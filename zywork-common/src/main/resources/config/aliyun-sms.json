@@ -1,0 +1,6 @@
+{
+  "accessKeyId": "yourAccessKeyId",
+  "accessKeySecret": "yourAccessKeySecret",
+  "signName": "signName",
+  "regionId": "cn-hangzhou"
+}
