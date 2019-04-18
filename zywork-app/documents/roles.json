@@ -1,0 +1,32 @@
+[
+    {
+        "title": "super_sys_admin",
+        "description": "超级系统管理员",
+        "isDefault": 0
+    },
+    {
+        "title": "sys_admin",
+        "description": "系统管理员",
+        "isDefault": 0
+    },
+    {
+        "title": "sys_dev",
+        "description": "系统研发人员",
+        "isDefault": 0
+    },
+    {
+        "title": "sys_user_demo",
+        "description": "系统演示用户",
+        "isDefault": 0
+    },
+    {
+        "title": "sys_user",
+        "description": "系统用户",
+        "isDefault": 1
+    },
+    {
+        "title": "sys_shop_owner",
+        "description": "店铺拥有者",
+        "isDefault": 0
+    }
+]

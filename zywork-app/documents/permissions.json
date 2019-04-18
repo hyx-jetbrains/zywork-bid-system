@@ -1,0 +1,913 @@
+[
+    {
+        "moduleTitle": "测试模块",
+        "permissions": [
+            {
+                "title": "测试添加",
+                "permission": "/test/add",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_user",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "测试修改",
+                "permission": "/test/edit",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_user",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "测试删除",
+                "permission": "/test/remove/*",
+                "roles": [
+                    "sys_user"
+                ]
+            },
+            {
+                "title": "测试文件上传",
+                "permission": "/test/upload",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "模块管理",
+        "permissions": [
+            {
+                "title": "后台-模块管理",
+                "permission": "/module/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "权限管理",
+        "permissions": [
+            {
+                "title": "后台-权限管理",
+                "permission": "/permission/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "角色管理",
+        "permissions": [
+            {
+                "title": "后台-角色管理",
+                "permission": "/role/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "模块权限管理",
+        "permissions": [
+            {
+                "title": "后台-模块权限管理",
+                "permission": "/module-permission/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-模块权限查询",
+                "permission": "/module-permission/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "角色权限管理",
+        "permissions": [
+            {
+                "title": "后台-角色权限管理",
+                "permission": "/role-permission/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "系统配置管理",
+        "permissions": [
+            {
+                "title": "后台-系统配置管理",
+                "permission": "/sys-config/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "系统日志管理",
+        "permissions": [
+            {
+                "title": "后台-系统日志管理",
+                "permission": "/sys-log/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "组织部门管理",
+        "permissions": [
+            {
+                "title": "后台-组织部门管理",
+                "permission": "/organization/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户组织部门管理",
+        "permissions": [
+            {
+                "title": "后台-用户组织部门管理",
+                "permission": "/user-organization/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-用户组织部门查询",
+                "permission": "/user-organization/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户管理",
+        "permissions": [
+            {
+                "title": "后台-用户管理",
+                "permission": "/user/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户角色管理",
+        "permissions": [
+            {
+                "title": "后台-用户角色查询",
+                "permission": "/user-role/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-用户角色查询",
+                "permission": "/user-role/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户详情管理",
+        "permissions": [
+            {
+                "title": "后台-用户详情管理",
+                "permission": "/user-userdetail/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-用户详情查询",
+                "permission": "/user-userdetail/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户第三方登录管理",
+        "permissions": [
+            {
+                "title": "后台-用户第三方登录管理",
+                "permission": "/user-usersocial/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户钱包管理",
+        "permissions": [
+            {
+                "title": "后台-用户钱包管理",
+                "permission": "/user-wallet/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户银行卡管理",
+        "permissions": [
+            {
+                "title": "后台-用户银行卡管理",
+                "permission": "/user-bankcard/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-用户银行卡管理",
+                "permission": "/user-bankcard/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "充值管理",
+        "permissions": [
+            {
+                "title": "后台-系统人工充值",
+                "permission": "/user-recharge/admin/human",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "提现管理",
+        "permissions": [
+            {
+                "title": "后台-提现管理",
+                "permission": "/withdraw/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-提现管理",
+                "permission": "/withdraw/user/*",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "转账管理",
+        "permissions": [
+            {
+                "title": "用户-转账操作",
+                "permission": "/transfer/user/*",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户收货地址管理",
+        "permissions": [
+            {
+                "title": "后台-用户收货地址管理",
+                "permission": "/shipping-address/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-用户收货地址管理",
+                "permission": "/shipping-address/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户账目详情管理",
+        "permissions": [
+            {
+                "title": "后台-用户账目详情管理",
+                "permission": "/accoundetail/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户路径管理",
+        "permissions": [
+            {
+                "title": "后台-用户路径管理",
+                "permission": "/user-path/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "分销管理",
+        "permissions": [
+            {
+                "title": "后台-分销管理",
+                "permission": "/distribution/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-分销查询",
+                "permission": "/distribution/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "文章类别管理",
+        "permissions": [
+            {
+                "title": "后台-文章类别管理",
+                "permission": "/article-category/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-文章类别查询",
+                "permission": "/article-category/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "文章管理",
+        "permissions": [
+            {
+                "title": "后台-文章管理",
+                "permission": "/article/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-文章查询",
+                "permission": "/article/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "文章评论管理",
+        "permissions": [
+            {
+                "title": "后台-文章评论管理",
+                "permission": "/article-comment/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-文章评论管理",
+                "permission": "/article-comment/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "流程文件管理",
+        "permissions": [
+            {
+                "title": "后台-流程文件管理",
+                "permission": "/process/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "流程管理",
+        "permissions": [
+            {
+                "title": "后台-流程管理",
+                "permission": "/process-activiti/admin/do/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "后台-流程查询",
+                "permission": "/process-activiti/admin/query/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-流程管理",
+                "permission": "/process-activiti/user/do/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            },
+            {
+                "title": "用户-流程查询",
+                "permission": "/process-activiti/user/query/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商品类目管理",
+        "permissions": [
+            {
+                "title": "后台-商品类目管理",
+                "permission": "/goods-category/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-商品类目查询",
+                "permission": "/goods-category/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商品属性管理",
+        "permissions": [
+            {
+                "title": "后台-商品属性管理",
+                "permission": "/goods-attribute/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商品类目属性管理",
+        "permissions": [
+            {
+                "title": "后台-商品类目属性管理",
+                "permission": "/goods-category-attr/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "店铺信息管理",
+        "permissions": [
+            {
+                "title": "后台-店铺信息管理",
+                "permission": "/goods-shop/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "店铺认证信息管理",
+        "permissions": [
+            {
+                "title": "后台-店铺认证信息管理",
+                "permission": "/goods-shop-certification/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "店铺审核历史查询",
+        "permissions": [
+            {
+                "title": "后台-店铺审核历史查询",
+                "permission": "/shop-certification-check/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商品基础信息管理",
+        "permissions": [
+            {
+                "title": "后台-商品基础信息管理",
+                "permission": "/goods-info/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-商品基础信息管理",
+                "permission": "/goods-info/user/**",
+                "roles": [
+                    "sys_shop_owner"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商品图片管理",
+        "permissions": [
+            {
+                "title": "后台-商品图片管理",
+                "permission": "/goods-pic/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-商品图片管理",
+                "permission": "/goods-pic/user/**",
+                "roles": [
+                    "sys_shop_owner"
+                ]
+            }
+        ]
+    },
+    {
+      "moduleTitle": "商品SKU管理",
+      "permissions": [
+        {
+          "title": "后台-商品SKU管理",
+          "permission": "/goods-sku/admin/**",
+          "roles": [
+            "super_sys_admin",
+            "sys_admin"
+          ]
+        }
+      ]
+    },
+    {
+        "moduleTitle": "商品SKU属性管理",
+        "permissions": [
+            {
+                "title": "后台-商品SKU属性管理",
+                "permission": "/goods-attribute-value/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+      "moduleTitle": "商品SKU属性查询",
+      "permissions": [
+        {
+          "title": "后台-商品SKU属性查询",
+          "permission": "/goods-sku-attr-val/admin/**",
+          "roles": [
+            "super_sys_admin",
+            "sys_admin"
+          ]
+        }
+      ]
+    },
+    {
+        "moduleTitle": "购物车管理",
+        "permissions": [
+            {
+                "title": "后台-购物车管理",
+                "permission": "/goods-cart/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "购物车查询",
+        "permissions": [
+            {
+                "title": "后台-购物车查询",
+                "permission": "/user-goods-cart/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商城订单管理",
+        "permissions": [
+            {
+                "title": "后台-商城订单管理",
+                "permission": "/goods-order/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商城订单项管理",
+        "permissions": [
+            {
+                "title": "后台-商城订单项管理",
+                "permission": "/goods-order-item/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商城订单物流管理",
+        "permissions": [
+            {
+                "title": "后台-商城订单物流管理",
+                "permission": "/goods-order-logistics/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商城用户订单查询",
+        "permissions": [
+            {
+                "title": "后台-商城用户订单查询",
+                "permission": "/user-goods-order/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商城用户订单项查询",
+        "permissions": [
+            {
+                "title": "后台-商城用户订单项查询",
+                "permission": "/user-goods-order-item/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "商城用户订单物流查询",
+        "permissions": [
+            {
+                "title": "后台-商城用户订单物流查询",
+                "permission": "/user-goods-order-logistics/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "消息管理",
+        "permissions": [
+            {
+                "title": "后台-消息管理",
+                "permission": "/message/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "消息查询",
+        "permissions": [
+            {
+                "title": "后台-消息查询",
+                "permission": "/user-message/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-消息查询",
+                "permission": "/user-message/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "公告管理",
+        "permissions": [
+            {
+                "title": "后台-公告管理",
+                "permission": "/notice/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-公告查询",
+                "permission": "/notice/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "角色权限导入导出管理",
+        "permissions": [
+            {
+                "title": "后台-导入导出角色权限",
+                "permission": "/permission-import-export/*",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_dev"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "Redis缓存管理",
+        "permissions": [
+            {
+                "title": "后台-Redis缓存管理",
+                "permission": "/redis-manage/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_dev"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "定时任务管理",
+        "permissions": [
+            {
+                "title": "后台-定时任务管理",
+                "permission": "/scheduler/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_dev"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "DAU管理",
+        "permissions": [
+            {
+                "title": "后台-DAU管理",
+                "permission": "/statistics-dau/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户统计管理",
+        "permissions": [
+            {
+                "title": "后台-用户统计管理",
+                "permission": "/user-liveness-stat/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    }
+]

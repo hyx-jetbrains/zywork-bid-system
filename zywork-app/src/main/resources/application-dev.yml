@@ -1,0 +1,152 @@
+server:
+  port: 8088
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  application:
+    name: zywork-app
+  banner:
+    charset: UTF-8
+    location: banner.txt
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/zywork_app?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowMultiQueries=true&useAffectedRows=true&allowPublicKeyRetrieval=true
+      username: root
+      password: root123456
+      validation-query: select 1
+      max-active: 100
+      min-idle: 10
+      max-wait: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      initial-size: 10
+      web-stat-filter:
+        principal-session-name: admin
+        principal-cookie-name: admin
+      stat-view-servlet:
+        login-username: zywork-app
+        login-password: zywork-app.123654
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8086"
+        username: zywork-app
+        password: zywork-app.123654
+        instance:
+          service-base-url: "http://localhost:8088"
+  activiti:
+    check-process-definitions: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+logging:
+  file:
+    max-history: 60
+  level:
+    root: INFO
+  path: .
+  pattern:
+    console: "%date %level %thread %10logger %file %line %msg%n"
+    file: "%date %level %thread %10logger %file %line %msg%n"
+    level: "%5p"
+  register-shutdown-hook: false
+mybatis:
+  configuration:
+    cache-enabled: true
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    use-column-label: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: top.zywork.dos
+  mapper-locations: classpath:/mapper/*Mapper.xml
+#XssFilter不过滤的url，从/开始配置
+xssFilter:
+  ignoreUrls: /article/admin/save,/article/admin/batch-save,/article/admin/update,/article/admin/batch-update,/notice/admin/save,/notice/admin/batch-save,/notice/admin/update,/notice/admin/batch-update
+#自定义jwt配置信息
+jwt:
+  #header名称
+  header: Authorization
+  #jwt token前缀
+  header-prefix: "Bearer "
+  #密钥
+  secret: w-oasiswgs123456
+  access-token:
+    #token失效时间，单位为s
+    expiration: 31536000
+    #token在redis中的失效时间，单位为s
+    redis-expiration: 604800
+#自定义微信配置信息
+weixin:
+  cookie:
+    #cookie有效期，单位为s
+    expiration: 604800
+    #公众号登录后的cookie
+    gzh-cookie-name: "zywork_weixin_gzh_openid"
+    #小程序登录后的cookie
+    xcx-cookie-name: "zywork_weixin_xcx_openid"
+reg:
+  code:
+    #邮箱注册时是否启用邮箱验证码
+    email: false
+    #手机注册时是否启用手机验证码
+    sms: false
+verify:
+  code:
+    #是否启用邮箱登录时的验证码功能
+    enable: true
+    #验证码有效期，单位为s
+    expiration: 600
+    cookie-name: "zywork_verify_code"
+  sms-code:
+    #手机验证码有效期，单位为s
+    expiration: 300
+user:
+  share-code:
+    #用户分享码长度
+    length: 6
+  reg-share-url: "http://zywork.top/user-reg?shareCode="
+  weixin-gzh-share-url: "http://zywork.top/wx-auth/to-gzh/?extraParams=http://zywork.top/index.html__http://zywork.top/notAuth.html__"
+exception:
+  printStackTrace: true
+activiti:
+  processDir: "./process"
+  allowedExts: ".zip"
+  #流程文件最大大小，单位MB
+  maxSize: 20
+storage:
+  #上传方式，可选local, aliyun-oss, qiniu-oss
+  provider: local
+  #配置本地上传保存目录及url
+  local:
+    compressSizes: "800x600,600x400"
+    compressScales: "0.8,0.5"
+    user:
+      imgParentDir: "."
+      imgDir: "image/user"
+      imgUrl: "upload/image/user"
+    goods:
+      #后台保存商品图片的路径
+      imgParentDir: "."
+      imgDir: "image/goods"
+      #前端显示商品图片的url路径
+      imgUrl: "upload/image/goods"
+    article:
+      imgParentDir: "."
+      imgDir: "image/article"
+      imgUrl: "upload/image/article"
+    notice:
+      imgParentDir: "."
+      imgDir: "image/notice"
+      imgUrl: "upload/image/notice"
