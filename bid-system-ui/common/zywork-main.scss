@@ -1,0 +1,89 @@
+$primary-color: #108EE9;
+$primary-backcolor:#FFFFFF;
+$primary-page-backcolor: #F8F8F8;
+
+$tabbar-backcolor: $primary-backcolor;
+$tabbar-text: #000000;
+$tabbar-select-text: $primary-color;
+
+$default-text-color: #6D6D6D;
+$primary-text-color: $primary-color;
+$tag-text-color: #FF4081;
+$warning-text-color: #FF4081;
+
+$border-color: #BFBFBF;
+
+page {
+	background-color: $primary-page-backcolor;
+}
+
+
+view, text {
+	font-size: 32upx;
+	color: $default-text-color;
+}
+
+button[type=primary] {
+	background-color: $primary-color;
+}
+
+.button-hover[type=primary] {
+	background-color: $primary-color;
+}
+
+button[disabled][type=primary] {
+	background-color: #9ED99D;
+}
+
+button[type=primary][plain] {
+	color: $primary-color;
+	border:1px solid $primary-color;
+	background-color:transparent;
+}
+
+.zy-page {
+	background-color: $primary-page-backcolor;
+}
+
+.zy-form {
+	width: 90%;
+	margin-bottom: 50upx;
+}
+
+.zy-form-item {
+}
+	
+.zy-form-item input {
+	height: 100upx;
+	border-bottom: 1px solid $border-color;
+}
+
+.zy-text-bold {
+	font-weight: bold;
+}
+
+.zy-text-info {
+	margin-bottom: 20upx;
+}
+	
+.zy-text-info-strong {
+	color: $primary-color;
+}
+
+.zy-small-text {
+	font-size: 28upx;
+}
+
+.zy-logo-img {
+	width: 300upx; 
+	height: 200upx;	
+}
+
+.zy-list-button {
+	padding:20upx;
+	border-radius: 0;
+	background-color: #FFFFFF;
+	text-align: center;
+	margin-top: 10upx;
+	font-size: 32upx;
+}

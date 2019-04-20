@@ -1,16 +1,115 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/project-info/project-info",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "招标信息",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/info-share/info-share",
+			"style": {
+				"navigationBarTitleText": "信息共享",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/message-notify/message-notify",
+			"style": {
+				"navigationBarTitleText": "消息通知",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/credit-query/credit-query",
+			"style": {
+				"navigationBarTitleText": "征信查询",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/user-center/user-center",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/nickname/nickname",
+			"style": {
+				"navigationBarTitleText": "我的昵称",
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/help/help",
+			"style": {
+				"navigationBarTitleText": "帮助中心",
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/about/about",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"backgroundTextStyle": "light"
+			}
+		},
+		{
+			"path": "pages/privacy/privacy",
+			"style": {
+				"navigationBarTitleText": "用户协议与隐私声明",
+				"backgroundTextStyle": "light"
 			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "江西招投标信息共享平台",
+		"navigationBarBackgroundColor": "#108EE9",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#6D6D6D",
+		"selectedColor": "#108EE9",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [
+			{
+				"text": "招标信息",
+				"pagePath": "pages/project-info/project-info",
+				"iconPath": "static/icon/project_info_default.png",
+				"selectedIconPath": "static/icon/project_info.png"
+			},
+			{
+				"text": "信息共享",
+				"pagePath": "pages/info-share/info-share",
+				"iconPath": "static/icon/info_share_default.png",
+				"selectedIconPath": "static/icon/info_share.png"
+			},
+			{
+				"text": "消息通知",
+				"pagePath": "pages/message-notify/message-notify",
+				"iconPath": "static/icon/message_notify_default.png",
+				"selectedIconPath": "static/icon/message_notify.png"
+			},
+			{
+				"text": "征信查询",
+				"pagePath": "pages/credit-query/credit-query",
+				"iconPath": "static/icon/credit_query_default.png",
+				"selectedIconPath": "static/icon/credit_query.png"
+			},
+			{
+				"text": "个人中心",
+				"pagePath": "pages/user-center/user-center",
+				"iconPath": "static/icon/user_center_default.png",
+				"selectedIconPath": "static/icon/user_center.png"
+			}
+		]
 	}
 }
