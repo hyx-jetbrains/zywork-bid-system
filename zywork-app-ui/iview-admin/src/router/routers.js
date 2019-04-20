@@ -76,44 +76,273 @@ export default [
       },
     ]
   },
-  // {
-  //   path: '',
-  //   name: 'doc',
-  //   meta: {
-  //     title: '文档',
-  //     href: 'https://lison16.github.io/iview-admin-doc/#/',
-  //     icon: 'ios-book'
-  //   }
-  // },
-	{
-	  path: '/admin',
-	  name: 'organization_manage',
-	  meta: {
-	    icon: 'md-people',
-	    title: '组织部门管理'
-	  },
-	  component: Main,
-	  children: [
-	    {
-	      path: 'Organization',
-	      name: 'organization',
-	      meta: {
-	        title: '组织部门管理',
-	        icon: 'md-people'
-	      },
-	      component: () => import('@/view/organization/Organization.vue')
+  {
+    path: '/admin',
+    name: 'bid_info',
+    meta: {
+      icon: 'md-list',
+      title: '招标信息'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'Advertisement',
+        name: 'advertisement_manage',
+        meta: {
+          title: '轮播广告管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/advertisement/Advertisement.vue')
       },
-			{
-			  path: 'UserOrganization',
-			  name: 'user_organization',
-			  meta: {
-			    title: '用户组织部门查询',
-			    icon: 'ios-people'
-			  },
-			  component: () => import('@/view/user-organization/UserOrganization.vue')
-			}
-	  ]
-	},
+      {
+        path: 'Headlines',
+        name: 'headlines_manage',
+        meta: {
+          title: '头条管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/headlines/Headlines.vue')
+      },
+      {
+        path: 'Project',
+        name: 'project_manage',
+        meta: {
+          title: '招投标项目管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/project/Project.vue')
+      },
+      {
+        path: 'ProjectAnnounce',
+        name: 'project_announce_manage',
+        meta: {
+          title: '公示详情管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/project-announce/ProjectAnnounce.vue')
+      },
+      {
+        path: 'ProjectResource',
+        name: 'project_resource_manage',
+        meta: {
+          title: '项目附件管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/project-resource/ProjectResource.vue')
+      },
+    ]
+  },
+  {
+    path: '/admin',
+    name: 'info_share',
+    meta: {
+      icon: 'md-list',
+      title: '信息共享'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'Builder',
+        name: 'builder_manage',
+        meta: {
+          title: '发布建造师管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/builder/Builder.vue')
+      },
+      {
+        path: 'BuilderRequest',
+        name: 'builder_req_manage',
+        meta: {
+          title: '发布建造师需求管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/builder-req/BuilderReq.vue')
+      },
+      {
+        path: 'BuilderResource',
+        name: 'builder_resource_manage',
+        meta: {
+          title: '建造师附件管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/builder-resource/BuilderResource.vue')
+      },
+      {
+        path: 'AptitudeTransfer',
+        name: 'aptitude_transfer_manage',
+        meta: {
+          title: '发布资质转让管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/aptitude-transfer/AptitudeTransfer.vue')
+      },
+      {
+        path: 'AptitudeResource',
+        name: 'aptitude_resource_manage',
+        meta: {
+          title: '资质转让附件管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/aptitude-resource/AptitudeResource.vue')
+      },
+      {
+        path: 'MarkCarpool',
+        name: 'mark_carpool_manage',
+        meta: {
+          title: '开标拼车管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/mark-carpool/MarkCarpool.vue')
+      },
+      {
+        path: 'MarkSeekcar',
+        name: 'mark_seekcar_manage',
+        meta: {
+          title: '开标找车管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/mark-seekcar/MarkSeekcar.vue')
+      },
+      {
+        path: 'RecruitInfo',
+        name: 'recruit_info_manage',
+        meta: {
+          title: '招聘信息管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/recruit/Recruit.vue')
+      },
+      {
+        path: 'SeekData',
+        name: 'seek_data_manage',
+        meta: {
+          title: '求带资料管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/seek-data/SeekData.vue')
+      },
+      {
+        path: 'ExpertSubscribe',
+        name: 'expert_subscribe_manage',
+        meta: {
+          title: '专家预约管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/expert-subscribe/ExpertSubscribe.vue')
+      },
+    ]
+  },
+  {
+    path: '/admin',
+    name: 'credit_enquiry',
+    meta: {
+      icon: 'md-list',
+      title: '征信查询'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'CompanyInfo',
+        name: 'company_info_manage',
+        meta: {
+          title: '企业信息管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/company/Company.vue')
+      },
+      {
+        path: 'CompanyPersonnel',
+        name: 'company_personnel_manage',
+        meta: {
+          title: '企业人员管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-personnel/CompPersonnel.vue')
+      },
+      {
+        path: 'CompanyBuilder',
+        name: 'company_builder_manage',
+        meta: {
+          title: '企业建造师管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-builder/CompBuilder.vue')
+      },
+      {
+        path: 'CompanyAptitude',
+        name: 'company_aptitude_manage',
+        meta: {
+          title: '企业业绩管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-aptitude/CompAptitude.vue')
+      },
+      {
+        path: 'CompanyAptitude',
+        name: 'company_aptitude_manage',
+        meta: {
+          title: '企业资质管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-aptitude/CompAptitude.vue')
+      },
+      {
+        path: 'CompanyHouseAchievement',
+        name: 'company_house_achievement_manage',
+        meta: {
+          title: '企业房建业绩管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-house-achievement/CompHouseAchievement.vue')
+      },
+      {
+        path: 'CompanyKeyProjectAchievement',
+        name: 'company_key_project_achievement_manage',
+        meta: {
+          title: '企业重点工程业绩管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-key-project-achievement/CompKeyProjectAchievement.vue')
+      },
+      {
+        path: 'CompanyTrafficAchievement',
+        name: 'company_traffic_achievement_manage',
+        meta: {
+          title: '企业交通业绩管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-traffic-achievement/CompTrafficAchievement.vue')
+      },
+      {
+        path: 'CompanyWaterAchievement',
+        name: 'company_water_achievement_manage',
+        meta: {
+          title: '企业水利业绩管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-water-achievement/CompWaterAchievement.vue')
+      },
+      {
+        path: 'CompanyWaterDeviseAchievement',
+        name: 'company_water_devise_achievement_manage',
+        meta: {
+          title: '企业水利勘查业绩管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-water-devise-achievement/CompWaterDeviseAchievement.vue')
+      },
+      {
+        path: 'CompanyWaterMonitorAchievement',
+        name: 'company_water_monitor_achievement_manage',
+        meta: {
+          title: '企业水利监理业绩管理',
+          icon: 'ios-locate'
+        },
+        component: () => import('@/view/comp-water-monitor-achievement/CompWaterMonitorAchievement.vue')
+      },
+    ]
+  },
   {
     path: '/admin',
     name: 'user_manage',
@@ -140,7 +369,16 @@ export default [
 			    icon: 'md-information-circle'
 			  },
 			  component: () => import('@/view/user-detail/UserUserDetail.vue')
-			},
+      },
+      {
+        path: 'UserWorkInfo',
+        name: 'user_work_info_query',
+        meta: {
+          title: '用户工作信息管理',
+          icon: 'md-information-circle'
+        },
+        component: () => import('@/view/user-work/UserWork.vue')
+      },
 			{
 			  path: 'UserSocial',
 			  name: 'user_social_query',
@@ -158,16 +396,79 @@ export default [
 			    icon: 'ios-lock'
 			  },
 			  component: () => import('@/view/user-role/UserRole.vue')
-			},
+      },
       {
-        path: 'ShippingAddress',
-        name: 'receiving_address_manage',
+        path: 'achievement',
+        name: 'achievement_manage',
         meta: {
-          title: '收货地址管理',
-          icon: 'ios-home'
+          title: '用户业绩查询',
+          icon: 'ios-document'
         },
-        component: () => import('@/view/shipping-address/ShippingAddress.vue')
-      }
+        component: () => import('@/view/achievement/Achievement.vue')
+      },
+      {
+        path: 'UserSubscribe',
+        name: 'user_subscribe_manage',
+        meta: {
+          title: '用户订阅管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/subscribe/Subscribe.vue')
+      },
+      {
+        path: 'UserProjectCollection',
+        name: 'user_project_collection_manage',
+        meta: {
+          title: '用户项目收藏管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/project-collection/ProjectCollection.vue')
+      },
+      {
+        path: 'UserResume',
+        name: 'user_resume_manage',
+        meta: {
+          title: '用户简历管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/resume/Resume.vue')
+      },
+      {
+        path: 'UserConsult',
+        name: 'user_consult_manage',
+        meta: {
+          title: '用户咨询管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/consult/Consult.vue')
+      },
+      {
+        path: 'Coupon',
+        name: 'coupon_manage',
+        meta: {
+          title: '抵扣券管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/coupon/Coupon.vue')
+      },
+      {
+        path: 'UserCoupon',
+        name: 'user_coupon_manage',
+        meta: {
+          title: '用户抵扣券管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/user-coupon/UserCoupon.vue')
+      },
+      {
+        path: 'CouponRecord',
+        name: 'coupon_record',
+        meta: {
+          title: '抵扣券使用记录',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/coupon-record/CouponRecord.vue')
+      },
     ]
   },
   {
@@ -189,69 +490,6 @@ export default [
         component: () => import('@/view/user-wallet/UserWallet.vue')
       },
       {
-        path: 'UserBankcard',
-        name: 'bank_card_manage',
-        meta: {
-          title: '银行卡管理',
-          icon: 'ios-card'
-        },
-        component: () => import('@/view/user-bankcard/UserBankcard.vue')
-      },
-      {
-        path: 'FundsRecharge',
-        name: 'funds_recharge',
-        meta: {
-          title: '充值管理',
-          icon: 'md-add-circle'
-        },
-        component: () => import('@/view/funds-recharge/FundsRecharge.vue')
-      },
-      {
-        path: 'FundsTransfer',
-        name: 'funds_transfer',
-        meta: {
-          title: '转账管理',
-          icon: 'md-swap'
-        },
-        component: () => import('@/view/funds-transfer/FundsTransfer.vue')
-      },
-      {
-        path: 'FundsFrezee',
-        name: 'funds_frezee',
-        meta: {
-          title: '冻结管理',
-          icon: 'md-snow'
-        },
-        component: () => import('@/view/funds-frezee/FundsFrezee.vue')
-      },
-      {
-        path: 'FundsWithdraw',
-        name: 'funds_withdraw',
-        meta: {
-          title: '提现管理',
-          icon: 'md-checkmark-circle'
-        },
-        component: () => import('@/view/funds-withdraw/FundsWithdraw.vue')
-      },
-      {
-        path: 'FundsWithdrawCheck',
-        name: 'funds_withdraw_check',
-        meta: {
-          title: '提现审核管理',
-          icon: 'md-open'
-        },
-        component: () => import('@/view/funds-withdraw-check/FundsWithdrawCheck.vue')
-      },
-      {
-        path: 'UserWithdrawCheck',
-        name: 'funds_withdraw_check_query',
-        meta: {
-          title: '提现审核查询',
-          icon: 'ios-pint'
-        },
-        component: () => import('@/view/funds-withdraw-check-query/UserWithdrawCheck.vue')
-      },
-      {
         path: 'AccountDetail',
         name: 'user_account_manage',
         meta: {
@@ -259,395 +497,6 @@ export default [
           icon: 'md-list-box'
         },
         component: () => import('@/view/account-detail/AccountDetail.vue')
-      }
-    ]
-  },
-  {
-    path: '/admin',
-    name: 'cms_management',
-    meta: {
-      icon: 'ios-book',
-      title: '内容管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'ArticleCategory',
-        name: 'article_category',
-        meta: {
-          title: '文章类别管理',
-          icon: 'md-filing'
-        },
-        component: () => import('@/view/article-category/ArticleCategory.vue')
-      },
-      {
-        path: 'Article',
-        name: 'article_management',
-        meta: {
-          title: '文章管理',
-          icon: 'ios-paper'
-        },
-        component: () => import('@/view/article/Article.vue')
-      },
-      {
-        path: 'ArticleComment',
-        name: 'article_comment',
-        meta: {
-          title: '文章评论管理',
-          icon: 'ios-text'
-        },
-        component: () => import('@/view/article-comment/ArticleComment.vue')
-      }
-    ]
-  },
-  {
-    path: '/admin',
-    name: 'processes_management',
-    meta: {
-      icon: 'md-repeat',
-      title: '流程管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'Process',
-        name: 'process_management',
-        meta: {
-          title: '流程文件管理',
-          icon: 'md-swap'
-        },
-        component: () => import('@/view/process/Process.vue')
-      },
-      {
-        path: 'ProcessDeployment',
-        name: 'process_deployment_management',
-        meta: {
-          title: '流程部署管理',
-          icon: 'md-sync'
-        },
-        component: () => import('@/view/activiti-deployment/ActivitiDeployment.vue')
-      },
-      {
-        path: 'ProcessDefinition',
-        name: 'process_definition_management',
-        meta: {
-          title: '流程定义管理',
-          icon: 'md-switch'
-        },
-        component: () => import('@/view/activiti-definition/ActivitiDefinition.vue')
-      },
-      {
-        path: 'ProcessInstance',
-        name: 'process_instance_management',
-        meta: {
-          title: '流程实例管理',
-          icon: 'ios-browsers'
-        },
-        component: () => import('@/view/activiti-instance/ActivitiInstance.vue')
-      },
-      {
-        path: 'ProcessTask',
-        name: 'process_task_management',
-        meta: {
-          title: '流程任务管理',
-          icon: 'ios-stopwatch'
-        },
-        component: () => import('@/view/activiti-task/ActivitiTask.vue')
-      },
-      {
-        path: 'HistoricProcess',
-        name: 'historic_process_management',
-        meta: {
-          title: '流程历史管理',
-          icon: 'ios-barcode'
-        },
-        component: () => import('@/view/activiti-his-instance/ActivitiHisInstance.vue')
-      },
-      {
-        path: 'ProcessDesign',
-        name: 'process_design',
-        meta: {
-          title: '流程在线设计',
-          href: baseUrl + ':8080/activiti-app',
-          icon: 'md-pricetag'
-        }
-      }
-    ]
-  },
-  {
-    path: '/admin',
-    name: 'mall_management',
-    meta: {
-      icon: 'ios-cart',
-      title: '商城管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'GoodsBasic',
-        name: 'goods_basic_management',
-        meta: {
-          icon: 'ios-create',
-          title: '商城基础信息管理'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'GoodsAttribute',
-            name: 'goods_attribute',
-            meta: {
-              icon: 'ios-keypad',
-              title: '商品属性管理'
-            },
-            component: () => import('@/view/goods-attribute/GoodsAttribute.vue')
-          },
-          {
-            path: 'GoodsCategory',
-            name: 'goods_category',
-            meta: {
-              icon: 'md-funnel',
-              title: '商品类目管理'
-            },
-            component: () => import('@/view/goods-category/GoodsCategory.vue')
-          },
-          {
-            path: 'CategoryAttribute',
-            name: 'category_attribute',
-            meta: {
-              icon: 'md-link',
-              title: '类目属性查询'
-            },
-            component: () => import('@/view/goods-category-attr/GoodsCategoryAttribute.vue')
-          }
-        ]
-      },
-      {
-        path: 'shops',
-        name: 'shops_management',
-        meta: {
-          icon: 'logo-skype',
-          title: '店铺管理'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'Shop',
-            name: 'shop_info',
-            meta: {
-              icon: 'ios-grid',
-              title: '店铺管理'
-            },
-            component: () => import('@/view/goods-shop/GoodsShop.vue')
-          },
-          {
-            path: 'ShopCertificate',
-            name: 'shop_certificate',
-            meta: {
-              icon: 'md-checkmark-circle',
-              title: '店铺认证'
-            },
-            component: () => import('@/view/goods-shop-certification/GoodsShopCertification.vue')
-          },
-          {
-            path: 'ShopCheck',
-            name: 'shop_check',
-            meta: {
-              icon: 'md-checkbox',
-              title: '店铺审核历史'
-            },
-            component: () => import('@/view/goods-shop-certification-check/GoodsShopCertificationCheck.vue')
-          }
-        ]
-      },
-      {
-        path: 'goods',
-        name: 'goods_management',
-        meta: {
-          icon: 'ios-globe',
-          title: '商品管理'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'GoodsInfo',
-            name: 'goods_info',
-            meta: {
-              icon: 'md-grid',
-              title: '商品管理'
-            },
-            component: () => import('@/view/goods-info/GoodsInfo.vue')
-          },
-          {
-            path: 'GoodsDetail',
-            name: 'goods_detail',
-            meta: {
-              icon: 'ios-grid',
-              title: '商品SKU属性查询'
-            },
-            component: () => import('@/view/goods-sku-attribute-value/GoodsSkuAttributeValue.vue')
-          }
-        ]
-      },
-      {
-        path: 'cart',
-        name: 'carts_management',
-        meta: {
-          icon: 'ios-cart',
-          title: '购物车管理'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'Cart',
-            name: 'cart_management',
-            meta: {
-              icon: 'md-cart',
-              title: '购物车管理'
-            },
-            component: () => import('@/view/goods-cart/GoodsCart.vue')
-          },
-          {
-            path: 'CartQuery',
-            name: 'cart_query',
-            meta: {
-              icon: 'ios-cart',
-              title: '购物车查询'
-            },
-            component: () => import('@/view/user-goods-cart/UserGoodsCart.vue')
-          }
-        ]
-      },
-      {
-        path: 'orders',
-        name: 'orders_management',
-        meta: {
-          icon: 'md-list',
-          title: '订单管理'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'GoodsOrder',
-            name: 'goods_order',
-            meta: {
-              icon: 'md-basket',
-              title: '订单管理'
-            },
-            component: () => import('@/view/goods-order/GoodsOrder.vue')
-          },
-          {
-            path: 'GoodsOrderItem',
-            name: 'goods_order_item',
-            meta: {
-              icon: 'ios-basket',
-              title: '订单项管理'
-            },
-            component: () => import('@/view/goods-order-item/GoodsOrderItem.vue')
-          },
-          {
-            path: 'OrderLogistics',
-            name: 'order_logistics',
-            meta: {
-              icon: 'md-bus',
-              title: '订单物流管理'
-            },
-            component: () => import('@/view/goods-order-logistics/GoodsOrderLogistics.vue')
-          },
-          {
-            path: 'OrderQuery',
-            name: 'order_query',
-            meta: {
-              icon: 'md-bookmarks',
-              title: '用户订单查询'
-            },
-            component: () => import('@/view/user-goods-order/UserGoodsOrder.vue')
-          },
-          {
-            path: 'OrderItemQuery',
-            name: 'order_item_query',
-            meta: {
-              icon: 'ios-bookmarks',
-              title: '用户订单项查询'
-            },
-            component: () => import('@/view/user-goods-order-item/UserGoodsOrderItem.vue')
-          },
-          {
-            path: 'OrderLogisticsQuery',
-            name: 'order_logistics_query',
-            meta: {
-              icon: 'ios-bus',
-              title: '用户订单物流查询'
-            },
-            component: () => import('@/view/user-goods-order-logistics/UserGoodsOrderLogistics.vue')
-          }
-        ]
-      },
-      {
-        path: 'coupons',
-        name: 'coupons_management',
-        meta: {
-          icon: 'ios-medal',
-          title: '优惠券管理'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'GoodsCoupon',
-            name: 'goods_coupon',
-            meta: {
-              icon: 'md-medal',
-              title: '优惠券管理'
-            },
-            component: () => import('@/view/demo/ComingSoon.vue')
-          },
-          {
-            path: 'UserCoupon',
-            name: 'user_coupon',
-            meta: {
-              icon: 'md-star',
-              title: '用户优惠券管理'
-            },
-            component: () => import('@/view/demo/ComingSoon.vue')
-          }
-        ]
-      }
-    ]
-  },
-  {
-    path: '/admin',
-    name: 'distribution_management',
-    meta: {
-      icon: 'md-share',
-      title: '分销管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'UserHierarchyQuery',
-        name: 'user_hierarchy_query',
-        meta: {
-          title: '用户层级关系查询',
-          icon: 'md-git-branch'
-        },
-        component: () => import('@/view/distribution/UserHierarchy.vue')
-      },
-      {
-        path: 'UserPath',
-        name: 'user_path_management',
-        meta: {
-          title: '用户路径管理',
-          icon: 'md-git-network'
-        },
-        component: () => import('@/view/user-path/UserPath.vue')
-      },
-      {
-        path: 'TopDistribution',
-        name: 'top_distribution',
-        meta: {
-          title: '顶级分销商查询',
-          icon: 'ios-thumbs-up'
-        },
-        component: () => import('@/view/distribution/TopDistribution.vue')
       }
     ]
   },
@@ -755,15 +604,6 @@ export default [
         component: () => import('@/view/sys-config/SysConfig.vue')
       },
       {
-        path: 'Notice',
-        name: 'system_notice',
-        meta: {
-          title: '系统公告管理',
-          icon: 'ios-notifications'
-        },
-        component: () => import('@/view/notice/Notice.vue')
-      },
-      {
         path: 'Message',
         name: 'system_message',
         meta: {
@@ -780,6 +620,24 @@ export default [
           icon: 'ios-information-circle'
         },
         component: () => import('@/view/user-message/UserMessage.vue')
+      },
+      {
+        path: 'OftenQuestion',
+        name: 'often_question_manage',
+        meta: {
+          title: '常见问题管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/often-question/OftenQuestion.vue')
+      },
+      {
+        path: 'Resource',
+        name: 'resource_manage',
+        meta: {
+          title: '资源附件管理',
+          icon: 'ios-document'
+        },
+        component: () => import('@/view/resource/Resource.vue')
       }
     ]
   },
