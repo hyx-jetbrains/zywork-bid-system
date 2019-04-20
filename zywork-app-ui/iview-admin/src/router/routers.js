@@ -80,7 +80,7 @@ export default [
     path: '/admin',
     name: 'bid_info',
     meta: {
-      icon: 'md-list',
+      icon: 'md-home',
       title: '招标信息'
     },
     component: Main,
@@ -99,7 +99,7 @@ export default [
         name: 'headlines_manage',
         meta: {
           title: '头条管理',
-          icon: 'ios-locate'
+          icon: 'ios-headset'
         },
         component: () => import('@/view/headlines/Headlines.vue')
       },
@@ -108,7 +108,7 @@ export default [
         name: 'project_manage',
         meta: {
           title: '招投标项目管理',
-          icon: 'ios-locate'
+          icon: 'ios-bookmark'
         },
         component: () => import('@/view/project/Project.vue')
       },
@@ -117,7 +117,7 @@ export default [
         name: 'project_announce_manage',
         meta: {
           title: '公示详情管理',
-          icon: 'ios-locate'
+          icon: 'ios-barcode'
         },
         component: () => import('@/view/project-announce/ProjectAnnounce.vue')
       },
@@ -126,7 +126,7 @@ export default [
         name: 'project_resource_manage',
         meta: {
           title: '项目附件管理',
-          icon: 'ios-locate'
+          icon: 'ios-link'
         },
         component: () => import('@/view/project-resource/ProjectResource.vue')
       },
@@ -136,7 +136,7 @@ export default [
     path: '/admin',
     name: 'info_share',
     meta: {
-      icon: 'md-list',
+      icon: 'md-share',
       title: '信息共享'
     },
     component: Main,
@@ -146,7 +146,7 @@ export default [
         name: 'builder_manage',
         meta: {
           title: '发布建造师管理',
-          icon: 'ios-locate'
+          icon: 'ios-contacts'
         },
         component: () => import('@/view/builder/Builder.vue')
       },
@@ -155,7 +155,7 @@ export default [
         name: 'builder_req_manage',
         meta: {
           title: '发布建造师需求管理',
-          icon: 'ios-locate'
+          icon: 'ios-contacts-outline'
         },
         component: () => import('@/view/builder-req/BuilderReq.vue')
       },
@@ -164,7 +164,7 @@ export default [
         name: 'builder_resource_manage',
         meta: {
           title: '建造师附件管理',
-          icon: 'ios-locate'
+          icon: 'ios-link'
         },
         component: () => import('@/view/builder-resource/BuilderResource.vue')
       },
@@ -173,7 +173,7 @@ export default [
         name: 'aptitude_transfer_manage',
         meta: {
           title: '发布资质转让管理',
-          icon: 'ios-locate'
+          icon: 'ios-medal'
         },
         component: () => import('@/view/aptitude-transfer/AptitudeTransfer.vue')
       },
@@ -182,7 +182,7 @@ export default [
         name: 'aptitude_resource_manage',
         meta: {
           title: '资质转让附件管理',
-          icon: 'ios-locate'
+          icon: 'ios-link'
         },
         component: () => import('@/view/aptitude-resource/AptitudeResource.vue')
       },
@@ -191,7 +191,7 @@ export default [
         name: 'mark_carpool_manage',
         meta: {
           title: '开标拼车管理',
-          icon: 'ios-locate'
+          icon: 'ios-car'
         },
         component: () => import('@/view/mark-carpool/MarkCarpool.vue')
       },
@@ -200,7 +200,7 @@ export default [
         name: 'mark_seekcar_manage',
         meta: {
           title: '开标找车管理',
-          icon: 'ios-locate'
+          icon: 'ios-car-outline'
         },
         component: () => import('@/view/mark-seekcar/MarkSeekcar.vue')
       },
@@ -209,7 +209,7 @@ export default [
         name: 'recruit_info_manage',
         meta: {
           title: '招聘信息管理',
-          icon: 'ios-locate'
+          icon: 'ios-medical'
         },
         component: () => import('@/view/recruit/Recruit.vue')
       },
@@ -218,7 +218,7 @@ export default [
         name: 'seek_data_manage',
         meta: {
           title: '求带资料管理',
-          icon: 'ios-locate'
+          icon: 'ios-paper'
         },
         component: () => import('@/view/seek-data/SeekData.vue')
       },
@@ -227,7 +227,7 @@ export default [
         name: 'expert_subscribe_manage',
         meta: {
           title: '专家预约管理',
-          icon: 'ios-locate'
+          icon: 'ios-person'
         },
         component: () => import('@/view/expert-subscribe/ExpertSubscribe.vue')
       },
@@ -237,7 +237,7 @@ export default [
     path: '/admin',
     name: 'credit_enquiry',
     meta: {
-      icon: 'md-list',
+      icon: 'md-paper-plane',
       title: '征信查询'
     },
     component: Main,
@@ -247,7 +247,7 @@ export default [
         name: 'company_info_manage',
         meta: {
           title: '企业信息管理',
-          icon: 'ios-locate'
+          icon: 'ios-people'
         },
         component: () => import('@/view/company/Company.vue')
       },
@@ -256,7 +256,7 @@ export default [
         name: 'company_personnel_manage',
         meta: {
           title: '企业人员管理',
-          icon: 'ios-locate'
+          icon: 'ios-people-outline'
         },
         component: () => import('@/view/comp-personnel/CompPersonnel.vue')
       },
@@ -265,7 +265,7 @@ export default [
         name: 'company_builder_manage',
         meta: {
           title: '企业建造师管理',
-          icon: 'ios-locate'
+          icon: 'ios-contacts'
         },
         component: () => import('@/view/comp-builder/CompBuilder.vue')
       },
@@ -273,17 +273,8 @@ export default [
         path: 'CompanyAptitude',
         name: 'company_aptitude_manage',
         meta: {
-          title: '企业业绩管理',
-          icon: 'ios-locate'
-        },
-        component: () => import('@/view/comp-aptitude/CompAptitude.vue')
-      },
-      {
-        path: 'CompanyAptitude',
-        name: 'company_aptitude_manage',
-        meta: {
           title: '企业资质管理',
-          icon: 'ios-locate'
+          icon: 'ios-medal'
         },
         component: () => import('@/view/comp-aptitude/CompAptitude.vue')
       },
@@ -292,7 +283,7 @@ export default [
         name: 'company_house_achievement_manage',
         meta: {
           title: '企业房建业绩管理',
-          icon: 'ios-locate'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/comp-house-achievement/CompHouseAchievement.vue')
       },
@@ -301,7 +292,7 @@ export default [
         name: 'company_key_project_achievement_manage',
         meta: {
           title: '企业重点工程业绩管理',
-          icon: 'ios-locate'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/comp-key-project-achievement/CompKeyProjectAchievement.vue')
       },
@@ -310,7 +301,7 @@ export default [
         name: 'company_traffic_achievement_manage',
         meta: {
           title: '企业交通业绩管理',
-          icon: 'ios-locate'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/comp-traffic-achievement/CompTrafficAchievement.vue')
       },
@@ -319,7 +310,7 @@ export default [
         name: 'company_water_achievement_manage',
         meta: {
           title: '企业水利业绩管理',
-          icon: 'ios-locate'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/comp-water-achievement/CompWaterAchievement.vue')
       },
@@ -328,7 +319,7 @@ export default [
         name: 'company_water_devise_achievement_manage',
         meta: {
           title: '企业水利勘查业绩管理',
-          icon: 'ios-locate'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/comp-water-devise-achievement/CompWaterDeviseAchievement.vue')
       },
@@ -337,7 +328,7 @@ export default [
         name: 'company_water_monitor_achievement_manage',
         meta: {
           title: '企业水利监理业绩管理',
-          icon: 'ios-locate'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/comp-water-monitor-achievement/CompWaterMonitorAchievement.vue')
       },
@@ -402,7 +393,7 @@ export default [
         name: 'achievement_manage',
         meta: {
           title: '用户业绩查询',
-          icon: 'ios-document'
+          icon: 'ios-paper-outline-document'
         },
         component: () => import('@/view/achievement/Achievement.vue')
       },
@@ -411,7 +402,7 @@ export default [
         name: 'user_subscribe_manage',
         meta: {
           title: '用户订阅管理',
-          icon: 'ios-document'
+          icon: 'ios-paper-plane-outline'
         },
         component: () => import('@/view/subscribe/Subscribe.vue')
       },
@@ -420,7 +411,7 @@ export default [
         name: 'user_project_collection_manage',
         meta: {
           title: '用户项目收藏管理',
-          icon: 'ios-document'
+          icon: 'ios-star'
         },
         component: () => import('@/view/project-collection/ProjectCollection.vue')
       },
@@ -429,7 +420,7 @@ export default [
         name: 'user_resume_manage',
         meta: {
           title: '用户简历管理',
-          icon: 'ios-document'
+          icon: 'ios-list-outline'
         },
         component: () => import('@/view/resume/Resume.vue')
       },
@@ -438,7 +429,7 @@ export default [
         name: 'user_consult_manage',
         meta: {
           title: '用户咨询管理',
-          icon: 'ios-document'
+          icon: 'ios-medkit'
         },
         component: () => import('@/view/consult/Consult.vue')
       },
@@ -447,7 +438,7 @@ export default [
         name: 'coupon_manage',
         meta: {
           title: '抵扣券管理',
-          icon: 'ios-document'
+          icon: 'md-pricetag'
         },
         component: () => import('@/view/coupon/Coupon.vue')
       },
@@ -456,7 +447,7 @@ export default [
         name: 'user_coupon_manage',
         meta: {
           title: '用户抵扣券管理',
-          icon: 'ios-document'
+          icon: 'ios-pricetag-outline'
         },
         component: () => import('@/view/user-coupon/UserCoupon.vue')
       },
@@ -465,7 +456,7 @@ export default [
         name: 'coupon_record',
         meta: {
           title: '抵扣券使用记录',
-          icon: 'ios-document'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/coupon-record/CouponRecord.vue')
       },
@@ -626,7 +617,7 @@ export default [
         name: 'often_question_manage',
         meta: {
           title: '常见问题管理',
-          icon: 'ios-document'
+          icon: 'ios-git-network'
         },
         component: () => import('@/view/often-question/OftenQuestion.vue')
       },
@@ -635,7 +626,7 @@ export default [
         name: 'resource_manage',
         meta: {
           title: '资源附件管理',
-          icon: 'ios-document'
+          icon: 'ios-link'
         },
         component: () => import('@/view/resource/Resource.vue')
       }
