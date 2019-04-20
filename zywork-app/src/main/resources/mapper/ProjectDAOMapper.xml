@@ -1,0 +1,891 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.ProjectDAO">
+
+    <insert id="save" parameterType="projectDO">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+        insert into t_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+				title,
+			</if>
+			<if test="projectType != null">
+				project_type,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="projectDetail != null">
+				project_detail,
+			</if>
+			<if test="releaseStatus != null">
+				release_status,
+			</if>
+			<if test="markUnitName != null">
+				mark_unit_name,
+			</if>
+			<if test="projectInvest != null">
+				project_invest,
+			</if>
+			<if test="checkPattern != null">
+				check_pattern,
+			</if>
+			<if test="compAptitudeType != null">
+				comp_aptitude_type,
+			</if>
+			<if test="builderLevel != null">
+				builder_level,
+			</if>
+			<if test="moneyToImplement != null">
+				money_to_implement,
+			</if>
+			<if test="tenderingAgent != null">
+				tendering_agent,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="offerPrice != null">
+				offer_price,
+			</if>
+			<if test="assurePrice != null">
+				assure_price,
+			</if>
+			<if test="constructionPeriod != null">
+				construction_period,
+			</if>
+			<if test="downloadEndTime != null">
+				download_end_time,
+			</if>
+			<if test="otherDemand != null">
+				other_demand,
+			</if>
+			<if test="openMarkInfo != null">
+				open_mark_info,
+			</if>
+			<if test="openMarkTime != null">
+				open_mark_time,
+			</if>
+			<if test="openMarkAddr != null">
+				open_mark_addr,
+			</if>
+			<if test="inMarkPublicity != null">
+				in_mark_publicity,
+			</if>
+			<if test="inMarkComp != null">
+				in_mark_comp,
+			</if>
+			<if test="noticeTime != null">
+				notice_time,
+			</if>
+			<if test="clickCount != null">
+				click_count,
+			</if>
+			<if test="isElectronic != null">
+				is_electronic,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="isActive != null">
+				is_active,
+			</if>
+			
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+				#{title},
+			</if>
+			<if test="projectType != null">
+				#{projectType},
+			</if>
+			<if test="city != null">
+				#{city},
+			</if>
+			<if test="projectDetail != null">
+				#{projectDetail},
+			</if>
+			<if test="releaseStatus != null">
+				#{releaseStatus},
+			</if>
+			<if test="markUnitName != null">
+				#{markUnitName},
+			</if>
+			<if test="projectInvest != null">
+				#{projectInvest},
+			</if>
+			<if test="checkPattern != null">
+				#{checkPattern},
+			</if>
+			<if test="compAptitudeType != null">
+				#{compAptitudeType},
+			</if>
+			<if test="builderLevel != null">
+				#{builderLevel},
+			</if>
+			<if test="moneyToImplement != null">
+				#{moneyToImplement},
+			</if>
+			<if test="tenderingAgent != null">
+				#{tenderingAgent},
+			</if>
+			<if test="phone != null">
+				#{phone},
+			</if>
+			<if test="offerPrice != null">
+				#{offerPrice},
+			</if>
+			<if test="assurePrice != null">
+				#{assurePrice},
+			</if>
+			<if test="constructionPeriod != null">
+				#{constructionPeriod},
+			</if>
+			<if test="downloadEndTime != null">
+				#{downloadEndTime},
+			</if>
+			<if test="otherDemand != null">
+				#{otherDemand},
+			</if>
+			<if test="openMarkInfo != null">
+				#{openMarkInfo},
+			</if>
+			<if test="openMarkTime != null">
+				#{openMarkTime},
+			</if>
+			<if test="openMarkAddr != null">
+				#{openMarkAddr},
+			</if>
+			<if test="inMarkPublicity != null">
+				#{inMarkPublicity},
+			</if>
+			<if test="inMarkComp != null">
+				#{inMarkComp},
+			</if>
+			<if test="noticeTime != null">
+				#{noticeTime},
+			</if>
+			<if test="clickCount != null">
+				#{clickCount},
+			</if>
+			<if test="isElectronic != null">
+				#{isElectronic},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="isActive != null">
+				#{isActive},
+			</if>
+			
+        </trim>
+    </insert>
+
+    <insert id="saveBatch" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+    	<foreach collection="list" item="item" separator=";">
+            insert into t_project
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.title != null">
+				title,
+			</if>
+			<if test="item.projectType != null">
+				project_type,
+			</if>
+			<if test="item.city != null">
+				city,
+			</if>
+			<if test="item.projectDetail != null">
+				project_detail,
+			</if>
+			<if test="item.releaseStatus != null">
+				release_status,
+			</if>
+			<if test="item.markUnitName != null">
+				mark_unit_name,
+			</if>
+			<if test="item.projectInvest != null">
+				project_invest,
+			</if>
+			<if test="item.checkPattern != null">
+				check_pattern,
+			</if>
+			<if test="item.compAptitudeType != null">
+				comp_aptitude_type,
+			</if>
+			<if test="item.builderLevel != null">
+				builder_level,
+			</if>
+			<if test="item.moneyToImplement != null">
+				money_to_implement,
+			</if>
+			<if test="item.tenderingAgent != null">
+				tendering_agent,
+			</if>
+			<if test="item.phone != null">
+				phone,
+			</if>
+			<if test="item.offerPrice != null">
+				offer_price,
+			</if>
+			<if test="item.assurePrice != null">
+				assure_price,
+			</if>
+			<if test="item.constructionPeriod != null">
+				construction_period,
+			</if>
+			<if test="item.downloadEndTime != null">
+				download_end_time,
+			</if>
+			<if test="item.otherDemand != null">
+				other_demand,
+			</if>
+			<if test="item.openMarkInfo != null">
+				open_mark_info,
+			</if>
+			<if test="item.openMarkTime != null">
+				open_mark_time,
+			</if>
+			<if test="item.openMarkAddr != null">
+				open_mark_addr,
+			</if>
+			<if test="item.inMarkPublicity != null">
+				in_mark_publicity,
+			</if>
+			<if test="item.inMarkComp != null">
+				in_mark_comp,
+			</if>
+			<if test="item.noticeTime != null">
+				notice_time,
+			</if>
+			<if test="item.clickCount != null">
+				click_count,
+			</if>
+			<if test="item.isElectronic != null">
+				is_electronic,
+			</if>
+			<if test="item.version != null">
+				version,
+			</if>
+			<if test="item.createTime != null">
+				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
+			</if>
+			<if test="item.isActive != null">
+				is_active,
+			</if>
+			
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.title != null">
+				#{item.title},
+			</if>
+			<if test="item.projectType != null">
+				#{item.projectType},
+			</if>
+			<if test="item.city != null">
+				#{item.city},
+			</if>
+			<if test="item.projectDetail != null">
+				#{item.projectDetail},
+			</if>
+			<if test="item.releaseStatus != null">
+				#{item.releaseStatus},
+			</if>
+			<if test="item.markUnitName != null">
+				#{item.markUnitName},
+			</if>
+			<if test="item.projectInvest != null">
+				#{item.projectInvest},
+			</if>
+			<if test="item.checkPattern != null">
+				#{item.checkPattern},
+			</if>
+			<if test="item.compAptitudeType != null">
+				#{item.compAptitudeType},
+			</if>
+			<if test="item.builderLevel != null">
+				#{item.builderLevel},
+			</if>
+			<if test="item.moneyToImplement != null">
+				#{item.moneyToImplement},
+			</if>
+			<if test="item.tenderingAgent != null">
+				#{item.tenderingAgent},
+			</if>
+			<if test="item.phone != null">
+				#{item.phone},
+			</if>
+			<if test="item.offerPrice != null">
+				#{item.offerPrice},
+			</if>
+			<if test="item.assurePrice != null">
+				#{item.assurePrice},
+			</if>
+			<if test="item.constructionPeriod != null">
+				#{item.constructionPeriod},
+			</if>
+			<if test="item.downloadEndTime != null">
+				#{item.downloadEndTime},
+			</if>
+			<if test="item.otherDemand != null">
+				#{item.otherDemand},
+			</if>
+			<if test="item.openMarkInfo != null">
+				#{item.openMarkInfo},
+			</if>
+			<if test="item.openMarkTime != null">
+				#{item.openMarkTime},
+			</if>
+			<if test="item.openMarkAddr != null">
+				#{item.openMarkAddr},
+			</if>
+			<if test="item.inMarkPublicity != null">
+				#{item.inMarkPublicity},
+			</if>
+			<if test="item.inMarkComp != null">
+				#{item.inMarkComp},
+			</if>
+			<if test="item.noticeTime != null">
+				#{item.noticeTime},
+			</if>
+			<if test="item.clickCount != null">
+				#{item.clickCount},
+			</if>
+			<if test="item.isElectronic != null">
+				#{item.isElectronic},
+			</if>
+			<if test="item.version != null">
+				#{item.version},
+			</if>
+			<if test="item.createTime != null">
+				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				#{item.isActive},
+			</if>
+			
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="removeById" parameterType="long">
+        delete from t_project where id = #{id}
+    </delete>
+
+    <delete id="removeByIds">
+        delete from t_project where id in
+        <foreach item="id" collection="array" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="projectDO">
+        update t_project
+        <set>
+            <if test="title != null">
+				title = #{title},
+			</if>
+			<if test="projectType != null">
+				project_type = #{projectType},
+			</if>
+			<if test="city != null">
+				city = #{city},
+			</if>
+			<if test="projectDetail != null">
+				project_detail = #{projectDetail},
+			</if>
+			<if test="releaseStatus != null">
+				release_status = #{releaseStatus},
+			</if>
+			<if test="markUnitName != null">
+				mark_unit_name = #{markUnitName},
+			</if>
+			<if test="projectInvest != null">
+				project_invest = #{projectInvest},
+			</if>
+			<if test="checkPattern != null">
+				check_pattern = #{checkPattern},
+			</if>
+			<if test="compAptitudeType != null">
+				comp_aptitude_type = #{compAptitudeType},
+			</if>
+			<if test="builderLevel != null">
+				builder_level = #{builderLevel},
+			</if>
+			<if test="moneyToImplement != null">
+				money_to_implement = #{moneyToImplement},
+			</if>
+			<if test="tenderingAgent != null">
+				tendering_agent = #{tenderingAgent},
+			</if>
+			<if test="phone != null">
+				phone = #{phone},
+			</if>
+			<if test="offerPrice != null">
+				offer_price = #{offerPrice},
+			</if>
+			<if test="assurePrice != null">
+				assure_price = #{assurePrice},
+			</if>
+			<if test="constructionPeriod != null">
+				construction_period = #{constructionPeriod},
+			</if>
+			<if test="downloadEndTime != null">
+				download_end_time = #{downloadEndTime},
+			</if>
+			<if test="otherDemand != null">
+				other_demand = #{otherDemand},
+			</if>
+			<if test="openMarkInfo != null">
+				open_mark_info = #{openMarkInfo},
+			</if>
+			<if test="openMarkTime != null">
+				open_mark_time = #{openMarkTime},
+			</if>
+			<if test="openMarkAddr != null">
+				open_mark_addr = #{openMarkAddr},
+			</if>
+			<if test="inMarkPublicity != null">
+				in_mark_publicity = #{inMarkPublicity},
+			</if>
+			<if test="inMarkComp != null">
+				in_mark_comp = #{inMarkComp},
+			</if>
+			<if test="noticeTime != null">
+				notice_time = #{noticeTime},
+			</if>
+			<if test="clickCount != null">
+				click_count = #{clickCount},
+			</if>
+			<if test="isElectronic != null">
+				is_electronic = #{isElectronic},
+			</if>
+			<if test="version != null">
+				version = #{version},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+        </set>
+        where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";">
+            update t_project
+            <set>
+                <if test="item.title != null">
+				title = #{item.title},
+			</if>
+			<if test="item.projectType != null">
+				project_type = #{item.projectType},
+			</if>
+			<if test="item.city != null">
+				city = #{item.city},
+			</if>
+			<if test="item.projectDetail != null">
+				project_detail = #{item.projectDetail},
+			</if>
+			<if test="item.releaseStatus != null">
+				release_status = #{item.releaseStatus},
+			</if>
+			<if test="item.markUnitName != null">
+				mark_unit_name = #{item.markUnitName},
+			</if>
+			<if test="item.projectInvest != null">
+				project_invest = #{item.projectInvest},
+			</if>
+			<if test="item.checkPattern != null">
+				check_pattern = #{item.checkPattern},
+			</if>
+			<if test="item.compAptitudeType != null">
+				comp_aptitude_type = #{item.compAptitudeType},
+			</if>
+			<if test="item.builderLevel != null">
+				builder_level = #{item.builderLevel},
+			</if>
+			<if test="item.moneyToImplement != null">
+				money_to_implement = #{item.moneyToImplement},
+			</if>
+			<if test="item.tenderingAgent != null">
+				tendering_agent = #{item.tenderingAgent},
+			</if>
+			<if test="item.phone != null">
+				phone = #{item.phone},
+			</if>
+			<if test="item.offerPrice != null">
+				offer_price = #{item.offerPrice},
+			</if>
+			<if test="item.assurePrice != null">
+				assure_price = #{item.assurePrice},
+			</if>
+			<if test="item.constructionPeriod != null">
+				construction_period = #{item.constructionPeriod},
+			</if>
+			<if test="item.downloadEndTime != null">
+				download_end_time = #{item.downloadEndTime},
+			</if>
+			<if test="item.otherDemand != null">
+				other_demand = #{item.otherDemand},
+			</if>
+			<if test="item.openMarkInfo != null">
+				open_mark_info = #{item.openMarkInfo},
+			</if>
+			<if test="item.openMarkTime != null">
+				open_mark_time = #{item.openMarkTime},
+			</if>
+			<if test="item.openMarkAddr != null">
+				open_mark_addr = #{item.openMarkAddr},
+			</if>
+			<if test="item.inMarkPublicity != null">
+				in_mark_publicity = #{item.inMarkPublicity},
+			</if>
+			<if test="item.inMarkComp != null">
+				in_mark_comp = #{item.inMarkComp},
+			</if>
+			<if test="item.noticeTime != null">
+				notice_time = #{item.noticeTime},
+			</if>
+			<if test="item.clickCount != null">
+				click_count = #{item.clickCount},
+			</if>
+			<if test="item.isElectronic != null">
+				is_electronic = #{item.isElectronic},
+			</if>
+			<if test="item.version != null">
+				version = #{item.version},
+			</if>
+			<if test="item.createTime != null">
+				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				is_active = #{item.isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+                <if test="item.version == null">
+                    version = version + 1,
+                </if>
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="select_columns">
+        id as id, title as title, project_type as projectType, city as city, project_detail as projectDetail, release_status as releaseStatus, mark_unit_name as markUnitName, project_invest as projectInvest, check_pattern as checkPattern, comp_aptitude_type as compAptitudeType, builder_level as builderLevel, money_to_implement as moneyToImplement, tendering_agent as tenderingAgent, phone as phone, offer_price as offerPrice, assure_price as assurePrice, construction_period as constructionPeriod, download_end_time as downloadEndTime, other_demand as otherDemand, open_mark_info as openMarkInfo, open_mark_time as openMarkTime, open_mark_addr as openMarkAddr, in_mark_publicity as inMarkPublicity, in_mark_comp as inMarkComp, notice_time as noticeTime, click_count as clickCount, is_electronic as isElectronic, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.id != null">
+			and id = #{query.id}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax == null">
+			and id <![CDATA[ >= ]]> #{query.idMin}
+		</if>
+		<if test="query != null and query.idMin == null and query.idMax != null">
+			and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax != null">
+			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.title != null and query.title != ''">
+			and title like concat('%', #{query.title}, '%')
+		</if>
+		<if test="query != null and query.projectType != null and query.projectType != ''">
+			and project_type like concat('%', #{query.projectType}, '%')
+		</if>
+		<if test="query != null and query.city != null and query.city != ''">
+			and city like concat('%', #{query.city}, '%')
+		</if>
+		<if test="query != null and query.projectDetail != null and query.projectDetail != ''">
+			and project_detail like concat('%', #{query.projectDetail}, '%')
+		</if>
+		<if test="query != null and query.releaseStatus != null and query.releaseStatus != ''">
+			and release_status like concat('%', #{query.releaseStatus}, '%')
+		</if>
+		<if test="query != null and query.markUnitName != null and query.markUnitName != ''">
+			and mark_unit_name like concat('%', #{query.markUnitName}, '%')
+		</if>
+		<if test="query != null and query.projectInvest != null and query.projectInvest != ''">
+			and project_invest like concat('%', #{query.projectInvest}, '%')
+		</if>
+		<if test="query != null and query.checkPattern != null and query.checkPattern != ''">
+			and check_pattern like concat('%', #{query.checkPattern}, '%')
+		</if>
+		<if test="query != null and query.compAptitudeType != null and query.compAptitudeType != ''">
+			and comp_aptitude_type like concat('%', #{query.compAptitudeType}, '%')
+		</if>
+		<if test="query != null and query.builderLevel != null and query.builderLevel != ''">
+			and builder_level like concat('%', #{query.builderLevel}, '%')
+		</if>
+		<if test="query != null and query.moneyToImplement != null">
+			and money_to_implement = #{query.moneyToImplement}
+		</if>
+		<if test="query != null and query.moneyToImplementMin != null and query.moneyToImplementMax == null">
+			and money_to_implement <![CDATA[ >= ]]> #{query.moneyToImplementMin}
+		</if>
+		<if test="query != null and query.moneyToImplementMin == null and query.moneyToImplementMax != null">
+			and money_to_implement <![CDATA[ <= ]]> #{query.moneyToImplementMax}
+		</if>
+		<if test="query != null and query.moneyToImplementMin != null and query.moneyToImplementMax != null">
+			and money_to_implement <![CDATA[ >= ]]> #{query.moneyToImplementMin} and money_to_implement <![CDATA[ <= ]]> #{query.moneyToImplementMax}
+		</if>
+		<if test="query != null and query.tenderingAgent != null and query.tenderingAgent != ''">
+			and tendering_agent like concat('%', #{query.tenderingAgent}, '%')
+		</if>
+		<if test="query != null and query.phone != null and query.phone != ''">
+			and phone like concat('%', #{query.phone}, '%')
+		</if>
+		<if test="query != null and query.offerPrice != null">
+			and offer_price = #{query.offerPrice}
+		</if>
+		<if test="query != null and query.offerPriceMin != null and query.offerPriceMax == null">
+			and offer_price <![CDATA[ >= ]]> #{query.offerPriceMin}
+		</if>
+		<if test="query != null and query.offerPriceMin == null and query.offerPriceMax != null">
+			and offer_price <![CDATA[ <= ]]> #{query.offerPriceMax}
+		</if>
+		<if test="query != null and query.offerPriceMin != null and query.offerPriceMax != null">
+			and offer_price <![CDATA[ >= ]]> #{query.offerPriceMin} and offer_price <![CDATA[ <= ]]> #{query.offerPriceMax}
+		</if>
+		<if test="query != null and query.assurePrice != null">
+			and assure_price = #{query.assurePrice}
+		</if>
+		<if test="query != null and query.assurePriceMin != null and query.assurePriceMax == null">
+			and assure_price <![CDATA[ >= ]]> #{query.assurePriceMin}
+		</if>
+		<if test="query != null and query.assurePriceMin == null and query.assurePriceMax != null">
+			and assure_price <![CDATA[ <= ]]> #{query.assurePriceMax}
+		</if>
+		<if test="query != null and query.assurePriceMin != null and query.assurePriceMax != null">
+			and assure_price <![CDATA[ >= ]]> #{query.assurePriceMin} and assure_price <![CDATA[ <= ]]> #{query.assurePriceMax}
+		</if>
+		<if test="query != null and query.constructionPeriod != null">
+			and construction_period = #{query.constructionPeriod}
+		</if>
+		<if test="query != null and query.constructionPeriodMin != null and query.constructionPeriodMax == null">
+			and construction_period <![CDATA[ >= ]]> #{query.constructionPeriodMin}
+		</if>
+		<if test="query != null and query.constructionPeriodMin == null and query.constructionPeriodMax != null">
+			and construction_period <![CDATA[ <= ]]> #{query.constructionPeriodMax}
+		</if>
+		<if test="query != null and query.constructionPeriodMin != null and query.constructionPeriodMax != null">
+			and construction_period <![CDATA[ >= ]]> #{query.constructionPeriodMin} and construction_period <![CDATA[ <= ]]> #{query.constructionPeriodMax}
+		</if>
+		<if test="query != null and query.downloadEndTime != null">
+			and download_end_time = #{query.downloadEndTime}
+		</if>
+		<if test="query != null and query.downloadEndTimeMin != null and query.downloadEndTimeMax == null">
+			and download_end_time <![CDATA[ >= ]]> #{query.downloadEndTimeMin}
+		</if>
+		<if test="query != null and query.downloadEndTimeMin == null and query.downloadEndTimeMax != null">
+			and download_end_time <![CDATA[ <= ]]> #{query.downloadEndTimeMax}
+		</if>
+		<if test="query != null and query.downloadEndTimeMin != null and query.downloadEndTimeMax != null">
+			and download_end_time <![CDATA[ >= ]]> #{query.downloadEndTimeMin} and download_end_time <![CDATA[ <= ]]> #{query.downloadEndTimeMax}
+		</if>
+		<if test="query != null and query.otherDemand != null and query.otherDemand != ''">
+			and other_demand like concat('%', #{query.otherDemand}, '%')
+		</if>
+		<if test="query != null and query.openMarkInfo != null and query.openMarkInfo != ''">
+			and open_mark_info like concat('%', #{query.openMarkInfo}, '%')
+		</if>
+		<if test="query != null and query.openMarkTime != null">
+			and open_mark_time = #{query.openMarkTime}
+		</if>
+		<if test="query != null and query.openMarkTimeMin != null and query.openMarkTimeMax == null">
+			and open_mark_time <![CDATA[ >= ]]> #{query.openMarkTimeMin}
+		</if>
+		<if test="query != null and query.openMarkTimeMin == null and query.openMarkTimeMax != null">
+			and open_mark_time <![CDATA[ <= ]]> #{query.openMarkTimeMax}
+		</if>
+		<if test="query != null and query.openMarkTimeMin != null and query.openMarkTimeMax != null">
+			and open_mark_time <![CDATA[ >= ]]> #{query.openMarkTimeMin} and open_mark_time <![CDATA[ <= ]]> #{query.openMarkTimeMax}
+		</if>
+		<if test="query != null and query.openMarkAddr != null and query.openMarkAddr != ''">
+			and open_mark_addr like concat('%', #{query.openMarkAddr}, '%')
+		</if>
+		<if test="query != null and query.inMarkPublicity != null and query.inMarkPublicity != ''">
+			and in_mark_publicity like concat('%', #{query.inMarkPublicity}, '%')
+		</if>
+		<if test="query != null and query.inMarkComp != null and query.inMarkComp != ''">
+			and in_mark_comp like concat('%', #{query.inMarkComp}, '%')
+		</if>
+		<if test="query != null and query.noticeTime != null">
+			and notice_time = #{query.noticeTime}
+		</if>
+		<if test="query != null and query.noticeTimeMin != null and query.noticeTimeMax == null">
+			and notice_time <![CDATA[ >= ]]> #{query.noticeTimeMin}
+		</if>
+		<if test="query != null and query.noticeTimeMin == null and query.noticeTimeMax != null">
+			and notice_time <![CDATA[ <= ]]> #{query.noticeTimeMax}
+		</if>
+		<if test="query != null and query.noticeTimeMin != null and query.noticeTimeMax != null">
+			and notice_time <![CDATA[ >= ]]> #{query.noticeTimeMin} and notice_time <![CDATA[ <= ]]> #{query.noticeTimeMax}
+		</if>
+		<if test="query != null and query.clickCount != null">
+			and click_count = #{query.clickCount}
+		</if>
+		<if test="query != null and query.clickCountMin != null and query.clickCountMax == null">
+			and click_count <![CDATA[ >= ]]> #{query.clickCountMin}
+		</if>
+		<if test="query != null and query.clickCountMin == null and query.clickCountMax != null">
+			and click_count <![CDATA[ <= ]]> #{query.clickCountMax}
+		</if>
+		<if test="query != null and query.clickCountMin != null and query.clickCountMax != null">
+			and click_count <![CDATA[ >= ]]> #{query.clickCountMin} and click_count <![CDATA[ <= ]]> #{query.clickCountMax}
+		</if>
+		<if test="query != null and query.isElectronic != null">
+			and is_electronic = #{query.isElectronic}
+		</if>
+		<if test="query != null and query.isElectronicMin != null and query.isElectronicMax == null">
+			and is_electronic <![CDATA[ >= ]]> #{query.isElectronicMin}
+		</if>
+		<if test="query != null and query.isElectronicMin == null and query.isElectronicMax != null">
+			and is_electronic <![CDATA[ <= ]]> #{query.isElectronicMax}
+		</if>
+		<if test="query != null and query.isElectronicMin != null and query.isElectronicMax != null">
+			and is_electronic <![CDATA[ >= ]]> #{query.isElectronicMin} and is_electronic <![CDATA[ <= ]]> #{query.isElectronicMax}
+		</if>
+		<if test="query != null and query.version != null">
+			and version = #{query.version}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax == null">
+			and version <![CDATA[ >= ]]> #{query.versionMin}
+		</if>
+		<if test="query != null and query.versionMin == null and query.versionMax != null">
+			and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax != null">
+			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.createTime != null">
+			and create_time = #{query.createTime}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax == null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin}
+		</if>
+		<if test="query != null and query.createTimeMin == null and query.createTimeMax != null">
+			and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.isActive != null">
+			and is_active = #{query.isActive}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax == null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin}
+		</if>
+		<if test="query != null and query.isActiveMin == null and query.isActiveMax != null">
+			and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="projectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project where id = #{id}
+    </select>
+
+    <select id="getVersionById" parameterType="long" resultType="integer">
+        select version from t_project where id = #{id}
+    </select>
+
+    <select id="listAll" resultType="projectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project
+        order by update_time desc, create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="projectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+             ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="projectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_project
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

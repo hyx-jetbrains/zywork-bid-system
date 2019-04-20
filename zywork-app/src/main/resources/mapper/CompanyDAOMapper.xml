@@ -1,0 +1,588 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.CompanyDAO">
+
+    <insert id="save" parameterType="companyDO">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+        insert into t_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jurisdictionType != null">
+				jurisdiction_type,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="compType != null">
+				comp_type,
+			</if>
+			<if test="industryType != null">
+				industry_type,
+			</if>
+			<if test="compName != null">
+				comp_name,
+			</if>
+			<if test="legalPerson != null">
+				legal_person,
+			</if>
+			<if test="legalPersonPhone != null">
+				legal_person_phone,
+			</if>
+			<if test="regAddress != null">
+				reg_address,
+			</if>
+			<if test="responsible != null">
+				responsible,
+			</if>
+			<if test="responsiblePhone != null">
+				responsible_phone,
+			</if>
+			<if test="compPhone != null">
+				comp_phone,
+			</if>
+			<if test="compAddr != null">
+				comp_addr,
+			</if>
+			<if test="regCapital != null">
+				reg_capital,
+			</if>
+			<if test="businessScope != null">
+				business_scope,
+			</if>
+			<if test="affordableBusiness != null">
+				affordable_business,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="isActive != null">
+				is_active,
+			</if>
+			
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jurisdictionType != null">
+				#{jurisdictionType},
+			</if>
+			<if test="city != null">
+				#{city},
+			</if>
+			<if test="compType != null">
+				#{compType},
+			</if>
+			<if test="industryType != null">
+				#{industryType},
+			</if>
+			<if test="compName != null">
+				#{compName},
+			</if>
+			<if test="legalPerson != null">
+				#{legalPerson},
+			</if>
+			<if test="legalPersonPhone != null">
+				#{legalPersonPhone},
+			</if>
+			<if test="regAddress != null">
+				#{regAddress},
+			</if>
+			<if test="responsible != null">
+				#{responsible},
+			</if>
+			<if test="responsiblePhone != null">
+				#{responsiblePhone},
+			</if>
+			<if test="compPhone != null">
+				#{compPhone},
+			</if>
+			<if test="compAddr != null">
+				#{compAddr},
+			</if>
+			<if test="regCapital != null">
+				#{regCapital},
+			</if>
+			<if test="businessScope != null">
+				#{businessScope},
+			</if>
+			<if test="affordableBusiness != null">
+				#{affordableBusiness},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="isActive != null">
+				#{isActive},
+			</if>
+			
+        </trim>
+    </insert>
+
+    <insert id="saveBatch" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+    	<foreach collection="list" item="item" separator=";">
+            insert into t_company
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.jurisdictionType != null">
+				jurisdiction_type,
+			</if>
+			<if test="item.city != null">
+				city,
+			</if>
+			<if test="item.compType != null">
+				comp_type,
+			</if>
+			<if test="item.industryType != null">
+				industry_type,
+			</if>
+			<if test="item.compName != null">
+				comp_name,
+			</if>
+			<if test="item.legalPerson != null">
+				legal_person,
+			</if>
+			<if test="item.legalPersonPhone != null">
+				legal_person_phone,
+			</if>
+			<if test="item.regAddress != null">
+				reg_address,
+			</if>
+			<if test="item.responsible != null">
+				responsible,
+			</if>
+			<if test="item.responsiblePhone != null">
+				responsible_phone,
+			</if>
+			<if test="item.compPhone != null">
+				comp_phone,
+			</if>
+			<if test="item.compAddr != null">
+				comp_addr,
+			</if>
+			<if test="item.regCapital != null">
+				reg_capital,
+			</if>
+			<if test="item.businessScope != null">
+				business_scope,
+			</if>
+			<if test="item.affordableBusiness != null">
+				affordable_business,
+			</if>
+			<if test="item.version != null">
+				version,
+			</if>
+			<if test="item.createTime != null">
+				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
+			</if>
+			<if test="item.isActive != null">
+				is_active,
+			</if>
+			
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.jurisdictionType != null">
+				#{item.jurisdictionType},
+			</if>
+			<if test="item.city != null">
+				#{item.city},
+			</if>
+			<if test="item.compType != null">
+				#{item.compType},
+			</if>
+			<if test="item.industryType != null">
+				#{item.industryType},
+			</if>
+			<if test="item.compName != null">
+				#{item.compName},
+			</if>
+			<if test="item.legalPerson != null">
+				#{item.legalPerson},
+			</if>
+			<if test="item.legalPersonPhone != null">
+				#{item.legalPersonPhone},
+			</if>
+			<if test="item.regAddress != null">
+				#{item.regAddress},
+			</if>
+			<if test="item.responsible != null">
+				#{item.responsible},
+			</if>
+			<if test="item.responsiblePhone != null">
+				#{item.responsiblePhone},
+			</if>
+			<if test="item.compPhone != null">
+				#{item.compPhone},
+			</if>
+			<if test="item.compAddr != null">
+				#{item.compAddr},
+			</if>
+			<if test="item.regCapital != null">
+				#{item.regCapital},
+			</if>
+			<if test="item.businessScope != null">
+				#{item.businessScope},
+			</if>
+			<if test="item.affordableBusiness != null">
+				#{item.affordableBusiness},
+			</if>
+			<if test="item.version != null">
+				#{item.version},
+			</if>
+			<if test="item.createTime != null">
+				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				#{item.isActive},
+			</if>
+			
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="removeById" parameterType="long">
+        delete from t_company where id = #{id}
+    </delete>
+
+    <delete id="removeByIds">
+        delete from t_company where id in
+        <foreach item="id" collection="array" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="companyDO">
+        update t_company
+        <set>
+            <if test="jurisdictionType != null">
+				jurisdiction_type = #{jurisdictionType},
+			</if>
+			<if test="city != null">
+				city = #{city},
+			</if>
+			<if test="compType != null">
+				comp_type = #{compType},
+			</if>
+			<if test="industryType != null">
+				industry_type = #{industryType},
+			</if>
+			<if test="compName != null">
+				comp_name = #{compName},
+			</if>
+			<if test="legalPerson != null">
+				legal_person = #{legalPerson},
+			</if>
+			<if test="legalPersonPhone != null">
+				legal_person_phone = #{legalPersonPhone},
+			</if>
+			<if test="regAddress != null">
+				reg_address = #{regAddress},
+			</if>
+			<if test="responsible != null">
+				responsible = #{responsible},
+			</if>
+			<if test="responsiblePhone != null">
+				responsible_phone = #{responsiblePhone},
+			</if>
+			<if test="compPhone != null">
+				comp_phone = #{compPhone},
+			</if>
+			<if test="compAddr != null">
+				comp_addr = #{compAddr},
+			</if>
+			<if test="regCapital != null">
+				reg_capital = #{regCapital},
+			</if>
+			<if test="businessScope != null">
+				business_scope = #{businessScope},
+			</if>
+			<if test="affordableBusiness != null">
+				affordable_business = #{affordableBusiness},
+			</if>
+			<if test="version != null">
+				version = #{version},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+        </set>
+        where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";">
+            update t_company
+            <set>
+                <if test="item.jurisdictionType != null">
+				jurisdiction_type = #{item.jurisdictionType},
+			</if>
+			<if test="item.city != null">
+				city = #{item.city},
+			</if>
+			<if test="item.compType != null">
+				comp_type = #{item.compType},
+			</if>
+			<if test="item.industryType != null">
+				industry_type = #{item.industryType},
+			</if>
+			<if test="item.compName != null">
+				comp_name = #{item.compName},
+			</if>
+			<if test="item.legalPerson != null">
+				legal_person = #{item.legalPerson},
+			</if>
+			<if test="item.legalPersonPhone != null">
+				legal_person_phone = #{item.legalPersonPhone},
+			</if>
+			<if test="item.regAddress != null">
+				reg_address = #{item.regAddress},
+			</if>
+			<if test="item.responsible != null">
+				responsible = #{item.responsible},
+			</if>
+			<if test="item.responsiblePhone != null">
+				responsible_phone = #{item.responsiblePhone},
+			</if>
+			<if test="item.compPhone != null">
+				comp_phone = #{item.compPhone},
+			</if>
+			<if test="item.compAddr != null">
+				comp_addr = #{item.compAddr},
+			</if>
+			<if test="item.regCapital != null">
+				reg_capital = #{item.regCapital},
+			</if>
+			<if test="item.businessScope != null">
+				business_scope = #{item.businessScope},
+			</if>
+			<if test="item.affordableBusiness != null">
+				affordable_business = #{item.affordableBusiness},
+			</if>
+			<if test="item.version != null">
+				version = #{item.version},
+			</if>
+			<if test="item.createTime != null">
+				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				is_active = #{item.isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+                <if test="item.version == null">
+                    version = version + 1,
+                </if>
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="select_columns">
+        id as id, jurisdiction_type as jurisdictionType, city as city, comp_type as compType, industry_type as industryType, comp_name as compName, legal_person as legalPerson, legal_person_phone as legalPersonPhone, reg_address as regAddress, responsible as responsible, responsible_phone as responsiblePhone, comp_phone as compPhone, comp_addr as compAddr, reg_capital as regCapital, business_scope as businessScope, affordable_business as affordableBusiness, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.id != null">
+			and id = #{query.id}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax == null">
+			and id <![CDATA[ >= ]]> #{query.idMin}
+		</if>
+		<if test="query != null and query.idMin == null and query.idMax != null">
+			and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax != null">
+			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.jurisdictionType != null">
+			and jurisdiction_type = #{query.jurisdictionType}
+		</if>
+		<if test="query != null and query.jurisdictionTypeMin != null and query.jurisdictionTypeMax == null">
+			and jurisdiction_type <![CDATA[ >= ]]> #{query.jurisdictionTypeMin}
+		</if>
+		<if test="query != null and query.jurisdictionTypeMin == null and query.jurisdictionTypeMax != null">
+			and jurisdiction_type <![CDATA[ <= ]]> #{query.jurisdictionTypeMax}
+		</if>
+		<if test="query != null and query.jurisdictionTypeMin != null and query.jurisdictionTypeMax != null">
+			and jurisdiction_type <![CDATA[ >= ]]> #{query.jurisdictionTypeMin} and jurisdiction_type <![CDATA[ <= ]]> #{query.jurisdictionTypeMax}
+		</if>
+		<if test="query != null and query.city != null and query.city != ''">
+			and city like concat('%', #{query.city}, '%')
+		</if>
+		<if test="query != null and query.compType != null and query.compType != ''">
+			and comp_type like concat('%', #{query.compType}, '%')
+		</if>
+		<if test="query != null and query.industryType != null and query.industryType != ''">
+			and industry_type like concat('%', #{query.industryType}, '%')
+		</if>
+		<if test="query != null and query.compName != null and query.compName != ''">
+			and comp_name like concat('%', #{query.compName}, '%')
+		</if>
+		<if test="query != null and query.legalPerson != null and query.legalPerson != ''">
+			and legal_person like concat('%', #{query.legalPerson}, '%')
+		</if>
+		<if test="query != null and query.legalPersonPhone != null and query.legalPersonPhone != ''">
+			and legal_person_phone like concat('%', #{query.legalPersonPhone}, '%')
+		</if>
+		<if test="query != null and query.regAddress != null and query.regAddress != ''">
+			and reg_address like concat('%', #{query.regAddress}, '%')
+		</if>
+		<if test="query != null and query.responsible != null and query.responsible != ''">
+			and responsible like concat('%', #{query.responsible}, '%')
+		</if>
+		<if test="query != null and query.responsiblePhone != null and query.responsiblePhone != ''">
+			and responsible_phone like concat('%', #{query.responsiblePhone}, '%')
+		</if>
+		<if test="query != null and query.compPhone != null and query.compPhone != ''">
+			and comp_phone like concat('%', #{query.compPhone}, '%')
+		</if>
+		<if test="query != null and query.compAddr != null and query.compAddr != ''">
+			and comp_addr like concat('%', #{query.compAddr}, '%')
+		</if>
+		<if test="query != null and query.regCapital != null and query.regCapital != ''">
+			and reg_capital like concat('%', #{query.regCapital}, '%')
+		</if>
+		<if test="query != null and query.businessScope != null and query.businessScope != ''">
+			and business_scope like concat('%', #{query.businessScope}, '%')
+		</if>
+		<if test="query != null and query.affordableBusiness != null and query.affordableBusiness != ''">
+			and affordable_business like concat('%', #{query.affordableBusiness}, '%')
+		</if>
+		<if test="query != null and query.version != null">
+			and version = #{query.version}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax == null">
+			and version <![CDATA[ >= ]]> #{query.versionMin}
+		</if>
+		<if test="query != null and query.versionMin == null and query.versionMax != null">
+			and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax != null">
+			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.createTime != null">
+			and create_time = #{query.createTime}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax == null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin}
+		</if>
+		<if test="query != null and query.createTimeMin == null and query.createTimeMax != null">
+			and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.isActive != null">
+			and is_active = #{query.isActive}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax == null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin}
+		</if>
+		<if test="query != null and query.isActiveMin == null and query.isActiveMax != null">
+			and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="companyDO">
+        select
+        <include refid="select_columns"/>
+        from t_company where id = #{id}
+    </select>
+
+    <select id="getVersionById" parameterType="long" resultType="integer">
+        select version from t_company where id = #{id}
+    </select>
+
+    <select id="listAll" resultType="companyDO">
+        select
+        <include refid="select_columns"/>
+        from t_company
+        order by update_time desc, create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="companyDO">
+        select
+        <include refid="select_columns"/>
+        from t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+             ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="companyDO">
+        select
+        <include refid="select_columns"/>
+        from t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>
