@@ -1,0 +1,1047 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.CompHouseAchievementDAO">
+
+    <insert id="save" parameterType="compHouseAchievementDO">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+        insert into t_comp_house_achievement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="compId != null">
+				comp_id,
+			</if>
+			<if test="projectName != null">
+				project_name,
+			</if>
+			<if test="builderName != null">
+				builder_name,
+			</if>
+			<if test="markMoney != null">
+				mark_money,
+			</if>
+			<if test="buildScale != null">
+				build_scale,
+			</if>
+			<if test="regionType != null">
+				region_type,
+			</if>
+			<if test="buildComp != null">
+				build_comp,
+			</if>
+			<if test="projectAddr != null">
+				project_addr,
+			</if>
+			<if test="contractDate != null">
+				contract_date,
+			</if>
+			<if test="markDate != null">
+				mark_date,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="certificateNum != null">
+				certificate_num,
+			</if>
+			<if test="constructors != null">
+				constructors,
+			</if>
+			<if test="constructorsCertificateNum != null">
+				constructors_certificate_num,
+			</if>
+			<if test="constructorsIdNum != null">
+				constructors_id_num,
+			</if>
+			<if test="qualityWorker != null">
+				quality_worker,
+			</if>
+			<if test="qualityWorkerCertificateNum != null">
+				quality_worker_certificate_num,
+			</if>
+			<if test="qualityWorkerIdNum != null">
+				quality_worker_id_num,
+			</if>
+			<if test="securityOfficer != null">
+				security_officer,
+			</if>
+			<if test="securityOfficerCertificateNum != null">
+				security_officer_certificate_num,
+			</if>
+			<if test="securityOfficerIdNum != null">
+				security_officer_id_num,
+			</if>
+			<if test="standardWorker != null">
+				standard_worker,
+			</if>
+			<if test="standardWorkerCertificateNum != null">
+				standard_worker_certificate_num,
+			</if>
+			<if test="standardWorkerIdNum != null">
+				standard_worker_id_num,
+			</if>
+			<if test="materialMan != null">
+				material_man,
+			</if>
+			<if test="materialManCertificateNum != null">
+				material_man_certificate_num,
+			</if>
+			<if test="materialManIdNum != null">
+				material_man_id_num,
+			</if>
+			<if test="mechanic != null">
+				mechanic,
+			</if>
+			<if test="mechanicCertificateNum != null">
+				mechanic_certificate_num,
+			</if>
+			<if test="mechanicIdNum != null">
+				mechanic_id_num,
+			</if>
+			<if test="labors != null">
+				labors,
+			</if>
+			<if test="laborsCertificateNum != null">
+				labors_certificate_num,
+			</if>
+			<if test="laborsIdNum != null">
+				labors_id_num,
+			</if>
+			<if test="dataClerk != null">
+				data_clerk,
+			</if>
+			<if test="dataClerkCertificateNum != null">
+				data_clerk_certificate_num,
+			</if>
+			<if test="dataClerkIdNum != null">
+				data_clerk_id_num,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="isActive != null">
+				is_active,
+			</if>
+			
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="compId != null">
+				#{compId},
+			</if>
+			<if test="projectName != null">
+				#{projectName},
+			</if>
+			<if test="builderName != null">
+				#{builderName},
+			</if>
+			<if test="markMoney != null">
+				#{markMoney},
+			</if>
+			<if test="buildScale != null">
+				#{buildScale},
+			</if>
+			<if test="regionType != null">
+				#{regionType},
+			</if>
+			<if test="buildComp != null">
+				#{buildComp},
+			</if>
+			<if test="projectAddr != null">
+				#{projectAddr},
+			</if>
+			<if test="contractDate != null">
+				#{contractDate},
+			</if>
+			<if test="markDate != null">
+				#{markDate},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="certificateNum != null">
+				#{certificateNum},
+			</if>
+			<if test="constructors != null">
+				#{constructors},
+			</if>
+			<if test="constructorsCertificateNum != null">
+				#{constructorsCertificateNum},
+			</if>
+			<if test="constructorsIdNum != null">
+				#{constructorsIdNum},
+			</if>
+			<if test="qualityWorker != null">
+				#{qualityWorker},
+			</if>
+			<if test="qualityWorkerCertificateNum != null">
+				#{qualityWorkerCertificateNum},
+			</if>
+			<if test="qualityWorkerIdNum != null">
+				#{qualityWorkerIdNum},
+			</if>
+			<if test="securityOfficer != null">
+				#{securityOfficer},
+			</if>
+			<if test="securityOfficerCertificateNum != null">
+				#{securityOfficerCertificateNum},
+			</if>
+			<if test="securityOfficerIdNum != null">
+				#{securityOfficerIdNum},
+			</if>
+			<if test="standardWorker != null">
+				#{standardWorker},
+			</if>
+			<if test="standardWorkerCertificateNum != null">
+				#{standardWorkerCertificateNum},
+			</if>
+			<if test="standardWorkerIdNum != null">
+				#{standardWorkerIdNum},
+			</if>
+			<if test="materialMan != null">
+				#{materialMan},
+			</if>
+			<if test="materialManCertificateNum != null">
+				#{materialManCertificateNum},
+			</if>
+			<if test="materialManIdNum != null">
+				#{materialManIdNum},
+			</if>
+			<if test="mechanic != null">
+				#{mechanic},
+			</if>
+			<if test="mechanicCertificateNum != null">
+				#{mechanicCertificateNum},
+			</if>
+			<if test="mechanicIdNum != null">
+				#{mechanicIdNum},
+			</if>
+			<if test="labors != null">
+				#{labors},
+			</if>
+			<if test="laborsCertificateNum != null">
+				#{laborsCertificateNum},
+			</if>
+			<if test="laborsIdNum != null">
+				#{laborsIdNum},
+			</if>
+			<if test="dataClerk != null">
+				#{dataClerk},
+			</if>
+			<if test="dataClerkCertificateNum != null">
+				#{dataClerkCertificateNum},
+			</if>
+			<if test="dataClerkIdNum != null">
+				#{dataClerkIdNum},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="isActive != null">
+				#{isActive},
+			</if>
+			
+        </trim>
+    </insert>
+
+    <insert id="saveBatch" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+    	<foreach collection="list" item="item" separator=";">
+            insert into t_comp_house_achievement
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.compId != null">
+				comp_id,
+			</if>
+			<if test="item.projectName != null">
+				project_name,
+			</if>
+			<if test="item.builderName != null">
+				builder_name,
+			</if>
+			<if test="item.markMoney != null">
+				mark_money,
+			</if>
+			<if test="item.buildScale != null">
+				build_scale,
+			</if>
+			<if test="item.regionType != null">
+				region_type,
+			</if>
+			<if test="item.buildComp != null">
+				build_comp,
+			</if>
+			<if test="item.projectAddr != null">
+				project_addr,
+			</if>
+			<if test="item.contractDate != null">
+				contract_date,
+			</if>
+			<if test="item.markDate != null">
+				mark_date,
+			</if>
+			<if test="item.name != null">
+				name,
+			</if>
+			<if test="item.certificateNum != null">
+				certificate_num,
+			</if>
+			<if test="item.constructors != null">
+				constructors,
+			</if>
+			<if test="item.constructorsCertificateNum != null">
+				constructors_certificate_num,
+			</if>
+			<if test="item.constructorsIdNum != null">
+				constructors_id_num,
+			</if>
+			<if test="item.qualityWorker != null">
+				quality_worker,
+			</if>
+			<if test="item.qualityWorkerCertificateNum != null">
+				quality_worker_certificate_num,
+			</if>
+			<if test="item.qualityWorkerIdNum != null">
+				quality_worker_id_num,
+			</if>
+			<if test="item.securityOfficer != null">
+				security_officer,
+			</if>
+			<if test="item.securityOfficerCertificateNum != null">
+				security_officer_certificate_num,
+			</if>
+			<if test="item.securityOfficerIdNum != null">
+				security_officer_id_num,
+			</if>
+			<if test="item.standardWorker != null">
+				standard_worker,
+			</if>
+			<if test="item.standardWorkerCertificateNum != null">
+				standard_worker_certificate_num,
+			</if>
+			<if test="item.standardWorkerIdNum != null">
+				standard_worker_id_num,
+			</if>
+			<if test="item.materialMan != null">
+				material_man,
+			</if>
+			<if test="item.materialManCertificateNum != null">
+				material_man_certificate_num,
+			</if>
+			<if test="item.materialManIdNum != null">
+				material_man_id_num,
+			</if>
+			<if test="item.mechanic != null">
+				mechanic,
+			</if>
+			<if test="item.mechanicCertificateNum != null">
+				mechanic_certificate_num,
+			</if>
+			<if test="item.mechanicIdNum != null">
+				mechanic_id_num,
+			</if>
+			<if test="item.labors != null">
+				labors,
+			</if>
+			<if test="item.laborsCertificateNum != null">
+				labors_certificate_num,
+			</if>
+			<if test="item.laborsIdNum != null">
+				labors_id_num,
+			</if>
+			<if test="item.dataClerk != null">
+				data_clerk,
+			</if>
+			<if test="item.dataClerkCertificateNum != null">
+				data_clerk_certificate_num,
+			</if>
+			<if test="item.dataClerkIdNum != null">
+				data_clerk_id_num,
+			</if>
+			<if test="item.version != null">
+				version,
+			</if>
+			<if test="item.createTime != null">
+				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
+			</if>
+			<if test="item.isActive != null">
+				is_active,
+			</if>
+			
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.compId != null">
+				#{item.compId},
+			</if>
+			<if test="item.projectName != null">
+				#{item.projectName},
+			</if>
+			<if test="item.builderName != null">
+				#{item.builderName},
+			</if>
+			<if test="item.markMoney != null">
+				#{item.markMoney},
+			</if>
+			<if test="item.buildScale != null">
+				#{item.buildScale},
+			</if>
+			<if test="item.regionType != null">
+				#{item.regionType},
+			</if>
+			<if test="item.buildComp != null">
+				#{item.buildComp},
+			</if>
+			<if test="item.projectAddr != null">
+				#{item.projectAddr},
+			</if>
+			<if test="item.contractDate != null">
+				#{item.contractDate},
+			</if>
+			<if test="item.markDate != null">
+				#{item.markDate},
+			</if>
+			<if test="item.name != null">
+				#{item.name},
+			</if>
+			<if test="item.certificateNum != null">
+				#{item.certificateNum},
+			</if>
+			<if test="item.constructors != null">
+				#{item.constructors},
+			</if>
+			<if test="item.constructorsCertificateNum != null">
+				#{item.constructorsCertificateNum},
+			</if>
+			<if test="item.constructorsIdNum != null">
+				#{item.constructorsIdNum},
+			</if>
+			<if test="item.qualityWorker != null">
+				#{item.qualityWorker},
+			</if>
+			<if test="item.qualityWorkerCertificateNum != null">
+				#{item.qualityWorkerCertificateNum},
+			</if>
+			<if test="item.qualityWorkerIdNum != null">
+				#{item.qualityWorkerIdNum},
+			</if>
+			<if test="item.securityOfficer != null">
+				#{item.securityOfficer},
+			</if>
+			<if test="item.securityOfficerCertificateNum != null">
+				#{item.securityOfficerCertificateNum},
+			</if>
+			<if test="item.securityOfficerIdNum != null">
+				#{item.securityOfficerIdNum},
+			</if>
+			<if test="item.standardWorker != null">
+				#{item.standardWorker},
+			</if>
+			<if test="item.standardWorkerCertificateNum != null">
+				#{item.standardWorkerCertificateNum},
+			</if>
+			<if test="item.standardWorkerIdNum != null">
+				#{item.standardWorkerIdNum},
+			</if>
+			<if test="item.materialMan != null">
+				#{item.materialMan},
+			</if>
+			<if test="item.materialManCertificateNum != null">
+				#{item.materialManCertificateNum},
+			</if>
+			<if test="item.materialManIdNum != null">
+				#{item.materialManIdNum},
+			</if>
+			<if test="item.mechanic != null">
+				#{item.mechanic},
+			</if>
+			<if test="item.mechanicCertificateNum != null">
+				#{item.mechanicCertificateNum},
+			</if>
+			<if test="item.mechanicIdNum != null">
+				#{item.mechanicIdNum},
+			</if>
+			<if test="item.labors != null">
+				#{item.labors},
+			</if>
+			<if test="item.laborsCertificateNum != null">
+				#{item.laborsCertificateNum},
+			</if>
+			<if test="item.laborsIdNum != null">
+				#{item.laborsIdNum},
+			</if>
+			<if test="item.dataClerk != null">
+				#{item.dataClerk},
+			</if>
+			<if test="item.dataClerkCertificateNum != null">
+				#{item.dataClerkCertificateNum},
+			</if>
+			<if test="item.dataClerkIdNum != null">
+				#{item.dataClerkIdNum},
+			</if>
+			<if test="item.version != null">
+				#{item.version},
+			</if>
+			<if test="item.createTime != null">
+				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				#{item.isActive},
+			</if>
+			
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="removeById" parameterType="long">
+        delete from t_comp_house_achievement where id = #{id}
+    </delete>
+
+    <delete id="removeByIds">
+        delete from t_comp_house_achievement where id in
+        <foreach item="id" collection="array" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="compHouseAchievementDO">
+        update t_comp_house_achievement
+        <set>
+            <if test="compId != null">
+				comp_id = #{compId},
+			</if>
+			<if test="projectName != null">
+				project_name = #{projectName},
+			</if>
+			<if test="builderName != null">
+				builder_name = #{builderName},
+			</if>
+			<if test="markMoney != null">
+				mark_money = #{markMoney},
+			</if>
+			<if test="buildScale != null">
+				build_scale = #{buildScale},
+			</if>
+			<if test="regionType != null">
+				region_type = #{regionType},
+			</if>
+			<if test="buildComp != null">
+				build_comp = #{buildComp},
+			</if>
+			<if test="projectAddr != null">
+				project_addr = #{projectAddr},
+			</if>
+			<if test="contractDate != null">
+				contract_date = #{contractDate},
+			</if>
+			<if test="markDate != null">
+				mark_date = #{markDate},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="certificateNum != null">
+				certificate_num = #{certificateNum},
+			</if>
+			<if test="constructors != null">
+				constructors = #{constructors},
+			</if>
+			<if test="constructorsCertificateNum != null">
+				constructors_certificate_num = #{constructorsCertificateNum},
+			</if>
+			<if test="constructorsIdNum != null">
+				constructors_id_num = #{constructorsIdNum},
+			</if>
+			<if test="qualityWorker != null">
+				quality_worker = #{qualityWorker},
+			</if>
+			<if test="qualityWorkerCertificateNum != null">
+				quality_worker_certificate_num = #{qualityWorkerCertificateNum},
+			</if>
+			<if test="qualityWorkerIdNum != null">
+				quality_worker_id_num = #{qualityWorkerIdNum},
+			</if>
+			<if test="securityOfficer != null">
+				security_officer = #{securityOfficer},
+			</if>
+			<if test="securityOfficerCertificateNum != null">
+				security_officer_certificate_num = #{securityOfficerCertificateNum},
+			</if>
+			<if test="securityOfficerIdNum != null">
+				security_officer_id_num = #{securityOfficerIdNum},
+			</if>
+			<if test="standardWorker != null">
+				standard_worker = #{standardWorker},
+			</if>
+			<if test="standardWorkerCertificateNum != null">
+				standard_worker_certificate_num = #{standardWorkerCertificateNum},
+			</if>
+			<if test="standardWorkerIdNum != null">
+				standard_worker_id_num = #{standardWorkerIdNum},
+			</if>
+			<if test="materialMan != null">
+				material_man = #{materialMan},
+			</if>
+			<if test="materialManCertificateNum != null">
+				material_man_certificate_num = #{materialManCertificateNum},
+			</if>
+			<if test="materialManIdNum != null">
+				material_man_id_num = #{materialManIdNum},
+			</if>
+			<if test="mechanic != null">
+				mechanic = #{mechanic},
+			</if>
+			<if test="mechanicCertificateNum != null">
+				mechanic_certificate_num = #{mechanicCertificateNum},
+			</if>
+			<if test="mechanicIdNum != null">
+				mechanic_id_num = #{mechanicIdNum},
+			</if>
+			<if test="labors != null">
+				labors = #{labors},
+			</if>
+			<if test="laborsCertificateNum != null">
+				labors_certificate_num = #{laborsCertificateNum},
+			</if>
+			<if test="laborsIdNum != null">
+				labors_id_num = #{laborsIdNum},
+			</if>
+			<if test="dataClerk != null">
+				data_clerk = #{dataClerk},
+			</if>
+			<if test="dataClerkCertificateNum != null">
+				data_clerk_certificate_num = #{dataClerkCertificateNum},
+			</if>
+			<if test="dataClerkIdNum != null">
+				data_clerk_id_num = #{dataClerkIdNum},
+			</if>
+			<if test="version != null">
+				version = #{version},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+        </set>
+        where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";">
+            update t_comp_house_achievement
+            <set>
+                <if test="item.compId != null">
+				comp_id = #{item.compId},
+			</if>
+			<if test="item.projectName != null">
+				project_name = #{item.projectName},
+			</if>
+			<if test="item.builderName != null">
+				builder_name = #{item.builderName},
+			</if>
+			<if test="item.markMoney != null">
+				mark_money = #{item.markMoney},
+			</if>
+			<if test="item.buildScale != null">
+				build_scale = #{item.buildScale},
+			</if>
+			<if test="item.regionType != null">
+				region_type = #{item.regionType},
+			</if>
+			<if test="item.buildComp != null">
+				build_comp = #{item.buildComp},
+			</if>
+			<if test="item.projectAddr != null">
+				project_addr = #{item.projectAddr},
+			</if>
+			<if test="item.contractDate != null">
+				contract_date = #{item.contractDate},
+			</if>
+			<if test="item.markDate != null">
+				mark_date = #{item.markDate},
+			</if>
+			<if test="item.name != null">
+				name = #{item.name},
+			</if>
+			<if test="item.certificateNum != null">
+				certificate_num = #{item.certificateNum},
+			</if>
+			<if test="item.constructors != null">
+				constructors = #{item.constructors},
+			</if>
+			<if test="item.constructorsCertificateNum != null">
+				constructors_certificate_num = #{item.constructorsCertificateNum},
+			</if>
+			<if test="item.constructorsIdNum != null">
+				constructors_id_num = #{item.constructorsIdNum},
+			</if>
+			<if test="item.qualityWorker != null">
+				quality_worker = #{item.qualityWorker},
+			</if>
+			<if test="item.qualityWorkerCertificateNum != null">
+				quality_worker_certificate_num = #{item.qualityWorkerCertificateNum},
+			</if>
+			<if test="item.qualityWorkerIdNum != null">
+				quality_worker_id_num = #{item.qualityWorkerIdNum},
+			</if>
+			<if test="item.securityOfficer != null">
+				security_officer = #{item.securityOfficer},
+			</if>
+			<if test="item.securityOfficerCertificateNum != null">
+				security_officer_certificate_num = #{item.securityOfficerCertificateNum},
+			</if>
+			<if test="item.securityOfficerIdNum != null">
+				security_officer_id_num = #{item.securityOfficerIdNum},
+			</if>
+			<if test="item.standardWorker != null">
+				standard_worker = #{item.standardWorker},
+			</if>
+			<if test="item.standardWorkerCertificateNum != null">
+				standard_worker_certificate_num = #{item.standardWorkerCertificateNum},
+			</if>
+			<if test="item.standardWorkerIdNum != null">
+				standard_worker_id_num = #{item.standardWorkerIdNum},
+			</if>
+			<if test="item.materialMan != null">
+				material_man = #{item.materialMan},
+			</if>
+			<if test="item.materialManCertificateNum != null">
+				material_man_certificate_num = #{item.materialManCertificateNum},
+			</if>
+			<if test="item.materialManIdNum != null">
+				material_man_id_num = #{item.materialManIdNum},
+			</if>
+			<if test="item.mechanic != null">
+				mechanic = #{item.mechanic},
+			</if>
+			<if test="item.mechanicCertificateNum != null">
+				mechanic_certificate_num = #{item.mechanicCertificateNum},
+			</if>
+			<if test="item.mechanicIdNum != null">
+				mechanic_id_num = #{item.mechanicIdNum},
+			</if>
+			<if test="item.labors != null">
+				labors = #{item.labors},
+			</if>
+			<if test="item.laborsCertificateNum != null">
+				labors_certificate_num = #{item.laborsCertificateNum},
+			</if>
+			<if test="item.laborsIdNum != null">
+				labors_id_num = #{item.laborsIdNum},
+			</if>
+			<if test="item.dataClerk != null">
+				data_clerk = #{item.dataClerk},
+			</if>
+			<if test="item.dataClerkCertificateNum != null">
+				data_clerk_certificate_num = #{item.dataClerkCertificateNum},
+			</if>
+			<if test="item.dataClerkIdNum != null">
+				data_clerk_id_num = #{item.dataClerkIdNum},
+			</if>
+			<if test="item.version != null">
+				version = #{item.version},
+			</if>
+			<if test="item.createTime != null">
+				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				is_active = #{item.isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+                <if test="item.version == null">
+                    version = version + 1,
+                </if>
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="select_columns">
+        id as id, comp_id as compId, project_name as projectName, builder_name as builderName, mark_money as markMoney, build_scale as buildScale, region_type as regionType, build_comp as buildComp, project_addr as projectAddr, contract_date as contractDate, mark_date as markDate, name as name, certificate_num as certificateNum, constructors as constructors, constructors_certificate_num as constructorsCertificateNum, constructors_id_num as constructorsIdNum, quality_worker as qualityWorker, quality_worker_certificate_num as qualityWorkerCertificateNum, quality_worker_id_num as qualityWorkerIdNum, security_officer as securityOfficer, security_officer_certificate_num as securityOfficerCertificateNum, security_officer_id_num as securityOfficerIdNum, standard_worker as standardWorker, standard_worker_certificate_num as standardWorkerCertificateNum, standard_worker_id_num as standardWorkerIdNum, material_man as materialMan, material_man_certificate_num as materialManCertificateNum, material_man_id_num as materialManIdNum, mechanic as mechanic, mechanic_certificate_num as mechanicCertificateNum, mechanic_id_num as mechanicIdNum, labors as labors, labors_certificate_num as laborsCertificateNum, labors_id_num as laborsIdNum, data_clerk as dataClerk, data_clerk_certificate_num as dataClerkCertificateNum, data_clerk_id_num as dataClerkIdNum, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.id != null">
+			and id = #{query.id}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax == null">
+			and id <![CDATA[ >= ]]> #{query.idMin}
+		</if>
+		<if test="query != null and query.idMin == null and query.idMax != null">
+			and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax != null">
+			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.compId != null">
+			and comp_id = #{query.compId}
+		</if>
+		<if test="query != null and query.compIdMin != null and query.compIdMax == null">
+			and comp_id <![CDATA[ >= ]]> #{query.compIdMin}
+		</if>
+		<if test="query != null and query.compIdMin == null and query.compIdMax != null">
+			and comp_id <![CDATA[ <= ]]> #{query.compIdMax}
+		</if>
+		<if test="query != null and query.compIdMin != null and query.compIdMax != null">
+			and comp_id <![CDATA[ >= ]]> #{query.compIdMin} and comp_id <![CDATA[ <= ]]> #{query.compIdMax}
+		</if>
+		<if test="query != null and query.projectName != null and query.projectName != ''">
+			and project_name like concat('%', #{query.projectName}, '%')
+		</if>
+		<if test="query != null and query.builderName != null and query.builderName != ''">
+			and builder_name like concat('%', #{query.builderName}, '%')
+		</if>
+		<if test="query != null and query.markMoney != null and query.markMoney != ''">
+			and mark_money like concat('%', #{query.markMoney}, '%')
+		</if>
+		<if test="query != null and query.buildScale != null and query.buildScale != ''">
+			and build_scale like concat('%', #{query.buildScale}, '%')
+		</if>
+		<if test="query != null and query.regionType != null and query.regionType != ''">
+			and region_type like concat('%', #{query.regionType}, '%')
+		</if>
+		<if test="query != null and query.buildComp != null and query.buildComp != ''">
+			and build_comp like concat('%', #{query.buildComp}, '%')
+		</if>
+		<if test="query != null and query.projectAddr != null and query.projectAddr != ''">
+			and project_addr like concat('%', #{query.projectAddr}, '%')
+		</if>
+		<if test="query != null and query.contractDate != null">
+			and contract_date = #{query.contractDate}
+		</if>
+		<if test="query != null and query.contractDateMin != null and query.contractDateMax == null">
+			and contract_date <![CDATA[ >= ]]> #{query.contractDateMin}
+		</if>
+		<if test="query != null and query.contractDateMin == null and query.contractDateMax != null">
+			and contract_date <![CDATA[ <= ]]> #{query.contractDateMax}
+		</if>
+		<if test="query != null and query.contractDateMin != null and query.contractDateMax != null">
+			and contract_date <![CDATA[ >= ]]> #{query.contractDateMin} and contract_date <![CDATA[ <= ]]> #{query.contractDateMax}
+		</if>
+		<if test="query != null and query.markDate != null">
+			and mark_date = #{query.markDate}
+		</if>
+		<if test="query != null and query.markDateMin != null and query.markDateMax == null">
+			and mark_date <![CDATA[ >= ]]> #{query.markDateMin}
+		</if>
+		<if test="query != null and query.markDateMin == null and query.markDateMax != null">
+			and mark_date <![CDATA[ <= ]]> #{query.markDateMax}
+		</if>
+		<if test="query != null and query.markDateMin != null and query.markDateMax != null">
+			and mark_date <![CDATA[ >= ]]> #{query.markDateMin} and mark_date <![CDATA[ <= ]]> #{query.markDateMax}
+		</if>
+		<if test="query != null and query.name != null and query.name != ''">
+			and name like concat('%', #{query.name}, '%')
+		</if>
+		<if test="query != null and query.certificateNum != null and query.certificateNum != ''">
+			and certificate_num like concat('%', #{query.certificateNum}, '%')
+		</if>
+		<if test="query != null and query.constructors != null and query.constructors != ''">
+			and constructors like concat('%', #{query.constructors}, '%')
+		</if>
+		<if test="query != null and query.constructorsCertificateNum != null and query.constructorsCertificateNum != ''">
+			and constructors_certificate_num like concat('%', #{query.constructorsCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.constructorsIdNum != null and query.constructorsIdNum != ''">
+			and constructors_id_num like concat('%', #{query.constructorsIdNum}, '%')
+		</if>
+		<if test="query != null and query.qualityWorker != null and query.qualityWorker != ''">
+			and quality_worker like concat('%', #{query.qualityWorker}, '%')
+		</if>
+		<if test="query != null and query.qualityWorkerCertificateNum != null and query.qualityWorkerCertificateNum != ''">
+			and quality_worker_certificate_num like concat('%', #{query.qualityWorkerCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.qualityWorkerIdNum != null and query.qualityWorkerIdNum != ''">
+			and quality_worker_id_num like concat('%', #{query.qualityWorkerIdNum}, '%')
+		</if>
+		<if test="query != null and query.securityOfficer != null and query.securityOfficer != ''">
+			and security_officer like concat('%', #{query.securityOfficer}, '%')
+		</if>
+		<if test="query != null and query.securityOfficerCertificateNum != null and query.securityOfficerCertificateNum != ''">
+			and security_officer_certificate_num like concat('%', #{query.securityOfficerCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.securityOfficerIdNum != null and query.securityOfficerIdNum != ''">
+			and security_officer_id_num like concat('%', #{query.securityOfficerIdNum}, '%')
+		</if>
+		<if test="query != null and query.standardWorker != null and query.standardWorker != ''">
+			and standard_worker like concat('%', #{query.standardWorker}, '%')
+		</if>
+		<if test="query != null and query.standardWorkerCertificateNum != null and query.standardWorkerCertificateNum != ''">
+			and standard_worker_certificate_num like concat('%', #{query.standardWorkerCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.standardWorkerIdNum != null and query.standardWorkerIdNum != ''">
+			and standard_worker_id_num like concat('%', #{query.standardWorkerIdNum}, '%')
+		</if>
+		<if test="query != null and query.materialMan != null and query.materialMan != ''">
+			and material_man like concat('%', #{query.materialMan}, '%')
+		</if>
+		<if test="query != null and query.materialManCertificateNum != null and query.materialManCertificateNum != ''">
+			and material_man_certificate_num like concat('%', #{query.materialManCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.materialManIdNum != null and query.materialManIdNum != ''">
+			and material_man_id_num like concat('%', #{query.materialManIdNum}, '%')
+		</if>
+		<if test="query != null and query.mechanic != null and query.mechanic != ''">
+			and mechanic like concat('%', #{query.mechanic}, '%')
+		</if>
+		<if test="query != null and query.mechanicCertificateNum != null and query.mechanicCertificateNum != ''">
+			and mechanic_certificate_num like concat('%', #{query.mechanicCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.mechanicIdNum != null and query.mechanicIdNum != ''">
+			and mechanic_id_num like concat('%', #{query.mechanicIdNum}, '%')
+		</if>
+		<if test="query != null and query.labors != null and query.labors != ''">
+			and labors like concat('%', #{query.labors}, '%')
+		</if>
+		<if test="query != null and query.laborsCertificateNum != null and query.laborsCertificateNum != ''">
+			and labors_certificate_num like concat('%', #{query.laborsCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.laborsIdNum != null and query.laborsIdNum != ''">
+			and labors_id_num like concat('%', #{query.laborsIdNum}, '%')
+		</if>
+		<if test="query != null and query.dataClerk != null and query.dataClerk != ''">
+			and data_clerk like concat('%', #{query.dataClerk}, '%')
+		</if>
+		<if test="query != null and query.dataClerkCertificateNum != null and query.dataClerkCertificateNum != ''">
+			and data_clerk_certificate_num like concat('%', #{query.dataClerkCertificateNum}, '%')
+		</if>
+		<if test="query != null and query.dataClerkIdNum != null and query.dataClerkIdNum != ''">
+			and data_clerk_id_num like concat('%', #{query.dataClerkIdNum}, '%')
+		</if>
+		<if test="query != null and query.version != null">
+			and version = #{query.version}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax == null">
+			and version <![CDATA[ >= ]]> #{query.versionMin}
+		</if>
+		<if test="query != null and query.versionMin == null and query.versionMax != null">
+			and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax != null">
+			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.createTime != null">
+			and create_time = #{query.createTime}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax == null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin}
+		</if>
+		<if test="query != null and query.createTimeMin == null and query.createTimeMax != null">
+			and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.isActive != null">
+			and is_active = #{query.isActive}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax == null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin}
+		</if>
+		<if test="query != null and query.isActiveMin == null and query.isActiveMax != null">
+			and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="compHouseAchievementDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_house_achievement where id = #{id}
+    </select>
+
+    <select id="getVersionById" parameterType="long" resultType="integer">
+        select version from t_comp_house_achievement where id = #{id}
+    </select>
+
+    <select id="listAll" resultType="compHouseAchievementDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_house_achievement
+        order by update_time desc, create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="compHouseAchievementDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_house_achievement
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+             ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="compHouseAchievementDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_house_achievement
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_comp_house_achievement
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,582 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.ResumeDAO">
+
+    <insert id="save" parameterType="resumeDO">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+        insert into t_resume
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+				user_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+			<if test="isFulltime != null">
+				is_fulltime,
+			</if>
+			<if test="jobTitle != null">
+				job_title,
+			</if>
+			<if test="workYear != null">
+				work_year,
+			</if>
+			<if test="education != null">
+				education,
+			</if>
+			<if test="salary != null">
+				salary,
+			</if>
+			<if test="isRecommend != null">
+				is_recommend,
+			</if>
+			<if test="aptitude != null">
+				aptitude,
+			</if>
+			<if test="intorduce != null">
+				intorduce,
+			</if>
+			<if test="isShow != null">
+				is_show,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="isActive != null">
+				is_active,
+			</if>
+			
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+				#{userId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="gender != null">
+				#{gender},
+			</if>
+			<if test="age != null">
+				#{age},
+			</if>
+			<if test="isFulltime != null">
+				#{isFulltime},
+			</if>
+			<if test="jobTitle != null">
+				#{jobTitle},
+			</if>
+			<if test="workYear != null">
+				#{workYear},
+			</if>
+			<if test="education != null">
+				#{education},
+			</if>
+			<if test="salary != null">
+				#{salary},
+			</if>
+			<if test="isRecommend != null">
+				#{isRecommend},
+			</if>
+			<if test="aptitude != null">
+				#{aptitude},
+			</if>
+			<if test="intorduce != null">
+				#{intorduce},
+			</if>
+			<if test="isShow != null">
+				#{isShow},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="isActive != null">
+				#{isActive},
+			</if>
+			
+        </trim>
+    </insert>
+
+    <insert id="saveBatch" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+    	<foreach collection="list" item="item" separator=";">
+            insert into t_resume
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null">
+				user_id,
+			</if>
+			<if test="item.name != null">
+				name,
+			</if>
+			<if test="item.gender != null">
+				gender,
+			</if>
+			<if test="item.age != null">
+				age,
+			</if>
+			<if test="item.isFulltime != null">
+				is_fulltime,
+			</if>
+			<if test="item.jobTitle != null">
+				job_title,
+			</if>
+			<if test="item.workYear != null">
+				work_year,
+			</if>
+			<if test="item.education != null">
+				education,
+			</if>
+			<if test="item.salary != null">
+				salary,
+			</if>
+			<if test="item.isRecommend != null">
+				is_recommend,
+			</if>
+			<if test="item.aptitude != null">
+				aptitude,
+			</if>
+			<if test="item.intorduce != null">
+				intorduce,
+			</if>
+			<if test="item.isShow != null">
+				is_show,
+			</if>
+			<if test="item.version != null">
+				version,
+			</if>
+			<if test="item.createTime != null">
+				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
+			</if>
+			<if test="item.isActive != null">
+				is_active,
+			</if>
+			
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null">
+				#{item.userId},
+			</if>
+			<if test="item.name != null">
+				#{item.name},
+			</if>
+			<if test="item.gender != null">
+				#{item.gender},
+			</if>
+			<if test="item.age != null">
+				#{item.age},
+			</if>
+			<if test="item.isFulltime != null">
+				#{item.isFulltime},
+			</if>
+			<if test="item.jobTitle != null">
+				#{item.jobTitle},
+			</if>
+			<if test="item.workYear != null">
+				#{item.workYear},
+			</if>
+			<if test="item.education != null">
+				#{item.education},
+			</if>
+			<if test="item.salary != null">
+				#{item.salary},
+			</if>
+			<if test="item.isRecommend != null">
+				#{item.isRecommend},
+			</if>
+			<if test="item.aptitude != null">
+				#{item.aptitude},
+			</if>
+			<if test="item.intorduce != null">
+				#{item.intorduce},
+			</if>
+			<if test="item.isShow != null">
+				#{item.isShow},
+			</if>
+			<if test="item.version != null">
+				#{item.version},
+			</if>
+			<if test="item.createTime != null">
+				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				#{item.isActive},
+			</if>
+			
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="removeById" parameterType="long">
+        delete from t_resume where id = #{id}
+    </delete>
+
+    <delete id="removeByIds">
+        delete from t_resume where id in
+        <foreach item="id" collection="array" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="resumeDO">
+        update t_resume
+        <set>
+            <if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="gender != null">
+				gender = #{gender},
+			</if>
+			<if test="age != null">
+				age = #{age},
+			</if>
+			<if test="isFulltime != null">
+				is_fulltime = #{isFulltime},
+			</if>
+			<if test="jobTitle != null">
+				job_title = #{jobTitle},
+			</if>
+			<if test="workYear != null">
+				work_year = #{workYear},
+			</if>
+			<if test="education != null">
+				education = #{education},
+			</if>
+			<if test="salary != null">
+				salary = #{salary},
+			</if>
+			<if test="isRecommend != null">
+				is_recommend = #{isRecommend},
+			</if>
+			<if test="aptitude != null">
+				aptitude = #{aptitude},
+			</if>
+			<if test="intorduce != null">
+				intorduce = #{intorduce},
+			</if>
+			<if test="isShow != null">
+				is_show = #{isShow},
+			</if>
+			<if test="version != null">
+				version = #{version},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+        </set>
+        where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";">
+            update t_resume
+            <set>
+                <if test="item.userId != null">
+				user_id = #{item.userId},
+			</if>
+			<if test="item.name != null">
+				name = #{item.name},
+			</if>
+			<if test="item.gender != null">
+				gender = #{item.gender},
+			</if>
+			<if test="item.age != null">
+				age = #{item.age},
+			</if>
+			<if test="item.isFulltime != null">
+				is_fulltime = #{item.isFulltime},
+			</if>
+			<if test="item.jobTitle != null">
+				job_title = #{item.jobTitle},
+			</if>
+			<if test="item.workYear != null">
+				work_year = #{item.workYear},
+			</if>
+			<if test="item.education != null">
+				education = #{item.education},
+			</if>
+			<if test="item.salary != null">
+				salary = #{item.salary},
+			</if>
+			<if test="item.isRecommend != null">
+				is_recommend = #{item.isRecommend},
+			</if>
+			<if test="item.aptitude != null">
+				aptitude = #{item.aptitude},
+			</if>
+			<if test="item.intorduce != null">
+				intorduce = #{item.intorduce},
+			</if>
+			<if test="item.isShow != null">
+				is_show = #{item.isShow},
+			</if>
+			<if test="item.version != null">
+				version = #{item.version},
+			</if>
+			<if test="item.createTime != null">
+				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				is_active = #{item.isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+                <if test="item.version == null">
+                    version = version + 1,
+                </if>
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="select_columns">
+        id as id, user_id as userId, name as name, gender as gender, age as age, is_fulltime as isFulltime, job_title as jobTitle, work_year as workYear, education as education, salary as salary, is_recommend as isRecommend, aptitude as aptitude, intorduce as intorduce, is_show as isShow, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.id != null">
+			and id = #{query.id}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax == null">
+			and id <![CDATA[ >= ]]> #{query.idMin}
+		</if>
+		<if test="query != null and query.idMin == null and query.idMax != null">
+			and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax != null">
+			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.userId != null">
+			and user_id = #{query.userId}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax == null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin}
+		</if>
+		<if test="query != null and query.userIdMin == null and query.userIdMax != null">
+			and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax != null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin} and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.name != null and query.name != ''">
+			and name like concat('%', #{query.name}, '%')
+		</if>
+		<if test="query != null and query.gender != null and query.gender != ''">
+			and gender like concat('%', #{query.gender}, '%')
+		</if>
+		<if test="query != null and query.age != null">
+			and age = #{query.age}
+		</if>
+		<if test="query != null and query.ageMin != null and query.ageMax == null">
+			and age <![CDATA[ >= ]]> #{query.ageMin}
+		</if>
+		<if test="query != null and query.ageMin == null and query.ageMax != null">
+			and age <![CDATA[ <= ]]> #{query.ageMax}
+		</if>
+		<if test="query != null and query.ageMin != null and query.ageMax != null">
+			and age <![CDATA[ >= ]]> #{query.ageMin} and age <![CDATA[ <= ]]> #{query.ageMax}
+		</if>
+		<if test="query != null and query.isFulltime != null">
+			and is_fulltime = #{query.isFulltime}
+		</if>
+		<if test="query != null and query.isFulltimeMin != null and query.isFulltimeMax == null">
+			and is_fulltime <![CDATA[ >= ]]> #{query.isFulltimeMin}
+		</if>
+		<if test="query != null and query.isFulltimeMin == null and query.isFulltimeMax != null">
+			and is_fulltime <![CDATA[ <= ]]> #{query.isFulltimeMax}
+		</if>
+		<if test="query != null and query.isFulltimeMin != null and query.isFulltimeMax != null">
+			and is_fulltime <![CDATA[ >= ]]> #{query.isFulltimeMin} and is_fulltime <![CDATA[ <= ]]> #{query.isFulltimeMax}
+		</if>
+		<if test="query != null and query.jobTitle != null and query.jobTitle != ''">
+			and job_title like concat('%', #{query.jobTitle}, '%')
+		</if>
+		<if test="query != null and query.workYear != null and query.workYear != ''">
+			and work_year like concat('%', #{query.workYear}, '%')
+		</if>
+		<if test="query != null and query.education != null and query.education != ''">
+			and education like concat('%', #{query.education}, '%')
+		</if>
+		<if test="query != null and query.salary != null and query.salary != ''">
+			and salary like concat('%', #{query.salary}, '%')
+		</if>
+		<if test="query != null and query.isRecommend != null">
+			and is_recommend = #{query.isRecommend}
+		</if>
+		<if test="query != null and query.isRecommendMin != null and query.isRecommendMax == null">
+			and is_recommend <![CDATA[ >= ]]> #{query.isRecommendMin}
+		</if>
+		<if test="query != null and query.isRecommendMin == null and query.isRecommendMax != null">
+			and is_recommend <![CDATA[ <= ]]> #{query.isRecommendMax}
+		</if>
+		<if test="query != null and query.isRecommendMin != null and query.isRecommendMax != null">
+			and is_recommend <![CDATA[ >= ]]> #{query.isRecommendMin} and is_recommend <![CDATA[ <= ]]> #{query.isRecommendMax}
+		</if>
+		<if test="query != null and query.aptitude != null and query.aptitude != ''">
+			and aptitude like concat('%', #{query.aptitude}, '%')
+		</if>
+		<if test="query != null and query.intorduce != null and query.intorduce != ''">
+			and intorduce like concat('%', #{query.intorduce}, '%')
+		</if>
+		<if test="query != null and query.isShow != null">
+			and is_show = #{query.isShow}
+		</if>
+		<if test="query != null and query.isShowMin != null and query.isShowMax == null">
+			and is_show <![CDATA[ >= ]]> #{query.isShowMin}
+		</if>
+		<if test="query != null and query.isShowMin == null and query.isShowMax != null">
+			and is_show <![CDATA[ <= ]]> #{query.isShowMax}
+		</if>
+		<if test="query != null and query.isShowMin != null and query.isShowMax != null">
+			and is_show <![CDATA[ >= ]]> #{query.isShowMin} and is_show <![CDATA[ <= ]]> #{query.isShowMax}
+		</if>
+		<if test="query != null and query.version != null">
+			and version = #{query.version}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax == null">
+			and version <![CDATA[ >= ]]> #{query.versionMin}
+		</if>
+		<if test="query != null and query.versionMin == null and query.versionMax != null">
+			and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax != null">
+			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.createTime != null">
+			and create_time = #{query.createTime}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax == null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin}
+		</if>
+		<if test="query != null and query.createTimeMin == null and query.createTimeMax != null">
+			and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.isActive != null">
+			and is_active = #{query.isActive}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax == null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin}
+		</if>
+		<if test="query != null and query.isActiveMin == null and query.isActiveMax != null">
+			and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="resumeDO">
+        select
+        <include refid="select_columns"/>
+        from t_resume where id = #{id}
+    </select>
+
+    <select id="getVersionById" parameterType="long" resultType="integer">
+        select version from t_resume where id = #{id}
+    </select>
+
+    <select id="listAll" resultType="resumeDO">
+        select
+        <include refid="select_columns"/>
+        from t_resume
+        order by update_time desc, create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="resumeDO">
+        select
+        <include refid="select_columns"/>
+        from t_resume
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+             ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="resumeDO">
+        select
+        <include refid="select_columns"/>
+        from t_resume
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_resume
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

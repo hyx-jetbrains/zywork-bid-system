@@ -1,0 +1,561 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.ExpertSubscribeDAO">
+
+    <insert id="save" parameterType="expertSubscribeDO">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+        insert into t_expert_subscribe
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+				user_id,
+			</if>
+			<if test="expertUserId != null">
+				expert_user_id,
+			</if>
+			<if test="questionType != null">
+				question_type,
+			</if>
+			<if test="questionDesc != null">
+				question_desc,
+			</if>
+			<if test="replyUserId != null">
+				reply_user_id,
+			</if>
+			<if test="replyContent != null">
+				reply_content,
+			</if>
+			<if test="replyTime != null">
+				reply_time,
+			</if>
+			<if test="subscribeStatus != null">
+				subscribe_status,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="payStatus != null">
+				pay_status,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="transactionNo != null">
+				transaction_no,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="isActive != null">
+				is_active,
+			</if>
+			
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+				#{userId},
+			</if>
+			<if test="expertUserId != null">
+				#{expertUserId},
+			</if>
+			<if test="questionType != null">
+				#{questionType},
+			</if>
+			<if test="questionDesc != null">
+				#{questionDesc},
+			</if>
+			<if test="replyUserId != null">
+				#{replyUserId},
+			</if>
+			<if test="replyContent != null">
+				#{replyContent},
+			</if>
+			<if test="replyTime != null">
+				#{replyTime},
+			</if>
+			<if test="subscribeStatus != null">
+				#{subscribeStatus},
+			</if>
+			<if test="price != null">
+				#{price},
+			</if>
+			<if test="payStatus != null">
+				#{payStatus},
+			</if>
+			<if test="payType != null">
+				#{payType},
+			</if>
+			<if test="transactionNo != null">
+				#{transactionNo},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="isActive != null">
+				#{isActive},
+			</if>
+			
+        </trim>
+    </insert>
+
+    <insert id="saveBatch" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+    	<foreach collection="list" item="item" separator=";">
+            insert into t_expert_subscribe
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null">
+				user_id,
+			</if>
+			<if test="item.expertUserId != null">
+				expert_user_id,
+			</if>
+			<if test="item.questionType != null">
+				question_type,
+			</if>
+			<if test="item.questionDesc != null">
+				question_desc,
+			</if>
+			<if test="item.replyUserId != null">
+				reply_user_id,
+			</if>
+			<if test="item.replyContent != null">
+				reply_content,
+			</if>
+			<if test="item.replyTime != null">
+				reply_time,
+			</if>
+			<if test="item.subscribeStatus != null">
+				subscribe_status,
+			</if>
+			<if test="item.price != null">
+				price,
+			</if>
+			<if test="item.payStatus != null">
+				pay_status,
+			</if>
+			<if test="item.payType != null">
+				pay_type,
+			</if>
+			<if test="item.transactionNo != null">
+				transaction_no,
+			</if>
+			<if test="item.version != null">
+				version,
+			</if>
+			<if test="item.createTime != null">
+				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
+			</if>
+			<if test="item.isActive != null">
+				is_active,
+			</if>
+			
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null">
+				#{item.userId},
+			</if>
+			<if test="item.expertUserId != null">
+				#{item.expertUserId},
+			</if>
+			<if test="item.questionType != null">
+				#{item.questionType},
+			</if>
+			<if test="item.questionDesc != null">
+				#{item.questionDesc},
+			</if>
+			<if test="item.replyUserId != null">
+				#{item.replyUserId},
+			</if>
+			<if test="item.replyContent != null">
+				#{item.replyContent},
+			</if>
+			<if test="item.replyTime != null">
+				#{item.replyTime},
+			</if>
+			<if test="item.subscribeStatus != null">
+				#{item.subscribeStatus},
+			</if>
+			<if test="item.price != null">
+				#{item.price},
+			</if>
+			<if test="item.payStatus != null">
+				#{item.payStatus},
+			</if>
+			<if test="item.payType != null">
+				#{item.payType},
+			</if>
+			<if test="item.transactionNo != null">
+				#{item.transactionNo},
+			</if>
+			<if test="item.version != null">
+				#{item.version},
+			</if>
+			<if test="item.createTime != null">
+				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				#{item.isActive},
+			</if>
+			
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="removeById" parameterType="long">
+        delete from t_expert_subscribe where id = #{id}
+    </delete>
+
+    <delete id="removeByIds">
+        delete from t_expert_subscribe where id in
+        <foreach item="id" collection="array" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="expertSubscribeDO">
+        update t_expert_subscribe
+        <set>
+            <if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="expertUserId != null">
+				expert_user_id = #{expertUserId},
+			</if>
+			<if test="questionType != null">
+				question_type = #{questionType},
+			</if>
+			<if test="questionDesc != null">
+				question_desc = #{questionDesc},
+			</if>
+			<if test="replyUserId != null">
+				reply_user_id = #{replyUserId},
+			</if>
+			<if test="replyContent != null">
+				reply_content = #{replyContent},
+			</if>
+			<if test="replyTime != null">
+				reply_time = #{replyTime},
+			</if>
+			<if test="subscribeStatus != null">
+				subscribe_status = #{subscribeStatus},
+			</if>
+			<if test="price != null">
+				price = #{price},
+			</if>
+			<if test="payStatus != null">
+				pay_status = #{payStatus},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType},
+			</if>
+			<if test="transactionNo != null">
+				transaction_no = #{transactionNo},
+			</if>
+			<if test="version != null">
+				version = #{version},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+        </set>
+        where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";">
+            update t_expert_subscribe
+            <set>
+                <if test="item.userId != null">
+				user_id = #{item.userId},
+			</if>
+			<if test="item.expertUserId != null">
+				expert_user_id = #{item.expertUserId},
+			</if>
+			<if test="item.questionType != null">
+				question_type = #{item.questionType},
+			</if>
+			<if test="item.questionDesc != null">
+				question_desc = #{item.questionDesc},
+			</if>
+			<if test="item.replyUserId != null">
+				reply_user_id = #{item.replyUserId},
+			</if>
+			<if test="item.replyContent != null">
+				reply_content = #{item.replyContent},
+			</if>
+			<if test="item.replyTime != null">
+				reply_time = #{item.replyTime},
+			</if>
+			<if test="item.subscribeStatus != null">
+				subscribe_status = #{item.subscribeStatus},
+			</if>
+			<if test="item.price != null">
+				price = #{item.price},
+			</if>
+			<if test="item.payStatus != null">
+				pay_status = #{item.payStatus},
+			</if>
+			<if test="item.payType != null">
+				pay_type = #{item.payType},
+			</if>
+			<if test="item.transactionNo != null">
+				transaction_no = #{item.transactionNo},
+			</if>
+			<if test="item.version != null">
+				version = #{item.version},
+			</if>
+			<if test="item.createTime != null">
+				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				is_active = #{item.isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+                <if test="item.version == null">
+                    version = version + 1,
+                </if>
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="select_columns">
+        id as id, user_id as userId, expert_user_id as expertUserId, question_type as questionType, question_desc as questionDesc, reply_user_id as replyUserId, reply_content as replyContent, reply_time as replyTime, subscribe_status as subscribeStatus, price as price, pay_status as payStatus, pay_type as payType, transaction_no as transactionNo, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.id != null">
+			and id = #{query.id}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax == null">
+			and id <![CDATA[ >= ]]> #{query.idMin}
+		</if>
+		<if test="query != null and query.idMin == null and query.idMax != null">
+			and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax != null">
+			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.userId != null">
+			and user_id = #{query.userId}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax == null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin}
+		</if>
+		<if test="query != null and query.userIdMin == null and query.userIdMax != null">
+			and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax != null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin} and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.expertUserId != null">
+			and expert_user_id = #{query.expertUserId}
+		</if>
+		<if test="query != null and query.expertUserIdMin != null and query.expertUserIdMax == null">
+			and expert_user_id <![CDATA[ >= ]]> #{query.expertUserIdMin}
+		</if>
+		<if test="query != null and query.expertUserIdMin == null and query.expertUserIdMax != null">
+			and expert_user_id <![CDATA[ <= ]]> #{query.expertUserIdMax}
+		</if>
+		<if test="query != null and query.expertUserIdMin != null and query.expertUserIdMax != null">
+			and expert_user_id <![CDATA[ >= ]]> #{query.expertUserIdMin} and expert_user_id <![CDATA[ <= ]]> #{query.expertUserIdMax}
+		</if>
+		<if test="query != null and query.questionType != null and query.questionType != ''">
+			and question_type like concat('%', #{query.questionType}, '%')
+		</if>
+		<if test="query != null and query.questionDesc != null and query.questionDesc != ''">
+			and question_desc like concat('%', #{query.questionDesc}, '%')
+		</if>
+		<if test="query != null and query.replyUserId != null">
+			and reply_user_id = #{query.replyUserId}
+		</if>
+		<if test="query != null and query.replyUserIdMin != null and query.replyUserIdMax == null">
+			and reply_user_id <![CDATA[ >= ]]> #{query.replyUserIdMin}
+		</if>
+		<if test="query != null and query.replyUserIdMin == null and query.replyUserIdMax != null">
+			and reply_user_id <![CDATA[ <= ]]> #{query.replyUserIdMax}
+		</if>
+		<if test="query != null and query.replyUserIdMin != null and query.replyUserIdMax != null">
+			and reply_user_id <![CDATA[ >= ]]> #{query.replyUserIdMin} and reply_user_id <![CDATA[ <= ]]> #{query.replyUserIdMax}
+		</if>
+		<if test="query != null and query.replyContent != null and query.replyContent != ''">
+			and reply_content like concat('%', #{query.replyContent}, '%')
+		</if>
+		<if test="query != null and query.replyTime != null">
+			and reply_time = #{query.replyTime}
+		</if>
+		<if test="query != null and query.replyTimeMin != null and query.replyTimeMax == null">
+			and reply_time <![CDATA[ >= ]]> #{query.replyTimeMin}
+		</if>
+		<if test="query != null and query.replyTimeMin == null and query.replyTimeMax != null">
+			and reply_time <![CDATA[ <= ]]> #{query.replyTimeMax}
+		</if>
+		<if test="query != null and query.replyTimeMin != null and query.replyTimeMax != null">
+			and reply_time <![CDATA[ >= ]]> #{query.replyTimeMin} and reply_time <![CDATA[ <= ]]> #{query.replyTimeMax}
+		</if>
+		<if test="query != null and query.subscribeStatus != null and query.subscribeStatus != ''">
+			and subscribe_status like concat('%', #{query.subscribeStatus}, '%')
+		</if>
+		<if test="query != null and query.price != null">
+			and price = #{query.price}
+		</if>
+		<if test="query != null and query.priceMin != null and query.priceMax == null">
+			and price <![CDATA[ >= ]]> #{query.priceMin}
+		</if>
+		<if test="query != null and query.priceMin == null and query.priceMax != null">
+			and price <![CDATA[ <= ]]> #{query.priceMax}
+		</if>
+		<if test="query != null and query.priceMin != null and query.priceMax != null">
+			and price <![CDATA[ >= ]]> #{query.priceMin} and price <![CDATA[ <= ]]> #{query.priceMax}
+		</if>
+		<if test="query != null and query.payStatus != null and query.payStatus != ''">
+			and pay_status like concat('%', #{query.payStatus}, '%')
+		</if>
+		<if test="query != null and query.payType != null and query.payType != ''">
+			and pay_type like concat('%', #{query.payType}, '%')
+		</if>
+		<if test="query != null and query.transactionNo != null and query.transactionNo != ''">
+			and transaction_no like concat('%', #{query.transactionNo}, '%')
+		</if>
+		<if test="query != null and query.version != null">
+			and version = #{query.version}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax == null">
+			and version <![CDATA[ >= ]]> #{query.versionMin}
+		</if>
+		<if test="query != null and query.versionMin == null and query.versionMax != null">
+			and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax != null">
+			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.createTime != null">
+			and create_time = #{query.createTime}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax == null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin}
+		</if>
+		<if test="query != null and query.createTimeMin == null and query.createTimeMax != null">
+			and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.isActive != null">
+			and is_active = #{query.isActive}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax == null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin}
+		</if>
+		<if test="query != null and query.isActiveMin == null and query.isActiveMax != null">
+			and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="expertSubscribeDO">
+        select
+        <include refid="select_columns"/>
+        from t_expert_subscribe where id = #{id}
+    </select>
+
+    <select id="getVersionById" parameterType="long" resultType="integer">
+        select version from t_expert_subscribe where id = #{id}
+    </select>
+
+    <select id="listAll" resultType="expertSubscribeDO">
+        select
+        <include refid="select_columns"/>
+        from t_expert_subscribe
+        order by update_time desc, create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="expertSubscribeDO">
+        select
+        <include refid="select_columns"/>
+        from t_expert_subscribe
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+             ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="expertSubscribeDO">
+        select
+        <include refid="select_columns"/>
+        from t_expert_subscribe
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_expert_subscribe
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>
