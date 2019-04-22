@@ -1,6 +1,5 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/project-info/project-info",
 			"style": {
 				"navigationBarTitleText": "招标信息",
@@ -38,34 +37,46 @@
 				"navigationBarTitleText": "个人中心",
 				"backgroundTextStyle": "light"
 			}
+		}
+	],
+	"subPackages": [
+		{
+			"root": "pages-static",
+			"pages": [
+				{
+					"path": "help/help",
+					"style": {
+						"navigationBarTitleText": "帮助中心",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "about/about",
+					"style": {
+						"navigationBarTitleText": "关于",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "privacy/privacy",
+					"style": {
+						"navigationBarTitleText": "用户协议与隐私声明",
+						"backgroundTextStyle": "light"
+					}
+				}
+			]
 		},
 		{
-			"path": "pages/nickname/nickname",
-			"style": {
-				"navigationBarTitleText": "我的昵称",
-				"backgroundTextStyle": "light"
-			}
-		},
-		{
-			"path": "pages/help/help",
-			"style": {
-				"navigationBarTitleText": "帮助中心",
-				"backgroundTextStyle": "light"
-			}
-		},
-		{
-			"path": "pages/about/about",
-			"style": {
-				"navigationBarTitleText": "关于",
-				"backgroundTextStyle": "light"
-			}
-		},
-		{
-			"path": "pages/privacy/privacy",
-			"style": {
-				"navigationBarTitleText": "用户协议与隐私声明",
-				"backgroundTextStyle": "light"
-			}
+			"root": "pages-user-center",
+			"pages": [
+				{
+					"path": "nickname/nickname",
+					"style": {
+						"navigationBarTitleText": "我的昵称",
+						"backgroundTextStyle": "light"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {
@@ -79,8 +90,7 @@
 		"selectedColor": "#108EE9",
 		"backgroundColor": "#FFFFFF",
 		"borderStyle": "black",
-		"list": [
-			{
+		"list": [{
 				"text": "招标信息",
 				"pagePath": "pages/project-info/project-info",
 				"iconPath": "static/icon/project_info_default.png",

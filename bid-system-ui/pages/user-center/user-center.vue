@@ -98,34 +98,6 @@
 					url: '/pages/login/login'
 				})
 			},
-			toAccountDetail() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/account-detail/account-detail?integral=' + this.userWallet.integral
-							+ '&usableIntegral=' + this.userWallet.usableIntegral + '&frezeeIntegral=' + this.userWallet.frezeeIntegral 
-					})
-				} else {
-					toLoginPage()
-				}
-			},
-			toFundsRecharge() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/funds-recharge/funds-recharge'
-					})
-				} else {
-					toLoginPage()
-				}
-			},
-			toFundsWithdraw() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/funds-withdraw/funds-withdraw?integral=' + this.userWallet.usableIntegral
-					})
-				} else {
-					toLoginPage()
-				}
-			},
 			toNickname() {
 				if (isUserTokenExist()) {
 					const self = this
@@ -140,68 +112,14 @@
 					toLoginPage()
 				}
 			},
-			toWeixinBarcode() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/weixin-barcode/weixin-barcode?wechatQrcode=' + this.user.wechatQrcode
-					})
-				} else {
-					toLoginPage()
-				}
-			},
-			toWeixinCertification() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/weixin-certification/weixin-certification'
-					})
-				} else {
-					toLoginPage()
-				}
-			},
-			toBankCard() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/bank-card/bank-card'
-					})
-				} else {
-					toLoginPage()
-				}
-			},
-			toWeixinFriend() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/weixin-friend/weixin-friend'
-					})
-				} else {
-					toLoginPage()
-				}
-			},
-			toMyMessage() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/my-message/my-message'
-					})
-				} else {
-					toLoginPage()
-				}
-			},
-			toPasswordSetting() {
-				if (isUserTokenExist()) {
-					uni.navigateTo({
-						url: '/pages/password-setting/password-setting'
-					})
-				} else {
-					toLoginPage()
-				}
-			},
 			toHelp() {
 				uni.navigateTo({
-					url: '/pages/help/help'
+					url: '/pages-static/help/help'
 				})
 			},
 			toAbout() {
 				uni.navigateTo({
-					url: '/pages/about/about'
+					url: '/pages-static/about/about'
 				})
 			},
 			logout() {

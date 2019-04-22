@@ -1,9 +1,6 @@
 <template>
 	<view>
-		<view class="zy-logo">
-			<image src='../../static/back-logo.png' class="zy-logo-img" />
-		</view>
-		关于TaskApp
+		关于
 	</view>
 </template>
 

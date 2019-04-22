@@ -1,9 +1,6 @@
 <template>
 	<view>
-		<view class="zy-logo">
-			<image src='../../static/back-logo.png' class="zy-logo-img" />
-		</view>
-		用户协议及隐私声明
+		帮助
 	</view>
 </template>
 
