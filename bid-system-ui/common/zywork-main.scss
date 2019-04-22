@@ -87,3 +87,30 @@ button[type=primary][plain] {
 	margin-top: 10upx;
 	font-size: 32upx;
 }
+
+.zy-top-search {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #FFFFFF; 
+	padding: 10upx;
+}
+
+.zy-search-bar {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	height: 60upx;
+	border: 1px solid $border-color;
+	border-radius: 30upx;
+	padding-left: 10upx;
+	font-size: 30upx;
+}
+
+.zy-search-bar input {
+	width: 100%;
+	margin-left: 10upx;
+}

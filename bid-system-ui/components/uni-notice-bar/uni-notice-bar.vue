@@ -147,7 +147,7 @@
 		padding: 12upx 20upx;
 		font-size: 24upx;
 		line-height: 1.5;
-		margin-bottom: 20upx;
+		margin-bottom: 10upx;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
