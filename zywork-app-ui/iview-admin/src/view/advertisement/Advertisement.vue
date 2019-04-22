@@ -155,10 +155,10 @@
           <Input v-model="searchForm.title" placeholder="请输入轮播图标题"/>
         </FormItem>
         <FormItem label="是否激活" prop="isActive">
-        <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
-          <Option v-for="item in isActiveSelect" :value="item.value" :key="item.value">{{item.label}}</option>
-        </Select>
-      </FormItem>
+          <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
+            <Option v-for="item in isActiveSelect" :value="item.value" :key="item.value">{{item.label}}</option>
+          </Select>
+        </FormItem>
         <FormItem label="版本号">
           <Row>
             <i-col span="11">
@@ -293,9 +293,7 @@
 <script>
 import * as utils from '@/api/utils'
 import * as responseStatus from '@/api/response-status'
-import {
-  isActiveSelect
-} from '@/api/select'
+import { isActiveSelect } from '@/api/select'
 import Editor from '_c/editor'
 import config from '@/config'
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
@@ -687,7 +685,6 @@ export default {
       }
     },
     add() {
-      console.log(this.form.content)
       utils.add(this)
     },
     edit() {
