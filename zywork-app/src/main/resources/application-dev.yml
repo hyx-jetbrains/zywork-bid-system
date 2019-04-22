@@ -16,9 +16,9 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/zywork_app?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowMultiQueries=true&useAffectedRows=true&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/jx_bid_system?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowMultiQueries=true&useAffectedRows=true&allowPublicKeyRetrieval=true
       username: root
-      password: root123456
+      password: 123456
       validation-query: select 1
       max-active: 100
       min-idle: 10
@@ -73,7 +73,7 @@ mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
 #XssFilter不过滤的url，从/开始配置
 xssFilter:
-  ignoreUrls: /article/admin/save,/article/admin/batch-save,/article/admin/update,/article/admin/batch-update,/notice/admin/save,/notice/admin/batch-save,/notice/admin/update,/notice/admin/batch-update
+  ignoreUrls: /article/admin/save,/article/admin/batch-save,/article/admin/update,/article/admin/batch-update,/notice/admin/save,/notice/admin/batch-save,/notice/admin/update,/notice/admin/batch-update,/advertisement/admin/save,/advertisement/admin/batch-save,/advertisement/admin/update,/advertisement/admin/batch-update
 #自定义jwt配置信息
 jwt:
   #header名称
@@ -150,3 +150,7 @@ storage:
       imgParentDir: "."
       imgDir: "image/notice"
       imgUrl: "upload/image/notice"
+    advertisement:
+      imgParentDir: "."
+      imgDir: "image/advertisement"
+      imgUrl: "upload/image/advertisement"

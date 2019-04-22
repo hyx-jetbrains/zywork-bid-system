@@ -393,7 +393,7 @@ export default [
         name: 'achievement_manage',
         meta: {
           title: '用户业绩查询',
-          icon: 'ios-paper-outline-document'
+          icon: 'ios-paper-outline'
         },
         component: () => import('@/view/achievement/Achievement.vue')
       },
@@ -420,7 +420,7 @@ export default [
         name: 'user_resume_manage',
         meta: {
           title: '用户简历管理',
-          icon: 'ios-list-outline'
+          icon: 'ios-list'
         },
         component: () => import('@/view/resume/Resume.vue')
       },
