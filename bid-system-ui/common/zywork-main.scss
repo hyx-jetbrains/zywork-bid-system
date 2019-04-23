@@ -82,7 +82,7 @@ button[type=primary][plain] {
 .zy-list-button {
 	padding:20upx;
 	border-radius: 0;
-	background-color: #FFFFFF;
+	background-color: $primary-backcolor;
 	text-align: center;
 	margin-top: 10upx;
 	font-size: 32upx;
@@ -93,12 +93,13 @@ button[type=primary][plain] {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	background-color: #FFFFFF; 
+	background-color: $primary-backcolor; 
 	padding: 10upx;
 }
 
 .zy-search-bar {
 	flex-grow: 1;
+	width: 80%;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
