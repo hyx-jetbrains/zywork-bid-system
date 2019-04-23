@@ -340,7 +340,7 @@ export default {
         activeUrl: '/projecannounce/admin/active',
         batchActiveUrl: '/projecannounce/admin/batch-active',
         uploadUrl: baseUrl + '/projecannounce/admin/upload-img',
-        projectSelectUrl: '/project/admin/project-select',
+        projectSelectUrl: '/projecannounce/admin/project-select',
         oneProjectUrl: '/project/admin/one/'
       },
       page: {

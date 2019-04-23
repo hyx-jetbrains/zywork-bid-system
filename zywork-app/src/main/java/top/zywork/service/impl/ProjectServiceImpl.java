@@ -74,13 +74,4 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         return tempProjectVOList;
     }
 
-    @Override
-    public List<ProjectDTO> getProjectSelect(Long projectId) {
-        List<ProjectDTO> projectDTOList = new ArrayList<>();
-        List<Object> list = projectDAO.getProjectSelect(projectId);
-        if (null != list && list.size() > 0) {
-            projectDTOList = BeanUtils.copy(list, ProjectDTO.class);
-        }
-        return projectDTOList;
-    }
 }

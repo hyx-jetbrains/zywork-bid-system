@@ -182,16 +182,6 @@ public class ProjectController extends BaseController {
         return ResponseStatusVO.ok("批量发布成功", null);
     }
 
-    @GetMapping("admin/project-select/{projectId}")
-    public ResponseStatusVO getProjectSelect(@PathVariable("projectId") Long projectId) {
-        List<ProjectDTO> projectDTOList = projectService.getProjectSelect(projectId);
-        if (null == projectDTOList || projectDTOList.size() <= 0) {
-            return ResponseStatusVO.error("未获取到数据", null);
-        }
-        List<ProjectVO> projectVOList = BeanUtils.copy(projectDTOList, ProjectVO.class);
-        return ResponseStatusVO.ok("查询成功", projectVOList);
-    }
-
     @Autowired
     public void setProjectService(ProjectService projectService) {
         this.projectService = projectService;

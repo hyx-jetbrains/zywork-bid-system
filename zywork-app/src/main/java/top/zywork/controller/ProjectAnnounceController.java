@@ -15,10 +15,12 @@ import top.zywork.common.StringUtils;
 import top.zywork.common.UploadUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
+import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectAnnounceQuery;
 import top.zywork.service.ProjectAnnounceService;
 import top.zywork.service.UploadService;
+import top.zywork.vo.ProjectVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectAnnounceVO;
@@ -164,6 +166,16 @@ public class ProjectAnnounceController extends BaseController {
         UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
         uploadOptions.generateCompressSizes(compressSizes);
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
+    }
+
+    @GetMapping("admin/project-select/{projectId}")
+    public ResponseStatusVO getProjectSelect(@PathVariable("projectId") Long projectId) {
+        List<ProjectDTO> projectDTOList = projectAnnounceService.getProjectSelect(projectId);
+        if (null == projectDTOList || projectDTOList.size() <= 0) {
+            return ResponseStatusVO.error("未获取到数据", null);
+        }
+        List<ProjectVO> projectVOList = BeanUtils.copy(projectDTOList, ProjectVO.class);
+        return ResponseStatusVO.ok("查询成功", projectVOList);
     }
 
     @Autowired
