@@ -37,11 +37,23 @@
 			<uni-segmented-control :current="projectStatus.current" :values="projectStatus.items" v-on:clickItem="onClickItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
 		
+		<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
+		
 		<view class="zy-project-item">
 			
 		</view>
 		<view class="zy-project-item">
 			
+		</view>
+		
+		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
+			<view class="calendar-box" @click.stop="">
+				<zywork-calendar :slide="calendar.slide" :disableBefore="calendar.disableBefore" :start-date="calendar.startDate" :date="calendar.date" @change="change" @to-click="toClick" />
+				<view class="calendar-button-groups">
+					<button type="primary" class="calendar-button-confirm" @click="closeMask">取消</button>
+					<button type="primary" class="calendar-button-confirm" @click="confirm">确认</button>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -49,17 +61,26 @@
 <script>
 	import uniNoticeBar from '@/components/uni-notice-bar/uni-notice-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
+	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
 	import {
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
 		isUserTokenExist,
-		toLoginPage
+		toLoginPage,
+		getCalendarDate,
+		formatCalendarDate
 	} from '../../common/util.js'
+	
+	const PROJECT_STATUS_ALL = 0
+	const PROJECT_STATUS_SHOWING = 1
+	const PROJECT_STATUS_WAITTING = 2
+	const PROJECT_STATUS_ALREADY = 3
 
 	export default {
 		components: {
 			uniNoticeBar,
-			uniSegmentedControl
+			uniSegmentedControl,
+			zyworkCalendar
 		},
 		data() {
 			return {
@@ -95,6 +116,16 @@
 						{id: 'other', name: '其他项目'}
 					]
 				},
+				showChooseDate: false,
+				calendar: {
+					showCalendar: false,
+					slide: 'horizontal',
+					disableBefore: false,
+					startDate: '',
+					date: '',
+					timeData: null,
+					currentFormatDate: ''
+				},
 				projects: [],
 				pager: {
 					pageNo: 1,
@@ -104,7 +135,9 @@
 				headicon: DEFAULT_HEADICON
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.calendar.currentFormatDate = formatCalendarDate(new Date())
+		},
 		onPullDownRefresh() {},
 		methods: {
 			chooseCity(e) {
@@ -142,8 +175,32 @@
 			},
 			onClickItem(index) {
 				if (this.current !== index) {
-					this.current = index;
+					this.current = index
+					if (index === PROJECT_STATUS_WAITTING) {
+						this.showChooseDate = true
+					} else {
+						this.showChooseDate = false
+					}
 				}
+			},
+			openCalendar() {
+				this.calendar.startDate = getCalendarDate(new Date())
+				this.calendar.date = this.calendar.date === '' ? getCalendarDate(new Date()) : this.calendar.date
+				this.calendar.showCalendar = true
+			},
+			change(e) {
+				this.calendar.timeData = e;
+			},
+			toClick(e) {
+				this.calendar.timeData = e;
+			},
+			closeMask() {
+				this.calendar.showCalendar = false;
+			},
+			confirm() {
+				this.calendar.date = this.calendar.timeData.fulldate
+				this.calendar.currentFormatDate = this.calendar.timeData.fulldate + ' ' + this.calendar.timeData.lunar.ncWeek
+				this.calendar.showCalendar = false;
 			}
 		}
 	}
@@ -173,7 +230,7 @@
 	}
 	
 	.zy-tab-bar {
-		background-color: #FFFFFF;
+		background-color: $primary-backcolor;
 	}
 	
 	.uni-tab-bar .active {
@@ -185,10 +242,65 @@
 		border-bottom: none;
 	}
 	
+	.segmented-control view {
+		font-size: 24upx;
+		line-height: 50upx;
+	}
+	
+	.zy-choose-date {
+		width:100%;
+		background-color: $primary-backcolor;
+		text-align: center;
+	}
+	
+	.calendar-mask {
+		position: fixed;
+		/* #ifdef H5 */
+		top: 45px;
+		/* #endif */
+		/* #ifndef H5 */
+		top: 0;
+		/* #endif */
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		background: rgba(0, 0, 0, 0.4);
+		z-index: 100;
+	}
+	
+	.calendar-box {
+		border: 1px #f5f5f5 solid;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		background: $primary-backcolor;
+	}
+	
+	.calendar-button-groups {
+		width: 100%;
+		margin-top: 50upx;
+		display: flex;
+		flex-direction: row;
+	}
+	
+	.calendar-button-confirm {
+		width: 50%;
+		margin: 10upx;
+	}
+	
+	.uni-calender__date.uni-calender__disable view {
+		color: #d4d4d4;
+	}
+	
+	.uni-calender__date.uni-calender__is-day view {
+		color: #fd2e32;
+	}
+	
 	.zy-project-item {
 		width: 100%;
 		margin-top: 10upx;
-		background-color: #FFFFFF;
+		background-color: $primary-backcolor;
 		height: 200upx;
 	}
 </style>

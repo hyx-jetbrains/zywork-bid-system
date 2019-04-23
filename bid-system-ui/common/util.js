@@ -68,3 +68,37 @@ export const showSuccessToast = (title) => {
 		duration: 2000
 	})
 }
+
+export const getCalendarDate = (date) => {
+	if (typeof date !== 'object') {
+		date = date.replace(/-/g, '/')
+	}
+	let dd = new Date(date);
+	let y = dd.getFullYear();
+	let m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1
+	let d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate()
+	return y + '-' + m + '-' + d
+}
+
+export const formatCalendarDate = (date) => {
+	if (typeof date !== 'object') {
+		date = date.replace(/-/g, '/')
+	}
+	let dd = new Date(date);
+	let y = dd.getFullYear();
+	let m = dd.getMonth() + 1
+	let d = dd.getDate()
+	let w = dd.getDay()
+	let week = '星期'
+	switch (w) {
+		case 0 : week = week + '日'; break;
+		case 1 : week = week + '一'; break;
+		case 2 : week = week + '二'; break;
+		case 3 : week = week + '三'; break;
+		case 4 : week = week + '四'; break;
+		case 5 : week = week + '五'; break;
+		case 6 : week = week + '六'; break;
+		default: break;
+	}
+	return y + '-' + m + '-' + d + ' ' + week
+}
