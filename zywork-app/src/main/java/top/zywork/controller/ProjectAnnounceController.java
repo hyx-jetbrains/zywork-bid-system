@@ -3,17 +3,22 @@ package top.zywork.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.common.UploadUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
+import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectAnnounceQuery;
 import top.zywork.service.ProjectAnnounceService;
+import top.zywork.service.UploadService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectAnnounceVO;
@@ -34,7 +39,27 @@ public class ProjectAnnounceController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectAnnounceController.class);
 
+    @Value("${storage.provider}")
+    private String storageProvider;
+
+    @Value("${storage.local.compressSizes}")
+    private String compressSizes;
+
+    @Value("${storage.local.compressScales}")
+    private String compressScales;
+
+    @Value("${storage.local.project.imgParentDir}")
+    private String imgParentDir;
+
+    @Value("${storage.local.project.imgDir}")
+    private String imgDir;
+
+    @Value("${storage.local.project.imgUrl}")
+    private String imgUrl;
+
     private ProjectAnnounceService projectAnnounceService;
+
+    private UploadService uploadService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectAnnounceVO projectAnnounceVO, BindingResult bindingResult) {
@@ -134,8 +159,21 @@ public class ProjectAnnounceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("admin/upload-img")
+    public ResponseStatusVO upload(MultipartFile file) {
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        uploadOptions.generateCompressSizes(compressSizes);
+        return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
+    }
+
     @Autowired
     public void setProjectAnnounceService(ProjectAnnounceService projectAnnounceService) {
         this.projectAnnounceService = projectAnnounceService;
     }
+
+    @Autowired
+    public void setUploadService(UploadService uploadService) {
+        this.uploadService = uploadService;
+    }
+
 }

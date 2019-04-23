@@ -49,10 +49,10 @@ public class ProjectVO extends BaseVO {
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String checkPattern;
 	// 企业资质类型
-	@Size(min = 0, max = 32, message = "必须小于32个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String compAptitudeType;
 	// 建造师等级
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String builderLevel;
 	// 资金落实(%)
 	private Float moneyToImplement;
