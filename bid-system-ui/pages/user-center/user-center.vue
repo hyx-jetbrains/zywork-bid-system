@@ -16,7 +16,6 @@
 						<view class="zy-text-small">您还未登录哦~</view>
 					</view>
 				</view>
-				<zywork-icon class="zy-user-more" type="iconiconfonti" size="24" color="#FFFFFF" @click.native="toLogin"/>
 			</view>
 		</view>
 		<view class="zy-user-balance">

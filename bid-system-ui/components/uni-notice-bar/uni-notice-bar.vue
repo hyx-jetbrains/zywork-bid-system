@@ -145,7 +145,7 @@
 
 	.uni-noticebar {
 		padding: 12upx 20upx;
-		font-size: 24upx;
+		font-size: 28upx;
 		line-height: 1.5;
 		margin-bottom: 10upx;
 		display: flex;
@@ -193,7 +193,7 @@
 	}
 
 	.uni-noticebar__content-more-text {
-		font-size: 24upx;
+		font-size: 28upx;
 		white-space: nowrap
 	}
 
@@ -224,7 +224,7 @@
 	}
 
 	.uni-noticebar__content-inner {
-		font-size: 24upx;
+		font-size: 28upx;
 		display: inline
 	}
 

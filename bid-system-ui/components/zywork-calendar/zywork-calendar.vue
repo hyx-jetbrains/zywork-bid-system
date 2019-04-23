@@ -138,6 +138,8 @@
 				dateShow: false, // 日期是否选择
 				selectDay: '', // 当前选择日期
 				canlender: {
+					year: '',
+					month: '',
 					weeks: []
 				},
 				domHeihgt: 600,
