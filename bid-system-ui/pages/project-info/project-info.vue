@@ -4,11 +4,11 @@
 			<picker @change="chooseCity" :value="cityIndex" :range="cityArray">
 				<view class="zy-address">
 					<text>{{cityArray[cityIndex]}}</text>
-					<i class="iconfont iconxiangxia"></i>
+					<zywork-icon type="iconxiangxia"/>
 				</view>
 			</picker>
 			<view class="zy-search-bar">
-				<i class="iconfont iconchaxun"></i>
+				<zywork-icon type="iconchaxun"/>
 				<input type="text" placeholder="我要搜索" @focus="searchFocus" />
 			</view>
 		</view>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniNoticeBar from '@/components/uni-notice-bar/uni-notice-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
@@ -78,6 +79,7 @@
 
 	export default {
 		components: {
+			zyworkIcon,
 			uniNoticeBar,
 			uniSegmentedControl,
 			zyworkCalendar

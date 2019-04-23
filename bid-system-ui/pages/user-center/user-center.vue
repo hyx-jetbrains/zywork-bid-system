@@ -1,12 +1,23 @@
 <template>
 	<view>
-		<view class="zy-user-container" v-if="isUserLogin">
-			<image class="zy-headicon" :src="user.headicon === null ? headicon : imgBaseUrl + '/' + user.headicon" @click="chooseImage"></image>
-			<text class="zy-name">{{user.nickname}} ></text>
-		</view>
-		<view class="zy-user-container" v-else>
-			<image class="zy-headicon" :src="headicon"></image>
-			<text class="zy-name" @click="toLogin">请登录</text>
+		<view class="zy-user-container">
+			<view class="zy-user-info" v-if="isUserLogin">
+				<view class="zy-user-left">
+					<image class="zy-headicon" :src="user.headicon === null ? headicon : imgBaseUrl + '/' + user.headicon" @click="chooseImage"></image>
+					<text class="zy-name">{{user.nickname}}</text>
+				</view>
+				<zywork-icon class="zy-user-more" type="iconiconfonti" color="#FFFFFF"/>
+			</view>
+			<view class="zy-user-info" v-else>
+				<view class="zy-user-left">
+					<image class="zy-headicon" :src="headicon"></image>
+					<view>
+						<view class="zy-name" @click="toLogin">点击登录</view>
+						<view class="zy-text-small">您还未登录哦~</view>
+					</view>
+				</view>
+				<zywork-icon class="zy-user-more" type="iconiconfonti" size="24" color="#FFFFFF" @click.native="toLogin"/>
+			</view>
 		</view>
 		<view class="zy-user-balance">
 			<view @click="toAccountDetail">
@@ -47,10 +58,12 @@
 		userWallet
 	} from '../../common/funds.js'
 
+	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
 	export default {
 		components: {
+			zyworkIcon,
 			uniList,
 			zyworkListItem
 		},
@@ -94,9 +107,7 @@
 				uploadHeadicon(this)
 			},
 			toLogin() {
-				uni.navigateTo({
-					url: '/pages/login/login'
-				})
+				console.log('toLogin')
 			},
 			toNickname() {
 				if (isUserTokenExist()) {
@@ -133,26 +144,42 @@
 	@import '../../common/zywork-main.scss';
 
 	.zy-user-container {
-		width: 100%;
-		padding-top: 15upx;
-		padding-bottom: 15upx;
-		margin-bottom: 10upx;
 		background-color: $primary-color;
+		padding: 30upx;
+	}
+	
+	.zy-user-info {
+		width: 100%;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.zy-user-left {
+		display: flex;
+		flex-direction: row;
 		align-items: center;
 	}
 
-	.zy-user-container .zy-headicon {
+	.zy-user-left .zy-headicon {
 		width: 120upx;
 		height: 120upx;
 		border-radius: 60upx;
+		margin-right: 20upx;
 	}
 
-	.zy-user-container .zy-name {
+	.zy-user-left view {
+		color: #FFFFFF;
+	}
+
+	.zy-user-left .zy-name {
 		font-size: 30upx;
 		font-weight: bold;
-		color: #FFFFFF;
+	}
+	
+	.zy-user-more {
+		
 	}
 
 	.zy-user-balance {
