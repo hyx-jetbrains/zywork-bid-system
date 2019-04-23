@@ -73,7 +73,7 @@ mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
 #XssFilter不过滤的url，从/开始配置
 xssFilter:
-  ignoreUrls: /article/admin/save,/article/admin/batch-save,/article/admin/update,/article/admin/batch-update,/notice/admin/save,/notice/admin/batch-save,/notice/admin/update,/notice/admin/batch-update,/advertisement/admin/save,/advertisement/admin/batch-save,/advertisement/admin/update,/advertisement/admin/batch-update,/headlines/admin/save,/headlines/admin/batch-save,/headlines/admin/update,/headlines/admin/batch-update
+  ignoreUrls: /article/admin/save,/article/admin/batch-save,/article/admin/update,/article/admin/batch-update,/notice/admin/save,/notice/admin/batch-save,/notice/admin/update,/notice/admin/batch-update,/advertisement/admin/save,/advertisement/admin/batch-save,/advertisement/admin/update,/advertisement/admin/batch-update,/headlines/admin/save,/headlines/admin/batch-save,/headlines/admin/update,/headlines/admin/batch-update,/project/admin/save,/project/admin/batch-save,/project/admin/update,/project/admin/batch-update
 #自定义jwt配置信息
 jwt:
   #header名称
@@ -158,3 +158,7 @@ storage:
       imgParentDir: "/data/zywork-app-data/upload"
       imgDir: "image/headlines"
       imgUrl: "upload/image/headlines"
+    project:
+      imgParentDir: "/data/zywork-app-data/upload"
+      imgDir: "image/project"
+      imgUrl: "upload/image/project"

@@ -116,7 +116,7 @@
         </FormItem>
         <FormItem label="是否激活" prop="isActive">
           <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
-            <Option v-for="item in isActiveSelect" :value="item.value" :key="item.value">{{item.label}}</option>
+            <i-option v-for="item in isActiveSelect" :value="item.value" :key="item.value">{{item.label}}</i-option>
           </Select>
         </FormItem>
         <FormItem label="版本号">
@@ -243,7 +243,7 @@
       </p>
       <p>
         是否激活:
-        <span v-text="form.isActive"></span>
+        <span v-text="form.isActive === 0 ? '激活' : '冻结'"></span>
       </p>
     </Modal>
   </div>
@@ -389,7 +389,6 @@ export default {
             title: '内容',
             key: 'content',
             minWidth: 120,
-            sortable: true,
             render: (h, params) => {
               return h('a', {
                   on: {

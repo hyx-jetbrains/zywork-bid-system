@@ -3,21 +3,26 @@ package top.zywork.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import top.zywork.common.BeanUtils;
-import top.zywork.common.BindingResultUtils;
-import top.zywork.common.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import top.zywork.common.*;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
+import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectQuery;
 import top.zywork.service.ProjectService;
+import top.zywork.service.UploadService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectVO;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,13 +39,34 @@ public class ProjectController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
+    @Value("${storage.provider}")
+    private String storageProvider;
+
+    @Value("${storage.local.compressSizes}")
+    private String compressSizes;
+
+    @Value("${storage.local.compressScales}")
+    private String compressScales;
+
+    @Value("${storage.local.project.imgParentDir}")
+    private String imgParentDir;
+
+    @Value("${storage.local.project.imgDir}")
+    private String imgDir;
+
+    @Value("${storage.local.project.imgUrl}")
+    private String imgUrl;
+
     private ProjectService projectService;
+
+    private UploadService uploadService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectVO projectVO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        projectVO = projectService.getOpenMark(projectVO);
         projectService.save(BeanUtils.copy(projectVO, ProjectDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -50,6 +76,7 @@ public class ProjectController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        projectVOList = projectService.getOpenMarkList(projectVOList);
         projectService.saveBatch(BeanUtils.copyListObj(projectVOList, ProjectDTO.class));
         return ResponseStatusVO.ok("批量添加成功", null);
     }
@@ -71,6 +98,7 @@ public class ProjectController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        projectVO = projectService.getOpenMark(projectVO);
         int updateRows = projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
         if (updateRows == 1) {
             return ResponseStatusVO.ok("更新成功", null);
@@ -84,6 +112,7 @@ public class ProjectController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        projectVOList = projectService.getOpenMarkList(projectVOList);
         projectService.updateBatch(BeanUtils.copyListObj(projectVOList, ProjectDTO.class));
         return ResponseStatusVO.ok("批量更新成功", null);
     }
@@ -134,8 +163,33 @@ public class ProjectController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("admin/upload-img")
+    public ResponseStatusVO upload(MultipartFile file) {
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        uploadOptions.generateCompressSizes(compressSizes);
+        return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
+    }
+
+    @PostMapping("admin/releaseProject")
+    public ResponseStatusVO releaseProject(@RequestBody ProjectVO projectVO) {
+        projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
+        return ResponseStatusVO.ok("发布成功", null);
+    }
+
+    @PostMapping("admin/batch-release")
+    public ResponseStatusVO releaseProjectBatch(@RequestBody @Validated List<ProjectVO> projectVOList) {
+        projectService.updateBatch(BeanUtils.copyListObj(projectVOList, ProjectDTO.class));
+        return ResponseStatusVO.ok("批量发布成功", null);
+    }
+
     @Autowired
     public void setProjectService(ProjectService projectService) {
         this.projectService = projectService;
     }
+
+    @Autowired
+    public void setUploadService(UploadService uploadService) {
+        this.uploadService = uploadService;
+    }
+
 }
