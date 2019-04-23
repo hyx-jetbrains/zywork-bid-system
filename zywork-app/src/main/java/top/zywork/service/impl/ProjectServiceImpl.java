@@ -2,6 +2,7 @@ package top.zywork.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.zywork.common.BeanUtils;
 import top.zywork.common.DateUtils;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.dao.ProjectDAO;
@@ -71,5 +72,15 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             tempProjectVOList.add(one);
         }
         return tempProjectVOList;
+    }
+
+    @Override
+    public List<ProjectDTO> getProjectSelect(Long projectId) {
+        List<ProjectDTO> projectDTOList = new ArrayList<>();
+        List<Object> list = projectDAO.getProjectSelect(projectId);
+        if (null != list && list.size() > 0) {
+            projectDTOList = BeanUtils.copy(list, ProjectDTO.class);
+        }
+        return projectDTOList;
     }
 }

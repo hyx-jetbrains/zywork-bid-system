@@ -527,4 +527,26 @@ export const arrayBufferToImage = (imageType, arrayBufferData) => {
     new Uint8Array(arrayBufferData).reduce((data, byte) => data + String.fromCharCode(byte), '')
   )
 }
-    
+
+/**
+ * 获取下拉框数据,不带参数
+ * @param url 请求的url
+ */
+export const getSelectData = (url) => {
+  return axios.request({
+    url: url,
+    method: 'GET'
+  })
+}
+
+/**
+ * 获取下拉框数据,不带参数
+ * @param url 请求的url
+ * @param param 请求的参数
+ */
+export const getSelectDataByOneCondition = (url, param) => {
+  return axios.request({
+    url: url + "/" + param,
+    method: 'GET'
+  })
+}
