@@ -8,18 +8,19 @@ $tabbar-select-text: $primary-color;
 
 $default-text-color: #6D6D6D;
 $primary-text-color: $primary-color;
-$tag-text-color: #FF4081;
-$warning-text-color: #FF4081;
+$info-text-color: #8A8A8A;
+$warning-text-color: #dd524d;
 
 $border-color: #BFBFBF;
+
+$seperator-color: #F0F0F0;
 
 page {
 	background-color: $primary-page-backcolor;
 }
 
-
 view, text {
-	font-size: 32upx;
+	font-size: 30upx;
 	color: $default-text-color;
 }
 
@@ -39,6 +40,10 @@ button[type=primary][plain] {
 	color: $primary-color;
 	border:1px solid $primary-color;
 	background-color:transparent;
+}
+
+.swiper-item image {
+	width: 100%;
 }
 
 .zy-page {
@@ -61,22 +66,28 @@ button[type=primary][plain] {
 .zy-text-bold {
 	font-weight: bold;
 }
-
-.zy-text-info {
-	margin-bottom: 20upx;
-}
 	
-.zy-text-info-strong {
+.zy-text-primary {
 	color: $primary-color;
+}
+.zy-text-info {
+	color: $info-text-color;
+}
+
+.zy-text-warning {
+	color: $warning-text-color;
+}
+
+.zy-text-big {
+	font-size: 32upx;
 }
 
 .zy-text-small {
 	font-size: 26upx;
 }
 
-.zy-logo-img {
-	width: 300upx; 
-	height: 200upx;	
+.zy-text-mini {
+	font-size: 22upx;
 }
 
 .zy-list-button {

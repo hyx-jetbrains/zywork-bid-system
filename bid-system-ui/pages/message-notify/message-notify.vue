@@ -11,7 +11,8 @@
 
 			}
 		},
-		onLoad() {},
+		onLoad() {
+		},
 		methods: {}
 	}
 </script>

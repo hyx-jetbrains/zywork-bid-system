@@ -39,11 +39,37 @@
 		
 		<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
 		
-		<view class="zy-project-item">
-			
-		</view>
-		<view class="zy-project-item">
-			
+		<view class="zy-project">
+			<view class="zy-project-item" v-for="(project, index) in projects" :key="index">
+				<view class="zy-project-head">
+					<image class="zy-icon" :src="imgIcon"/>
+					<view>
+						<view>
+							<text>{{projectTypeName}}</text>
+							<text style="margin-left: 30upx;">[{{project.city}}]</text>
+						</view>
+						<view class="zy-text-mini zy-text-info">公告时间：{{project.publishTime}}</view>
+					</view>
+					<view class="zy-project-head-right">
+						<view>
+							<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
+							<uni-tag :text="project.status" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
+						</view>
+						<view class="zy-text-mini zy-text-warning" v-if="project.time !== null">开标时间：{{project.time}}</view>
+						<view class="zy-text-mini zy-text-warning" v-else>开标时间：暂无</view>
+					</view>
+				</view>
+				<view>
+					<view class="zy-text-big zy-text-bold">{{project.title}}</view>
+					<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
+					<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
+					<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
+					<view class="zy-project-item-row">
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkWay}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money}}</view>
+					</view>
+				</view>
+			</view>
 		</view>
 		
 		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
@@ -63,6 +89,7 @@
 	import uniNoticeBar from '@/components/uni-notice-bar/uni-notice-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
+	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import {
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
@@ -76,13 +103,28 @@
 	const PROJECT_STATUS_SHOWING = 1
 	const PROJECT_STATUS_WAITTING = 2
 	const PROJECT_STATUS_ALREADY = 3
+	
+	const PROJECT_TYPE_BUILDING = 0
+	const PROJECT_TYPE_HYDRAULIC = 1
+	const PROJECT_TYPE_TRAFFIC = 2
+	const PROJECT_TYPE_PURCHASE = 3
+	const PROJECT_TYPE_IMPORTANT = 4
+	const PROJECT_TYPE_OTHER = 5
+	
+	const PROJECT_TYPE_ICONS = ['../../static/icon/building.png',
+								'../../static/icon/hydraulic.png',
+								'../../static/icon/traffic.png',
+								'../../static/icon/purchase.png',
+								'../../static/icon/important.png',
+								'../../static/icon/other.png']
 
 	export default {
 		components: {
 			zyworkIcon,
 			uniNoticeBar,
 			uniSegmentedControl,
-			zyworkCalendar
+			zyworkCalendar,
+			uniTag
 		},
 		data() {
 			return {
@@ -90,12 +132,13 @@
 				autoplay: true,
 				interval: 5000,
 				duration: 500,
-				swiperItems: [{
-						imgUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/img/ad.png",
+				swiperItems: [
+					{
+						imgUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg",
 						contentUrl: "http://39.108.116.103:8080/"
 					},
 					{
-						imgUrl: "http://img.cdn.aliyun.dcloud.net.cn/ask/img/ke.qq.com.uniapp@2x.png",
+						imgUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111253594&di=5344d9889d61ccc8279bd26a7765e4b3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180106%2F4042bb85604c4609a1c7da9e45edb2b4.jpeg",
 						contentUrl: "http://39.108.116.103:8080/"
 					}
 				],
@@ -128,7 +171,28 @@
 					timeData: null,
 					currentFormatDate: ''
 				},
-				projects: [],
+				imgIcon: PROJECT_TYPE_ICONS[0],
+				projectTypeName: '房建市政',
+				projects: [
+					{
+						title: '赣州中学工程招标',
+						city: '南昌市',
+						publishTime: '2019-04-24 18:00:00',
+						status: '公告中',
+						time: null,
+						checkWay: '资格后审',
+						money: 3000
+					},
+					{
+						title: '赣州中学工程招标',
+						city: '南昌市',
+						publishTime: '2019-04-24 18:00:00',
+						status: '待开标',
+						time: '2019-04-25 10:30',
+						checkWay: '资格后审',
+						money: 3000
+					}
+				],
 				pager: {
 					pageNo: 1,
 					pageSize: 10
@@ -162,17 +226,16 @@
 				})
 			},
 			async tapTab(e) {
-				let tabIndex = e.target.dataset.current;
-// 				if (this.newsitems[tabIndex].data.length === 0) {
-// 					this.addData(tabIndex)
-// 				}
-				if (this.tabIndex === tabIndex) {
+				let tabIndex = e.target.dataset.current
+				if (this.projectType.tabIndex === tabIndex) {
 					return false
 				} else {
 					let tabBar = await this.getElSize("tab-bar"),
 						tabBarScrollLeft = tabBar.scrollLeft
 					this.projectType.scrollLeft = tabBarScrollLeft
 					this.projectType.tabIndex = tabIndex
+					
+					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
 				}
 			},
 			onClickItem(index) {
@@ -299,10 +362,49 @@
 		color: #fd2e32;
 	}
 	
+	.zy-project {
+		margin-top: 10upx;
+		padding-left: 15upx;
+		padding-right: 15upx;
+		background-color: $primary-backcolor;
+	}
+	
 	.zy-project-item {
 		width: 100%;
-		margin-top: 10upx;
-		background-color: $primary-backcolor;
-		height: 200upx;
+		padding-top: 20upx;
+		padding-bottom: 20upx;
+		border-bottom: 1upx solid $seperator-color;
+	}
+	
+	.zy-project-item:last-child {
+		border-bottom: none;
+	}
+	
+	.zy-project-head {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	
+	.zy-project-head .zy-icon {
+		width: 60upx;
+		height: 60upx;
+		margin-right: 15upx;
+	}
+	
+	.zy-project-head-right {
+		flex-grow: 1;
+		justify-content: flex-end;
+		text-align: right;
+	}
+	
+	.zy-project-item-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	
+	.zy-project-item-row view {
+		width: 50%;
 	}
 </style>
