@@ -21,3 +21,11 @@ export const getModuleById = (id) => {
       data: ''
     })
 }
+
+export const getUserById = (id) => {
+	return axios.request({
+		url: '/user-userdetail/admin/multi/' + id,
+		method: 'GET',
+		data: ''
+	})
+}
