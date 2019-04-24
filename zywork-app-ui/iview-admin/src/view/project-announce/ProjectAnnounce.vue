@@ -765,9 +765,6 @@ export default {
         .catch(err => {
           this.$Message.error(err)
         })
-      if (projectId !== 0) {
-        // 编辑，需要在list后面追加当前的数据
-      }
     },
     // 前往项目详情页面
     showProjectDetail(projectId) {

@@ -162,3 +162,7 @@ storage:
       imgParentDir: "."
       imgDir: "image/project"
       imgUrl: "upload/image/project"
+    resource:
+      imgParentDir: "."
+      imgDir: "resource"
+      imgUrl: "upload/resource"

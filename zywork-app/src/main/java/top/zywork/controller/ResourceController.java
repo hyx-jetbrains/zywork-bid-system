@@ -3,17 +3,23 @@ package top.zywork.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.common.UploadUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ResourceDTO;
+import top.zywork.enums.ResponseStatusEnum;
+import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ResourceQuery;
 import top.zywork.service.ResourceService;
+import top.zywork.service.UploadService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ResourceVO;
@@ -134,8 +140,12 @@ public class ResourceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+
+
+
     @Autowired
     public void setResourceService(ResourceService resourceService) {
         this.resourceService = resourceService;
     }
+
 }

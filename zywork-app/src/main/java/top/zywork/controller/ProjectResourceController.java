@@ -3,17 +3,29 @@ package top.zywork.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.common.UploadUtils;
+import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectResourceDTO;
+import top.zywork.dto.ResourceDTO;
+import top.zywork.enums.ResponseStatusEnum;
+import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectResourceQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.ProjectResourceService;
+import top.zywork.service.ResourceService;
+import top.zywork.service.UploadService;
+import top.zywork.vo.ResourceVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectResourceVO;
@@ -34,7 +46,29 @@ public class ProjectResourceController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectResourceController.class);
 
+    @Value("${storage.provider}")
+    private String storageProvider;
+
+    @Value("${storage.local.compressSizes}")
+    private String compressSizes;
+
+    @Value("${storage.local.compressScales}")
+    private String compressScales;
+
+    @Value("${storage.local.resource.imgParentDir}")
+    private String imgParentDir;
+
+    @Value("${storage.local.resource.imgDir}")
+    private String imgDir;
+
+    @Value("${storage.local.resource.imgUrl}")
+    private String imgUrl;
+
     private ProjectResourceService projectResourceService;
+
+    private UploadService uploadService;
+
+    private ResourceService resourceService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectResourceVO projectResourceVO, BindingResult bindingResult) {
@@ -134,8 +168,37 @@ public class ProjectResourceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("admin/upload-res")
+    public ResponseStatusVO upload(MultipartFile file) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        ResponseStatusVO responseStatusVO = uploadService.uploadFile(storageProvider, file, UploadTypeEnum.OFFICE.getAllowedExts(), UploadTypeEnum.OFFICE.getMaxSize(), uploadOptions);
+        if (!responseStatusVO.getCode().equals(ResponseStatusEnum.OK.getCode())) {
+            return responseStatusVO;
+        }
+        String fileName = file.getOriginalFilename();
+        String extension = fileName.split("\\.")[1];
+        String url = responseStatusVO.getData().toString();
+        ResourceDTO resourceDTO = resourceService.saveResource(jwtUser.getUserId(), ResourceConstants.RESOURCE_TYPE_DOCUMENT, url, extension);
+        ResourceVO resourceVO = BeanUtils.copy(resourceDTO, ResourceVO.class);
+        return ResponseStatusVO.ok("上传成功", resourceVO);
+    }
+
     @Autowired
     public void setProjectResourceService(ProjectResourceService projectResourceService) {
         this.projectResourceService = projectResourceService;
+    }
+
+    @Autowired
+    public void setUploadService(UploadService uploadService) {
+        this.uploadService = uploadService;
+    }
+
+    @Autowired
+    public void setResourceService(ResourceService resourceService) {
+        this.resourceService = resourceService;
     }
 }

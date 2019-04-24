@@ -33,4 +33,20 @@ public class ResourceServiceImpl extends AbstractBaseService implements Resource
     public void init() {
         super.init(ResourceDO.class, ResourceDTO.class);
     }
+
+
+    @Override
+    public ResourceDTO saveResource(Long userId, String mimeType, String url, String extension) {
+        ResourceDTO resourceDTO = new ResourceDTO();
+        try {
+            resourceDTO.setUserId(userId);
+            resourceDTO.setMimeType(mimeType);
+            resourceDTO.setUrl(url);
+            resourceDTO.setExtension(extension);
+            resourceDAO.save(resourceDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resourceDTO;
+    }
 }

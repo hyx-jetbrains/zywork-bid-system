@@ -292,7 +292,7 @@
 
 <script>
 import * as utils from '@/api/utils'
-import * as responseStatus from '@/api/response-status'
+import * as ResponseStatus from '@/api/response-status'
 import { isActiveSelect } from '@/api/select'
 import Editor from '_c/editor'
 import config from '@/config'
@@ -711,7 +711,7 @@ export default {
       this.form.content = html
     },
     handleSuccess(res, file) {
-      if (res.code === responseStatus.OK) {
+      if (res.code === ResponseStatus.OK) {
         this.$Notice.success({
           title: '上传成功',
           desc: file.name + ' 上传成功'

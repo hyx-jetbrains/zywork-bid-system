@@ -162,3 +162,7 @@ storage:
       imgParentDir: "/data/zywork-app-data/upload"
       imgDir: "image/project"
       imgUrl: "upload/image/project"
+    resource:
+      imgParentDir: "/data/zywork-app-data/upload"
+      imgDir: "resource"
+      imgUrl: "upload/resource"

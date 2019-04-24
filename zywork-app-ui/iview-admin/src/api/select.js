@@ -196,3 +196,46 @@ export const questionType = [
     label: '建造师及业绩'
   }
 ]
+
+/**
+ * 资源类型
+ */
+export const resourceType = [
+  {
+    value: 0,
+    label: '图片'
+  },
+  {
+    value: 1,
+    label: '文档'
+  },
+  {
+    value: 2,
+    label: '视频'
+  },
+  {
+    value: 3,
+    label: '音频'
+  }
+]
+/**
+ * 项目资源类型
+ */
+export const projectResourceType = [
+  {
+    value: 0,
+    label: '招标文件'
+  },
+  {
+    value: 1,
+    label: '澄清文件'
+  },
+  {
+    value: 2,
+    label: '清单文件'
+  },
+  {
+    value: 3,
+    label: '资格审查文件'
+  }
+]

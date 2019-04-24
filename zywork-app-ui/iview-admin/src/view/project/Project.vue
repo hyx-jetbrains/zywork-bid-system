@@ -1613,11 +1613,9 @@ export default {
   },
   computed: {},
   mounted() {
-    console.log(this.projectId)
     if (this.projectId !== undefined) {
       this.searchForm.id = this.projectId
     }
-    console.log(this.searchForm.id)
     this.search()
     this.$refs.editorAdd.initEditor(this.urls.uploadUrl)
     this.$refs.editorEdit.initEditor(this.urls.uploadUrl)
