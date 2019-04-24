@@ -70,7 +70,6 @@
           </Select>
         </FormItem>
         <FormItem label="资源文件" prop="resourceId">
-          <!-- <InputNumber v-model="form.resourceId" placeholder="请输入资源编号" style="width: 100%;"/> -->
           <Upload multiple type="drag" 
             :action="urls.uploadResourceUrl" 
             :on-success="handleSuccess"
@@ -756,13 +755,13 @@ export default {
     handleFormatError(file) {
       this.$Notice.warning({
         title: '文件格式不正确',
-        desc: file.name + ' 文件格式不正确，请选择JPG或PNG。'
+        desc: file.name + ' 文件格式不正确，请选择Word文档或PDF文档。'
       })
     },
     handleMaxSize(file) {
       this.$Notice.warning({
         title: '超出文件大小限制',
-        desc: file.name + ' 太大，不得超过2M.'
+        desc: file.name + ' 太大，不得超10M.'
       })
     },
   }
