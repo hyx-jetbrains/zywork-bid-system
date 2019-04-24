@@ -1100,7 +1100,7 @@ export default {
         this.showBuilderEnclosure(row.id)
       }
     },
-    add() {
+    setAddress() {
       if (this.tempAddress.length <= 0) {
         this.$Message.error('地址为必填项')
         return
@@ -1117,25 +1117,13 @@ export default {
           '/' +
           this.tempAddress[2]
       }
+    },
+    add() {
+      this.setAddress()
       utils.add(this)
     },
     edit() {
-      if (this.tempAddress.length <= 0) {
-        this.$Message.error('地址为必填项')
-        return
-      } else if (this.tempAddress.length === 1) {
-        this.form.certificateAddress = this.tempAddress[0]
-      } else if (this.tempAddress.length === 2) {
-        this.form.certificateAddress =
-          this.tempAddress[0] + '/' + this.tempAddress[1]
-      } else if (this.tempAddress.length === 3) {
-        this.form.certificateAddress =
-          this.tempAddress[0] +
-          '/' +
-          this.tempAddress[1] +
-          '/' +
-          this.tempAddress[2]
-      }
+      this.setAddress()
       utils.edit(this)
     },
     active(row) {
