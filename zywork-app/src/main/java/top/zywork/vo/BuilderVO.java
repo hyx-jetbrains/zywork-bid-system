@@ -24,7 +24,6 @@ public class BuilderVO extends BaseVO {
     // 建造师编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 姓名
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
@@ -69,10 +68,12 @@ public class BuilderVO extends BaseVO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
+
+	private Long[] resourceId;
 	
     public BuilderVO () {}
 
-    public BuilderVO (Long id, Long userId, String name, String gender, Date birthday, String certificateAddress, String certificateType, String certificateMajorType, String certificateStatus, String certificateRegStatus, String salary, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public BuilderVO (Long id, Long userId, String name, String gender, Date birthday, String certificateAddress, String certificateType, String certificateMajorType, String certificateStatus, String certificateRegStatus, String salary, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive, Long[] resourceId) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -90,6 +91,7 @@ public class BuilderVO extends BaseVO {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.isActive = isActive;
+		this.resourceId = resourceId;
 		
     }
 
@@ -229,6 +231,13 @@ public class BuilderVO extends BaseVO {
 		this.isActive = isActive;
 	}
 
+	public Long[] getResourceId() {
+    	return resourceId;
+	}
+
+	public void setResourceId(Long[] resourceId) {
+    	this.resourceId = resourceId;
+	}
 	
     @Override
     public String toString() {
@@ -249,7 +258,8 @@ public class BuilderVO extends BaseVO {
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 
-				", isActive = " + isActive + 
+				", isActive = " + isActive +
+				", resourceId = " + resourceId +
 				" }";
     }
 
