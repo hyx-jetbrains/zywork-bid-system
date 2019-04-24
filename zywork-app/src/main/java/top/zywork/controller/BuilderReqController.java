@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.BuilderReqDTO;
 import top.zywork.query.BuilderReqQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.BuilderReqService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -38,6 +40,11 @@ public class BuilderReqController extends BaseController {
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated BuilderReqVO builderReqVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+        builderReqVO.setUserId(jwtUser.getUserId());
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }

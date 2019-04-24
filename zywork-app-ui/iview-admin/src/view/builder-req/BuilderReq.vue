@@ -183,9 +183,6 @@
         <FormItem label="手机号" prop="phone">
           <Input v-model="searchForm.phone" placeholder="请输入手机号"/>
         </FormItem>
-        <FormItem label="说明" prop="memo">
-          <Input v-model="searchForm.memo" placeholder="请输入说明"/>
-        </FormItem>
         <FormItem label="所需人数">
           <Row>
             <i-col span="11">
@@ -208,32 +205,6 @@
               </FormItem>
             </i-col>
           </Row>
-        </FormItem>
-        <FormItem label="提供年薪">
-          <Row>
-            <i-col span="11">
-              <FormItem prop="salaryMin">
-                <InputNumber
-                  v-model="searchForm.salaryMin"
-                  placeholder="请输入开始提供年薪"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-            <i-col span="2" style="text-align: center">-</i-col>
-            <i-col span="11">
-              <FormItem prop="salaryMax">
-                <InputNumber
-                  v-model="searchForm.salaryMax"
-                  placeholder="请输入结束提供年薪"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-          </Row>
-        </FormItem>
-        <FormItem label="企业地址" prop="compAddr">
-          <Input v-model="searchForm.compAddr" placeholder="请输入企业地址"/>
         </FormItem>
         <FormItem label="企业名称" prop="compName">
           <Input v-model="searchForm.compName" placeholder="请输入企业名称"/>
@@ -703,13 +674,6 @@ export default {
             minWidth: 150,
             sortable: true
           },
-          {
-            title: '是否激活',
-            key: 'isActive',
-            minWidth: 120,
-            sortable: true
-          },
-
           {
             title: '激活状态',
             key: 'isActive',
