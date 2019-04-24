@@ -25,4 +25,6 @@ public interface MarkCarpoolDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByprojectId(@Param("projectId") Long projectId);
 }

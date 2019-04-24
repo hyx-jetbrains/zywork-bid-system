@@ -137,6 +137,16 @@ public class ProjectAnnounceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", projectAnnounceVO);
     }
 
+    @GetMapping("user/getByProjectId/{id}")
+    public ResponseStatusVO getByProjectId(@PathVariable("id") Long id) {
+        ProjectAnnounceVO projectAnnounceVO = new ProjectAnnounceVO();
+        Object obj = projectAnnounceService.getByProjectId(id);
+        if(obj != null) {
+            projectAnnounceVO = BeanUtils.copy(obj, ProjectAnnounceVO.class);
+        }
+        return ResponseStatusVO.ok("查询成功", projectAnnounceVO);
+    }
+
     @GetMapping("admin/all")
     public ResponseStatusVO listAll() {
         PagerDTO pagerDTO = projectAnnounceService.listAll();

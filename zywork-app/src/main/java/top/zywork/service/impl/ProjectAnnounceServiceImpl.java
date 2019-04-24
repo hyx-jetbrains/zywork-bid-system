@@ -38,7 +38,6 @@ public class ProjectAnnounceServiceImpl extends AbstractBaseService implements P
         super.init(ProjectAnnounceDO.class, ProjectAnnounceDTO.class);
     }
 
-
     @Override
     public List<ProjectDTO> getProjectSelect(Long projectId) {
         List<ProjectDTO> projectDTOList = new ArrayList<>();
@@ -47,5 +46,10 @@ public class ProjectAnnounceServiceImpl extends AbstractBaseService implements P
             projectDTOList = BeanUtils.copy(list, ProjectDTO.class);
         }
         return projectDTOList;
+    }
+
+    @Override
+    public Object getByProjectId(Long projectId) {
+        return projectAnnounceDAO.getByProjectId(projectId);
     }
 }

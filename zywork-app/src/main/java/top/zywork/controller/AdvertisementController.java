@@ -143,6 +143,11 @@ public class AdvertisementController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @GetMapping("any/all")
+    public ResponseStatusVO userlistAll() {
+        return listAll();
+    }
+
     @PostMapping("admin/all-cond")
     public ResponseStatusVO listAllByCondition(@RequestBody AdvertisementQuery advertisementQuery) {
         PagerDTO pagerDTO = advertisementService.listAllByCondition(advertisementQuery);

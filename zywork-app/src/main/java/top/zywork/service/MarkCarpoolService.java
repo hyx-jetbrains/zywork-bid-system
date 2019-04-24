@@ -1,5 +1,7 @@
 package top.zywork.service;
 
+import org.apache.ibatis.annotations.Param;
+
 /**
  * MarkCarpoolService服务接口<br/>
  *
@@ -9,4 +11,6 @@ package top.zywork.service;
  * @version 1.0
  */
 public interface MarkCarpoolService extends BaseService {
+
+    Object getByprojectId(@Param("projectId") Long projectId);
 }

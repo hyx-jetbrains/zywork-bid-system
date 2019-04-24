@@ -110,6 +110,18 @@ public class MarkCarpoolController extends BaseController {
         return ResponseStatusVO.ok("查询成功", markCarpoolVO);
     }
 
+    @GetMapping("user/getByProjectId/{id}")
+    public ResponseStatusVO getByProjectId(@PathVariable("id") Long id) {
+        MarkCarpoolVO markCarpoolVO = new MarkCarpoolVO();
+        Object obj = markCarpoolService.getByprojectId(id);
+        if (obj != null) {
+            markCarpoolVO = BeanUtils.copy(obj, MarkCarpoolVO.class);
+        }
+        return ResponseStatusVO.ok("查询成功", markCarpoolVO);
+    }
+
+
+
     @GetMapping("admin/all")
     public ResponseStatusVO listAll() {
         PagerDTO pagerDTO = markCarpoolService.listAll();

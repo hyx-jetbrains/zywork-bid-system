@@ -139,6 +139,11 @@ public class ProjectController extends BaseController {
         return ResponseStatusVO.ok("查询成功", projectVO);
     }
 
+    @GetMapping("user/one/{id}")
+    public ResponseStatusVO getProject(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
     @GetMapping("admin/all")
     public ResponseStatusVO listAll() {
         PagerDTO pagerDTO = projectService.listAll();
@@ -163,6 +168,7 @@ public class ProjectController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+
     @PostMapping("admin/upload-img")
     public ResponseStatusVO upload(MultipartFile file) {
         UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
@@ -180,6 +186,11 @@ public class ProjectController extends BaseController {
     public ResponseStatusVO releaseProjectBatch(@RequestBody @Validated List<ProjectVO> projectVOList) {
         projectService.updateBatch(BeanUtils.copyListObj(projectVOList, ProjectDTO.class));
         return ResponseStatusVO.ok("批量发布成功", null);
+    }
+
+    @PostMapping("user/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody ProjectQuery projectQuery) {
+        return listPageByCondition(projectQuery);
     }
 
     @Autowired

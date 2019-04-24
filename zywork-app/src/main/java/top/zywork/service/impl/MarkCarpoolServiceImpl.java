@@ -33,4 +33,9 @@ public class MarkCarpoolServiceImpl extends AbstractBaseService implements MarkC
     public void init() {
         super.init(MarkCarpoolDO.class, MarkCarpoolDTO.class);
     }
+
+    @Override
+    public Object getByprojectId(Long projectId) {
+        return markCarpoolDAO.getByprojectId(projectId);
+    }
 }

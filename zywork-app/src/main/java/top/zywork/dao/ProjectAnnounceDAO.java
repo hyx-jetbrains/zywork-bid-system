@@ -26,6 +26,7 @@ public interface ProjectAnnounceDAO extends BaseDAO {
     @Override
     Long countByCondition(@Param("query") Object queryObj);
 
+
     /***
      * @description: 取前端所需的下拉框，用于公示详情的下拉框
      * @return: java.util.List<java.lang.Object>
@@ -33,4 +34,7 @@ public interface ProjectAnnounceDAO extends BaseDAO {
      * @date: 2019-04-23 13:07
      */
     List<Object> getProjectSelect(@Param("projectId") Long projectId);
+
+    Object getByProjectId(@Param("projectId") Long projectId);
+
 }

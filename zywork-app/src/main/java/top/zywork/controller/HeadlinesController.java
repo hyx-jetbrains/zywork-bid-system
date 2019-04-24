@@ -135,6 +135,11 @@ public class HeadlinesController extends BaseController {
         return ResponseStatusVO.ok("查询成功", headlinesVO);
     }
 
+    @GetMapping("any/one/{id}")
+    public ResponseStatusVO getHeadlinesById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
     @GetMapping("admin/all")
     public ResponseStatusVO listAll() {
         PagerDTO pagerDTO = headlinesService.listAll();
@@ -164,6 +169,11 @@ public class HeadlinesController extends BaseController {
         UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
         uploadOptions.generateCompressSizes(compressSizes);
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
+    }
+
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListAllByCondition(@RequestBody HeadlinesQuery headlinesQuery) {
+        return listPageByCondition(headlinesQuery);
     }
 
     @Autowired
