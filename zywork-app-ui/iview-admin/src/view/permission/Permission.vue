@@ -318,7 +318,12 @@
         <span v-text="form.isActive"></span>
       </p>
     </Modal>
-    <moduleDetail :form="moduleDetailForm" :detail="modal.moduleDetail" v-on:setDetail="setDetailModal"/>
+    <Modal 
+      :transfer="false"
+      title="项目详情"
+      v-model="modal.moduleDetail">
+      <moduleDetail :form="moduleDetailForm" />
+    </Modal>
     <Modal
       :transfer="false"
       fullscreen
@@ -831,16 +836,15 @@ export default {
     changePageSize(pageSize) {
       utils.changePageSize(this, pageSize)
     },
-    setDetailModal(val) {
-      this.modal.moduleDetail = val
-    },
     showModuleDetailModal(id) {
       getModuleById(id)
         .then(res => {
           const data = res.data
           if (data.code === ResponseStatus.OK) {
             this.moduleDetailForm = data.data
-            this.modal.moduleDetail = true
+            // setTimeout(() => {
+              this.modal.moduleDetail = true
+            // }, 500)
           } else {
             this.$Message.error(data.message)
           }
