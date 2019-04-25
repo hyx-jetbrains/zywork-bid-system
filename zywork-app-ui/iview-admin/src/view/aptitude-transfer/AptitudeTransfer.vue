@@ -95,7 +95,7 @@
             placeholder="请输入备注"
           />
         </FormItem>
-        <FormItem label="资源文件" prop="resourceId">
+        <FormItem label="资源文件" prop="resourceId" v-if="isEnclosureShow">
           <Upload
             multiple
             type="drag"
@@ -112,6 +112,7 @@
               <p>单击或拖动文件到此处上传</p>
             </div>
           </Upload>
+          <p style="color: red">请方向上传你的资质证书，我们平台承诺仅为核实企业真实性，不会对外透露贵公司信息。</p>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -925,7 +926,8 @@ export default {
       },
       uploadHeader: {
         Authorization: 'Bearer ' + getLocalStorageToken()
-      }
+      },
+      isEnclosureShow: false
     }
   },
   computed: {},
@@ -1070,8 +1072,10 @@ export default {
     // 切换资质转让类别
     switchType() {
       if (this.form.type === 0) {
+        this.isEnclosureShow = false
         this.form.title = '本人急购一家' + this.form.compAptitudeLevel + this.form.compAptitudeType + '资质的企业'
       } else {
+        this.isEnclosureShow = true
         this.form.title = '本人急售一家' + this.form.compAptitudeLevel + this.form.compAptitudeType + '资质的企业'
       }
     },
