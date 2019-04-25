@@ -118,6 +118,21 @@ export const projectMarkStatus = [
     label: '已开标'
   }
 ]
+
+/**
+ * @description 辖区类别
+ */
+export const region = [
+	{
+		value: '省内',
+		label: '省内'
+	},
+	{
+		value: '省外',
+		label: '省外'
+	}
+]
+
 /**
  * @description 招投标项目城市下拉框，江西省的所有市
  */
