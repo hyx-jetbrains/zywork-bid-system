@@ -1218,3 +1218,29 @@ export const education = [
     label: '博士'
   }
 ]
+
+/**
+ * 资料类别
+ */
+export const seekDataType = [
+  {
+    value: '资料',
+    label: '资料'
+  },
+  {
+    value: '文件夹',
+    label: '文件夹'
+  },
+  {
+    value: '物品',
+    label: '物品'
+  },
+  {
+    value: '包裹',
+    label: '包裹'
+  },
+  {
+    value: '重要证件',
+    label: '重要证件'
+  }
+]

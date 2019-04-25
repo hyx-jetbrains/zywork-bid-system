@@ -1281,7 +1281,6 @@ export default {
       this.modal.userDetail = val
     },
     confirmSelection(id) {
-      console.log(id)
       this.modal.userDetalSearch = false
       this.searchForm.idMin = id
       this.searchForm.idMax = id
