@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.MarkSeekcarDTO;
 import top.zywork.query.MarkSeekcarQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.MarkSeekcarService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -25,7 +27,7 @@ import java.util.List;
  *
  * 创建于2019-04-19<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 @RestController
@@ -38,9 +40,14 @@ public class MarkSeekcarController extends BaseController {
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated MarkSeekcarVO markSeekcarVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.authenticationError();
+        }
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        markSeekcarVO.setUserId(jwtUser.getUserId());
         markSeekcarService.save(BeanUtils.copy(markSeekcarVO, MarkSeekcarDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }

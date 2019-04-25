@@ -1047,7 +1047,18 @@ export default {
     this.search()
   },
   methods: {
+    initSelect() {
+      this.form.certificateType = this.certificateTypeList[0].value
+      this.initCertificateMajor(this.form.certificateType)
+      this.form.certificateStatus = this.certificateStatus[0].value
+      this.form.certificateRegStatus = this.certificateRegStatus[0].value
+      this.form.salary = this.salaryRange[0].value
+      this.form.gender = this.genderList[0].value
+    },
     showModal(modal) {
+      if (modal === 'add') {
+        this.initSelect()
+      }
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
@@ -1148,6 +1159,7 @@ export default {
     initCertificateMajor(val) {
       this.certificateMajorList = []
       this.certificateMajorList = this.certificateMajor[val]
+      this.form.certificateMajorType = this.certificateMajorList[0].value
     },
     handleSuccess(res, file) {
       if (res.code === ResponseStatus.OK) {

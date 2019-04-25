@@ -1137,3 +1137,29 @@ export const companyAptitudeType = [
     label: '其他项目'
   }
 ]
+
+/**
+ * 轿车类别
+ */
+export const carType = [
+  {
+    value: '小轿车',
+    label: '小轿车'
+  },
+  {
+    value: 'suv',
+    label: 'suv'
+  },
+  {
+    value: '面包车',
+    label: '面包车'
+  },
+  {
+    value: '越野车',
+    label: '越野车'
+  },
+  {
+    value: '班车',
+    label: '班车'
+  }
+]

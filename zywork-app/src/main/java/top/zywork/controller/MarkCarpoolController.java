@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.MarkCarpoolDTO;
 import top.zywork.query.MarkCarpoolQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.MarkCarpoolService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -38,9 +40,14 @@ public class MarkCarpoolController extends BaseController {
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated MarkCarpoolVO markCarpoolVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.authenticationError();
+        }
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        markCarpoolVO.setUserId(jwtUser.getUserId());
         markCarpoolService.save(BeanUtils.copy(markCarpoolVO, MarkCarpoolDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
