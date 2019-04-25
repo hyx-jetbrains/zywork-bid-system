@@ -24,7 +24,6 @@ public class AptitudeTransferVO extends BaseVO {
     // 资质转让编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 转让类别
 	@NotNull(message = "此项是必须项")
@@ -56,10 +55,14 @@ public class AptitudeTransferVO extends BaseVO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
+
+	private Long[] resourceId;
 	
     public AptitudeTransferVO () {}
 
-    public AptitudeTransferVO (Long id, Long userId, Byte type, String title, String compAptitudeLevel, String compAptitudeType, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public AptitudeTransferVO (Long id, Long userId, Byte type, String title, String compAptitudeLevel,
+							   String compAptitudeType, String phone, String memo, Integer version,
+							   Date createTime, Date updateTime, Byte isActive, Long[] resourceId) {
         this.id = id;
 		this.userId = userId;
 		this.type = type;
@@ -72,7 +75,7 @@ public class AptitudeTransferVO extends BaseVO {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.isActive = isActive;
-		
+		this.resourceId = resourceId;
     }
 
     public Long getId() {
@@ -171,8 +174,15 @@ public class AptitudeTransferVO extends BaseVO {
 		this.isActive = isActive;
 	}
 
-	
-    @Override
+	public Long[] getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(Long[] resourceId) {
+		this.resourceId = resourceId;
+	}
+
+	@Override
     public String toString() {
         return "AptitudeTransferVO {" +
                 "id = " + id + 
@@ -186,7 +196,8 @@ public class AptitudeTransferVO extends BaseVO {
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 
-				", isActive = " + isActive + 
+				", isActive = " + isActive +
+				", resourceId = " + resourceId +
 				" }";
     }
 

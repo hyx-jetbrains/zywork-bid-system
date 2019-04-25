@@ -70,7 +70,7 @@
           </Select>
         </FormItem>
         <FormItem label="资源文件" prop="resourceId">
-          <Upload multiple type="drag" 
+          <Upload type="drag" 
             :action="urls.uploadResourceUrl" 
             :on-success="handleSuccess"
             :on-format-error="handleFormatError"
@@ -296,10 +296,12 @@
       @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
       :closable="false"
       :mask-closable="false"
-      :footer-hide="true"
       width="1000"
     >
       <project-list ref="projectListItem" @initData="initData"></project-list>
+      <div slot="footer">
+        <Button type="default" size="large" @click="cancelModal('project')">取消</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -326,7 +328,7 @@ export default {
         edit: false,
         search: false,
         detail: false,
-        project: true
+        project: false
       },
       loading: {
         add: false,
@@ -359,18 +361,10 @@ export default {
         version: null,
         createTime: null,
         updateTime: null,
-        isActive: null
+        isActive: null,
       },
       validateRules: {
         projectId: [
-          {
-            type: 'integer',
-            required: true,
-            message: '此项为必须项',
-            trigger: 'blur, change'
-          }
-        ],
-        resourceId: [
           {
             type: 'integer',
             required: true,
@@ -635,14 +629,19 @@ export default {
       projectList: [],
       isActiveSelect: isActiveSelect,
       projectResourceType: projectResourceType,
-      projectId: '',
       uploadHeader: {
         'Authorization': 'Bearer ' + getLocalStorageToken()
-      }
+      },
+      projectId: this.$route.params.projectId
     }
   },
   computed: {},
   mounted() {
+    if (this.projectId !== undefined) {
+      this.initData(this.projectId) 
+    } else {
+      this.modal.project = true
+    }
     this.initProjectSelect()
   },
   methods: {
@@ -650,7 +649,10 @@ export default {
     initData(projectId) {
       this.modal.project = false
       this.projectId = projectId
-      this.searchForm.projectId = projectId
+      this.searchForm.projectId 
+            = this.searchForm.projectIdMin
+            = this.searchForm.projectIdMax
+            = this.projectId
       this.search()
     },
     showModal(modal) {

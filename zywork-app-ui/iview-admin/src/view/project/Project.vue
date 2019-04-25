@@ -1588,6 +1588,15 @@ export default {
                         },
                         '发布'
                       ),
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'showEnclosure'
+                          }
+                        },
+                        '附件'
+                      ),
                     ]
                   )
                 ]
@@ -1672,6 +1681,9 @@ export default {
         }
         row.releaseStatus = '已发布';
         projectUtils.releaseProject(this, row)
+      } else if (itemName === 'showEnclosure') {
+        // 查看附件
+        this.showBuilderEnclosure(row.id)
       }
     },
     add() {
@@ -1700,6 +1712,13 @@ export default {
     },
     handleChange(html, text) {
       this.form.projectDetail = html
+    },
+    // 前往附件页面
+    showBuilderEnclosure(projectId) {
+      this.$router.push({
+        name: 'project_resource_manage',
+        params: { projectId: projectId }
+      });
     }
   }
 }

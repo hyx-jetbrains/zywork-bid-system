@@ -155,7 +155,7 @@
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
             :format="['jpg','jpeg','png']"
-            :max-size="10240"
+            :max-size="2048"
             :headers="uploadHeader"
           >
             <div style="padding: 20px 0">

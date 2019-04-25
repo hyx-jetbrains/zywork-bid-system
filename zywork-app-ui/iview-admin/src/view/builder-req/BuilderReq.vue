@@ -385,9 +385,7 @@ import * as utils from '@/api/utils'
 import UserList from '@/view/user/UserList.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
-import {
-  isActiveSelect
-} from '@/api/select'
+import { isActiveSelect } from '@/api/select'
 import city from '@/api/city.json'
 
 export default {
@@ -399,25 +397,24 @@ export default {
   data() {
     return {
       userDetailForm: {
-					userId: null,
-					userPhone: null,
-					userEmail: null,
-					userCreateTime: null,
-					userDetailNickname: null,
-					userDetailHeadicon: null,
-					userDetailGender: null,
-					userDetailBirthday: null,
-					userDetailAge: null,
-					userDetailQq: null,
-					userDetailQqQrcode: null,
-					userDetailWechat: null,
-					userDetailWechatQrcode: null,
-					userDetailAlipay: null,
-					userDetailAlipayQrcode: null,
-					userDetailShareCode: null,
-					userDetailVersion: null,
-
-				},
+        userId: null,
+        userPhone: null,
+        userEmail: null,
+        userCreateTime: null,
+        userDetailNickname: null,
+        userDetailHeadicon: null,
+        userDetailGender: null,
+        userDetailBirthday: null,
+        userDetailAge: null,
+        userDetailQq: null,
+        userDetailQqQrcode: null,
+        userDetailWechat: null,
+        userDetailWechatQrcode: null,
+        userDetailAlipay: null,
+        userDetailAlipayQrcode: null,
+        userDetailShareCode: null,
+        userDetailVersion: null
+      },
       modal: {
         add: false,
         edit: false,
@@ -811,7 +808,7 @@ export default {
         maxRows: 5
       },
       cityData: city,
-      tempAddress: [],
+      tempAddress: []
     }
   },
   computed: {},
@@ -905,8 +902,7 @@ export default {
       } else if (this.tempAddress.length === 1) {
         this.form.compAddr = this.tempAddress[0]
       } else if (this.tempAddress.length === 2) {
-        this.form.compAddr =
-          this.tempAddress[0] + '/' + this.tempAddress[1]
+        this.form.compAddr = this.tempAddress[0] + '/' + this.tempAddress[1]
       } else if (this.tempAddress.length === 3) {
         this.form.compAddr =
           this.tempAddress[0] +

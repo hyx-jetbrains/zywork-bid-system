@@ -3,17 +3,29 @@ package top.zywork.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.common.UploadUtils;
+import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.AptitudeTransferDTO;
+import top.zywork.dto.ResourceDTO;
+import top.zywork.enums.ResponseStatusEnum;
+import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.AptitudeTransferQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.AptitudeTransferService;
+import top.zywork.service.ResourceService;
+import top.zywork.service.UploadService;
+import top.zywork.vo.ResourceVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.AptitudeTransferVO;
@@ -25,7 +37,7 @@ import java.util.List;
  *
  * 创建于2019-04-19<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 @RestController
@@ -36,12 +48,19 @@ public class AptitudeTransferController extends BaseController {
 
     private AptitudeTransferService aptitudeTransferService;
 
+    private ResourceService resourceService;
+
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated AptitudeTransferVO aptitudeTransferVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+        aptitudeTransferVO.setUserId(jwtUser.getUserId());
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
-        aptitudeTransferService.save(BeanUtils.copy(aptitudeTransferVO, AptitudeTransferDTO.class));
+        aptitudeTransferService.saveAptitudeTransfer(aptitudeTransferVO);
         return ResponseStatusVO.ok("添加成功", null);
     }
 
@@ -134,8 +153,22 @@ public class AptitudeTransferController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("admin/upload-res")
+    public ResponseStatusVO upload(MultipartFile file) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
+                ResourceConstants.RESOURCE_TYPE_IMAGE, UploadTypeEnum.IMAGE.getAllowedExts(),
+                UploadTypeEnum.IMAGE.getMaxSize());
+        return responseStatusVO;
+    }
+
     @Autowired
     public void setAptitudeTransferService(AptitudeTransferService aptitudeTransferService) {
         this.aptitudeTransferService = aptitudeTransferService;
+    }
+
+    @Autowired
+    public void setResourceService(ResourceService resourceService) {
+        this.resourceService = resourceService;
     }
 }

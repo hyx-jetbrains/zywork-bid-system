@@ -1079,3 +1079,61 @@ export const salaryRange = [
     label: '15万元以上'
   },
 ]
+
+/**
+ * 资质转让类别
+ */
+export const aptitudeTransferType = [
+  {
+    value: 0,
+    label: '购买'
+  },
+  {
+    value: 1,
+    label: '转让'
+  }
+]
+
+/**
+ * 企业资质等级
+ */
+export const companyAptitudeLevel = [
+  {
+    value: '一级',
+    label: '一级'
+  },
+  {
+    value: '二级',
+    label: '二级'
+  },
+  {
+    value: '三级',
+    label: '三级'
+  }
+]
+
+/**
+ * 企业资质类别
+ */
+export const companyAptitudeType = [
+  {
+    value: '房建市政',
+    label: '房建市政'
+  },
+  {
+    value: '水利工程',
+    label: '水利工程'
+  },
+  {
+    value: '交通工程',
+    label: '交通工程'
+  },
+  {
+    value: '政府采购',
+    label: '政府采购'
+  },
+  {
+    value: '重点工程',
+    label: '其他项目'
+  }
+]

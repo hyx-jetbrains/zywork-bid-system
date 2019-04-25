@@ -166,7 +166,7 @@ export default [
           title: '建造师附件管理',
           icon: 'ios-link'
         },
-        component: () => import('@/view/builder-resource/BuilderResource.vue')
+        component: () => import('@/view/builder-resource/BuilderResourceList.vue')
       },
       {
         path: 'AptitudeTransfer',
@@ -184,7 +184,7 @@ export default [
           title: '资质转让附件管理',
           icon: 'ios-link'
         },
-        component: () => import('@/view/aptitude-resource/AptitudeResource.vue')
+        component: () => import('@/view/aptitude-resource/AptitudeResourceList.vue')
       },
       {
         path: 'MarkCarpool',

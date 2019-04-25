@@ -46,27 +46,7 @@ public class ProjectResourceController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectResourceController.class);
 
-    @Value("${storage.provider}")
-    private String storageProvider;
-
-    @Value("${storage.local.compressSizes}")
-    private String compressSizes;
-
-    @Value("${storage.local.compressScales}")
-    private String compressScales;
-
-    @Value("${storage.local.resource.imgParentDir}")
-    private String imgParentDir;
-
-    @Value("${storage.local.resource.imgDir}")
-    private String imgDir;
-
-    @Value("${storage.local.resource.imgUrl}")
-    private String imgUrl;
-
     private ProjectResourceService projectResourceService;
-
-    private UploadService uploadService;
 
     private ResourceService resourceService;
 
@@ -171,30 +151,15 @@ public class ProjectResourceController extends BaseController {
     @PostMapping("admin/upload-res")
     public ResponseStatusVO upload(MultipartFile file) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
-        if (jwtUser == null) {
-            return ResponseStatusVO.authenticationError();
-        }
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
-        ResponseStatusVO responseStatusVO = uploadService.uploadFile(storageProvider, file, UploadTypeEnum.OFFICE.getAllowedExts(), UploadTypeEnum.OFFICE.getMaxSize(), uploadOptions);
-        if (!responseStatusVO.getCode().equals(ResponseStatusEnum.OK.getCode())) {
-            return responseStatusVO;
-        }
-        String fileName = file.getOriginalFilename();
-        String extension = fileName.split("\\.")[1];
-        String url = responseStatusVO.getData().toString();
-        ResourceDTO resourceDTO = resourceService.saveResource(jwtUser.getUserId(), ResourceConstants.RESOURCE_TYPE_DOCUMENT, url, extension);
-        ResourceVO resourceVO = BeanUtils.copy(resourceDTO, ResourceVO.class);
-        return ResponseStatusVO.ok("上传成功", resourceVO);
+        ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
+                ResourceConstants.RESOURCE_TYPE_DOCUMENT, UploadTypeEnum.OFFICE.getAllowedExts(),
+                UploadTypeEnum.OFFICE.getMaxSize());
+        return responseStatusVO;
     }
 
     @Autowired
     public void setProjectResourceService(ProjectResourceService projectResourceService) {
         this.projectResourceService = projectResourceService;
-    }
-
-    @Autowired
-    public void setUploadService(UploadService uploadService) {
-        this.uploadService = uploadService;
     }
 
     @Autowired
