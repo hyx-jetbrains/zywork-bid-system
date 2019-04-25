@@ -1,5 +1,7 @@
 import axios from '@/libs/api.request'
 import Qs from 'qs'
+import * as ResponseStatus from '@/api/response-status'
+import * as utils from '@/api/utils'
 /**
  * 登入
  */
@@ -129,5 +131,67 @@ export const restoreTrash = msg_id => {
     data: {
       msg_id
     }
+  })
+}
+
+/**
+ * 隐藏或开放简历
+ * @param self this
+ * @param row 需要隐藏或开放的数据对象
+ */
+export const setResumeIsShow = (self, row) => {
+  return new Promise((resolve, reject) => {
+    let isShow = row.isShow === 0 ? 1 : 0
+    axios.request({
+      url: self.urls.activeUrl,
+      method: 'POST',
+      data: {
+        id: row.id,
+        isShow: isShow
+      }
+    }).then(response => {
+      if (response.data.code !== ResponseStatus.OK) {
+        self.$Message.error(response.data.message)
+      } else {
+        self.$Message.success("隐藏或开放成功")
+      }
+      utils.search(self)
+      resolve(response)
+    }).catch(error => {
+      console.log(error)
+      self.$Message.error('隐藏或开放数据失败，稍候再试')
+      reject(error)
+    })
+  })
+}
+
+/**
+ * 设置是否允许推荐
+ * @param self this
+ * @param row 需要设置的对象
+ */
+export const setResumeIsRecommend = (self, row) => {
+  return new Promise((resolve, reject) => {
+    let isRecommend = row.isRecommend === 0 ? 1 : 0
+    axios.request({
+      url: self.urls.activeUrl,
+      method: 'POST',
+      data: {
+        id: row.id,
+        isRecommend: isRecommend
+      }
+    }).then(response => {
+      if (response.data.code !== ResponseStatus.OK) {
+        self.$Message.error(response.data.message)
+      } else {
+        self.$Message.success("设置成功")
+      }
+      utils.search(self)
+      resolve(response)
+    }).catch(error => {
+      console.log(error)
+      self.$Message.error('设置失败，稍候再试')
+      reject(error)
+    })
   })
 }

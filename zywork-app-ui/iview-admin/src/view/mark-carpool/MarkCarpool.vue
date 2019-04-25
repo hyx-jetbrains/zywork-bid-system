@@ -54,12 +54,14 @@
       @on-visible-change="changeModalVisibleResetForm('addForm', $event)"
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
+        <FormItem label="发布用户" prop="userId">
+          <span v-text="form.userId"></span>
+          &nbsp;
+          <Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
+        </FormItem>
         <FormItem label="项目编号" prop="projectId">
-          <span v-text="projectId"></span>
-          <Button @click="showModal('project')" type="text">选择项目</Button>&nbsp;
-          <p style="color: red;">
-            <strong>温馨提示：</strong>请先选选择项目
-          </p>
+          <span v-text="form.projectId"></span>
+          &nbsp;<Button @click="showModal('project')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="城市" prop="city">
           <Cascader
@@ -120,8 +122,14 @@
       @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
+        <FormItem label="发布用户" prop="userId">
+          <span v-text="form.userId"></span>
+          &nbsp;
+          <Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
+        </FormItem>
         <FormItem label="项目编号" prop="projectId">
-          <Input v-model="form.projectId" readonly/>
+          <span v-text="form.projectId"></span>
+          &nbsp;<Button @click="showModal('project')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="城市" prop="city">
           <Cascader
@@ -254,7 +262,13 @@
           <Input v-model="searchForm.endAddr" placeholder="请输入目的地"/>
         </FormItem>
         <FormItem label="汽车类型" prop="carType">
-          <Input v-model="searchForm.carType" placeholder="请输入汽车类型"/>
+          <Select v-model="searchForm.carType" placeholder="请选择汽车类型" clearable filterable>
+            <i-option
+              v-for="item in carTypeSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="搭载人数">
           <Row>
@@ -495,7 +509,6 @@
     <Modal
       v-model="modal.project"
       title="选择招投标项目"
-      @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
       :closable="false"
       :mask-closable="false"
       width="1000"
@@ -505,6 +518,13 @@
         <Button type="default" size="large" @click="cancelModal('project')">取消</Button>
       </div>
     </Modal>
+
+    <Modal :transfer="false" fullscreen v-model="modal.userChoice" title="选择用户">
+      <user-list-choice ref="UserListChoice" v-on:confirmChoice="confirmChoice"/>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -512,6 +532,7 @@
 import * as utils from '@/api/utils'
 import UserList from '@/view/user/UserList.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
+import UserListChoice from '@/view/user/UserListChoice.vue'
 import { getUserById } from '@/api/module'
 import ProjectList from '@/view/project/ProjectList.vue'
 import city from '@/api/city.json'
@@ -522,7 +543,8 @@ export default {
   components: {
     userDetail,
     UserList,
-    ProjectList
+    ProjectList,
+    UserListChoice
   },
   data() {
     return {
@@ -552,7 +574,8 @@ export default {
         detail: false,
         userDetail: false,
         userDetalSearch: false,
-        project: false
+        project: false,
+        userChoice: false
       },
       loading: {
         add: false,
@@ -990,7 +1013,6 @@ export default {
         tableDetails: [],
         selections: []
       },
-      projectId: '',
       cityData: city,
       tempAddress: [],
       isActiveSelect: isActiveSelect,
@@ -1004,11 +1026,13 @@ export default {
   methods: {
     // 初始化数据
     initData(projectId) {
-      utils.cancelModal(this, 'project')
-      this.projectId = projectId
+      this.cancelModal('project')
       this.form.projectId = projectId
     },
     showModal(modal) {
+      if (modal === 'add') {
+        this.form.carType = this.carTypeSelect[0].value
+      }
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
@@ -1048,7 +1072,6 @@ export default {
         for (var i = 0; i < tempAddrArr.length; i++) {
           this.tempAddress.push(tempAddrArr[i])
         }
-        this.projectId = this.form.projectId
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -1106,14 +1129,13 @@ export default {
     },
     add() {
       if (
-        this.projectId === undefined ||
-        this.projectId === null ||
-        this.projectId === ''
+        this.form.projectId === undefined ||
+        this.form.projectId === null ||
+        this.form.projectId === ''
       ) {
         this.$Message.error('请选择项目')
         return
       }
-      this.form.projectId = this.projectId
       this.setAddress()
       utils.add(this)
     },
@@ -1138,6 +1160,11 @@ export default {
     },
     changePageSize(pageSize) {
       utils.changePageSize(this, pageSize)
+    },
+    // 确认选择用户
+    confirmChoice(userId) {
+      this.form.userId = userId
+      this.cancelModal('userChoice')
     }
   }
 }

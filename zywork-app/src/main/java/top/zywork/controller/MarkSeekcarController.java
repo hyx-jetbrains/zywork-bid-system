@@ -40,14 +40,9 @@ public class MarkSeekcarController extends BaseController {
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated MarkSeekcarVO markSeekcarVO, BindingResult bindingResult) {
-        JwtUser jwtUser = SecurityUtils.getJwtUser();
-        if (null == jwtUser) {
-            return ResponseStatusVO.authenticationError();
-        }
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
-        markSeekcarVO.setUserId(jwtUser.getUserId());
         markSeekcarService.save(BeanUtils.copy(markSeekcarVO, MarkSeekcarDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }

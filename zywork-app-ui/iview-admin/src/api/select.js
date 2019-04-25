@@ -1163,3 +1163,43 @@ export const carType = [
     label: '班车'
   }
 ]
+
+/**
+ * 求职类别
+ */
+export const jobType = [
+  {
+    value: 0,
+    label: '全职'
+  },
+  {
+    value: 1,
+    label: '兼职'
+  }
+]
+
+/**
+ * 学历
+ */
+export const education = [
+  {
+    value: '不限',
+    label: '不限'
+  },
+  {
+    value: '大专',
+    label: '大专'
+  },
+  {
+    value: '本科',
+    label: '本科'
+  },
+  {
+    value: '硕士',
+    label: '硕士'
+  },
+  {
+    value: '博士',
+    label: '博士'
+  }
+]

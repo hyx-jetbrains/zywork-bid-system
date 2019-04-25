@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ResumeDTO;
 import top.zywork.query.ResumeQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.ResumeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;

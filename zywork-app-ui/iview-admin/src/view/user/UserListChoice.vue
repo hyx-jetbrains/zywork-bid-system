@@ -8,12 +8,27 @@
 					<Tooltip content="刷新" placement="right">
 						<Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
 					</Tooltip>
-					<Table ref="dataTable" stripe :loading="table.loading" :columns="table.tableColumns" :data="table.tableDetails"
-					 style="margin-top:20px;" @on-selection-change="changeSelection" @on-sort-change="changeSort"></Table>
+					<Table 
+						highlight-row
+						ref="dataTable"
+						stripe
+						:loading="table.loading"
+						:columns="table.tableColumns"
+						:data="table.tableDetails"
+						style="margin-top:20px;"
+						@on-current-change="changeCurrent"
+						@on-sort-change="changeSort"
+					></Table>
 					<div style="margin: 20px;overflow: hidden">
 						<div style="float: right;">
-							<Page :total="page.total" :current="searchForm.pageNo" @on-change="changePageNo" @on-page-size-change="changePageSize"
-							 showSizer showTotal></Page>
+							<Page
+								:total="page.total"
+								:current="searchForm.pageNo"
+								@on-change="changePageNo"
+								@on-page-size-change="changePageSize"
+								showSizer
+								showTotal
+							></Page>
 						</div>
 					</div>
 				</Card>
@@ -109,8 +124,6 @@
 			<p>用户编号: <span v-text="form.id"></span></p>
 			<p>手机号: <span v-text="form.phone"></span></p>
 			<p>用户邮箱: <span v-text="form.email"></span></p>
-			<p>登录密码: <span v-text="form.password"></span></p>
-			<p>加密盐值: <span v-text="form.salt"></span></p>
 			<p>创建时间: <span v-text="form.createTime"></span></p>
 			<p>更新时间: <span v-text="form.updateTime"></span></p>
 			<p>是否激活: <span v-text="form.isActive"></span></p>
@@ -123,7 +136,7 @@
 	import * as utils from '@/api/utils'
 
 	export default {
-		name: 'UserList',
+		name: 'UserListSingle',
 		data() {
 			return {
 				modal: {
@@ -180,13 +193,7 @@
 				},
 				table: {
 					loading: false,
-					tableColumns: [{
-							type: 'selection',
-							width: 45,
-							key: "id",
-							align: 'center',
-							fixed: 'left'
-						},
+					tableColumns: [
 						{
 							width: 60,
 							align: 'center',
@@ -210,18 +217,6 @@
 						{
 							title: '用户邮箱',
 							key: 'email',
-							minWidth: 120,
-							sortable: true
-						},
-						{
-							title: '登录密码',
-							key: 'password',
-							minWidth: 120,
-							sortable: true
-						},
-						{
-							title: '加密盐值',
-							key: 'salt',
 							minWidth: 120,
 							sortable: true
 						},
@@ -271,7 +266,8 @@
 						}
 					],
 					tableDetails: [],
-					selections: []
+					selections: [],
+					currentRow: {}
 				}
 			}
 		},
@@ -313,6 +309,9 @@
 			changeSelection(selections) {
 				utils.changeSelections(this, selections)
 			},
+			changeCurrent(currentRow, oldCurrentRow) {
+			    utils.changeCurrent(this, currentRow, oldCurrentRow)
+			},
 			changeSort(sortColumn) {
 				utils.changeSort(this, sortColumn)
 			},
@@ -324,11 +323,7 @@
 			},
 			confirmSelection() {
 				// 确认选择的逻辑
-				if (this.table.selections.length !== 1) {
-				  this.$Message.error('请选择一条数据')
-				  return
-				}
-				this.$emit("confirmSelection", this.table.selections[0].id)
+				this.$emit("confirmChoice", this.table.currentRow.id)
 			}
 		}
 	}
