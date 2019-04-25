@@ -1,6 +1,6 @@
 <template>
 	<view>
-		帮助
+		常见问题
 	</view>
 </template>
 

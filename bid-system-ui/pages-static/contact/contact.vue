@@ -1,6 +1,6 @@
 <template>
 	<view>
-		关于
+		联系我们
 	</view>
 </template>
 

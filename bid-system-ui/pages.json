@@ -46,14 +46,14 @@
 				{
 					"path": "help/help",
 					"style": {
-						"navigationBarTitleText": "帮助中心",
+						"navigationBarTitleText": "常见问题",
 						"backgroundTextStyle": "light"
 					}
 				},
 				{
-					"path": "about/about",
+					"path": "contact/contact",
 					"style": {
-						"navigationBarTitleText": "关于",
+						"navigationBarTitleText": "联系我们",
 						"backgroundTextStyle": "light"
 					}
 				},

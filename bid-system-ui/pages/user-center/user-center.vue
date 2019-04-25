@@ -4,39 +4,61 @@
 			<view class="zy-user-info" v-if="isUserLogin">
 				<view class="zy-user-left">
 					<image class="zy-headicon" :src="user.headicon === null ? headicon : imgBaseUrl + '/' + user.headicon" @click="chooseImage"></image>
-					<text class="zy-name">{{user.nickname}}</text>
+					<view>
+						<view class="zy-text-bold">{{user.nickname}}</view>
+						<view class="zy-text-small">手机号</view>
+					</view>
+					<view style="margin-left: 100upx;">
+						<zywork-icon type="iconVIP" color="#ffffff" size="24" style="display: inline-block; margin-right: 20upx;"/>
+						<zywork-icon type="iconzhuanjiarenzheng" color="#ccc" size="24" style="display: inline-block;"/>
+					</view>
 				</view>
-				<zywork-icon class="zy-user-more" type="iconiconfonti" color="#FFFFFF"/>
+				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF"/>
 			</view>
 			<view class="zy-user-info" v-else>
 				<view class="zy-user-left">
 					<image class="zy-headicon" :src="headicon"></image>
 					<view>
-						<view class="zy-name" @click="toLogin">点击登录</view>
+						<view class="zy-text-bold" @click="toLogin">点击登录</view>
 						<view class="zy-text-small">您还未登录哦~</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="zy-user-balance">
-			<view @click="toAccountDetail">
-				<view>
-					<text class="zy-data-text">{{userWallet.usableIntegral / 100}}/{{userWallet.integral / 100}}</text>
-					<text class="zy-small-text">积分 ></text>
-				</view>
+			<view class="zy-user-balance-item">
+				<text class="zy-text-primary zy-text-big zy-text-bold">0</text>
+				<text class="zy-text-info">佣金</text>
 			</view>
-			<view class="zy-user-balance-opt">
-				<view @click="toFundsRecharge">充值</view>
-				<view @click="toFundsWithdraw">提现</view>
+			<view class="zy-user-balance-item">
+				<text class="zy-text-primary zy-text-big zy-text-bold">20</text>
+				<text class="zy-text-info">积分</text>
 			</view>
 		</view>
 		<uni-list>
-			<zywork-list-item title="帮助中心" show-extra-icon="true" :extra-icon="{color: '#E51C23',size: '18',type: 'iconbangzhu'}"
+			<zywork-list-item title="我的订阅" show-extra-icon="true" :extra-icon="{color: '#FF4539',size: '18',type: 'icondingyue'}"
 			 @click="toHelp"></zywork-list-item>
-			<zywork-list-item title="关于TaskApp" show-extra-icon="true" :extra-icon="{color: '#535CA7',size: '18',type: 'iconguanyu'}"
-			 @click="toAbout"></zywork-list-item>
+			<zywork-list-item title="我的发布" show-extra-icon="true" :extra-icon="{color: '#568999',size: '18',type: 'iconfabu'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="我的收藏" show-extra-icon="true" :extra-icon="{color: '#892398',size: '18',type: 'iconshoucang'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="我的预约" show-extra-icon="true" :extra-icon="{color: '#ABC033',size: '18',type: 'iconyuyue'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="我的咨询反馈" show-extra-icon="true" :extra-icon="{color: '#F98E69',size: '18',type: 'iconshouye'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="我的简历" show-extra-icon="true" :extra-icon="{color: '#681899',size: '18',type: 'iconresume-line'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="我的抵用券" show-extra-icon="true" :extra-icon="{color: '#23AA22',size: '18',type: 'iconquan'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="我的分享邀请" show-extra-icon="true" :extra-icon="{color: '#567890',size: '18',type: 'iconicon-test1'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="业绩二维码" show-extra-icon="true" :extra-icon="{color: '#E51C23',size: '18',type: 'iconico'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="常见问题" show-extra-icon="true" :extra-icon="{color: '#CC0022',size: '18',type: 'iconbangzhu'}"
+			 @click="toHelp"></zywork-list-item>
+			<zywork-list-item title="联系我们" show-extra-icon="true" :extra-icon="{color: '#535CA7',size: '18',type: 'iconguanyu'}"
+			 @click="toContact"></zywork-list-item>
 		</uni-list>
-		<view class="zy-list-button" @click="logout" v-if="isUserLogin">退出登录</view>
 	</view>
 </template>
 
@@ -45,12 +67,10 @@
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
 		isUserTokenExist,
-		removeUserToken,
-		toLoginPage
+		removeUserToken
 	} from '../../common/util.js'
 	import {
 		userDetail,
-		logout,
 		uploadHeadicon
 	} from '../../common/user.js'
 	import {
@@ -85,6 +105,7 @@
 			}
 		},
 		onLoad() {
+			
 		},
 		onShow() {
 			this.judgeUserLogin()
@@ -106,7 +127,34 @@
 				uploadHeadicon(this)
 			},
 			toLogin() {
-				console.log('toLogin')
+				// #ifdef MP-WEIXIN
+				uni.login({
+				  provider: 'weixin',
+				  success: function (loginRes) {
+					console.log(loginRes.code)
+					uni.getUserInfo({
+					  provider: 'weixin',
+					  success: function (infoRes) {
+						console.log('用户昵称为：' + infoRes.userInfo.nickName)
+					  }
+					})
+				  }
+				})
+				// #endif
+				// #ifdef APP-PLUS
+				uni.login({
+				  provider: 'weixin',
+				  success: function (loginRes) {
+					console.log(loginRes.authResult)
+					uni.getUserInfo({
+					  provider: 'weixin',
+					  success: function (infoRes) {
+						console.log('用户昵称为：' + infoRes.userInfo.nickName)
+					  }
+					})
+				  }
+				})
+				// #endif
 			},
 			toNickname() {
 				if (isUserTokenExist()) {
@@ -118,8 +166,6 @@
 					uni.navigateTo({
 						url: '/pages/nickname/nickname?nickname=' + this.user.nickname
 					})
-				} else {
-					toLoginPage()
 				}
 			},
 			toHelp() {
@@ -127,13 +173,10 @@
 					url: '/pages-static/help/help'
 				})
 			},
-			toAbout() {
+			toContact() {
 				uni.navigateTo({
-					url: '/pages-static/about/about'
+					url: '/pages-static/contact/contact'
 				})
-			},
-			logout() {
-				logout(this)
 			}
 		}
 	}
@@ -171,53 +214,20 @@
 	.zy-user-left view {
 		color: #FFFFFF;
 	}
-
-	.zy-user-left .zy-name {
-		font-size: 30upx;
-		font-weight: bold;
-	}
 	
-	.zy-user-more {
-		
-	}
-
 	.zy-user-balance {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: space-around;
 		align-items: center;
 		background-color: $primary-backcolor;
 		padding: 10upx;
 		margin-bottom: 10upx;
 	}
-
-	.zy-data-text {
-		padding: 10upx;
-		font-size: 42upx;
-		color: $primary-color;
-	}
-
-	.zy-small-text {
-		font-size: 24upx;
-		color: $primary-color;
-		margin-left: 10upx;
-	}
-
-	.zy-user-balance-opt {
-		width: 60%;
-		margin-top: 30upx;
+	
+	.zy-user-balance-item {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: center;
-		justify-content: space-between;
-	}
-
-	.zy-user-balance-opt view {
-		padding: 10upx;
-		text-align: center;
-		flex-grow: 1;
-	}
-
-	.zy-user-balance-opt view:first-child {
-		border-right: 1px solid $primary-page-backcolor;
 	}
 </style>

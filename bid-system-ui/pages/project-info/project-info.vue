@@ -284,14 +284,18 @@
 
 	.swiper {
 		width: 100%;
-		height: 300upx;
+		height: 200upx;
 	}
 
 	.swiper-item {
 		display: block;
-		height: 300upx;
-		line-height: 300px;
+		height: 200upx;
+		line-height: 200px;
 		text-align: center;
+	}
+	
+	.swiper-item image {
+		width: 100%;
 	}
 	
 	.zy-tab-bar {
