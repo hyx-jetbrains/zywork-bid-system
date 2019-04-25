@@ -9,7 +9,6 @@
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
           </Tooltip>
           <Table
-            highlight-row
             ref="dataTable"
             stripe
             :loading="table.loading"
