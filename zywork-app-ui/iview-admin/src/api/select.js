@@ -124,12 +124,56 @@ export const projectMarkStatus = [
  */
 export const region = [
 	{
-		value: '省内',
+		value: 1,
 		label: '省内'
 	},
 	{
-		value: '省外',
+		value: 2,
 		label: '省外'
+	}
+]
+
+/**
+ * @description 企业类型
+ */
+export const compType = [
+	{
+		value: '有限责任公司',
+		label: '有限责任公司'
+	},
+	{
+		value: '股份有限公司',
+		label: '股份有限公司'
+	}
+]
+
+/**
+ * @description行业类型
+ */
+export const industryType = [
+	{
+		value: '施工单位',
+		label: '施工单位'
+	},
+	{
+		value: '供应商',
+		label: '供应商'
+	},
+	{
+		value: '招标代理',
+		label: '招标代理'
+	},
+	{
+		value: '监理',
+		label: '监理'
+	},
+	{
+		value: '设计',
+		label: '设计'
+	},
+	{
+		value: '业主',
+		label: '业主'
 	}
 ]
 
@@ -185,7 +229,7 @@ export const projectCity = [
 /**
  * @description 在线提问的问题分类
  */
-export const questionTypeSelect = [
+export const questionType = [
   {
     value: 'CA证书',
     label: 'CA证书'
@@ -209,48 +253,6 @@ export const questionTypeSelect = [
   {
     value: '建造师及业绩',
     label: '建造师及业绩'
-  }
-]
-
-/**
- * 预约状态
- */
-export const subscribeStatusSelect = [
-  {
-    value: '未处理',
-    label: '未处理'
-  },
-  {
-    value: '已处理',
-    label: '已处理'
-  }
-]
-
-/**
- * 支付状态
- */
-export const payStatusSelect = [
-  {
-    value: '待支付',
-    label: '待支付'
-  },
-  {
-    value: '已支付',
-    label: '已支付'
-  }
-]
-
-/**
- * 支付方式
- */
-export const payTypeSelect = [
-  {
-    value: '微信',
-    label: '微信'
-  },
-  {
-    value: '支付宝',
-    label: '支付宝'
   }
 ]
 
@@ -1286,3 +1288,7 @@ export const seekDataType = [
     label: '重要证件'
   }
 ]
+
+/**
+ * 企业类型
+ */
