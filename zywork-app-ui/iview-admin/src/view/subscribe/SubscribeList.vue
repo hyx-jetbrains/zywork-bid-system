@@ -745,8 +745,7 @@ export default {
     },
     confirmSelection(id) {
       this.modal.userDetalSearch = false
-      this.searchForm.userId 
-            = this.searchForm.userIdMin
+      this.searchForm.userIdMin
             = this.searchForm.userIdMax
             = id
       this.search()

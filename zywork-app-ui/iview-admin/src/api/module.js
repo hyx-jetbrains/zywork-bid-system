@@ -22,10 +22,26 @@ export const getModuleById = (id) => {
     })
 }
 
+/**
+ * 根据用户id查询用户信息
+ * @param {*} id 
+ */
 export const getUserById = (id) => {
 	return axios.request({
 		url: '/user-userdetail/admin/multi/' + id,
 		method: 'GET',
 		data: ''
 	})
+}
+
+/**
+ * 根据项目id查询项目信息
+ * @param {*} id 
+ */
+export const getProjectById = (id) => {
+  return axios.request({
+    url: '/project/admin/one/' + id,
+    method: 'GET',
+    data: ''
+  })
 }

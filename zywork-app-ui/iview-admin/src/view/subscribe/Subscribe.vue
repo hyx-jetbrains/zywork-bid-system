@@ -768,10 +768,9 @@
 			  this.modal.userDetail = val
 			},
 			confirmSelection(id) {
-				console.log(id)
 			  this.modal.userDetalSearch = false
-			  this.searchForm.idMin = id
-			  this.searchForm.idMax = id
+			  this.searchForm.userIdMin = id
+			  this.searchForm.userIdMax = id
 			  utils.search(this)
 			},
 			confirm() {

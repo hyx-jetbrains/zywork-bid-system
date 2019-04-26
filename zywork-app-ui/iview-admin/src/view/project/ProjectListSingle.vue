@@ -1090,6 +1090,7 @@ export default {
     },
     confirmSelection() {
       // 确认选择的逻辑
+			this.$emit("confirmSelectionProject", this.table.currentRow.id)
     }
   }
 }
