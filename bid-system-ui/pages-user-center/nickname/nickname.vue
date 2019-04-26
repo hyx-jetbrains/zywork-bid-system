@@ -1,5 +1,5 @@
 <template>
-	<view class="zy-page">
+	<view class="zy-page-column-center zy-page-padding">
 		<view class="zy-form">
 			<view class="uni-form-item uni-column">
 				<input v-model="user.nickname" class="uni-input" placeholder="请输入昵称" />
@@ -34,12 +34,4 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-
-	.zy-page {
-		width: 100%;
-		padding-top: 20upx;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
 </style>

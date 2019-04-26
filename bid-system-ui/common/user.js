@@ -1,25 +1,108 @@
-import {BASE_URL, DEFAULT_HEADICON, saveUserToken, removeUserToken, getUserToken, clearForm, networkError, invalidToken, showInfoToast, showSuccessToast} from './util.js'
+import {
+	BASE_URL,
+	DEFAULT_HEADICON,
+	saveUserToken,
+	saveOpenid,
+	isUserTokenExist,
+	removeUserToken,
+	getUserToken,
+	clearForm,
+	networkError,
+	invalidToken,
+	showInfoToast,
+	showSuccessToast,
+	IMAGE_BASE_URL
+} from './util.js'
 import * as ResponseStatus from './response-status.js'
 
 const graceChecker = require("./graceChecker.js");
 
-export const userDetail = (self) => {
+export const judgeLogin = (self) => {
+	if (isUserTokenExist()) {
+		self.isUserLogin = true
+		getUserDetail(self)
+	} else {
+		// #ifdef MP-WEIXIN
+		xcxLogin(self)
+		// #endif
+	}
+}
+
+export const xcxLogin = (self) => {
+	uni.login({
+		provider: 'weixin',
+		success: function(wxRes) {
+			uni.request({
+				url: BASE_URL + '/wx-auth/xcx',
+				method: 'GET',
+				data: {
+					code: wxRes.code
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: (res) => {
+					if (res.data.code === ResponseStatus.OK) {
+						self.isUserLogin = true
+						saveOpenid(res.data.data[1])
+						saveUserToken(res.data.data[2])
+						if (res.data.data[0] === 'firstLogin') {
+							// 第一次小程序登录，需要点击登录按钮，再保存用户信息
+						} else {
+							// 第二次开始不需要点击登录按钮，而是直接从后台获取用户信息
+							getUserDetail(self)
+						}
+					} else {
+						showInfoToast(res.data.message)
+					}
+				},
+				fail: () => {
+					networkError()
+				}
+			})
+		}
+	})
+}
+
+export const saveUserDetail = (self, params) => {
+	uni.showLoading({
+		title: '登录中'
+	})
 	uni.request({
-		url: BASE_URL + '/user-detail/user/one',
-		method: 'GET',
+		url: BASE_URL + '/wx-auth/xcx-userdetail',
+		method: 'POST',
+		data: params,
 		header: {
-			'Authorization': 'Bearer ' + getUserToken()
+			'content-type': 'application/x-www-form-urlencoded'
+		},
+		success: (res) => {
+			uni.hideLoading()
+			if (res.data.code === ResponseStatus.OK) {
+				self.getUserInfo = true
+				self.user.headicon = params.headicon
+				self.user.nickname = params.nickname
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			uni.hideLoading()
+			networkError()
+		}
+	})
+}
+
+export const saveUserPhone = (self, params) => {
+	uni.request({
+		url: BASE_URL + '/wx-auth/xcx-phone',
+		method: 'POST',
+		data: params,
+		header: {
+			'content-type': 'application/x-www-form-urlencoded'
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.user.nickname = res.data.data.nickname
-				self.user.headicon = res.data.data.headicon
-				self.user.wechatQrcode = res.data.data.wechatQrcode
-			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
-				showInfoToast('请登录')
-				self.isUserLogin = false
-				self.getUserInfo = false
-				removeUserToken()
+				self.user.phone = res.data.data.phoneNumber
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -30,29 +113,35 @@ export const userDetail = (self) => {
 	})
 }
 
-export const updateNickname = (self) => {
+export const getUserDetail = (self) => {
+	uni.showLoading({
+		title: '登录中'
+	})
 	uni.request({
-		url: BASE_URL + '/user-detail/user/update',
-		method: 'POST',
-		data: {
-			nickname: self.user.nickname
-		},
+		url: BASE_URL + '/user-userdetail/user/get',
+		method: 'GET',
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
+			uni.hideLoading()
 			if (res.data.code === ResponseStatus.OK) {
-				self.$event.$emit('changeNickname', {'nickname': self.user.nickname})
-				uni.navigateBack({
-					
-				})
+				self.getUserInfo = true
+				self.user.nickname = res.data.data.rows[0].userDetailNickname
+				self.user.headicon = res.data.data.rows[0].userDetailHeadicon
+				if (self.user.headicon !== undefined && self.user.headicon.indexOf('http') < 0) {
+					self.user.headicon = IMAGE_BASE_URL + '/' + self.uesr.headicon
+				}
+				self.user.phone = res.data.data.rows[0].userPhone
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
-				invalidToken()
+				// 如果token过期了，则直接使用小程序登录，获取最新的token
+				xcxLogin(self)
 			} else {
 				showInfoToast(res.data.message)
 			}
 		},
 		fail: () => {
+			uni.hideLoading()
 			networkError()
 		}
 	})
@@ -67,7 +156,7 @@ export const uploadHeadicon = (self) => {
 		success: (res) => {
 			self.user.headicon = res.tempFilePaths[0]
 			uni.uploadFile({
-				url: BASE_URL +　'/user-detail/user/upload-headicon',
+				url: BASE_URL + '/user-detail/user/upload-headicon',
 				filePath: res.tempFilePaths[0],
 				name: 'file',
 				header: {
@@ -90,6 +179,36 @@ export const uploadHeadicon = (self) => {
 		},
 		fail: (res) => {
 			console.log(res)
+		}
+	})
+}
+
+export const updateNickname = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-detail/user/update',
+		method: 'POST',
+		data: {
+			nickname: self.user.nickname
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.$event.$emit('changeNickname', {
+					'nickname': self.user.nickname
+				})
+				uni.navigateBack({
+
+				})
+			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
+				invalidToken()
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
 		}
 	})
 }

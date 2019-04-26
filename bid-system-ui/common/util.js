@@ -1,6 +1,7 @@
 export const BASE_URL = 'http://192.168.203.132:8088'
 export const IMAGE_BASE_URL = 'http://localhost'
 export const USER_TOKEN_KEY = 'userToken'
+export const USER_OPENID = 'openid'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 
@@ -27,6 +28,22 @@ export const getUserToken = () => {
 
 export const removeUserToken = () => {
 	uni.removeStorageSync(USER_TOKEN_KEY)
+}
+
+export const saveOpenid = (openid) => {
+	uni.setStorageSync(USER_OPENID, openid)
+}
+
+export const getOpenid = () => {
+	const openid = uni.getStorageSync(USER_OPENID)
+	if (!isEmpty(openid)) {
+		return openid
+	}
+	return null
+}
+
+export const removeOpenid = () => {
+	uni.removeStorageSync(USER_OPENID)
 }
 
 export const toLoginPage = () => {

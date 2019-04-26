@@ -1,25 +1,30 @@
 <template>
 	<view>
 		<view class="zy-user-container">
-			<view class="zy-user-info" v-if="isUserLogin">
+			<view class="zy-user-info" v-if="getUserInfo">
 				<view class="zy-user-left">
-					<image class="zy-headicon" :src="user.headicon === null ? headicon : imgBaseUrl + '/' + user.headicon" @click="chooseImage"></image>
+					<image class="zy-headicon" :src="user.headicon === null ? headicon : user.headicon" @click="toUserSetting"></image>
 					<view>
-						<view class="zy-text-bold">{{user.nickname}}</view>
-						<view class="zy-text-small">手机号</view>
+						<view class="zy-text-bold" @click="toUserSetting">{{user.nickname}}</view>
+						<view class="zy-text-small" v-if="user.phone !== ''" @click="toUserSetting">{{user.phone}}</view>
+						<button v-else class="zy-wx-btn" open-type="getPhoneNumber" lang="zh_CN" @getphonenumber="bindGetPhoneNumber">
+							<view class="zy-text-small">获取手机号</view>
+						</button>
 					</view>
 					<view style="margin-left: 100upx;">
 						<zywork-icon type="iconVIP" color="#ffffff" size="24" style="display: inline-block; margin-right: 20upx;"/>
 						<zywork-icon type="iconzhuanjiarenzheng" color="#ccc" size="24" style="display: inline-block;"/>
 					</view>
 				</view>
-				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF"/>
+				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF" @click.native="toUserSetting"/>
 			</view>
 			<view class="zy-user-info" v-else>
 				<view class="zy-user-left">
 					<image class="zy-headicon" :src="headicon"></image>
 					<view>
-						<view class="zy-text-bold" @click="toLogin">点击登录</view>
+						<button class="zy-wx-btn" open-type="getUserInfo" lang="zh_CN" @getuserinfo="bindGetUserInfo">
+							<view class="zy-text-big zy-text-bold">点击登录</view>
+						</button>
 						<view class="zy-text-small">您还未登录哦~</view>
 					</view>
 				</view>
@@ -64,14 +69,13 @@
 
 <script>
 	import {
-		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
-		isUserTokenExist,
-		removeUserToken
+		getOpenid
 	} from '../../common/util.js'
 	import {
-		userDetail,
-		uploadHeadicon
+		judgeLogin,
+		saveUserDetail,
+		saveUserPhone
 	} from '../../common/user.js'
 	import {
 		userWallet
@@ -91,70 +95,44 @@
 				isUserLogin: false,
 				getUserInfo: false,
 				user: {
-					headicon: null,
+					headicon: '',
 					nickname: '',
-					wechatQrcode: null
+					phone: ''
 				},
 				userWallet: {
 					integral: 0,
 					usableIntegral: 0,
 					frezeeIntegral: 0
 				},
-				imgBaseUrl: IMAGE_BASE_URL,
 				headicon: DEFAULT_HEADICON
 			}
 		},
 		onLoad() {
-			
+			judgeLogin(this)
 		},
 		onShow() {
-			this.judgeUserLogin()
 			userWallet(this)
 		},
 		methods: {
-			judgeUserLogin() {
-				if (isUserTokenExist()) {
-					this.isUserLogin = true
-				} else {
-					this.isUserLogin = false
-				}
-				if (!this.getUserInfo && this.isUserLogin) {
-					userDetail(this)
-					this.getUserInfo = true
-				}
-			},
-			chooseImage() {
-				uploadHeadicon(this)
-			},
-			toLogin() {
-				// #ifdef MP-WEIXIN
-				uni.login({
-				  provider: 'weixin',
-				  success: function (loginRes) {
-					console.log(loginRes.code)
-					uni.getUserInfo({
-					  provider: 'weixin',
-					  success: function (infoRes) {
-						console.log('用户昵称为：' + infoRes.userInfo.nickName)
-					  }
-					})
-				  }
+			bindGetUserInfo(e) {
+				saveUserDetail(this, {
+					openid: getOpenid(),
+					nickname: e.detail.userInfo.nickName,
+					headicon: e.detail.userInfo.avatarUrl,
+					gender: e.detail.userInfo.gender
 				})
-				// #endif
-				// #ifdef APP-PLUS
-				uni.login({
-				  provider: 'weixin',
-				  success: function (loginRes) {
-					console.log(loginRes.authResult)
-					uni.getUserInfo({
-					  provider: 'weixin',
-					  success: function (infoRes) {
-						console.log('用户昵称为：' + infoRes.userInfo.nickName)
-					  }
-					})
-				  }
+			},
+			bindGetPhoneNumber(e) {
+				saveUserPhone(this, {
+					openid: getOpenid(),
+					encryptedData: e.detail.encryptedData,
+					iv: e.detail.iv
 				})
-				// #endif
+			},
+			toUserSetting() {
+				uni.navigateTo({
+					url: '/pages-user-center/user-setting/user-setting'
+				})
 			},
 			toNickname() {
 				if (isUserTokenExist()) {
@@ -215,10 +193,18 @@
 		color: #FFFFFF;
 	}
 	
+	.zy-wx-btn {
+		text-align: left;
+		line-height: 1;
+		display: inline;
+		padding: 0;
+		background-color: transparent;
+	}
+	
 	.zy-user-balance {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: between;
 		align-items: center;
 		background-color: $primary-backcolor;
 		padding: 10upx;
@@ -226,8 +212,14 @@
 	}
 	
 	.zy-user-balance-item {
+		flex-grow: 1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		text-align: center;
+	}
+	
+	.zy-user-balance-item:first-child {
+		border-right: 1px solid $seperator-color;
 	}
 </style>

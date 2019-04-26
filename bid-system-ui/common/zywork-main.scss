@@ -43,7 +43,18 @@ button[type=primary][plain] {
 }
 
 .zy-page {
-	background-color: $primary-page-backcolor;
+	width: 100%;
+}
+
+.zy-page-column-center {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.zy-page-padding {
+	padding: 15upx;
 }
 
 .zy-form {

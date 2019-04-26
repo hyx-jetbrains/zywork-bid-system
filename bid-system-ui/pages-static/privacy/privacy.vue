@@ -18,10 +18,4 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-
-	.zy-logo {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
 </style>

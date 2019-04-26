@@ -70,6 +70,13 @@
 			"root": "pages-user-center",
 			"pages": [
 				{
+					"path": "user-setting/user-setting",
+					"style": {
+						"navigationBarTitleText": "个人详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "nickname/nickname",
 					"style": {
 						"navigationBarTitleText": "我的昵称",
