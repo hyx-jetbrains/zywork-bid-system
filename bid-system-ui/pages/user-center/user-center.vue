@@ -123,11 +123,13 @@
 				})
 			},
 			bindGetPhoneNumber(e) {
-				saveUserPhone(this, {
-					openid: getOpenid(),
-					encryptedData: e.detail.encryptedData,
-					iv: e.detail.iv
-				})
+				if (e.detail.errMsg === 'getPhoneNumber:ok') {
+					saveUserPhone(this, {
+						openid: getOpenid(),
+						encryptedData: e.detail.encryptedData,
+						iv: e.detail.iv
+					})
+				}
 			},
 			toUserSetting() {
 				uni.navigateTo({
