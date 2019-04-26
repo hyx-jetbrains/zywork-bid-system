@@ -515,7 +515,7 @@ export default {
     },
     confirmSelection() {
       // 确认选择的逻辑
-      this.$emit("confirmSelectionCoupon", this.table.currentRow.id)
+      this.$emit("confirmChoiceCoupon", this.table.currentRow.id)
     }
   }
 }

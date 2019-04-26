@@ -55,13 +55,12 @@
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="用户编号" prop="userId">
-          <InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
+          <span v-text="form.userId"></span>
+          <Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
         </FormItem>
         <FormItem label="抵扣券编号" prop="couponId">
-          <InputNumber v-model="form.couponId" placeholder="请输入抵扣券编号" style="width: 100%;"/>
-        </FormItem>
-        <FormItem label="使用状态" prop="useStatus">
-          <InputNumber v-model="form.useStatus" placeholder="请输入使用状态" style="width: 100%;"/>
+          <span v-text="form.couponId"></span>
+          <Button @click="showModal('couponChoice')" type="text">选择优惠券</Button>&nbsp;
         </FormItem>
       </Form>
       <div slot="footer">
@@ -76,13 +75,12 @@
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="用户编号" prop="userId">
-          <InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
+          <span v-text="form.userId"></span>
+          <Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
         </FormItem>
         <FormItem label="抵扣券编号" prop="couponId">
-          <InputNumber v-model="form.couponId" placeholder="请输入抵扣券编号" style="width: 100%;"/>
-        </FormItem>
-        <FormItem label="使用状态" prop="useStatus">
-          <InputNumber v-model="form.useStatus" placeholder="请输入使用状态" style="width: 100%;"/>
+          <span v-text="form.couponId"></span>
+          <Button @click="showModal('couponChoice')" type="text">选择优惠券</Button>&nbsp;
         </FormItem>
       </Form>
       <div slot="footer">
@@ -162,27 +160,22 @@
           </Row>
         </FormItem>
         <FormItem label="使用状态">
-          <Row>
-            <i-col span="11">
-              <FormItem prop="useStatusMin">
-                <InputNumber
-                  v-model="searchForm.useStatusMin"
-                  placeholder="请输入开始使用状态"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-            <i-col span="2" style="text-align: center">-</i-col>
-            <i-col span="11">
-              <FormItem prop="useStatusMax">
-                <InputNumber
-                  v-model="searchForm.useStatusMax"
-                  placeholder="请输入结束使用状态"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-          </Row>
+          <Select v-model="searchForm.useStatus" placeholder="请选择使用状态" clearable filterable>
+            <i-option
+              v-for="item in couponUseStatusSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
+        </FormItem>
+        <FormItem label="是否激活" prop="isActive">
+          <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
+            <i-option
+              v-for="item in isActiveSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="版本号">
           <Row>
@@ -265,29 +258,6 @@
             </i-col>
           </Row>
         </FormItem>
-        <FormItem label="是否激活">
-          <Row>
-            <i-col span="11">
-              <FormItem prop="isActiveMin">
-                <InputNumber
-                  v-model="searchForm.isActiveMin"
-                  placeholder="请输入开始是否激活"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-            <i-col span="2" style="text-align: center">-</i-col>
-            <i-col span="11">
-              <FormItem prop="isActiveMax">
-                <InputNumber
-                  v-model="searchForm.isActiveMax"
-                  placeholder="请输入结束是否激活"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-          </Row>
-        </FormItem>
       </Form>
       <div slot="footer">
         <Button type="text" size="large" @click="resetForm('searchForm')">清空</Button>
@@ -340,7 +310,7 @@
     </Modal>
 
     <Modal :transfer="false" v-model="modal.userDetail" title="模块详情">
-      <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
+      <userDetail :form="userDetailForm"/>
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
@@ -350,20 +320,58 @@
         <Button type="primary" size="large" @click="confirm">确认选择</Button>
       </div>
     </Modal>
+
+    <Modal :transfer="false" v-model="modal.couponDetail" title="优惠券详情">
+      <couponDetail :form="couponDetailForm"/>
+    </Modal>
+
+    <Modal :transfer="false" fullscreen v-model="modal.couponDetalSearch" title="搜索主表信息">
+      <coupon-list ref="couponList" v-on:confirmSelectionCoupon="confirmSelectionCoupon"/>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('couponDetalSearch')">取消</Button>
+        <Button type="primary" size="large" @click="confirmCoupon">确认选择</Button>
+      </div>
+    </Modal>
+
+    <!-- 选择用户弹窗 -->
+    <Modal :transfer="false" fullscreen v-model="modal.userChoice" title="选择用户">
+      <user-list-choice ref="UserListChoice" v-on:confirmChoice="confirmChoice"/>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
+      </div>
+    </Modal>
+
+    <!-- 选择优惠券弹窗 -->
+    <Modal :transfer="false" fullscreen v-model="modal.couponChoice" title="选择优惠券">
+      <coupon-list-choice ref="couponListChoice" v-on:confirmChoiceCoupon="confirmChoiceCoupon"/>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('couponChoice')">取消</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
 import * as utils from '@/api/utils'
+import * as ResponseStatus from '@/api/response-status'
 import UserList from '@/view/user/UserList.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
-import { getUserById } from '@/api/module'
+import CouponList from '@/view/coupon/CouponListSingle.vue'
+import CouponDetail from '@/view/coupon/CouponDetail.vue'
+import { getUserById, getCouponById } from '@/api/module'
+import UserListChoice from '@/view/user/UserListChoice.vue'
+import CouponListChoice from '@/view/coupon/CouponListChoice.vue'
+import { isActiveSelect, couponUseStatusSelect } from '@/api/select'
 
 export default {
   name: 'UserCoupon',
   components: {
     userDetail,
-    UserList
+    UserList,
+    UserListChoice,
+    CouponListChoice,
+    CouponList,
+    CouponDetail
   },
   data() {
     return {
@@ -386,13 +394,28 @@ export default {
         userDetailShareCode: null,
         userDetailVersion: null
       },
+      couponDetailForm: {
+        id: null,
+        type: null,
+        money: null,
+        couponCount: null,
+        validTime: null,
+        version: null,
+        createTime: null,
+        updateTime: null,
+        isActive: null
+      },
       modal: {
         add: false,
         edit: false,
         search: false,
         detail: false,
         userDetail: false,
-        userDetalSearch: false
+        userDetalSearch: false,
+        userChoice: false,
+        couponChoice: false,
+        couponDetalSearch: false,
+        couponDetail: false
       },
       loading: {
         add: false,
@@ -547,13 +570,90 @@ export default {
             title: '抵扣券编号',
             key: 'couponId',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              return h(
+                'Dropdown',
+                {
+                  on: {
+                    'on-click': itemName => {
+                      this.userOpt(itemName, params.row)
+                    }
+                  },
+                  props: {
+                    transfer: true
+                  }
+                },
+                [
+                  h('span', [
+                    params.row.couponId,
+                    h('Icon', {
+                      props: {
+                        type: 'ios-list',
+                        size: '25'
+                      }
+                    })
+                  ]),
+                  h(
+                    'DropdownMenu',
+                    {
+                      slot: 'list'
+                    },
+                    [
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'moduleDetailCoupon'
+                          }
+                        },
+                        '详情'
+                      ),
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'showSearchCoupon'
+                          }
+                        },
+                        '搜索'
+                      )
+                    ]
+                  )
+                ]
+              )
+            }
           },
           {
             title: '使用状态',
             key: 'useStatus',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              const color =
+                row.useStatus === 0
+                  ? 'default'
+                  : row.useStatus === 1
+                  ? 'primary'
+                  : 'error'
+              const text =
+                row.useStatus === 0
+                  ? '待使用'
+                  : row.useStatus === 1
+                  ? '已使用'
+                  : '未知'
+              return h(
+                'Button',
+                {
+                  props: {
+                    size: 'small',
+                    type: color
+                  }
+                },
+                text
+              )
+            }
           },
           {
             title: '版本号',
@@ -710,7 +810,9 @@ export default {
         ],
         tableDetails: [],
         selections: []
-      }
+      },
+      isActiveSelect: isActiveSelect,
+      couponUseStatusSelect: couponUseStatusSelect
     }
   },
   computed: {},
@@ -763,13 +865,17 @@ export default {
         this.showUserDetailModal(row.userId)
       } else if (itemName === 'showSearch') {
         utils.showModal(this, 'userDetalSearch')
+      } else if (itemName === 'moduleDetailCoupon') {
+        this.showCouponDetailModal(row.couponId)
+      } else if (itemName === 'showSearchCoupon') {
+        utils.showModal(this, 'couponDetalSearch')
       }
     },
     showUserDetailModal(id) {
       getUserById(id)
         .then(res => {
           const data = res.data
-          if (data.code === 1001) {
+          if (data.code === ResponseStatus.OK) {
             this.userDetailForm = data.data.rows[0]
             this.modal.userDetail = true
           } else {
@@ -780,8 +886,20 @@ export default {
           this.$Message.error(err)
         })
     },
-    setDetailModal(val) {
-      this.modal.userDetail = val
+    showCouponDetailModal(id) {
+      getCouponById(id)
+        .then(res => {
+          const data = res.data
+          if (data.code === ResponseStatus.OK) {
+            this.couponDetailForm = data.data
+            this.modal.couponDetail = true
+          } else {
+            this.$Message.error(data.message)
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err)
+        })
     },
     confirmSelection(id) {
       this.modal.userDetalSearch = false
@@ -789,8 +907,17 @@ export default {
       this.searchForm.userIdMax = id
       utils.search(this)
     },
+    confirmSelectionCoupon(id) {
+      this.cancelModal('couponDetalSearch')
+      this.searchForm.couponIdMin = id
+      this.searchForm.couponIdMax = id
+      utils.search(this)
+    },
     confirm() {
       this.$refs.UserList.confirmSelection()
+    },
+    confirmCoupon() {
+      this.$refs.couponList.confirmSelection()
     },
     add() {
       utils.add(this)
@@ -815,6 +942,16 @@ export default {
     },
     changePageSize(pageSize) {
       utils.changePageSize(this, pageSize)
+    },
+    // 确认选择用户
+    confirmChoice(userId) {
+      this.form.userId = userId
+      this.cancelModal('userChoice')
+    },
+    // 确认优惠券
+    confirmChoiceCoupon(couponId) {
+      this.form.couponId = couponId
+      this.cancelModal('couponChoice')
     }
   }
 }

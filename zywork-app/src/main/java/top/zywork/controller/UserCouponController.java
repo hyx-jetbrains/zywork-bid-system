@@ -13,7 +13,9 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.UserCouponDTO;
 import top.zywork.query.UserCouponQuery;
+import top.zywork.service.CouponService;
 import top.zywork.service.UserCouponService;
+import top.zywork.vo.CouponVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.UserCouponVO;
@@ -36,12 +38,20 @@ public class UserCouponController extends BaseController {
 
     private UserCouponService userCouponService;
 
+    private CouponService couponService;
+
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated UserCouponVO userCouponVO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
-        userCouponService.save(BeanUtils.copy(userCouponVO, UserCouponDTO.class));
+        int res = userCouponService.save(BeanUtils.copy(userCouponVO, UserCouponDTO.class));
+        if (1 == res) {
+            // 保存成功，扣除优惠券
+            CouponVO couponVO = BeanUtils.copy(couponService.getById(userCouponVO.getCouponId()), CouponVO.class);
+            couponVO.setCouponCount(couponVO.getCouponCount()-1);
+            couponService.update(couponVO);
+        }
         return ResponseStatusVO.ok("添加成功", null);
     }
 
@@ -137,5 +147,10 @@ public class UserCouponController extends BaseController {
     @Autowired
     public void setUserCouponService(UserCouponService userCouponService) {
         this.userCouponService = userCouponService;
+    }
+
+    @Autowired
+    public void setCouponService(CouponService couponService) {
+        this.couponService = couponService;
     }
 }

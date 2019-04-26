@@ -1290,5 +1290,15 @@ export const seekDataType = [
 ]
 
 /**
- * 企业类型
+ * 优惠券使用状态
  */
+export const couponUseStatusSelect = [
+  {
+    value: 0,
+    label: '待使用'
+  },
+  {
+    value: 1,
+    label: '已使用'
+  }
+]

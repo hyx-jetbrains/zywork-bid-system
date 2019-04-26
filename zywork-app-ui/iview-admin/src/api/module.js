@@ -45,3 +45,15 @@ export const getProjectById = (id) => {
     data: ''
   })
 }
+
+/**
+ * 根据优惠券id查询信息
+ * @param {*} id 
+ */
+export const getCouponById = (id) => {
+  return axios.request({
+    url: '/coupon/admin/one/' + id,
+    method: 'GET',
+    data: ''
+  })
+}
