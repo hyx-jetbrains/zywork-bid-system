@@ -229,7 +229,7 @@ export default [
           title: '专家预约管理',
           icon: 'ios-person'
         },
-        component: () => import('@/view/expert-subscribe/ExpertSubscribe.vue')
+        component: () => import('@/view/expert-subscribe/ExpertSubscribeList.vue')
       },
     ]
   },

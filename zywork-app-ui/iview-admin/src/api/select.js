@@ -185,7 +185,7 @@ export const projectCity = [
 /**
  * @description 在线提问的问题分类
  */
-export const questionType = [
+export const questionTypeSelect = [
   {
     value: 'CA证书',
     label: 'CA证书'
@@ -209,6 +209,48 @@ export const questionType = [
   {
     value: '建造师及业绩',
     label: '建造师及业绩'
+  }
+]
+
+/**
+ * 预约状态
+ */
+export const subscribeStatusSelect = [
+  {
+    value: '未处理',
+    label: '未处理'
+  },
+  {
+    value: '已处理',
+    label: '已处理'
+  }
+]
+
+/**
+ * 支付状态
+ */
+export const payStatusSelect = [
+  {
+    value: '待支付',
+    label: '待支付'
+  },
+  {
+    value: '已支付',
+    label: '已支付'
+  }
+]
+
+/**
+ * 支付方式
+ */
+export const payTypeSelect = [
+  {
+    value: '微信',
+    label: '微信'
+  },
+  {
+    value: '支付宝',
+    label: '支付宝'
   }
 ]
 

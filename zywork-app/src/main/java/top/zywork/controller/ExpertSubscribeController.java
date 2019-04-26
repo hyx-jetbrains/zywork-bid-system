@@ -9,10 +9,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
+import top.zywork.common.DateUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.ExpertSubscribeConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ExpertSubscribeDTO;
 import top.zywork.query.ExpertSubscribeQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.ExpertSubscribeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +136,18 @@ public class ExpertSubscribeController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ExpertSubscribeVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    @PostMapping("admin/replay")
+    public ResponseStatusVO replay(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.authenticationError();
+        }
+        expertSubscribeVO.setReplyUserId(jwtUser.getUserId());
+        expertSubscribeVO.setReplyTime(DateUtils.currentDate());
+        expertSubscribeVO.setSubscribeStatus(ExpertSubscribeConstants.SUBSCRIBE_STATUS_YES);
+        return update(expertSubscribeVO, bindingResult);
     }
 
     @Autowired

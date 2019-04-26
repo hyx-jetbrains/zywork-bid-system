@@ -1159,7 +1159,10 @@ export default {
     initCertificateMajor(val) {
       this.certificateMajorList = []
       this.certificateMajorList = this.certificateMajor[val]
-      this.form.certificateMajorType = this.certificateMajorList[0].value
+      if (this.certificateMajorList !== undefined && this.certificateMajorList.length > 0) {
+        this.form.certificateMajorType = this.certificateMajorList[0].value
+      }
+      
     },
     handleSuccess(res, file) {
       if (res.code === ResponseStatus.OK) {
