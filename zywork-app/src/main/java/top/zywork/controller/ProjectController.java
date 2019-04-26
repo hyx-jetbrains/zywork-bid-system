@@ -35,7 +35,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/project")
-public class multiProjectController extends BaseController {
+public class ProjectController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
