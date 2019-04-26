@@ -418,7 +418,7 @@ import {
   payTypeSelect,
   questionTypeSelect
 } from '@/api/select'
-import * as es from '@/api/expertSubscribe'
+import * as es from '@/api/expert_subscribe'
 
 export default {
   name: 'ExpertSubscribeList',
