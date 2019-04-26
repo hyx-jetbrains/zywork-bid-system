@@ -404,7 +404,7 @@ export default [
           title: '用户订阅管理',
           icon: 'ios-paper-plane-outline'
         },
-        component: () => import('@/view/subscribe/Subscribe.vue')
+        component: () => import('@/view/subscribe/SubscribeList.vue')
       },
       {
         path: 'UserProjectCollection',

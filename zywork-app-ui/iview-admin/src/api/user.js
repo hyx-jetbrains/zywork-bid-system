@@ -226,3 +226,35 @@ export const setSeekDataIsUrgent = (self, row) => {
     })
   })
 }
+
+
+/**
+ * 设置是否开通订阅
+ * @param self this
+ * @param row 需要设置的对象
+ */
+export const setIsSubscribe = (self, row) => {
+  return new Promise((resolve, reject) => {
+    let isSubscribe = row.isSubscribe === 0 ? 1 : 0
+    axios.request({
+      url: self.urls.activeUrl,
+      method: 'POST',
+      data: {
+        id: row.id,
+        isSubscribe: isSubscribe
+      }
+    }).then(response => {
+      if (response.data.code !== ResponseStatus.OK) {
+        self.$Message.error(response.data.message)
+      } else {
+        self.$Message.success("设置成功")
+      }
+      utils.search(self)
+      resolve(response)
+    }).catch(error => {
+      console.log(error)
+      self.$Message.error('设置失败，稍候再试')
+      reject(error)
+    })
+  })
+}
