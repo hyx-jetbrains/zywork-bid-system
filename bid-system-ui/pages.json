@@ -107,7 +107,7 @@
 				{
 					"path": "setting-company-address/setting-company-address",
 					"style": {
-						"navigationBarTitleText": "我的工作地址",
+						"navigationBarTitleText": "我的办公地点",
 						"backgroundTextStyle": "light"
 					}
 				},

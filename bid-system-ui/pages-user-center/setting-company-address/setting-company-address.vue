@@ -2,10 +2,10 @@
 	<view class="zy-page-column-center zy-page-padding">
 		<view class="zy-form">
 			<view class="uni-form-item uni-column">
-				<input v-model="user.nickname" class="uni-input" placeholder="请输入工作地点" />
+				<input v-model="companyAddr" class="uni-input" placeholder="请输入办公地点" />
 			</view>
 			<view class="uni-form-item">
-				<button type="primary" style="width: 100%;" @click="changeNickname">修改工作地点</button>
+				<button type="primary" style="width: 100%;" @click="changeCompanyAddr">修改办公地点</button>
 			</view>
 		</view>
 	</view>
@@ -16,17 +16,14 @@
 	export default {
 		data() {
 			return {
-				user: {
-					realname: null
-				}
+				companyAddr: ''
 			}
 		},
 		onLoad(option) {
-			this.user.realname = option.realname
+			this.companyAddr= option.companyAddr
 		},
 		methods: {
-			changeNickname() {
-				updateNickname(this)
+			changeCompanyAddr() {
 			}
 		}
 	}

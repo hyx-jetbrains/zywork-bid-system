@@ -2,10 +2,10 @@
 	<view class="zy-page-column-center zy-page-padding">
 		<view class="zy-form">
 			<view class="uni-form-item uni-column">
-				<input v-model="user.nickname" class="uni-input" placeholder="请输入身份证号" />
+				<input v-model="identity" class="uni-input" placeholder="请输入身份证号" />
 			</view>
 			<view class="uni-form-item">
-				<button type="primary" style="width: 100%;" @click="changeNickname">修改身份证号</button>
+				<button type="primary" style="width: 100%;" @click="changeIdentity">修改身份证号</button>
 			</view>
 		</view>
 	</view>
@@ -16,17 +16,14 @@
 	export default {
 		data() {
 			return {
-				user: {
-					realname: null
-				}
+				identity: ''
 			}
 		},
 		onLoad(option) {
-			this.user.realname = option.realname
+			this.identity = option.identity
 		},
 		methods: {
-			changeNickname() {
-				updateNickname(this)
+			changeIdentity() {
 			}
 		}
 	}

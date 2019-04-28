@@ -31,15 +31,15 @@
 		data() {
 			return {
 				user: {
-					headicon: null,
-					nickname: null,
-					realname: null,
+					headicon: '',
+					nickname: '',
+					realname: '',
 					gender: 0,
-					identity: null,
-					phone: null,
-					company: null,
-					job: null,
-					companyAddress: null
+					identity: '',
+					phone: '',
+					company: '',
+					job: '',
+					companyAddress: ''
 				},
 				visible: false,
 				genderIndex: 0,

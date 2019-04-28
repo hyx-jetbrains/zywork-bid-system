@@ -3,7 +3,7 @@
 		<view class="zy-user-container">
 			<view class="zy-user-info" v-if="getUserInfo">
 				<view class="zy-user-left">
-					<image class="zy-headicon" :src="user.headicon === null ? headicon : user.headicon" @click="toUserSetting"></image>
+					<image class="zy-headicon" :src="user.headicon === '' ? headicon : user.headicon" @click="toUserSetting"></image>
 					<view>
 						<view class="zy-text-bold" @click="toUserSetting">{{user.nickname}}</view>
 						<view class="zy-text-small" v-if="user.phone !== ''" @click="toUserSetting">{{user.phone}}</view>
