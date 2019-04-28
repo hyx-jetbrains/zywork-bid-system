@@ -85,6 +85,10 @@
 		padding-bottom: 20upx;
 		border-bottom: 1upx solid $seperator-color;
 	}
+	
+	.zy-message-item:last-child {
+		border-bottom: none;
+	}
 
 	.zy-message-head {
 		display: flex;

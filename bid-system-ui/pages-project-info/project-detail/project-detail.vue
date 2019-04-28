@@ -1,6 +1,6 @@
 <template>
 	<view>
-		项目详情
+		招标详情
 	</view>
 </template>
 

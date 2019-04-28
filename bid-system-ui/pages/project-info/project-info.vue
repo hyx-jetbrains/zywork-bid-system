@@ -40,7 +40,7 @@
 		<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
 		
 		<view class="zy-project" v-if="projects.length > 0">
-			<view class="zy-project-item" v-for="(project, index) in projects" :key="index">
+			<view class="zy-project-item" v-for="(project, index) in projects" :key="index" @click="toProjectDetail">
 				<view class="zy-project-head">
 					<image class="zy-icon" :src="imgIcon"/>
 					<view>
@@ -279,7 +279,14 @@
 				})
 			},
 			toNoticeDetail() {
-				console.log('notice detail')
+				uni.navigateTo({
+					url: '/pages-project-info/notice-detail/notice-detail'
+				})
+			},
+			toProjectDetail() {
+				uni.navigateTo({
+					url: '/pages-project-info/project-detail/project-detail'
+				})
 			}
 		}
 	}
