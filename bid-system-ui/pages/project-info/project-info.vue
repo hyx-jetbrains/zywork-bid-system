@@ -24,7 +24,7 @@
 		</view>
 
 		<view v-if="latestNotice !== null" style="margin-top: 10upx;">
-			<uni-notice-bar @getmore="toNoticeList" :show-get-more="true" more-text="查看更多" show-icon="true" single="true" :text="latestNotice"></uni-notice-bar>
+			<zywork-notice-bar @click="toNoticeDetail" @getmore="toNoticeList" :show-get-more="true" more-text="查看更多" show-icon="true" single="true" color="#108ee9" :text="latestNotice"></zywork-notice-bar>
 		</view>
 
 		<view class="uni-tab-bar zy-tab-bar">
@@ -88,7 +88,7 @@
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
-	import uniNoticeBar from '@/components/uni-notice-bar/uni-notice-bar.vue'
+	import zyworkNoticeBar from '@/components/zywork-notice-bar/zywork-notice-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
@@ -124,7 +124,7 @@
 	export default {
 		components: {
 			zyworkIcon,
-			uniNoticeBar,
+			zyworkNoticeBar,
 			uniSegmentedControl,
 			zyworkCalendar,
 			uniTag,
@@ -277,6 +277,9 @@
 				uni.navigateTo({
 					url: '/pages-project-info/notice-list/notice-list'
 				})
+			},
+			toNoticeDetail() {
+				console.log('notice detail')
 			}
 		}
 	}
