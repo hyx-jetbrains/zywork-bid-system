@@ -70,6 +70,19 @@ button[type=primary][plain] {
 	border-bottom: none;
 }
 
+.zy-tab-bar {
+	background-color: $primary-backcolor;
+}
+	
+.uni-tab-bar .active {
+	color: $primary-color;
+	font-weight: bold;
+}
+	
+.uni-swiper-tab {
+	border-bottom: none;
+}
+
 .zy-form {
 	width: 95%;
 	padding-top: 10upx;

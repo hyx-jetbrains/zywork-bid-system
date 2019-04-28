@@ -319,19 +319,6 @@
 		width: 100%;
 	}
 	
-	.zy-tab-bar {
-		background-color: $primary-backcolor;
-	}
-	
-	.uni-tab-bar .active {
-		color: $primary-color;
-		font-weight: bold;
-	}
-	
-	.uni-swiper-tab {
-		border-bottom: none;
-	}
-	
 	.segmented-control view {
 		font-size: 24upx;
 		line-height: 50upx;
