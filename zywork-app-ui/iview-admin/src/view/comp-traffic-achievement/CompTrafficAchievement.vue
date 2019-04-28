@@ -325,7 +325,7 @@
 		  title="搜索主表信息">
 		  <company-list-single ref="CompanyListSingle" v-on:confirmSelection="confirmSelection"/>
 		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
+		    <Button type="text" size="large" @click="cancelModal('companyChoice')">取消</Button>
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
 		  </div>
 		</Modal>
@@ -337,7 +337,7 @@
 	import {getCompanyById} from '@/api/module'
 	import CompanyDetail from '@/view/company/CompanyDetail.vue'
 	import CompanyListSingle from '@/view/company/CompanyListSingle.vue'
-	import {gender} from '@/api/select'
+	import {validStatus} from '@/api/select'
 	import city from '@/api/city.json'
 
 	export default {
@@ -348,7 +348,7 @@
 		},
 		data() {
 			return {
-				ValidStatusList: gender,
+				ValidStatusList: validStatus,
 				cityData: city,
 				workAddr: [],
 				modal: {

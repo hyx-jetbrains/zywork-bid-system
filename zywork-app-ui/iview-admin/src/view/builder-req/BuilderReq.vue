@@ -371,9 +371,9 @@
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
-      <user-list ref="UserList" v-on:confirmSelection="confirmSelection"/>
+      <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
       <div slot="footer">
-        <Button type="text" size="large" @click="cancelModal('moduleSearch')">取消</Button>
+        <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
         <Button type="primary" size="large" @click="confirm">确认选择</Button>
       </div>
     </Modal>
@@ -382,7 +382,7 @@
 
 <script>
 import * as utils from '@/api/utils'
-import UserList from '@/view/user/UserList.vue'
+import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
 import { isActiveSelect } from '@/api/select'
@@ -392,7 +392,7 @@ export default {
   name: 'BuilderReq',
   components: {
     userDetail,
-    UserList
+    UserListSingle
   },
   data() {
     return {
@@ -557,6 +557,7 @@ export default {
             title: '建造师需求编号',
             key: 'id',
             minWidth: 160,
+						align: 'center',
             sortable: true
           },
           {
@@ -644,7 +645,7 @@ export default {
           {
             title: '企业地址',
             key: 'compAddr',
-            minWidth: 120,
+            minWidth: 160,
             sortable: true
           },
           {
@@ -657,6 +658,7 @@ export default {
             title: '版本号',
             key: 'version',
             minWidth: 120,
+						align: 'center',
             sortable: true
           },
           {
@@ -886,14 +888,13 @@ export default {
       this.modal.userDetail = val
     },
     confirmSelection(id) {
-      console.log(id)
       this.modal.userDetalSearch = false
-      this.searchForm.idMin = id
-      this.searchForm.idMax = id
+      this.searchForm.userIdMin = id
+      this.searchForm.userIdMax = id
       utils.search(this)
     },
     confirm() {
-      this.$refs.UserList.confirmSelection()
+      this.$refs.UserListSingle.confirmSelection()
     },
     setAddress() {
       if (this.tempAddress.length <= 0) {

@@ -544,11 +544,26 @@
         <span v-text="form.isActive === 0 ? '激活' : '冻结'"></span>
       </p>
     </Modal>
+		
+		<Modal :transfer="false" v-model="modal.userDetail" title="模块详情">
+		  <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
+		</Modal>
+		
+		<Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
+		  <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
+		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
+		  </div>
+		</Modal>
   </div>
 </template>
 
 <script>
 import * as utils from '@/api/utils'
+import UserListSingle from '@/view/user/UserListSingle.vue'
+import userDetail from '@/view/user-detail/UserDetail.vue'
+import { getUserById } from '@/api/module'
 import * as ResponseStatus from '@/api/response-status'
 import {
   isActiveSelect,
@@ -570,13 +585,19 @@ import { getLocalStorageToken } from '@/libs/util'
 
 export default {
   name: 'Builder',
+	 components: {
+	  userDetail,
+	  UserListSingle
+	},
   data() {
     return {
       modal: {
         add: false,
         edit: false,
         search: false,
-        detail: false
+        detail: false,
+				userDetail: false,
+				userDetalSearch: false
       },
       loading: {
         add: false,
@@ -620,6 +641,25 @@ export default {
         isActive: null,
         resourceId: []
       },
+			userDetailForm: {
+			  userId: null,
+			  userPhone: null,
+			  userEmail: null,
+			  userCreateTime: null,
+			  userDetailNickname: null,
+			  userDetailHeadicon: null,
+			  userDetailGender: null,
+			  userDetailBirthday: null,
+			  userDetailAge: null,
+			  userDetailQq: null,
+			  userDetailQqQrcode: null,
+			  userDetailWechat: null,
+			  userDetailWechatQrcode: null,
+			  userDetailAlipay: null,
+			  userDetailAlipayQrcode: null,
+			  userDetailShareCode: null,
+			  userDetailVersion: null
+			},
       validateRules: {
         name: [
           {
@@ -785,13 +825,66 @@ export default {
             title: '建造师编号',
             key: 'id',
             minWidth: 120,
+						align: 'center',
             sortable: true
           },
           {
             title: '用户编号',
             key: 'userId',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+						  return h(
+						    'Dropdown',
+						    {
+						      on: {
+						        'on-click': itemName => {
+						          this.userOpt(itemName, params.row)
+						        }
+						      },
+						      props: {
+						        transfer: true
+						      }
+						    },
+						    [
+						      h('span', [
+						        params.row.userId,
+						        h('Icon', {
+						          props: {
+						            type: 'ios-list',
+						            size: '25'
+						          }
+						        })
+						      ]),
+						      h(
+						        'DropdownMenu',
+						        {
+						          slot: 'list'
+						        },
+						        [
+						          h(
+						            'DropdownItem',
+						            {
+						              props: {
+						                name: 'moduleDetail'
+						              }
+						            },
+						            '详情'
+						          ),
+						          h(
+						            'DropdownItem',
+						            {
+						              props: {
+						                name: 'showSearch'
+						              }
+						            },
+						            '搜索'
+						          )
+						        ]
+						      )
+						    ]
+						  )
+						}
           },
           {
             title: '姓名',
@@ -814,13 +907,13 @@ export default {
           {
             title: '出生年份',
             key: 'birthday',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
             title: '证件地址',
             key: 'certificateAddress',
-            minWidth: 120,
+            minWidth: 160,
             sortable: true
           },
           {
@@ -869,18 +962,19 @@ export default {
             title: '版本号',
             key: 'version',
             minWidth: 120,
+						align: 'center',
             sortable: true
           },
           {
             title: '创建时间',
             key: 'createTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
             title: '更新时间',
             key: 'updateTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
@@ -1109,8 +1203,39 @@ export default {
       } else if (itemName === 'showEnclosure') {
         // 查看附件
         this.showBuilderEnclosure(row.id)
+      } else if (itemName === 'moduleDetail') {
+        this.showUserDetailModal(row.userId)
+      } else if (itemName === 'showSearch') {
+        utils.showModal(this, 'userDetalSearch')
       }
     },
+		showUserDetailModal(id) {
+		  getUserById(id)
+		    .then(res => {
+		      const data = res.data
+		      if (data.code === 1001) {
+		        this.userDetailForm = data.data.rows[0]
+		        this.modal.userDetail = true
+		      } else {
+		        this.$Message.error(data.message)
+		      }
+		    })
+		    .catch(err => {
+		      this.$Message.error(err)
+		    })
+		},
+		setDetailModal(val) {
+		  this.modal.userDetail = val
+		},
+		confirmSelection(id) {
+		  this.modal.userDetalSearch = false
+		  this.searchForm.userIdMin = id
+		  this.searchForm.userIdMax = id
+		  utils.search(this)
+		},
+		confirm() {
+		  this.$refs.UserListSingle.confirmSelection()
+		},
     setAddress() {
       if (this.tempAddress.length <= 0) {
         this.$Message.error('地址为必填项')

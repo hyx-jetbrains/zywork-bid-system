@@ -281,9 +281,9 @@
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
-      <user-list ref="UserList" v-on:confirmSelection="confirmSelection"/>
+      <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
       <div slot="footer">
-        <Button type="text" size="large" @click="cancelModal('moduleSearch')">取消</Button>
+        <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
         <Button type="primary" size="large" @click="confirm">确认选择</Button>
       </div>
     </Modal>
@@ -299,7 +299,7 @@
 
 <script>
 import * as utils from '@/api/utils'
-import UserList from '@/view/user/UserList.vue'
+import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
 import UserListChoice from '@/view/user/UserListChoice.vue'
@@ -311,7 +311,7 @@ export default {
   name: 'Achievement',
   components: {
     userDetail,
-    UserList,
+    UserListSingle,
     UserListChoice
   },
   data() {
@@ -739,7 +739,7 @@ export default {
       utils.search(this)
     },
     confirm() {
-      this.$refs.UserList.confirmSelection()
+      this.$refs.UserListSingle.confirmSelection()
     },
     add() {
       utils.add(this)
