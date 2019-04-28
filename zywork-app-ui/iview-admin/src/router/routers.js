@@ -628,7 +628,7 @@ export default [
           title: '资源附件管理',
           icon: 'ios-link'
         },
-        component: () => import('@/view/resource/Resource.vue')
+        component: () => import('@/view/resource/ResourceList.vue')
       }
     ]
   },

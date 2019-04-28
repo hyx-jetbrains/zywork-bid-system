@@ -298,7 +298,7 @@
 		  title="搜索主表信息">
 		  <user-list ref="UserList" v-on:confirmSelection="confirmSelection"/>
 		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('moduleSearch')">取消</Button>
+		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
 		  </div>
 		</Modal>
@@ -306,7 +306,8 @@
 </template>
 
 <script>
-	import * as utils from '@/api/utils'
+  import * as utils from '@/api/utils'
+  import * as ResponseStatus from '@/api/response-status'
 	import UserList from '@/view/user/UserList.vue'
 	import userDetail from '@/view/user-detail/UserDetail.vue'
 	import {getUserById} from '@/api/module'
@@ -753,7 +754,7 @@
 			  getUserById(id)
 			    .then(res => {
 			      const data = res.data
-			      if (data.code === 1001) {
+			      if (data.code === ResponseStatus.OK) {
 			        this.userDetailForm = data.data.rows[0]
 			        this.modal.userDetail = true
 			      } else {
@@ -768,7 +769,7 @@
 			  this.modal.userDetail = val
 			},
 			confirmSelection(id) {
-			  this.modal.userDetalSearch = false
+        this.cancelModal('userDetalSearch')
 			  this.searchForm.userIdMin = id
 			  this.searchForm.userIdMax = id
 			  utils.search(this)
