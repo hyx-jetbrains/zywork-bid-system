@@ -57,3 +57,15 @@ export const getCouponById = (id) => {
     data: ''
   })
 }
+
+/**
+ * 根据用户id查询企业信息
+ * @param {*} id 
+ */
+export const getCompanyById = (id) => {
+	return axios.request({
+		url: '/company/admin/one/' + id,
+		method: 'GET',
+		data: ''
+	})
+}

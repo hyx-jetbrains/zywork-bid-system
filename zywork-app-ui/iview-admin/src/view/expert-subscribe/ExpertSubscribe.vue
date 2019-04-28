@@ -342,9 +342,9 @@
 		  fullscreen
 		  v-model="modal.userDetalSearch"
 		  title="搜索主表信息">
-		  <user-list ref="UserList" v-on:confirmSelection="confirmSelection"/>
+		  <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
 		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('moduleSearch')">取消</Button>
+		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
 		  </div>
 		</Modal>
@@ -353,7 +353,7 @@
 
 <script>
 	import * as utils from '@/api/utils'
-	import UserList from '@/view/user/UserList.vue'
+	import UserListSingle from '@/view/user/UserListSingle.vue'
 	import userDetail from '@/view/user-detail/UserDetail.vue'
 	import {getUserById} from '@/api/module'
 
@@ -361,7 +361,7 @@
 		name: 'ExpertSubscribe',
 		components: {
 			userDetail,
-			UserList
+			UserListSingle
 		},
 		data() {
 			return {
@@ -371,7 +371,8 @@
 					search: false,
 					detail: false,
 					userDetail: false,
-					userDetalSearch: false
+					userDetalSearch: false,
+					type: ''
 				},
 				loading: {
 					add: false,
@@ -413,6 +414,26 @@
 					updateTime: null,
 					isActive: null,
 
+				},
+				userDetailForm: {
+					userId: null,
+					userPhone: null,
+					userEmail: null,
+					userCreateTime: null,
+					userDetailNickname: null,
+					userDetailHeadicon: null,
+					userDetailGender: null,
+					userDetailBirthday: null,
+					userDetailAge: null,
+					userDetailQq: null,
+					userDetailQqQrcode: null,
+					userDetailWechat: null,
+					userDetailWechatQrcode: null,
+					userDetailAlipay: null,
+					userDetailAlipayQrcode: null,
+					userDetailShareCode: null,
+					userDetailVersion: null,
+				
 				},
 				validateRules: {
 					userId: [{
@@ -603,7 +624,7 @@
 							            'DropdownItem',
 							            {
 							              props: {
-							                name: 'showSearch'
+							                name: 'showUserIdSearch'
 							              }
 							            },
 							            '搜索'
@@ -664,7 +685,7 @@
 							            'DropdownItem',
 							            {
 							              props: {
-							                name: 'showSearch'
+							                name: 'showExpertUserIdSearch'
 							              }
 							            },
 							            '搜索'
@@ -737,7 +758,7 @@
 							            'DropdownItem',
 							            {
 							              props: {
-							                name: 'showSearch'
+							                name: 'showReplyUserIdSearch'
 							              }
 							            },
 							            '搜索'
@@ -960,8 +981,15 @@
 					this.showUserDetailModal(row.replyUserId)
 				}else if (itemName === 'expertDetail') {
 					this.showUserDetailModal(row.expertUserId)
-				} else if (itemName === 'showSearch') {
+				} else if (itemName === 'showUserIdSearch') {
 					utils.showModal(this, 'userDetalSearch')
+					this.modal.type = 'userId'
+				} else if (itemName === 'showReplyUserIdSearch') {
+					utils.showModal(this, 'userDetalSearch')
+					this.modal.type = 'replyUserId'
+				} else if (itemName === 'showExpertUserIdSearch') {
+					utils.showModal(this, 'userDetalSearch')
+					this.modal.type = 'expertUserId'
 				}
 			},
 			showUserDetailModal(id) {
@@ -983,14 +1011,21 @@
 			  this.modal.userDetail = val
 			},
 			confirmSelection(id) {
-				console.log(id)
 			  this.modal.userDetalSearch = false
-			  this.searchForm.idMin = id
-			  this.searchForm.idMax = id
+			  if(this.modal.type === "userId") {
+				  this.searchForm.userIdMin = id
+				  this.searchForm.userIdMax = id
+			  } else if(this.modal.type === "replyUserId") {
+				  this.searchForm.replyUserIdMin = id
+				  this.searchForm.replyUserIdMax = id
+			  } else if(this.modal.type === "expertUserId") {
+				  this.searchForm.expertUserIdMin = id
+				  this.searchForm.expertUserIdMax = id
+			  }
 			  utils.search(this)
 			},
 			confirm() {
-			  this.$refs.UserList.confirmSelection()
+			  this.$refs.UserListSingle.confirmSelection()
 			},
 			add() {
 				utils.add(this)
