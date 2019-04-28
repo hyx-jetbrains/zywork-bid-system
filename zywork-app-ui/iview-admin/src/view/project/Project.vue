@@ -839,7 +839,6 @@
     <Modal
       v-model="modal.projectDetail"
       title="招投标项目公示详情"
-      @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
       :fullscreen="true"
     >
       <span v-html="form.projectDetail"></span>

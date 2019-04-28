@@ -82,7 +82,13 @@
           </Row>
         </FormItem>
         <FormItem label="资源类型" prop="mimeType">
-          <Input v-model="searchForm.mimeType" placeholder="请输入资源类型"/>
+          <Select v-model="searchForm.mimeType" placeholder="请选择资源类型" clearable filterable>
+            <i-option
+              v-for="item in resourceTypeSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="资源扩展名" prop="extension">
           <Input v-model="searchForm.extension" placeholder="请输入资源扩展名"/>
@@ -248,7 +254,7 @@ import * as ResponseStatus from '@/api/response-status'
 import UserList from '@/view/user/UserList.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
-import { isActiveSelect } from '@/api/select'
+import { isActiveSelect,resourceType } from '@/api/select'
 
 export default {
   name: 'ResourceList',
@@ -425,7 +431,19 @@ export default {
             title: '资源类型',
             key: 'mimeType',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              const text = row.mimeType === 'Image' ? '图片' 
+                         : row.mimeType === 'Document' ? '文档'
+                         : row.mimeType === 'Video' ? '视频'
+                         : row.mimeType === 'Audio' ? '音频' : '未知'
+              return h(
+                'span',
+                {},
+                text
+              )
+            }
           },
           {
             title: '资源地址',
@@ -497,7 +515,8 @@ export default {
         tableDetails: [],
         selections: []
       },
-      isActiveSelect: isActiveSelect
+      isActiveSelect: isActiveSelect,
+      resourceTypeSelect: resourceType
     }
   },
   computed: {},
