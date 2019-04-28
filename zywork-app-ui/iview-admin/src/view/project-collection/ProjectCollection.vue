@@ -202,9 +202,9 @@
 		  fullscreen
 		  v-model="modal.userDetalSearch"
 		  title="搜索主表信息">
-		  <user-list ref="UserList" v-on:confirmSelection="confirmSelection"/>
+		  <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
 		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('moduleSearch')">取消</Button>
+		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
 		  </div>
 		</Modal>
@@ -231,24 +231,24 @@
 </template>
 
 <script>
-  import * as utils from '@/api/utils'
-  import * as ResponseStatus from '@/api/response-status'
-	import UserList from '@/view/user/UserList.vue'
-  import userDetail from '@/view/user-detail/UserDetail.vue'
-  import ProjectList from '@/view/project/ProjectList.vue'
+	import * as utils from '@/api/utils'
+	import * as ResponseStatus from '@/api/response-status'
+	import UserListSingle from '@/view/user/UserListSingle.vue'
+	import userDetail from '@/view/user-detail/UserDetail.vue'
+	import ProjectList from '@/view/project/ProjectList.vue'
 	import ProjectDetail from '@/view/project/ProjectDetail.vue'
 	import {
-    getUserById,
-    getProjectById  
-  } from '@/api/module'
+		getUserById,
+		getProjectById  
+	} from '@/api/module'
 
 	export default {
 		name: 'ProjectCollection',
 		components: {
 			userDetail,
-      UserList,
-      ProjectList,
-      ProjectDetail
+			UserListSingle,
+			ProjectList,
+			ProjectDetail
 		},
 		data() {
 			return {
@@ -750,7 +750,7 @@
       },
       // 确认用户选择
 			confirm() {
-			  this.$refs.UserList.confirmSelection()
+			  this.$refs.UserListSingle.confirmSelection()
       },
       // 选择招标项目确认
       initData(id) {

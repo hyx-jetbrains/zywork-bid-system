@@ -454,9 +454,9 @@
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
-      <user-list ref="UserList" v-on:confirmSelection="confirmSelection"/>
+      <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
       <div slot="footer">
-        <Button type="text" size="large" @click="cancelModal('moduleSearch')">取消</Button>
+        <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
         <Button type="primary" size="large" @click="confirm">确认选择</Button>
       </div>
     </Modal>
@@ -485,7 +485,7 @@
 
 <script>
 import * as utils from '@/api/utils'
-import UserList from '@/view/user/UserList.vue'
+import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import UserListChoice from '@/view/user/UserListChoice.vue'
 import { getUserById } from '@/api/module'
@@ -497,7 +497,7 @@ export default {
   name: 'MarkSeekcar',
   components: {
     userDetail,
-    UserList,
+    UserListSingle,
     ProjectList,
     UserListChoice
   },
@@ -1042,12 +1042,12 @@ export default {
     },
     confirmSelection(id) {
       this.modal.userDetalSearch = false
-      this.searchForm.idMin = id
-      this.searchForm.idMax = id
+      this.searchForm.userIdMin = id
+      this.searchForm.userIdMax = id
       utils.search(this)
     },
     confirm() {
-      this.$refs.UserList.confirmSelection()
+      this.$refs.UserListSingle.confirmSelection()
     },
     setAddress() {
       if (this.tempAddress.length <= 0) {

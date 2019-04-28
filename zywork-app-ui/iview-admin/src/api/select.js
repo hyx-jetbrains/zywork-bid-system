@@ -1302,3 +1302,17 @@ export const couponUseStatusSelect = [
     label: '已使用'
   }
 ]
+
+/**
+ * 验证状态
+ */
+export const validStatus = [
+	{
+		value: '验证不通过',
+		label: '验证不通过'
+	},
+	{
+		value: '验证通过',
+		label: '验证通过'
+	}
+]

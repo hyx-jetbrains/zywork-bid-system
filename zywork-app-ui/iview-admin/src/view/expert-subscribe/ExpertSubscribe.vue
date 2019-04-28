@@ -571,7 +571,7 @@
 						{
 							title: '专家预约编号',
 							key: 'id',
-							minWidth: 160,
+							minWidth: 180,
 							sortable: true
 						},
 						{
@@ -711,7 +711,7 @@
 						{
 							title: '回复用户编号',
 							key: 'replyUserId',
-							minWidth: 150,
+							minWidth: 180,
 							sortable: true,
 							render: (h, params) => {
 							  return h(

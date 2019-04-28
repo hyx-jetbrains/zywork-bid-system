@@ -794,7 +794,7 @@
 		  title="搜索主表信息">
 		  <company-list-single ref="CompanyListSingle" v-on:confirmSelection="confirmSelection"/>
 		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
+		    <Button type="text" size="large" @click="cancelModal('companyChoice')">取消</Button>
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
 		  </div>
 		</Modal>

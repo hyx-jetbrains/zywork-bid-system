@@ -396,7 +396,7 @@
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
-      <user-list ref="UserList" v-on:confirmSelection="confirmSelection"/>
+      <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
         <Button type="primary" size="large" @click="confirm">确认选择</Button>
@@ -421,7 +421,7 @@
 <script>
 import * as utils from '@/api/utils'
 import * as ResponseStatus from '@/api/response-status'
-import UserList from '@/view/user/UserList.vue'
+import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import CouponList from '@/view/coupon/CouponListSingle.vue'
 import CouponDetail from '@/view/coupon/CouponDetail.vue'
@@ -432,7 +432,7 @@ export default {
   name: 'CouponRecord',
   components: {
     userDetail,
-    UserList,
+    UserListSingle,
     CouponList,
     CouponDetail
   },
@@ -954,8 +954,8 @@ export default {
     },
     confirmSelection(id) {
       this.modal.userDetalSearch = false
-      this.searchForm.idMin = id
-      this.searchForm.idMax = id
+      this.searchForm.userIdMin = id
+      this.searchForm.userIdMax = id
       utils.search(this)
     },
     confirmSelectionCoupon(id) {
@@ -965,7 +965,7 @@ export default {
       utils.search(this)
     },
     confirm() {
-      this.$refs.UserList.confirmSelection()
+      this.$refs.UserListSingle.confirmSelection()
     },
     confirmCoupon() {
       this.$refs.couponList.confirmSelection()

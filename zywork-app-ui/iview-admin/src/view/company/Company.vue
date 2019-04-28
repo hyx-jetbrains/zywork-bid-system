@@ -117,10 +117,18 @@
 					<Input v-model="form.regCapital" placeholder="请输入注册资本" />
 				</FormItem>
 				<FormItem label="经营范围" prop="businessScope">
-					<Input v-model="form.businessScope" placeholder="请输入经营范围" />
+					<Input
+						v-model="form.businessScope"
+						type="textarea"
+						:autosize="descriptionAutoSize"
+						placeholder="请输入经营范围" />
 				</FormItem>
 				<FormItem label="可承担业务" prop="affordableBusiness">
-					<Input v-model="form.affordableBusiness" placeholder="请输入可承担业务" />
+					<Input 
+						v-model="form.affordableBusiness"
+						type="textarea"
+						:autosize="descriptionAutoSize"
+						placeholder="请输入可承担业务" />
 				</FormItem>
 
 			</Form>
@@ -208,10 +216,18 @@
 					<Input v-model="form.regCapital" placeholder="请输入注册资本" />
 				</FormItem>
 				<FormItem label="经营范围" prop="businessScope">
-					<Input v-model="form.businessScope" placeholder="请输入经营范围" />
+					<Input
+						v-model="form.businessScope"
+						type="textarea"
+						:autosize="descriptionAutoSize"
+						placeholder="请输入经营范围" />
 				</FormItem>
 				<FormItem label="可承担业务" prop="affordableBusiness">
-					<Input v-model="form.affordableBusiness" placeholder="请输入可承担业务" />
+					<Input 
+						v-model="form.affordableBusiness"
+						type="textarea"
+						:autosize="descriptionAutoSize"
+						placeholder="请输入可承担业务" />
 				</FormItem>
 
 			</Form>
