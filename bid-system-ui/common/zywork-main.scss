@@ -53,6 +53,23 @@ button[type=primary][plain] {
 	align-items: center;
 }
 
+.zy-page-list {
+	padding-left: 15upx;
+	padding-right: 15upx;
+	background-color: $primary-backcolor;
+}
+	
+.zy-page-list-item {
+	width: 100%;
+	padding-top: 20upx;
+	padding-bottom: 20upx;
+	border-bottom: 1upx solid $seperator-color;
+}
+	
+.zy-page-list-item:last-child {
+	border-bottom: none;
+}
+
 .zy-form {
 	width: 95%;
 	padding-top: 10upx;

@@ -4,8 +4,8 @@
 			<uni-segmented-control :current="messageStatus.current" :values="messageStatus.items" v-on:clickItem="onClickItem"
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
-		<view v-if="messages.length > 0" class="zy-message">
-			<view v-for="(message, index) in messages" :key="index" class="zy-message-item" @click="toMessageDetail">
+		<view v-if="messages.length > 0" class="zy-page-list">
+			<view v-for="(message, index) in messages" :key="index" class="zy-page-list-item" @click="toMessageDetail">
 				<view class="zy-message-head">
 					<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{message.title}}</view>
 					<uni-tag v-if="message.isRead" text="已读" type="success" size="small" :inverted="true"></uni-tag>
@@ -72,24 +72,6 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-
-	.zy-message {
-		padding-left: 15upx;
-		padding-right: 15upx;
-		background-color: $primary-backcolor;
-	}
-
-	.zy-message-item {
-		width: 100%;
-		padding-top: 20upx;
-		padding-bottom: 20upx;
-		border-bottom: 1upx solid $seperator-color;
-	}
-	
-	.zy-message-item:last-child {
-		border-bottom: none;
-	}
-
 	.zy-message-head {
 		display: flex;
 		flex-direction: row;

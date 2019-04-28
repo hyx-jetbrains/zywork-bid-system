@@ -39,8 +39,8 @@
 		
 		<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
 		
-		<view class="zy-project" v-if="projects.length > 0">
-			<view class="zy-project-item" v-for="(project, index) in projects" :key="index" @click="toProjectDetail">
+		<view class="zy-page-list zy-project" v-if="projects.length > 0">
+			<view class="zy-page-list-item" v-for="(project, index) in projects" :key="index" @click="toProjectDetail">
 				<view class="zy-project-head">
 					<image class="zy-icon" :src="imgIcon"/>
 					<view>
@@ -389,20 +389,6 @@
 	
 	.zy-project {
 		margin-top: 10upx;
-		padding-left: 15upx;
-		padding-right: 15upx;
-		background-color: $primary-backcolor;
-	}
-	
-	.zy-project-item {
-		width: 100%;
-		padding-top: 20upx;
-		padding-bottom: 20upx;
-		border-bottom: 1upx solid $seperator-color;
-	}
-	
-	.zy-project-item:last-child {
-		border-bottom: none;
 	}
 	
 	.zy-project-head {

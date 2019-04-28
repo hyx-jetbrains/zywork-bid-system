@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view v-if="notices.length > 0" class="zy-notice-list">
-			<view v-for="(notice, index) in notices" :key="index" class="zy-notice-item" @click="toNoticeDetail">
+		<view v-if="notices.length > 0" class="zy-page-list">
+			<view v-for="(notice, index) in notices" :key="index" class="zy-page-list-item" @click="toNoticeDetail">
 				<view class="zy-text-big zy-text-bold">{{notice.title}}</view>
 				<view class="zy-notice-summary zy-overflow-hidden">{{notice.summary}}</view>
 				<view class="zy-text-small zy-text-info">{{notice.createTime}}</view>
@@ -44,21 +44,4 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	
-	.zy-notice-list {
-		padding-left: 15upx;
-		padding-right: 15upx;
-		background-color: $primary-backcolor;
-	}
-	
-	.zy-notice-item {
-		width: 100%;
-		padding-top: 20upx;
-		padding-bottom: 20upx;
-		border-bottom: 1upx solid $seperator-color;
-	}
-	
-	.zy-notice-item:last-child {
-		border-bottom: none;
-	}
 </style>
