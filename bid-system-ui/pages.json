@@ -41,12 +41,69 @@
 	],
 	"subPackages": [
 		{
+			"root": "pages-project-info",
+			"pages": [
+				{
+					"path": "search-page/search-page",
+					"style": {
+						"navigationBarTitleText": "招标信息搜索",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "notice-list/notice-list",
+					"style": {
+						"navigationBarTitleText": "公告列表",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "notice-detail/notice-detail",
+					"style": {
+						"navigationBarTitleText": "公告详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "project-detail/project-detail",
+					"style": {
+						"navigationBarTitleText": "招标详情",
+						"backgroundTextStyle": "light"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages-info-share",
+			"pages": [
+				{
+					"path": "search-page/search-page",
+					"style": {
+						"navigationBarTitleText": "信息共享搜索",
+						"backgroundTextStyle": "light"
+					}
+				}
+			]
+		},
+		{
 			"root": "pages-message-notify",
 			"pages": [
 				{
 					"path": "message-detail/message-detail",
 					"style": {
 						"navigationBarTitleText": "消息详情",
+						"backgroundTextStyle": "light"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages-credit-query",
+			"pages": [
+				{
+					"path": "search-page/search-page",
+					"style": {
+						"navigationBarTitleText": "企业征信搜索",
 						"backgroundTextStyle": "light"
 					}
 				}

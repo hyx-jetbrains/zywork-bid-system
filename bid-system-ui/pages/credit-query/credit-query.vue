@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<view class="zy-top-search">
-			<view class="zy-search-bar">
-				<i class="iconfont iconchaxun"></i>
-				<input type="text" placeholder="我要搜索" @focus="searchFocus"/>
+			<view class="zy-search-bar" @click="toSearchPage">
+				<zywork-icon type="iconchaxun"/>
+				<input type="text" placeholder="我要搜索" disabled/>
 			</view>
 		</view>
 		征信查询
@@ -11,7 +11,11 @@
 </template>
 
 <script>
+	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	export default {
+		components: {
+			zyworkIcon
+		},
 		data() {
 			return {
 
@@ -19,8 +23,10 @@
 		},
 		onLoad() {},
 		methods: {
-			searchFocus() {
-				console.log('to search page')
+			toSearchPage() {
+				uni.navigateTo({
+					url: '/pages-credit-query/search-page/search-page'
+				})
 			}
 		}
 	}

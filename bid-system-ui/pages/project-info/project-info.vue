@@ -7,9 +7,9 @@
 					<zywork-icon type="iconxiangxia"/>
 				</view>
 			</picker>
-			<view class="zy-search-bar">
+			<view class="zy-search-bar" @click="toSearchPage">
 				<zywork-icon type="iconchaxun"/>
-				<input type="text" placeholder="我要搜索" @focus="searchFocus" />
+				<input type="text" placeholder="我要搜索" disabled/>
 			</view>
 		</view>
 
@@ -213,9 +213,6 @@
 			chooseCity(e) {
 				this.cityIndex = e.target.value
 			},
-			searchFocus() {
-				console.log('to search page')
-			},
 			showSwiperDetail(contentUrl) {
 				console.log(contentUrl)
 			},
@@ -270,6 +267,16 @@
 				this.calendar.date = this.calendar.timeData.fulldate
 				this.calendar.currentFormatDate = this.calendar.timeData.fulldate + ' ' + this.calendar.timeData.lunar.ncWeek
 				this.calendar.showCalendar = false;
+			},
+			toSearchPage() {
+				uni.navigateTo({
+					url: '/pages-project-info/search-page/search-page'
+				})
+			},
+			toNoticeList() {
+				uni.navigateTo({
+					url: '/pages-project-info/notice-list/notice-list'
+				})
 			}
 		}
 	}
