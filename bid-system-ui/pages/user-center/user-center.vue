@@ -12,8 +12,8 @@
 						</button>
 					</view>
 					<view style="margin-left: 100upx;">
-						<zywork-icon type="iconVIP" color="#ffffff" size="24" style="display: inline-block; margin-right: 20upx;"/>
-						<zywork-icon type="iconzhuanjiarenzheng" color="#ccc" size="24" style="display: inline-block;"/>
+						<zywork-icon type="iconVIP" color="#ffffff" size="24" style="display: inline-block; margin-right: 20upx;" @click.native="toUserVip"/>
+						<zywork-icon type="iconzhuanjiarenzheng" color="#ccc" size="24" style="display: inline-block;" @click.native="toUserExpert"/>
 					</view>
 				</view>
 				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF" @click.native="toUserSetting"/>
@@ -31,34 +31,34 @@
 			</view>
 		</view>
 		<view class="zy-user-balance">
-			<view class="zy-user-balance-item">
+			<view class="zy-user-balance-item" @click="toComission">
 				<text class="zy-text-primary zy-text-big zy-text-bold">0</text>
 				<text class="zy-text-info">佣金</text>
 			</view>
-			<view class="zy-user-balance-item">
+			<view class="zy-user-balance-item" @click="toIntegral">
 				<text class="zy-text-primary zy-text-big zy-text-bold">20</text>
 				<text class="zy-text-info">积分</text>
 			</view>
 		</view>
 		<uni-list>
 			<zywork-list-item title="我的订阅" show-extra-icon="true" :extra-icon="{color: '#FF4539',size: '18',type: 'icondingyue'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toSubscrible"></zywork-list-item>
 			<zywork-list-item title="我的发布" show-extra-icon="true" :extra-icon="{color: '#568999',size: '18',type: 'iconfabu'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toPublish"></zywork-list-item>
 			<zywork-list-item title="我的收藏" show-extra-icon="true" :extra-icon="{color: '#892398',size: '18',type: 'iconshoucang'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toCollection"></zywork-list-item>
 			<zywork-list-item title="我的预约" show-extra-icon="true" :extra-icon="{color: '#ABC033',size: '18',type: 'iconyuyue'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toAppointment"></zywork-list-item>
 			<zywork-list-item title="我的咨询反馈" show-extra-icon="true" :extra-icon="{color: '#F98E69',size: '18',type: 'iconshouye'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toConsult"></zywork-list-item>
 			<zywork-list-item title="我的简历" show-extra-icon="true" :extra-icon="{color: '#681899',size: '18',type: 'iconresume-line'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toResume"></zywork-list-item>
 			<zywork-list-item title="我的抵用券" show-extra-icon="true" :extra-icon="{color: '#23AA22',size: '18',type: 'iconquan'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toCoupon"></zywork-list-item>
 			<zywork-list-item title="我的分享邀请" show-extra-icon="true" :extra-icon="{color: '#567890',size: '18',type: 'iconicon-test1'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toShare"></zywork-list-item>
 			<zywork-list-item title="业绩二维码" show-extra-icon="true" :extra-icon="{color: '#E51C23',size: '18',type: 'iconico'}"
-			 @click="toHelp"></zywork-list-item>
+			 @click="toPerformanceQrcode"></zywork-list-item>
 			<zywork-list-item title="常见问题" show-extra-icon="true" :extra-icon="{color: '#CC0022',size: '18',type: 'iconbangzhu'}"
 			 @click="toHelp"></zywork-list-item>
 			<zywork-list-item title="联系我们" show-extra-icon="true" :extra-icon="{color: '#535CA7',size: '18',type: 'iconguanyu'}"
@@ -136,17 +136,70 @@
 					url: '/pages-user-center/user-setting/user-setting'
 				})
 			},
-			toNickname() {
-				if (isUserTokenExist()) {
-					const self = this
-					this.$event.$on('changeNickname', function(data) {
-						self.user.nickname = data.nickname
-						self.$event.$off('changeNickname')
-					});
-					uni.navigateTo({
-						url: '/pages/nickname/nickname?nickname=' + this.user.nickname
-					})
-				}
+			toUserVip() {
+				uni.navigateTo({
+					url: '/pages-user-center/user-vip/user-vip'
+				})
+			},
+			toUserExpert() {
+				uni.navigateTo({
+					url: '/pages-user-center/user-expert/user-expert'
+				})
+			},
+			toComission() {
+				uni.navigateTo({
+					url: '/pages-user-center/commission/commission'
+				})
+			},
+			toIntegral() {
+				uni.navigateTo({
+					url: '/pages-user-center/integral/integral'
+				})
+			},
+			toSubscrible() {
+				uni.navigateTo({
+					url: '/pages-user-center/subscrible/subscrible'
+				})
+			},
+			toPublish() {
+				uni.navigateTo({
+					url: '/pages-user-center/publish/publish'
+				})
+			},
+			toCollection() {
+				uni.navigateTo({
+					url: '/pages-user-center/collection/collection'
+				})
+			},
+			toResume() {
+				uni.navigateTo({
+					url: '/pages-user-center/resume/resume'
+				})
+			},
+			toConsult() {
+				uni.navigateTo({
+					url: '/pages-user-center/consult/consult'
+				})
+			},
+			toAppointment() {
+				uni.navigateTo({
+					url: '/pages-user-center/appointment/appointment'
+				})
+			},
+			toShare() {
+				uni.navigateTo({
+					url: '/pages-user-center/share/share'
+				})
+			},
+			toCoupon() {
+				uni.navigateTo({
+					url: '/pages-user-center/coupon/coupon'
+				})
+			},
+			toPerformanceQrcode() {
+				uni.navigateTo({
+					url: '/pages-user-center/performance-qrcode/performance-qrcode'
+				})
 			},
 			toHelp() {
 				uni.navigateTo({
