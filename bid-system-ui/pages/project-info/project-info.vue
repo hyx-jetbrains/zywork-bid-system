@@ -24,7 +24,7 @@
 		</view>
 
 		<view v-if="latestNotice !== null" style="margin-top: 10upx;">
-			<zywork-notice-bar @click="toNoticeDetail" @getmore="toNoticeList" :show-get-more="true" more-text="查看更多" show-icon="true" single="true" color="#108ee9" :text="latestNotice"></zywork-notice-bar>
+			<zywork-notice-bar @click="toNoticeDetail" @getmore="toNoticeList" :show-get-more="true" more-text="更多头条" show-icon="true" single="true" color="#108ee9" :text="latestNotice"></zywork-notice-bar>
 		</view>
 
 		<view class="uni-tab-bar zy-tab-bar">

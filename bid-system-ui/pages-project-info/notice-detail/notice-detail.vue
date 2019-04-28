@@ -1,6 +1,6 @@
 <template>
 	<view>
-		公告详情
+		头条详情
 	</view>
 </template>
 

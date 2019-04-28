@@ -7,7 +7,7 @@
 				<view class="zy-text-small zy-text-info">{{notice.createTime}}</view>
 			</view>
 		</view>
-		<zywork-no-data v-else text="暂无公告"></zywork-no-data>
+		<zywork-no-data v-else text="暂无头条"></zywork-no-data>
 	</view>
 </template>
 
@@ -21,13 +21,11 @@
 			return {
 				notices: [
 					{
-						title: '公告标题',
-						summary: '公告摘要',
+						title: '头条标题',
 						createTime: '2019-04-28 10:30:00'
 					},
 					{
-						title: '公告标题',
-						summary: '公告摘要',
+						title: '头条标题',
 						createTime: '2019-04-28 10:30:00'
 					}
 				]
@@ -62,9 +60,5 @@
 	
 	.zy-notice-item:last-child {
 		border-bottom: none;
-	}
-	
-	.zy-notice-summary {
-		max-height: 200upx;
 	}
 </style>

@@ -54,7 +54,7 @@
 				{
 					"path": "notice-list/notice-list",
 					"style": {
-						"navigationBarTitleText": "公告列表",
+						"navigationBarTitleText": "头条列表",
 						"enablePullDownRefresh": true,
 						"backgroundTextStyle": "light"
 					}
@@ -62,7 +62,7 @@
 				{
 					"path": "notice-detail/notice-detail",
 					"style": {
-						"navigationBarTitleText": "公告详情",
+						"navigationBarTitleText": "头条详情",
 						"backgroundTextStyle": "light"
 					}
 				},
