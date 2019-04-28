@@ -39,7 +39,7 @@
 		
 		<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
 		
-		<view class="zy-project">
+		<view class="zy-project" v-if="projects.length > 0">
 			<view class="zy-project-item" v-for="(project, index) in projects" :key="index">
 				<view class="zy-project-head">
 					<image class="zy-icon" :src="imgIcon"/>
@@ -72,6 +72,8 @@
 			</view>
 		</view>
 		
+		<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
+		
 		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
 			<view class="calendar-box" @click.stop="">
 				<zywork-calendar :slide="calendar.slide" :disableBefore="calendar.disableBefore" :start-date="calendar.startDate" :date="calendar.date" @change="change" @to-click="toClick" />
@@ -90,6 +92,7 @@
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import {
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
@@ -124,7 +127,8 @@
 			uniNoticeBar,
 			uniSegmentedControl,
 			zyworkCalendar,
-			uniTag
+			uniTag,
+			zyworkNoData
 		},
 		data() {
 			return {

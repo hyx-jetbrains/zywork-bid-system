@@ -41,26 +41,12 @@
 	],
 	"subPackages": [
 		{
-			"root": "pages-static",
+			"root": "pages-message-notify",
 			"pages": [
 				{
-					"path": "help/help",
+					"path": "message-detail/message-detail",
 					"style": {
-						"navigationBarTitleText": "常见问题",
-						"backgroundTextStyle": "light"
-					}
-				},
-				{
-					"path": "contact/contact",
-					"style": {
-						"navigationBarTitleText": "联系我们",
-						"backgroundTextStyle": "light"
-					}
-				},
-				{
-					"path": "privacy/privacy",
-					"style": {
-						"navigationBarTitleText": "用户协议与隐私声明",
+						"navigationBarTitleText": "消息详情",
 						"backgroundTextStyle": "light"
 					}
 				}
@@ -80,6 +66,32 @@
 					"path": "nickname/nickname",
 					"style": {
 						"navigationBarTitleText": "我的昵称",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "help/help",
+					"style": {
+						"navigationBarTitleText": "常见问题",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "contact/contact",
+					"style": {
+						"navigationBarTitleText": "联系我们",
+						"backgroundTextStyle": "light"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages-static",
+			"pages": [
+				{
+					"path": "privacy/privacy",
+					"style": {
+						"navigationBarTitleText": "用户协议与隐私声明",
 						"backgroundTextStyle": "light"
 					}
 				}

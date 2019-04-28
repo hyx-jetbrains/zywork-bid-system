@@ -150,12 +150,12 @@
 			},
 			toHelp() {
 				uni.navigateTo({
-					url: '/pages-static/help/help'
+					url: '/pages-user-center/help/help'
 				})
 			},
 			toContact() {
 				uni.navigateTo({
-					url: '/pages-static/contact/contact'
+					url: '/pages-user-center/contact/contact'
 				})
 			}
 		}
