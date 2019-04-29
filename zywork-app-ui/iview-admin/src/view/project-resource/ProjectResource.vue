@@ -56,9 +56,9 @@
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <Select v-model="form.projectId" placeholder="请选择项目" clearable filterable>
-            <i-option v-for="item in projectList" :value="item.id" :key="item.id">{{item.title}}</i-option>
-          </Select>
+          <span v-text="form.projectId"/>
+          &nbsp;
+          <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="资源类别" prop="resType">
           <Select v-model="form.resType" placeholder="请选择资源类别" clearable filterable>
@@ -70,14 +70,16 @@
           </Select>
         </FormItem>
         <FormItem label="资源文件" prop="resourceId">
-          <Upload type="drag" 
-            :action="urls.uploadResourceUrl" 
+          <Upload
+            type="drag"
+            :action="urls.uploadResourceUrl"
             :on-success="handleSuccess"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
             :format="['doc','docx','pdf']"
             :max-size="10240"
-            :headers="uploadHeader">
+            :headers="uploadHeader"
+          >
             <div style="padding: 20px 0">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>单击或拖动文件到此处上传</p>
@@ -97,9 +99,9 @@
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <Select v-model="form.projectId" placeholder="请选择项目" clearable filterable>
-            <i-option v-for="item in projectList" :value="item.id" :key="item.id">{{item.title}}</i-option>
-          </Select>
+          <span v-text="form.projectId"/>
+          &nbsp;
+          <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="资源类别" prop="resType">
           <Select v-model="form.resType" placeholder="请选择资源类别" clearable filterable>
@@ -135,6 +137,29 @@
                 <InputNumber
                   v-model="searchForm.idMax"
                   placeholder="请输入结束项目资源表主键"
+                  style="width: 100%;"
+                />
+              </FormItem>
+            </i-col>
+          </Row>
+        </FormItem>
+        <FormItem label="项目编号">
+          <Row>
+            <i-col span="11">
+              <FormItem prop="projectIdMin">
+                <InputNumber
+                  v-model="searchForm.projectIdMin"
+                  placeholder="请输入开始项目编号"
+                  style="width: 100%;"
+                />
+              </FormItem>
+            </i-col>
+            <i-col span="2" style="text-align: center">-</i-col>
+            <i-col span="11">
+              <FormItem prop="projectIdMax">
+                <InputNumber
+                  v-model="searchForm.projectIdMax"
+                  placeholder="请输入结束请项目编号"
                   style="width: 100%;"
                 />
               </FormItem>
@@ -303,6 +328,39 @@
         <Button type="default" size="large" @click="cancelModal('project')">取消</Button>
       </div>
     </Modal>
+
+    <Modal :transfer="false" v-model="modal.projectDetail" title="招投标项目详情">
+      <project-detail :form="projectDetailForm"/>
+    </Modal>
+
+    <Modal :transfer="false" fullscreen v-model="modal.projectDetailSearch" title="搜索主表信息">
+      <project-list-single
+        ref="ProjectListSingle"
+        v-on:confirmSelectionProject="confirmSelectionProject"
+      />
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('projectDetailSearch')">取消</Button>
+        <Button type="primary" size="large" @click="confirmProject">确认选择</Button>
+      </div>
+    </Modal>
+
+    <Modal :transfer="false" fullscreen v-model="modal.projectChoice" title="选择招投标项目">
+      <project-list-choice
+        ref="ProjectListChoice"
+        v-on:confirmChoiceProject="confirmChoiceProject"
+      />
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('projectChoice')">取消</Button>
+        <Button type="primary" size="large" @click="confirmChoice">确认选择</Button>
+      </div>
+    </Modal>
+
+    <Modal :transfer="false" v-model="modal.resourceDetail" title="资源预览">
+      <img :src="imgUrl" style="width: 490px" />
+      <div slot="footer">
+        <Button type="default" size="large" @click="cancelModal('resourceDetail')">取消</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -310,25 +368,72 @@
 import * as utils from '@/api/utils'
 import * as ResponseStatus from '@/api/response-status'
 import ProjectList from '@/view/project/ProjectList.vue'
+import ProjectDetail from '@/view/project/ProjectDetail.vue'
+import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
+import { getProjectById } from '@/api/module'
+import ProjectListChoice from '@/view/project/ProjectListChoice.vue'
 import { isActiveSelect, projectResourceType } from '@/api/select'
 import config from '@/config'
-const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? config.baseUrl.dev
+    : config.baseUrl.pro
 const cdnUrl = config.baseUrl.cdnUrl
 import { getLocalStorageToken } from '@/libs/util'
 
 export default {
   name: 'ProjectResource',
   components: {
-    ProjectList
+    ProjectList,
+    ProjectDetail,
+    ProjectListSingle,
+    ProjectListChoice
   },
   data() {
     return {
+      projectDetailForm: {
+        id: null,
+        title: null,
+        projectType: null,
+        city: null,
+        projectDetail: null,
+        releaseStatus: null,
+        markUnitName: null,
+        projectInvest: null,
+        checkPattern: null,
+        compAptitudeType: null,
+        builderLevel: null,
+        moneyToImplement: 100,
+        tenderingAgent: null,
+        phone: null,
+        offerPrice: 0,
+        assurePrice: 0,
+        constructionPeriod: null,
+        downloadEndTime: null,
+        otherDemand: null,
+        openMarkInfo: null,
+        openMarkTime: null,
+        openMarkAddr: null,
+        inMarkPublicity: null,
+        inMarkComp: null,
+        noticeTime: null,
+        clickCount: null,
+        isElectronic: null,
+        version: null,
+        createTime: null,
+        updateTime: null,
+        isActive: null
+      },
       modal: {
         add: false,
         edit: false,
         search: false,
         detail: false,
-        project: false
+        project: false,
+        projectDetail: false,
+        projectDetailSearch: false,
+        projectChoice: false,
+        resourceDetail: false
       },
       loading: {
         add: false,
@@ -348,7 +453,8 @@ export default {
         activeUrl: '/projecresource/admin/active',
         projectSelectUrl: '/project/admin/all',
         batchActiveUrl: '/projecresource/admin/batch-active',
-        uploadResourceUrl: baseUrl + '/projecresource/admin/upload-res'
+        uploadResourceUrl: baseUrl + '/projecresource/admin/upload-res',
+        resourceOneUrl: '/resource/admin/one/'
       },
       page: {
         total: 0
@@ -361,7 +467,7 @@ export default {
         version: null,
         createTime: null,
         updateTime: null,
-        isActive: null,
+        isActive: null
       },
       validateRules: {
         projectId: [
@@ -444,13 +550,82 @@ export default {
             title: '项目编号',
             key: 'projectId',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              return h(
+                'Dropdown',
+                {
+                  on: {
+                    'on-click': itemName => {
+                      this.userOpt(itemName, params.row)
+                    }
+                  },
+                  props: {
+                    transfer: true
+                  }
+                },
+                [
+                  h('span', [
+                    params.row.projectId,
+                    h('Icon', {
+                      props: {
+                        type: 'ios-list',
+                        size: '25'
+                      }
+                    })
+                  ]),
+                  h(
+                    'DropdownMenu',
+                    {
+                      slot: 'list'
+                    },
+                    [
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'moduleDetailProject'
+                          }
+                        },
+                        '详情'
+                      ),
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'showSearchProject'
+                          }
+                        },
+                        '搜索'
+                      )
+                    ]
+                  )
+                ]
+              )
+            }
           },
           {
             title: '资源编号',
             key: 'resourceId',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              return h(
+                'Button',
+                {
+                  props: {
+                    size: 'small',
+                    type: 'text'
+                  },
+                  on: {
+                    click: () => {
+                      this.showResource(params.row)
+                    }
+                  }
+                },
+                '点击查看'
+              )
+            }
           },
           {
             title: '资源类别',
@@ -459,22 +634,36 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
-              const color = row.resType === 0 ? 'primary' 
-                          : row.resType === 1 ? 'info'
-                          : row.resType === 2 ? 'success'
-                          : row.resType === 3 ? 'warning'
-                          : 'error'
-               const text = row.resType === 0 ? '招标文件' 
-                          : row.resType === 1 ? '澄清文件'
-                          : row.resType === 2 ? '清单文件'
-                          : row.resType === 3 ? '资格审查文件'
-                          : '未知'
-              return h('Button', {
+              const color =
+                row.resType === 0
+                  ? 'primary'
+                  : row.resType === 1
+                  ? 'info'
+                  : row.resType === 2
+                  ? 'success'
+                  : row.resType === 3
+                  ? 'warning'
+                  : 'error'
+              const text =
+                row.resType === 0
+                  ? '招标文件'
+                  : row.resType === 1
+                  ? '澄清文件'
+                  : row.resType === 2
+                  ? '清单文件'
+                  : row.resType === 3
+                  ? '资格审查文件'
+                  : '未知'
+              return h(
+                'Button',
+                {
                   props: {
                     size: 'small',
                     type: color
                   }
-                }, text)
+                },
+                text
+              )
             }
           },
           {
@@ -626,33 +815,29 @@ export default {
         tableDetails: [],
         selections: []
       },
-      projectList: [],
       isActiveSelect: isActiveSelect,
       projectResourceType: projectResourceType,
       uploadHeader: {
-        'Authorization': 'Bearer ' + getLocalStorageToken()
+        Authorization: 'Bearer ' + getLocalStorageToken()
       },
-      projectId: this.$route.params.projectId
+      projectId: this.$route.params.projectId,
+      imgUrl: ''
     }
   },
   computed: {},
   mounted() {
     if (this.projectId !== undefined) {
-      this.initData(this.projectId) 
+      this.initData(this.projectId)
     } else {
       this.modal.project = true
     }
-    this.initProjectSelect()
   },
   methods: {
     // 初始化数据
     initData(projectId) {
-      this.modal.project = false
+      this.cancelModal('project')
       this.projectId = projectId
-      this.searchForm.projectId 
-            = this.searchForm.projectIdMin
-            = this.searchForm.projectIdMax
-            = this.projectId
+      this.searchForm.projectIdMin = this.searchForm.projectIdMax = this.projectId
       this.search()
     },
     showModal(modal) {
@@ -699,7 +884,41 @@ export default {
         this.form = JSON.parse(JSON.stringify(row))
       } else if (itemName === 'remove') {
         utils.remove(this, row)
+      } else if (itemName === 'moduleDetailProject') {
+        this.showProjectDetailModal(row.projectId)
+      } else if (itemName === 'showSearchProject') {
+        utils.showModal(this, 'projectDetailSearch')
       }
+    },
+    showProjectDetailModal(id) {
+      getProjectById(id)
+        .then(res => {
+          const data = res.data
+          if (data.code === ResponseStatus.OK) {
+            this.projectDetailForm = data.data
+            this.showModal('projectDetail')
+          } else {
+            this.$Message.error(data.message)
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err)
+        })
+    },
+    confirmSelectionProject(id) {
+      this.cancelModal('projectDetailSearch')
+      this.searchForm.projectIdMin = this.searchForm.projectIdMax = id
+      utils.search(this)
+    },
+    confirmProject() {
+      this.$refs.ProjectListSingle.confirmSelection()
+    },
+    confirmChoiceProject(projectId) {
+      this.form.projectId = projectId
+      this.cancelModal('projectChoice')
+    },
+    confirmChoice() {
+      this.$refs.ProjectListChoice.confirmSelection()
     },
     add() {
       utils.add(this)
@@ -724,21 +943,6 @@ export default {
     },
     changePageSize(pageSize) {
       utils.changePageSize(this, pageSize)
-    },
-    // 初始化项目下拉框，根据添加、编辑不同的操作，生成不同的下拉框
-    initProjectSelect() {
-      utils
-        .getSelectData(this.urls.projectSelectUrl)
-        .then(res => {
-          if (res.data.code !== ResponseStatus.OK) {
-            this.$Message.error(res.data.message)
-            return
-          }
-          this.projectList = res.data.data.rows
-        })
-        .catch(err => {
-          this.$Message.error(err)
-        })
     },
     handleSuccess(res, file) {
       if (res.code === ResponseStatus.OK) {
@@ -765,6 +969,32 @@ export default {
         title: '超出文件大小限制',
         desc: file.name + ' 太大，不得超10M.'
       })
+    },
+    // 查看资源
+    showResource(row) {
+      utils
+        .getOneById(this.urls.resourceOneUrl, row.resourceId)
+        .then(res => {
+          const data = res.data
+          if (data.code === ResponseStatus.OK) {
+            const mimeType = data.data.mimeType
+            const url = cdnUrl + '/' + data.data.url
+            if (mimeType === 'Image') {
+              this.imgUrl = url
+              this.showModal('resourceDetail')
+            } else if (mimeType === 'Document') {
+              this.imgUrl = url
+              window.open(url)
+            } else {
+              this.$Message.error(mimeType)
+            }
+          } else {
+            this.$Message.error(data.message)
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err)
+        })
     },
   }
 }

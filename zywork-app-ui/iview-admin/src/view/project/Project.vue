@@ -113,7 +113,13 @@
         <Row>
           <i-col span="12">
             <FormItem label="审查方式" prop="checkPattern">
-              <Input v-model="form.checkPattern" placeholder="请输入审查方式"/>
+              <Select v-model="form.checkPattern" placeholder="请选择审查方式" clearable filterable>
+                <i-option
+                  v-for="item in checkPatternSelect"
+                  :value="item.value"
+                  :key="item.value"
+                >{{item.label}}</i-option>
+              </Select>
             </FormItem>
           </i-col>
           <i-col span="12">
@@ -134,7 +140,7 @@
                 v-model="form.moneyToImplement"
                 placeholder="请输入资金落实(%)"
                 style="width: 100%;"
-              /> -->
+              />-->
               <Slider v-model="form.moneyToImplement"></Slider>
             </FormItem>
           </i-col>
@@ -317,7 +323,13 @@
         <Row>
           <i-col span="12">
             <FormItem label="审查方式" prop="checkPattern">
-              <Input v-model="form.checkPattern" placeholder="请输入审查方式"/>
+              <Select v-model="form.checkPattern" placeholder="请选择审查方式" clearable filterable>
+                <i-option
+                  v-for="item in checkPatternSelect"
+                  :value="item.value"
+                  :key="item.value"
+                >{{item.label}}</i-option>
+              </Select>
             </FormItem>
           </i-col>
           <i-col span="12">
@@ -338,7 +350,7 @@
                 v-model="form.moneyToImplement"
                 placeholder="请输入资金落实(%)"
                 style="width: 100%;"
-              /> -->
+              />-->
               <Slider v-model="form.moneyToImplement"></Slider>
             </FormItem>
           </i-col>
@@ -836,12 +848,31 @@
         <span v-text="form.isActive === 0 ? '激活' : '冻结'"></span>
       </p>
     </Modal>
-    <Modal
-      v-model="modal.projectDetail"
-      title="招投标项目公示详情"
-      :fullscreen="true"
-    >
+    <Modal v-model="modal.projectDetail" title="招投标项目公示详情" :fullscreen="true">
       <span v-html="form.projectDetail"></span>
+    </Modal>
+
+    <Modal
+      v-model="modal.markDate"
+      title="设置开标时间"
+      @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
+    >
+      <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
+        <FormItem label="开标时间" prop="openMarkTime">
+          <DatePicker
+            @on-change="form.openMarkTime=$event"
+            :value="form.openMarkTime"
+            placeholder="请选择开标时间"
+            type="datetime"
+            format="yyyy-MM-dd HH:mm:ss"
+            style="width: 100%;"
+          ></DatePicker>
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="resetFormCancelModal('editForm', 'markDate')">取消</Button>
+        <Button type="primary" size="large" @click="edit" :loading="loading.edit">修改</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -855,7 +886,8 @@ import {
   isElectronic,
   projectReleaseStatus,
   projectCity,
-  projectMarkStatus
+  projectMarkStatus,
+  checkPatternSelect
 } from '@/api/select'
 import Editor from '_c/editor'
 import config from '@/config'
@@ -877,7 +909,9 @@ export default {
         edit: false,
         search: false,
         detail: false,
-        projectDetail: false
+        projectDetail: false,
+        markDate: false
+
       },
       loading: {
         add: false,
@@ -898,7 +932,7 @@ export default {
         batchActiveUrl: '/project/admin/batch-active',
         uploadUrl: baseUrl + '/project/admin/upload-img',
         releaseStatusUrl: '/project/admin/releaseProject',
-        batchReleaseUrl: '/project/admin/batch-release',
+        batchReleaseUrl: '/project/admin/batch-release'
       },
       page: {
         total: 0
@@ -915,11 +949,11 @@ export default {
         checkPattern: null,
         compAptitudeType: null,
         builderLevel: null,
-        moneyToImplement: null,
+        moneyToImplement: 100,
         tenderingAgent: null,
         phone: null,
-        offerPrice: null,
-        assurePrice: null,
+        offerPrice: 0,
+        assurePrice: 0,
         constructionPeriod: null,
         downloadEndTime: null,
         otherDemand: null,
@@ -1232,14 +1266,18 @@ export default {
             key: 'projectDetail',
             minWidth: 120,
             render: (h, params) => {
-              return h('a', {
+              return h(
+                'a',
+                {
                   on: {
                     click: () => {
                       utils.showModal(this, 'projectDetail')
                       this.form = JSON.parse(JSON.stringify(params.row))
                     }
                   }
-                },'点击查看')
+                },
+                '点击查看'
+              )
             }
           },
           {
@@ -1249,36 +1287,51 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
-              const color = row.releaseStatus === '待审核' ? 'default' 
-                          : row.releaseStatus === '已发布' ? 'success' : 'error'
+              const color =
+                row.releaseStatus === '待审核'
+                  ? 'default'
+                  : row.releaseStatus === '已发布'
+                  ? 'success'
+                  : 'error'
               if (row.releaseStatus === '待审核') {
-                return h('Tooltip', {
-                  props: {
-                    placement: 'top',
-                    content: '点击发布'
-                  }
-                }, [
-                  h('Button', {
-                    on: {
-                      'click': () => {
-                        this.userOpt('releaseProject', row)
-                      }
-                    },
+                return h(
+                  'Tooltip',
+                  {
+                    props: {
+                      placement: 'top',
+                      content: '点击发布'
+                    }
+                  },
+                  [
+                    h(
+                      'Button',
+                      {
+                        on: {
+                          click: () => {
+                            this.userOpt('releaseProject', row)
+                          }
+                        },
+                        props: {
+                          size: 'small',
+                          type: color
+                        }
+                      },
+                      row.releaseStatus
+                    )
+                  ]
+                )
+              } else {
+                return h(
+                  'Button',
+                  {
                     props: {
                       size: 'small',
                       type: color
                     }
-                  }, row.releaseStatus)
-                ])
-              } else {
-                return h('Button', {
-                  props: {
-                    size: 'small',
-                    type: color
-                  }
-                }, row.releaseStatus)
+                  },
+                  row.releaseStatus
+                )
               }
-              
             }
           },
           {
@@ -1318,12 +1371,16 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
-              return h('Progress', {
+              return h(
+                'Progress',
+                {
                   props: {
                     percent: row.moneyToImplement,
                     status: 'active'
                   }
-                }, row.moneyToImplement + '%')
+                },
+                row.moneyToImplement + '%'
+              )
             }
           },
           {
@@ -1342,13 +1399,31 @@ export default {
             title: '要约价(元)',
             key: 'offerPrice',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              const text = row.offerPrice / 100
+              return h(
+                'span',
+                {},
+                '¥' + text
+              )
+            }
           },
           {
             title: '保证金(万元)',
             key: 'assurePrice',
             minWidth: 130,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              const text = row.assurePrice / 100
+              return h(
+                'span',
+                {},
+                '¥' + text
+              )
+            }
           },
           {
             title: '工期(天)',
@@ -1393,15 +1468,24 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
-              const color = row.inMarkPublicity === '待开标' ? 'default' 
-                          : row.inMarkPublicity === '公告中' ? 'success' 
-                          : row.inMarkPublicity === '已开标' ? 'primary' : 'error'
-              return h('Button', {
+              const color =
+                row.inMarkPublicity === '待开标'
+                  ? 'default'
+                  : row.inMarkPublicity === '公告中'
+                  ? 'success'
+                  : row.inMarkPublicity === '已开标'
+                  ? 'primary'
+                  : 'error'
+              return h(
+                'Button',
+                {
                   props: {
                     size: 'small',
                     type: color
                   }
-                }, row.inMarkPublicity)
+                },
+                row.inMarkPublicity
+              )
             }
           },
           {
@@ -1429,14 +1513,28 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
-              const color = row.isElectronic === 0 ? 'default' : row.isElectronic === 1 ? 'success' : 'error'
-              const text = row.isElectronic === 0 ? '非电子' : row.isElectronic === 1 ? '电子' : '未知'
-              return h('Button', {
+              const color =
+                row.isElectronic === 0
+                  ? 'default'
+                  : row.isElectronic === 1
+                  ? 'success'
+                  : 'error'
+              const text =
+                row.isElectronic === 0
+                  ? '非电子'
+                  : row.isElectronic === 1
+                  ? '电子'
+                  : '未知'
+              return h(
+                'Button',
+                {
                   props: {
                     size: 'small',
                     type: color
                   }
-                }, text)
+                },
+                text
+              )
             }
           },
           {
@@ -1596,6 +1694,15 @@ export default {
                         },
                         '附件'
                       ),
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'setMarkDate'
+                          }
+                        },
+                        '开标时间'
+                      )
                     ]
                   )
                 ]
@@ -1612,11 +1719,12 @@ export default {
       projectType: projectType,
       projectCity: projectCity,
       projectMarkStatus: projectMarkStatus,
+      checkPatternSelect: checkPatternSelect,
       descriptionAutoSize: {
         minRows: 3,
         maxRows: 5
       },
-      projectId: this.$route.params.projectId,
+      projectId: this.$route.params.projectId
     }
   },
   computed: {},
@@ -1630,6 +1738,12 @@ export default {
   },
   methods: {
     showModal(modal) {
+      if (modal === 'add') {
+        this.form.projectType = this.projectType[0].value
+        this.form.checkPattern = this.checkPatternSelect[0].value
+        this.form.releaseStatus = this.projectReleaseStatus[0].value
+        this.form.isElectronic = this.isElectronic[0].value
+      }
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
@@ -1668,6 +1782,7 @@ export default {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
         this.$refs.editorEdit.setHtml(this.form.projectDetail)
+        this.setPrice(0)
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -1678,18 +1793,45 @@ export default {
           this.$Message.warning('该信息不是待审核状态，不能发布')
           return
         }
-        row.releaseStatus = '已发布';
+        row.releaseStatus = '已发布'
         projectUtils.releaseProject(this, row)
       } else if (itemName === 'showEnclosure') {
         // 查看附件
         this.showBuilderEnclosure(row.id)
+      } else if (itemName === 'setMarkDate') {
+        // 设置开标时间
+        utils.showModal(this, 'markDate')
+        this.form = JSON.parse(JSON.stringify(row))
+      }
+    },
+    // 设置价格
+    setPrice(type) {
+      if (type === 0) {
+        if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
+          this.form.offerPrice = this.form.offerPrice / 100
+        }
+        if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
+          this.form.assurePrice = this.form.assurePrice / 100
+        }
+      } else if (type === 1) {
+        if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
+          this.form.offerPrice = this.form.offerPrice * 100
+        }
+        if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
+          this.form.assurePrice = this.form.assurePrice * 100
+        }
       }
     },
     add() {
+      this.setPrice(1)
       utils.add(this)
     },
     edit() {
+      this.setPrice(1)
       utils.edit(this)
+      if (this.modal.markDate) {
+        this.cancelModal('markDate')
+      }
     },
     active(row) {
       utils.active(this, row)
@@ -1717,14 +1859,15 @@ export default {
       this.$router.push({
         name: 'project_resource_manage',
         params: { projectId: projectId }
-      });
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-.top,.bottom{
+.top,
+.bottom {
   text-align: center;
 }
 </style>

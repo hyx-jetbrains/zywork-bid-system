@@ -1316,3 +1316,13 @@ export const validStatus = [
 		label: '验证通过'
 	}
 ]
+
+/**
+ * 审查方式下拉框
+ */
+export const checkPatternSelect = [
+  {
+    value: '资格后审',
+    label: '资格后审'
+  }
+]

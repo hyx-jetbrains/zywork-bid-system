@@ -56,9 +56,8 @@
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <Select v-model="form.projectId" placeholder="请选择项目" clearable filterable>
-            <i-option v-for="item in projectList" :value="item.id" :key="item.id">{{item.title}}</i-option>
-          </Select>
+          <span v-text="form.projectId" />
+          &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
@@ -86,9 +85,8 @@
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <Select v-model="form.projectId" placeholder="请选择项目" clearable filterable>
-            <i-option v-for="item in projectList" :value="item.id" :key="item.id">{{item.title}}</i-option>
-          </Select>
+          <span v-text="form.projectId" />
+          &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
@@ -134,9 +132,27 @@
           </Row>
         </FormItem>
         <FormItem label="项目编号">
-          <Select v-model="searchForm.projectId" placeholder="请选择项目" clearable filterable>
-            <i-option v-for="item in projectList" :value="item.id" :key="item.id">{{item.title}}</i-option>
-          </Select>
+          <Row>
+            <i-col span="11">
+              <FormItem prop="projectIdMin">
+                <InputNumber
+                  v-model="searchForm.projectIdMin"
+                  placeholder="请输入开始项目编号"
+                  style="width: 100%;"
+                />
+              </FormItem>
+            </i-col>
+            <i-col span="2" style="text-align: center">-</i-col>
+            <i-col span="11">
+              <FormItem prop="projectIdMax">
+                <InputNumber
+                  v-model="searchForm.projectIdMax"
+                  placeholder="请输入结束项目编号"
+                  style="width: 100%;"
+                />
+              </FormItem>
+            </i-col>
+          </Row>
         </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="searchForm.firstCandidate" placeholder="请输入第一候选人"/>
@@ -252,7 +268,6 @@
     <Modal
       v-model="modal.detail"
       title="详情"
-      @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
     >
       <p>
         公示编号:
@@ -291,7 +306,27 @@
         <span v-text="form.isActive"></span>
       </p>
       <p>公示详情:</p>
-      <span v-text="form.announceDesc"></span>
+      <span v-html="form.announceDesc"></span>
+    </Modal>
+
+    <Modal :transfer="false" v-model="modal.projectDetail" title="招投标项目详情">
+      <project-detail :form="projectDetailForm" />
+    </Modal>
+
+    <Modal :transfer="false" fullscreen v-model="modal.projectDetailSearch" title="搜索主表信息">
+      <project-list-single ref="ProjectListSingle" v-on:confirmSelectionProject="confirmSelectionProject"/>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('projectDetailSearch')">取消</Button>
+        <Button type="primary" size="large" @click="confirmProject">确认选择</Button>
+      </div>
+    </Modal>
+
+    <Modal :transfer="false" fullscreen v-model="modal.projectChoice" title="选择招投标项目">
+      <project-list-choice ref="ProjectListChoice" v-on:confirmChoiceProject="confirmChoiceProject"/>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('projectChoice')">取消</Button>
+        <Button type="primary" size="large" @click="confirmChoice">确认选择</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -300,6 +335,10 @@
 import * as utils from '@/api/utils'
 import * as ResponseStatus from '@/api/response-status'
 import * as projectUtils from '@/api/project'
+import ProjectDetail from '@/view/project/ProjectDetail.vue'
+import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
+import { getProjectById } from '@/api/module'
+import ProjectListChoice from '@/view/project/ProjectListChoice.vue'
 import Editor from '_c/editor'
 import { isActiveSelect } from '@/api/select'
 import config from '@/config'
@@ -312,15 +351,54 @@ const cdnUrl = config.baseUrl.cdnUrl
 export default {
   name: 'ProjectAnnounce',
   components: {
-    Editor
+    Editor,
+    ProjectDetail,
+    ProjectListSingle,
+    ProjectListChoice
   },
   data() {
     return {
+      projectDetailForm: {
+        id: null,
+        title: null,
+        projectType: null,
+        city: null,
+        projectDetail: null,
+        releaseStatus: null,
+        markUnitName: null,
+        projectInvest: null,
+        checkPattern: null,
+        compAptitudeType: null,
+        builderLevel: null,
+        moneyToImplement: 100,
+        tenderingAgent: null,
+        phone: null,
+        offerPrice: 0,
+        assurePrice: 0,
+        constructionPeriod: null,
+        downloadEndTime: null,
+        otherDemand: null,
+        openMarkInfo: null,
+        openMarkTime: null,
+        openMarkAddr: null,
+        inMarkPublicity: null,
+        inMarkComp: null,
+        noticeTime: null,
+        clickCount: null,
+        isElectronic: null,
+        version: null,
+        createTime: null,
+        updateTime: null,
+        isActive: null
+      },
       modal: {
         add: false,
         edit: false,
         search: false,
-        detail: false
+        detail: false,
+        projectDetail: false,
+        projectDetailSearch: false,
+        projectChoice: false
       },
       loading: {
         add: false,
@@ -460,15 +538,54 @@ export default {
             sortable: true,
             render: (h, params) => {
               return h(
-                'a',
+                'Dropdown',
                 {
                   on: {
-                    click: () => {
-                      this.showProjectDetail(params.row.projectId)
+                    'on-click': itemName => {
+                      this.userOpt(itemName, params.row)
                     }
+                  },
+                  props: {
+                    transfer: true
                   }
                 },
-                params.row.projectId
+                [
+                  h('span', [
+                    params.row.projectId,
+                    h('Icon', {
+                      props: {
+                        type: 'ios-list',
+                        size: '25'
+                      }
+                    })
+                  ]),
+                  h(
+                    'DropdownMenu',
+                    {
+                      slot: 'list'
+                    },
+                    [
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'moduleDetailProject'
+                          }
+                        },
+                        '详情'
+                      ),
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'showSearchProject'
+                          }
+                        },
+                        '搜索'
+                      )
+                    ]
+                  )
+                ]
               )
             }
           },
@@ -659,7 +776,6 @@ export default {
         tableDetails: [],
         selections: []
       },
-      projectList: [],
       isActiveSelect: isActiveSelect
     }
   },
@@ -671,13 +787,7 @@ export default {
   },
   methods: {
     showModal(modal) {
-      if (modal === 'add') {
-        this.initProjectSelect(0, modal)
-      } else if (modal === 'search') {
-        this.initProjectSelect(-1, modal)
-      } else {
-        utils.showModal(this, modal)
-      }
+      utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
       if (!visible) {
@@ -710,18 +820,49 @@ export default {
     },
     userOpt(itemName, row) {
       if (itemName === 'showEdit') {
-        this.initProjectSelect(row.projectId, 'edit')
-        setTimeout(() => {
-          this.form = JSON.parse(JSON.stringify(row))
-          this.$refs.editorEdit.setHtml(this.form.announceDesc)
-        }, 500)
-        
+        this.showModal('edit')
+        this.form = JSON.parse(JSON.stringify(row))
+        this.$refs.editorEdit.setHtml(this.form.announceDesc)
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
       } else if (itemName === 'remove') {
         utils.remove(this, row)
+      } else if (itemName === 'moduleDetailProject') {
+        this.showProjectDetailModal(row.projectId)
+      } else if (itemName === 'showSearchProject') {
+        utils.showModal(this, 'projectDetailSearch')
       }
+    },
+    showProjectDetailModal(id) {
+      getProjectById(id)
+        .then(res => {
+          const data = res.data
+          if (data.code === ResponseStatus.OK) {
+            this.projectDetailForm = data.data
+            this.showModal('projectDetail')
+          } else {
+            this.$Message.error(data.message)
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err)
+        })
+    },
+    confirmSelectionProject(id) {
+      this.cancelModal('projectDetailSearch')
+      this.searchForm.projectIdMin = this.searchForm.projectIdMax = id
+      utils.search(this)
+    },
+    confirmProject() {
+      this.$refs.ProjectListSingle.confirmSelection()
+    },
+    confirmChoiceProject(projectId) {
+      this.form.projectId = projectId
+      this.cancelModal('projectChoice')
+    },
+    confirmChoice() {
+      this.$refs.ProjectListChoice.confirmSelection()
     },
     add() {
       utils.add(this)
@@ -750,29 +891,6 @@ export default {
     handleChange(html, text) {
       this.form.announceDesc = html
     },
-    // 初始化项目下拉框，根据添加、查询、编辑不同的操作，生成不同的下拉框
-    initProjectSelect(projectId, modal) {
-      utils
-        .getSelectDataByOneCondition(this.urls.projectSelectUrl, projectId)
-        .then(res => {
-          if (res.data.code !== ResponseStatus.OK) {
-            this.$Message.error(res.data.message)
-            return
-          }
-          this.projectList = res.data.data
-          utils.showModal(this, modal)
-        })
-        .catch(err => {
-          this.$Message.error(err)
-        })
-    },
-    // 前往项目详情页面
-    showProjectDetail(projectId) {
-      this.$router.push({
-        name: 'project_manage',
-        params: { projectId: projectId }
-      });
-    }
   }
 }
 </script>

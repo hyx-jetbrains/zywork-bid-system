@@ -550,3 +550,16 @@ export const getSelectDataByOneCondition = (url, param) => {
     method: 'GET'
   })
 }
+
+/**
+ * 根据id查询单个信息
+ * @param {*} url 请求的url
+ * @param {*} id id
+ */
+export const getOneById = (url, id) => {
+  return axios.request({
+    url: url + id,
+    method: 'GET',
+    data: ''
+  })
+}
