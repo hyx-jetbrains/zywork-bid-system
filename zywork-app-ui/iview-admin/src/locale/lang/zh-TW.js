@@ -144,7 +144,7 @@ export default {
   project_resource_manage: '項目附件管理',
   bid_info: '招標資訊',
   builder_manage: '發佈建造師管理',
-  builder_req_manage: '發佈建造師需求管理',
+  builder_req_manage: '發佈建造師招聘管理',
   builder_resource_manage: '建造師附件管理',
   aptitude_transfer_manage: '發佈資質轉讓管理',
   aptitude_resource_manage: '資質轉讓附件管理',

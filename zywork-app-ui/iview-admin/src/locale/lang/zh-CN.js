@@ -146,7 +146,7 @@ export default {
   project_resource_manage: '项目附件管理',
   bid_info: '招标信息',
   builder_manage: '发布建造师管理',
-  builder_req_manage: '发布建造师需求管理',
+  builder_req_manage: '发布建造师招聘管理',
   builder_resource_manage: '建造师附件管理',
   aptitude_transfer_manage: '发布资质转让管理',
   aptitude_resource_manage: '资质转让附件管理',

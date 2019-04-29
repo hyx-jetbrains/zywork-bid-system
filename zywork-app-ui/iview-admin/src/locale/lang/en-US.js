@@ -144,7 +144,7 @@ export default {
   project_resource_manage: 'Project Annex Management',
   bid_info: 'Bidding information',
   builder_manage: 'Publish Builder Management',
-  builder_req_manage: 'Publish Builder Req Management',
+  builder_req_manage: 'Publish Builder Recruit Management',
   builder_resource_manage: 'Builder Annex Management',
   aptitude_transfer_manage: 'Publish Aptitude Transfer Management',
   aptitude_resource_manage: 'Aptitude Annex Management',
