@@ -63,19 +63,21 @@
           <Input v-model="form.idNum" placeholder="请输入身份证号"/>
         </FormItem>
         <FormItem label="工作单位" prop="workUnit">
-          <Select v-model="form.workUnit" placeholder="请选择工作单位" clearable filterable>
-            <i-option
-              v-for="item in companySelect"
-              :value="item.compName"
-              :key="item.id"
-            >{{item.compName}}</i-option>
-          </Select>
+          <span v-text="form.workUnit"></span>
+          &nbsp;
+          <Button @click="showModal('companyChoice')" type="text">选择工作单位</Button>&nbsp;
         </FormItem>
         <FormItem label="职务" prop="jobTitle">
           <Input v-model="form.jobTitle" placeholder="请输入职务"/>
         </FormItem>
         <FormItem label="工作地点" prop="workAddr">
-          <Input v-model="form.workAddr" placeholder="请输入工作地点"/>
+          <Select v-model="form.workAddr" placeholder="请选择工作地点" clearable filterable>
+            <i-option
+              v-for="item in projectCitySelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -98,19 +100,21 @@
           <Input v-model="form.idNum" placeholder="请输入身份证号"/>
         </FormItem>
         <FormItem label="工作单位" prop="workUnit">
-          <Select v-model="form.workUnit" placeholder="请选择工作单位" clearable filterable>
-            <i-option
-              v-for="item in companySelect"
-              :value="item.compName"
-              :key="item.id"
-            >{{item.compName}}</i-option>
-          </Select>
+          <span v-text="form.workUnit"></span>
+          &nbsp;
+          <Button @click="showModal('companyChoice')" type="text">选择工作单位</Button>&nbsp;
         </FormItem>
         <FormItem label="职务" prop="jobTitle">
           <Input v-model="form.jobTitle" placeholder="请输入职务"/>
         </FormItem>
         <FormItem label="工作地点" prop="workAddr">
-          <Input v-model="form.workAddr" placeholder="请输入工作地点"/>
+          <Select v-model="form.workAddr" placeholder="请选择工作地点" clearable filterable>
+            <i-option
+              v-for="item in projectCitySelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -342,6 +346,13 @@
         <Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
       </div>
     </Modal>
+
+    <Modal :transfer="false" fullscreen v-model="modal.companyChoice" title="选择工作单位">
+      <company-list-choice ref="CompanyListChoice" v-on:confirmChoiceComp="confirmChoiceComp"/>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('companyChoice')">取消</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -351,18 +362,17 @@ import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import UserListChoice from '@/view/user/UserListChoice.vue'
 import { getUserById } from '@/api/module'
-import * as comp from '@/api/company'
+import CompanyListChoice from '@/view/company/CompanyListChoice.vue'
 import * as ResponseStatus from '@/api/response-status'
-import {
-  isActiveSelect
-} from '@/api/select'
+import { isActiveSelect, projectCity } from '@/api/select'
 
 export default {
   name: 'UserWork',
   components: {
     userDetail,
     UserListSingle,
-    UserListChoice
+    UserListChoice,
+    CompanyListChoice
   },
   data() {
     return {
@@ -373,7 +383,8 @@ export default {
         detail: false,
         userDetail: false,
         userDetalSearch: false,
-        userChoice: false
+        userChoice: false,
+        companyChoice: false
       },
       loading: {
         add: false,
@@ -753,14 +764,13 @@ export default {
         tableDetails: [],
         selections: []
       },
-      companySelect: [],
       isActiveSelect: isActiveSelect,
+      projectCitySelect: projectCity
     }
   },
   computed: {},
   mounted() {
     this.search()
-    this.initCompany()
   },
   methods: {
     showModal(modal) {
@@ -866,20 +876,10 @@ export default {
       this.form.userId = userId
       this.cancelModal('userChoice')
     },
-    // 初始化公司下拉框
-    initCompany() {
-      comp
-        .getCompanyAll()
-        .then(res => {
-          if (res.data.code !== ResponseStatus.OK) {
-            self.$Message.error(res.data.message)
-          } else {
-            this.companySelect = res.data.data.rows
-          }
-        })
-        .catch(err => {
-          this.$Message.error(err)
-        })
+    // 确认选择公司
+    confirmChoiceComp(compId, companyName) {
+      this.form.workUnit = companyName
+      this.cancelModal('companyChoice')
     }
   }
 }
