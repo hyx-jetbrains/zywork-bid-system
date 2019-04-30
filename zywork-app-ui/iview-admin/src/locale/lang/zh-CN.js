@@ -154,6 +154,7 @@ export default {
   mark_seekcar_manage: '开标找车管理',
   recruit_info_manage: '招聘信息管理',
   seek_data_manage: '求带资料管理',
+  guarantee_manage: '申请保函管理',
   expert_subscribe_manage: '专家预约管理',
   credit_enquiry: '征信查询',
   company_info_manage: '企业信息管理',

@@ -152,6 +152,7 @@ export default {
   mark_seekcar_manage: 'Bid Seekcar Management',
   recruit_info_manage: 'Recruitment Information Management',
   seek_data_manage: 'Seek Data Management',
+  guarantee_manage: 'Application for Guarantee Management',
   expert_subscribe_manage: 'Expert Subscribe Management',
   credit_enquiry: 'Credit Enquiry',
   company_info_manage: 'Company Information Management',

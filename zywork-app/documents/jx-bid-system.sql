@@ -18,6 +18,32 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
+-- Table structure for t_guarantee
+-- ----------------------------
+DROP TABLE IF EXISTS `t_guarantee`;
+CREATE TABLE `t_guarantee` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '保函编号',
+  `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
+  `project_name` varchar(100) DEFAULT '' COMMENT '项目名称',
+  `open_mark_time` datetime DEFAULT NULL COMMENT '开标时间',
+  `mark_unit_name` varchar(32) DEFAULT '' COMMENT '招标单位名称',
+  `construction_period` int(10) DEFAULT '0' COMMENT '工期(天)',
+  `assure_price` bigint(20) DEFAULT '0' COMMENT '担保金额(万元)',
+  `guarantee_comp` varchar(32) DEFAULT '' COMMENT '担保公司',
+  `applicant` varchar(20) DEFAULT '' COMMENT '申请人',
+  `name` varchar(20) DEFAULT '' COMMENT '联系人',
+  `phone` varchar(11) DEFAULT '' COMMENT '手机号',
+  `address` varchar(100) DEFAULT '' COMMENT '地址',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '申请保函表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
 -- Table structure for t_account_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `t_account_detail`;

@@ -1326,3 +1326,13 @@ export const checkPatternSelect = [
     label: '资格后审'
   }
 ]
+
+/**
+ * 担保公司下拉框
+ */
+export const guaranteeCompSelect = [
+  {
+    value: '赣州智悦网络科技有限公司',
+    label: '赣州智悦网络科技有限公司'
+  }
+]

@@ -152,6 +152,7 @@ export default {
   mark_seekcar_manage: '開標找車管理',
   recruit_info_manage: '招聘資訊管理',
   seek_data_manage: '求帶資料管理',
+  guarantee_manage: '申請保函管理',
   expert_subscribe_manage: '專家預約管理',
   credit_enquiry: '征信査詢',
   company_info_manage: '企業資訊管理',

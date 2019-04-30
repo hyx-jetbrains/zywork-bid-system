@@ -1,0 +1,531 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.GuaranteeDAO">
+
+    <insert id="save" parameterType="guaranteeDO">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+        insert into t_guarantee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">
+				project_id,
+			</if>
+			<if test="projectName != null">
+				project_name,
+			</if>
+			<if test="openMarkTime != null">
+				open_mark_time,
+			</if>
+			<if test="markUnitName != null">
+				mark_unit_name,
+			</if>
+			<if test="constructionPeriod != null">
+				construction_period,
+			</if>
+			<if test="assurePrice != null">
+				assure_price,
+			</if>
+			<if test="guaranteeComp != null">
+				guarantee_comp,
+			</if>
+			<if test="applicant != null">
+				applicant,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="isActive != null">
+				is_active,
+			</if>
+			
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">
+				#{projectId},
+			</if>
+			<if test="projectName != null">
+				#{projectName},
+			</if>
+			<if test="openMarkTime != null">
+				#{openMarkTime},
+			</if>
+			<if test="markUnitName != null">
+				#{markUnitName},
+			</if>
+			<if test="constructionPeriod != null">
+				#{constructionPeriod},
+			</if>
+			<if test="assurePrice != null">
+				#{assurePrice},
+			</if>
+			<if test="guaranteeComp != null">
+				#{guaranteeComp},
+			</if>
+			<if test="applicant != null">
+				#{applicant},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="phone != null">
+				#{phone},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="isActive != null">
+				#{isActive},
+			</if>
+			
+        </trim>
+    </insert>
+
+    <insert id="saveBatch" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+    	<foreach collection="list" item="item" separator=";">
+            insert into t_guarantee
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.projectId != null">
+				project_id,
+			</if>
+			<if test="item.projectName != null">
+				project_name,
+			</if>
+			<if test="item.openMarkTime != null">
+				open_mark_time,
+			</if>
+			<if test="item.markUnitName != null">
+				mark_unit_name,
+			</if>
+			<if test="item.constructionPeriod != null">
+				construction_period,
+			</if>
+			<if test="item.assurePrice != null">
+				assure_price,
+			</if>
+			<if test="item.guaranteeComp != null">
+				guarantee_comp,
+			</if>
+			<if test="item.applicant != null">
+				applicant,
+			</if>
+			<if test="item.name != null">
+				name,
+			</if>
+			<if test="item.phone != null">
+				phone,
+			</if>
+			<if test="item.address != null">
+				address,
+			</if>
+			<if test="item.version != null">
+				version,
+			</if>
+			<if test="item.createTime != null">
+				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
+			</if>
+			<if test="item.isActive != null">
+				is_active,
+			</if>
+			
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.projectId != null">
+				#{item.projectId},
+			</if>
+			<if test="item.projectName != null">
+				#{item.projectName},
+			</if>
+			<if test="item.openMarkTime != null">
+				#{item.openMarkTime},
+			</if>
+			<if test="item.markUnitName != null">
+				#{item.markUnitName},
+			</if>
+			<if test="item.constructionPeriod != null">
+				#{item.constructionPeriod},
+			</if>
+			<if test="item.assurePrice != null">
+				#{item.assurePrice},
+			</if>
+			<if test="item.guaranteeComp != null">
+				#{item.guaranteeComp},
+			</if>
+			<if test="item.applicant != null">
+				#{item.applicant},
+			</if>
+			<if test="item.name != null">
+				#{item.name},
+			</if>
+			<if test="item.phone != null">
+				#{item.phone},
+			</if>
+			<if test="item.address != null">
+				#{item.address},
+			</if>
+			<if test="item.version != null">
+				#{item.version},
+			</if>
+			<if test="item.createTime != null">
+				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				#{item.isActive},
+			</if>
+			
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="removeById" parameterType="long">
+        delete from t_guarantee where id = #{id}
+    </delete>
+
+    <delete id="removeByIds">
+        delete from t_guarantee where id in
+        <foreach item="id" collection="array" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="guaranteeDO">
+        update t_guarantee
+        <set>
+            <if test="projectId != null">
+				project_id = #{projectId},
+			</if>
+			<if test="projectName != null">
+				project_name = #{projectName},
+			</if>
+			<if test="openMarkTime != null">
+				open_mark_time = #{openMarkTime},
+			</if>
+			<if test="markUnitName != null">
+				mark_unit_name = #{markUnitName},
+			</if>
+			<if test="constructionPeriod != null">
+				construction_period = #{constructionPeriod},
+			</if>
+			<if test="assurePrice != null">
+				assure_price = #{assurePrice},
+			</if>
+			<if test="guaranteeComp != null">
+				guarantee_comp = #{guaranteeComp},
+			</if>
+			<if test="applicant != null">
+				applicant = #{applicant},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="phone != null">
+				phone = #{phone},
+			</if>
+			<if test="address != null">
+				address = #{address},
+			</if>
+			<if test="version != null">
+				version = #{version},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+        </set>
+        where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";">
+            update t_guarantee
+            <set>
+                <if test="item.projectId != null">
+				project_id = #{item.projectId},
+			</if>
+			<if test="item.projectName != null">
+				project_name = #{item.projectName},
+			</if>
+			<if test="item.openMarkTime != null">
+				open_mark_time = #{item.openMarkTime},
+			</if>
+			<if test="item.markUnitName != null">
+				mark_unit_name = #{item.markUnitName},
+			</if>
+			<if test="item.constructionPeriod != null">
+				construction_period = #{item.constructionPeriod},
+			</if>
+			<if test="item.assurePrice != null">
+				assure_price = #{item.assurePrice},
+			</if>
+			<if test="item.guaranteeComp != null">
+				guarantee_comp = #{item.guaranteeComp},
+			</if>
+			<if test="item.applicant != null">
+				applicant = #{item.applicant},
+			</if>
+			<if test="item.name != null">
+				name = #{item.name},
+			</if>
+			<if test="item.phone != null">
+				phone = #{item.phone},
+			</if>
+			<if test="item.address != null">
+				address = #{item.address},
+			</if>
+			<if test="item.version != null">
+				version = #{item.version},
+			</if>
+			<if test="item.createTime != null">
+				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				is_active = #{item.isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+                <if test="item.version == null">
+                    version = version + 1,
+                </if>
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="select_columns">
+        id as id, project_id as projectId, project_name as projectName, open_mark_time as openMarkTime, mark_unit_name as markUnitName, construction_period as constructionPeriod, assure_price as assurePrice, guarantee_comp as guaranteeComp, applicant as applicant, name as name, phone as phone, address as address, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.id != null">
+			and id = #{query.id}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax == null">
+			and id <![CDATA[ >= ]]> #{query.idMin}
+		</if>
+		<if test="query != null and query.idMin == null and query.idMax != null">
+			and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax != null">
+			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.projectId != null">
+			and project_id = #{query.projectId}
+		</if>
+		<if test="query != null and query.projectIdMin != null and query.projectIdMax == null">
+			and project_id <![CDATA[ >= ]]> #{query.projectIdMin}
+		</if>
+		<if test="query != null and query.projectIdMin == null and query.projectIdMax != null">
+			and project_id <![CDATA[ <= ]]> #{query.projectIdMax}
+		</if>
+		<if test="query != null and query.projectIdMin != null and query.projectIdMax != null">
+			and project_id <![CDATA[ >= ]]> #{query.projectIdMin} and project_id <![CDATA[ <= ]]> #{query.projectIdMax}
+		</if>
+		<if test="query != null and query.projectName != null and query.projectName != ''">
+			and project_name like concat('%', #{query.projectName}, '%')
+		</if>
+		<if test="query != null and query.openMarkTime != null">
+			and open_mark_time = #{query.openMarkTime}
+		</if>
+		<if test="query != null and query.openMarkTimeMin != null and query.openMarkTimeMax == null">
+			and open_mark_time <![CDATA[ >= ]]> #{query.openMarkTimeMin}
+		</if>
+		<if test="query != null and query.openMarkTimeMin == null and query.openMarkTimeMax != null">
+			and open_mark_time <![CDATA[ <= ]]> #{query.openMarkTimeMax}
+		</if>
+		<if test="query != null and query.openMarkTimeMin != null and query.openMarkTimeMax != null">
+			and open_mark_time <![CDATA[ >= ]]> #{query.openMarkTimeMin} and open_mark_time <![CDATA[ <= ]]> #{query.openMarkTimeMax}
+		</if>
+		<if test="query != null and query.markUnitName != null and query.markUnitName != ''">
+			and mark_unit_name like concat('%', #{query.markUnitName}, '%')
+		</if>
+		<if test="query != null and query.constructionPeriod != null">
+			and construction_period = #{query.constructionPeriod}
+		</if>
+		<if test="query != null and query.constructionPeriodMin != null and query.constructionPeriodMax == null">
+			and construction_period <![CDATA[ >= ]]> #{query.constructionPeriodMin}
+		</if>
+		<if test="query != null and query.constructionPeriodMin == null and query.constructionPeriodMax != null">
+			and construction_period <![CDATA[ <= ]]> #{query.constructionPeriodMax}
+		</if>
+		<if test="query != null and query.constructionPeriodMin != null and query.constructionPeriodMax != null">
+			and construction_period <![CDATA[ >= ]]> #{query.constructionPeriodMin} and construction_period <![CDATA[ <= ]]> #{query.constructionPeriodMax}
+		</if>
+		<if test="query != null and query.assurePrice != null">
+			and assure_price = #{query.assurePrice}
+		</if>
+		<if test="query != null and query.assurePriceMin != null and query.assurePriceMax == null">
+			and assure_price <![CDATA[ >= ]]> #{query.assurePriceMin}
+		</if>
+		<if test="query != null and query.assurePriceMin == null and query.assurePriceMax != null">
+			and assure_price <![CDATA[ <= ]]> #{query.assurePriceMax}
+		</if>
+		<if test="query != null and query.assurePriceMin != null and query.assurePriceMax != null">
+			and assure_price <![CDATA[ >= ]]> #{query.assurePriceMin} and assure_price <![CDATA[ <= ]]> #{query.assurePriceMax}
+		</if>
+		<if test="query != null and query.guaranteeComp != null and query.guaranteeComp != ''">
+			and guarantee_comp like concat('%', #{query.guaranteeComp}, '%')
+		</if>
+		<if test="query != null and query.applicant != null and query.applicant != ''">
+			and applicant like concat('%', #{query.applicant}, '%')
+		</if>
+		<if test="query != null and query.name != null and query.name != ''">
+			and name like concat('%', #{query.name}, '%')
+		</if>
+		<if test="query != null and query.phone != null and query.phone != ''">
+			and phone like concat('%', #{query.phone}, '%')
+		</if>
+		<if test="query != null and query.address != null and query.address != ''">
+			and address like concat('%', #{query.address}, '%')
+		</if>
+		<if test="query != null and query.version != null">
+			and version = #{query.version}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax == null">
+			and version <![CDATA[ >= ]]> #{query.versionMin}
+		</if>
+		<if test="query != null and query.versionMin == null and query.versionMax != null">
+			and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax != null">
+			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.createTime != null">
+			and create_time = #{query.createTime}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax == null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin}
+		</if>
+		<if test="query != null and query.createTimeMin == null and query.createTimeMax != null">
+			and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.isActive != null">
+			and is_active = #{query.isActive}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax == null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin}
+		</if>
+		<if test="query != null and query.isActiveMin == null and query.isActiveMax != null">
+			and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="guaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee where id = #{id}
+    </select>
+
+    <select id="getVersionById" parameterType="long" resultType="integer">
+        select version from t_guarantee where id = #{id}
+    </select>
+
+    <select id="listAll" resultType="guaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee
+        order by update_time desc, create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="guaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+             ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="guaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_guarantee
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

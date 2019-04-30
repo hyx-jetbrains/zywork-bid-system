@@ -223,6 +223,15 @@ export default [
         component: () => import('@/view/seek-data/SeekData.vue')
       },
       {
+        path: 'Guarantee',
+        name: 'guarantee_manage',
+        meta: {
+          title: '申请保函管理',
+          icon: 'ios-paper-outline'
+        },
+        component: () => import('@/view/guarantee/Guarantee.vue')
+      },
+      {
         path: 'ExpertSubscribe',
         name: 'expert_subscribe_manage',
         meta: {
