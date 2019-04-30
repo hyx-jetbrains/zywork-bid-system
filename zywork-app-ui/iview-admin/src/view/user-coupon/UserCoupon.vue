@@ -674,13 +674,6 @@ export default {
             sortable: true
           },
           {
-            title: '是否激活',
-            key: 'isActive',
-            minWidth: 120,
-            sortable: true
-          },
-
-          {
             title: '激活状态',
             key: 'isActive',
             minWidth: 100,

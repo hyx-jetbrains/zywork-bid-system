@@ -55,7 +55,13 @@
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="抵用券类别" prop="type">
-          <Input v-model="form.type" placeholder="请输入抵用券类别"/>
+          <Select v-model="form.type" placeholder="请选择抵用券类别" clearable filterable>
+            <i-option
+              v-for="item in couponeTypeSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="金额" prop="money">
           <InputNumber v-model="form.money" placeholder="请输入金额" style="width: 100%;"/>
@@ -86,7 +92,13 @@
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="抵用券类别" prop="type">
-          <Input v-model="form.type" placeholder="请输入抵用券类别"/>
+          <Select v-model="form.type" placeholder="请选择抵用券类别" clearable filterable>
+            <i-option
+              v-for="item in couponeTypeSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="金额" prop="money">
           <InputNumber v-model="form.money" placeholder="请输入金额" style="width: 100%;"/>
@@ -213,6 +225,15 @@
             </i-col>
           </Row>
         </FormItem>
+        <FormItem label="是否激活" prop="isActive">
+          <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
+            <i-option
+              v-for="item in isActiveSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
+        </FormItem>
         <FormItem label="版本号">
           <Row>
             <i-col span="11">
@@ -294,29 +315,6 @@
             </i-col>
           </Row>
         </FormItem>
-        <FormItem label="是否激活">
-          <Row>
-            <i-col span="11">
-              <FormItem prop="isActiveMin">
-                <InputNumber
-                  v-model="searchForm.isActiveMin"
-                  placeholder="请输入开始是否激活"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-            <i-col span="2" style="text-align: center">-</i-col>
-            <i-col span="11">
-              <FormItem prop="isActiveMax">
-                <InputNumber
-                  v-model="searchForm.isActiveMax"
-                  placeholder="请输入结束是否激活"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-          </Row>
-        </FormItem>
       </Form>
       <div slot="footer">
         <Button type="text" size="large" @click="resetForm('searchForm')">清空</Button>
@@ -376,6 +374,10 @@
 
 <script>
 import * as utils from '@/api/utils'
+import {
+  isActiveSelect,
+  couponeTypeSelect
+} from '@/api/select'
 
 export default {
   name: 'Coupon',
@@ -662,7 +664,9 @@ export default {
         ],
         tableDetails: [],
         selections: []
-      }
+      },
+      isActiveSelect: isActiveSelect,
+      couponeTypeSelect: couponeTypeSelect
     }
   },
   computed: {},
@@ -671,6 +675,9 @@ export default {
   },
   methods: {
     showModal(modal) {
+      if (modal === 'add') {
+        this.form.type = this.couponeTypeSelect[0].value
+      }
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {

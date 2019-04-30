@@ -1336,3 +1336,13 @@ export const guaranteeCompSelect = [
     label: '赣州智悦网络科技有限公司'
   }
 ]
+
+/**
+ * 抵扣券类别下拉框
+ */
+export const couponeTypeSelect = [
+  {
+    value: '充值VIP',
+    label: '充值VIP'
+  }
+]

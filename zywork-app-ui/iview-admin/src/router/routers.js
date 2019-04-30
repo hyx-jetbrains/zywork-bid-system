@@ -397,15 +397,16 @@ export default [
 			  },
 			  component: () => import('@/view/user-role/UserRole.vue')
       },
-      {
-        path: 'achievement',
-        name: 'achievement_manage',
-        meta: {
-          title: '用户业绩查询',
-          icon: 'ios-paper-outline'
-        },
-        component: () => import('@/view/achievement/Achievement.vue')
-      },
+      // 根据客户需求，不需要这个功能
+      // {
+      //   path: 'achievement',
+      //   name: 'achievement_manage',
+      //   meta: {
+      //     title: '用户业绩查询',
+      //     icon: 'ios-paper-outline'
+      //   },
+      //   component: () => import('@/view/achievement/Achievement.vue')
+      // },
       {
         path: 'UserSubscribe',
         name: 'user_subscribe_manage',
