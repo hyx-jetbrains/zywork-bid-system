@@ -6,7 +6,8 @@ export const USER_OPENID = 'openid'
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 
 export const isEmpty = (data) => {
-	return data === null || data === undefined || data === ''
+	// return data === null || data === undefined || data === ''
+	return !data
 }
 
 export const isUserTokenExist = () => {

@@ -76,7 +76,6 @@ export const saveUserDetail = (self, params) => {
 			'content-type': 'application/x-www-form-urlencoded'
 		},
 		success: (res) => {
-			uni.hideLoading()
 			if (res.data.code === ResponseStatus.OK) {
 				self.getUserInfo = true
 				self.user.headicon = params.headicon
@@ -86,8 +85,10 @@ export const saveUserDetail = (self, params) => {
 			}
 		},
 		fail: () => {
-			uni.hideLoading()
 			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
 		}
 	})
 }
@@ -124,7 +125,6 @@ export const getUserDetail = (self) => {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
-			uni.hideLoading()
 			if (res.data.code === ResponseStatus.OK) {
 				self.getUserInfo = true
 				self.user.nickname = res.data.data.rows[0].userDetailNickname
@@ -141,8 +141,10 @@ export const getUserDetail = (self) => {
 			}
 		},
 		fail: () => {
-			uni.hideLoading()
 			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
 		}
 	})
 }
