@@ -76,9 +76,12 @@
             :on-success="handleSuccess"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :before-upload="handleBeforeUpload"
+            :on-remove="handleRemoveFile"
             :format="['doc','docx','pdf']"
             :max-size="10240"
             :headers="uploadHeader"
+            ref="uploadFile"
           >
             <div style="padding: 20px 0">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
@@ -356,7 +359,7 @@
     </Modal>
 
     <Modal :transfer="false" v-model="modal.resourceDetail" title="资源预览">
-      <img :src="imgUrl" style="width: 490px" />
+      <img :src="imgUrl" style="width: 490px">
       <div slot="footer">
         <Button type="default" size="large" @click="cancelModal('resourceDetail')">取消</Button>
       </div>
@@ -821,7 +824,7 @@ export default {
         Authorization: 'Bearer ' + getLocalStorageToken()
       },
       projectId: this.$route.params.projectId,
-      imgUrl: ''
+      imgUrl: '',
     }
   },
   computed: {},
@@ -843,6 +846,8 @@ export default {
     showModal(modal) {
       if (modal === 'add') {
         this.form.projectId = this.projectId
+        this.form.resourceId = null
+        this.$refs.uploadFile.clearFiles()
       }
       utils.showModal(this, modal)
     },
@@ -970,6 +975,19 @@ export default {
         desc: file.name + ' 太大，不得超10M.'
       })
     },
+    handleBeforeUpload(file) {
+      if (this.form.resourceId === undefined 
+          || this.form.resourceId == null 
+          || this.form.resourceId === 0) {
+        return true
+      }
+      this.$Message.error('只能上传一个文件')
+      return false
+    },
+    handleRemoveFile(file) {
+      console.log('reomve')
+      this.form.resourceId = null
+    },
     // 查看资源
     showResource(row) {
       utils
@@ -995,7 +1013,7 @@ export default {
         .catch(err => {
           this.$Message.error(err)
         })
-    },
+    }
   }
 }
 </script>
