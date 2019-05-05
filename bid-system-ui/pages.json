@@ -185,6 +185,13 @@
 					}
 				},
 				{
+					"path": "user-expert/expert-setting",
+					"style": {
+						"navigationBarTitleText": "专家申请信息",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "commission/commission",
 					"style": {
 						"navigationBarTitleText": "佣金详情",

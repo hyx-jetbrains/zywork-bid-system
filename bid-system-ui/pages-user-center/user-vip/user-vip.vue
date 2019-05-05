@@ -83,6 +83,7 @@
 		},
 		onLoad() {},
 		methods: {
+			// 开通VIP
 			openVIP(type) {
 				uni.showModal({
 					title: type
