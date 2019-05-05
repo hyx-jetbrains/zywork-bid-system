@@ -161,3 +161,20 @@ button[type=primary][plain] {
 	margin: 10upx 15upx;
 	border-left: 10upx solid $primary-color;
 }
+
+.zy-list-item-input {
+	width: 100%;
+	padding-right: 40upx;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+	
+.zy-list-item-input input {
+	width: 100%;
+	text-align: right;
+}
+
+.zy-list-item-input textarea {
+	width: 100%;
+}

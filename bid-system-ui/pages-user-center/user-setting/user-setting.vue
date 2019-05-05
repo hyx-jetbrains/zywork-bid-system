@@ -13,6 +13,18 @@
 			<zywork-list-item title="工作单位" :note="user.company" @click="toSettingCompany"></zywork-list-item>
 			<zywork-list-item title="职务" :note="user.job" @click="toSettingJob"></zywork-list-item>
 			<zywork-list-item title="办公地点" :note="user.companyAddress" @click="toSettingCompanyAddr"></zywork-list-item>
+			<!--
+			<zywork-list-item-input title="测试" flexDirection="row">
+				<view slot="content" class="zy-list-item-input">
+					<input type="text" placeholder="测试"></input>
+				</view>
+			</zywork-list-item-input>
+			<zywork-list-item-input title="测试" flexDirection="column">
+				<view slot="content" class="zy-list-item-input">
+					<textarea placeholder="测试" style="height: 200upx;"></textarea>
+				</view>
+			</zywork-list-item-input>
+			-->
 		</uni-list>
 	</view>
 </template>
@@ -23,10 +35,12 @@
 	} from '../../common/user.js'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
+	import zyworkListItemInput from '@/components/zywork-list-item-input/zywork-list-item-input.vue'
 	export default {
 		components: {
 			uniList,
-			zyworkListItem
+			zyworkListItem,
+			zyworkListItemInput
 		},
 		data() {
 			return {
