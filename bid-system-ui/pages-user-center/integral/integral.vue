@@ -10,7 +10,9 @@
 				<view v-for="(integralItem, index) in integralList" :key="index" class="zy-page-list-item">
 					<view class="zy-integral-left">
 						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{integralItem.title}}</view>
-						<view class="zy-text-info zy-text-small" style="color: #F0AD4E">{{integralItem.count}}</view>
+						<view class="zy-text-info zy-text-small" style="color: #F0AD4E">
+							{{integralItem.count > 0 ? '+' : ''}}{{integralItem.count}}
+						</view>
 					</view>
 					<view>{{integralItem.createTime}}</view>
 				</view>
