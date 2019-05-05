@@ -8,5 +8,5 @@ package top.zywork.service;
  * @author http://zywork.top 王振宇
  * @version 1.0
  */
-public interface UserMessageService extends BaseService {
+public interface UserUserMessageService extends BaseService {
 }

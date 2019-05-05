@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0
  */
 @Repository
-public interface UserMessageDAO extends BaseDAO {
+public interface UserUserMessageDAO extends BaseDAO {
 
     @Override
     List<Object> listAllByCondition(@Param("query") Object queryObj);
