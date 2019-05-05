@@ -95,13 +95,7 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	
-	.zy-type-title {
-		padding-left: 10upx;
-		margin: 10upx 15upx;
-		border-left: 10upx solid $primary-color;
-	}
-	
+
 	.zy-vip-button {
 		margin-top: 20upx;
 	}

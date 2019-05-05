@@ -2,7 +2,7 @@
 	<view>
 		<view class="zy-type-title zy-text-bold">专家信息</view>
 		<view class="zy-expert-tag">
-			<uni-tag text="非专家" type="error" size="small" :inverted="true" :circle="false"></uni-tag>
+			<uni-tag text="非专家" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
 		</view>
 		<view class="zy-expert-icon">
 			<zywork-icon type="iconzhuanjiarenzheng" color="#ccc" size="80" style="display: inline-block;"></zywork-icon>
@@ -57,12 +57,6 @@
 	
 	.uni-list-cell {
 		justify-content: flex-start
-	}
-	
-	.zy-type-title {
-		padding-left: 10upx;
-		margin: 10upx 15upx;
-		border-left: 10upx solid $primary-color;
 	}
 	
 	.zy-expert-tag {
