@@ -94,6 +94,9 @@ export const saveUserDetail = (self, params) => {
 }
 
 export const saveUserPhone = (self, params) => {
+	uni.showLoading({
+		title:'保存手机号'
+	})
 	uni.request({
 		url: BASE_URL + '/wx-auth/xcx-phone',
 		method: 'POST',
@@ -110,6 +113,9 @@ export const saveUserPhone = (self, params) => {
 		},
 		fail: () => {
 			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
 		}
 	})
 }
