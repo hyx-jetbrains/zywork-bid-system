@@ -187,7 +187,7 @@
 				{
 					"path": "user-expert/expert-setting",
 					"style": {
-						"navigationBarTitleText": "专家申请信息",
+						"navigationBarTitleText": "申请专家",
 						"backgroundTextStyle": "light"
 					}
 				},
