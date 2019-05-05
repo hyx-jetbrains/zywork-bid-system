@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * MarkSeekcarQuery查询对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-05<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class MarkSeekcarQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372034939823179L;
+    private static final long serialVersionUID = -9223372035531949125L;
 
     // 开标找车编号
 	private Long id;
@@ -35,10 +35,12 @@ public class MarkSeekcarQuery extends PageQuery {
 	private Long projectIdMin;
 	// 项目编号（最大值）
 	private Long projectIdMax;
-	// 城市
-	private String city;
+	// 出发城市
+	private String startCity;
 	// 出发地点
 	private String startAddr;
+	// 目的地城市
+	private String endCity;
 	// 目的地
 	private String endAddr;
 	// 出发时间
@@ -89,7 +91,7 @@ public class MarkSeekcarQuery extends PageQuery {
 	
     public MarkSeekcarQuery () {}
 
-    public MarkSeekcarQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long projectId, Long projectIdMin, Long projectIdMax, String city, String startAddr, String endAddr, Date startTime, Date startTimeMin, Date startTimeMax, String name, String phone, String memo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public MarkSeekcarQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long projectId, Long projectIdMin, Long projectIdMax, String startCity, String startAddr, String endCity, String endAddr, Date startTime, Date startTimeMin, Date startTimeMax, String name, String phone, String memo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -99,8 +101,9 @@ public class MarkSeekcarQuery extends PageQuery {
 		this.projectId = projectId;
 		this.projectIdMin = projectIdMin;
 		this.projectIdMax = projectIdMax;
-		this.city = city;
+		this.startCity = startCity;
 		this.startAddr = startAddr;
+		this.endCity = endCity;
 		this.endAddr = endAddr;
 		this.startTime = startTime;
 		this.startTimeMin = startTimeMin;
@@ -195,12 +198,12 @@ public class MarkSeekcarQuery extends PageQuery {
 		this.projectIdMax = projectIdMax;
 	}
 
-	public String getCity() {
-		return city;
+	public String getStartCity() {
+		return startCity;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setStartCity(String startCity) {
+		this.startCity = startCity;
 	}
 
 	public String getStartAddr() {
@@ -209,6 +212,14 @@ public class MarkSeekcarQuery extends PageQuery {
 
 	public void setStartAddr(String startAddr) {
 		this.startAddr = startAddr;
+	}
+
+	public String getEndCity() {
+		return endCity;
+	}
+
+	public void setEndCity(String endCity) {
+		this.endCity = endCity;
 	}
 
 	public String getEndAddr() {
@@ -376,8 +387,9 @@ public class MarkSeekcarQuery extends PageQuery {
 				", projectId = " + projectId + 
 				", projectIdMin = " + projectIdMin + 
 				", projectIdMax = " + projectIdMax + 
-				", city = " + city + 
+				", startCity = " + startCity + 
 				", startAddr = " + startAddr + 
+				", endCity = " + endCity + 
 				", endAddr = " + endAddr + 
 				", startTime = " + startTime + 
 				", startTimeMin = " + startTimeMin + 

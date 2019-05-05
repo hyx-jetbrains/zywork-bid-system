@@ -54,6 +54,11 @@
       @on-visible-change="changeModalVisibleResetForm('addForm', $event)"
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
+				<FormItem label="用户编号" prop="userId">
+					<span v-text="form.userId"></span>
+					&nbsp;
+					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
+				</FormItem>
         <FormItem label="姓名" prop="name">
           <Input v-model="form.name" placeholder="请输入姓名"/>
         </FormItem>
@@ -176,6 +181,11 @@
       @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
+				<FormItem label="用户编号" prop="userId">
+					<span v-text="form.userId"></span>
+					&nbsp;
+					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
+				</FormItem>
         <FormItem label="姓名" prop="name">
           <Input v-model="form.name" placeholder="请输入姓名"/>
         </FormItem>
@@ -299,6 +309,29 @@
             </i-col>
           </Row>
         </FormItem>
+				<FormItem label="用户编号">
+				  <Row>
+				    <i-col span="11">
+				      <FormItem prop="userIdMin">
+				        <InputNumber
+				          v-model="searchForm.userIdMin"
+				          placeholder="请输入开始用户编号"
+				          style="width: 100%;"
+				        />
+				      </FormItem>
+				    </i-col>
+				    <i-col span="2" style="text-align: center">-</i-col>
+				    <i-col span="11">
+				      <FormItem prop="userIdMax">
+				        <InputNumber
+				          v-model="searchForm.userIdMax"
+				          placeholder="请输入结束用户编号"
+				          style="width: 100%;"
+				        />
+				      </FormItem>
+				    </i-col>
+				  </Row>
+				</FormItem>
         <FormItem label="姓名" prop="name">
           <Input v-model="searchForm.name" placeholder="请输入姓名"/>
         </FormItem>
@@ -545,7 +578,7 @@
       </p>
     </Modal>
 		
-		<Modal :transfer="false" v-model="modal.userDetail" title="模块详情">
+		<Modal :transfer="false" v-model="modal.userDetail" title="用户详情">
 		  <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
 		</Modal>
 		
@@ -554,6 +587,13 @@
 		  <div slot="footer">
 		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
+		  </div>
+		</Modal>
+		
+		<Modal :transfer="false" fullscreen v-model="modal.userChoice" title="选择用户">
+		  <user-list-choice ref="UserListChoice" v-on:confirmChoice="confirmChoice"/>
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
 		  </div>
 		</Modal>
   </div>
@@ -565,6 +605,7 @@ import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
 import * as ResponseStatus from '@/api/response-status'
+import UserListChoice from '@/view/user/UserListChoice.vue'
 import {
   isActiveSelect,
   certificateType,
@@ -587,7 +628,8 @@ export default {
   name: 'Builder',
 	 components: {
 	  userDetail,
-	  UserListSingle
+	  UserListSingle,
+		UserListChoice
 	},
   data() {
     return {
@@ -597,7 +639,8 @@ export default {
         search: false,
         detail: false,
 				userDetail: false,
-				userDetalSearch: false
+				userDetalSearch: false,
+				userChoice: false
       },
       loading: {
         add: false,
@@ -1254,6 +1297,10 @@ export default {
           this.tempAddress[2]
       }
     },
+		confirmChoice(userId) {
+		  this.form.userId = userId
+		  this.cancelModal('userChoice')
+		},
     add() {
       this.setAddress()
       utils.add(this)

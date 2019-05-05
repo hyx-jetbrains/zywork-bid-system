@@ -54,6 +54,11 @@
       @on-visible-change="changeModalVisibleResetForm('addForm', $event)"
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
+				<FormItem label="用户编号" prop="userId">
+					<span v-text="form.userId"></span>
+					&nbsp;
+					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
+				</FormItem>
         <FormItem label="手机号" prop="phone">
           <Input v-model="form.phone" placeholder="请输入手机号"/>
         </FormItem>
@@ -96,6 +101,11 @@
       @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
+				<FormItem label="用户编号" prop="userId">
+					<span v-text="form.userId"></span>
+					&nbsp;
+					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
+				</FormItem>
         <FormItem label="手机号" prop="phone">
           <Input v-model="form.phone" placeholder="请输入手机号"/>
         </FormItem>
@@ -366,7 +376,7 @@
       </p>
     </Modal>
 
-    <Modal :transfer="false" v-model="modal.userDetail" title="模块详情">
+    <Modal :transfer="false" v-model="modal.userDetail" title="用户详情">
       <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
     </Modal>
 
@@ -377,6 +387,13 @@
         <Button type="primary" size="large" @click="confirm">确认选择</Button>
       </div>
     </Modal>
+		
+		<Modal :transfer="false" fullscreen v-model="modal.userChoice" title="选择用户">
+		  <user-list-choice ref="UserListChoice" v-on:confirmChoice="confirmChoice"/>
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
+		  </div>
+		</Modal>
   </div>
 </template>
 
@@ -387,12 +404,14 @@ import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
 import { isActiveSelect } from '@/api/select'
 import city from '@/api/city.json'
+import UserListChoice from '@/view/user/UserListChoice.vue'
 
 export default {
   name: 'BuilderReq',
   components: {
     userDetail,
-    UserListSingle
+    UserListSingle,
+		UserListChoice
   },
   data() {
     return {
@@ -421,7 +440,8 @@ export default {
         search: false,
         detail: false,
         userDetail: false,
-        userDetalSearch: false
+        userDetalSearch: false,
+				userChoice: false
       },
       loading: {
         add: false,
@@ -896,6 +916,10 @@ export default {
     confirm() {
       this.$refs.UserListSingle.confirmSelection()
     },
+		confirmChoice(userId) {
+		  this.form.userId = userId
+		  this.cancelModal('userChoice')
+		},
     setAddress() {
       if (this.tempAddress.length <= 0) {
         this.$Message.error('地址为必填项')

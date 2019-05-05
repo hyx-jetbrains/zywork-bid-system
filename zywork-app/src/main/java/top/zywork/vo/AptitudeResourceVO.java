@@ -38,7 +38,6 @@ public class AptitudeResourceVO extends BaseVO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
 	// 是否激活
-	@NotNull(message = "此项是必须项")
 	private Byte isActive;
 	
     public AptitudeResourceVO () {}

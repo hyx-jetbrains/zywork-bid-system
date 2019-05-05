@@ -59,10 +59,14 @@
           <Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
         </FormItem>
         <FormItem label="出发地点" prop="startAddr">
-          <Input v-model="form.startAddr" placeholder="请输入出发地点"/>
+					<Select v-model="form.startAddr" placeholder="请选择出发地点" clearable filterable>
+						<i-option v-for="item in projectCity" :value="item.value" :key="item.value">{{item.label}}</i-option>
+					</Select>
         </FormItem>
         <FormItem label="目的地" prop="endAddr">
-          <Input v-model="form.endAddr" placeholder="请输入目的地"/>
+					<Select v-model="form.endAddr" placeholder="请选择目的地" clearable filterable>
+						<i-option v-for="item in projectCity" :value="item.value" :key="item.value">{{item.label}}</i-option>
+					</Select>
         </FormItem>
         <FormItem label="资料类型" prop="dataType">
           <Select v-model="form.dataType" placeholder="请选择资料类型" clearable filterable>
@@ -123,10 +127,14 @@
           <Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
         </FormItem>
         <FormItem label="出发地点" prop="startAddr">
-          <Input v-model="form.startAddr" placeholder="请输入出发地点"/>
+         <Select v-model="form.startAddr" placeholder="请选择出发地点" clearable filterable>
+         	<i-option v-for="item in projectCity" :value="item.value" :key="item.value">{{item.label}}</i-option>
+         </Select>
         </FormItem>
         <FormItem label="目的地" prop="endAddr">
-          <Input v-model="form.endAddr" placeholder="请输入目的地"/>
+          <Select v-model="form.endAddr" placeholder="请选择出发地点" clearable filterable>
+          	<i-option v-for="item in projectCity" :value="item.value" :key="item.value">{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="资料类型" prop="dataType">
           <Select v-model="form.dataType" placeholder="请选择资料类型" clearable filterable>
@@ -486,7 +494,7 @@
       </p>
     </Modal>
 
-    <Modal :transfer="false" v-model="modal.userDetail" title="模块详情">
+    <Modal :transfer="false" v-model="modal.userDetail" title="用户详情">
       <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
     </Modal>
 
@@ -516,6 +524,7 @@ import { getUserById } from '@/api/module'
 import {
   isActiveSelect,
   seekDataType,
+	projectCity
 } from '@/api/select'
 import {
   setSeekDataIsUrgent
@@ -530,6 +539,7 @@ export default {
   },
   data() {
     return {
+			projectCity: projectCity,
       userDetailForm: {
         userId: null,
         userPhone: null,

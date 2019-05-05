@@ -333,7 +333,7 @@
 		<Modal
 		  :transfer="false"
 		  v-model="modal.userDetail"
-		  title="模块详情">
+		  title="用户详情">
 			<userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
 		</Modal>
 		

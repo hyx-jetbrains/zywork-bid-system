@@ -64,7 +64,7 @@
           &nbsp;
           <Button @click="showModal('project')" type="text">选择项目</Button>&nbsp;
         </FormItem>
-        <FormItem label="城市" prop="city">
+        <FormItem label="出发地城市" prop="startCity">
           <Cascader
             :data="cityData"
             v-model="tempAddress"
@@ -77,6 +77,16 @@
         <FormItem label="出发地点" prop="startAddr">
           <Input v-model="form.startAddr" placeholder="请输入出发地点"/>
         </FormItem>
+				<FormItem label="目的地城市" prop="endCity">
+				  <Cascader
+				    :data="cityData"
+				    v-model="endAddress"
+				    trigger="hover"
+				    change-on-select
+				    filterable
+				    clearable
+				  />
+				</FormItem>
         <FormItem label="目的地" prop="endAddr">
           <Input v-model="form.endAddr" placeholder="请输入目的地"/>
         </FormItem>
@@ -126,7 +136,7 @@
           &nbsp;
           <Button @click="showModal('project')" type="text">选择项目</Button>&nbsp;
         </FormItem>
-        <FormItem label="城市" prop="city">
+        <FormItem label="城市" prop="startCity">
           <Cascader
             :data="cityData"
             v-model="tempAddress"
@@ -139,6 +149,16 @@
         <FormItem label="出发地点" prop="startAddr">
           <Input v-model="form.startAddr" placeholder="请输入出发地点"/>
         </FormItem>
+				<FormItem label="目的地城市" prop="endCity">
+				  <Cascader
+				    :data="cityData"
+				    v-model="endAddress"
+				    trigger="hover"
+				    change-on-select
+				    filterable
+				    clearable
+				  />
+				</FormItem>
         <FormItem label="目的地" prop="endAddr">
           <Input v-model="form.endAddr" placeholder="请输入目的地"/>
         </FormItem>
@@ -404,13 +424,17 @@
         <span v-text="form.projectId"></span>
       </p>
       <p>
-        城市:
-        <span v-text="form.city"></span>
+        出发地城市:
+        <span v-text="form.startCity"></span>
       </p>
       <p>
         出发地点:
         <span v-text="form.startAddr"></span>
       </p>
+			<p>
+			  目的地城市:
+			  <span v-text="form.endCity"></span>
+			</p>
       <p>
         目的地:
         <span v-text="form.endAddr"></span>
@@ -449,7 +473,7 @@
       </p>
     </Modal>
 
-    <Modal :transfer="false" v-model="modal.userDetail" title="模块详情">
+    <Modal :transfer="false" v-model="modal.userDetail" title="用户详情">
       <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
     </Modal>
 
@@ -460,6 +484,17 @@
         <Button type="primary" size="large" @click="confirm">确认选择</Button>
       </div>
     </Modal>
+		
+		<Modal :transfer="false" v-model="modal.projectDetail" title="项目详情">
+			<ProjectDetail :form="projectDetailForm" v-on:setDetail="setProjectDetailModal" />
+		</Modal>
+		<Modal :transfer="false" fullscreen v-model="modal.projectDetalSearch" title="搜索主表信息">
+			<project-list-single ref="ProjectListSingle" v-on:confirmSelectionProject="projectConfirmSelection" />
+			<div slot="footer">
+				<Button type="text" size="large" @click="cancelModal('projectDetalSearch')">取消</Button>
+				<Button type="primary" size="large" @click="projectConfirm">确认选择</Button>
+			</div>
+		</Modal>
 
     <Modal
       v-model="modal.project"
@@ -488,10 +523,12 @@ import * as utils from '@/api/utils'
 import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import UserListChoice from '@/view/user/UserListChoice.vue'
-import { getUserById } from '@/api/module'
+import { getUserById, getProjectById } from '@/api/module'
 import ProjectList from '@/view/project/ProjectList.vue'
 import city from '@/api/city.json'
 import { isActiveSelect } from '@/api/select'
+import ProjectDetail from '@/view/project/ProjectDetail.vue'
+	import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
 
 export default {
   name: 'MarkSeekcar',
@@ -499,7 +536,9 @@ export default {
     userDetail,
     UserListSingle,
     ProjectList,
-    UserListChoice
+    UserListChoice,
+		ProjectDetail,
+		ProjectListSingle
   },
   data() {
     return {
@@ -530,7 +569,9 @@ export default {
         userDetail: false,
         userDetalSearch: false,
         project: false,
-        userChoice: false
+        userChoice: false,
+				projectDetail: false,
+				projectDetalSearch: false
       },
       loading: {
         add: false,
@@ -557,8 +598,9 @@ export default {
         id: null,
         userId: null,
         projectId: null,
-        city: null,
+        startCity: null,
         startAddr: null,
+				endCity: null,
         endAddr: null,
         startTime: null,
         name: null,
@@ -569,8 +611,41 @@ export default {
         updateTime: null,
         isActive: null
       },
+			projectDetailForm: {
+			  id: null,
+			  title: null,
+			  projectType: null,
+			  city: null,
+			  projectDetail: null,
+			  releaseStatus: null,
+			  markUnitName: null,
+			  projectInvest: null,
+			  checkPattern: null,
+			  compAptitudeType: null,
+			  builderLevel: null,
+			  moneyToImplement: null,
+			  tenderingAgent: null,
+			  phone: null,
+			  offerPrice: null,
+			  assurePrice: null,
+			  constructionPeriod: null,
+			  downloadEndTime: null,
+			  otherDemand: null,
+			  openMarkInfo: null,
+			  openMarkTime: null,
+			  openMarkAddr: null,
+			  inMarkPublicity: null,
+			  inMarkComp: null,
+			  noticeTime: null,
+			  clickCount: null,
+			  isElectronic: null,
+			  version: null,
+			  createTime: null,
+			  updateTime: null,
+			  isActive: null
+			},
       validateRules: {
-        city: [
+        startCity: [
           {
             type: 'string',
             min: 1,
@@ -639,8 +714,9 @@ export default {
         projectId: null,
         projectIdMin: null,
         projectIdMax: null,
-        city: null,
+        startCity: null,
         startAddr: null,
+				endCity: null,
         endAddr: null,
         startTime: null,
         startTimeMin: null,
@@ -752,24 +828,78 @@ export default {
             title: '项目编号',
             key: 'projectId',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							return h(
+								'Dropdown', {
+									on: {
+										'on-click': itemName => {
+											this.userOpt(itemName, params.row)
+										}
+									},
+									props: {
+										transfer: true
+									}
+								},
+								[
+									h('span', [
+										params.row.projectId,
+										h('Icon', {
+											props: {
+												type: 'ios-list',
+												size: '25'
+											}
+										})
+									]),
+									h(
+										'DropdownMenu', {
+											slot: 'list'
+										},
+										[
+											h(
+												'DropdownItem', {
+													props: {
+														name: 'projectDetail'
+													}
+												},
+												'详情'
+											),
+											h(
+												'DropdownItem', {
+													props: {
+														name: 'projectShowSearch'
+													}
+												},
+												'搜索'
+											)
+										]
+									)
+								]
+							)
+						}
           },
           {
-            title: '城市',
-            key: 'city',
-            minWidth: 120,
+            title: '出发地城市',
+            key: 'startCity',
+            minWidth: 160,
             sortable: true
           },
           {
             title: '出发地点',
             key: 'startAddr',
-            minWidth: 120,
+            minWidth: 160,
             sortable: true
           },
+					{
+					  title: '目的地城市',
+					  key: 'endCity',
+					  minWidth: 160,
+					  sortable: true
+					},
           {
             title: '目的地',
             key: 'endAddr',
-            minWidth: 120,
+            minWidth: 160,
             sortable: true
           },
           {
@@ -954,6 +1084,7 @@ export default {
       },
       cityData: city,
       tempAddress: [],
+			endAddress: [],
       isActiveSelect: isActiveSelect,
       descriptionAutoSize: {
         minRows: 3,
@@ -1007,10 +1138,14 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
-        var tempAddrArr = this.form.city.split('/')
+        var tempAddrArr = this.form.startCity.split('/')
         for (var i = 0; i < tempAddrArr.length; i++) {
           this.tempAddress.push(tempAddrArr[i])
         }
+				var endAddress = this.form.endCity.split('/')
+				for (var i = 0; i < endAddress.length; i++) {
+				  this.endAddress.push(endAddress[i])
+				}
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -1018,9 +1153,13 @@ export default {
         utils.remove(this, row)
       } else if (itemName === 'moduleDetail') {
         this.showUserDetailModal(row.userId)
-      } else if (itemName === 'showSearch') {
+      } else if (itemName === 'projectDetail') {
+					this.showProjectDetailModal(row.projectId)
+			} else if (itemName === 'showSearch') {
         utils.showModal(this, 'userDetalSearch')
-      }
+      } else if (itemName === 'projectShowSearch') {
+					utils.showModal(this, 'projectDetalSearch')
+				}
     },
     showUserDetailModal(id) {
       getUserById(id)
@@ -1037,9 +1176,27 @@ export default {
           this.$Message.error(err)
         })
     },
+		showProjectDetailModal(id) {
+			getProjectById(id)
+				.then(res => {
+					const data = res.data
+					if (data.code === 1001) {
+						this.projectDetailForm = data.data
+						this.modal.projectDetail = true
+					} else {
+						this.$Message.error(data.message)
+					}
+				})
+				.catch(err => {
+					this.$Message.error(err)
+				})
+		},
     setDetailModal(val) {
       this.modal.userDetail = val
     },
+		setProjectDetailModal(val) {
+			this.modal.projectDetail = val
+		},
     confirmSelection(id) {
       this.modal.userDetalSearch = false
       this.searchForm.userIdMin = id
@@ -1049,21 +1206,39 @@ export default {
     confirm() {
       this.$refs.UserListSingle.confirmSelection()
     },
+		projectConfirmSelection(id) {
+			this.modal.projectDetalSearch = false
+			this.searchForm.projectIdMin = id
+			this.searchForm.projectIdMax = id
+			utils.search(this)
+		},
+		projectConfirm() {
+			this.$refs.ProjectListSingle.confirmSelection()
+		},
     setAddress() {
       if (this.tempAddress.length <= 0) {
         this.$Message.error('地址为必填项')
         return
       } else if (this.tempAddress.length === 1) {
-        this.form.city = this.tempAddress[0]
+        this.form.startCity = this.tempAddress[0]
+				this.form.endCity = this.endAddress[0]
       } else if (this.tempAddress.length === 2) {
-        this.form.city = this.tempAddress[0] + '/' + this.tempAddress[1]
+        this.form.startCity = this.tempAddress[0] + '/' + this.tempAddress[1]
+				this.form.endCity = this.endAddress[0] + '/' + this.endAddress[1]
       } else if (this.tempAddress.length === 3) {
-        this.form.city =
+        this.form.startCity =
           this.tempAddress[0] +
           '/' +
           this.tempAddress[1] +
           '/' +
           this.tempAddress[2]
+					
+				this.form.endCity =
+				  this.endAddress[0] +
+				  '/' +
+				  this.endAddress[1] +
+				  '/' +
+				  this.endAddress[2]
       }
     },
     add() {

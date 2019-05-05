@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * MarkSeekcarDO数据对象实体类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-05<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class MarkSeekcarDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372034935527631L;
+    private static final long serialVersionUID = -9223372034881759574L;
 
     // 开标找车编号
 	private Long id;
@@ -21,10 +21,12 @@ public class MarkSeekcarDO extends BaseDO {
 	private Long userId;
 	// 项目编号
 	private Long projectId;
-	// 城市
-	private String city;
+	// 出发城市
+	private String startCity;
 	// 出发地点
 	private String startAddr;
+	// 目的地城市
+	private String endCity;
 	// 目的地
 	private String endAddr;
 	// 出发时间
@@ -46,12 +48,13 @@ public class MarkSeekcarDO extends BaseDO {
 	
     public MarkSeekcarDO () {}
 
-    public MarkSeekcarDO (Long id, Long userId, Long projectId, String city, String startAddr, String endAddr, Date startTime, String name, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public MarkSeekcarDO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String name, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.projectId = projectId;
-		this.city = city;
+		this.startCity = startCity;
 		this.startAddr = startAddr;
+		this.endCity = endCity;
 		this.endAddr = endAddr;
 		this.startTime = startTime;
 		this.name = name;
@@ -88,12 +91,12 @@ public class MarkSeekcarDO extends BaseDO {
 		this.projectId = projectId;
 	}
 
-	public String getCity() {
-		return city;
+	public String getStartCity() {
+		return startCity;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setStartCity(String startCity) {
+		this.startCity = startCity;
 	}
 
 	public String getStartAddr() {
@@ -102,6 +105,14 @@ public class MarkSeekcarDO extends BaseDO {
 
 	public void setStartAddr(String startAddr) {
 		this.startAddr = startAddr;
+	}
+
+	public String getEndCity() {
+		return endCity;
+	}
+
+	public void setEndCity(String endCity) {
+		this.endCity = endCity;
 	}
 
 	public String getEndAddr() {
@@ -183,8 +194,9 @@ public class MarkSeekcarDO extends BaseDO {
                 "id = " + id + 
 				", userId = " + userId + 
 				", projectId = " + projectId + 
-				", city = " + city + 
+				", startCity = " + startCity + 
 				", startAddr = " + startAddr + 
+				", endCity = " + endCity + 
 				", endAddr = " + endAddr + 
 				", startTime = " + startTime + 
 				", name = " + name + 

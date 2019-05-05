@@ -69,3 +69,25 @@ export const getCompanyById = (id) => {
 		data: ''
 	})
 }
+
+/**
+ * 根据建造师id查询
+ */
+export const getBuilderById = (id) => {
+	return axios.request({
+		url: '/builder/admin/one/' + id,
+		method: 'GET',
+		data: ''
+	})
+}
+
+/**
+ * 根据资质id查询
+ */
+export const getAptitudeTransferById = (id) => {
+	return axios.request({
+		url: '/aptitude-transfer/admin/one/' + id,
+		method: 'GET',
+		data: ''
+	})
+}

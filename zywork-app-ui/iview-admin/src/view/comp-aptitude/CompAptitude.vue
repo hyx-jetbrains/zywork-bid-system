@@ -41,7 +41,7 @@
 					<Input v-model="form.certificateNum" placeholder="请输入证件号码" />
 				</FormItem>
 				<FormItem label="资质详情" prop="certificateDetail">
-					<Input v-model="form.certificateDetail" placeholder="请输入资质详情" />
+					<Input v-model="form.certificateDetail" type="textarea" :autosize="descriptionAutoSize" placeholder="请输入资质详情" />
 				</FormItem>
 
 			</Form>
@@ -61,7 +61,7 @@
 					<Input v-model="form.certificateNum" placeholder="请输入证件号码" />
 				</FormItem>
 				<FormItem label="资质详情" prop="certificateDetail">
-					<Input v-model="form.certificateDetail" placeholder="请输入资质详情" />
+					<Input v-model="form.certificateDetail" type="textarea" :autosize="descriptionAutoSize" placeholder="请输入资质详情" />
 				</FormItem>
 
 			</Form>

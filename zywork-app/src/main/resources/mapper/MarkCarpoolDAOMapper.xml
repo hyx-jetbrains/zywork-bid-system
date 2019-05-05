@@ -16,11 +16,14 @@
 			<if test="projectId != null">
 				project_id,
 			</if>
-			<if test="city != null">
-				city,
+			<if test="startCity != null">
+				start_city,
 			</if>
 			<if test="startAddr != null">
 				start_addr,
+			</if>
+			<if test="endCity != null">
+				end_city,
 			</if>
 			<if test="endAddr != null">
 				end_addr,
@@ -64,11 +67,14 @@
 			<if test="projectId != null">
 				#{projectId},
 			</if>
-			<if test="city != null">
-				#{city},
+			<if test="startCity != null">
+				#{startCity},
 			</if>
 			<if test="startAddr != null">
 				#{startAddr},
+			</if>
+			<if test="endCity != null">
+				#{endCity},
 			</if>
 			<if test="endAddr != null">
 				#{endAddr},
@@ -120,11 +126,14 @@
 			<if test="item.projectId != null">
 				project_id,
 			</if>
-			<if test="item.city != null">
-				city,
+			<if test="item.startCity != null">
+				start_city,
 			</if>
 			<if test="item.startAddr != null">
 				start_addr,
+			</if>
+			<if test="item.endCity != null">
+				end_city,
 			</if>
 			<if test="item.endAddr != null">
 				end_addr,
@@ -168,11 +177,14 @@
 			<if test="item.projectId != null">
 				#{item.projectId},
 			</if>
-			<if test="item.city != null">
-				#{item.city},
+			<if test="item.startCity != null">
+				#{item.startCity},
 			</if>
 			<if test="item.startAddr != null">
 				#{item.startAddr},
+			</if>
+			<if test="item.endCity != null">
+				#{item.endCity},
 			</if>
 			<if test="item.endAddr != null">
 				#{item.endAddr},
@@ -232,11 +244,14 @@
 			<if test="projectId != null">
 				project_id = #{projectId},
 			</if>
-			<if test="city != null">
-				city = #{city},
+			<if test="startCity != null">
+				start_city = #{startCity},
 			</if>
 			<if test="startAddr != null">
 				start_addr = #{startAddr},
+			</if>
+			<if test="endCity != null">
+				end_city = #{endCity},
 			</if>
 			<if test="endAddr != null">
 				end_addr = #{endAddr},
@@ -286,11 +301,14 @@
 			<if test="item.projectId != null">
 				project_id = #{item.projectId},
 			</if>
-			<if test="item.city != null">
-				city = #{item.city},
+			<if test="item.startCity != null">
+				start_city = #{item.startCity},
 			</if>
 			<if test="item.startAddr != null">
 				start_addr = #{item.startAddr},
+			</if>
+			<if test="item.endCity != null">
+				end_city = #{item.endCity},
 			</if>
 			<if test="item.endAddr != null">
 				end_addr = #{item.endAddr},
@@ -335,7 +353,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, user_id as userId, project_id as projectId, city as city, start_addr as startAddr, end_addr as endAddr, start_time as startTime, car_type as carType, people_count as peopleCount, price as price, name as name, phone as phone, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, user_id as userId, project_id as projectId, start_city as startCity, start_addr as startAddr, end_city as endCity, end_addr as endAddr, start_time as startTime, car_type as carType, people_count as peopleCount, price as price, name as name, phone as phone, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -375,11 +393,14 @@
 		<if test="query != null and query.projectIdMin != null and query.projectIdMax != null">
 			and project_id <![CDATA[ >= ]]> #{query.projectIdMin} and project_id <![CDATA[ <= ]]> #{query.projectIdMax}
 		</if>
-		<if test="query != null and query.city != null and query.city != ''">
-			and city like concat('%', #{query.city}, '%')
+		<if test="query != null and query.startCity != null and query.startCity != ''">
+			and start_city like concat('%', #{query.startCity}, '%')
 		</if>
 		<if test="query != null and query.startAddr != null and query.startAddr != ''">
 			and start_addr like concat('%', #{query.startAddr}, '%')
+		</if>
+		<if test="query != null and query.endCity != null and query.endCity != ''">
+			and end_city like concat('%', #{query.endCity}, '%')
 		</if>
 		<if test="query != null and query.endAddr != null and query.endAddr != ''">
 			and end_addr like concat('%', #{query.endAddr}, '%')

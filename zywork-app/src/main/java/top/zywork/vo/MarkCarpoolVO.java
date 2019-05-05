@@ -12,28 +12,32 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * MarkCarpoolVO值对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-05<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class MarkCarpoolVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372036853225426L;
+    private static final long serialVersionUID = -9223372034791049269L;
 
     // 开标拼车编号
 	private Long id;
 	// 用户编号
+	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 项目编号
 	@NotNull(message = "此项是必须项")
 	private Long projectId;
-	// 城市
+	// 出发城市
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
-	private String city;
+	private String startCity;
 	// 出发地点
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String startAddr;
+	// 目的地城市
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	private String endCity;
 	// 目的地
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String endAddr;
@@ -66,12 +70,13 @@ public class MarkCarpoolVO extends BaseVO {
 	
     public MarkCarpoolVO () {}
 
-    public MarkCarpoolVO (Long id, Long userId, Long projectId, String city, String startAddr, String endAddr, Date startTime, String carType, Integer peopleCount, Long price, String name, String phone, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public MarkCarpoolVO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String carType, Integer peopleCount, Long price, String name, String phone, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.projectId = projectId;
-		this.city = city;
+		this.startCity = startCity;
 		this.startAddr = startAddr;
+		this.endCity = endCity;
 		this.endAddr = endAddr;
 		this.startTime = startTime;
 		this.carType = carType;
@@ -110,12 +115,12 @@ public class MarkCarpoolVO extends BaseVO {
 		this.projectId = projectId;
 	}
 
-	public String getCity() {
-		return city;
+	public String getStartCity() {
+		return startCity;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setStartCity(String startCity) {
+		this.startCity = startCity;
 	}
 
 	public String getStartAddr() {
@@ -124,6 +129,14 @@ public class MarkCarpoolVO extends BaseVO {
 
 	public void setStartAddr(String startAddr) {
 		this.startAddr = startAddr;
+	}
+
+	public String getEndCity() {
+		return endCity;
+	}
+
+	public void setEndCity(String endCity) {
+		this.endCity = endCity;
 	}
 
 	public String getEndAddr() {
@@ -221,8 +234,9 @@ public class MarkCarpoolVO extends BaseVO {
                 "id = " + id + 
 				", userId = " + userId + 
 				", projectId = " + projectId + 
-				", city = " + city + 
+				", startCity = " + startCity + 
 				", startAddr = " + startAddr + 
+				", endCity = " + endCity + 
 				", endAddr = " + endAddr + 
 				", startTime = " + startTime + 
 				", carType = " + carType + 
