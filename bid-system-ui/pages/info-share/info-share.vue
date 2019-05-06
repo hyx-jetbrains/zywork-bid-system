@@ -6,7 +6,7 @@
 				<input type="text" placeholder="我要搜索" disabled/>
 			</view>
 			<view style="margin-left: 10upx;">
-				<zywork-icon type="icontianjia" color="#dd524d" size="28" class="zy-icon" @click.native="toPublishChoose"/>
+				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toPublishChoose"/>
 			</view>
 		</view>
 		<view class="uni-tab-bar zy-tab-bar">
