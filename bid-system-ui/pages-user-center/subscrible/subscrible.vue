@@ -25,31 +25,31 @@
 					<checkbox-group name="projectType">
 						<view class="zy-sub-project-type">
 							<label class="zy-sub-project-type-item">
-								<checkbox value="房建市政" />
+								<checkbox value="房建市政" color="#108ee9"/>
 								房建市政
 							</label>
 							<label class="zy-sub-project-type-item">
-								<checkbox value="水利工程" />
+								<checkbox value="水利工程" color="#108ee9"/>
 								水利工程
 							</label>
 						</view>
 						<view class="zy-sub-project-type">
 							<label class="zy-sub-project-type-item">
-								<checkbox value="交通工程" />
+								<checkbox value="交通工程" color="#108ee9"/>
 								交通工程
 							</label>
 							<label class="zy-sub-project-type-item">
-								<checkbox @click="chooseCheckbox" value="政府采购" />
+								<checkbox @click="chooseCheckbox" value="政府采购" color="#108ee9"/>
 								政府采购
 							</label>
 						</view>
 						<view class="zy-sub-project-type">
 							<label class="zy-sub-project-type-item">
-								<checkbox value="重点项目" />
+								<checkbox value="重点项目" color="#108ee9"/>
 								重点项目
 							</label>
 							<label class="zy-sub-project-type-item">
-								<checkbox value="其他项目" />
+								<checkbox value="其他项目" color="#108ee9"/>
 								其他项目
 							</label>
 						</view>
@@ -77,7 +77,7 @@
 						<checkbox-group name="tenderee" @change="chooseTenderee">
 							<label class="uni-list-cell uni-list-cell-pd" v-for="item in tendereeList" :key="item.value">
 								<view>
-									<checkbox :value="item.value" />
+									<checkbox :value="item.value" color="#108ee9"/>
 								</view>
 								<view>{{item.name}}</view>
 							</label>
@@ -86,7 +86,7 @@
 				</view>
 				<view class="uni-form-item uni-column zy-flex-label">
 					<view class="zy-text-bold" style="margin-right: 30upx;">是否开通</view>
-					<switch name="isSubscrible" />
+					<switch name="isSubscrible" color="#108EE9"/>
 				</view>
 				<view class="uni-btn-v">
 					<button type="primary" formType="submit">保存订阅</button>
