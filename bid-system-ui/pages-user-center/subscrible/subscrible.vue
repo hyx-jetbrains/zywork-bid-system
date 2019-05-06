@@ -2,7 +2,7 @@
 	<view>
 		<view class="uni-padding-wrap uni-common-mt">
 			<form @submit="formSubmit" @reset="formReset">
-				<view class="uni-form-item uni-column zy-flex-label zy-label-bottom-border">
+				<view class="uni-form-item uni-column zy-disable-flex zy-label-bottom-border">
 					<view class="zy-text-bold">订阅城市</view>
 					<picker name="city" @change="chooseCity" :value="cityIndex" :range="cityArray">
 						<view class="zy-address">
@@ -11,7 +11,7 @@
 						</view>
 					</picker>
 				</view>
-				<view class="uni-form-item uni-column zy-flex-label zy-label-bottom-border">
+				<view class="uni-form-item uni-column zy-disable-flex zy-label-bottom-border">
 					<view class="zy-text-bold">企业资质</view>
 					<picker name="aptitude" mode="multiSelector" @columnchange="qualificationsChange" :value="conditionIndex" :range="conditionArray">
 						<view class="zy-qualifications">
@@ -84,7 +84,7 @@
 						</checkbox-group>
 					</view>
 				</view>
-				<view class="uni-form-item uni-column zy-flex-label">
+				<view class="uni-form-item uni-column zy-disable-flex">
 					<view class="zy-text-bold" style="margin-right: 30upx;">是否开通</view>
 					<switch name="isSubscrible" color="#108EE9"/>
 				</view>
@@ -208,12 +208,7 @@
 		flex-direction: column;
 		align-items: center;
 	}
-	
-	.zy-flex-label {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
+
 	.zy-label-bottom-border {
 		border-bottom: 1upx solid $seperator-color;
 	}

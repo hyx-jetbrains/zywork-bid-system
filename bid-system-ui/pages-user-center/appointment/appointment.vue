@@ -3,7 +3,7 @@
 		<view style="background-color: #FFFFFF; padding: 20upx 0;">
 			<uni-segmented-control :current="appointmentStatus.current" :values="appointmentStatus.items" v-on:clickItem="onClickItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
-		<view class="zy-type-title zy-flex-label">
+		<view class="zy-type-title zy-disable-flex">
 			<text class="zy-text-bold">我的预约记录</text>
 			<picker @change="choosePayStatus" :value="payStatusIndex" :range="payStatusArray">
 				<view class="zy-pay-status">
@@ -128,10 +128,8 @@
 		methods: {
 			// 分段器选择是否处理
 			onClickItem(index) {
-				console.log(index)
-				console.log(this.current)
-				if (this.current !== index) {
-					this.current = index
+				if (this.appointmentStatus.current !== index) {
+					this.appointmentStatus.current = index
 				}
 			},
 			// 立即支付
@@ -170,12 +168,6 @@
 		align-items: center;
 		margin-right: 10upx;
 		margin-left: 380upx;
-	}
-	
-	.zy-flex-label {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
 	}
 	
 </style>

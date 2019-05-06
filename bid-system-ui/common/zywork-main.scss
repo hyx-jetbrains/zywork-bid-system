@@ -178,3 +178,14 @@ button[type=primary][plain] {
 .zy-list-item-input textarea {
 	width: 100%;
 }
+
+.zy-disable-flex {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.zy-price {
+	font-size: 50upx; 
+	color: red;
+}
