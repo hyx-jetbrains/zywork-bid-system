@@ -84,6 +84,55 @@
 						"navigationBarTitleText": "信息共享搜索",
 						"backgroundTextStyle": "light"
 					}
+				},
+				{
+					"path": "publish-choose/publish-choose",
+					"style": {
+						"navigationBarTitleText": "选择发布类型",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-builder/publish-builder",
+					"style": {
+						"navigationBarTitleText": "发布建造师",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-aptitude/publish-aptitude",
+					"style": {
+						"navigationBarTitleText": "发布资质转让",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-carpool/publish-carpool",
+					"style": {
+						"navigationBarTitleText": "开标拼车",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-hire/publish-hire",
+					"style": {
+						"navigationBarTitleText": "发布岗位招聘",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-material/publish-material",
+					"style": {
+						"navigationBarTitleText": "求带资料",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-guarantee/publish-guarantee",
+					"style": {
+						"navigationBarTitleText": "申请保函",
+						"backgroundTextStyle": "light"
+					}
 				}
 			]
 		},

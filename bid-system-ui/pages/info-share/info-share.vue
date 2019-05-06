@@ -6,7 +6,7 @@
 				<input type="text" placeholder="我要搜索" disabled/>
 			</view>
 			<view style="margin-left: 10upx;">
-				<zywork-icon type="icontianjia" color="#dd524d" size="28" class="zy-icon" @click.native="toPublish"/>
+				<zywork-icon type="icontianjia" color="#dd524d" size="28" class="zy-icon" @click.native="toPublishChoose"/>
 			</view>
 		</view>
 		<view class="uni-tab-bar zy-tab-bar">
@@ -123,8 +123,10 @@
 					url: '/pages-info-share/search-page/search-page'
 				})
 			},
-			toPublish() {
-				
+			toPublishChoose() {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-choose/publish-choose'
+				})
 			},
 			onClickBuilderItem(index) {
 				if (this.builderOpts.current !== index) {
