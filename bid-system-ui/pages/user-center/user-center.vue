@@ -57,8 +57,10 @@
 			 @click="toCoupon"></zywork-list-item>
 			<zywork-list-item title="我的分享邀请" show-extra-icon="true" :extra-icon="{color: '#567890',size: '18',type: 'iconicon-test1'}"
 			 @click="toShare"></zywork-list-item>
+			 <!--
 			<zywork-list-item title="业绩二维码" show-extra-icon="true" :extra-icon="{color: '#E51C23',size: '18',type: 'iconico'}"
 			 @click="toPerformanceQrcode"></zywork-list-item>
+			 -->
 			<zywork-list-item title="常见问题" show-extra-icon="true" :extra-icon="{color: '#CC0022',size: '18',type: 'iconbangzhu'}"
 			 @click="toHelp"></zywork-list-item>
 			<zywork-list-item title="联系我们" show-extra-icon="true" :extra-icon="{color: '#535CA7',size: '18',type: 'iconguanyu'}"
