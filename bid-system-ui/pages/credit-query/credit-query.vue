@@ -34,5 +34,4 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	@import '../../common/iconfont.css';
 </style>

@@ -240,8 +240,8 @@
 				}
 			},
 			onClickItem(index) {
-				if (this.current !== index) {
-					this.current = index
+				if (this.projectStatus.current !== index) {
+					this.projectStatus.current = index
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {
@@ -294,7 +294,6 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	@import '../../common/iconfont.css';
 
 	.zy-address {
 		display: flex;
