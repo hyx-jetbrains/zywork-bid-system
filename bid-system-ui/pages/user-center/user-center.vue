@@ -12,8 +12,8 @@
 						</button>
 					</view>
 					<view style="margin-left: 100upx;">
-						<zywork-icon type="iconVIP" color="#ffffff" size="24" style="display: inline-block; margin-right: 20upx;" @click.native="toUserVip"/>
-						<zywork-icon type="iconzhuanjiarenzheng" color="#ccc" size="24" style="display: inline-block;" @click.native="toUserExpert"/>
+						<zywork-icon type="iconVIP" color="#CCCCCC" size="24" style="display: inline-block; margin-right: 20upx;" @click.native="toUserVip"/>
+						<zywork-icon type="iconzhuanjiarenzheng" color="#CCCCCC" size="24" style="display: inline-block;" @click.native="toUserExpert"/>
 					</view>
 				</view>
 				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF" @click.native="toUserSetting"/>

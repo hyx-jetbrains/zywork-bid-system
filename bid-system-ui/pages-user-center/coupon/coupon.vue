@@ -3,8 +3,9 @@
 		<view style="background-color: #FFFFFF; padding: 20upx 0;">
 			<uni-segmented-control :current="functionType.current" :values="functionType.items" v-on:clickItem="onClickItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
+		<!-- 抵用券 -->
 		<view v-if="functionType.current == 0">
-			<view class="zy-coupon-card" v-for="(coupon, index) in couponList" :key="index">
+			<view class="zy-coupon-card" v-for="(coupon, index) in couponList" :key="index" style="position: relative;">
 				<view class="zy-coupon-money">
 					<text class="zy-coupon-money-detail">
 						¥
@@ -16,15 +17,19 @@
 					<view class="zy-text-info">{{coupon.validDate}}</view>
 				</view>
 				<view style="margin-left: 200upx;">
-					<uni-tag text="立即使用" type="error" size="small" :inverted="true" :circle="true" @click="useCouupon"></uni-tag>
+					<view v-if="coupon.validDate < currDate">
+						<zywork-icon class="zy-icon-yiguoqi" type="iconyiguoqi" color="#afacac" size="60" style="display: inline-block;" />
+					</view>
+					<uni-tag v-else text="立即使用" type="error" size="small" :inverted="true" :circle="true" @click="useCouupon"></uni-tag>
 				</view>
 			</view>
 		</view>
+		<!-- 抵用券使用记录 -->
 		<view v-if="functionType.current == 1">
 			<view class="zy-coupon-record">
 				<view v-if="couponRecordlList.length > 0" class="zy-page-list" style="padding: 0upx 30upx;">
 					<view v-for="(couponRecordItem, index) in couponRecordlList" :key="index" class="zy-page-list-item" style="position: relative;">
-						<zywork-icon class="zy-icon-yishiyong" type="iconyishiyong" color="#F8F8F8" size="60" style="display: inline-block;" />
+						<zywork-icon class="zy-icon-yishiyong" type="iconyishiyong" color="#afacac" size="60" style="display: inline-block;" />
 						<view class="zy-coupon-title">
 							<text class="zy-text-bold" style="font-size: 40upx;">{{couponRecordItem.type}}</text>
 						</view>
@@ -67,6 +72,11 @@
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	
+	import {
+		getCalendarDate
+	} from '../../common/util.js'
+	
 	export default {
 		components: {
 			uniSegmentedControl,
@@ -76,6 +86,7 @@
 		},
 		data() {
 			return {
+				currDate: getCalendarDate(new Date()),
 				functionType: {
 					current: 0,
 					items: ['抵用券', '使用记录']
@@ -122,7 +133,9 @@
 				]
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			console.log(this.currDate)
+		},
 		methods: {
 			// 分段器选择类别
 			onClickItem(index) {
@@ -172,6 +185,10 @@
 		position: absolute;
 		top: 0;
 		right: 0;
+	}
+	.zy-icon-yiguoqi {
+		position: absolute;
+		top: 0;
 	}
 	
 </style>

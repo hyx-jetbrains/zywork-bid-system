@@ -1,6 +1,5 @@
 <template>
 	<view>
-		<view class="zy-type-title zy-text-bold">我的咨询反馈记录</view>
 		<uni-card v-for="(consult, index) in consultList" :key="index" :title="consult.consultType">
 			<view>
 				<text>{{consult.consultDesc}}</text>
