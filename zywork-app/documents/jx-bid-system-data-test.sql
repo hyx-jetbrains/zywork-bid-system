@@ -4888,6 +4888,28 @@ CREATE TABLE `t_user_hierarchy`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for t_user_expert
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_expert`;
+CREATE TABLE `t_user_expert` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家信息编号',
+  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
+  `name` varchar(20) DEFAULT '' COMMENT '专家姓名',
+  `gender` tinyint(4) DEFAULT '0' COMMENT '性别',
+  `age` int(11) DEFAULT NULL COMMENT '年龄',
+  `type` varchar(20) DEFAULT '' COMMENT '专家类别',
+  `is_fulltime` tinyint(4) DEFAULT '0' COMMENT '是否全职',
+  `phone` varchar(11) DEFAULT '' COMMENT '联系电话',
+  `memo` varchar(300) DEFAULT '' COMMENT '个人情况介绍',
+  `examine_status` tinyint(4) DEFAULT '0' COMMENT '审核状态',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Records of t_user_hierarchy
 -- ----------------------------
 INSERT INTO `t_user_hierarchy` VALUES (1, 31, 31, 1, 1, '2018-12-28 11:26:11', NULL, 0);
