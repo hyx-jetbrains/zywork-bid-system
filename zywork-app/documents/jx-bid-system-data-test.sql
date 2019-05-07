@@ -215,7 +215,7 @@ CREATE TABLE `t_builder`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '建造师编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
-  `gender` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '性别',
+  `gender` tinyint(4) NULL DEFAULT 0 COMMENT '性别',
   `birthday` date NULL DEFAULT NULL COMMENT '出生年份',
   `certificate_address` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '证件地址',
   `certificate_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '证书类别',
