@@ -34,32 +34,32 @@
 		methods: {
 			toPublishBuilder() {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-builder/publish-builder'
+					url: '/pages-user-center/publish-builder/publish-builder'
 				})
 			},
 			toPublishAptitude() {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-aptitude/publish-aptitude'
+					url: '/pages-user-center/publish-aptitude/publish-aptitude'
 				})
 			},
 			toPublishCarpool() {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-carpool/publish-carpool'
+					url: '/pages-user-center/publish-carpool/publish-carpool'
 				})
 			},
 			toPublishHire() {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-hire/publish-hire'
+					url: '/pages-user-center/publish-hire/publish-hire'
 				})
 			},
 			toPublishMaterial() {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-material/publish-material'
+					url: '/pages-user-center/publish-material/publish-material'
 				})
 			},
 			toPublishGuarantee() {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-guarantee/publish-guarantee'
+					url: '/pages-user-center/publish-guarantee/publish-guarantee'
 				})
 			}
 		}

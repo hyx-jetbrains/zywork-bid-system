@@ -271,6 +271,48 @@
 					}
 				},
 				{
+					"path": "publish-builder/publish-builder",
+					"style": {
+						"navigationBarTitleText": "我发布的建造师",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-aptitude/publish-aptitude",
+					"style": {
+						"navigationBarTitleText": "我发布的资质转让",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-carpool/publish-carpool",
+					"style": {
+						"navigationBarTitleText": "我的开标拼车",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-hire/publish-hire",
+					"style": {
+						"navigationBarTitleText": "我发布的岗位招聘",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-material/publish-material",
+					"style": {
+						"navigationBarTitleText": "我的求带资料",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-guarantee/publish-guarantee",
+					"style": {
+						"navigationBarTitleText": "我的申请保函",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "collection/collection",
 					"style": {
 						"navigationBarTitleText": "我的收藏",
