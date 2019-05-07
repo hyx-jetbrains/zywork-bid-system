@@ -557,7 +557,7 @@
       </p>
     </Modal>
 
-    <Modal :transfer="false" v-model="modal.userDetail" title="模块详情">
+    <Modal :transfer="false" v-model="modal.userDetail" title="用户详情">
       <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
     </Modal>
 
@@ -681,15 +681,6 @@ export default {
             min: 1,
             max: 20,
             message: '必须1-20个字符',
-            trigger: 'blur'
-          }
-        ],
-        gender: [
-          {
-            type: 'string',
-            min: 1,
-            max: 10,
-            message: '必须1-10个字符',
             trigger: 'blur'
           }
         ],
@@ -892,8 +883,7 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
-              const text =
-                row.gender === '1' ? '男' : row.gender === '2' ? '女' : '未知'
+              const text = (row.gender == '1' ? '男' : row.gender == '2' ? '女' : '未知')
               return h('span', {}, text)
             }
           },

@@ -240,6 +240,15 @@ export default [
         },
         component: () => import('@/view/expert-subscribe/ExpertSubscribeList.vue')
       },
+			{
+			  path: 'UserExpert',
+			  name: 'user_expert',
+			  meta: {
+			    title: '专家信息',
+			    icon: 'ios-person'
+			  },
+			  component: () => import('@/view/user-expert/UserExpert.vue')
+			},
     ]
   },
   {

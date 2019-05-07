@@ -37,3 +37,28 @@ export const replay = (self) => {
     })
   })
 }
+
+export const replayPrice = (self) => {
+	return new Promise((resolve, reject) => {
+	  axios.request({
+	    url: self.urls.replayPriceUrl,
+	    method: 'POST',
+	    data: self.form
+	  }).then(response => {
+	    self.loading['replayPrice'] = false
+	    if (response.data.code !== ResponseStatus.OK) {
+	      self.$Message.error(response.data.message)
+	    } else {
+	      self.$Message.success(response.data.message)
+	      utils.cancelModal(self, 'replayPrice')
+	      utils.search(self)
+	    }
+	    resolve(response)
+	  }).catch(error => {
+	    console.log(error)
+	    self.loading['replayPrice'] = false
+	    self.$Message.error('设置失败，稍候再试')
+	    reject(error)
+	  })
+	})
+}

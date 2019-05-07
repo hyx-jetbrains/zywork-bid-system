@@ -154,6 +154,7 @@ export default {
   seek_data_manage: 'Seek Data Management',
   guarantee_manage: 'Application for Guarantee Management',
   expert_subscribe_manage: 'Expert Subscribe Management',
+  user_expert: 'Expert Information',
   credit_enquiry: 'Credit Enquiry',
   company_info_manage: 'Company Information Management',
   company_personnel_manage: 'Company Personnel Management',

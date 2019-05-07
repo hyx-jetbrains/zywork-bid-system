@@ -156,6 +156,7 @@ export default {
   seek_data_manage: '求带资料管理',
   guarantee_manage: '申请保函管理',
   expert_subscribe_manage: '专家预约管理',
+  user_expert: '专家信息',
   credit_enquiry: '征信查询',
   company_info_manage: '企业信息管理',
   company_personnel_manage: '企业人员管理',

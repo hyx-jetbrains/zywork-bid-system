@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * CompBuilderVO值对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-07<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class CompBuilderVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034832796611L;
+    private static final long serialVersionUID = -9223372036155963005L;
 
     // 企业建造师编号
 	private Long id;
@@ -30,8 +30,7 @@ public class CompBuilderVO extends BaseVO {
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String name;
 	// 性别
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
-	private String gender;
+	private Byte gender;
 	// 注册证件号码
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String regNum;
@@ -51,7 +50,7 @@ public class CompBuilderVO extends BaseVO {
 	
     public CompBuilderVO () {}
 
-    public CompBuilderVO (Long id, Long compId, String name, String gender, String regNum, String majorLevel, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public CompBuilderVO (Long id, Long compId, String name, Byte gender, String regNum, String majorLevel, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.compId = compId;
 		this.name = name;
@@ -89,11 +88,11 @@ public class CompBuilderVO extends BaseVO {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Byte gender) {
 		this.gender = gender;
 	}
 

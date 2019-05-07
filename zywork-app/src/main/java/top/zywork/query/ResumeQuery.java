@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ResumeQuery查询对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-07<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ResumeQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035964726706L;
+    private static final long serialVersionUID = -9223372035542692919L;
 
     // 简历编号
 	private Long id;
@@ -32,7 +32,11 @@ public class ResumeQuery extends PageQuery {
 	// 姓名
 	private String name;
 	// 性别
-	private String gender;
+	private Byte gender;
+	// 性别（最小值）
+	private Byte genderMin;
+	// 性别（最大值）
+	private Byte genderMax;
 	// 年龄
 	private Integer age;
 	// 年龄（最小值）
@@ -102,7 +106,7 @@ public class ResumeQuery extends PageQuery {
 	
     public ResumeQuery () {}
 
-    public ResumeQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, String gender, Integer age, Integer ageMin, Integer ageMax, Byte isFulltime, Byte isFulltimeMin, Byte isFulltimeMax, String jobTitle, String workYear, String education, String salary, Integer isRecommend, Integer isRecommendMin, Integer isRecommendMax, String aptitude, String intorduce, Integer isShow, Integer isShowMin, Integer isShowMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ResumeQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, Byte gender, Byte genderMin, Byte genderMax, Integer age, Integer ageMin, Integer ageMax, Byte isFulltime, Byte isFulltimeMin, Byte isFulltimeMax, String jobTitle, String workYear, String education, String salary, Integer isRecommend, Integer isRecommendMin, Integer isRecommendMax, String aptitude, String intorduce, Integer isShow, Integer isShowMin, Integer isShowMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -111,6 +115,8 @@ public class ResumeQuery extends PageQuery {
 		this.userIdMax = userIdMax;
 		this.name = name;
 		this.gender = gender;
+		this.genderMin = genderMin;
+		this.genderMax = genderMax;
 		this.age = age;
 		this.ageMin = ageMin;
 		this.ageMax = ageMax;
@@ -200,12 +206,28 @@ public class ResumeQuery extends PageQuery {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Byte gender) {
 		this.gender = gender;
+	}
+
+	public Byte getGenderMin() {
+		return genderMin;
+	}
+
+	public void setGenderMin(Byte genderMin) {
+		this.genderMin = genderMin;
+	}
+
+	public Byte getGenderMax() {
+		return genderMax;
+	}
+
+	public void setGenderMax(Byte genderMax) {
+		this.genderMax = genderMax;
 	}
 
 	public Integer getAge() {
@@ -460,6 +482,8 @@ public class ResumeQuery extends PageQuery {
 				", userIdMax = " + userIdMax + 
 				", name = " + name + 
 				", gender = " + gender + 
+				", genderMin = " + genderMin + 
+				", genderMax = " + genderMax + 
 				", age = " + age + 
 				", ageMin = " + ageMin + 
 				", ageMax = " + ageMax + 

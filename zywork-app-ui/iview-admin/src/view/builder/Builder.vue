@@ -943,7 +943,7 @@ export default {
             render: (h, params) => {
               const row = params.row
               const text =
-                row.gender === '1' ? '男' : row.gender === '2' ? '女' : '未知'
+                row.gender === 1 ? '男' : row.gender === 2 ? '女' : '未知'
               return h('span', {}, text)
             }
           },

@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ResumeVO值对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-07<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ResumeVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372036790455329L;
+    private static final long serialVersionUID = -9223372035460444477L;
 
     // 简历编号
 	private Long id;
@@ -30,8 +30,7 @@ public class ResumeVO extends BaseVO {
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String name;
 	// 性别
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
-	private String gender;
+	private Byte gender;
 	// 年龄
 	private Integer age;
 	// 求职类型
@@ -71,7 +70,7 @@ public class ResumeVO extends BaseVO {
 	
     public ResumeVO () {}
 
-    public ResumeVO (Long id, Long userId, String name, String gender, Integer age, Byte isFulltime, String jobTitle, String workYear, String education, String salary, Integer isRecommend, String aptitude, String intorduce, Integer isShow, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ResumeVO (Long id, Long userId, String name, Byte gender, Integer age, Byte isFulltime, String jobTitle, String workYear, String education, String salary, Integer isRecommend, String aptitude, String intorduce, Integer isShow, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -117,11 +116,11 @@ public class ResumeVO extends BaseVO {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Byte gender) {
 		this.gender = gender;
 	}
 

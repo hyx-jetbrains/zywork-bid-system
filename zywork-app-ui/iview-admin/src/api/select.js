@@ -304,15 +304,15 @@ export const projectResourceType = [
  */
 export const gender = [
   {
-    value: '0',
+    value: 0,
     label: '未知'
   },
   {
-    value: '1',
+    value: 1,
     label: '男'
   },
   {
-    value: '2',
+    value: 2,
     label: '女'
   }
 ]
@@ -1315,6 +1315,21 @@ export const validStatus = [
 		value: '验证通过',
 		label: '验证通过'
 	}
+]
+
+export const examine = [
+	{
+		value: 0,
+		label: '审核中'
+	},
+	{
+		value: 1,
+		label: '审核通过'
+	},
+	{
+		value: 2,
+		label: '审核不通过'
+	},
 ]
 
 /**

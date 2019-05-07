@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * ResumeDTO数据传输对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-07<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ResumeDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372036083274826L;
+    private static final long serialVersionUID = -9223372035058874403L;
 
     // 简历编号
 	private Long id;
@@ -22,7 +22,7 @@ public class ResumeDTO extends BaseDTO {
 	// 姓名
 	private String name;
 	// 性别
-	private String gender;
+	private Byte gender;
 	// 年龄
 	private Integer age;
 	// 求职类型
@@ -54,7 +54,7 @@ public class ResumeDTO extends BaseDTO {
 	
     public ResumeDTO () {}
 
-    public ResumeDTO (Long id, Long userId, String name, String gender, Integer age, Byte isFulltime, String jobTitle, String workYear, String education, String salary, Integer isRecommend, String aptitude, String intorduce, Integer isShow, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ResumeDTO (Long id, Long userId, String name, Byte gender, Integer age, Byte isFulltime, String jobTitle, String workYear, String education, String salary, Integer isRecommend, String aptitude, String intorduce, Integer isShow, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -100,11 +100,11 @@ public class ResumeDTO extends BaseDTO {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Byte gender) {
 		this.gender = gender;
 	}
 

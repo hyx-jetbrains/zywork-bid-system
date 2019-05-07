@@ -391,9 +391,6 @@
             readonly
           />
         </FormItem>
-        <FormItem label="价格" prop="price">
-          <InputNumber v-model="form.price" placeholder="请输入问题价格" style="width: 100%;"/>
-        </FormItem>
         <FormItem label="回复内容" prop="replyContent">
           <Input v-model="form.replyContent" type="textarea" :autosize="descriptionAutoSize"/>
         </FormItem>
@@ -403,6 +400,22 @@
         <Button type="primary" size="large" @click="replay" :loading="loading.replay">回复</Button>
       </div>
     </Modal>
+		
+		<Modal
+		  :transfer="false"
+		  v-model="modal.replayPrice"
+		  title="设置回复价格"
+		>
+			<Form ref="replayForm" :model="form" :label-width="80" :rules="validateRules">
+		    <FormItem label="价格" prop="price">
+		      <InputNumber v-model="form.price" placeholder="请输入问题价格" style="width: 100%;"/>
+		    </FormItem>
+		  </Form>
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('replayPrice')">取消</Button>
+		    <Button type="primary" size="large" @click="replayPrice" :loading="loading.replayPrice">设置价格</Button>
+		  </div>
+		</Modal>
   </div>
 </template>
 
@@ -454,17 +467,20 @@ export default {
         detail: false,
         userDetail: false,
         userDetalSearch: false,
-        replay: false
+        replay: false,
+				replayPrice: false
       },
       loading: {
         search: false,
-        replay: false
+        replay: false,
+				replayPrice: false
       },
       urls: {
         searchUrl: '/expersubscribe/admin/pager-cond',
         allUrl: '/expersubscribe/admin/all',
         detailUrl: '/expersubscribe/admin/one/',
-        replayUrl: '/expersubscribe/admin/replay'
+        replayUrl: '/expersubscribe/admin/replay',
+				replayPriceUrl: '/expersubscribe/admin/replayPrice'
       },
       page: {
         total: 0
@@ -628,7 +644,7 @@ export default {
           {
             title: '专家预约编号',
             key: 'id',
-            minWidth: 120,
+            minWidth: 130,
             sortable: true
           },
           {
@@ -692,7 +708,7 @@ export default {
           {
             title: '预约专家编号',
             key: 'expertUserId',
-            minWidth: 120,
+            minWidth: 130,
             sortable: true,
             render: (h, params) => {
               const row = params.row
@@ -709,13 +725,13 @@ export default {
           {
             title: '问题说明',
             key: 'questionDesc',
-            minWidth: 120,
+            minWidth: 180,
             sortable: true
           },
           {
             title: '回复用户编号',
             key: 'replyUserId',
-            minWidth: 120,
+            minWidth: 130,
             sortable: true,
             render: (h, params) => {
               const row = params.row
@@ -726,13 +742,13 @@ export default {
           {
             title: '回复内容',
             key: 'replyContent',
-            minWidth: 120,
+            minWidth: 180,
             sortable: true
           },
           {
             title: '回复时间',
             key: 'replyTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
@@ -774,13 +790,13 @@ export default {
           {
             title: '创建时间',
             key: 'createTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
             title: '更新时间',
             key: 'updateTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
@@ -837,6 +853,23 @@ export default {
                       )
                     ]
                   ),
+									h(
+									  'DropdownMenu',
+									  {
+									    slot: 'list'
+									  },
+									  [
+									    h(
+									      'DropdownItem',
+									      {
+									        props: {
+									          name: 'settingReplyPrice'
+									        }
+									      },
+									      '设置回复价格'
+									    )
+									  ]
+									),
                   h(
                     'DropdownMenu',
                     {
@@ -900,7 +933,10 @@ export default {
       } else if (itemName === 'replay') {
         utils.showModal(this, 'replay')
         this.form = JSON.parse(JSON.stringify(row))
-      }
+      } else if(itemName == 'settingReplyPrice') {
+				utils.showModal(this, 'replayPrice')
+				this.form = JSON.parse(JSON.stringify(row))
+			}
     },
     showUserDetailModal(id) {
       getUserById(id)
@@ -966,6 +1002,9 @@ export default {
     replay() {
 			es.replay(this)
 		},
+		replayPrice() {
+			es.replayPrice(this)
+		}
   }
 }
 </script>

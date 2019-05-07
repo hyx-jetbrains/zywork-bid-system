@@ -1,9 +1,9 @@
-Î<template>
+<template>
 	<div>
 		<Row>
 			<i-col span="24">
 				<Card>
-					<!-- <Button @click="showModal('add')" type="primary">添加</Button>&nbsp; -->
+					<Button @click="showModal('add')" type="primary">添加</Button>&nbsp;
 					<Dropdown @on-click="batchOpt">
 						<Button type="primary">
 							批量操作
@@ -33,10 +33,57 @@
 		<Modal v-model="modal.add" title="添加" @on-visible-change="changeModalVisibleResetForm('addForm', $event)">
 			<Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
 				<FormItem label="用户编号" prop="userId">
-					<InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;" />
+					<span v-text="form.userId"></span>
+					&nbsp;
+					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
 				</FormItem>
-				<FormItem label="项目编号" prop="projectId">
-					<InputNumber v-model="form.projectId" placeholder="请输入项目编号" style="width: 100%;" />
+				<FormItem label="专家姓名" prop="name">
+					<Input v-model="form.name" placeholder="请输入专家姓名" />
+				</FormItem>
+				<FormItem label="性别" prop="gender">
+					<Select
+					  v-model="form.gender"
+					  placeholder="请选择性别"
+					  clearable
+					  filterable
+					>
+					  <i-option v-for="item in genderList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
+				</FormItem>
+				<FormItem label="年龄" prop="age">
+					<InputNumber v-model="form.age" placeholder="请输入年龄" style="width: 100%;" />
+				</FormItem>
+				<FormItem label="专家类别" prop="type">
+					<Input v-model="form.type" placeholder="请输入专家类别" />
+				</FormItem>
+				<FormItem label="是否全职" prop="isFulltime">
+					<Select
+						v-model="form.isFulltime"
+						placeholder="请选是否全职"
+						clearable
+						filterable
+					>
+						<i-option v-for="item in jobTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
+				</FormItem>
+				<FormItem label="联系电话" prop="phone">
+					<Input v-model="form.phone" placeholder="请输入联系电话" />
+				</FormItem>
+				<FormItem label="个人情况介绍" prop="memo">
+					<Input v-model="form.memo" 
+						type="textarea"
+						:autosize="descriptionAutoSize"
+						placeholder="请输入个人情况介绍" />
+				</FormItem>
+				<FormItem label="审核状态" prop="examineStatus">
+					<Select
+						v-model="form.examineStatus"
+						placeholder="请选审核状"
+						clearable
+						filterable
+					>
+						<i-option v-for="item in examineList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
 				</FormItem>
 
 			</Form>
@@ -48,10 +95,57 @@
 		<Modal v-model="modal.edit" title="修改" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
 			<Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
 				<FormItem label="用户编号" prop="userId">
-					<InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;" />
+					<span v-text="form.userId"></span>
+					&nbsp;
+					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
 				</FormItem>
-				<FormItem label="项目编号" prop="projectId">
-					<InputNumber v-model="form.projectId" placeholder="请输入项目编号" style="width: 100%;" />
+				<FormItem label="专家姓名" prop="name">
+					<Input v-model="form.name" placeholder="请输入专家姓名" />
+				</FormItem>
+				<FormItem label="性别" prop="gender">
+					<Select
+					  v-model="form.gender"
+					  placeholder="请选择性别"
+					  clearable
+					  filterable
+					>
+					  <i-option v-for="item in genderList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
+				</FormItem>
+				<FormItem label="年龄" prop="age">
+					<InputNumber v-model="form.age" placeholder="请输入年龄" style="width: 100%;" />
+				</FormItem>
+				<FormItem label="专家类别" prop="type">
+					<Input v-model="form.type" placeholder="请输入专家类别" />
+				</FormItem>
+				<FormItem label="是否全职" prop="isFulltime">
+					<Select
+						v-model="form.isFulltime"
+						placeholder="请选是否全职"
+						clearable
+						filterable
+					>
+						<i-option v-for="item in jobTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
+				</FormItem>
+				<FormItem label="联系电话" prop="phone">
+					<Input v-model="form.phone" placeholder="请输入联系电话" />
+				</FormItem>
+				<FormItem label="个人情况介绍" prop="memo">
+					<Input v-model="form.memo"
+						type="textarea"
+						:autosize="descriptionAutoSize"
+						placeholder="请输入个人情况介绍" />
+				</FormItem>
+				<FormItem label="审核状态" prop="examineStatus">
+					<Select
+						v-model="form.examineStatus"
+						placeholder="请选审核状"
+						clearable
+						filterable
+					>
+						<i-option v-for="item in examineList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
 				</FormItem>
 
 			</Form>
@@ -62,17 +156,17 @@
 		</Modal>
 		<Modal v-model="modal.search" title="高级搜索">
 			<Form ref="searchForm" :model="searchForm" :label-width="80">
-				<FormItem label="项目收藏编号">
+				<FormItem label="专家信息编号">
 					<Row>
 						<i-col span="11">
 							<FormItem prop="idMin">
-								<InputNumber v-model="searchForm.idMin" placeholder="请输入开始项目收藏编号" style="width: 100%;" />
+								<InputNumber v-model="searchForm.idMin" placeholder="请输入开始专家信息编号" style="width: 100%;" />
 							</FormItem>
 						</i-col>
 						<i-col span="2" style="text-align: center">-</i-col>
 						<i-col span="11">
 							<FormItem prop="idMax">
-								<InputNumber v-model="searchForm.idMax" placeholder="请输入结束项目收藏编号" style="width: 100%;" />
+								<InputNumber v-model="searchForm.idMax" placeholder="请输入结束专家信息编号" style="width: 100%;" />
 							</FormItem>
 						</i-col>
 					</Row>
@@ -92,17 +186,74 @@
 						</i-col>
 					</Row>
 				</FormItem>
-				<FormItem label="项目编号">
+				<FormItem label="专家姓名" prop="name">
+					<Input v-model="searchForm.name" placeholder="请输入专家姓名" />
+				</FormItem>
+				<FormItem label="性别">
 					<Row>
 						<i-col span="11">
-							<FormItem prop="projectIdMin">
-								<InputNumber v-model="searchForm.projectIdMin" placeholder="请输入开始项目编号" style="width: 100%;" />
+							<FormItem prop="genderMin">
+								<InputNumber v-model="searchForm.genderMin" placeholder="请输入开始性别" style="width: 100%;" />
 							</FormItem>
 						</i-col>
 						<i-col span="2" style="text-align: center">-</i-col>
 						<i-col span="11">
-							<FormItem prop="projectIdMax">
-								<InputNumber v-model="searchForm.projectIdMax" placeholder="请输入结束项目编号" style="width: 100%;" />
+							<FormItem prop="genderMax">
+								<InputNumber v-model="searchForm.genderMax" placeholder="请输入结束性别" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+					</Row>
+				</FormItem>
+				<FormItem label="年龄">
+					<Row>
+						<i-col span="11">
+							<FormItem prop="ageMin">
+								<InputNumber v-model="searchForm.ageMin" placeholder="请输入开始年龄" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+						<i-col span="2" style="text-align: center">-</i-col>
+						<i-col span="11">
+							<FormItem prop="ageMax">
+								<InputNumber v-model="searchForm.ageMax" placeholder="请输入结束年龄" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+					</Row>
+				</FormItem>
+				<FormItem label="专家类别" prop="type">
+					<Input v-model="searchForm.type" placeholder="请输入专家类别" />
+				</FormItem>
+				<FormItem label="是否全职">
+					<Row>
+						<i-col span="11">
+							<FormItem prop="isFulltimeMin">
+								<InputNumber v-model="searchForm.isFulltimeMin" placeholder="请输入开始是否全职" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+						<i-col span="2" style="text-align: center">-</i-col>
+						<i-col span="11">
+							<FormItem prop="isFulltimeMax">
+								<InputNumber v-model="searchForm.isFulltimeMax" placeholder="请输入结束是否全职" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+					</Row>
+				</FormItem>
+				<FormItem label="联系电话" prop="phone">
+					<Input v-model="searchForm.phone" placeholder="请输入联系电话" />
+				</FormItem>
+				<FormItem label="个人情况介绍" prop="memo">
+					<Input v-model="searchForm.memo" placeholder="请输入个人情况介绍" />
+				</FormItem>
+				<FormItem label="审核状态">
+					<Row>
+						<i-col span="11">
+							<FormItem prop="examineStatusMin">
+								<InputNumber v-model="searchForm.examineStatusMin" placeholder="请输入开始审核状态" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+						<i-col span="2" style="text-align: center">-</i-col>
+						<i-col span="11">
+							<FormItem prop="examineStatusMax">
+								<InputNumber v-model="searchForm.examineStatusMax" placeholder="请输入结束审核状态" style="width: 100%;" />
 							</FormItem>
 						</i-col>
 					</Row>
@@ -180,9 +331,16 @@
 			</div>
 		</Modal>
 		<Modal v-model="modal.detail" title="详情" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
-			<p>项目收藏编号: <span v-text="form.id"></span></p>
+			<p>专家信息编号: <span v-text="form.id"></span></p>
 			<p>用户编号: <span v-text="form.userId"></span></p>
-			<p>项目编号: <span v-text="form.projectId"></span></p>
+			<p>专家姓名: <span v-text="form.name"></span></p>
+			<p>性别: <span v-text="(form.gender == '1' ? '男' : form.gender == '2' ? '女' : '未知')"></span></p>
+			<p>年龄: <span v-text="form.age"></span></p>
+			<p>专家类别: <span v-text="form.type"></span></p>
+			<p>是否全职: <span v-text="(form.isFulltime == '0' ? '全职' : '兼职')"></span></p>
+			<p>联系电话: <span v-text="form.phone"></span></p>
+			<p>个人情况介绍: <span v-text="form.memo"></span></p>
+			<p>审核状态: <span v-text="(form.examineStatus == '0' ? '审核中' : form.examineStatus == '1' ? '审核通过' : '审核不通过')"></span></p>
 			<p>版本号: <span v-text="form.version"></span></p>
 			<p>创建时间: <span v-text="form.createTime"></span></p>
 			<p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -190,41 +348,22 @@
 
 		</Modal>
 		
-		<Modal
-		  :transfer="false"
-		  v-model="modal.userDetail"
-		  title="用户详情">
-			<userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
+		<Modal :transfer="false" v-model="modal.userDetail" title="用户详情">
+		  <userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
 		</Modal>
 		
-		<Modal
-		  :transfer="false"
-		  fullscreen
-		  v-model="modal.userDetalSearch"
-		  title="搜索主表信息">
+		<Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
 		  <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
 		  <div slot="footer">
 		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
 		  </div>
 		</Modal>
-
-    <Modal
-		  :transfer="false"
-		  v-model="modal.projectDetail"
-		  title="项目详情">
-			<projectDetail :form="projectDetailForm"/>
-		</Modal>
 		
-		<Modal
-		  :transfer="false"
-		  fullscreen
-		  v-model="modal.projectDetalSearch"
-		  title="搜索主表信息">
-		  <project-list ref="ProjectList" v-on:initData="initData"/>
+		<Modal :transfer="false" fullscreen v-model="modal.userChoice" title="选择用户">
+		  <user-list-choice ref="UserListChoice" v-on:confirmChoice="confirmChoice"/>
 		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('projectDetalSearch')">取消</Button>
-		    <Button type="primary" size="large" @click="confirmProject">确认选择</Button>
+		    <Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
 		  </div>
 		</Modal>
 	</div>
@@ -232,87 +371,33 @@
 
 <script>
 	import * as utils from '@/api/utils'
-	import * as ResponseStatus from '@/api/response-status'
 	import UserListSingle from '@/view/user/UserListSingle.vue'
 	import userDetail from '@/view/user-detail/UserDetail.vue'
-	import ProjectList from '@/view/project/ProjectList.vue'
-	import ProjectDetail from '@/view/project/ProjectDetail.vue'
+	import UserListChoice from '@/view/user/UserListChoice.vue'
+	import { getUserById } from '@/api/module'
 	import {
-		getUserById,
-		getProjectById  
-	} from '@/api/module'
+	  gender,
+		examine,
+		jobType
+	} from '@/api/select'
 
 	export default {
-		name: 'ProjectCollection',
+		name: 'UserExpert',
 		components: {
-			userDetail,
-			UserListSingle,
-			ProjectList,
-			ProjectDetail
+		  userDetail,
+		  UserListSingle,
+			UserListChoice
 		},
 		data() {
 			return {
-        userDetailForm: {
-        userId: null,
-        userPhone: null,
-        userEmail: null,
-        userCreateTime: null,
-        userDetailNickname: null,
-        userDetailHeadicon: null,
-        userDetailGender: null,
-        userDetailBirthday: null,
-        userDetailAge: null,
-        userDetailQq: null,
-        userDetailQqQrcode: null,
-        userDetailWechat: null,
-        userDetailWechatQrcode: null,
-        userDetailAlipay: null,
-        userDetailAlipayQrcode: null,
-        userDetailShareCode: null,
-        userDetailVersion: null
-      },
-      projectDetailForm: {
-        id: null,
-        title: null,
-        projectType: null,
-        city: null,
-        projectDetail: null,
-        releaseStatus: null,
-        markUnitName: null,
-        projectInvest: null,
-        checkPattern: null,
-        compAptitudeType: null,
-        builderLevel: null,
-        moneyToImplement: null,
-        tenderingAgent: null,
-        phone: null,
-        offerPrice: null,
-        assurePrice: null,
-        constructionPeriod: null,
-        downloadEndTime: null,
-        otherDemand: null,
-        openMarkInfo: null,
-        openMarkTime: null,
-        openMarkAddr: null,
-        inMarkPublicity: null,
-        inMarkComp: null,
-        noticeTime: null,
-        clickCount: null,
-        isElectronic: null,
-        version: null,
-        createTime: null,
-        updateTime: null,
-        isActive: null
-      },
 				modal: {
 					add: false,
 					edit: false,
 					search: false,
 					detail: false,
 					userDetail: false,
-          userDetalSearch: false,
-          projectDetail: false,
-					projectDetalSearch: false
+					userDetalSearch: false,
+					userChoice: false
 				},
 				loading: {
 					add: false,
@@ -320,17 +405,17 @@
 					search: false
 				},
 				urls: {
-					addUrl: '/projeccollection/admin/save',
-					batchAddUrl: '/projeccollection/admin/batch-save',
-					editUrl: '/projeccollection/admin/update',
-					batchEditUrl: '/projeccollection/admin/batch-update',
-					searchUrl: '/projeccollection/admin/pager-cond',
-					allUrl: '/projeccollection/admin/all',
-					removeUrl: '/projeccollection/admin/remove/',
-					batchRemoveUrl: '/projeccollection/admin/batch-remove',
-					detailUrl: '/projeccollection/admin/one/',
-					activeUrl: '/projeccollection/admin/active',
-					batchActiveUrl: '/projeccollection/admin/batch-active'
+					addUrl: '/user-expert/admin/save',
+					batchAddUrl: '/user-expert/admin/batch-save',
+					editUrl: '/user-expert/admin/update',
+					batchEditUrl: '/user-expert/admin/batch-update',
+					searchUrl: '/user-expert/admin/pager-cond',
+					allUrl: '/user-expert/admin/all',
+					removeUrl: '/user-expert/admin/remove/',
+					batchRemoveUrl: '/user-expert/admin/batch-remove',
+					detailUrl: '/user-expert/admin/one/',
+					activeUrl: '/user-expert/admin/active',
+					batchActiveUrl: '/user-expert/admin/batch-active'
 				},
 				page: {
 					total: 0
@@ -338,25 +423,67 @@
 				form: {
 					id: null,
 					userId: null,
-					projectId: null,
+					name: null,
+					gender: null,
+					age: null,
+					type: null,
+					isFulltime: null,
+					phone: null,
+					memo: null,
+					examineStatus: null,
 					version: null,
 					createTime: null,
 					updateTime: null,
 					isActive: null,
 
 				},
+				userDetailForm: {
+				  userId: null,
+				  userPhone: null,
+				  userEmail: null,
+				  userCreateTime: null,
+				  userDetailNickname: null,
+				  userDetailHeadicon: null,
+				  userDetailGender: null,
+				  userDetailBirthday: null,
+				  userDetailAge: null,
+				  userDetailQq: null,
+				  userDetailQqQrcode: null,
+				  userDetailWechat: null,
+				  userDetailWechatQrcode: null,
+				  userDetailAlipay: null,
+				  userDetailAlipayQrcode: null,
+				  userDetailShareCode: null,
+				  userDetailVersion: null
+				},
 				validateRules: {
-					userId: [{
-						type: 'integer',
-						required: true,
-						message: '此项为必须项',
-						trigger: 'blur, change'
+					name: [{
+						type: 'string',
+						min: 1,
+						max: 20,
+						message: '必须1-20个字符',
+						trigger: 'blur'
 					}],
-					projectId: [{
-						type: 'integer',
-						required: true,
-						message: '此项为必须项',
-						trigger: 'blur, change'
+					type: [{
+						type: 'string',
+						min: 1,
+						max: 20,
+						message: '必须1-20个字符',
+						trigger: 'blur'
+					}],
+					phone: [{
+						type: 'string',
+						min: 1,
+						max: 11,
+						message: '必须1-11个字符',
+						trigger: 'blur'
+					}],
+					memo: [{
+						type: 'string',
+						min: 1,
+						max: 300,
+						message: '必须1-300个字符',
+						trigger: 'blur'
 					}],
 
 				},
@@ -371,9 +498,22 @@
 					userId: null,
 					userIdMin: null,
 					userIdMax: null,
-					projectId: null,
-					projectIdMin: null,
-					projectIdMax: null,
+					name: null,
+					gender: null,
+					genderMin: null,
+					genderMax: null,
+					age: null,
+					ageMin: null,
+					ageMax: null,
+					type: null,
+					isFulltime: null,
+					isFulltimeMin: null,
+					isFulltimeMax: null,
+					phone: null,
+					memo: null,
+					examineStatus: null,
+					examineStatusMin: null,
+					examineStatusMax: null,
 					version: null,
 					versionMin: null,
 					versionMax: null,
@@ -406,15 +546,15 @@
 							}
 						},
 						{
-							title: '项目收藏编号',
+							title: '专家信息编号',
 							key: 'id',
-							minWidth: 120,
+							minWidth: 130,
 							sortable: true
 						},
 						{
 							title: '用户编号',
 							key: 'userId',
-							minWidth: 120,
+							minWidth: 130,
 							sortable: true,
 							render: (h, params) => {
 							  return h(
@@ -425,23 +565,20 @@
 							          this.userOpt(itemName, params.row)
 							        }
 							      },
-							        props: {
-							          transfer: true
-							        }
+							      props: {
+							        transfer: true
+							      }
 							    },
 							    [
-							      h(
-							        'span',
-							        [
-							          params.row.userId,
-							          h('Icon', {
-							            props: {
-							              type: 'ios-list',
-							              size: '25'
-							            }
-							          })
-							        ]
-							      ),
+							      h('span', [
+							        params.row.userId,
+							        h('Icon', {
+							          props: {
+							            type: 'ios-list',
+							            size: '25'
+							          }
+							        })
+							      ]),
 							      h(
 							        'DropdownMenu',
 							        {
@@ -473,65 +610,89 @@
 							}
 						},
 						{
-							title: '项目编号',
-							key: 'projectId',
+							title: '专家姓名',
+							key: 'name',
 							minWidth: 120,
-              sortable: true,
-              render: (h, params) => {
-							  return h(
-							    'Dropdown',
-							    {
-							      on: {
-							        'on-click': itemName => {
-							          this.userOpt(itemName, params.row)
-							        }
-							      },
-							        props: {
-							          transfer: true
-							        }
-							    },
-							    [
-							      h(
-							        'span',
-							        [
-							          params.row.projectId,
-							          h('Icon', {
-							            props: {
-							              type: 'ios-list',
-							              size: '25'
-							            }
-							          })
-							        ]
-							      ),
-							      h(
-							        'DropdownMenu',
-							        {
-							          slot: 'list'
-							        },
-							        [
-							          h(
-							            'DropdownItem',
-							            {
-							              props: {
-							                name: 'moduleDetailProject'
-							              }
-							            },
-							            '详情'
-							          ),
-							          h(
-							            'DropdownItem',
-							            {
-							              props: {
-							                name: 'showSearchProject'
-							              }
-							            },
-							            '搜索'
-							          )
-							        ]
-							      )
-							    ]
-							  )
+							sortable: true
+						},
+						{
+							title: '性别',
+							key: 'gender',
+							minWidth: 120,
+							sortable: true,
+							render: (h, params) => {
+								let text = null
+								if(params.row.gender === 0) {
+									text = '未知'
+								} else if(params.row.gender === 1) {
+									text = '男'
+								} else if(params.row.gender === 2) {
+									text = '女'
+								}
+								return h('span', text)
 							}
+						},
+						{
+							title: '年龄',
+							key: 'age',
+							minWidth: 120,
+							sortable: true
+						},
+						{
+							title: '专家类别',
+							key: 'type',
+							minWidth: 120,
+							sortable: true
+						},
+						{
+							title: '是否全职',
+							key: 'isFulltime',
+							minWidth: 120,
+							sortable: true,
+							render: (h, params) => {
+								let text = null
+								if(params.row.isFulltime === 0) {
+									text = '全职'
+								} else if(params.row.isFulltime === 1) {
+									text = '兼职'
+								}
+								return h('span', text)
+							}
+						},
+						{
+							title: '联系电话',
+							key: 'phone',
+							minWidth: 120,
+							sortable: true
+						},
+						{
+							title: '个人情况介绍',
+							key: 'memo',
+							minWidth: 140,
+							sortable: true
+						},
+						{
+							title: '审核状态',
+							key: 'examineStatus',
+							minWidth: 120,
+							sortable: true,
+							render: (h, params) => {
+								let text = null
+								if(params.row.examineStatus === 0) {
+									text = '审核中'
+								} else if(params.row.examineStatus === 1) {
+									text = '审核通过'
+								} else if(params.row.examineStatus === 2) {
+									text = '审核不通过'
+								}
+								return h('span', text)
+							}
+						},
+						{
+							title: '版本号',
+							key: 'version',
+							minWidth: 120,
+							sortable: true
 						},
 						{
 							title: '创建时间',
@@ -543,12 +704,6 @@
 							title: '更新时间',
 							key: 'updateTime',
 							minWidth: 150,
-							sortable: true
-						},
-						{
-							title: '版本号',
-							key: 'version',
-							minWidth: 120,
 							sortable: true
 						},
 						{
@@ -620,11 +775,11 @@
 									h('DropdownMenu', {
 										slot: "list"
 									}, [
-										// h('DropdownItem', {
-										// 	props: {
-										// 		name: 'showEdit'
-										// 	}
-										// }, '编辑'),
+										h('DropdownItem', {
+											props: {
+												name: 'showEdit'
+											}
+										}, '编辑'),
 										h('DropdownItem', {
 											props: {
 												name: 'showDetail'
@@ -648,7 +803,14 @@
 					],
 					tableDetails: [],
 					selections: []
-				}
+				},
+				genderList: gender,
+				jobTypeList: jobType,
+				examineList: examine,
+				descriptionAutoSize: {
+				  minRows: 3,
+				  maxRows: 5
+				},
 			}
 		},
 		computed: {},
@@ -656,7 +818,13 @@
 			this.search()
 		},
 		methods: {
+			initSelect() {
+			  this.form.gender = this.genderList[0].value
+			},
 			showModal(modal) {
+				if (modal === 'add') {
+				  this.initSelect()
+				}
 				utils.showModal(this, modal)
 			},
 			changeModalVisibleResetForm(formRef, visible) {
@@ -701,34 +869,15 @@
 					this.showUserDetailModal(row.userId)
 				} else if (itemName === 'showSearch') {
 					utils.showModal(this, 'userDetalSearch')
-				} else if (itemName === 'moduleDetailProject') {
-					this.showProjectDetailModal(row.projectId)
-				} else if (itemName === 'showSearchProject') {
-					utils.showModal(this, 'projectDetalSearch')
 				}
 			},
 			showUserDetailModal(id) {
 			  getUserById(id)
 			    .then(res => {
 			      const data = res.data
-			      if (data.code === ResponseStatus.OK) {
+			      if (data.code === 1001) {
 			        this.userDetailForm = data.data.rows[0]
 			        this.modal.userDetail = true
-			      } else {
-			        this.$Message.error(data.message)
-			      }
-			    })
-			    .catch(err => {
-			      this.$Message.error(err)
-			    })
-      },
-      showProjectDetailModal(id) {
-			  getProjectById(id)
-			    .then(res => {
-            const data = res.data
-			      if (data.code === ResponseStatus.OK) {
-              this.projectDetailForm = data.data
-			        this.showModal('projectDetail')
 			      } else {
 			        this.$Message.error(data.message)
 			      }
@@ -739,30 +888,19 @@
 			},
 			setDetailModal(val) {
 			  this.modal.userDetail = val
-      },
-      // 确认用户选择
+			},
 			confirmSelection(id) {
-			  this.cancelModal('userDetalSearch')
-        this.searchForm.userIdMin
-              = this.searchForm.userIdMax
-              = id
+			  this.modal.userDetalSearch = false
+			  this.searchForm.userIdMin = id
+			  this.searchForm.userIdMax = id
 			  utils.search(this)
-      },
-      // 确认用户选择
+			},
 			confirm() {
 			  this.$refs.UserListSingle.confirmSelection()
-      },
-      // 选择招标项目确认
-      initData(id) {
-			  this.cancelModal('projectDetalSearch')
-        this.searchForm.projectIdMin
-              = this.searchForm.projectIdMax
-              = id
-			  utils.search(this)
-      },
-      // 确认招标项目
-			confirmProject() {
-			  this.$refs.ProjectList.confirmSelection()
+			},
+			confirmChoice(userId) {
+			  this.form.userId = userId
+			  this.cancelModal('userChoice')
 			},
 			add() {
 				utils.add(this)
@@ -787,7 +925,7 @@
 			},
 			changePageSize(pageSize) {
 				utils.changePageSize(this, pageSize)
-			}
+			},
 		}
 	}
 </script>

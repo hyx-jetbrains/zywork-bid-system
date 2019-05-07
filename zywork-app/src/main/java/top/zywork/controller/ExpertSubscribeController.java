@@ -150,6 +150,11 @@ public class ExpertSubscribeController extends BaseController {
         return update(expertSubscribeVO, bindingResult);
     }
 
+    @PostMapping("admin/replayPrice")
+    public ResponseStatusVO replayPrice(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO, BindingResult bindingResult) {
+        return update(expertSubscribeVO, bindingResult);
+    }
+
     @Autowired
     public void setExpertSubscribeService(ExpertSubscribeService expertSubscribeService) {
         this.expertSubscribeService = expertSubscribeService;

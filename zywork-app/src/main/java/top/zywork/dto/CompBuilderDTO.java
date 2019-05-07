@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * CompBuilderDTO数据传输对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-07<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class CompBuilderDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372036030660025L;
+    private static final long serialVersionUID = -9223372035435452482L;
 
     // 企业建造师编号
 	private Long id;
@@ -22,7 +22,7 @@ public class CompBuilderDTO extends BaseDTO {
 	// 姓名
 	private String name;
 	// 性别
-	private String gender;
+	private Byte gender;
 	// 注册证件号码
 	private String regNum;
 	// 专业等级
@@ -38,7 +38,7 @@ public class CompBuilderDTO extends BaseDTO {
 	
     public CompBuilderDTO () {}
 
-    public CompBuilderDTO (Long id, Long compId, String name, String gender, String regNum, String majorLevel, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public CompBuilderDTO (Long id, Long compId, String name, Byte gender, String regNum, String majorLevel, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.compId = compId;
 		this.name = name;
@@ -76,11 +76,11 @@ public class CompBuilderDTO extends BaseDTO {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Byte gender) {
 		this.gender = gender;
 	}
 

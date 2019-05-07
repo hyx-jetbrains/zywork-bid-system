@@ -12,25 +12,25 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * BuilderVO值对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-07<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class BuilderVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035566965758L;
+    private static final long serialVersionUID = -9223372035335672447L;
 
     // 建造师编号
 	private Long id;
 	// 用户编号
+	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 姓名
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String name;
 	// 性别
-	@Size(min = 0, max = 5, message = "必须小于5个字符")
-	private String gender;
+	private Byte gender;
 	// 出生年份
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date birthday;
@@ -68,12 +68,11 @@ public class BuilderVO extends BaseVO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
-
 	private Long[] resourceId;
 	
     public BuilderVO () {}
 
-    public BuilderVO (Long id, Long userId, String name, String gender, Date birthday, String certificateAddress, String certificateType, String certificateMajorType, String certificateStatus, String certificateRegStatus, String salary, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive, Long[] resourceId) {
+    public BuilderVO (Long id, Long userId, String name, Byte gender, Date birthday, String certificateAddress, String certificateType, String certificateMajorType, String certificateStatus, String certificateRegStatus, String salary, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive,Long [] resourceId) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -119,11 +118,11 @@ public class BuilderVO extends BaseVO {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Byte gender) {
 		this.gender = gender;
 	}
 
@@ -232,14 +231,14 @@ public class BuilderVO extends BaseVO {
 	}
 
 	public Long[] getResourceId() {
-    	return resourceId;
+		return resourceId;
 	}
 
 	public void setResourceId(Long[] resourceId) {
-    	this.resourceId = resourceId;
+		this.resourceId = resourceId;
 	}
-	
-    @Override
+
+	@Override
     public String toString() {
         return "BuilderVO {" +
                 "id = " + id + 
@@ -258,8 +257,7 @@ public class BuilderVO extends BaseVO {
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 
-				", isActive = " + isActive +
-				", resourceId = " + resourceId +
+				", isActive = " + isActive + 
 				" }";
     }
 

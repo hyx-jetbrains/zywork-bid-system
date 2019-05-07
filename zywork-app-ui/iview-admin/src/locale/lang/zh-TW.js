@@ -154,6 +154,7 @@ export default {
   seek_data_manage: '求帶資料管理',
   guarantee_manage: '申請保函管理',
   expert_subscribe_manage: '專家預約管理',
+  user_expert: '專家信息',
   credit_enquiry: '征信査詢',
   company_info_manage: '企業資訊管理',
   company_personnel_manage: '企業人員管理',

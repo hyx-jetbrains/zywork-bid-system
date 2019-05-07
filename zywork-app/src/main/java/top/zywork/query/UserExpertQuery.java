@@ -6,22 +6,22 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * BuilderQuery查询对象类<br/>
+ * UserExpertQuery查询对象类<br/>
  *
- * 创建于2019-05-07<br/>
+ * 创建于2019-05-06<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
-public class BuilderQuery extends PageQuery {
+public class UserExpertQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036480265686L;
+    private static final long serialVersionUID = -9223372035586769592L;
 
-    // 建造师编号
+    // 专家信息编号
 	private Long id;
-	// 建造师编号（最小值）
+	// 专家信息编号（最小值）
 	private Long idMin;
-	// 建造师编号（最大值）
+	// 专家信息编号（最大值）
 	private Long idMax;
 	// 用户编号
 	private Long userId;
@@ -29,7 +29,7 @@ public class BuilderQuery extends PageQuery {
 	private Long userIdMin;
 	// 用户编号（最大值）
 	private Long userIdMax;
-	// 姓名
+	// 专家姓名
 	private String name;
 	// 性别
 	private Byte gender;
@@ -37,31 +37,30 @@ public class BuilderQuery extends PageQuery {
 	private Byte genderMin;
 	// 性别（最大值）
 	private Byte genderMax;
-	// 出生年份
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date birthday;
-	// 出生年份（最小值）
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date birthdayMin;
-	// 出生年份（最大值）
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date birthdayMax;
-	// 证件地址
-	private String certificateAddress;
-	// 证书类别
-	private String certificateType;
-	// 证书专业类型
-	private String certificateMajorType;
-	// 证书状态
-	private String certificateStatus;
-	// 注册状态
-	private String certificateRegStatus;
-	// 期望年薪
-	private String salary;
-	// 手机号
+	// 年龄
+	private Integer age;
+	// 年龄（最小值）
+	private Integer ageMin;
+	// 年龄（最大值）
+	private Integer ageMax;
+	// 专家类别
+	private String type;
+	// 是否全职
+	private Byte isFulltime;
+	// 是否全职（最小值）
+	private Byte isFulltimeMin;
+	// 是否全职（最大值）
+	private Byte isFulltimeMax;
+	// 联系电话
 	private String phone;
-	// 说明
+	// 个人情况介绍
 	private String memo;
+	// 审核状态
+	private Byte examineStatus;
+	// 审核状态（最小值）
+	private Byte examineStatusMin;
+	// 审核状态（最大值）
+	private Byte examineStatusMax;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -93,9 +92,9 @@ public class BuilderQuery extends PageQuery {
 	// 是否激活（最大值）
 	private Byte isActiveMax;
 	
-    public BuilderQuery () {}
+    public UserExpertQuery () {}
 
-    public BuilderQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, Byte gender, Byte genderMin, Byte genderMax, Date birthday, Date birthdayMin, Date birthdayMax, String certificateAddress, String certificateType, String certificateMajorType, String certificateStatus, String certificateRegStatus, String salary, String phone, String memo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public UserExpertQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, Byte gender, Byte genderMin, Byte genderMax, Integer age, Integer ageMin, Integer ageMax, String type, Byte isFulltime, Byte isFulltimeMin, Byte isFulltimeMax, String phone, String memo, Byte examineStatus, Byte examineStatusMin, Byte examineStatusMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -106,17 +105,18 @@ public class BuilderQuery extends PageQuery {
 		this.gender = gender;
 		this.genderMin = genderMin;
 		this.genderMax = genderMax;
-		this.birthday = birthday;
-		this.birthdayMin = birthdayMin;
-		this.birthdayMax = birthdayMax;
-		this.certificateAddress = certificateAddress;
-		this.certificateType = certificateType;
-		this.certificateMajorType = certificateMajorType;
-		this.certificateStatus = certificateStatus;
-		this.certificateRegStatus = certificateRegStatus;
-		this.salary = salary;
+		this.age = age;
+		this.ageMin = ageMin;
+		this.ageMax = ageMax;
+		this.type = type;
+		this.isFulltime = isFulltime;
+		this.isFulltimeMin = isFulltimeMin;
+		this.isFulltimeMax = isFulltimeMax;
 		this.phone = phone;
 		this.memo = memo;
+		this.examineStatus = examineStatus;
+		this.examineStatusMin = examineStatusMin;
+		this.examineStatusMax = examineStatusMax;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -212,76 +212,60 @@ public class BuilderQuery extends PageQuery {
 		this.genderMax = genderMax;
 	}
 
-	public Date getBirthday() {
-		return birthday;
+	public Integer getAge() {
+		return age;
 	}
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
-	public Date getBirthdayMin() {
-		return birthdayMin;
+	public Integer getAgeMin() {
+		return ageMin;
 	}
 
-	public void setBirthdayMin(Date birthdayMin) {
-		this.birthdayMin = birthdayMin;
+	public void setAgeMin(Integer ageMin) {
+		this.ageMin = ageMin;
 	}
 
-	public Date getBirthdayMax() {
-		return birthdayMax;
+	public Integer getAgeMax() {
+		return ageMax;
 	}
 
-	public void setBirthdayMax(Date birthdayMax) {
-		this.birthdayMax = birthdayMax;
+	public void setAgeMax(Integer ageMax) {
+		this.ageMax = ageMax;
 	}
 
-	public String getCertificateAddress() {
-		return certificateAddress;
+	public String getType() {
+		return type;
 	}
 
-	public void setCertificateAddress(String certificateAddress) {
-		this.certificateAddress = certificateAddress;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getCertificateType() {
-		return certificateType;
+	public Byte getIsFulltime() {
+		return isFulltime;
 	}
 
-	public void setCertificateType(String certificateType) {
-		this.certificateType = certificateType;
+	public void setIsFulltime(Byte isFulltime) {
+		this.isFulltime = isFulltime;
 	}
 
-	public String getCertificateMajorType() {
-		return certificateMajorType;
+	public Byte getIsFulltimeMin() {
+		return isFulltimeMin;
 	}
 
-	public void setCertificateMajorType(String certificateMajorType) {
-		this.certificateMajorType = certificateMajorType;
+	public void setIsFulltimeMin(Byte isFulltimeMin) {
+		this.isFulltimeMin = isFulltimeMin;
 	}
 
-	public String getCertificateStatus() {
-		return certificateStatus;
+	public Byte getIsFulltimeMax() {
+		return isFulltimeMax;
 	}
 
-	public void setCertificateStatus(String certificateStatus) {
-		this.certificateStatus = certificateStatus;
-	}
-
-	public String getCertificateRegStatus() {
-		return certificateRegStatus;
-	}
-
-	public void setCertificateRegStatus(String certificateRegStatus) {
-		this.certificateRegStatus = certificateRegStatus;
-	}
-
-	public String getSalary() {
-		return salary;
-	}
-
-	public void setSalary(String salary) {
-		this.salary = salary;
+	public void setIsFulltimeMax(Byte isFulltimeMax) {
+		this.isFulltimeMax = isFulltimeMax;
 	}
 
 	public String getPhone() {
@@ -298,6 +282,30 @@ public class BuilderQuery extends PageQuery {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public Byte getExamineStatus() {
+		return examineStatus;
+	}
+
+	public void setExamineStatus(Byte examineStatus) {
+		this.examineStatus = examineStatus;
+	}
+
+	public Byte getExamineStatusMin() {
+		return examineStatusMin;
+	}
+
+	public void setExamineStatusMin(Byte examineStatusMin) {
+		this.examineStatusMin = examineStatusMin;
+	}
+
+	public Byte getExamineStatusMax() {
+		return examineStatusMax;
+	}
+
+	public void setExamineStatusMax(Byte examineStatusMax) {
+		this.examineStatusMax = examineStatusMax;
 	}
 
 	public Integer getVersion() {
@@ -399,7 +407,7 @@ public class BuilderQuery extends PageQuery {
 	
     @Override
     public String toString() {
-        return "BuilderQuery {" +
+        return "UserExpertQuery {" +
                 "id = " + id + 
 				", idMin = " + idMin + 
 				", idMax = " + idMax + 
@@ -410,17 +418,18 @@ public class BuilderQuery extends PageQuery {
 				", gender = " + gender + 
 				", genderMin = " + genderMin + 
 				", genderMax = " + genderMax + 
-				", birthday = " + birthday + 
-				", birthdayMin = " + birthdayMin + 
-				", birthdayMax = " + birthdayMax + 
-				", certificateAddress = " + certificateAddress + 
-				", certificateType = " + certificateType + 
-				", certificateMajorType = " + certificateMajorType + 
-				", certificateStatus = " + certificateStatus + 
-				", certificateRegStatus = " + certificateRegStatus + 
-				", salary = " + salary + 
+				", age = " + age + 
+				", ageMin = " + ageMin + 
+				", ageMax = " + ageMax + 
+				", type = " + type + 
+				", isFulltime = " + isFulltime + 
+				", isFulltimeMin = " + isFulltimeMin + 
+				", isFulltimeMax = " + isFulltimeMax + 
 				", phone = " + phone + 
 				", memo = " + memo + 
+				", examineStatus = " + examineStatus + 
+				", examineStatusMin = " + examineStatusMin + 
+				", examineStatusMax = " + examineStatusMax + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

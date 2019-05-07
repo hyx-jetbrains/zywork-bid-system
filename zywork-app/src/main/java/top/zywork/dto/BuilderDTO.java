@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * BuilderDTO数据传输对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-07<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class BuilderDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372036130952100L;
+    private static final long serialVersionUID = -9223372036042815614L;
 
     // 建造师编号
 	private Long id;
@@ -22,7 +22,7 @@ public class BuilderDTO extends BaseDTO {
 	// 姓名
 	private String name;
 	// 性别
-	private String gender;
+	private Byte gender;
 	// 出生年份
 	private Date birthday;
 	// 证件地址
@@ -52,7 +52,7 @@ public class BuilderDTO extends BaseDTO {
 	
     public BuilderDTO () {}
 
-    public BuilderDTO (Long id, Long userId, String name, String gender, Date birthday, String certificateAddress, String certificateType, String certificateMajorType, String certificateStatus, String certificateRegStatus, String salary, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public BuilderDTO (Long id, Long userId, String name, Byte gender, Date birthday, String certificateAddress, String certificateType, String certificateMajorType, String certificateStatus, String certificateRegStatus, String salary, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
@@ -97,11 +97,11 @@ public class BuilderDTO extends BaseDTO {
 		this.name = name;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Byte gender) {
 		this.gender = gender;
 	}
 
