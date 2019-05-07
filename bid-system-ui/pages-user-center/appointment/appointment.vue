@@ -12,49 +12,52 @@
 				</view>
 			</picker>
 		</view>
-		<uni-card v-for="(expertSubscribe, index) in expertSubscribeList" :key="index" :title="expertSubscribe.questionType" :extra="expertSubscribe.subscribeStatus">
-			<view>
-				<text>{{expertSubscribe.questionDesc}}</text>
-				<view class="zy-time zy-text-info zy-text-small">{{expertSubscribe.createTime}}</view>
-			</view>
-			
-			<!-- 支付成功之后才能查看专家回复的内容 -->
-			<view v-if="expertSubscribe.payStatus == '已支付'">
-				<view class="zy-bottom-border" />
-				<view class="zy-text-bold">
-					专家回复：
-				</view>
-				<text>
-					{{expertSubscribe.replyContent}}
-				</text>
-				<view class="zy-time zy-text-info zy-text-small">
-					{{expertSubscribe.replyTime}}
-				</view>
-			</view>
-			
-			<!-- 后台设置好金额之后，显示订单信息让用户进行支付 -->
-			<view v-if="expertSubscribe.price != 0">
-				<view class="zy-bottom-border" />
+		<view v-if="expertSubscribeList.length > 0">
+			<uni-card v-for="(expertSubscribe, index) in expertSubscribeList" :key="index" :title="expertSubscribe.questionType" :extra="expertSubscribe.subscribeStatus">
 				<view>
-					<text class="zy-text-bold">订单编号：</text>
-					{{expertSubscribe.transactionNo}}
+					<text>{{expertSubscribe.questionDesc}}</text>
+					<view class="zy-time zy-text-info zy-text-small">{{expertSubscribe.createTime}}</view>
 				</view>
-				<view>
-					<text class="zy-text-bold">价格：</text>
-					
-					<text class="zy-text-warning zy-text-big">
-						¥{{expertSubscribe.price / 100}}
+				
+				<!-- 支付成功之后才能查看专家回复的内容 -->
+				<view v-if="expertSubscribe.payStatus == '已支付'">
+					<view class="zy-bottom-border" />
+					<view class="zy-text-bold">
+						专家回复：
+					</view>
+					<text>
+						{{expertSubscribe.replyContent}}
 					</text>
+					<view class="zy-time zy-text-info zy-text-small">
+						{{expertSubscribe.replyTime}}
+					</view>
 				</view>
-				<view>
-					<text class="zy-text-bold">支付状态：</text>
-					{{expertSubscribe.payStatus}}
+				
+				<!-- 后台设置好金额之后，显示订单信息让用户进行支付 -->
+				<view v-if="expertSubscribe.price != 0">
+					<view class="zy-bottom-border" />
+					<view>
+						<text class="zy-text-bold">订单编号：</text>
+						{{expertSubscribe.transactionNo}}
+					</view>
+					<view>
+						<text class="zy-text-bold">价格：</text>
+						
+						<text class="zy-text-warning zy-text-big">
+							¥{{expertSubscribe.price / 100}}
+						</text>
+					</view>
+					<view>
+						<text class="zy-text-bold">支付状态：</text>
+						{{expertSubscribe.payStatus}}
+					</view>
+					<view class="zy-button" v-if="expertSubscribe.payStatus == '待支付'">
+						<button type="primary" @click="pay">立即支付</button>
+					</view>
 				</view>
-				<view class="zy-button" v-if="expertSubscribe.payStatus == '待支付'">
-					<button type="primary" @click="pay">立即支付</button>
-				</view>
-			</view>
-		</uni-card>
+			</uni-card>
+		</view>
+		<zywork-no-data v-else text="暂无预约记录"></zywork-no-data>
 	</view>
 </template>
 
@@ -62,11 +65,13 @@
 	import uniCard from "@/components/uni-card/uni-card.vue"
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	export default {
 		components: {
 			uniCard,
 			uniSegmentedControl,
-			zyworkIcon
+			zyworkIcon,
+			zyworkNoData
 		},
 		data() {
 			return {

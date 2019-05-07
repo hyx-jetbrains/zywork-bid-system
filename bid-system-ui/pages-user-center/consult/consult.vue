@@ -1,32 +1,37 @@
 <template>
 	<view>
-		<uni-card v-for="(consult, index) in consultList" :key="index" :title="consult.consultType">
-			<view>
-				<text>{{consult.consultDesc}}</text>
-				<view class="zy-time zy-text-info zy-text-small">{{consult.createTime}}</view>
-			</view>
-			
-			<view v-if="consult.replyContent != ''">
-				<view class="zy-bottom-border" />
-				<view class="zy-text-bold">
-					咨询回复：
+		<view v-if="consultList.length > 0">
+			<uni-card v-for="(consult, index) in consultList" :key="index" :title="consult.consultType">
+				<view>
+					<text>{{consult.consultDesc}}</text>
+					<view class="zy-time zy-text-info zy-text-small">{{consult.createTime}}</view>
 				</view>
-				<text>
-					{{consult.replyContent}}
-				</text>
-				<view class="zy-time zy-text-info zy-text-small">
-					{{consult.replyTime}}
+				
+				<view v-if="consult.replyContent != ''">
+					<view class="zy-bottom-border" />
+					<view class="zy-text-bold">
+						咨询回复：
+					</view>
+					<text>
+						{{consult.replyContent}}
+					</text>
+					<view class="zy-time zy-text-info zy-text-small">
+						{{consult.replyTime}}
+					</view>
 				</view>
-			</view>
-		</uni-card>
+			</uni-card>
+		</view>
+		<zywork-no-data v-else text="暂无咨询记录"></zywork-no-data>
 	</view>
 </template>
 
 <script>
 	import uniCard from "@/components/uni-card/uni-card.vue"
+	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	export default {
 		components: {
-			uniCard
+			uniCard,
+			zyworkNoData
 		},
 		data() {
 			return {

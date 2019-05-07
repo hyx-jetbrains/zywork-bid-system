@@ -5,24 +5,27 @@
 		</view>
 		<!-- 抵用券 -->
 		<view v-if="functionType.current == 0">
-			<view class="zy-coupon-card" v-for="(coupon, index) in couponList" :key="index" style="position: relative;">
-				<view class="zy-coupon-money">
-					<text class="zy-coupon-money-detail">
-						¥
-						<text class="zy-text-bold zy-price">{{coupon.money / 100}}</text>
-					</text>
-				</view>
-				<view style="margin-left: 30upx;">
-					<view class="zy-text-big zy-text-bold">{{coupon.type}}VIP</view>
-					<view class="zy-text-info">{{coupon.validDate}}</view>
-				</view>
-				<view style="margin-left: 200upx;">
-					<view v-if="coupon.validDate < currDate">
-						<zywork-icon class="zy-icon-yiguoqi" type="iconyiguoqi" color="#afacac" size="60" style="display: inline-block;" />
+			<view v-if="couponList.length > 0">
+				<view class="zy-coupon-card" v-for="(coupon, index) in couponList" :key="index" style="position: relative;">
+					<view class="zy-coupon-money">
+						<text class="zy-coupon-money-detail">
+							¥
+							<text class="zy-text-bold zy-price">{{coupon.money / 100}}</text>
+						</text>
 					</view>
-					<uni-tag v-else text="立即使用" type="error" size="small" :inverted="true" :circle="true" @click="useCouupon"></uni-tag>
+					<view style="margin-left: 30upx;">
+						<view class="zy-text-big zy-text-bold">{{coupon.type}}VIP</view>
+						<view class="zy-text-info">{{coupon.validDate}}</view>
+					</view>
+					<view style="margin-left: 200upx;">
+						<view v-if="coupon.validDate < currDate">
+							<zywork-icon class="zy-icon-yiguoqi" type="iconyiguoqi" color="#afacac" size="60" style="display: inline-block;" />
+						</view>
+						<uni-tag v-else text="立即使用" type="error" size="small" :inverted="true" :circle="true" @click="useCouupon"></uni-tag>
+					</view>
 				</view>
 			</view>
+			<zywork-no-data v-else text="还没有抵用券"></zywork-no-data>
 		</view>
 		<!-- 抵用券使用记录 -->
 		<view v-if="functionType.current == 1">
@@ -92,21 +95,21 @@
 					items: ['抵用券', '使用记录']
 				},
 				couponList: [
-					{
-						type: '充值VIP',
-						validDate: '2019-04-30',
-						money: 500
-					},
-					{
-						type: '充值VIP',
-						validDate: '2019-04-29',
-						money: 800
-					},
-					{
-						type: '充值VIP',
-						validDate: '2019-05-30',
-						money: 1000
-					}
+					// {
+					// 	type: '充值VIP',
+					// 	validDate: '2019-04-30',
+					// 	money: 500
+					// },
+					// {
+					// 	type: '充值VIP',
+					// 	validDate: '2019-04-29',
+					// 	money: 800
+					// },
+					// {
+					// 	type: '充值VIP',
+					// 	validDate: '2019-05-30',
+					// 	money: 1000
+					// } 
 				],
 				couponRecordlList: [
 					{
