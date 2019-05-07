@@ -1,5 +1,14 @@
 <template>
 	<view>
+		<view class="zy-top-search">
+			<view class="zy-search-bar" @click="toSearchPage">
+				<zywork-icon type="iconchaxun"/>
+				<input type="text" placeholder="我要搜索" disabled/>
+			</view>
+			<view style="margin-left: 10upx;">
+				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toAddConsultPage"/>
+			</view>
+		</view>
 		<view v-if="consultList.length > 0">
 			<uni-card v-for="(consult, index) in consultList" :key="index" :title="consult.consultType">
 				<view>
@@ -28,10 +37,12 @@
 <script>
 	import uniCard from "@/components/uni-card/uni-card.vue"
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	export default {
 		components: {
 			uniCard,
-			zyworkNoData
+			zyworkNoData,
+			zyworkIcon
 		},
 		data() {
 			return {
@@ -55,6 +66,18 @@
 		},
 		onLoad() {},
 		methods: {
+			// 前往搜索页面
+			toSearchPage() {
+				uni.navigateTo({
+					url: '/pages-user-center/consult/search-page'
+				})
+			},
+			// 前往添加咨询页面
+			toAddConsultPage() {
+				uni.navigateTo({
+					url: '/pages-user-center/consult/add-consult'
+				})
+			},
 			// 分段器选择是否处理
 			onClickItem(index) {
 				console.log(index)

@@ -95,21 +95,21 @@
 					items: ['抵用券', '使用记录']
 				},
 				couponList: [
-					// {
-					// 	type: '充值VIP',
-					// 	validDate: '2019-04-30',
-					// 	money: 500
-					// },
-					// {
-					// 	type: '充值VIP',
-					// 	validDate: '2019-04-29',
-					// 	money: 800
-					// },
-					// {
-					// 	type: '充值VIP',
-					// 	validDate: '2019-05-30',
-					// 	money: 1000
-					// } 
+					{
+						type: '充值VIP',
+						validDate: '2019-04-30',
+						money: 500
+					},
+					{
+						type: '充值VIP',
+						validDate: '2019-04-29',
+						money: 800
+					},
+					{
+						type: '充值VIP',
+						validDate: '2019-05-30',
+						money: 1000
+					} 
 				],
 				couponRecordlList: [
 					{
