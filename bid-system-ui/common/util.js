@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://192.168.203.132:8088'
+export const BASE_URL = 'http://192.168.203.244:8088'
 export const IMAGE_BASE_URL = 'http://localhost'
 export const USER_TOKEN_KEY = 'userToken'
 export const USER_OPENID = 'openid'
