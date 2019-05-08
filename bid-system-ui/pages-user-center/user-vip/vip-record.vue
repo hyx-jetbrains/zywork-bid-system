@@ -65,6 +65,8 @@
 				</view>
 			</view>
 		</view>
+			<view class="zy-record-card-left"></view>
+			<view class="zy-record-card-right"></view>
 		<view class="zy-pay-button">
 			<button type="primary" @click="payRecord">立即支付</button>
 		</view>
@@ -193,6 +195,24 @@
 		margin: 30upx;
 		border-radius: 20upx;
 		padding-top: 20upx;
+	}
+	.zy-record-card-left {
+		position: absolute;
+		top: 100;
+		right: 0;
+		width: 50upx;
+		height: 50upx;
+		background-color: $primary-page-backcolor;
+		border-radius: 50upx 0 0 50upx;
+	}
+	.zy-record-card-right {
+		position: absolute;
+		top: 100;
+		left: 0;
+		width: 50upx;
+		height: 50upx;
+		background-color: $primary-page-backcolor;
+		border-radius: 0 50upx 50upx 0;
 	}
 	.zy-record-tip-com {
 		color: #FFFFFF;
