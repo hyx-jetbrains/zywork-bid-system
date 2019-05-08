@@ -1,24 +1,22 @@
 <template>
 	<view>
-		<uni-card :title="question.title" :extra="question.type">
+		<view class="zy-help-detail-card">
+			<view class="zy-help-detail-card-title zy-text-bold zy-text-big">
+				{{question.title}}
+			</view>
 			<view v-html="question.content"></view>
 			<view class="zy-text-info zy-time" v-text="question.createTime"></view>
-		</uni-card>
+		</view>
 	</view>
 </template>
 
 <script>
-	import uniCard from "@/components/uni-card/uni-card.vue"
 	export default {
-		components: {
-			uniCard
-		},
 		data() {
 			return {
 				question: {
 					id: '1',
-					type: 'CA证书',
-					title: 'CA证书问题dfsdfdsfs淡粉色的适当方式分',
+					title: 'CA证书问题长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试',
 					content: '<h2>内容</h2><p>内容内容内让</p>',
 					createTime: '2019-04-28 10:34:04'
 				}
@@ -31,6 +29,16 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+	
+	.zy-help-detail-card {
+		background-color: #FFFFFF;
+		margin: 20upx;
+		padding: 20upx;
+	}
+	.zy-help-detail-card-title {
+		text-align: center;
+		padding-bottom: 20upx;
+	}
 	
 	.zy-time {
 		text-align: right;

@@ -6,26 +6,24 @@
 				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
 			</scroll-view>
 		</view>
-		<uni-list>
-			<zywork-list-item v-for="(oftenQuestion, index) in oftenQuestionList" :key="index" 
-				:title="oftenQuestion.title" show-extra-icon="true" 
-				:extra-icon="{color: '#FF4539',size: '18',type: 'iconbangzhu'}"
-				@click="toOftenQuestionDetail(oftenQuestion.id)"></zywork-list-item>
-		</uni-list>
+		<view class="zy-disable-flex zy-help-list" v-for="(oftenQuestion, index) in oftenQuestionList" 
+				:key="index" @click="toOftenQuestionDetail(oftenQuestion.id)">
+			<zywork-icon type="iconbangzhu" color="#dd524d" size="24" style="display: inline-block;" />
+			<view class="zy-help-list-title">
+				{{oftenQuestion.title}}
+			</view>
+			<zywork-icon class="zy-help-list-right-icon" type="iconiconfonti" color="#8A8A8A" size="20" style="display: inline-block;" />
+		</view>
 	</view>
 </template>
 
 <script>
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
-	import uniList from '@/components/uni-list/uni-list.vue'
-	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
 	export default {
 		components: {
 			uniSegmentedControl,
-			zyworkIcon,
-			uniList,
-			zyworkListItem
+			zyworkIcon
 		},
 		data() {
 			return {
@@ -45,7 +43,7 @@
 					{
 						id: '1',
 						type: '',
-						title: 'CA证书问题dfsdfdsfs淡粉色的适当方式分'
+						title: 'CA证书问题长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试'
 					},
 					{
 						id: '2',
@@ -91,4 +89,21 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+	
+	.zy-help-list {
+		background-color: #FFFFFF;
+		padding: 20upx;
+		// position: relative;
+		border-bottom: 2upx solid $border-color;
+	}
+	.zy-help-list-title {
+		padding: 20upx;
+		width: 800upx;
+	}
+	.zy-help-list-right-icon {
+		text-align: right;
+		// position: absolute;
+		// top: 20upx;
+		// right: 20upx;
+	}
 </style>
