@@ -88,6 +88,9 @@
 			<if test="isElectronic != null">
 				is_electronic,
 			</if>
+			<if test="sourceUrl != null">
+				source_url,
+			</if>
 			<if test="version != null">
 				version,
 			</if>
@@ -180,6 +183,9 @@
 			</if>
 			<if test="isElectronic != null">
 				#{isElectronic},
+			</if>
+			<if test="sourceUrl != null">
+				#{sourceUrl},
 			</if>
 			<if test="version != null">
 				#{version},
@@ -282,6 +288,9 @@
 			<if test="item.isElectronic != null">
 				is_electronic,
 			</if>
+			<if test="item.sourceUrl != null">
+				source_url,
+			</if>
 			<if test="item.version != null">
 				version,
 			</if>
@@ -374,6 +383,9 @@
 			</if>
 			<if test="item.isElectronic != null">
 				#{item.isElectronic},
+			</if>
+			<if test="item.sourceUrl != null">
+				#{item.sourceUrl},
 			</if>
 			<if test="item.version != null">
 				#{item.version},
@@ -484,6 +496,9 @@
 			<if test="isElectronic != null">
 				is_electronic = #{isElectronic},
 			</if>
+			<if test="sourceUrl != null">
+				source_url = #{sourceUrl},
+			</if>
 			<if test="version != null">
 				version = #{version},
 			</if>
@@ -583,6 +598,9 @@
 			<if test="item.isElectronic != null">
 				is_electronic = #{item.isElectronic},
 			</if>
+			<if test="item.sourceUrl != null">
+				source_url = #{item.sourceUrl},
+			</if>
 			<if test="item.version != null">
 				version = #{item.version},
 			</if>
@@ -605,7 +623,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, title as title, project_type as projectType, city as city, project_detail as projectDetail, release_status as releaseStatus, mark_unit_name as markUnitName, project_invest as projectInvest, check_pattern as checkPattern, comp_aptitude_type as compAptitudeType, builder_level as builderLevel, money_to_implement as moneyToImplement, tendering_agent as tenderingAgent, phone as phone, offer_price as offerPrice, assure_price as assurePrice, construction_period as constructionPeriod, download_end_time as downloadEndTime, other_demand as otherDemand, open_mark_info as openMarkInfo, open_mark_time as openMarkTime, open_mark_addr as openMarkAddr, in_mark_publicity as inMarkPublicity, in_mark_comp as inMarkComp, notice_time as noticeTime, click_count as clickCount, is_electronic as isElectronic, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, title as title, project_type as projectType, city as city, project_detail as projectDetail, release_status as releaseStatus, mark_unit_name as markUnitName, project_invest as projectInvest, check_pattern as checkPattern, comp_aptitude_type as compAptitudeType, builder_level as builderLevel, money_to_implement as moneyToImplement, tendering_agent as tenderingAgent, phone as phone, offer_price as offerPrice, assure_price as assurePrice, construction_period as constructionPeriod, download_end_time as downloadEndTime, other_demand as otherDemand, open_mark_info as openMarkInfo, open_mark_time as openMarkTime, open_mark_addr as openMarkAddr, in_mark_publicity as inMarkPublicity, in_mark_comp as inMarkComp, notice_time as noticeTime, click_count as clickCount, is_electronic as isElectronic, source_url as sourceUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -779,6 +797,9 @@
 		</if>
 		<if test="query != null and query.isElectronicMin != null and query.isElectronicMax != null">
 			and is_electronic <![CDATA[ >= ]]> #{query.isElectronicMin} and is_electronic <![CDATA[ <= ]]> #{query.isElectronicMax}
+		</if>
+		<if test="query != null and query.sourceUrl != null and query.sourceUrl != ''">
+			and source_url like concat('%', #{query.sourceUrl}, '%')
 		</if>
 		<if test="query != null and query.version != null">
 			and version = #{query.version}

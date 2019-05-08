@@ -108,6 +108,9 @@
 <FormItem label="是否电子标" prop="isElectronic">
 	<InputNumber v-model="form.isElectronic" placeholder="请输入是否电子标" style="width: 100%;"/>
 </FormItem>
+<FormItem label="源地址" prop="sourceUrl">
+	<Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
+</FormItem>
 
       </Form>
       <div slot="footer">
@@ -194,6 +197,9 @@
 </FormItem>
 <FormItem label="是否电子标" prop="isElectronic">
 	<InputNumber v-model="form.isElectronic" placeholder="请输入是否电子标" style="width: 100%;"/>
+</FormItem>
+<FormItem label="源地址" prop="sourceUrl">
+	<Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
 </FormItem>
 
       </Form>
@@ -395,6 +401,9 @@
 </i-col>
 </Row>
 </FormItem>
+<FormItem label="源地址" prop="sourceUrl">
+	<Input v-model="searchForm.sourceUrl" placeholder="请输入源地址"/>
+</FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
 	<FormItem prop="versionMin">
@@ -487,6 +496,7 @@
 <p>公告时间: <span v-text="form.noticeTime"></span></p>
 <p>点击次数: <span v-text="form.clickCount"></span></p>
 <p>是否电子标: <span v-text="form.isElectronic"></span></p>
+<p>源地址: <span v-text="form.sourceUrl"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
 <p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -558,6 +568,7 @@ inMarkComp: null,
 noticeTime: null,
 clickCount: null,
 isElectronic: null,
+sourceUrl: null,
 version: null,
 createTime: null,
 updateTime: null,
@@ -591,10 +602,10 @@ checkPattern: [
 {type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
 ],
 compAptitudeType: [
-{type: 'string', min: 1, max: 32, message: '必须1-32个字符', trigger: 'blur'}
+{type: 'string', min: 1, max: 200, message: '必须1-200个字符', trigger: 'blur'}
 ],
 builderLevel: [
-{type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
+{type: 'string', min: 1, max: 200, message: '必须1-200个字符', trigger: 'blur'}
 ],
 tenderingAgent: [
 {type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
@@ -606,7 +617,7 @@ otherDemand: [
 {type: 'string', min: 1, max: 500, message: '必须1-500个字符', trigger: 'blur'}
 ],
 openMarkInfo: [
-{type: 'string', min: 1, max: 32, message: '必须1-32个字符', trigger: 'blur'}
+{type: 'string', min: 1, max: 10, message: '必须1-10个字符', trigger: 'blur'}
 ],
 openMarkAddr: [
 {type: 'string', min: 1, max: 32, message: '必须1-32个字符', trigger: 'blur'}
@@ -616,6 +627,9 @@ inMarkPublicity: [
 ],
 inMarkComp: [
 {type: 'string', min: 1, max: 32, message: '必须1-32个字符', trigger: 'blur'}
+],
+sourceUrl: [
+{type: 'string', min: 1, max: 300, message: '必须1-300个字符', trigger: 'blur'}
 ],
 
         },
@@ -671,6 +685,7 @@ clickCountMax: null,
 isElectronic: null,
 isElectronicMin: null, 
 isElectronicMax: null, 
+sourceUrl: null,
 version: null,
 versionMin: null, 
 versionMax: null, 
@@ -862,6 +877,12 @@ sortable: true
 {
 title: '是否电子标',
 key: 'isElectronic',
+minWidth: 120,
+sortable: true
+},
+{
+title: '源地址',
+key: 'sourceUrl',
 minWidth: 120,
 sortable: true
 },

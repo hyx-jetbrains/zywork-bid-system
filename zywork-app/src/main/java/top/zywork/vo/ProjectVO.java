@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectVO值对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-08<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ProjectVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372036124834920L;
+    private static final long serialVersionUID = -9223372035706186326L;
 
     // 招投标项目编号
 	private Long id;
@@ -75,7 +75,7 @@ public class ProjectVO extends BaseVO {
 	@Size(min = 0, max = 500, message = "必须小于500个字符")
 	private String otherDemand;
 	// 开标信息
-	@Size(min = 0, max = 32, message = "必须小于32个字符")
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String openMarkInfo;
 	// 开标时间
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -96,6 +96,9 @@ public class ProjectVO extends BaseVO {
 	private Long clickCount;
 	// 是否电子标
 	private Byte isElectronic;
+	// 源地址
+	@Size(min = 0, max = 300, message = "必须小于300个字符")
+	private String sourceUrl;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -109,7 +112,7 @@ public class ProjectVO extends BaseVO {
 	
     public ProjectVO () {}
 
-    public ProjectVO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectVO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.projectType = projectType;
@@ -137,6 +140,7 @@ public class ProjectVO extends BaseVO {
 		this.noticeTime = noticeTime;
 		this.clickCount = clickCount;
 		this.isElectronic = isElectronic;
+		this.sourceUrl = sourceUrl;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -360,6 +364,14 @@ public class ProjectVO extends BaseVO {
 		this.isElectronic = isElectronic;
 	}
 
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -423,6 +435,7 @@ public class ProjectVO extends BaseVO {
 				", noticeTime = " + noticeTime + 
 				", clickCount = " + clickCount + 
 				", isElectronic = " + isElectronic + 
+				", sourceUrl = " + sourceUrl + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

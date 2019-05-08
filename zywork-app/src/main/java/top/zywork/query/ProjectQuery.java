@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectQuery查询对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-08<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ProjectQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036196557041L;
+    private static final long serialVersionUID = -9223372034840754793L;
 
     // 招投标项目编号
 	private Long id;
@@ -120,6 +120,8 @@ public class ProjectQuery extends PageQuery {
 	private Byte isElectronicMin;
 	// 是否电子标（最大值）
 	private Byte isElectronicMax;
+	// 源地址
+	private String sourceUrl;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -153,7 +155,7 @@ public class ProjectQuery extends PageQuery {
 	
     public ProjectQuery () {}
 
-    public ProjectQuery (Long id, Long idMin, Long idMax, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, Float moneyToImplementMin, Float moneyToImplementMax, String tenderingAgent, String phone, Long offerPrice, Long offerPriceMin, Long offerPriceMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Date downloadEndTime, Date downloadEndTimeMin, Date downloadEndTimeMax, String otherDemand, String openMarkInfo, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Date noticeTimeMin, Date noticeTimeMax, Long clickCount, Long clickCountMin, Long clickCountMax, Byte isElectronic, Byte isElectronicMin, Byte isElectronicMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ProjectQuery (Long id, Long idMin, Long idMax, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, Float moneyToImplementMin, Float moneyToImplementMax, String tenderingAgent, String phone, Long offerPrice, Long offerPriceMin, Long offerPriceMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Date downloadEndTime, Date downloadEndTimeMin, Date downloadEndTimeMax, String otherDemand, String openMarkInfo, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Date noticeTimeMin, Date noticeTimeMax, Long clickCount, Long clickCountMin, Long clickCountMax, Byte isElectronic, Byte isElectronicMin, Byte isElectronicMax, String sourceUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -201,6 +203,7 @@ public class ProjectQuery extends PageQuery {
 		this.isElectronic = isElectronic;
 		this.isElectronicMin = isElectronicMin;
 		this.isElectronicMax = isElectronicMax;
+		this.sourceUrl = sourceUrl;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -592,6 +595,14 @@ public class ProjectQuery extends PageQuery {
 		this.isElectronicMax = isElectronicMax;
 	}
 
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -739,6 +750,7 @@ public class ProjectQuery extends PageQuery {
 				", isElectronic = " + isElectronic + 
 				", isElectronicMin = " + isElectronicMin + 
 				", isElectronicMax = " + isElectronicMax + 
+				", sourceUrl = " + sourceUrl + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

@@ -240,7 +240,9 @@
             </FormItem>
           </i-col>
         </Row>
-
+        <FormItem label="源地址" prop="sourceUrl">
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+        </FormItem>
         <FormItem label="其他要求" prop="otherDemand">
           <Input
             v-model="form.otherDemand"
@@ -443,6 +445,9 @@
             </FormItem>
           </i-col>
         </Row>
+        <FormItem label="源地址" prop="sourceUrl">
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+        </FormItem>
         <FormItem label="其他要求" prop="otherDemand">
           <Input
             v-model="form.otherDemand"
@@ -796,6 +801,10 @@
         <span v-text="form.downloadEndTime"></span>
       </p>
       <p>
+        源地址：
+        <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
+      </p>
+      <p>
         其他要求:
         <span v-text="form.otherDemand"></span>
       </p>
@@ -965,6 +974,7 @@ export default {
         noticeTime: null,
         clickCount: null,
         isElectronic: null,
+        sourceUrl: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -1436,6 +1446,25 @@ export default {
             key: 'downloadEndTime',
             minWidth: 130,
             sortable: true
+          },
+          {
+            title: '源地址',
+            key: 'sourceUrl',
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              return h(
+                'a',
+                {
+                  attrs: {
+                    href: row.sourceUrl,
+                    target: '_blank'
+                  }
+                },
+                row.sourceUrl
+              )
+            }
           },
           {
             title: '其他要求',

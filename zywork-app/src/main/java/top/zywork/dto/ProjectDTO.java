@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * ProjectDTO数据传输对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-08<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ProjectDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035323006838L;
+    private static final long serialVersionUID = -9223372036137755834L;
 
     // 招投标项目编号
 	private Long id;
@@ -69,6 +69,8 @@ public class ProjectDTO extends BaseDTO {
 	private Long clickCount;
 	// 是否电子标
 	private Byte isElectronic;
+	// 源地址
+	private String sourceUrl;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -80,7 +82,7 @@ public class ProjectDTO extends BaseDTO {
 	
     public ProjectDTO () {}
 
-    public ProjectDTO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectDTO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.projectType = projectType;
@@ -108,6 +110,7 @@ public class ProjectDTO extends BaseDTO {
 		this.noticeTime = noticeTime;
 		this.clickCount = clickCount;
 		this.isElectronic = isElectronic;
+		this.sourceUrl = sourceUrl;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -331,6 +334,14 @@ public class ProjectDTO extends BaseDTO {
 		this.isElectronic = isElectronic;
 	}
 
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -394,6 +405,7 @@ public class ProjectDTO extends BaseDTO {
 				", noticeTime = " + noticeTime + 
 				", clickCount = " + clickCount + 
 				", isElectronic = " + isElectronic + 
+				", sourceUrl = " + sourceUrl + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

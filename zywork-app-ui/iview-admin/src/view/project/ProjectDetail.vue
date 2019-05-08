@@ -73,6 +73,10 @@
         <span v-text="form.downloadEndTime"></span>
       </p>
       <p>
+        源地址：
+        <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
+      </p>
+      <p>
         其他要求:
         <span v-text="form.otherDemand"></span>
       </p>
