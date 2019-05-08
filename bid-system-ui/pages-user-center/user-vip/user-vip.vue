@@ -85,8 +85,8 @@
 		methods: {
 			// 开通VIP
 			openVIP(type) {
-				uni.showModal({
-					title: type
+				uni.navigateTo({
+					url: '/pages-user-center/user-vip/vip-record'
 				})
 			}
 		}

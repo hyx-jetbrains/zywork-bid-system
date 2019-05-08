@@ -227,6 +227,13 @@
 					}
 				},
 				{
+					"path": "user-vip/vip-record",
+					"style": {
+						"navigationBarTitleText": "VIP订单详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "user-expert/user-expert",
 					"style": {
 						"navigationBarTitleText": "专家信息",

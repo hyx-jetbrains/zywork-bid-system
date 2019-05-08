@@ -148,8 +148,8 @@
 			},
 			// 使用抵用券
 			useCouupon() {
-				uni.showModal({
-					title: '立即使用'
+				uni.navigateTo({
+					url: '/pages-user-center/user-vip/user-vip'
 				})
 			}
 		}
