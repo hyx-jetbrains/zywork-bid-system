@@ -488,6 +488,7 @@ CREATE TABLE `t_company`  (
   `reg_capital` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册资本',
   `business_scope` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '经营范围',
   `affordable_business` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '可承担业务',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -502,7 +503,7 @@ DROP TABLE IF EXISTS `t_consult`;
 CREATE TABLE `t_consult`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '咨询编号',
   `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
-  `consult_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '问题类别',
+  `question_type_id` bigint(20) NULL DEFAULT 0 COMMENT '问题类别编号',
   `consult_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '问题说明',
   `reply_user_id` bigint(20) NULL DEFAULT 0 COMMENT '回复人编号',
   `reply_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '回复内容',
@@ -549,6 +550,35 @@ CREATE TABLE `t_coupon_record`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券使用记录表' ROW_FORMAT = Dynamic;
 
+- ----------------------------
+-- Table structure for t_expert_question_type
+-- ----------------------------
+DROP TABLE IF EXISTS `t_expert_question_type`;
+CREATE TABLE `t_expert_question_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家问题分类编号',
+  `name` varchar(30) DEFAULT '' COMMENT '类别名称',
+  `memo` varchar(200) DEFAULT '' COMMENT '备注',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='专家问题分类表';
+
+-- ----------------------------
+-- Records of t_expert_question_type
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_expert_question_type` VALUES (1, '系统注册登录', '系统注册登录', 1, '2019-05-08 17:30:24', NULL, 0);
+INSERT INTO `t_expert_question_type` VALUES (2, 'CA锁办理及绑定激活', 'CA锁办理及绑定激活', 1, '2019-05-08 17:30:53', NULL, 0);
+INSERT INTO `t_expert_question_type` VALUES (3, '招标文件制作', '招标文件制作', 1, '2019-05-08 17:30:57', NULL, 0);
+INSERT INTO `t_expert_question_type` VALUES (4, '投标文件制作', '投标文件制作', 1, '2019-05-08 17:31:05', NULL, 0);
+INSERT INTO `t_expert_question_type` VALUES (5, '工程量清单编制', '工程量清单编制', 1, '2019-05-08 17:31:14', NULL, 0);
+INSERT INTO `t_expert_question_type` VALUES (6, '工程造价', '工程造价', 1, '2019-05-08 17:31:22', NULL, 0);
+INSERT INTO `t_expert_question_type` VALUES (7, '电子虚拟保证金缴纳', '电子虚拟保证金缴纳', 1, '2019-05-08 17:31:30', NULL, 0);
+INSERT INTO `t_expert_question_type` VALUES (8, '其他', '其他', 1, '2019-05-08 17:31:36', NULL, 0);
+COMMIT;
+
 -- ----------------------------
 -- Table structure for t_expert_subscribe
 -- ----------------------------
@@ -557,7 +587,7 @@ CREATE TABLE `t_expert_subscribe`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家预约编号',
   `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
   `expert_user_id` bigint(20) NULL DEFAULT 0 COMMENT '预约专家编号',
-  `question_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '问题类型',
+  `question_type_id` bigint(20) NULL DEFAULT 0 COMMENT '问题类别编号',
   `question_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '问题说明',
   `reply_user_id` bigint(20) NULL DEFAULT 0 COMMENT '回复用户编号',
   `reply_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '回复内容',
@@ -1735,6 +1765,7 @@ CREATE TABLE `t_project`  (
   `notice_time` datetime(0) NULL DEFAULT NULL COMMENT '公告时间',
   `click_count` bigint(20) NULL DEFAULT 0 COMMENT '点击次数',
   `is_electronic` tinyint(4) NULL DEFAULT 0 COMMENT '是否电子标',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -1754,6 +1785,7 @@ CREATE TABLE `t_project_announce`  (
   `first_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第一候选人',
   `second_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第二候选人',
   `third_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第三候选人',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -4897,7 +4929,6 @@ CREATE TABLE `t_user_expert` (
   `name` varchar(20) DEFAULT '' COMMENT '专家姓名',
   `gender` tinyint(4) DEFAULT '0' COMMENT '性别',
   `age` int(11) DEFAULT NULL COMMENT '年龄',
-  `type` varchar(20) DEFAULT '' COMMENT '专家类别',
   `is_fulltime` tinyint(4) DEFAULT '0' COMMENT '是否全职',
   `phone` varchar(11) DEFAULT '' COMMENT '联系电话',
   `memo` varchar(300) DEFAULT '' COMMENT '个人情况介绍',
@@ -4908,6 +4939,24 @@ CREATE TABLE `t_user_expert` (
   `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家信息表' ROW_FORMAT = Dynamic;
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for t_user_expert_question_type
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_expert_question_type`;
+CREATE TABLE `t_user_expert_question_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家类别编号',
+  `user_expert_id` bigint(20) DEFAULT '0' COMMENT '专家信息编号',
+  `question_type_id` bigint(20) DEFAULT NULL COMMENT '问题类别编号',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家类别表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_hierarchy
