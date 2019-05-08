@@ -1,14 +1,8 @@
 <template>
 	<view>
-		<view class="zy-top-search">
-			<view class="zy-search-bar" @click="toSearchPage">
-				<zywork-icon type="iconchaxun"/>
-				<input type="text" placeholder="我要搜索" disabled/>
-			</view>
-			<view style="margin-left: 10upx;">
-				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toAddConsultPage"/>
-			</view>
-		</view>
+		<button class="zy-consult-button" type="primary" @click="toAddConsultPage">
+			我要咨询
+		</button>
 		<view v-if="consultList.length > 0">
 			<uni-card v-for="(consult, index) in consultList" :key="index" :title="consult.consultType">
 				<view>
@@ -102,6 +96,12 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+	
+	.zy-consult-button {
+		text-align: center;
+		margin: 30upx 25upx;
+		border-radius: 50upx 50upx;
+	}
 	
 	.zy-bottom-border {
 		margin: 20upx 0;
