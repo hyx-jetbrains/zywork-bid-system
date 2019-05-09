@@ -185,6 +185,11 @@ button[type=primary][plain] {
 	align-items: center;
 }
 
+.zy-disable-flex-right {
+	margin-left: auto;
+	margin-right: 20upx;
+}
+
 .zy-price {
 	font-size: 50upx; 
 	color: red;

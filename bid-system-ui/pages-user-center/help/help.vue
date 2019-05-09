@@ -1,10 +1,18 @@
 <template>
 	<view>
-		<view class="uni-tab-bar zy-tab-bar" style="margin-bottom: 20upx;">
-			<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="questionType.scrollLeft">
-				<view v-for="(tab,index) in questionType.tabbars" :key="tab.id" class="swiper-tab-list" :class="questionType.tabIndex==index ? 'active' : ''"
-				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
-			</scroll-view>
+		<view class="zy-disable-flex">
+			<view class="zy-type-title zy-text-bold">选择问题类别</view>
+			<view class="zy-disable-flex-right">
+				<view class="uni-list-cell-db">
+					<picker @change="chooseType" :value="questionTypeIndex" :range="questionTypeArray">
+						<view class="zy-disable-flex">
+							<text>{{questionTypeArray[questionTypeIndex]}}</text>
+							<zywork-icon type="iconxiangxia"/>
+						</view>
+					</picker>
+				</view>
+			</view>
+			
 		</view>
 		<view class="zy-disable-flex zy-help-list" v-for="(oftenQuestion, index) in oftenQuestionList" 
 				:key="index" @click="toOftenQuestionDetail(oftenQuestion.id)">
@@ -18,27 +26,25 @@
 </template>
 
 <script>
-	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	export default {
 		components: {
-			uniSegmentedControl,
 			zyworkIcon
 		},
 		data() {
 			return {
-				questionType: {
-					scrollLeft: 0,
-					tabIndex: 0,
-					tabbars: [
-						{id: '1', name: 'CA证书'},
-						{id: '2', name: '注册登入'},
-						{id: '3', name: '招标'},
-						{id: '4', name: '投标'},
-						{id: '5', name: '开标'},
-						{id: '6', name: '建造师及业绩'}
-					]
-				},
+				questionTypeList: [
+					{id: '1', name: '系统注册登录'},
+					{id: '5', name: '工程量清单编制'},
+					{id: '3', name: '招标文件制作'},
+					{id: '4', name: '投标文件制作'},
+					{id: '6', name: '工程造价'},
+					{id: '2', name: 'CA锁办理及绑定激活'},
+					{id: '7', name: '电子虚拟保证金缴纳'},
+					{id: '8', name: '其他'}
+				],
+				questionTypeArray: [],
+				questionTypeIndex: 0,
 				oftenQuestionList: [
 					{
 						id: '1',
@@ -53,28 +59,28 @@
 				]
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initQuestionType()
+		},
 		methods: {
-			getElSize(id) {
-				return new Promise((res, rej) => {
-					uni.createSelectorQuery().select("#" + id).fields({
-						size: true,
-						scrollOffset: true
-					}, (data) => {
-						res(data);
-					}).exec();
-				})
+			// 初始化问题类型
+			initQuestionType() {
+				// 请求后台，获取到所有的类型
+				// TODO 后面实现。。。
+				let len = this.questionTypeList.length
+				this.questionTypeArray.push('全部')
+				for (var i = 0; i < len; i++) {
+					this.questionTypeArray.push(this.questionTypeList[i].name)
+				}
 			},
-			// 监听导航菜单事件
-			async tapTab(e) {
-				let tabIndex = e.target.dataset.current
-				if (this.questionType.tabIndex === tabIndex) {
-					return false
-				} else {
-					let tabBar = await this.getElSize("tab-bar"),
-						tabBarScrollLeft = tabBar.scrollLeft
-					this.questionType.scrollLeft = tabBarScrollLeft
-					this.questionType.tabIndex = tabIndex
+			// 监听类别选择
+			chooseType: function(e) {
+				let index = e.target.value
+				this.questionTypeIndex = index
+				// 等于0表示取全部数据
+				if (index !== '0') {
+					console.log(this.questionTypeList[index - 1].id)
+					console.log(this.questionTypeList[index - 1].name)
 				}
 			},
 			// 前往问题详情页面
@@ -82,7 +88,7 @@
 				uni.navigateTo({
 					url: '/pages-user-center/help/help-detail'
 				})
-			}
+			},
 		}
 	}
 </script>

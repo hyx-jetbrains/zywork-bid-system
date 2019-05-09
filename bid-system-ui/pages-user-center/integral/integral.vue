@@ -8,9 +8,9 @@
 		<view class="zy-integral-record">
 			<view v-if="integralList.length > 0" class="zy-page-list" style="padding: 0upx 30upx;">
 				<view v-for="(integralItem, index) in integralList" :key="index" class="zy-page-list-item">
-					<view class="zy-integral-left">
+					<view class="zy-disable-flex">
 						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{integralItem.title}}</view>
-						<view class="zy-text-info zy-text-small" style="color: #F0AD4E">
+						<view class="zy-text-info zy-text-small zy-disable-flex-right" style="color: #F0AD4E">
 							{{integralItem.count > 0 ? '+' : ''}}{{integralItem.count}}
 						</view>
 					</view>
@@ -130,13 +130,6 @@
 	
 	.zy-integral-record {
 		margin: 10upx 20upx;
-	}
-	
-	.zy-integral-left {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
 	}
 	
 </style>

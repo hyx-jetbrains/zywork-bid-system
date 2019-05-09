@@ -4,12 +4,14 @@
 			<form @submit="formSubmit" @reset="formReset">
 				<view class="uni-form-item uni-column zy-disable-flex zy-label-bottom-border">
 					<view class="zy-text-bold">订阅城市</view>
-					<picker name="city" @change="chooseCity" :value="cityIndex" :range="cityArray">
-						<view class="zy-address zy-disable-flex">
-							<text>{{cityArray[cityIndex]}}</text>
-							<zywork-icon type="iconxiangxia"/>
-						</view>
-					</picker>
+					<view class="zy-disable-flex-right">
+						<picker name="city" @change="chooseCity" :value="cityIndex" :range="cityArray">
+							<view class="zy-disable-flex">
+								<text>{{cityArray[cityIndex]}}</text>
+								<zywork-icon type="iconxiangxia"/>
+							</view>
+						</picker>
+					</view>
 				</view>
 				<view class="uni-form-item uni-column zy-disable-flex zy-label-bottom-border">
 					<view class="zy-text-bold">企业资质</view>
@@ -211,11 +213,6 @@
 
 	.zy-label-bottom-border {
 		border-bottom: 1upx solid $seperator-color;
-	}
-	
-	.zy-address {
-		margin-right: 10upx;
-		margin-left: 460upx;
 	}
 	
 	.zy-qualifications {
