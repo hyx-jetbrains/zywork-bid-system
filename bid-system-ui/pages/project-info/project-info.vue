@@ -40,33 +40,36 @@
 		<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
 		
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
-			<view class="zy-page-list-item" v-for="(project, index) in projects" :key="index" @click="toProjectDetail">
-				<view class="zy-project-head">
-					<image class="zy-icon" :src="imgIcon"/>
+			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
+				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap" />
+				<view  @click="toProjectDetail">
+					<view class="zy-project-head">
+						<image class="zy-icon" :src="imgIcon"/>
+						<view>
+							<view>
+								<text>{{projectTypeName}}</text>
+								<text style="margin-left: 30upx;">[{{project.city}}]</text>
+							</view>
+							<view class="zy-text-mini zy-text-info">公告时间：{{project.publishTime}}</view>
+						</view>
+						<view class="zy-project-head-right">
+							<view style="padding-right: 50upx;">
+								<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
+								<uni-tag :text="project.status" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
+							</view>
+							<view class="zy-text-mini zy-text-warning" v-if="project.time !== null">开标时间：{{project.time}}</view>
+							<view class="zy-text-mini zy-text-warning" v-else>开标时间：暂无</view>
+						</view>
+					</view>
 					<view>
-						<view>
-							<text>{{projectTypeName}}</text>
-							<text style="margin-left: 30upx;">[{{project.city}}]</text>
+						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
+						<view class="zy-project-item-row">
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkWay}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money}}</view>
 						</view>
-						<view class="zy-text-mini zy-text-info">公告时间：{{project.publishTime}}</view>
-					</view>
-					<view class="zy-project-head-right">
-						<view>
-							<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
-							<uni-tag :text="project.status" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
-						</view>
-						<view class="zy-text-mini zy-text-warning" v-if="project.time !== null">开标时间：{{project.time}}</view>
-						<view class="zy-text-mini zy-text-warning" v-else>开标时间：暂无</view>
-					</view>
-				</view>
-				<view>
-					<view class="zy-text-big zy-text-bold">{{project.title}}</view>
-					<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
-					<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
-					<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
-					<view class="zy-project-item-row">
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkWay}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money}}</view>
 					</view>
 				</view>
 			</view>
@@ -120,6 +123,17 @@
 								'../../static/icon/purchase.png',
 								'../../static/icon/important.png',
 								'../../static/icon/other.png']
+	
+	/** 澄清文件标识-0 */
+	const SEE_FILE_TYPE_CHENGQING = 0
+	/** 招标文件标识-1 */
+	const SEE_FILE_TYPE_ZHAOBIAO = 1
+	/** 清单文件标识-2 */
+	const SEE_FILE_TYPE_QINGDAN = 2
+	/** 资质文件标识-3 */
+	const SEE_FILE_TYPE_ZIZHI = 3
+	/** 取消收藏-4 */
+	const COLLECTION_PROJECT = 4
 
 	export default {
 		components: {
@@ -181,6 +195,9 @@
 					{
 						title: '赣州中学工程招标',
 						city: '南昌市',
+						compAptitudeType: '市政公用工程施工总承包三级',
+						builderLevel: '市政公用工程三级',
+						markUnitName: '赣州中学工程招标',
 						publishTime: '2019-04-24 18:00:00',
 						status: '公告中',
 						time: null,
@@ -190,6 +207,9 @@
 					{
 						title: '赣州中学工程招标',
 						city: '南昌市',
+						compAptitudeType: '市政公用工程施工总承包三级',
+						builderLevel: '市政公用工程三级',
+						markUnitName: '赣州中学工程招标',
 						publishTime: '2019-04-24 18:00:00',
 						status: '待开标',
 						time: '2019-04-25 10:30',
@@ -287,6 +307,35 @@
 				uni.navigateTo({
 					url: '/pages-project-info/project-detail/project-detail'
 				})
+			},
+			// 触发操作选项
+			actionSheetTap() {
+				uni.showActionSheet({
+					title:'标题',
+					itemList: ['澄清文件', '招标文件', '清单文件', '资质文件', '收藏项目'],
+					success: (e) => {
+						this.seeFile(e.tapIndex)
+						// uni.showToast({
+						// 	title:"点击了第" + e.tapIndex + "个选项",
+						// 	icon:"none"
+						// })
+					}
+				})
+			},
+			// 查看文件
+			seeFile(type) {
+				console.log(type)
+				if (SEE_FILE_TYPE_CHENGQING === type) {
+					console.log("查看澄清文件")
+				} else if (SEE_FILE_TYPE_ZHAOBIAO === type) {
+					console.log("查看招标文件")
+				} else if (SEE_FILE_TYPE_QINGDAN === type) {
+					console.log("查看清单文件");
+				} else if (SEE_FILE_TYPE_ZIZHI === type) {
+					console.log("查看资质文件");
+				} else if (COLLECTION_PROJECT === type) {
+					console.log("收藏项目");
+				}
 			}
 		}
 	}
@@ -403,5 +452,12 @@
 	
 	.zy-project-item-row view {
 		width: 50%;
+	}
+	
+	.zy-project-sheet-icon {
+		margin-left: 20upx;
+		position: absolute;
+		top: -2upx;
+		right: -10upx;
 	}
 </style>

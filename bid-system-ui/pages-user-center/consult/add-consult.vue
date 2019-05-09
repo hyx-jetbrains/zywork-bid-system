@@ -69,7 +69,6 @@
 		methods: {
 			// 设置当前选中的类型
 			setCurrentTagIndex(id) {
-				console.log(id)
 				this.currentTagIndex = id;
 				this.formInfo.questionTypeId = id;
 			},
