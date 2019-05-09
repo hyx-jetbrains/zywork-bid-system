@@ -92,7 +92,7 @@
 							<view class="uni-label zy-text-bold zy-resume-label">允许平台推荐</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<switch :checked="formInfo.isRecommend !== 0" @change="switchIsRecommend" />
+							<switch :checked="formInfo.isRecommend !== 0" @change="switchIsRecommend" color="#108EE9" />
 						</view>
 					</view>
 					<view class="uni-list-cell">
@@ -121,7 +121,7 @@
 							<view class="uni-label zy-text-bold zy-resume-label">开放简历</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<switch :checked="formInfo.isShow !== 0" @change="switchIsShow" ></switch>
+							<switch :checked="formInfo.isShow !== 0" @change="switchIsShow" color="#108EE9" />
 						</view>
 					</view>
 					<view class="uni-list-cell">

@@ -31,12 +31,12 @@
 					scrollLeft: 0,
 					tabIndex: 0,
 					tabbars: [
-						{id: 'certificate', name: 'CA证书'},
-						{id: 'registrationLogin', name: '注册登入'},
-						{id: 'tendering', name: '招标'},
-						{id: 'bid', name: '投标'},
-						{id: 'openingOfTender', name: '开标'},
-						{id: 'architectsAndPerformance', name: '建造师及业绩'}
+						{id: '1', name: 'CA证书'},
+						{id: '2', name: '注册登入'},
+						{id: '3', name: '招标'},
+						{id: '4', name: '投标'},
+						{id: '5', name: '开标'},
+						{id: '6', name: '建造师及业绩'}
 					]
 				},
 				oftenQuestionList: [
