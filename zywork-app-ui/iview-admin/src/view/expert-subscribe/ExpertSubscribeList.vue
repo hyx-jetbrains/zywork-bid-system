@@ -103,15 +103,6 @@
             </i-col>
           </Row>
         </FormItem>
-        <FormItem label="问题类型" prop="questionType">
-          <Select v-model="searchForm.questionType" placeholder="请选择问题类型" clearable filterable>
-            <i-option
-              v-for="item in questionTypeSelect"
-              :value="item.value"
-              :key="item.value"
-            >{{item.label}}</i-option>
-          </Select>
-        </FormItem>
         <FormItem label="回复用户编号">
           <Row>
             <i-col span="11">
@@ -304,8 +295,8 @@
         <span v-text="form.expertUserId"></span>
       </p>
       <p>
-        问题类型:
-        <span v-text="form.questionType"></span>
+        问题类型编号:
+        <span v-text="form.questionTypeId"></span>
       </p>
       <p>
         问题说明:
@@ -380,8 +371,8 @@
       @on-visible-change="changeModalVisibleResetForm('replayForm', $event)"
     >
       <Form ref="replayForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="问题类型" prop="questionType">
-          <Input v-model="form.questionType" readonly/>
+        <FormItem label="问题类型" prop="questionTypeName">
+          <Input v-model="questionTypeName" readonly/>
         </FormItem>
         <FormItem label="问题说明" prop="questionDesc">
           <Input
@@ -421,6 +412,7 @@
 
 <script>
 import * as utils from '@/api/utils'
+import * as ResponseStatus from '@/api/response-status'
 import UserList from '@/view/user/UserList.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
@@ -428,8 +420,7 @@ import {
   isActiveSelect,
   subscribeStatusSelect,
   payStatusSelect,
-  payTypeSelect,
-  questionTypeSelect
+  payTypeSelect
 } from '@/api/select'
 import * as es from '@/api/expert_subscribe'
 
@@ -480,7 +471,8 @@ export default {
         allUrl: '/expersubscribe/admin/all',
         detailUrl: '/expersubscribe/admin/one/',
         replayUrl: '/expersubscribe/admin/replay',
-				replayPriceUrl: '/expersubscribe/admin/replayPrice'
+        replayPriceUrl: '/expersubscribe/admin/replayPrice',
+        questionTypeOneUrl: '/experquestion-type/admin/one/'
       },
       page: {
         total: 0
@@ -489,7 +481,7 @@ export default {
         id: null,
         userId: null,
         expertUserId: null,
-        questionType: null,
+        questionTypeId: null,
         questionDesc: null,
         replyUserId: null,
         replyContent: null,
@@ -505,15 +497,6 @@ export default {
         isActive: null
       },
       validateRules: {
-        questionType: [
-          {
-            type: 'string',
-            min: 1,
-            max: 20,
-            message: '必须1-20个字符',
-            trigger: 'blur'
-          }
-        ],
         questionDesc: [
           {
             type: 'string',
@@ -589,7 +572,7 @@ export default {
         expertUserId: null,
         expertUserIdMin: null,
         expertUserIdMax: null,
-        questionType: null,
+        questionTypeId: null,
         questionDesc: null,
         replyUserId: null,
         replyUserIdMin: null,
@@ -717,8 +700,8 @@ export default {
             }
           },
           {
-            title: '问题类型',
-            key: 'questionType',
+            title: '问题类型编号',
+            key: 'questionTypeId',
             minWidth: 120,
             sortable: true
           },
@@ -899,11 +882,11 @@ export default {
       subscribeStatusSelect: subscribeStatusSelect,
       payStatusSelect: payStatusSelect,
       payTypeSelect: payTypeSelect,
-      questionTypeSelect: questionTypeSelect,
       descriptionAutoSize: {
         minRows: 3,
         maxRows: 5
-      }
+      },
+      questionTypeName: null,
     }
   },
   computed: {},
@@ -917,6 +900,21 @@ export default {
     showDetail(modal, row) {
       utils.showModal(this, modal)
       this.form = row
+    },
+    // 根据id获取问题类别名称
+    getQuestionTypeName(id) {
+      utils.getOneById(this.urls.questionTypeOneUrl, id)
+        .then(res => {
+          const data = res.data
+          if (data.code === ResponseStatus.OK) {
+            this.questionTypeName = data.data.name
+          } else {
+            this.$Message.error(data.message)
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err)
+        })
     },
     userOpt(itemName, row) {
       if (itemName === 'moduleDetail') {
@@ -933,6 +931,7 @@ export default {
       } else if (itemName === 'replay') {
         utils.showModal(this, 'replay')
         this.form = JSON.parse(JSON.stringify(row))
+        this.getQuestionTypeName(row.questionTypeId)
       } else if(itemName == 'settingReplyPrice') {
 				utils.showModal(this, 'replayPrice')
 				this.form = JSON.parse(JSON.stringify(row))

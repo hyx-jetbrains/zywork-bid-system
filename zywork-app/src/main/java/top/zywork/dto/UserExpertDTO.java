@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * UserExpertDTO数据传输对象类<br/>
  *
- * 创建于2019-05-06<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserExpertDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372036138047884L;
+    private static final long serialVersionUID = -9223372034842730294L;
 
     // 专家信息编号
 	private Long id;
@@ -25,8 +25,6 @@ public class UserExpertDTO extends BaseDTO {
 	private Byte gender;
 	// 年龄
 	private Integer age;
-	// 专家类别
-	private String type;
 	// 是否全职
 	private Byte isFulltime;
 	// 联系电话
@@ -46,13 +44,12 @@ public class UserExpertDTO extends BaseDTO {
 	
     public UserExpertDTO () {}
 
-    public UserExpertDTO (Long id, Long userId, String name, Byte gender, Integer age, String type, Byte isFulltime, String phone, String memo, Byte examineStatus, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public UserExpertDTO (Long id, Long userId, String name, Byte gender, Integer age, Byte isFulltime, String phone, String memo, Byte examineStatus, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
 		this.gender = gender;
 		this.age = age;
-		this.type = type;
 		this.isFulltime = isFulltime;
 		this.phone = phone;
 		this.memo = memo;
@@ -102,14 +99,6 @@ public class UserExpertDTO extends BaseDTO {
 
 	public void setAge(Integer age) {
 		this.age = age;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public Byte getIsFulltime() {
@@ -185,7 +174,6 @@ public class UserExpertDTO extends BaseDTO {
 				", name = " + name + 
 				", gender = " + gender + 
 				", age = " + age + 
-				", type = " + type + 
 				", isFulltime = " + isFulltime + 
 				", phone = " + phone + 
 				", memo = " + memo + 

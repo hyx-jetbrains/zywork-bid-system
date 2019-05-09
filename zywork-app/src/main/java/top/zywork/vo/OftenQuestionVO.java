@@ -12,20 +12,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * OftenQuestionVO值对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class OftenQuestionVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034765076595L;
+    private static final long serialVersionUID = -9223372036596020544L;
 
     // 常见问题编号
 	private Long id;
-	// 问题类别
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
-	private String type;
+	// 问题类别编号
+	private Long questionTypeId;
 	// 问题标题
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String title;
@@ -45,9 +44,9 @@ public class OftenQuestionVO extends BaseVO {
 	
     public OftenQuestionVO () {}
 
-    public OftenQuestionVO (Long id, String type, String title, String content, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public OftenQuestionVO (Long id, Long questionTypeId, String title, String content, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
-		this.type = type;
+		this.questionTypeId = questionTypeId;
 		this.title = title;
 		this.content = content;
 		this.version = version;
@@ -65,12 +64,12 @@ public class OftenQuestionVO extends BaseVO {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
 	}
 
 	public String getTitle() {
@@ -126,7 +125,7 @@ public class OftenQuestionVO extends BaseVO {
     public String toString() {
         return "OftenQuestionVO {" +
                 "id = " + id + 
-				", type = " + type + 
+				", questionTypeId = " + questionTypeId + 
 				", title = " + title + 
 				", content = " + content + 
 				", version = " + version + 

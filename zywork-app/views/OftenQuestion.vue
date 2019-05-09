@@ -30,8 +30,8 @@
     </Row>
     <Modal v-model="modal.add" title="添加" @on-visible-change="changeModalVisibleResetForm('addForm', $event)">
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="问题类别" prop="type">
-	<Input v-model="form.type" placeholder="请输入问题类别"/>
+        <FormItem label="问题类别编号" prop="questionTypeId">
+	<InputNumber v-model="form.questionTypeId" placeholder="请输入问题类别编号" style="width: 100%;"/>
 </FormItem>
 <FormItem label="问题标题" prop="title">
 	<Input v-model="form.title" placeholder="请输入问题标题"/>
@@ -48,8 +48,8 @@
     </Modal>
     <Modal v-model="modal.edit" title="修改" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="问题类别" prop="type">
-	<Input v-model="form.type" placeholder="请输入问题类别"/>
+        <FormItem label="问题类别编号" prop="questionTypeId">
+	<InputNumber v-model="form.questionTypeId" placeholder="请输入问题类别编号" style="width: 100%;"/>
 </FormItem>
 <FormItem label="问题标题" prop="title">
 	<Input v-model="form.title" placeholder="请输入问题标题"/>
@@ -80,8 +80,19 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="问题类别" prop="type">
-	<Input v-model="searchForm.type" placeholder="请输入问题类别"/>
+<FormItem label="问题类别编号"><Row>
+	<i-col span="11">
+	<FormItem prop="questionTypeIdMin">
+	<InputNumber v-model="searchForm.questionTypeIdMin" placeholder="请输入开始问题类别编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="questionTypeIdMax">
+	<InputNumber v-model="searchForm.questionTypeIdMax" placeholder="请输入结束问题类别编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
 </FormItem>
 <FormItem label="问题标题" prop="title">
 	<Input v-model="searchForm.title" placeholder="请输入问题标题"/>
@@ -155,7 +166,7 @@
     </Modal>
     <Modal v-model="modal.detail" title="详情" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
       <p>常见问题编号: <span v-text="form.id"></span></p>
-<p>问题类别: <span v-text="form.type"></span></p>
+<p>问题类别编号: <span v-text="form.questionTypeId"></span></p>
 <p>问题标题: <span v-text="form.title"></span></p>
 <p>问题解答: <span v-text="form.content"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
@@ -203,7 +214,7 @@
         },
         form: {
           id: null,
-type: null,
+questionTypeId: null,
 title: null,
 content: null,
 version: null,
@@ -213,10 +224,7 @@ isActive: null,
 
         },
         validateRules: {
-          type: [
-{type: 'string', min: 1, max: 10, message: '必须1-10个字符', trigger: 'blur'}
-],
-title: [
+          title: [
 {type: 'string', min: 1, max: 32, message: '必须1-32个字符', trigger: 'blur'}
 ],
 content: [
@@ -232,7 +240,9 @@ content: [
           id: null,
 idMin: null, 
 idMax: null, 
-type: null,
+questionTypeId: null,
+questionTypeIdMin: null, 
+questionTypeIdMax: null, 
 title: null,
 content: null,
 version: null,
@@ -274,8 +284,8 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '问题类别',
-key: 'type',
+title: '问题类别编号',
+key: 'questionTypeId',
 minWidth: 120,
 sortable: true
 },

@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * UserExpertQuery查询对象类<br/>
  *
- * 创建于2019-05-06<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserExpertQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035586769592L;
+    private static final long serialVersionUID = -9223372036723959030L;
 
     // 专家信息编号
 	private Long id;
@@ -43,8 +43,6 @@ public class UserExpertQuery extends PageQuery {
 	private Integer ageMin;
 	// 年龄（最大值）
 	private Integer ageMax;
-	// 专家类别
-	private String type;
 	// 是否全职
 	private Byte isFulltime;
 	// 是否全职（最小值）
@@ -94,7 +92,7 @@ public class UserExpertQuery extends PageQuery {
 	
     public UserExpertQuery () {}
 
-    public UserExpertQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, Byte gender, Byte genderMin, Byte genderMax, Integer age, Integer ageMin, Integer ageMax, String type, Byte isFulltime, Byte isFulltimeMin, Byte isFulltimeMax, String phone, String memo, Byte examineStatus, Byte examineStatusMin, Byte examineStatusMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public UserExpertQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, Byte gender, Byte genderMin, Byte genderMax, Integer age, Integer ageMin, Integer ageMax, Byte isFulltime, Byte isFulltimeMin, Byte isFulltimeMax, String phone, String memo, Byte examineStatus, Byte examineStatusMin, Byte examineStatusMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -108,7 +106,6 @@ public class UserExpertQuery extends PageQuery {
 		this.age = age;
 		this.ageMin = ageMin;
 		this.ageMax = ageMax;
-		this.type = type;
 		this.isFulltime = isFulltime;
 		this.isFulltimeMin = isFulltimeMin;
 		this.isFulltimeMax = isFulltimeMax;
@@ -234,14 +231,6 @@ public class UserExpertQuery extends PageQuery {
 
 	public void setAgeMax(Integer ageMax) {
 		this.ageMax = ageMax;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public Byte getIsFulltime() {
@@ -421,7 +410,6 @@ public class UserExpertQuery extends PageQuery {
 				", age = " + age + 
 				", ageMin = " + ageMin + 
 				", ageMax = " + ageMax + 
-				", type = " + type + 
 				", isFulltime = " + isFulltime + 
 				", isFulltimeMin = " + isFulltimeMin + 
 				", isFulltimeMax = " + isFulltimeMax + 

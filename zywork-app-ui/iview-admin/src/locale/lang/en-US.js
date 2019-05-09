@@ -155,6 +155,8 @@ export default {
   guarantee_manage: 'Application for Guarantee Management',
   expert_subscribe_manage: 'Expert Subscribe Management',
   user_expert: 'Expert Information',
+  user_expert_question_type_manage: 'Expert Type Management',
+  expert_question_type_manage: 'Expert Type Question Management',
   credit_enquiry: 'Credit Enquiry',
   company_info_manage: 'Company Information Management',
   company_personnel_manage: 'Company Personnel Management',

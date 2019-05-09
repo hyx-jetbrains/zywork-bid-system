@@ -6,21 +6,21 @@ import java.util.Date;
 /**
  * ConsultDTO数据传输对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ConsultDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035461517036L;
+    private static final long serialVersionUID = -9223372036196170114L;
 
     // 咨询编号
 	private Long id;
 	// 用户编号
 	private Long userId;
-	// 问题类别
-	private String consultType;
+	// 问题类别编号
+	private Long questionTypeId;
 	// 问题说明
 	private String consultDesc;
 	// 回复人编号
@@ -40,10 +40,10 @@ public class ConsultDTO extends BaseDTO {
 	
     public ConsultDTO () {}
 
-    public ConsultDTO (Long id, Long userId, String consultType, String consultDesc, Long replyUserId, String replyContent, Date replyTime, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ConsultDTO (Long id, Long userId, Long questionTypeId, String consultDesc, Long replyUserId, String replyContent, Date replyTime, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
-		this.consultType = consultType;
+		this.questionTypeId = questionTypeId;
 		this.consultDesc = consultDesc;
 		this.replyUserId = replyUserId;
 		this.replyContent = replyContent;
@@ -71,12 +71,12 @@ public class ConsultDTO extends BaseDTO {
 		this.userId = userId;
 	}
 
-	public String getConsultType() {
-		return consultType;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setConsultType(String consultType) {
-		this.consultType = consultType;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
 	}
 
 	public String getConsultDesc() {
@@ -149,7 +149,7 @@ public class ConsultDTO extends BaseDTO {
         return "ConsultDTO {" +
                 "id = " + id + 
 				", userId = " + userId + 
-				", consultType = " + consultType + 
+				", questionTypeId = " + questionTypeId + 
 				", consultDesc = " + consultDesc + 
 				", replyUserId = " + replyUserId + 
 				", replyContent = " + replyContent + 

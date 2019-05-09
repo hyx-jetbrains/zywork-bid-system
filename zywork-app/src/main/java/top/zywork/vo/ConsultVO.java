@@ -12,24 +12,23 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ConsultVO值对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ConsultVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035801099764L;
+    private static final long serialVersionUID = -9223372035550667319L;
 
     // 咨询编号
 	private Long id;
 	// 用户编号
 	@NotNull(message = "此项是必须项")
 	private Long userId;
-	// 问题类别
-	@NotBlank(message = "此项是必须项")
-	@Size(min = 1, max = 20, message = "必须是1-20个字符")
-	private String consultType;
+	// 问题类别编号
+	@NotNull(message = "此项是必须项")
+	private Long questionTypeId;
 	// 问题说明
 	@NotBlank(message = "此项是必须项")
 	@Size(min = 1, max = 255, message = "必须是1-255个字符")
@@ -55,10 +54,10 @@ public class ConsultVO extends BaseVO {
 	
     public ConsultVO () {}
 
-    public ConsultVO (Long id, Long userId, String consultType, String consultDesc, Long replyUserId, String replyContent, Date replyTime, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ConsultVO (Long id, Long userId, Long questionTypeId, String consultDesc, Long replyUserId, String replyContent, Date replyTime, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
-		this.consultType = consultType;
+		this.questionTypeId = questionTypeId;
 		this.consultDesc = consultDesc;
 		this.replyUserId = replyUserId;
 		this.replyContent = replyContent;
@@ -86,12 +85,12 @@ public class ConsultVO extends BaseVO {
 		this.userId = userId;
 	}
 
-	public String getConsultType() {
-		return consultType;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setConsultType(String consultType) {
-		this.consultType = consultType;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
 	}
 
 	public String getConsultDesc() {
@@ -164,7 +163,7 @@ public class ConsultVO extends BaseVO {
         return "ConsultVO {" +
                 "id = " + id + 
 				", userId = " + userId + 
-				", consultType = " + consultType + 
+				", questionTypeId = " + questionTypeId + 
 				", consultDesc = " + consultDesc + 
 				", replyUserId = " + replyUserId + 
 				", replyContent = " + replyContent + 

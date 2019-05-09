@@ -78,9 +78,6 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="专家类别" prop="type">
-	<Input v-model="searchForm.type" placeholder="请输入专家类别"/>
-</FormItem>
 <FormItem label="是否全职"><Row>
 	<i-col span="11">
 	<FormItem prop="isFulltimeMin">
@@ -185,7 +182,6 @@
 <p>专家姓名: <span v-text="form.name"></span></p>
 <p>性别: <span v-text="form.gender"></span></p>
 <p>年龄: <span v-text="form.age"></span></p>
-<p>专家类别: <span v-text="form.type"></span></p>
 <p>是否全职: <span v-text="form.isFulltime"></span></p>
 <p>联系电话: <span v-text="form.phone"></span></p>
 <p>个人情况介绍: <span v-text="form.memo"></span></p>
@@ -229,7 +225,6 @@ userId: null,
 name: null,
 gender: null,
 age: null,
-type: null,
 isFulltime: null,
 phone: null,
 memo: null,
@@ -258,7 +253,6 @@ genderMax: null,
 age: null,
 ageMin: null, 
 ageMax: null, 
-type: null,
 isFulltime: null,
 isFulltimeMin: null, 
 isFulltimeMax: null, 
@@ -319,12 +313,6 @@ sortable: true
 {
 title: '年龄',
 key: 'age',
-minWidth: 120,
-sortable: true
-},
-{
-title: '专家类别',
-key: 'type',
 minWidth: 120,
 sortable: true
 },

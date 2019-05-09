@@ -57,8 +57,8 @@
         <FormItem label="用户编号" prop="userId">
           <InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="问题类别" prop="consultType">
-          <Input v-model="form.consultType" placeholder="请输入问题类别"/>
+        <FormItem label="问题类别编号" prop="questionTypeId">
+          <Input v-model="form.questionTypeId" placeholder="请输入问题类别编号"/>
         </FormItem>
         <FormItem label="问题说明" prop="consultDesc">
           <Input v-model="form.consultDesc" placeholder="请输入问题说明"/>
@@ -94,8 +94,8 @@
         <FormItem label="用户编号" prop="userId">
           <InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="问题类别" prop="consultType">
-          <Input v-model="form.consultType" placeholder="请输入问题类别"/>
+        <FormItem label="问题类别编号" prop="questionTypeId">
+          <Input v-model="form.questionTypeId" placeholder="请输入问题类别编号"/>
         </FormItem>
         <FormItem label="问题说明" prop="consultDesc">
           <Input v-model="form.consultDesc" placeholder="请输入问题说明"/>
@@ -169,15 +169,6 @@
               </FormItem>
             </i-col>
           </Row>
-        </FormItem>
-        <FormItem label="问题类别" prop="consultType">
-          <Select v-model="searchForm.consultType" placeholder="请选择问题类型" clearable filterable>
-            <i-option
-              v-for="item in questionTypeSelect"
-              :value="item.value"
-              :key="item.value"
-            >{{item.label}}</i-option>
-          </Select>
         </FormItem>
         <FormItem label="回复人编号">
           <Row>
@@ -318,8 +309,8 @@
         <span v-text="form.userId"></span>
       </p>
       <p>
-        问题类别:
-        <span v-text="form.consultType"></span>
+        问题类别编号:
+        <span v-text="form.questionTypeId"></span>
       </p>
       <p>
         问题说明:
@@ -374,8 +365,8 @@
       @on-visible-change="changeModalVisibleResetForm('replayForm', $event)"
     >
       <Form ref="replayForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="问题类型" prop="consultType">
-          <Input v-model="form.consultType" readonly/>
+        <FormItem label="问题类型" prop="questionTypeName">
+          <Input v-model="questionTypeName" readonly/>
         </FormItem>
         <FormItem label="问题说明" prop="consultDesc">
           <Input
@@ -399,13 +390,13 @@
 
 <script>
 import * as utils from '@/api/utils'
+import * as ResponseStatus from '@/api/response-status'
 import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
 import * as es from '@/api/expert_subscribe'
 import {
-  isActiveSelect,
-  questionTypeSelect
+  isActiveSelect
 } from '@/api/select'
 
 export default {
@@ -462,7 +453,8 @@ export default {
         detailUrl: '/consult/admin/one/',
         activeUrl: '/consult/admin/active',
         batchActiveUrl: '/consult/admin/batch-active',
-        replayUrl: '/consult/admin/replay'
+        replayUrl: '/consult/admin/replay',
+        questionTypeOneUrl: '/experquestion-type/admin/one/'
       },
       page: {
         total: 0
@@ -470,7 +462,7 @@ export default {
       form: {
         id: null,
         userId: null,
-        consultType: null,
+        questionTypeId: null,
         consultDesc: null,
         replyUserId: null,
         replyContent: null,
@@ -489,13 +481,7 @@ export default {
             trigger: 'blur, change'
           }
         ],
-        consultType: [
-          {
-            type: 'string',
-            required: true,
-            message: '此项为必须项',
-            trigger: 'blur'
-          },
+        questionTypeId: [
           {
             type: 'string',
             min: 1,
@@ -540,7 +526,7 @@ export default {
         userId: null,
         userIdMin: null,
         userIdMax: null,
-        consultType: null,
+        questionTypeId: null,
         consultDesc: null,
         replyUserId: null,
         replyUserIdMin: null,
@@ -650,8 +636,8 @@ export default {
             }
           },
           {
-            title: '问题类别',
-            key: 'consultType',
+            title: '问题类别编号',
+            key: 'questionTypeId',
             minWidth: 180,
             sortable: true
           },
@@ -895,7 +881,7 @@ export default {
         maxRows: 5
       },
       isActiveSelect: isActiveSelect,
-      questionTypeSelect: questionTypeSelect,
+      questionTypeName: null
     }
   },
   computed: {},
@@ -935,6 +921,21 @@ export default {
         utils.batchRemove(this)
       }
     },
+    // 根据id获取问题类别名称
+    getQuestionTypeName(id) {
+      utils.getOneById(this.urls.questionTypeOneUrl, id)
+        .then(res => {
+          const data = res.data
+          if (data.code === ResponseStatus.OK) {
+            this.questionTypeName = data.data.name
+          } else {
+            this.$Message.error(data.message)
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err)
+        })
+    },
     userOpt(itemName, row) {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
@@ -953,6 +954,7 @@ export default {
       } else if (itemName === 'replay') {
         utils.showModal(this, 'replay')
         this.form = JSON.parse(JSON.stringify(row))
+        this.getQuestionTypeName(row.questionTypeId)
       }
     },
     showUserDetailModal(id) {

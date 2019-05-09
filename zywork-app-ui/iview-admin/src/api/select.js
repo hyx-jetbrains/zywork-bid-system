@@ -226,35 +226,6 @@ export const projectCity = [
     label: '上饶市'
   }
 ]
-/**
- * @description 在线提问的问题分类
- */
-export const questionType = [
-  {
-    value: 'CA证书',
-    label: 'CA证书'
-  },
-  {
-    value: '注册登陆',
-    label: '注册登陆'
-  },
-  {
-    value: '招标',
-    label: '招标'
-  },
-  {
-    value: '投标',
-    label: '投标'
-  },
-  {
-    value: '开标',
-    label: '开标'
-  },
-  {
-    value: '建造师及业绩',
-    label: '建造师及业绩'
-  }
-]
 
 /**
  * 资源类型

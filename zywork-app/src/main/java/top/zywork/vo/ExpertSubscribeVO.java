@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ExpertSubscribeVO值对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ExpertSubscribeVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035676687499L;
+    private static final long serialVersionUID = -9223372036723982407L;
 
     // 专家预约编号
 	private Long id;
@@ -28,10 +28,9 @@ public class ExpertSubscribeVO extends BaseVO {
 	private Long userId;
 	// 预约专家编号
 	private Long expertUserId;
-	// 问题类型
-	@NotBlank(message = "此项是必须项")
-	@Size(min = 1, max = 20, message = "必须是1-20个字符")
-	private String questionType;
+	// 问题类型编号
+	@NotNull(message = "此项是必须项")
+	private Long questionTypeId;
 	// 问题说明
 	@NotBlank(message = "此项是必须项")
 	@Size(min = 1, max = 255, message = "必须是1-255个字符")
@@ -71,11 +70,11 @@ public class ExpertSubscribeVO extends BaseVO {
 	
     public ExpertSubscribeVO () {}
 
-    public ExpertSubscribeVO (Long id, Long userId, Long expertUserId, String questionType, String questionDesc, Long replyUserId, String replyContent, Date replyTime, String subscribeStatus, Long price, String payStatus, String payType, String transactionNo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ExpertSubscribeVO (Long id, Long userId, Long expertUserId, Long questionTypeId, String questionDesc, Long replyUserId, String replyContent, Date replyTime, String subscribeStatus, Long price, String payStatus, String payType, String transactionNo, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.expertUserId = expertUserId;
-		this.questionType = questionType;
+		this.questionTypeId = questionTypeId;
 		this.questionDesc = questionDesc;
 		this.replyUserId = replyUserId;
 		this.replyContent = replyContent;
@@ -116,12 +115,12 @@ public class ExpertSubscribeVO extends BaseVO {
 		this.expertUserId = expertUserId;
 	}
 
-	public String getQuestionType() {
-		return questionType;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setQuestionType(String questionType) {
-		this.questionType = questionType;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
 	}
 
 	public String getQuestionDesc() {
@@ -235,7 +234,7 @@ public class ExpertSubscribeVO extends BaseVO {
                 "id = " + id + 
 				", userId = " + userId + 
 				", expertUserId = " + expertUserId + 
-				", questionType = " + questionType + 
+				", questionTypeId = " + questionTypeId + 
 				", questionDesc = " + questionDesc + 
 				", replyUserId = " + replyUserId + 
 				", replyContent = " + replyContent + 

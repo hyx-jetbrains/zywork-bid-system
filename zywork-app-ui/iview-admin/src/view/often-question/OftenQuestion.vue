@@ -55,14 +55,8 @@
       :fullscreen="true"
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="问题类别" prop="type">
-          <Select v-model="form.type" placeholder="请选择问题类别" clearable filterable>
-            <i-option
-              v-for="item in questionTypeSelect"
-              :value="item.value"
-              :key="item.value"
-            >{{item.label}}</i-option>
-          </Select>
+        <FormItem label="问题类别编号" prop="questionTypeId">
+          <Input v-model="form.questionTypeId" placeholder="请输入问题类别编号"/>
         </FormItem>
         <FormItem label="问题标题" prop="title">
           <Input v-model="form.title" placeholder="请输入问题标题"/>
@@ -83,14 +77,8 @@
       :fullscreen="true"
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="问题类别" prop="type">
-          <Select v-model="form.type" placeholder="请选择问题类别" clearable filterable>
-            <i-option
-              v-for="item in questionTypeSelect"
-              :value="item.value"
-              :key="item.value"
-            >{{item.label}}</i-option>
-          </Select>
+        <FormItem label="问题类别编号" prop="questionTypeId">
+          <Input v-model="form.questionTypeId" placeholder="请输入问题类别编号"/>
         </FormItem>
         <FormItem label="问题标题" prop="title">
           <Input v-model="form.title" placeholder="请输入问题标题"/>
@@ -128,15 +116,6 @@
               </FormItem>
             </i-col>
           </Row>
-        </FormItem>
-        <FormItem label="问题类别" prop="type">
-          <Select v-model="searchForm.type" placeholder="请选择问题类别" clearable filterable>
-            <i-option
-              v-for="item in questionTypeSelect"
-              :value="item.value"
-              :key="item.value"
-            >{{item.label}}</i-option>
-          </Select>
         </FormItem>
         <FormItem label="问题标题" prop="title">
           <Input v-model="searchForm.title" placeholder="请输入问题标题"/>
@@ -253,8 +232,8 @@
         <span v-text="form.id"></span>
       </p>
       <p>
-        问题类别:
-        <span v-text="form.type"></span>
+        问题类别编号:
+        <span v-text="form.questionTypeId"></span>
       </p>
       <p>
         问题标题:
@@ -293,7 +272,7 @@
 
 <script>
 import * as utils from '@/api/utils'
-import { isActiveSelect, questionType } from '@/api/select'
+import { isActiveSelect } from '@/api/select'
 import Editor from '_c/editor'
 import config from '@/config'
 const baseUrl =
@@ -340,7 +319,7 @@ export default {
       },
       form: {
         id: null,
-        type: null,
+        questionTypeId: null,
         title: null,
         content: null,
         version: null,
@@ -349,15 +328,6 @@ export default {
         isActive: null
       },
       validateRules: {
-        type: [
-          {
-            type: 'string',
-            min: 1,
-            max: 10,
-            message: '必须1-10个字符',
-            trigger: 'blur'
-          }
-        ],
         title: [
           {
             type: 'string',
@@ -385,7 +355,7 @@ export default {
         id: null,
         idMin: null,
         idMax: null,
-        type: null,
+        questionTypeId: null,
         title: null,
         content: null,
         version: null,
@@ -431,8 +401,8 @@ export default {
             sortable: true
           },
           {
-            title: '问题类别',
-            key: 'type',
+            title: '问题类别编号',
+            key: 'questionTypeId',
             minWidth: 120,
             sortable: true
           },
@@ -608,7 +578,6 @@ export default {
         selections: []
       },
       isActiveSelect: isActiveSelect,
-      questionTypeSelect: questionType
     }
   },
   computed: {},

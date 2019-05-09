@@ -22,9 +22,6 @@
 			<if test="age != null">
 				age,
 			</if>
-			<if test="type != null">
-				type,
-			</if>
 			<if test="isFulltime != null">
 				is_fulltime,
 			</if>
@@ -63,9 +60,6 @@
 			</if>
 			<if test="age != null">
 				#{age},
-			</if>
-			<if test="type != null">
-				#{type},
 			</if>
 			<if test="isFulltime != null">
 				#{isFulltime},
@@ -114,9 +108,6 @@
 			<if test="item.age != null">
 				age,
 			</if>
-			<if test="item.type != null">
-				type,
-			</if>
 			<if test="item.isFulltime != null">
 				is_fulltime,
 			</if>
@@ -155,9 +146,6 @@
 			</if>
 			<if test="item.age != null">
 				#{item.age},
-			</if>
-			<if test="item.type != null">
-				#{item.type},
 			</if>
 			<if test="item.isFulltime != null">
 				#{item.isFulltime},
@@ -214,9 +202,6 @@
 			<if test="age != null">
 				age = #{age},
 			</if>
-			<if test="type != null">
-				type = #{type},
-			</if>
 			<if test="isFulltime != null">
 				is_fulltime = #{isFulltime},
 			</if>
@@ -262,9 +247,6 @@
 			<if test="item.age != null">
 				age = #{item.age},
 			</if>
-			<if test="item.type != null">
-				type = #{item.type},
-			</if>
 			<if test="item.isFulltime != null">
 				is_fulltime = #{item.isFulltime},
 			</if>
@@ -299,7 +281,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, user_id as userId, name as name, gender as gender, age as age, type as type, is_fulltime as isFulltime, phone as phone, memo as memo, examine_status as examineStatus, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, user_id as userId, name as name, gender as gender, age as age, is_fulltime as isFulltime, phone as phone, memo as memo, examine_status as examineStatus, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -353,9 +335,6 @@
 		</if>
 		<if test="query != null and query.ageMin != null and query.ageMax != null">
 			and age <![CDATA[ >= ]]> #{query.ageMin} and age <![CDATA[ <= ]]> #{query.ageMax}
-		</if>
-		<if test="query != null and query.type != null and query.type != ''">
-			and type like concat('%', #{query.type}, '%')
 		</if>
 		<if test="query != null and query.isFulltime != null">
 			and is_fulltime = #{query.isFulltime}

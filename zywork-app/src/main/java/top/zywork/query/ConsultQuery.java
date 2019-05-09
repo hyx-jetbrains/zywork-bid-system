@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ConsultQuery查询对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ConsultQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035333701641L;
+    private static final long serialVersionUID = -9223372036332635360L;
 
     // 咨询编号
 	private Long id;
@@ -29,8 +29,12 @@ public class ConsultQuery extends PageQuery {
 	private Long userIdMin;
 	// 用户编号（最大值）
 	private Long userIdMax;
-	// 问题类别
-	private String consultType;
+	// 问题类别编号
+	private Long questionTypeId;
+	// 问题类别编号（最小值）
+	private Long questionTypeIdMin;
+	// 问题类别编号（最大值）
+	private Long questionTypeIdMax;
 	// 问题说明
 	private String consultDesc;
 	// 回复人编号
@@ -83,14 +87,16 @@ public class ConsultQuery extends PageQuery {
 	
     public ConsultQuery () {}
 
-    public ConsultQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String consultType, String consultDesc, Long replyUserId, Long replyUserIdMin, Long replyUserIdMax, String replyContent, Date replyTime, Date replyTimeMin, Date replyTimeMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ConsultQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long questionTypeId, Long questionTypeIdMin, Long questionTypeIdMax, String consultDesc, Long replyUserId, Long replyUserIdMin, Long replyUserIdMax, String replyContent, Date replyTime, Date replyTimeMin, Date replyTimeMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
 		this.userId = userId;
 		this.userIdMin = userIdMin;
 		this.userIdMax = userIdMax;
-		this.consultType = consultType;
+		this.questionTypeId = questionTypeId;
+		this.questionTypeIdMin = questionTypeIdMin;
+		this.questionTypeIdMax = questionTypeIdMax;
 		this.consultDesc = consultDesc;
 		this.replyUserId = replyUserId;
 		this.replyUserIdMin = replyUserIdMin;
@@ -162,12 +168,28 @@ public class ConsultQuery extends PageQuery {
 		this.userIdMax = userIdMax;
 	}
 
-	public String getConsultType() {
-		return consultType;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setConsultType(String consultType) {
-		this.consultType = consultType;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
+	}
+
+	public Long getQuestionTypeIdMin() {
+		return questionTypeIdMin;
+	}
+
+	public void setQuestionTypeIdMin(Long questionTypeIdMin) {
+		this.questionTypeIdMin = questionTypeIdMin;
+	}
+
+	public Long getQuestionTypeIdMax() {
+		return questionTypeIdMax;
+	}
+
+	public void setQuestionTypeIdMax(Long questionTypeIdMax) {
+		this.questionTypeIdMax = questionTypeIdMax;
 	}
 
 	public String getConsultDesc() {
@@ -340,7 +362,9 @@ public class ConsultQuery extends PageQuery {
 				", userId = " + userId + 
 				", userIdMin = " + userIdMin + 
 				", userIdMax = " + userIdMax + 
-				", consultType = " + consultType + 
+				", questionTypeId = " + questionTypeId + 
+				", questionTypeIdMin = " + questionTypeIdMin + 
+				", questionTypeIdMax = " + questionTypeIdMax + 
 				", consultDesc = " + consultDesc + 
 				", replyUserId = " + replyUserId + 
 				", replyUserIdMin = " + replyUserIdMin + 

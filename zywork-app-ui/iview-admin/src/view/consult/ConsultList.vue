@@ -81,9 +81,6 @@
             </i-col>
           </Row>
         </FormItem>
-        <FormItem label="问题类别" prop="consultType">
-          <Input v-model="searchForm.consultType" placeholder="请输入问题类别"/>
-        </FormItem>
         <FormItem label="问题说明" prop="consultDesc">
           <Input v-model="searchForm.consultDesc" placeholder="请输入问题说明"/>
         </FormItem>
@@ -268,8 +265,8 @@
         <span v-text="form.userId"></span>
       </p>
       <p>
-        问题类别:
-        <span v-text="form.consultType"></span>
+        问题类别编号:
+        <span v-text="form.questionTypeId"></span>
       </p>
       <p>
         问题说明:
@@ -334,7 +331,7 @@ export default {
       form: {
         id: null,
         userId: null,
-        consultType: null,
+        questionTypeId: null,
         consultDesc: null,
         replyUserId: null,
         replyContent: null,
@@ -355,7 +352,7 @@ export default {
         userId: null,
         userIdMin: null,
         userIdMax: null,
-        consultType: null,
+        questionTypeId: null,
         consultDesc: null,
         replyUserId: null,
         replyUserIdMin: null,

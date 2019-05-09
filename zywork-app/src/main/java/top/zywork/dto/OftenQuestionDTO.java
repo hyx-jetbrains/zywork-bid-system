@@ -6,19 +6,19 @@ import java.util.Date;
 /**
  * OftenQuestionDTO数据传输对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class OftenQuestionDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372034861031738L;
+    private static final long serialVersionUID = -9223372035346860121L;
 
     // 常见问题编号
 	private Long id;
-	// 问题类别
-	private String type;
+	// 问题类别编号
+	private Long questionTypeId;
 	// 问题标题
 	private String title;
 	// 问题解答
@@ -34,9 +34,9 @@ public class OftenQuestionDTO extends BaseDTO {
 	
     public OftenQuestionDTO () {}
 
-    public OftenQuestionDTO (Long id, String type, String title, String content, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public OftenQuestionDTO (Long id, Long questionTypeId, String title, String content, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
-		this.type = type;
+		this.questionTypeId = questionTypeId;
 		this.title = title;
 		this.content = content;
 		this.version = version;
@@ -54,12 +54,12 @@ public class OftenQuestionDTO extends BaseDTO {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
 	}
 
 	public String getTitle() {
@@ -115,7 +115,7 @@ public class OftenQuestionDTO extends BaseDTO {
     public String toString() {
         return "OftenQuestionDTO {" +
                 "id = " + id + 
-				", type = " + type + 
+				", questionTypeId = " + questionTypeId + 
 				", title = " + title + 
 				", content = " + content + 
 				", version = " + version + 

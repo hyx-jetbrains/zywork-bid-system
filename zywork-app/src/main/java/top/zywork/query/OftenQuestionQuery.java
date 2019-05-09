@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * OftenQuestionQuery查询对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class OftenQuestionQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035624687102L;
+    private static final long serialVersionUID = -9223372036675382333L;
 
     // 常见问题编号
 	private Long id;
@@ -23,8 +23,12 @@ public class OftenQuestionQuery extends PageQuery {
 	private Long idMin;
 	// 常见问题编号（最大值）
 	private Long idMax;
-	// 问题类别
-	private String type;
+	// 问题类别编号
+	private Long questionTypeId;
+	// 问题类别编号（最小值）
+	private Long questionTypeIdMin;
+	// 问题类别编号（最大值）
+	private Long questionTypeIdMax;
 	// 问题标题
 	private String title;
 	// 问题解答
@@ -62,11 +66,13 @@ public class OftenQuestionQuery extends PageQuery {
 	
     public OftenQuestionQuery () {}
 
-    public OftenQuestionQuery (Long id, Long idMin, Long idMax, String type, String title, String content, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public OftenQuestionQuery (Long id, Long idMin, Long idMax, Long questionTypeId, Long questionTypeIdMin, Long questionTypeIdMax, String title, String content, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
-		this.type = type;
+		this.questionTypeId = questionTypeId;
+		this.questionTypeIdMin = questionTypeIdMin;
+		this.questionTypeIdMax = questionTypeIdMax;
 		this.title = title;
 		this.content = content;
 		this.version = version;
@@ -108,12 +114,28 @@ public class OftenQuestionQuery extends PageQuery {
 		this.idMax = idMax;
 	}
 
-	public String getType() {
-		return type;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
+	}
+
+	public Long getQuestionTypeIdMin() {
+		return questionTypeIdMin;
+	}
+
+	public void setQuestionTypeIdMin(Long questionTypeIdMin) {
+		this.questionTypeIdMin = questionTypeIdMin;
+	}
+
+	public Long getQuestionTypeIdMax() {
+		return questionTypeIdMax;
+	}
+
+	public void setQuestionTypeIdMax(Long questionTypeIdMax) {
+		this.questionTypeIdMax = questionTypeIdMax;
 	}
 
 	public String getTitle() {
@@ -235,7 +257,9 @@ public class OftenQuestionQuery extends PageQuery {
                 "id = " + id + 
 				", idMin = " + idMin + 
 				", idMax = " + idMax + 
-				", type = " + type + 
+				", questionTypeId = " + questionTypeId + 
+				", questionTypeIdMin = " + questionTypeIdMin + 
+				", questionTypeIdMax = " + questionTypeIdMax + 
 				", title = " + title + 
 				", content = " + content + 
 				", version = " + version + 

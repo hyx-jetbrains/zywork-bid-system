@@ -42,9 +42,6 @@
 <FormItem label="年龄" prop="age">
 	<InputNumber v-model="form.age" placeholder="请输入年龄" style="width: 100%;"/>
 </FormItem>
-<FormItem label="专家类别" prop="type">
-	<Input v-model="form.type" placeholder="请输入专家类别"/>
-</FormItem>
 <FormItem label="是否全职" prop="isFulltime">
 	<InputNumber v-model="form.isFulltime" placeholder="请输入是否全职" style="width: 100%;"/>
 </FormItem>
@@ -77,9 +74,6 @@
 </FormItem>
 <FormItem label="年龄" prop="age">
 	<InputNumber v-model="form.age" placeholder="请输入年龄" style="width: 100%;"/>
-</FormItem>
-<FormItem label="专家类别" prop="type">
-	<Input v-model="form.type" placeholder="请输入专家类别"/>
 </FormItem>
 <FormItem label="是否全职" prop="isFulltime">
 	<InputNumber v-model="form.isFulltime" placeholder="请输入是否全职" style="width: 100%;"/>
@@ -160,9 +154,6 @@
 </FormItem>
 </i-col>
 </Row>
-</FormItem>
-<FormItem label="专家类别" prop="type">
-	<Input v-model="searchForm.type" placeholder="请输入专家类别"/>
 </FormItem>
 <FormItem label="是否全职"><Row>
 	<i-col span="11">
@@ -268,7 +259,6 @@
 <p>专家姓名: <span v-text="form.name"></span></p>
 <p>性别: <span v-text="form.gender"></span></p>
 <p>年龄: <span v-text="form.age"></span></p>
-<p>专家类别: <span v-text="form.type"></span></p>
 <p>是否全职: <span v-text="form.isFulltime"></span></p>
 <p>联系电话: <span v-text="form.phone"></span></p>
 <p>个人情况介绍: <span v-text="form.memo"></span></p>
@@ -322,7 +312,6 @@ userId: null,
 name: null,
 gender: null,
 age: null,
-type: null,
 isFulltime: null,
 phone: null,
 memo: null,
@@ -335,9 +324,6 @@ isActive: null,
         },
         validateRules: {
           name: [
-{type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
-],
-type: [
 {type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
 ],
 phone: [
@@ -366,7 +352,6 @@ genderMax: null,
 age: null,
 ageMin: null, 
 ageMax: null, 
-type: null,
 isFulltime: null,
 isFulltimeMin: null, 
 isFulltimeMax: null, 
@@ -434,12 +419,6 @@ sortable: true
 {
 title: '年龄',
 key: 'age',
-minWidth: 120,
-sortable: true
-},
-{
-title: '专家类别',
-key: 'type',
 minWidth: 120,
 sortable: true
 },

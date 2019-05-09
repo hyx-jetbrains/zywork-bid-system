@@ -33,8 +33,8 @@
         <FormItem label="用户编号" prop="userId">
 	<InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="问题类别" prop="consultType">
-	<Input v-model="form.consultType" placeholder="请输入问题类别"/>
+<FormItem label="问题类别编号" prop="questionTypeId">
+	<InputNumber v-model="form.questionTypeId" placeholder="请输入问题类别编号" style="width: 100%;"/>
 </FormItem>
 <FormItem label="问题说明" prop="consultDesc">
 	<Input v-model="form.consultDesc" placeholder="请输入问题说明"/>
@@ -60,8 +60,8 @@
         <FormItem label="用户编号" prop="userId">
 	<InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="问题类别" prop="consultType">
-	<Input v-model="form.consultType" placeholder="请输入问题类别"/>
+<FormItem label="问题类别编号" prop="questionTypeId">
+	<InputNumber v-model="form.questionTypeId" placeholder="请输入问题类别编号" style="width: 100%;"/>
 </FormItem>
 <FormItem label="问题说明" prop="consultDesc">
 	<Input v-model="form.consultDesc" placeholder="请输入问题说明"/>
@@ -112,8 +112,19 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="问题类别" prop="consultType">
-	<Input v-model="searchForm.consultType" placeholder="请输入问题类别"/>
+<FormItem label="问题类别编号"><Row>
+	<i-col span="11">
+	<FormItem prop="questionTypeIdMin">
+	<InputNumber v-model="searchForm.questionTypeIdMin" placeholder="请输入开始问题类别编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="questionTypeIdMax">
+	<InputNumber v-model="searchForm.questionTypeIdMax" placeholder="请输入结束问题类别编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
 </FormItem>
 <FormItem label="问题说明" prop="consultDesc">
 	<Input v-model="searchForm.consultDesc" placeholder="请输入问题说明"/>
@@ -216,7 +227,7 @@
     <Modal v-model="modal.detail" title="详情" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
       <p>咨询编号: <span v-text="form.id"></span></p>
 <p>用户编号: <span v-text="form.userId"></span></p>
-<p>问题类别: <span v-text="form.consultType"></span></p>
+<p>问题类别编号: <span v-text="form.questionTypeId"></span></p>
 <p>问题说明: <span v-text="form.consultDesc"></span></p>
 <p>回复人编号: <span v-text="form.replyUserId"></span></p>
 <p>回复内容: <span v-text="form.replyContent"></span></p>
@@ -267,7 +278,7 @@
         form: {
           id: null,
 userId: null,
-consultType: null,
+questionTypeId: null,
 consultDesc: null,
 replyUserId: null,
 replyContent: null,
@@ -282,9 +293,8 @@ isActive: null,
           userId: [
 {type: 'integer', required: true, message: '此项为必须项', trigger: 'blur, change'}
 ],
-consultType: [
-{type: 'string', required: true, message: '此项为必须项', trigger: 'blur'},
-{type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
+questionTypeId: [
+{type: 'integer', required: true, message: '此项为必须项', trigger: 'blur, change'}
 ],
 consultDesc: [
 {type: 'string', required: true, message: '此项为必须项', trigger: 'blur'},
@@ -306,7 +316,9 @@ idMax: null,
 userId: null,
 userIdMin: null, 
 userIdMax: null, 
-consultType: null,
+questionTypeId: null,
+questionTypeIdMin: null, 
+questionTypeIdMax: null, 
 consultDesc: null,
 replyUserId: null,
 replyUserIdMin: null, 
@@ -360,8 +372,8 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '问题类别',
-key: 'consultType',
+title: '问题类别编号',
+key: 'questionTypeId',
 minWidth: 120,
 sortable: true
 },

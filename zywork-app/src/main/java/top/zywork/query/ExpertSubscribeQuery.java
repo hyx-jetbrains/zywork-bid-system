@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ExpertSubscribeQuery查询对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ExpertSubscribeQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036817494497L;
+    private static final long serialVersionUID = -9223372035366446647L;
 
     // 专家预约编号
 	private Long id;
@@ -35,8 +35,12 @@ public class ExpertSubscribeQuery extends PageQuery {
 	private Long expertUserIdMin;
 	// 预约专家编号（最大值）
 	private Long expertUserIdMax;
-	// 问题类型
-	private String questionType;
+	// 问题类型编号
+	private Long questionTypeId;
+	// 问题类型编号（最小值）
+	private Long questionTypeIdMin;
+	// 问题类型编号（最大值）
+	private Long questionTypeIdMax;
 	// 问题说明
 	private String questionDesc;
 	// 回复用户编号
@@ -103,7 +107,7 @@ public class ExpertSubscribeQuery extends PageQuery {
 	
     public ExpertSubscribeQuery () {}
 
-    public ExpertSubscribeQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long expertUserId, Long expertUserIdMin, Long expertUserIdMax, String questionType, String questionDesc, Long replyUserId, Long replyUserIdMin, Long replyUserIdMax, String replyContent, Date replyTime, Date replyTimeMin, Date replyTimeMax, String subscribeStatus, Long price, Long priceMin, Long priceMax, String payStatus, String payType, String transactionNo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ExpertSubscribeQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long expertUserId, Long expertUserIdMin, Long expertUserIdMax, Long questionTypeId, Long questionTypeIdMin, Long questionTypeIdMax, String questionDesc, Long replyUserId, Long replyUserIdMin, Long replyUserIdMax, String replyContent, Date replyTime, Date replyTimeMin, Date replyTimeMax, String subscribeStatus, Long price, Long priceMin, Long priceMax, String payStatus, String payType, String transactionNo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -113,7 +117,9 @@ public class ExpertSubscribeQuery extends PageQuery {
 		this.expertUserId = expertUserId;
 		this.expertUserIdMin = expertUserIdMin;
 		this.expertUserIdMax = expertUserIdMax;
-		this.questionType = questionType;
+		this.questionTypeId = questionTypeId;
+		this.questionTypeIdMin = questionTypeIdMin;
+		this.questionTypeIdMax = questionTypeIdMax;
 		this.questionDesc = questionDesc;
 		this.replyUserId = replyUserId;
 		this.replyUserIdMin = replyUserIdMin;
@@ -216,12 +222,28 @@ public class ExpertSubscribeQuery extends PageQuery {
 		this.expertUserIdMax = expertUserIdMax;
 	}
 
-	public String getQuestionType() {
-		return questionType;
+	public Long getQuestionTypeId() {
+		return questionTypeId;
 	}
 
-	public void setQuestionType(String questionType) {
-		this.questionType = questionType;
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
+	}
+
+	public Long getQuestionTypeIdMin() {
+		return questionTypeIdMin;
+	}
+
+	public void setQuestionTypeIdMin(Long questionTypeIdMin) {
+		this.questionTypeIdMin = questionTypeIdMin;
+	}
+
+	public Long getQuestionTypeIdMax() {
+		return questionTypeIdMax;
+	}
+
+	public void setQuestionTypeIdMax(Long questionTypeIdMax) {
+		this.questionTypeIdMax = questionTypeIdMax;
 	}
 
 	public String getQuestionDesc() {
@@ -453,7 +475,9 @@ public class ExpertSubscribeQuery extends PageQuery {
 				", expertUserId = " + expertUserId + 
 				", expertUserIdMin = " + expertUserIdMin + 
 				", expertUserIdMax = " + expertUserIdMax + 
-				", questionType = " + questionType + 
+				", questionTypeId = " + questionTypeId + 
+				", questionTypeIdMin = " + questionTypeIdMin + 
+				", questionTypeIdMax = " + questionTypeIdMax + 
 				", questionDesc = " + questionDesc + 
 				", replyUserId = " + replyUserId + 
 				", replyUserIdMin = " + replyUserIdMin + 

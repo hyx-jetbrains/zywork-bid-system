@@ -36,8 +36,8 @@
 <FormItem label="预约专家编号" prop="expertUserId">
 	<InputNumber v-model="form.expertUserId" placeholder="请输入预约专家编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="问题类型" prop="questionType">
-	<Input v-model="form.questionType" placeholder="请输入问题类型"/>
+<FormItem label="问题类型编号" prop="questionTypeId">
+	<InputNumber v-model="form.questionTypeId" placeholder="请输入问题类型编号" style="width: 100%;"/>
 </FormItem>
 <FormItem label="问题说明" prop="questionDesc">
 	<Input v-model="form.questionDesc" placeholder="请输入问题说明"/>
@@ -81,8 +81,8 @@
 <FormItem label="预约专家编号" prop="expertUserId">
 	<InputNumber v-model="form.expertUserId" placeholder="请输入预约专家编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="问题类型" prop="questionType">
-	<Input v-model="form.questionType" placeholder="请输入问题类型"/>
+<FormItem label="问题类型编号" prop="questionTypeId">
+	<InputNumber v-model="form.questionTypeId" placeholder="请输入问题类型编号" style="width: 100%;"/>
 </FormItem>
 <FormItem label="问题说明" prop="questionDesc">
 	<Input v-model="form.questionDesc" placeholder="请输入问题说明"/>
@@ -162,8 +162,19 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="问题类型" prop="questionType">
-	<Input v-model="searchForm.questionType" placeholder="请输入问题类型"/>
+<FormItem label="问题类型编号"><Row>
+	<i-col span="11">
+	<FormItem prop="questionTypeIdMin">
+	<InputNumber v-model="searchForm.questionTypeIdMin" placeholder="请输入开始问题类型编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="questionTypeIdMax">
+	<InputNumber v-model="searchForm.questionTypeIdMax" placeholder="请输入结束问题类型编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
 </FormItem>
 <FormItem label="问题说明" prop="questionDesc">
 	<Input v-model="searchForm.questionDesc" placeholder="请输入问题说明"/>
@@ -293,7 +304,7 @@
       <p>专家预约编号: <span v-text="form.id"></span></p>
 <p>用户编号: <span v-text="form.userId"></span></p>
 <p>预约专家编号: <span v-text="form.expertUserId"></span></p>
-<p>问题类型: <span v-text="form.questionType"></span></p>
+<p>问题类型编号: <span v-text="form.questionTypeId"></span></p>
 <p>问题说明: <span v-text="form.questionDesc"></span></p>
 <p>回复用户编号: <span v-text="form.replyUserId"></span></p>
 <p>回复内容: <span v-text="form.replyContent"></span></p>
@@ -350,7 +361,7 @@
           id: null,
 userId: null,
 expertUserId: null,
-questionType: null,
+questionTypeId: null,
 questionDesc: null,
 replyUserId: null,
 replyContent: null,
@@ -370,9 +381,8 @@ isActive: null,
           userId: [
 {type: 'integer', required: true, message: '此项为必须项', trigger: 'blur, change'}
 ],
-questionType: [
-{type: 'string', required: true, message: '此项为必须项', trigger: 'blur'},
-{type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
+questionTypeId: [
+{type: 'integer', required: true, message: '此项为必须项', trigger: 'blur, change'}
 ],
 questionDesc: [
 {type: 'string', required: true, message: '此项为必须项', trigger: 'blur'},
@@ -409,7 +419,9 @@ userIdMax: null,
 expertUserId: null,
 expertUserIdMin: null, 
 expertUserIdMax: null, 
-questionType: null,
+questionTypeId: null,
+questionTypeIdMin: null, 
+questionTypeIdMax: null, 
 questionDesc: null,
 replyUserId: null,
 replyUserIdMin: null, 
@@ -476,8 +488,8 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '问题类型',
-key: 'questionType',
+title: '问题类型编号',
+key: 'questionTypeId',
 minWidth: 120,
 sortable: true
 },

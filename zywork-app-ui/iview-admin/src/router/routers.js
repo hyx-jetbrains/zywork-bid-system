@@ -248,7 +248,25 @@ export default [
 			    icon: 'ios-person'
 			  },
 			  component: () => import('@/view/user-expert/UserExpert.vue')
-			},
+      },
+      {
+        path: 'UserExpertQuestionType',
+        name: 'user_expert_question_type_manage',
+        meta: {
+          title: '专家类型管理',
+          icon: 'ios-person'
+        },
+        component: () => import('@/view/user-expert-question-type/UserExpertQuestionType.vue')
+      },
+      {
+        path: 'ExpertQuestionType',
+        name: 'expert_question_type_manage',
+        meta: {
+          title: '专家问题类型管理',
+          icon: 'ios-person'
+        },
+        component: () => import('@/view/expert-question-type/ExpertQuestionType.vue')
+      },
     ]
   },
   {

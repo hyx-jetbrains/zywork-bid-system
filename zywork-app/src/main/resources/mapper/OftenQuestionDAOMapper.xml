@@ -10,8 +10,8 @@
     	</selectKey>
         insert into t_often_question
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="type != null">
-				type,
+            <if test="questionTypeId != null">
+				question_type_id,
 			</if>
 			<if test="title != null">
 				title,
@@ -34,8 +34,8 @@
 			
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="type != null">
-				#{type},
+            <if test="questionTypeId != null">
+				#{questionTypeId},
 			</if>
 			<if test="title != null">
 				#{title},
@@ -66,8 +66,8 @@
     	<foreach collection="list" item="item" separator=";">
             insert into t_often_question
             <trim prefix="(" suffix=")" suffixOverrides=",">
-                <if test="item.type != null">
-				type,
+                <if test="item.questionTypeId != null">
+				question_type_id,
 			</if>
 			<if test="item.title != null">
 				title,
@@ -90,8 +90,8 @@
 			
             </trim>
             <trim prefix="values (" suffix=")" suffixOverrides=",">
-                <if test="item.type != null">
-				#{item.type},
+                <if test="item.questionTypeId != null">
+				#{item.questionTypeId},
 			</if>
 			<if test="item.title != null">
 				#{item.title},
@@ -130,8 +130,8 @@
     <update id="update" parameterType="oftenQuestionDO">
         update t_often_question
         <set>
-            <if test="type != null">
-				type = #{type},
+            <if test="questionTypeId != null">
+				question_type_id = #{questionTypeId},
 			</if>
 			<if test="title != null">
 				title = #{title},
@@ -160,8 +160,8 @@
     	<foreach collection="list" item="item" separator=";">
             update t_often_question
             <set>
-                <if test="item.type != null">
-				type = #{item.type},
+                <if test="item.questionTypeId != null">
+				question_type_id = #{item.questionTypeId},
 			</if>
 			<if test="item.title != null">
 				title = #{item.title},
@@ -191,7 +191,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, type as type, title as title, content as content, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, question_type_id as questionTypeId, title as title, content as content, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -207,8 +207,17 @@
 		<if test="query != null and query.idMin != null and query.idMax != null">
 			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
 		</if>
-		<if test="query != null and query.type != null and query.type != ''">
-			and type like concat('%', #{query.type}, '%')
+		<if test="query != null and query.questionTypeId != null">
+			and question_type_id = #{query.questionTypeId}
+		</if>
+		<if test="query != null and query.questionTypeIdMin != null and query.questionTypeIdMax == null">
+			and question_type_id <![CDATA[ >= ]]> #{query.questionTypeIdMin}
+		</if>
+		<if test="query != null and query.questionTypeIdMin == null and query.questionTypeIdMax != null">
+			and question_type_id <![CDATA[ <= ]]> #{query.questionTypeIdMax}
+		</if>
+		<if test="query != null and query.questionTypeIdMin != null and query.questionTypeIdMax != null">
+			and question_type_id <![CDATA[ >= ]]> #{query.questionTypeIdMin} and question_type_id <![CDATA[ <= ]]> #{query.questionTypeIdMax}
 		</if>
 		<if test="query != null and query.title != null and query.title != ''">
 			and title like concat('%', #{query.title}, '%')
