@@ -68,6 +68,9 @@
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
         </FormItem>
+        <FormItem label="源地址" prop="sourceUrl">
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+        </FormItem>
         <FormItem label="公示详情" prop="announceDesc">
           <editor ref="editorAdd" :value="form.announceDesc" @on-change="handleChange"/>
         </FormItem>
@@ -96,6 +99,9 @@
         </FormItem>
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
+        </FormItem>
+        <FormItem label="源地址" prop="sourceUrl">
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
         </FormItem>
         <FormItem label="公示详情" prop="announceDesc">
           <editor ref="editorEdit" :value="form.announceDesc" @on-change="handleChange"/>
@@ -290,6 +296,10 @@
         <span v-text="form.thirdCandidate"></span>
       </p>
       <p>
+        源地址：
+        <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
+      </p>
+      <p>
         版本号:
         <span v-text="form.version"></span>
       </p>
@@ -386,6 +396,7 @@ export default {
         noticeTime: null,
         clickCount: null,
         isElectronic: null,
+        sourceUrl: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -626,6 +637,25 @@ export default {
             key: 'thirdCandidate',
             minWidth: 120,
             sortable: true
+          },
+          {
+            title: '源地址',
+            key: 'sourceUrl',
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              return h(
+                'a',
+                {
+                  attrs: {
+                    href: row.sourceUrl,
+                    target: '_blank'
+                  }
+                },
+                row.sourceUrl
+              )
+            }
           },
           {
             title: '版本号',

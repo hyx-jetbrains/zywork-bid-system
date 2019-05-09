@@ -45,6 +45,9 @@
 <FormItem label="第三候选人" prop="thirdCandidate">
 	<Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
 </FormItem>
+<FormItem label="源地址" prop="sourceUrl">
+	<Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
+</FormItem>
 
       </Form>
       <div slot="footer">
@@ -68,6 +71,9 @@
 </FormItem>
 <FormItem label="第三候选人" prop="thirdCandidate">
 	<Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
+</FormItem>
+<FormItem label="源地址" prop="sourceUrl">
+	<Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
 </FormItem>
 
       </Form>
@@ -117,6 +123,9 @@
 </FormItem>
 <FormItem label="第三候选人" prop="thirdCandidate">
 	<Input v-model="searchForm.thirdCandidate" placeholder="请输入第三候选人"/>
+</FormItem>
+<FormItem label="源地址" prop="sourceUrl">
+	<Input v-model="searchForm.sourceUrl" placeholder="请输入源地址"/>
 </FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
@@ -189,6 +198,7 @@
 <p>第一候选人: <span v-text="form.firstCandidate"></span></p>
 <p>第二候选人: <span v-text="form.secondCandidate"></span></p>
 <p>第三候选人: <span v-text="form.thirdCandidate"></span></p>
+<p>源地址: <span v-text="form.sourceUrl"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
 <p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -239,6 +249,7 @@ announceDesc: null,
 firstCandidate: null,
 secondCandidate: null,
 thirdCandidate: null,
+sourceUrl: null,
 version: null,
 createTime: null,
 updateTime: null,
@@ -258,6 +269,9 @@ secondCandidate: [
 thirdCandidate: [
 {type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
 ],
+sourceUrl: [
+{type: 'string', min: 1, max: 300, message: '必须1-300个字符', trigger: 'blur'}
+],
 
         },
         searchForm: {
@@ -275,6 +289,7 @@ announceDesc: null,
 firstCandidate: null,
 secondCandidate: null,
 thirdCandidate: null,
+sourceUrl: null,
 version: null,
 versionMin: null, 
 versionMax: null, 
@@ -340,6 +355,12 @@ sortable: true
 {
 title: '第三候选人',
 key: 'thirdCandidate',
+minWidth: 120,
+sortable: true
+},
+{
+title: '源地址',
+key: 'sourceUrl',
 minWidth: 120,
 sortable: true
 },
