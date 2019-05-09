@@ -1391,7 +1391,7 @@ INSERT INTO `t_notice` VALUES (1, '公告标题', '公告摘要', '公告内容<
 DROP TABLE IF EXISTS `t_often_question`;
 CREATE TABLE `t_often_question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '常见问题编号',
-  `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '问题类别',
+  `question_type_id` bigint(20) DEFAULT NULL COMMENT '问题类别编号',
   `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '问题标题',
   `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '问题解答',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
