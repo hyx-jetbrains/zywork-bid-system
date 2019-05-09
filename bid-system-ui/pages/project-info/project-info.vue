@@ -61,15 +61,35 @@
 							<view class="zy-text-mini zy-text-warning" v-else>开标时间：暂无</view>
 						</view>
 					</view>
-					<view>
+					<!-- 全部和公告中内容部分 -->
+					<view v-if="projectStatus.current === 0 || projectStatus.current === 1">
 						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
 						<view class="zy-project-item-row">
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkWay}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money / 100}}</view>
 						</view>
+					</view>
+					<!-- 待开标内容部分 -->
+					<view v-else-if="projectStatus.current === 2">
+						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
+						<view class="zy-project-item-row">
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.assurePrice / 100}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.offerPrice / 100}}</view>
+						</view>
+						<view class="zy-project-item-row">
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.constructionPeriod}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.openMarkAddr}}</view>
+						</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.otherDemand}}</view>
+					</view>
+					<!-- 已开标内容部分 -->
+					<view v-else-if="projectStatus.current === 3">
+						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.inMarkComp}}</view>
 					</view>
 				</view>
 			</view>
@@ -202,7 +222,13 @@
 						status: '公告中',
 						time: null,
 						checkWay: '资格后审',
-						money: 3000
+						money: 300000,
+						assurePrice: 20000,
+						offerPrice: 200000000,
+						constructionPeriod: 30,
+						openMarkAddr: '开标室一',
+						otherDemand: '没有其他要求',
+						inMarkComp: '某公司'
 					},
 					{
 						title: '赣州中学工程招标',
@@ -214,7 +240,13 @@
 						status: '待开标',
 						time: '2019-04-25 10:30',
 						checkWay: '资格后审',
-						money: 3000
+						money: 300000,
+						assurePrice: 20000,
+						offerPrice: 200000000,
+						constructionPeriod: 30,
+						openMarkAddr: '开标室一',
+						otherDemand: '没有其他要求',
+						inMarkComp: '某公司'
 					}
 				],
 				pager: {
