@@ -219,8 +219,8 @@
 			},
 			// 点击分段器触发
 			onClickItem(index) {
-				if (this.current !== index) {
-					this.current = index
+				if (this.projectStatus.current !== index) {
+					this.projectStatus.current = index
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {

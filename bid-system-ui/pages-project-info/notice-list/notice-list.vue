@@ -1,10 +1,14 @@
 <template>
 	<view>
 		<view v-if="notices.length > 0" class="zy-page-list">
-			<view v-for="(notice, index) in notices" :key="index" class="zy-page-list-item" @click="toNoticeDetail">
-				<view class="zy-text-big zy-text-bold">{{notice.title}}</view>
-				<view class="zy-notice-summary zy-overflow-hidden">{{notice.summary}}</view>
-				<view class="zy-text-small zy-text-info">{{notice.createTime}}</view>
+			<view v-for="(notice, index) in notices" :key="index" class="zy-page-list-item zy-disable-flex" @click="toNoticeDetail">
+				<view>
+					<view class="zy-text-big zy-text-bold zy-notice-title zy-overflow-hidden">{{notice.title}}</view>
+					<view class="zy-text-small zy-text-info">{{notice.createTime}}</view>
+				</view>
+				<view class="zy-disable-flex-right">
+					<uni-tag text="查看" type="error" size="small" :inverted="true" :circle="true" @click="toNoticeDetail"></uni-tag>
+				</view>
 			</view>
 		</view>
 		<zywork-no-data v-else text="暂无头条"></zywork-no-data>
@@ -13,15 +17,17 @@
 
 <script>
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	export default {
 		components: {
-			zyworkNoData
+			zyworkNoData,
+			uniTag
 		},
 		data() {
 			return {
 				notices: [
 					{
-						title: '头条标题',
+						title: '头条标题长标题长标题长标题长标题长标题长标题长标题长标题长标题长标题长标题',
 						createTime: '2019-04-28 10:30:00'
 					},
 					{
@@ -44,4 +50,8 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+	
+	.zy-notice-title {
+		width: 600upx;
+	}
 </style>

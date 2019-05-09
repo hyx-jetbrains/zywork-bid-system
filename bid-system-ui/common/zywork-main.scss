@@ -205,3 +205,21 @@ button[type=primary][plain] {
 .zy-position-relative {
 	position: relative;
 }
+
+.zy-detail-card {
+	background-color: #FFFFFF;
+	margin: 20upx;
+	padding: 20upx;
+}
+.zy-detail-card-title {
+	text-align: center;
+	padding-bottom: 20upx;
+}
+.zy-detail-card-type {
+	margin-left: 10upx;
+	color: $primary-color;
+}
+.zy-detail-card-time {
+	text-align: right;
+	margin: 20upx 20upx;
+}
