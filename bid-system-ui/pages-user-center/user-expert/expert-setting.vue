@@ -16,7 +16,7 @@
 							<view class="uni-label zy-text-bold">性别</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<picker @change="chooseGender" :value="formInfo.gender" :range="genderArray">
+							<picker @change="chooseGender" :range="genderArray">
 								<view class="zy-disable-flex">
 									<text class="zy-picker zy-text-info">{{genderArray[formInfo.gender]}}</text>
 									<zywork-icon type="iconxiangxia"/>
@@ -59,7 +59,7 @@
 							<view class="uni-label zy-text-bold">申请类型</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<picker @change="chooseFulltime" :value="formInfo.isFulltime" :range="fulltimeArray">
+							<picker @change="chooseFulltime" :range="fulltimeArray">
 								<view class="zy-disable-flex">
 									<text class="zy-picker zy-text-info">{{fulltimeArray[formInfo.isFulltime]}}</text>
 									<zywork-icon type="iconxiangxia"/>
