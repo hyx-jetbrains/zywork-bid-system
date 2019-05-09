@@ -65,9 +65,9 @@
 				</view>
 			</view>
 		</view>
-			<view class="zy-record-card-left"></view>
-			<view class="zy-record-card-right"></view>
-		<view class="zy-pay-button">
+		<view class="zy-record-card-left"></view>
+		<view class="zy-record-card-right"></view>
+		<view class="zy-bottom-button">
 			<button type="primary" @click="payRecord">立即支付</button>
 		</view>
 	</view>
@@ -235,10 +235,5 @@
 	.zy-record-card-item-border {
 		border-bottom: 2upx solid $border-color;
 		margin: 80upx 30upx;
-	}
-	.zy-pay-button {
-		position: absolute;
-		bottom: 0;
-		width: 100%;
 	}
 </style>
