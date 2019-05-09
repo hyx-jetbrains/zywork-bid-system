@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * CompanyDTO数据传输对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class CompanyDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035504471025L;
+    private static final long serialVersionUID = -9223372035844587301L;
 
     // 企业编号
 	private Long id;
@@ -47,6 +47,8 @@ public class CompanyDTO extends BaseDTO {
 	private String businessScope;
 	// 可承担业务
 	private String affordableBusiness;
+	// 源地址
+	private String sourceUrl;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -58,7 +60,7 @@ public class CompanyDTO extends BaseDTO {
 	
     public CompanyDTO () {}
 
-    public CompanyDTO (Long id, Byte jurisdictionType, String city, String compType, String industryType, String compName, String legalPerson, String legalPersonPhone, String regAddress, String responsible, String responsiblePhone, String compPhone, String compAddr, String regCapital, String businessScope, String affordableBusiness, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public CompanyDTO (Long id, Byte jurisdictionType, String city, String compType, String industryType, String compName, String legalPerson, String legalPersonPhone, String regAddress, String responsible, String responsiblePhone, String compPhone, String compAddr, String regCapital, String businessScope, String affordableBusiness, String sourceUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.jurisdictionType = jurisdictionType;
 		this.city = city;
@@ -75,6 +77,7 @@ public class CompanyDTO extends BaseDTO {
 		this.regCapital = regCapital;
 		this.businessScope = businessScope;
 		this.affordableBusiness = affordableBusiness;
+		this.sourceUrl = sourceUrl;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -210,6 +213,14 @@ public class CompanyDTO extends BaseDTO {
 		this.affordableBusiness = affordableBusiness;
 	}
 
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -262,6 +273,7 @@ public class CompanyDTO extends BaseDTO {
 				", regCapital = " + regCapital + 
 				", businessScope = " + businessScope + 
 				", affordableBusiness = " + affordableBusiness + 
+				", sourceUrl = " + sourceUrl + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

@@ -16,6 +16,10 @@
       <p>注册资本: <span v-text="form.regCapital"></span></p>
       <p>经营范围: <span v-text="form.businessScope"></span></p>
       <p>可承担业务: <span v-text="form.affordableBusiness"></span></p>
+      <p>
+        源地址：
+        <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
+      </p>
       <p>版本号: <span v-text="form.version"></span></p>
       <p>创建时间: <span v-text="form.createTime"></span></p>
       <p>更新时间: <span v-text="form.updateTime"></span></p>

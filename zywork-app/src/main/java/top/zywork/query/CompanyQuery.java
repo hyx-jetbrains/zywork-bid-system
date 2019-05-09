@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * CompanyQuery查询对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-09<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class CompanyQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372034738121633L;
+    private static final long serialVersionUID = -9223372036674049208L;
 
     // 企业编号
 	private Long id;
@@ -57,6 +57,8 @@ public class CompanyQuery extends PageQuery {
 	private String businessScope;
 	// 可承担业务
 	private String affordableBusiness;
+	// 源地址
+	private String sourceUrl;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -90,7 +92,7 @@ public class CompanyQuery extends PageQuery {
 	
     public CompanyQuery () {}
 
-    public CompanyQuery (Long id, Long idMin, Long idMax, Byte jurisdictionType, Byte jurisdictionTypeMin, Byte jurisdictionTypeMax, String city, String compType, String industryType, String compName, String legalPerson, String legalPersonPhone, String regAddress, String responsible, String responsiblePhone, String compPhone, String compAddr, String regCapital, String businessScope, String affordableBusiness, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public CompanyQuery (Long id, Long idMin, Long idMax, Byte jurisdictionType, Byte jurisdictionTypeMin, Byte jurisdictionTypeMax, String city, String compType, String industryType, String compName, String legalPerson, String legalPersonPhone, String regAddress, String responsible, String responsiblePhone, String compPhone, String compAddr, String regCapital, String businessScope, String affordableBusiness, String sourceUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -111,6 +113,7 @@ public class CompanyQuery extends PageQuery {
 		this.regCapital = regCapital;
 		this.businessScope = businessScope;
 		this.affordableBusiness = affordableBusiness;
+		this.sourceUrl = sourceUrl;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -286,6 +289,14 @@ public class CompanyQuery extends PageQuery {
 		this.affordableBusiness = affordableBusiness;
 	}
 
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -406,6 +417,7 @@ public class CompanyQuery extends PageQuery {
 				", regCapital = " + regCapital + 
 				", businessScope = " + businessScope + 
 				", affordableBusiness = " + affordableBusiness + 
+				", sourceUrl = " + sourceUrl + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

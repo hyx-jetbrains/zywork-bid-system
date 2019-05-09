@@ -130,7 +130,9 @@
 						:autosize="descriptionAutoSize"
 						placeholder="请输入可承担业务" />
 				</FormItem>
-
+        <FormItem label="源地址" prop="sourceUrl">
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+        </FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="resetFormCancelModal('addForm', 'add')">取消</Button>
@@ -229,7 +231,9 @@
 						:autosize="descriptionAutoSize"
 						placeholder="请输入可承担业务" />
 				</FormItem>
-
+        <FormItem label="源地址" prop="sourceUrl">
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+        </FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="resetFormCancelModal('editForm', 'edit')">取消</Button>
@@ -406,6 +410,10 @@
 			<p>注册资本: <span v-text="form.regCapital"></span></p>
 			<p>经营范围: <span v-text="form.businessScope"></span></p>
 			<p>可承担业务: <span v-text="form.affordableBusiness"></span></p>
+       <p>
+        源地址：
+        <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
+      </p>
 			<p>版本号: <span v-text="form.version"></span></p>
 			<p>创建时间: <span v-text="form.createTime"></span></p>
 			<p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -479,7 +487,8 @@
 					compAddr: null,
 					regCapital: null,
 					businessScope: null,
-					affordableBusiness: null,
+          affordableBusiness: null,
+          sourceUrl: null,
 					version: null,
 					createTime: null,
 					updateTime: null,
@@ -755,7 +764,26 @@
 							key: 'affordableBusiness',
 							minWidth: 350,
 							sortable: true
-						},
+            },
+            {
+            title: '源地址',
+            key: 'sourceUrl',
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              return h(
+                'a',
+                {
+                  attrs: {
+                    href: row.sourceUrl,
+                    target: '_blank'
+                  }
+                },
+                row.sourceUrl
+              )
+            }
+          },
 						{
 							title: '版本号',
 							key: 'version',
@@ -873,7 +901,11 @@
 					],
 					tableDetails: [],
 					selections: []
-				}
+        },
+        descriptionAutoSize: {
+          minRows: 3,
+          maxRows: 5
+        },
 			}
 		},
 		computed: {},
