@@ -308,6 +308,7 @@ sortable: true
       },
       confirmSelection() {
         // 确认选择的逻辑
+				this.$emit("confirmExpertQuestionSelection", this.table.currentRow.id)
       }
     }
   }

@@ -56,7 +56,9 @@
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="问题类别编号" prop="questionTypeId">
-          <Input v-model="form.questionTypeId" placeholder="请输入问题类别编号"/>
+					<span v-text="form.questionTypeId"></span>
+					&nbsp;
+					<Button @click="showModal('questionTypeChoice')" type="text">选择问题类别</Button>&nbsp;
         </FormItem>
         <FormItem label="问题标题" prop="title">
           <Input v-model="form.title" placeholder="请输入问题标题"/>
@@ -78,7 +80,9 @@
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="问题类别编号" prop="questionTypeId">
-          <Input v-model="form.questionTypeId" placeholder="请输入问题类别编号"/>
+          <span v-text="form.questionTypeId"></span>
+          &nbsp;
+          <Button @click="showModal('questionTypeChoice')" type="text">选择问题类别</Button>&nbsp;
         </FormItem>
         <FormItem label="问题标题" prop="title">
           <Input v-model="form.title" placeholder="请输入问题标题"/>
@@ -267,12 +271,34 @@
     >
       <span v-html="form.content"></span>
     </Modal>
+		
+		<Modal :transfer="false" fullscreen v-model="modal.questionTypeChoice" title="选择问题类型">
+		  <expertQuestionType-list-single ref="ExpertQuestionTypeListSingle" v-on:confirmExpertQuestionSelection="confirmExpertQuestion"/>
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('questionTypeChoice')">取消</Button>
+		  </div>
+		</Modal>
+		
+		<Modal :transfer="false" v-model="modal.expertQuestionTypeDetail" title="问题类型详情">
+		  <ExpertQuestionTypeDetail :form="ExpertQuestionTypeDetailForm" v-on:setDetail="setExpertQuestionTypeDetailModal"/>
+		</Modal>
+		
+		<Modal :transfer="false" fullscreen v-model="modal.expertQuestionTypeSearch" title="搜索主表信息">
+		  <expertQuestionType-list-single ref="ExpertQuestionTypeListSingle" v-on:confirmExpertQuestionSelection="confirmExpertQuestionSelection"/>
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('ExpertQuestionTypeSearch')">取消</Button>
+		    <Button type="primary" size="large" @click="confirmxpertQuestionType">确认选择</Button>
+		  </div>
+		</Modal>
   </div>
 </template>
 
 <script>
 import * as utils from '@/api/utils'
+import ExpertQuestionTypeListSingle from '@/view/expert-question-type/ExpertQuestionTypeListSingle.vue'
+import ExpertQuestionTypeDetail from '@/view/expert-question-type/ExpertQuestionTypeDetail.vue'
 import { isActiveSelect } from '@/api/select'
+import { getExpertQuestionTypeById } from '@/api/module'
 import Editor from '_c/editor'
 import config from '@/config'
 const baseUrl =
@@ -284,7 +310,9 @@ const cdnUrl = config.baseUrl.cdnUrl
 export default {
   name: 'OftenQuestion',
   components: {
-    Editor
+    Editor,
+		ExpertQuestionTypeDetail,
+		ExpertQuestionTypeListSingle
   },
   data() {
     return {
@@ -293,7 +321,10 @@ export default {
         edit: false,
         search: false,
         detail: false,
-        questionDetail: false
+        questionDetail: false,
+				expertQuestionTypeDetail: false,
+				expertQuestionTypeSearch: false,
+				questionTypeChoice: false,
       },
       loading: {
         add: false,
@@ -327,6 +358,15 @@ export default {
         updateTime: null,
         isActive: null
       },
+			ExpertQuestionTypeDetailForm: {
+				id: null,
+				name: null,
+				memo: null,
+				version: null,
+				createTime: null,
+				updateTime: null,
+				isActive: null,
+			},
       validateRules: {
         title: [
           {
@@ -404,7 +444,65 @@ export default {
             title: '问题类别编号',
             key: 'questionTypeId',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+								if(params.row.questionTypeId == 0) {
+									return h('span', '无')
+								}
+							  return h(
+							    'Dropdown',
+							    {
+							      on: {
+							        'on-click': itemName => {
+							          this.userOpt(itemName, params.row)
+							        }
+							      },
+							        props: {
+							          transfer: true
+							        }
+							    },
+							    [
+							      h(
+							        'span',
+							        [
+							          params.row.questionTypeId,
+							          h('Icon', {
+							            props: {
+							              type: 'ios-list',
+							              size: '25'
+							            }
+							          })
+							        ]
+							      ),
+							      h(
+							        'DropdownMenu',
+							        {
+							          slot: 'list'
+							        },
+							        [
+							          h(
+							            'DropdownItem',
+							            {
+							              props: {
+							                name: 'expertQuestionTypeDetail'
+							              }
+							            },
+							            '详情'
+							          ),
+							          h(
+							            'DropdownItem',
+							            {
+							              props: {
+							                name: 'showExpertQuestionTypeSearch'
+							              }
+							            },
+							            '搜索'
+							          )
+							        ]
+							      )
+							    ]
+							  )
+							}
           },
           {
             title: '问题标题',
@@ -629,8 +727,43 @@ export default {
         this.form = JSON.parse(JSON.stringify(row))
       } else if (itemName === 'remove') {
         utils.remove(this, row)
+      } else if (itemName === 'expertQuestionTypeDetail') {
+        this.showExprotQuestionTypeDetailModal(row.questionTypeId)
+      } else if (itemName === 'showExpertQuestionTypeSearch') {
+        utils.showModal(this, 'expertQuestionTypeSearch')
       }
     },
+		showExprotQuestionTypeDetailModal(id) {
+		  getExpertQuestionTypeById(id)
+		    .then(res => {
+		      const data = res.data
+		      if (data.code === 1001) {
+		        this.ExpertQuestionTypeDetailForm = data.data
+		        this.modal.expertQuestionTypeDetail = true
+		      } else {
+		        this.$Message.error(data.message)
+		      }
+		    })
+		    .catch(err => {
+		      this.$Message.error(err)
+		    })
+		},
+		setExpertQuestionTypeDetailModal(val) {
+		  this.modal.expertQuestionTypeDetail = val
+		},
+		confirmExpertQuestionSelection(id) {
+		  this.modal.expertQuestionTypeSearch = false
+			this.searchForm.questionTypeId = id
+		  utils.search(this)
+		},
+		confirmxpertQuestionType() {
+		  this.$refs.ExpertQuestionTypeListSingle.confirmSelection()
+		},
+		confirmExpertQuestion(id) {
+			this.modal.questionTypeChoice = false
+			this.form.questionTypeId = id
+			utils.search(this)
+		},
     add() {
       utils.add(this)
     },

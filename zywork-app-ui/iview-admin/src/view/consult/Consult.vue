@@ -385,6 +385,18 @@
         <Button type="primary" size="large" @click="replay" :loading="loading.replay">回复</Button>
       </div>
     </Modal>
+		
+		<Modal :transfer="false" v-model="modal.expertQuestionTypeDetail" title="问题类型详情">
+		  <ExpertQuestionTypeDetail :form="ExpertQuestionTypeDetailForm" v-on:setDetail="setExpertQuestionTypeDetailModal"/>
+		</Modal>
+		
+		<Modal :transfer="false" fullscreen v-model="modal.expertQuestionTypeSearch" title="搜索主表信息">
+		  <expertQuestionType-list-single ref="ExpertQuestionTypeListSingle" v-on:confirmExpertQuestionSelection="confirmExpertQuestionSelection"/>
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('ExpertQuestionTypeSearch')">取消</Button>
+		    <Button type="primary" size="large" @click="confirmxpertQuestionType">确认选择</Button>
+		  </div>
+		</Modal>
   </div>
 </template>
 
@@ -393,7 +405,9 @@ import * as utils from '@/api/utils'
 import * as ResponseStatus from '@/api/response-status'
 import UserListSingle from '@/view/user/UserListSingle.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
-import { getUserById } from '@/api/module'
+import ExpertQuestionTypeListSingle from '@/view/expert-question-type/ExpertQuestionTypeListSingle.vue'
+import ExpertQuestionTypeDetail from '@/view/expert-question-type/ExpertQuestionTypeDetail.vue'
+import { getUserById,getExpertQuestionTypeById } from '@/api/module'
 import * as es from '@/api/expert_subscribe'
 import {
   isActiveSelect
@@ -403,7 +417,9 @@ export default {
   name: 'Consult',
   components: {
     userDetail,
-    UserListSingle
+    UserListSingle,
+		ExpertQuestionTypeDetail,
+		ExpertQuestionTypeListSingle
   },
   data() {
     return {
@@ -426,6 +442,15 @@ export default {
         userDetailShareCode: null,
         userDetailVersion: null
       },
+			ExpertQuestionTypeDetailForm: {
+				id: null,
+				name: null,
+				memo: null,
+				version: null,
+				createTime: null,
+				updateTime: null,
+				isActive: null,
+			},
       modal: {
         add: false,
         edit: false,
@@ -433,6 +458,8 @@ export default {
         detail: false,
         userDetail: false,
         userDetalSearch: false,
+				expertQuestionTypeDetail: false,
+				expertQuestionTypeSearch: false,
         replay: false
       },
       loading: {
@@ -639,8 +666,66 @@ export default {
             title: '问题类别编号',
             key: 'questionTypeId',
             minWidth: 180,
-            sortable: true
-          },
+            sortable: true,
+						render: (h, params) => {
+								if(params.row.questionTypeId == 0) {
+									return h('span', '无')
+								}
+							  return h(
+							    'Dropdown',
+							    {
+							      on: {
+							        'on-click': itemName => {
+							          this.userOpt(itemName, params.row)
+							        }
+							      },
+							        props: {
+							          transfer: true
+							        }
+							    },
+							    [
+							      h(
+							        'span',
+							        [
+							          params.row.questionTypeId,
+							          h('Icon', {
+							            props: {
+							              type: 'ios-list',
+							              size: '25'
+							            }
+							          })
+							        ]
+							      ),
+							      h(
+							        'DropdownMenu',
+							        {
+							          slot: 'list'
+							        },
+							        [
+							          h(
+							            'DropdownItem',
+							            {
+							              props: {
+							                name: 'expertQuestionTypeDetail'
+							              }
+							            },
+							            '详情'
+							          ),
+							          h(
+							            'DropdownItem',
+							            {
+							              props: {
+							                name: 'showExpertQuestionTypeSearch'
+							              }
+							            },
+							            '搜索'
+							          )
+							        ]
+							      )
+							    ]
+							  )
+							}
+					},
           {
             title: '问题说明',
             key: 'consultDesc',
@@ -653,6 +738,9 @@ export default {
             minWidth: 120,
             sortable: true,
             render: (h, params) => {
+							if(params.row.replyUserId == 0) {
+								return h('spen', '无')
+							}
               return h(
                 'Dropdown',
                 {
@@ -955,6 +1043,10 @@ export default {
         utils.showModal(this, 'replay')
         this.form = JSON.parse(JSON.stringify(row))
         this.getQuestionTypeName(row.questionTypeId)
+      } else if (itemName === 'expertQuestionTypeDetail') {
+        this.showExprotQuestionTypeDetailModal(row.questionTypeId)
+      } else if (itemName === 'showExpertQuestionTypeSearch') {
+        utils.showModal(this, 'expertQuestionTypeSearch')
       }
     },
     showUserDetailModal(id) {
@@ -984,6 +1076,32 @@ export default {
     confirm() {
       this.$refs.UserListSingle.confirmSelection()
     },
+		showExprotQuestionTypeDetailModal(id) {
+		  getExpertQuestionTypeById(id)
+		    .then(res => {
+		      const data = res.data
+		      if (data.code === 1001) {
+		        this.ExpertQuestionTypeDetailForm = data.data
+		        this.modal.expertQuestionTypeDetail = true
+		      } else {
+		        this.$Message.error(data.message)
+		      }
+		    })
+		    .catch(err => {
+		      this.$Message.error(err)
+		    })
+		},
+		setExpertQuestionTypeDetailModal(val) {
+		  this.modal.expertQuestionTypeDetail = val
+		},
+		confirmExpertQuestionSelection(id) {
+		  this.modal.expertQuestionTypeSearch = false
+			this.searchForm.questionTypeId = id
+		  utils.search(this)
+		},
+		confirmxpertQuestionType() {
+		  this.$refs.ExpertQuestionTypeListSingle.confirmSelection()
+		},
     add() {
       utils.add(this)
     },

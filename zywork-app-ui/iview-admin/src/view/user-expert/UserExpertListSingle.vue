@@ -445,6 +445,7 @@ sortable: true
       },
       confirmSelection() {
         // 确认选择的逻辑
+				this.$emit("confirmuserExpertChoice", this.table.currentRow.id)
       }
     }
   }

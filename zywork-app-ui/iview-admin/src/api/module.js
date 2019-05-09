@@ -91,3 +91,25 @@ export const getAptitudeTransferById = (id) => {
 		data: ''
 	})
 }
+
+/**
+ * 根据问题类型id查询
+ */
+export const getExpertQuestionTypeById = (id) => {
+	return axios.request({
+		url: '/experquestion-type/admin/one/' + id,
+		method: 'GET',
+		data: ''
+	})
+}
+
+/**
+ * 根据问题类型id查询
+ */
+export const getuserExpertById = (id) => {
+	return axios.request({
+		url: '/user-expert/admin/one/' + id,
+		method: 'GET',
+		data: ''
+	})
+}
