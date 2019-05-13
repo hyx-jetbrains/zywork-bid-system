@@ -30,6 +30,7 @@ CREATE TABLE `t_guarantee` (
   `construction_period` int(10) DEFAULT '0' COMMENT '工期(天)',
   `assure_price` bigint(20) DEFAULT '0' COMMENT '担保金额(万元)',
   `guarantee_comp` varchar(32) DEFAULT '' COMMENT '担保公司',
+  `guarantee_price` bigint(20) DEFAULT '0' COMMENT '保函费(元)',
   `applicant` varchar(20) DEFAULT '' COMMENT '申请人',
   `name` varchar(20) DEFAULT '' COMMENT '联系人',
   `phone` varchar(11) DEFAULT '' COMMENT '手机号',

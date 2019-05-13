@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * GuaranteeVO值对象类<br/>
  *
- * 创建于2019-04-29<br/>
+ * 创建于2019-05-13<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class GuaranteeVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034874822721L;
+    private static final long serialVersionUID = -9223372035706433479L;
 
     // 保函编号
 	private Long id;
@@ -41,6 +41,8 @@ public class GuaranteeVO extends BaseVO {
 	// 担保公司
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String guaranteeComp;
+	// 保函费
+	private Long guaranteePrice;
 	// 申请人
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String applicant;
@@ -66,7 +68,7 @@ public class GuaranteeVO extends BaseVO {
 	
     public GuaranteeVO () {}
 
-    public GuaranteeVO (Long id, Long projectId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public GuaranteeVO (Long id, Long projectId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
 		this.projectName = projectName;
@@ -75,6 +77,7 @@ public class GuaranteeVO extends BaseVO {
 		this.constructionPeriod = constructionPeriod;
 		this.assurePrice = assurePrice;
 		this.guaranteeComp = guaranteeComp;
+		this.guaranteePrice = guaranteePrice;
 		this.applicant = applicant;
 		this.name = name;
 		this.phone = phone;
@@ -148,6 +151,14 @@ public class GuaranteeVO extends BaseVO {
 
 	public void setGuaranteeComp(String guaranteeComp) {
 		this.guaranteeComp = guaranteeComp;
+	}
+
+	public Long getGuaranteePrice() {
+		return guaranteePrice;
+	}
+
+	public void setGuaranteePrice(Long guaranteePrice) {
+		this.guaranteePrice = guaranteePrice;
 	}
 
 	public String getApplicant() {
@@ -226,6 +237,7 @@ public class GuaranteeVO extends BaseVO {
 				", constructionPeriod = " + constructionPeriod + 
 				", assurePrice = " + assurePrice + 
 				", guaranteeComp = " + guaranteeComp + 
+				", guaranteePrice = " + guaranteePrice + 
 				", applicant = " + applicant + 
 				", name = " + name + 
 				", phone = " + phone + 

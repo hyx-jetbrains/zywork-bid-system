@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * GuaranteeDO数据对象实体类<br/>
  *
- * 创建于2019-04-29<br/>
+ * 创建于2019-05-13<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class GuaranteeDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372034822491314L;
+    private static final long serialVersionUID = -9223372036045015279L;
 
     // 保函编号
 	private Long id;
@@ -31,6 +31,8 @@ public class GuaranteeDO extends BaseDO {
 	private Long assurePrice;
 	// 担保公司
 	private String guaranteeComp;
+	// 保函费
+	private Long guaranteePrice;
 	// 申请人
 	private String applicant;
 	// 联系人
@@ -50,7 +52,7 @@ public class GuaranteeDO extends BaseDO {
 	
     public GuaranteeDO () {}
 
-    public GuaranteeDO (Long id, Long projectId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public GuaranteeDO (Long id, Long projectId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
 		this.projectName = projectName;
@@ -59,6 +61,7 @@ public class GuaranteeDO extends BaseDO {
 		this.constructionPeriod = constructionPeriod;
 		this.assurePrice = assurePrice;
 		this.guaranteeComp = guaranteeComp;
+		this.guaranteePrice = guaranteePrice;
 		this.applicant = applicant;
 		this.name = name;
 		this.phone = phone;
@@ -132,6 +135,14 @@ public class GuaranteeDO extends BaseDO {
 
 	public void setGuaranteeComp(String guaranteeComp) {
 		this.guaranteeComp = guaranteeComp;
+	}
+
+	public Long getGuaranteePrice() {
+		return guaranteePrice;
+	}
+
+	public void setGuaranteePrice(Long guaranteePrice) {
+		this.guaranteePrice = guaranteePrice;
 	}
 
 	public String getApplicant() {
@@ -210,6 +221,7 @@ public class GuaranteeDO extends BaseDO {
 				", constructionPeriod = " + constructionPeriod + 
 				", assurePrice = " + assurePrice + 
 				", guaranteeComp = " + guaranteeComp + 
+				", guaranteePrice = " + guaranteePrice + 
 				", applicant = " + applicant + 
 				", name = " + name + 
 				", phone = " + phone + 

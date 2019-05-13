@@ -31,6 +31,9 @@
 			<if test="guaranteeComp != null">
 				guarantee_comp,
 			</if>
+			<if test="guaranteePrice != null">
+				guarantee_price,
+			</if>
 			<if test="applicant != null">
 				applicant,
 			</if>
@@ -78,6 +81,9 @@
 			</if>
 			<if test="guaranteeComp != null">
 				#{guaranteeComp},
+			</if>
+			<if test="guaranteePrice != null">
+				#{guaranteePrice},
 			</if>
 			<if test="applicant != null">
 				#{applicant},
@@ -135,6 +141,9 @@
 			<if test="item.guaranteeComp != null">
 				guarantee_comp,
 			</if>
+			<if test="item.guaranteePrice != null">
+				guarantee_price,
+			</if>
 			<if test="item.applicant != null">
 				applicant,
 			</if>
@@ -182,6 +191,9 @@
 			</if>
 			<if test="item.guaranteeComp != null">
 				#{item.guaranteeComp},
+			</if>
+			<if test="item.guaranteePrice != null">
+				#{item.guaranteePrice},
 			</if>
 			<if test="item.applicant != null">
 				#{item.applicant},
@@ -247,6 +259,9 @@
 			<if test="guaranteeComp != null">
 				guarantee_comp = #{guaranteeComp},
 			</if>
+			<if test="guaranteePrice != null">
+				guarantee_price = #{guaranteePrice},
+			</if>
 			<if test="applicant != null">
 				applicant = #{applicant},
 			</if>
@@ -301,6 +316,9 @@
 			<if test="item.guaranteeComp != null">
 				guarantee_comp = #{item.guaranteeComp},
 			</if>
+			<if test="item.guaranteePrice != null">
+				guarantee_price = #{item.guaranteePrice},
+			</if>
 			<if test="item.applicant != null">
 				applicant = #{item.applicant},
 			</if>
@@ -335,7 +353,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, project_id as projectId, project_name as projectName, open_mark_time as openMarkTime, mark_unit_name as markUnitName, construction_period as constructionPeriod, assure_price as assurePrice, guarantee_comp as guaranteeComp, applicant as applicant, name as name, phone as phone, address as address, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, project_id as projectId, project_name as projectName, open_mark_time as openMarkTime, mark_unit_name as markUnitName, construction_period as constructionPeriod, assure_price as assurePrice, guarantee_comp as guaranteeComp, guarantee_price as guaranteePrice, applicant as applicant, name as name, phone as phone, address as address, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -407,6 +425,18 @@
 		</if>
 		<if test="query != null and query.guaranteeComp != null and query.guaranteeComp != ''">
 			and guarantee_comp like concat('%', #{query.guaranteeComp}, '%')
+		</if>
+		<if test="query != null and query.guaranteePrice != null">
+			and guarantee_price = #{query.guaranteePrice}
+		</if>
+		<if test="query != null and query.guaranteePriceMin != null and query.guaranteePriceMax == null">
+			and guarantee_price <![CDATA[ >= ]]> #{query.guaranteePriceMin}
+		</if>
+		<if test="query != null and query.guaranteePriceMin == null and query.guaranteePriceMax != null">
+			and guarantee_price <![CDATA[ <= ]]> #{query.guaranteePriceMax}
+		</if>
+		<if test="query != null and query.guaranteePriceMin != null and query.guaranteePriceMax != null">
+			and guarantee_price <![CDATA[ >= ]]> #{query.guaranteePriceMin} and guarantee_price <![CDATA[ <= ]]> #{query.guaranteePriceMax}
 		</if>
 		<if test="query != null and query.applicant != null and query.applicant != ''">
 			and applicant like concat('%', #{query.applicant}, '%')

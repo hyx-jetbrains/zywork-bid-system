@@ -84,7 +84,7 @@
           />
         </FormItem>
         <FormItem label="担保金额(万元)" prop="assurePrice">
-          <InputNumber v-model="form.assurePrice" placeholder="请输入担保金额(万元)" style="width: 100%;"/>
+          <InputNumber v-model="form.assurePrice" readonly placeholder="请输入担保金额(万元)" style="width: 100%;"/>
         </FormItem>
         <FormItem label="担保公司" prop="guaranteeComp">
           <Select v-model="form.guaranteeComp" placeholder="请选择担保公司" clearable filterable>
@@ -97,6 +97,9 @@
         </FormItem>
         <FormItem label="申请人" prop="applicant">
           <Input v-model="form.applicant" placeholder="请输入申请人（建筑单位）"/>
+        </FormItem>
+        <FormItem label="保函费(元)" prop="guaranteePrice">
+          <Input v-model="form.guaranteePrice" placeholder="请输入保函费"/>
         </FormItem>
         <FormItem label="联系人" prop="name">
           <Input v-model="form.name" placeholder="请输入联系人"/>
@@ -154,7 +157,7 @@
           />
         </FormItem>
         <FormItem label="担保金额(万元)" prop="assurePrice">
-          <InputNumber v-model="form.assurePrice" placeholder="请输入担保金额(万元)" style="width: 100%;"/>
+          <InputNumber v-model="form.assurePrice" readonly placeholder="请输入担保金额(万元)" style="width: 100%;"/>
         </FormItem>
         <FormItem label="担保公司" prop="guaranteeComp">
           <Select v-model="form.guaranteeComp" placeholder="请选择担保公司" clearable filterable>
@@ -164,6 +167,9 @@
               :key="item.value"
             >{{item.label}}</i-option>
           </Select>
+        </FormItem>
+        <FormItem label="保函费(元)" prop="guaranteePrice">
+          <Input v-model="form.guaranteePrice" placeholder="请输入保函费"/>
         </FormItem>
         <FormItem label="申请人" prop="applicant">
           <Input v-model="form.applicant" placeholder="请输入申请人（建筑单位）"/>
@@ -467,6 +473,10 @@
         <span v-text="form.guaranteeComp"></span>
       </p>
       <p>
+        担保金额:
+        <span v-text="form.guaranteePrice"></span>
+      </p>
+      <p>
         申请人:
         <span v-text="form.applicant"></span>
       </p>
@@ -618,6 +628,7 @@ export default {
         constructionPeriod: null,
         assurePrice: null,
         guaranteeComp: null,
+        guaranteePrice: null,
         applicant: null,
         name: null,
         phone: null,
@@ -863,6 +874,21 @@ export default {
             key: 'guaranteeComp',
             minWidth: 120,
             sortable: true
+          },
+          {
+            title: '担保金额',
+            key: 'guaranteePrice',
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              const text = row.guaranteePrice / 100
+              return h(
+                'span',
+                {},
+                text
+              )
+            }
           },
           {
             title: '申请人',
@@ -1134,6 +1160,7 @@ export default {
             this.form.openMarkTime = data.data.openMarkTime
             this.form.markUnitName = data.data.markUnitName
             this.form.constructionPeriod = data.data.constructionPeriod
+            this.form.assurePrice = data.data.assurePrice / 100
           } else {
             this.$Message.error(data.message)
           }

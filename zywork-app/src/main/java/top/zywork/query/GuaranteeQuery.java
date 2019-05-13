@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * GuaranteeQuery查询对象类<br/>
  *
- * 创建于2019-04-29<br/>
+ * 创建于2019-05-13<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class GuaranteeQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035550801952L;
+    private static final long serialVersionUID = -9223372036410423414L;
 
     // 保函编号
 	private Long id;
@@ -56,6 +56,12 @@ public class GuaranteeQuery extends PageQuery {
 	private Long assurePriceMax;
 	// 担保公司
 	private String guaranteeComp;
+	// 保函费
+	private Long guaranteePrice;
+	// 保函费（最小值）
+	private Long guaranteePriceMin;
+	// 保函费（最大值）
+	private Long guaranteePriceMax;
 	// 申请人
 	private String applicant;
 	// 联系人
@@ -97,7 +103,7 @@ public class GuaranteeQuery extends PageQuery {
 	
     public GuaranteeQuery () {}
 
-    public GuaranteeQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String projectName, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String markUnitName, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, String guaranteeComp, String applicant, String name, String phone, String address, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public GuaranteeQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String projectName, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String markUnitName, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, String guaranteeComp, Long guaranteePrice, Long guaranteePriceMin, Long guaranteePriceMax, String applicant, String name, String phone, String address, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -116,6 +122,9 @@ public class GuaranteeQuery extends PageQuery {
 		this.assurePriceMin = assurePriceMin;
 		this.assurePriceMax = assurePriceMax;
 		this.guaranteeComp = guaranteeComp;
+		this.guaranteePrice = guaranteePrice;
+		this.guaranteePriceMin = guaranteePriceMin;
+		this.guaranteePriceMax = guaranteePriceMax;
 		this.applicant = applicant;
 		this.name = name;
 		this.phone = phone;
@@ -279,6 +288,30 @@ public class GuaranteeQuery extends PageQuery {
 		this.guaranteeComp = guaranteeComp;
 	}
 
+	public Long getGuaranteePrice() {
+		return guaranteePrice;
+	}
+
+	public void setGuaranteePrice(Long guaranteePrice) {
+		this.guaranteePrice = guaranteePrice;
+	}
+
+	public Long getGuaranteePriceMin() {
+		return guaranteePriceMin;
+	}
+
+	public void setGuaranteePriceMin(Long guaranteePriceMin) {
+		this.guaranteePriceMin = guaranteePriceMin;
+	}
+
+	public Long getGuaranteePriceMax() {
+		return guaranteePriceMax;
+	}
+
+	public void setGuaranteePriceMax(Long guaranteePriceMax) {
+		this.guaranteePriceMax = guaranteePriceMax;
+	}
+
 	public String getApplicant() {
 		return applicant;
 	}
@@ -429,6 +462,9 @@ public class GuaranteeQuery extends PageQuery {
 				", assurePriceMin = " + assurePriceMin + 
 				", assurePriceMax = " + assurePriceMax + 
 				", guaranteeComp = " + guaranteeComp + 
+				", guaranteePrice = " + guaranteePrice + 
+				", guaranteePriceMin = " + guaranteePriceMin + 
+				", guaranteePriceMax = " + guaranteePriceMax + 
 				", applicant = " + applicant + 
 				", name = " + name + 
 				", phone = " + phone + 

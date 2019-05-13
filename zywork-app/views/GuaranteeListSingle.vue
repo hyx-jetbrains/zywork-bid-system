@@ -98,6 +98,20 @@
 <FormItem label="担保公司" prop="guaranteeComp">
 	<Input v-model="searchForm.guaranteeComp" placeholder="请输入担保公司"/>
 </FormItem>
+<FormItem label="保函费"><Row>
+	<i-col span="11">
+	<FormItem prop="guaranteePriceMin">
+	<InputNumber v-model="searchForm.guaranteePriceMin" placeholder="请输入开始保函费" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="guaranteePriceMax">
+	<InputNumber v-model="searchForm.guaranteePriceMax" placeholder="请输入结束保函费" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
+</FormItem>
 <FormItem label="申请人" prop="applicant">
 	<Input v-model="searchForm.applicant" placeholder="请输入申请人"/>
 </FormItem>
@@ -183,6 +197,7 @@
 <p>工期(天): <span v-text="form.constructionPeriod"></span></p>
 <p>担保金额(万元): <span v-text="form.assurePrice"></span></p>
 <p>担保公司: <span v-text="form.guaranteeComp"></span></p>
+<p>保函费: <span v-text="form.guaranteePrice"></span></p>
 <p>申请人: <span v-text="form.applicant"></span></p>
 <p>联系人: <span v-text="form.name"></span></p>
 <p>手机号: <span v-text="form.phone"></span></p>
@@ -229,6 +244,7 @@ markUnitName: null,
 constructionPeriod: null,
 assurePrice: null,
 guaranteeComp: null,
+guaranteePrice: null,
 applicant: null,
 name: null,
 phone: null,
@@ -262,6 +278,9 @@ assurePrice: null,
 assurePriceMin: null, 
 assurePriceMax: null, 
 guaranteeComp: null,
+guaranteePrice: null,
+guaranteePriceMin: null, 
+guaranteePriceMax: null, 
 applicant: null,
 name: null,
 phone: null,
@@ -336,6 +355,12 @@ sortable: true
 {
 title: '担保公司',
 key: 'guaranteeComp',
+minWidth: 120,
+sortable: true
+},
+{
+title: '保函费',
+key: 'guaranteePrice',
 minWidth: 120,
 sortable: true
 },
