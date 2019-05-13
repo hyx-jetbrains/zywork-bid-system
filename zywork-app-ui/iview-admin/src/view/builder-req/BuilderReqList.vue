@@ -47,6 +47,9 @@
 </i-col>
 </Row>
 </FormItem>
+<FormItem label="姓名" prop="name">
+	<Input v-model="searchForm.name" placeholder="请输入姓名"/>
+</FormItem>
 <FormItem label="手机号" prop="phone">
 	<Input v-model="searchForm.phone" placeholder="请输入手机号"/>
 </FormItem>
@@ -154,6 +157,7 @@
     <Modal v-model="modal.detail" title="详情">
       <p>建造师需求编号: <span v-text="form.id"></span></p>
 <p>用户编号: <span v-text="form.userId"></span></p>
+<p>姓名: <span v-text="form.name"></span></p>
 <p>手机号: <span v-text="form.phone"></span></p>
 <p>说明: <span v-text="form.memo"></span></p>
 <p>所需人数: <span v-text="form.peopleCount"></span></p>
@@ -196,6 +200,7 @@
         form: {
           id: null,
 userId: null,
+name: null,
 phone: null,
 memo: null,
 peopleCount: null,
@@ -219,6 +224,7 @@ idMax: null,
 userId: null,
 userIdMin: null, 
 userIdMax: null, 
+name: null,
 phone: null,
 memo: null,
 peopleCount: null,
@@ -270,6 +276,12 @@ sortable: true
 {
 title: '用户编号',
 key: 'userId',
+minWidth: 120,
+sortable: true
+},
+{
+title: '姓名',
+key: 'name',
 minWidth: 120,
 sortable: true
 },

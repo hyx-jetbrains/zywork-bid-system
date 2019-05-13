@@ -6,19 +6,21 @@ import java.util.Date;
 /**
  * BuilderReqDTO数据传输对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-13<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class BuilderReqDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372036104582282L;
+    private static final long serialVersionUID = -9223372036275662372L;
 
     // 建造师需求编号
 	private Long id;
 	// 用户编号
 	private Long userId;
+	// 姓名
+	private String name;
 	// 手机号
 	private String phone;
 	// 说明
@@ -42,9 +44,10 @@ public class BuilderReqDTO extends BaseDTO {
 	
     public BuilderReqDTO () {}
 
-    public BuilderReqDTO (Long id, Long userId, String phone, String memo, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public BuilderReqDTO (Long id, Long userId, String name, String phone, String memo, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
+		this.name = name;
 		this.phone = phone;
 		this.memo = memo;
 		this.peopleCount = peopleCount;
@@ -72,6 +75,14 @@ public class BuilderReqDTO extends BaseDTO {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPhone() {
@@ -160,6 +171,7 @@ public class BuilderReqDTO extends BaseDTO {
         return "BuilderReqDTO {" +
                 "id = " + id + 
 				", userId = " + userId + 
+				", name = " + name + 
 				", phone = " + phone + 
 				", memo = " + memo + 
 				", peopleCount = " + peopleCount + 

@@ -6,19 +6,21 @@ import java.util.Date;
 /**
  * BuilderReqDO数据对象实体类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-13<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class BuilderReqDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372036461915543L;
+    private static final long serialVersionUID = -9223372036616889836L;
 
     // 建造师需求编号
 	private Long id;
 	// 用户编号
 	private Long userId;
+	// 姓名
+	private String name;
 	// 手机号
 	private String phone;
 	// 说明
@@ -42,9 +44,10 @@ public class BuilderReqDO extends BaseDO {
 	
     public BuilderReqDO () {}
 
-    public BuilderReqDO (Long id, Long userId, String phone, String memo, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public BuilderReqDO (Long id, Long userId, String name, String phone, String memo, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
+		this.name = name;
 		this.phone = phone;
 		this.memo = memo;
 		this.peopleCount = peopleCount;
@@ -72,6 +75,14 @@ public class BuilderReqDO extends BaseDO {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPhone() {
@@ -160,6 +171,7 @@ public class BuilderReqDO extends BaseDO {
         return "BuilderReqDO {" +
                 "id = " + id + 
 				", userId = " + userId + 
+				", name = " + name + 
 				", phone = " + phone + 
 				", memo = " + memo + 
 				", peopleCount = " + peopleCount + 

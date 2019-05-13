@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * BuilderReqQuery查询对象类<br/>
  *
- * 创建于2019-04-19<br/>
+ * 创建于2019-05-13<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class BuilderReqQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035231758736L;
+    private static final long serialVersionUID = -9223372035925625138L;
 
     // 建造师需求编号
 	private Long id;
@@ -29,6 +29,8 @@ public class BuilderReqQuery extends PageQuery {
 	private Long userIdMin;
 	// 用户编号（最大值）
 	private Long userIdMax;
+	// 姓名
+	private String name;
 	// 手机号
 	private String phone;
 	// 说明
@@ -82,13 +84,14 @@ public class BuilderReqQuery extends PageQuery {
 	
     public BuilderReqQuery () {}
 
-    public BuilderReqQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String phone, String memo, Integer peopleCount, Integer peopleCountMin, Integer peopleCountMax, Long salary, Long salaryMin, Long salaryMax, String compAddr, String compName, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public BuilderReqQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, String phone, String memo, Integer peopleCount, Integer peopleCountMin, Integer peopleCountMax, Long salary, Long salaryMin, Long salaryMax, String compAddr, String compName, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
 		this.userId = userId;
 		this.userIdMin = userIdMin;
 		this.userIdMax = userIdMax;
+		this.name = name;
 		this.phone = phone;
 		this.memo = memo;
 		this.peopleCount = peopleCount;
@@ -160,6 +163,14 @@ public class BuilderReqQuery extends PageQuery {
 
 	public void setUserIdMax(Long userIdMax) {
 		this.userIdMax = userIdMax;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPhone() {
@@ -348,6 +359,7 @@ public class BuilderReqQuery extends PageQuery {
 				", userId = " + userId + 
 				", userIdMin = " + userIdMin + 
 				", userIdMax = " + userIdMax + 
+				", name = " + name + 
 				", phone = " + phone + 
 				", memo = " + memo + 
 				", peopleCount = " + peopleCount + 

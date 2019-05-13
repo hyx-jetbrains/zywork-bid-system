@@ -59,6 +59,9 @@
 					&nbsp;
 					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
 				</FormItem>
+        <FormItem label="姓名" prop="name">
+          <Input v-model="form.name" placeholder="请输入招聘者姓名"/>
+        </FormItem>
         <FormItem label="手机号" prop="phone">
           <Input v-model="form.phone" placeholder="请输入手机号"/>
         </FormItem>
@@ -106,6 +109,9 @@
 					&nbsp;
 					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
 				</FormItem>
+        <FormItem label="姓名" prop="name">
+          <Input v-model="form.name" placeholder="请输入招聘者姓名"/>
+        </FormItem>
         <FormItem label="手机号" prop="phone">
           <Input v-model="form.phone" placeholder="请输入手机号"/>
         </FormItem>
@@ -189,6 +195,9 @@
               </FormItem>
             </i-col>
           </Row>
+        </FormItem>
+        <FormItem label="姓名" prop="name">
+          <Input v-model="searchForm.name" placeholder="请输入招聘者姓名"/>
         </FormItem>
         <FormItem label="手机号" prop="phone">
           <Input v-model="searchForm.phone" placeholder="请输入手机号"/>
@@ -335,6 +344,10 @@
         <span v-text="form.userId"></span>
       </p>
       <p>
+        姓名:
+        <span v-text="form.name"></span>
+      </p>
+      <p>
         手机号:
         <span v-text="form.phone"></span>
       </p>
@@ -467,6 +480,7 @@ export default {
       form: {
         id: null,
         userId: null,
+        name: null,
         phone: null,
         memo: null,
         peopleCount: null,
@@ -479,6 +493,15 @@ export default {
         isActive: null
       },
       validateRules: {
+        name: [
+          {
+            type: 'string',
+            min: 1,
+            max: 5,
+            message: '必须1-5个字符',
+            trigger: 'blur'
+          }
+        ],
         phone: [
           {
             type: 'string',
@@ -637,6 +660,12 @@ export default {
                 ]
               )
             }
+          },
+          {
+            title: '姓名',
+            key: 'name',
+            minWidth: 120,
+            sortable: true
           },
           {
             title: '手机号',

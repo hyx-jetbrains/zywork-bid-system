@@ -215,6 +215,7 @@ DROP TABLE IF EXISTS `t_builder_req`;
 CREATE TABLE `t_builder_req`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '建造师需求编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
   `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '手机号',
   `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '说明',
   `people_count` int(10) NULL DEFAULT 0 COMMENT '所需人数',

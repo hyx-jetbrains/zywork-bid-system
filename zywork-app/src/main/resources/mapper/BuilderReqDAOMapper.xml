@@ -13,6 +13,9 @@
             <if test="userId != null">
 				user_id,
 			</if>
+			<if test="name != null">
+				name,
+			</if>
 			<if test="phone != null">
 				phone,
 			</if>
@@ -48,6 +51,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">
 				#{userId},
+			</if>
+			<if test="name != null">
+				#{name},
 			</if>
 			<if test="phone != null">
 				#{phone},
@@ -93,6 +99,9 @@
                 <if test="item.userId != null">
 				user_id,
 			</if>
+			<if test="item.name != null">
+				name,
+			</if>
 			<if test="item.phone != null">
 				phone,
 			</if>
@@ -128,6 +137,9 @@
             <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="item.userId != null">
 				#{item.userId},
+			</if>
+			<if test="item.name != null">
+				#{item.name},
 			</if>
 			<if test="item.phone != null">
 				#{item.phone},
@@ -181,6 +193,9 @@
             <if test="userId != null">
 				user_id = #{userId},
 			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
 			<if test="phone != null">
 				phone = #{phone},
 			</if>
@@ -223,6 +238,9 @@
                 <if test="item.userId != null">
 				user_id = #{item.userId},
 			</if>
+			<if test="item.name != null">
+				name = #{item.name},
+			</if>
 			<if test="item.phone != null">
 				phone = #{item.phone},
 			</if>
@@ -263,7 +281,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, user_id as userId, phone as phone, memo as memo, people_count as peopleCount, salary as salary, comp_addr as compAddr, comp_name as compName, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, user_id as userId, name as name, phone as phone, memo as memo, people_count as peopleCount, salary as salary, comp_addr as compAddr, comp_name as compName, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -290,6 +308,9 @@
 		</if>
 		<if test="query != null and query.userIdMin != null and query.userIdMax != null">
 			and user_id <![CDATA[ >= ]]> #{query.userIdMin} and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.name != null and query.name != ''">
+			and name like concat('%', #{query.name}, '%')
 		</if>
 		<if test="query != null and query.phone != null and query.phone != ''">
 			and phone like concat('%', #{query.phone}, '%')

@@ -341,7 +341,6 @@
             placeholder="请选择性别"
             clearable
             filterable
-            @on-change="initCertificateMajor"
           >
             <i-option v-for="item in genderList" :value="item.value" :key="item.key">{{item.label}}</i-option>
           </Select>
