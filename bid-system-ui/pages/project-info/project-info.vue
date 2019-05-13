@@ -50,7 +50,7 @@
 								<text>{{projectTypeName}}</text>
 								<text style="margin-left: 30upx;">[{{project.city}}]</text>
 							</view>
-							<view class="zy-text-mini zy-text-info">公告时间：{{project.publishTime}}</view>
+							<view class="zy-text-mini zy-text-info">公告时间：{{project.noticeTime}}</view>
 						</view>
 						<view class="zy-project-head-right">
 							<view style="padding-right: 50upx;">
@@ -61,8 +61,41 @@
 							<view class="zy-text-mini zy-text-warning" v-else>开标时间：暂无</view>
 						</view>
 					</view>
-					<!-- 全部和公告中内容部分 -->
-					<view v-if="projectStatus.current === 0 || projectStatus.current === 1">
+					<!-- 全部内容部分 -->
+					<view v-if="projectStatus.current === 0">
+						<!-- 公告中内容部分 -->
+						<view v-if="project.status === '公告中'">
+							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
+							<view class="zy-project-item-row">
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkWay}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money / 100}}</view>
+							</view>
+						</view>
+						<!-- 待开标内容部分 -->
+						<view v-else-if="project.status === '待开标'">
+							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
+							<view class="zy-project-item-row">
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.assurePrice / 100}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.offerPrice / 100}}</view>
+							</view>
+							<view class="zy-project-item-row">
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.constructionPeriod}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.openMarkAddr}}</view>
+							</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.otherDemand}}</view>
+						</view>
+						<!-- 已开标内容部分 -->
+						<view v-else-if="project.status === '已开标'">
+							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.inMarkComp}}</view>
+						</view>
+					</view>
+					<!-- 公告中内容部分 -->
+					<view v-else-if="projectStatus.current === 1">
 						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
@@ -218,7 +251,7 @@
 						compAptitudeType: '市政公用工程施工总承包三级',
 						builderLevel: '市政公用工程三级',
 						markUnitName: '赣州中学工程招标',
-						publishTime: '2019-04-24 18:00:00',
+						noticeTime: '2019-04-24 18:00:00',
 						status: '公告中',
 						time: null,
 						checkWay: '资格后审',
@@ -236,7 +269,7 @@
 						compAptitudeType: '市政公用工程施工总承包三级',
 						builderLevel: '市政公用工程三级',
 						markUnitName: '赣州中学工程招标',
-						publishTime: '2019-04-24 18:00:00',
+						noticeTime: '2019-04-24 18:00:00',
 						status: '待开标',
 						time: '2019-04-25 10:30',
 						checkWay: '资格后审',

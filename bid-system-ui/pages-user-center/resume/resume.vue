@@ -5,7 +5,7 @@
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">姓名</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">姓名</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入真实姓名" v-model="formInfo.name"></input>
@@ -13,12 +13,12 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">性别</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">性别</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<picker @change="chooseGender" :range="genderArray">
 								<view class="zy-disable-flex">
-									<text class="zy-picker zy-text-info">{{genderArray[formInfo.gender]}}</text>
+									<text class="zy-list-form-picker zy-text-info">{{genderArray[formInfo.gender]}}</text>
 									<zywork-icon type="iconxiangxia"/>
 								</view>
 							</picker>
@@ -26,7 +26,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">年龄</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">年龄</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入年龄" v-model="formInfo.age"></input>
@@ -34,12 +34,12 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">申请类型</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">申请类型</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<picker @change="chooseFulltime" :range="fulltimeArray">
 								<view class="zy-disable-flex">
-									<text class="zy-picker zy-text-info">{{fulltimeArray[formInfo.isFulltime]}}</text>
+									<text class="zy-list-form-picker zy-text-info">{{fulltimeArray[formInfo.isFulltime]}}</text>
 									<zywork-icon type="iconxiangxia"/>
 								</view>
 							</picker>
@@ -47,7 +47,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">求职岗位</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">求职岗位</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入求职岗位" v-model="formInfo.jobTitle"></input>
@@ -55,7 +55,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">工作时间(年)</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">工作时间(年)</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入工作年限" v-model="formInfo.workYear"></input>
@@ -63,12 +63,12 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">学历</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">学历</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<picker @change="chooseEducation" :range="educationArray">
 								<view class="zy-disable-flex">
-									<text class="zy-picker zy-text-info">{{educationArray[educationIndex]}}</text>
+									<text class="zy-list-form-picker zy-text-info">{{educationArray[educationIndex]}}</text>
 									<zywork-icon type="iconxiangxia"/>
 								</view>
 							</picker>
@@ -76,12 +76,12 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">要求新增/月</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">要求新增/月</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<picker @change="chooseSalary" :range="salaryArray">
 								<view class="zy-disable-flex">
-									<text class="zy-picker zy-text-info">{{salaryArray[salaryIndex]}}</text>
+									<text class="zy-list-form-picker zy-text-info">{{salaryArray[salaryIndex]}}</text>
 									<zywork-icon type="iconxiangxia"/>
 								</view>
 							</picker>
@@ -89,7 +89,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">允许平台推荐</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">允许平台推荐</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<switch :checked="formInfo.isRecommend !== 0" @change="switchIsRecommend" color="#108EE9" />
@@ -118,7 +118,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-resume-label">开放简历</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">开放简历</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<switch :checked="formInfo.isShow !== 0" @change="switchIsShow" color="#108EE9" />
@@ -133,7 +133,7 @@
 						</view>
 					</view>
 					<view class="uni-list-cell">
-						<textarea class="zy-memo" placeholder="请简单介绍下个人情况" v-model="formInfo.intorduce"/>
+						<textarea class="zy-list-form-memo" placeholder="请简单介绍下个人情况" v-model="formInfo.intorduce"/>
 					</view>
 				</view>
 				<view class="zy-bottom-button">
@@ -312,20 +312,5 @@
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
 	@import '../../common/uni.css';
-	
-	.zy-picker {
-		margin-left: 20upx;
-		font-size: 28upx;
-	}
-	
-	.zy-resume-label {
-		width: 300upx;
-	}
-	
-	.zy-memo {
-		margin-left: 40upx;
-		margin-bottom: 150upx;
-		padding-top: 20upx;
-	}
-	
+
 </style>
