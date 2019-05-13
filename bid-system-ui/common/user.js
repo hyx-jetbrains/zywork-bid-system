@@ -156,7 +156,6 @@ export const getUserDetail = (self) => {
 }
 
 export const uploadHeadicon = (self) => {
-	console.log('test')
 	uni.chooseImage({
 		sizeType: ['original', 'compressed'],
 		sourceType: ['album', 'camera'],
