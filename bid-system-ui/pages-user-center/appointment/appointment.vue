@@ -1,16 +1,19 @@
 <template>
 	<view>
+		<!-- 我的预约 -->
 		<view style="background-color: #FFFFFF; padding: 20upx 0;">
 			<uni-segmented-control :current="appointmentStatus.current" :values="appointmentStatus.items" v-on:clickItem="onClickItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
 		<view class="zy-type-title zy-disable-flex">
 			<text class="zy-text-bold">我的预约记录</text>
-			<picker @change="choosePayStatus" :value="payStatusIndex" :range="payStatusArray">
-				<view class="zy-pay-status">
-					<text>{{payStatusArray[payStatusIndex]}}</text>
-					<zywork-icon type="iconxiangxia"/>
-				</view>
-			</picker>
+			<view class="zy-disable-flex-right">
+				<picker @change="choosePayStatus" :value="payStatusIndex" :range="payStatusArray">
+					<view class="zy-disable-flex">
+						<text>{{payStatusArray[payStatusIndex]}}</text>
+						<zywork-icon type="iconxiangxia"/>
+					</view>
+				</picker>
+			</view>
 		</view>
 		<view v-if="expertSubscribeList.length > 0">
 			<uni-card v-for="(expertSubscribe, index) in expertSubscribeList" :key="index" :title="expertSubscribe.questionType" :extra="expertSubscribe.subscribeStatus">
@@ -169,14 +172,6 @@
 	
 	.zy-time {
 		text-align: right;
-	}
-	
-	.zy-pay-status {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		margin-right: 10upx;
-		margin-left: 380upx;
 	}
 	
 </style>

@@ -1,6 +1,10 @@
 
 // 下面是下拉框常用的数据
 /**
+ * 担保公司数组
+ */
+export const guaranteeCompanyArray = ['江西数达信息科技有限公司']
+/**
  * 证书状态数组
  */
 export const certificateStatusArray = ['闲置中', '合同快到期']
@@ -314,3 +318,6 @@ export const operationArray = ['全部', '未处理', '已处理']
  * 项目状态数组
  */
 export const projectStatusArray = ['全部', '公告中', '待开标', '已开标']
+
+
+
