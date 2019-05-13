@@ -181,10 +181,12 @@
 			/** 监听企业资质类型选择器 */
 			chooseCompanyAptitudeType: function(e) {
 				this.aptitude.compAptitudeType = this.companyAptitudeTypeArray[e.target.value]
+				this.switchAptitudeType()
 			},
 			/** 监听企业资质等级选择器 */
 			chooseCompanyAptitudeLevel: function(e) {
 				this.aptitude.compAptitudeLevel = this.companyAptitudeLevelArray[e.target.value]
+				this.switchAptitudeType()
 			},
 			// 切换资质转让类别
 			switchAptitudeType() {

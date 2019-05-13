@@ -51,6 +51,18 @@ export const jxCityArray = ['全省', '南昌', '赣州', '萍乡', '吉安', '�
  */
 export const messageReadTypeArray = ['全部', '未读', '已读']
 /**
+ * 企业资质等级数组
+ */
+export const companyAptitudeLevelArray = ['一级', '二级', '三级']
+/**
+ * 企业资质类型数组
+ */
+export const companyAptitudeTypeArray = ['房建', '市政', '公路', '水利', '通信', '其他']
+/**
+ * 汽车车型数组
+ */
+export const carTypeArray = ['小轿车', 'suv', '面包车', '越野车', '班车']
+/**
  * 证书类别数组
  */
 export const certificateTypeArray = [
@@ -281,15 +293,11 @@ export const builderTypeArray = ['招聘', '应聘']
 /**
  * 资质类型数组
  */
-export const aptitudeTypeArray = ['转让', '求购']
+export const aptitudeTypeArray = ['求购', '转让']
 /**
  * 开标拼车数组
  */
 export const openMarkArray = ['我是车主', '我要找车']
-/**
- * 招聘类型数组
- */
-export const hireArray = ['职位', '人才']
 
 
 // 下面是分段器用到的数组

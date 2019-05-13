@@ -72,7 +72,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请填写说明" v-model="builderReq.memo" />
-							</view>
+						</view>
 					</view>
 					<view class="zy-bottom-button">
 						<button type="primary" formType="submit">发布信息</button>
@@ -254,7 +254,6 @@
 
 <script>
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
-	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	import cityData from '@/common/city.data.js';
@@ -285,7 +284,6 @@
 	export default {
 		components: {
 			uniSegmentedControl,
-			zyworkNoData,
 			zyworkIcon,
 			mpvueCityPicker
 		},
@@ -410,7 +408,17 @@
 			onConfirm(e) {
 				console.log(e);
 				// this.pickerText = JSON.stringify(e)
-				this.builder.certificateAddress = this.builderReq.compAddr = e.label
+				var tempAddrLabel = e.label
+				var tempAddr = ''
+				var tempAddrArray = tempAddrLabel.split('-')
+				for (var i = 0; i < tempAddrArray.length; i++) {
+					if (tempAddr == '') {
+						tempAddr = tempAddrArray[i]
+					} else {
+						tempAddr += '/' + tempAddrArray[i]
+					}
+				}
+				this.builder.certificateAddress = this.builderReq.compAddr = tempAddr
 			},
 			/** 地区选择框取消 */
 			onCancel(e) {
