@@ -1,4 +1,5 @@
 
+// 下面是下拉框常用的数据
 /**
  * 证书状态数组
  */
@@ -12,11 +13,43 @@ export const certificateRegStatusArray = ['初始', '转注']
  */
 export const genderArray = ['未知', '男', '女']
 /**
+ * 是否全职数组
+ */
+export const fulltimeArray = ['全职', '兼职']
+/**
+ * 学历数组
+ */
+export const educationArray = ['不限', '大专', '本科', '硕士', '博士']
+/**
  * 薪资数组
  */
 export const salaryArray = [
 	'一万元以下', '1-2万元', '2-3万元', '3-5万元', '5-10万元', '10-15万元', '15万元以上'
 ]
+/**
+ * vip等级数组
+ */
+export const vipLevelArray = ['一级', '二级', '三级']
+/**
+ * 支付状态数组
+ */
+export const payTypeArray = ['微信']
+/**
+ * 支付状态数组
+ */
+export const payStatusArray = ['全部', '待支付', '已支付']
+/**
+ * 收支状态数组
+ */
+export const revenueExpenditureStatusArray = ['全部', '收入', '支出']
+/**
+ * 江西城市数组
+ */
+export const jxCityArray = ['全省', '南昌', '赣州', '萍乡', '吉安', '上饶', '新余', '抚州', '九江', '鹰潭', '宜春', '景德镇']
+/**
+ * 消息读取状态
+ */
+export const messageReadTypeArray = ['全部', '未读', '已读']
 /**
  * 证书类别数组
  */
@@ -245,3 +278,27 @@ export const certificateMajorTypeObj = {
  * 建造师类型数组
  */
 export const builderTypeArray = ['招聘', '应聘']
+/**
+ * 资质类型数组
+ */
+export const aptitudeTypeArray = ['转让', '求购']
+/**
+ * 开标拼车数组
+ */
+export const openMarkArray = ['我是车主', '我要找车']
+/**
+ * 招聘类型数组
+ */
+export const hireArray = ['职位', '人才']
+
+
+// 下面是分段器用到的数组
+/**
+ * 操作数组
+ */
+export const operationArray = ['全部', '未处理', '已处理']
+
+/**
+ * 项目状态数组
+ */
+export const projectStatusArray = ['全部', '公告中', '待开标', '已开标']
