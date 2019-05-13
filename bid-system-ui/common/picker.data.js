@@ -63,6 +63,10 @@ export const companyAptitudeTypeArray = ['房建', '市政', '公路', '水利',
  */
 export const carTypeArray = ['小轿车', 'suv', '面包车', '越野车', '班车']
 /**
+ * 资料类型数组
+ */
+export const dataTypeArray= ['资料', '文件夹', '物品', '重要证件']
+/**
  * 证书类别数组
  */
 export const certificateTypeArray = [

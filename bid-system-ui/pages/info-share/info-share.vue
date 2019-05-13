@@ -44,6 +44,11 @@
 			<view v-if="infoType.tabIndex === 4">
 				<view class="zy-page-list-item">带资料</view>
 			</view>
+			
+			<!-- 申请保函 -->
+			<view v-if="infoType.tabIndex === 5">
+				<view class="zy-page-list-item">申请保函</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -79,7 +84,8 @@
 						{id: 'aptitude', name: '资质转让'},
 						{id: 'carPool', name: '开标拼车'},
 						{id: 'hire', name: '岗位招聘'},
-						{id: 'material', name: '求带资料'}
+						{id: 'material', name: '求带资料'},
+						{id: 'guarantee', name: '申请保函'}
 					]
 				},
 				builderOpts: {

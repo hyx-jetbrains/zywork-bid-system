@@ -357,6 +357,7 @@
 					this.type.current = index
 				}
 			},
+			/** 初始化下拉选择器 */
 			initPicker() {
 				this.carpool.carType = this.carTypeArray[0]
 			},

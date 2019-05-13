@@ -249,24 +249,6 @@
 		},
 		onLoad() {},
 		methods: {
-			// 提交简历信息
-			addResumeInfo: function(e) {
-				var formObj = e.detail.value;
-				this.formInfo.education = this.educationArray[this.educationIndex];
-				this.formInfo.salary = this.salaryArray[this.salaryIndex];
-				var len = formObj.aptitude.length;
-				if (len > 0) {
-					for (var i = 0; i < len; i++) {
-						if (this.formInfo.aptitude === null) {
-							this.formInfo.aptitude = formObj.aptitude[i]
-						} else {
-							this.formInfo.aptitude += "," + formObj.aptitude[i]
-						}
-					}
-				}
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.formInfo)
-			},
 			// 监听性别选中
 			chooseGender(e) {
 				this.formInfo.gender = e.target.value
@@ -278,10 +260,12 @@
 			// 监听学历选中
 			chooseEducation(e) {
 				this.educationIndex = e.target.value
+				this.formInfo.education = this.educationArray[this.educationIndex];
 			},
 			// 监听薪资选中
 			chooseSalary(e) {
 				this.salaryIndex = e.target.value
+				this.formInfo.salary = this.salaryArray[this.salaryIndex];
 			},
 			// 监听是否允许平台推荐
 			switchIsRecommend: function(e) {
@@ -311,6 +295,22 @@
 						this.$set(item,'checked',false)
 					}
 				}
+			},
+			// 提交简历信息
+			addResumeInfo: function(e) {
+				var formObj = e.detail.value;
+				var len = formObj.aptitude.length;
+				if (len > 0) {
+					for (var i = 0; i < len; i++) {
+						if (this.formInfo.aptitude === null) {
+							this.formInfo.aptitude = formObj.aptitude[i]
+						} else {
+							this.formInfo.aptitude += "," + formObj.aptitude[i]
+						}
+					}
+				}
+				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
+				console.log(this.formInfo)
 			},
 		}
 	}
