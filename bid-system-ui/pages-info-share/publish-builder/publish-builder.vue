@@ -43,8 +43,7 @@
 								<view class="uni-label zy-text-bold zy-list-form-label">公司地址</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="true" placeholder="选择公司地址" v-model="builderReq.compAddr"
-								 @tap="chooseCity"></input>
+								<input class="uni-input" type="text" :disabled="true" placeholder="选择公司地址" v-model="builderReq.compAddr" @tap="chooseCity"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
@@ -73,10 +72,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请填写说明" v-model="builderReq.memo" />
-						</view>
+							</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">发布招聘</button>
+						<button type="primary" formType="submit">发布信息</button>
 					</view>
 				</form>
 			</view>
@@ -210,7 +209,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请填写说明" v-model="builder.memo" />
-							</view>
+						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
 								<view class="uni-label zy-text-bold">上传附件</view>
@@ -243,7 +242,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">保存简历</button>
+						<button type="primary" formType="submit">发布信息</button>
 					</view>
 				</form>
 			</view>
@@ -462,13 +461,13 @@
 					urls: this.imageList
 				})
 			},
-			/** 保存简历 */
+			/** 发布应聘信息 */
 			addBuilder: function(e) {
 				var formObj = e.detail.value;
 				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
 				console.log(this.builder)
 			},
-			/** 发布招聘 */
+			/** 发布招聘信息 */
 			addBuilderReq: function(e) {
 				var formObj = e.detail.value;
 				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));

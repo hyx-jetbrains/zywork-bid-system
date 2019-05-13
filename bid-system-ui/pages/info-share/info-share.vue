@@ -37,7 +37,6 @@
 			
 			<!-- 岗位招聘 -->
 			<view v-if="infoType.tabIndex === 3">
-				<uni-segmented-control :current="hireOpts.current" :values="hireOpts.items" v-on:clickItem="onClickHireItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
 				<view class="zy-page-list-item">招聘</view>
 			</view>
 			
@@ -55,7 +54,8 @@
 	import {
 		builderTypeArray,
 		aptitudeTypeArray,
-		openMarkArray
+		openMarkArray,
+		hireArray
 	} from '@/common/picker.data.js'
 	
 	const INFO_BUILDER = 0
@@ -93,10 +93,6 @@
 				carPoolOpts: {
 					current: 0,
 					items: openMarkArray
-				},
-				hireOpts: {
-					current: 0,
-					items: hireArray
 				}
 			}
 		},
@@ -148,11 +144,6 @@
 					this.carPoolOpts.current = index
 				}
 			},
-			onClickHireItem(index) {
-				if (this.hireOpts.current !== index) {
-					this.hireOpts.current = index
-				}
-			}
 		}
 	}
 </script>

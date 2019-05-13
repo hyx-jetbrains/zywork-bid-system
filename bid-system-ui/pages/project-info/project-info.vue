@@ -158,7 +158,8 @@
 		formatCalendarDate
 	} from '@/common/util.js'
 	import {
-		projectStatusArray
+		projectStatusArray,
+		jxCityArray
 	} from '@/common/picker.data.js'
 	
 	const PROJECT_STATUS_ALL = 0
