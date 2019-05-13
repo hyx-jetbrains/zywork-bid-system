@@ -38,6 +38,9 @@
 <script>
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import {
+		revenueExpenditureStatusArray
+	} from '@/common/picker.data.js'
 	
 	export default {
 		components: {
@@ -98,7 +101,7 @@
 					}
 				],
 				typeIndex: 0,
-				typeArray: ['全部', '收入', '支出'],
+				typeArray: revenueExpenditureStatusArray,
 			}
 		},
 		onLoad() {},

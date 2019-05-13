@@ -156,7 +156,10 @@
 		toLoginPage,
 		getCalendarDate,
 		formatCalendarDate
-	} from '../../common/util.js'
+	} from '@/common/util.js'
+	import {
+		projectStatusArray
+	} from '@/common/picker.data.js'
 	
 	const PROJECT_STATUS_ALL = 0
 	const PROJECT_STATUS_SHOWING = 1
@@ -213,12 +216,12 @@
 						contentUrl: "http://39.108.116.103:8080/"
 					}
 				],
-				cityArray: ['全省', '南昌', '赣州', '萍乡', '吉安', '上饶', '新余', '抚州', '九江', '鹰潭', '宜春', '景德镇'],
+				cityArray: jxCityArray,
 				cityIndex: 0,
 				latestNotice: '头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题',
 				projectStatus: {
 					current: 0,
-					items: ['全部', '公告中', '待开标', '已开标']
+					items: projectStatusArray
 				},
 				projectType: {
 					scrollLeft: 0,

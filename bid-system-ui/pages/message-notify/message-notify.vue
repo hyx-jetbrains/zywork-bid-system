@@ -23,6 +23,9 @@
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
+	import {
+		messageReadTypeArray
+	} from '@/common/picker.data.js'
 	const MESSAGE_ALL = 0
 	const MESSAGE_UNREAD = 1
 	const MESSAGE_READ = 2
@@ -36,7 +39,7 @@
 			return {
 				messageStatus: {
 					current: 0,
-					items: ['全部', '未读', '已读']
+					items: messageReadTypeArray
 				},
 				messages: [
 					{

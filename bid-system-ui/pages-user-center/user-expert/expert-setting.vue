@@ -97,13 +97,17 @@
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import {
+		genderArray,
+		fulltimeArray
+	} from '@/common/picker.data.js'
 	export default {
 		components: {
 			zyworkIcon
 		},
 		data() {
 			return {
-				genderArray: ['未知', '男', '女'],
+				genderArray: genderArray,
 				formInfo: {
 					name: null,
 					gender: 0,
@@ -146,7 +150,7 @@
 						name: '其他'
 					}
 				],
-				fulltimeArray: ['全职', '兼职']
+				fulltimeArray: fulltimeArray
 			}
 		},
 		onLoad() {},

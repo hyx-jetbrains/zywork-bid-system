@@ -146,13 +146,20 @@
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import {
+		genderArray,
+		educationArray,
+		fulltimeArray,
+		salaryArray
+	} from '@/common/picker.data.js'
+	
 	export default {
 		components: {
 			zyworkIcon
 		},
 		data() {
 			return {
-				genderArray: ['未知', '男', '女'],
+				genderArray: genderArray,
 				formInfo: {
 					name: null,
 					gender: 0,
@@ -167,10 +174,10 @@
 					intorduce: null,
 					isShow: 0
 				},
-				fulltimeArray: ['全职', '兼职'],
-				educationArray: ['不限', '大专', '本科', '硕士', '博士'],
+				fulltimeArray: fulltimeArray,
+				educationArray: educationArray,
 				educationIndex: 0,
-				salaryArray: ['一万元以下', '1-2万元', '2-3万元', '3-5万元', '5-10万元', '10-15万元', '15万元以上'],
+				salaryArray: salaryArray,
 				salaryIndex: 0,
 				aptitudeList: [
 					{

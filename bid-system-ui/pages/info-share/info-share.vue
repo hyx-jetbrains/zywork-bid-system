@@ -52,6 +52,11 @@
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
+	import {
+		builderTypeArray,
+		aptitudeTypeArray,
+		openMarkArray
+	} from '@/common/picker.data.js'
 	
 	const INFO_BUILDER = 0
 	const INFO_APTITUDE = 1
@@ -79,19 +84,19 @@
 				},
 				builderOpts: {
 					current: 0,
-					items: ['招聘', '应聘']
+					items: builderTypeArray
 				},
 				aptitudeOpts: {
 					current: 0,
-					items: ['转让', '求购']
+					items: aptitudeTypeArray
 				},
 				carPoolOpts: {
 					current: 0,
-					items: ['我是车主', '我要找车']
+					items: openMarkArray
 				},
 				hireOpts: {
 					current: 0,
-					items: ['职位', '人才']
+					items: hireArray
 				}
 			}
 		},

@@ -122,7 +122,10 @@
 		toLoginPage,
 		getCalendarDate,
 		formatCalendarDate
-	} from '../../common/util.js'
+	} from '@/common/util.js'
+	import {
+		projectStatusArray
+	} from '@/common/picker.data.js'
 	
 	const PROJECT_STATUS_ALL = 0
 	const PROJECT_STATUS_SHOWING = 1
@@ -175,7 +178,7 @@
 				},
 				projectStatus: {
 					current: 0,
-					items: ['全部', '公告中', '待开标', '已开标']
+					items: projectStatusArray
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				projectTypeName: '房建市政',

@@ -66,6 +66,10 @@
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import {
+		operationArray,
+		payStatusArray
+	} from '@/common/picker.data.js'
 	export default {
 		components: {
 			uniCard,
@@ -77,9 +81,9 @@
 			return {
 				appointmentStatus: {
 					current: 0,
-					items: ['全部', '未处理', '已处理']
+					items: operationArray
 				},
-				payStatusArray: ['全部', '待支付', '已支付'],
+				payStatusArray: payStatusArray,
 				payStatusIndex: 0,
 				expertSubscribeList: [
 					{

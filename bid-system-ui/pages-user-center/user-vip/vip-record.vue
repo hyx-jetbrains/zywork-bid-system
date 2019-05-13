@@ -78,6 +78,10 @@
 	import uniDrawer from '@/components/uni-drawer/uni-drawer.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
+	import {
+		vipLevelArray,
+		payTypeArray
+	} from '@/common/picker.data.js'
 	
 	const VIP_LEVEL_MONEY_ONE = 19900
 	const VIP_LEVEL_MONEY_TWO = 29900
@@ -96,9 +100,9 @@
 		},
 		data() {
 			return {
-				levelArray: ['一级', '二级', '三级'],
+				levelArray: vipLevelArray,
 				levelIndex: 0,
-				payTypeArray: ['微信'],
+				payTypeArray: payTypeArray,
 				payTypeIndex: 0,
 				couponDrawer: false,
 				couponList: [

@@ -15,6 +15,9 @@
 <script>
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import {
+		hireArray
+	} from '@/common/picker.data.js'
 	export default {
 		components: {
 			uniSegmentedControl,
@@ -24,7 +27,7 @@
 			return {
 				type: {
 					current: 0,
-					items: ['职位', '人才']
+					items: hireArray
 				},
 			}
 		},

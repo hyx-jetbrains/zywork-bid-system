@@ -101,13 +101,16 @@
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import {
+		jxCityArray
+	} from '@/common/picker.data.js'
 	export default {
 		components: {
 			zyworkIcon
 		},
 		data() {
 			return {
-				cityArray: ['全省', '南昌', '赣州', '萍乡', '吉安', '上饶', '新余', '抚州', '九江', '鹰潭', '宜春', '景德镇'],
+				cityArray: jxCityArray,
 				cityIndex: 0,
 				tendereeList: [
 					{

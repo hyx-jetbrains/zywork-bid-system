@@ -36,6 +36,9 @@
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
 	import zyworkListItemInput from '@/components/zywork-list-item-input/zywork-list-item-input.vue'
+	import {
+		genderArray
+	} from '@/common/picker.data.js'
 	export default {
 		components: {
 			uniList,
@@ -57,7 +60,7 @@
 				},
 				visible: false,
 				genderIndex: 0,
-				genderArray: ['男', '女']
+				genderArray: genderArray
 			}
 		},
 		onLoad() {},
