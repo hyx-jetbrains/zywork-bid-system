@@ -553,7 +553,7 @@ CREATE TABLE `t_coupon_record`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券使用记录表' ROW_FORMAT = Dynamic;
 
-- ----------------------------
+-- ----------------------------
 -- Table structure for t_expert_question_type
 -- ----------------------------
 DROP TABLE IF EXISTS `t_expert_question_type`;
