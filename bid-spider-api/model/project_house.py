@@ -57,51 +57,26 @@ def get_house_projects():
 # 从表格中获取招标信息
 def get_from_table(project, article_info):
     # 处理招标信息表格
-    company_name_tag = article_info.find(text=u'招标单位名称')
-    if company_name_tag is not None:
-        company_name_td = company_name_tag.parent.parent
-        if company_name_td.name == 'tag':
-            company_name = company_name_td.parent.parent.next_sibling.next_sibling.span.text
-            project.markUnitName = company_name
-    invest_tag = article_info.find(text=u'本项目投资')
-    if invest_tag is not None:
-        invest_td = invest_tag.parent.parent
-        if invest_td.name == 'td':
-            invest = invest_td.next_sibling.next_sibling.span.text
-            project.projectInvest = invest
-    check_tag = article_info.find(text=u'资格审查方式')
-    if check_tag is not None:
-        check_td = check_tag.parent.parent
-        if check_td.name == 'td':
-            check_pattern = check_td.next_sibling.next_sibling.span.text
-            project.checkPattern = check_pattern
-    imp_money_tag = article_info.find(text=u'资金已落实')
-    if imp_money_tag is not None:
-        imp_money_td = imp_money_tag.parent.parent
-        if imp_money_td.name == 'td':
-            imp_money = imp_money_td.next_sibling.next_sibling.span.text
-            project.moneyToImplement = imp_money[0: len(imp_money) - 1]
-    aptitude_tag = article_info.find(text=u'企业资质类别及等级')
-    if aptitude_tag is not None:
-        aptitude_td = aptitude_tag.parent.parent
-        if aptitude_td.name == 'td':
-            aptitude = aptitude_td.next_sibling.next_sibling.span.text
-            project.compAptitudeType = aptitude
-    builder_tag = article_info.find(text=u'注册建造师类别和等级')
-    if builder_tag is not None:
-        builder_td = builder_tag.parent.parent
-        if builder_td.name == 'td':
-            builder_level = builder_td.next_sibling.next_sibling.span.text
-            project.builderLevel = builder_level
-    phone_tag = article_info.find(text=u'联系电话')
-    if phone_tag is not None:
-        phone_td = phone_tag.parent.parent
-        if phone_td.name == 'td':
-            phone = phone_td.next_sibling.next_sibling.span.text
-            project.phone = phone
-    other_demand_tag = article_info.find(text=u'其他要求')
-    if other_demand_tag is not None:
-        other_demand_td = other_demand_tag.parent.parent
-        if other_demand_td.name == 'td':
-            other_demand = other_demand_td.next_sibling.next_sibling.span.text
-            project.otherDemand = other_demand
+    project.markUnitName = get_from_td(article_info, u'招标单位名称')
+    project.projectInvest = get_from_td(article_info, u'本项目投资')
+    project.checkPattern = get_from_td(article_info, u'资格审查方式')
+    imp_money = get_from_td(article_info, u'资金已落实')
+    if imp_money is not None:
+        project.moneyToImplement = imp_money[0: len(imp_money) - 1]
+    else:
+        project.moneyToImplement = None
+    project.compAptitudeType = get_from_td(article_info, u'企业资质类别及等级')
+    project.builderLevel = get_from_td(article_info, u'注册建造师类别和等级')
+    project.phone = get_from_td(article_info, u'联系电话')
+    project.otherDemand = get_from_td(article_info, u'其他要求')
+
+
+# 解析指定td的内容
+def get_from_td(article_info, zh_text):
+    tag = article_info.find(text=zh_text)
+    if tag is not None:
+        td = tag.parent.parent
+        if td.name == 'td':
+            text = td.next_sibling.next_sibling.span.text
+            return text
+    return None
