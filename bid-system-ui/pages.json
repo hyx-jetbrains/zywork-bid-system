@@ -133,6 +133,20 @@
 						"navigationBarTitleText": "申请保函",
 						"backgroundTextStyle": "light"
 					}
+				},
+				{
+					"path": "publish-builder-detail/publish-builder-detail",
+					"style": {
+						"navigationBarTitleText": "建造师应聘详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-builder-req-detail/publish-builder-req-detail",
+					"style": {
+						"navigationBarTitleText": "建造师需求详情",
+						"backgroundTextStyle": "light"
+					}
 				}
 			]
 		},

@@ -27,7 +27,7 @@
 						<!-- 招聘信息 -->
 						<view class="zy-page-list" v-if="builderReqList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in builderReqList" :key="index">
-								<view @click="toBuilderReqDetailPage(item.id)">
+								<view @click="toBuilderReqDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.headicon" />
 										<view>
@@ -55,7 +55,7 @@
 						<!-- 应聘信息 -->
 						<view class="zy-page-list" v-if="builderList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in builderList" :key="index">
-								<view @click="toBuilderDetailPage(item.id)">
+								<view @click="toBuilderDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.headicon" />
 										<view>
@@ -89,7 +89,7 @@
 						<!-- 求购信息 -->
 						<view class="zy-page-list" v-if="aptitudeBuyList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in aptitudeBuyList" :key="index">
-								<view @click="toAptitudeDetailPage(item.id)">
+								<view @click="toAptitudeDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.headicon" />
 										<view>
@@ -114,7 +114,7 @@
 						<!-- 转让信息 -->
 						<view class="zy-page-list" v-if="aptitudeSellList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in aptitudeSellList" :key="index">
-								<view @click="toAptitudeDetailPage(item.id)">
+								<view @click="toAptitudeDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.headicon" />
 										<view>
@@ -148,7 +148,7 @@
 						<!-- 拼车信息 -->
 						<view class="zy-page-list" v-if="carpoolList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
-								<view @click="toCarpoolDetailPage(item.id)">
+								<view @click="toCarpoolDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.headicon" />
 										<view>
@@ -189,7 +189,7 @@
 						<!-- 找车信息 -->
 						<view class="zy-page-list" v-if="seekcarList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
-								<view @click="toSeekcarDetailPage(item.id)">
+								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.headicon" />
 										<view>
@@ -232,7 +232,7 @@
 					<!-- 其他岗位招聘信息 -->
 					<view class="zy-page-list" v-if="recruitList.length > 0">
 						<view class="zy-page-list-item" v-for="(item, index) in recruitList" :key="index">
-							<view @click="toRecruitDetailPage(item.id)">
+							<view @click="toRecruitDetailPage(item)">
 								<view class="zy-disable-flex">
 									<image class="zy-page-mini-headicon" :src="item.headicon" />
 									<view>
@@ -283,22 +283,25 @@
 					<!-- 求带资料信息 -->
 						<view class="zy-page-list" v-if="seekDataList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in seekDataList" :key="index">
-								<view @click="toSeekDataDetailPage(item.id)">
+								<view @click="toSeekDataDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.headicon" />
 										<view>
-											<view>
-												<text class="zy-text-bold">{{item.nickname}}</text>
+											<view class="zy-disable-flex">
+												<text class="zy-text-bold" style="margin-right: 20upx;">{{item.dataType}}</text>
+												<text class="zy-text-bold">{{item.dataCount}}份</text>
 											</view>
 											<view class="zy-text-mini zy-text-info" style="color: #108EE9">最晚时间：{{item.latestTime}}</view>
 										</view>
 										<view class="zy-disable-flex-right">
 											<view class="zy-disable-flex">
+												赏金：
 												<text style="margin-right: 10upx;">¥{{item.price / 100}}</text>
 												<!-- <uni-tag v-if="item.isUrgent === 0" text="急" type="error" size="small" :inverted="true" :circle="false"></uni-tag> -->
 												<zywork-icon v-if="item.isUrgent === 0" type="iconjinjidingdan" color="#dd524d" size="20" />
 											</view>
 										</view>
+										
 									</view>
 									<view>
 										<view class="zy-text-bold">
@@ -377,37 +380,65 @@
 				builderReqList: [
 					{
 						id: 1,
-						compName: '赣州智悦科技有限公司1',
+						headicon: DEFAULT_HEADICON,
+						nickanme: 'Carter',
+						name: '危锦辉',
+						people: '需要某某人才',
+						peopleCount: 3,
+						compName: '赣州智悦科技有限公司',
+						compAddr: '山西/长治市/襄垣县',
 						createTime: '2019-04-24 17:24:01',
 						salary: '30000',
-						memo: '公司急招聘市政工程师，有意请联系18279700223',
-						headicon: DEFAULT_HEADICON
+						phone: '18279700225',
+						memo: '公司急招聘市政工程师，有意请联系18279700223'
 					},
 					{
 						id: 2,
-						compName: '赣州智悦科技有限公司2',
+						headicon: DEFAULT_HEADICON,
+						nickanme: 'Carter1',
+						name: '危锦辉1',
+						people: '需要某某人才1',
+						peopleCount: 5,
+						compName: '赣州智悦科技有限公司1',
+						compAddr: '山西/长治市/襄垣县',
 						createTime: '2019-04-24 17:24:01',
-						salary: '30000',
-						memo: '赣州企业诚聘2急三五出场房建 ，市政建造师，中介勿扰，欢迎诚心寻求单位的人才随时来电18297000223（周）',
-						headicon: DEFAULT_HEADICON
+						salary: '50000',
+						phone: '18279700225',
+						memo: '公司急招聘市政工程师，有意请联系18279700223',
 					}
 				],
 				builderList: [
 					{
 						id: 1,
+						nickname: 'Carter',
+						name: '危锦辉',
+						certificateMajorType: '机电工程',
+						createTime: '2019-04-24 17:24:01',
+						memo: '找工作，诚心的',
+						headicon: DEFAULT_HEADICON,
+						phone: '18279700225',
+						gender: 1,
+						certificateType: '建筑师',
+						certificateMajorType: '一级建筑师',
+						certificateAddr: '北京/北京市/东城区',
+						salary: '5-10万元',
+						memo: '无其他要求'
+					},
+					{
+						id: 2,
+						nickname: '刘某某',
 						name: '刘某',
 						certificateMajorType: '机电工程',
 						createTime: '2019-04-24 17:24:01',
 						memo: '找工作，诚心的',
-						headicon: DEFAULT_HEADICON
-					},
-					{
-						id: 2,
-						name: '王某',
-						certificateMajorType: '房建市政',
-						createTime: '2019-04-24 17:24:01',
-						memo: '找工作，诚心的',
-						headicon: DEFAULT_HEADICON
+						headicon: DEFAULT_HEADICON,
+						phone: '18279700225',
+						gender: 1,
+						certificateType: '建筑师',
+						certificateMajorType: '一级建筑师',
+						certificateAddr: '北京/北京市/东城区',
+						salary: '5-10万元',
+						memo: '无其他要求'
 					}
 				],
 				aptitudeBuyList: [
@@ -537,6 +568,7 @@
 						id: 1,
 						nickname: '曾某某',
 						headicon: DEFAULT_HEADICON,
+						gender: 1,
 						dataType: '资料',
 						dataCount: 1,
 						latestTime: '2019-04-25 00:00:00',
@@ -549,6 +581,7 @@
 						id: 2,
 						nickname: '曾某某',
 						headicon: DEFAULT_HEADICON,
+						gender: 2,
 						dataType: '资料',
 						dataCount: 1,
 						latestTime: '2019-04-25 00:00:00',
@@ -591,35 +624,39 @@
 			toPublishChoose() {
 				uni.navigateTo({
 					url: '/pages-info-share/publish-choose/publish-choose'
-				})
+				});
 			},
 			/** 前往建造师需求详情页面 */
-			toBuilderReqDetailPage(id) {
-				console.log(id);
+			toBuilderReqDetailPage(item) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-builder-req-detail/publish-builder-req-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+				});
 			},
 			/** 前往建造师应聘详情页面 */
-			toBuilderDetailPage(id) {
-				console.log(id);
+			toBuilderDetailPage(item) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-builder-detail/publish-builder-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+				});
 			},
 			/** 前往资质转让详情页面 */
-			toAptitudeDetailPage(id) {
-				console.log(id)
+			toAptitudeDetailPage(item) {
+				console.log(item)
 			},
 			/** 前往拼车详情页面 */
-			toCarpoolDetailPage(id) {
-				console.log(id)
+			toCarpoolDetailPage(item) {
+				console.log(item)
 			},
 			/** 前往找车详情页面 */
-			toSeekcarDetailPage(id) {
-				console.log(id)
+			toSeekcarDetailPage(item) {
+				console.log(item)
 			},
 			/** 前往其他岗位招聘详情页面 */
-			toRecruitDetailPage(id) {
-				console.log(id)
+			toRecruitDetailPage(item) {
+				console.log(item)
 			},
 			/** 前往求带资料详情页面 */
-			toSeekDataDetailPage(id) {
-				console.log(id)
+			toSeekDataDetailPage(item) {
+				console.log(item)
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {

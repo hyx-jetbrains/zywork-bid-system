@@ -1,10 +1,10 @@
 <template>
 	<view>
-		<view style="margin-top: 10upx; margin-bottom: 10upx;">
+		<view class="zy-uni-segmented-control">
 			<uni-segmented-control :current="messageStatus.current" :values="messageStatus.items" v-on:clickItem="onClickItem"
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
-		<view v-if="messages.length > 0" class="zy-page-list">
+		<view v-if="messages.length > 0" class="zy-page-list" style="margin-top: 10upx;">
 			<view v-for="(message, index) in messages" :key="index" class="zy-page-list-item" @click="toMessageDetail">
 				<view class="zy-message-head">
 					<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{message.title}}</view>
