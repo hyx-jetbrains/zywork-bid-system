@@ -98,6 +98,15 @@
             clearable
           />
         </FormItem>
+        <FormItem label="招聘状态" prop="recruitStatus">
+          <Select v-model="form.recruitStatus" placeholder="请选择招聘状态">
+            <i-option
+              v-for="item in recruitStatusSelect"
+              :value="item.value"
+              :key="item.key"
+            >{{item.label}}</i-option>
+          </Select>
+        </FormItem>
         <FormItem label="职位描述" prop="memo">
           <Input
             v-model="form.memo"
@@ -161,6 +170,15 @@
             filterable
             clearable
           />
+        </FormItem>
+        <FormItem label="招聘状态" prop="recruitStatus">
+          <Select v-model="form.recruitStatus" placeholder="请选择招聘状态">
+            <i-option
+              v-for="item in recruitStatusSelect"
+              :value="item.value"
+              :key="item.key"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="职位描述" prop="memo">
           <Input
@@ -248,6 +266,15 @@
           <Select v-model="searchForm.salary" placeholder="请选择要求薪资/月" clearable filterable>
             <i-option
               v-for="item in salaryRangeList"
+              :value="item.value"
+              :key="item.key"
+            >{{item.label}}</i-option>
+          </Select>
+        </FormItem>
+        <FormItem label="招聘状态" prop="recruitStatus">
+          <Select v-model="searchForm.recruitStatus" placeholder="请选择招聘状态">
+            <i-option
+              v-for="item in recruitStatusSelect"
               :value="item.value"
               :key="item.key"
             >{{item.label}}</i-option>
@@ -397,6 +424,10 @@
         <span v-text="form.memo"></span>
       </p>
       <p>
+        招聘状态:
+        <span v-text="form.recruitStatus"></span>
+      </p>
+      <p>
         版本号:
         <span v-text="form.version"></span>
       </p>
@@ -441,7 +472,7 @@ import UserListSingle from '@/view/user/UserListSingle.vue'
 import UserListChoice from '@/view/user/UserListChoice.vue'
 import userDetail from '@/view/user-detail/UserDetail.vue'
 import { getUserById } from '@/api/module'
-import { isActiveSelect, jobType, education, salaryRange } from '@/api/select'
+import { isActiveSelect, jobType, education, salaryRange, recruitStatusSelect } from '@/api/select'
 import city from '@/api/city.json'
 
 export default {
@@ -512,6 +543,7 @@ export default {
         salary: null,
         workAddr: null,
         memo: null,
+        recruitStatus: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -543,7 +575,7 @@ export default {
         ],
         isFulltime: [
           {
-            type: 'string',
+            type: 'integer',
             required: true,
             message: '此项为必须项',
             trigger: 'blur, change'
@@ -614,6 +646,7 @@ export default {
         education: null,
         salary: null,
         workAddr: null,
+        recruitStatus: null,
         memo: null,
         version: null,
         versionMin: null,
@@ -783,6 +816,31 @@ export default {
             sortable: true
           },
           {
+            title: '招聘状态',
+            key: 'recruitStatus',
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              const color =
+                row.recruitStatus === '招聘中'
+                  ? 'primary'
+                  : row.recruitStatus === '已停止'
+                  ? 'default'
+                  : 'error'
+              return h(
+                'Button',
+                {
+                  props: {
+                    size: 'small',
+                    type: color
+                  }
+                },
+                row.recruitStatus
+              )
+            }
+          },
+          {
             title: '版本号',
             key: 'version',
             minWidth: 120,
@@ -940,7 +998,8 @@ export default {
         maxRows: 5
       },
       cityData: city,
-      tempAddress: []
+      tempAddress: [],
+      recruitStatusSelect: recruitStatusSelect
     }
   },
   computed: {},
@@ -949,6 +1008,9 @@ export default {
   },
   methods: {
     showModal(modal) {
+      if (modal === 'add') {
+        this.form.recruitStatus = this.recruitStatusSelect[0].value
+      }
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {

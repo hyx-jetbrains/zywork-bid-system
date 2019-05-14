@@ -1332,3 +1332,17 @@ export const couponeTypeSelect = [
     label: '充值VIP'
   }
 ]
+
+/**
+ * 招聘状态
+ */
+export const recruitStatusSelect = [
+  {
+    value: '招聘中',
+    label: '招聘中'
+  },
+  {
+    value: '已停止',
+    label: '已停止'
+  }
+]

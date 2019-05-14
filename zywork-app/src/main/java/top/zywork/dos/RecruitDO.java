@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * RecruitDO数据对象实体类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-14<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class RecruitDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372036803896219L;
+    private static final long serialVersionUID = -9223372036524057792L;
 
     // 招聘编号
 	private Long id;
@@ -33,6 +33,8 @@ public class RecruitDO extends BaseDO {
 	private String workAddr;
 	// 职位描述
 	private String memo;
+	// 招聘状态
+	private String recruitStatus;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -44,7 +46,7 @@ public class RecruitDO extends BaseDO {
 	
     public RecruitDO () {}
 
-    public RecruitDO (Long id, Long userId, String jobTitle, Byte isFulltime, String workYear, String education, String salary, String workAddr, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public RecruitDO (Long id, Long userId, String jobTitle, Byte isFulltime, String workYear, String education, String salary, String workAddr, String memo, String recruitStatus, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.jobTitle = jobTitle;
@@ -54,6 +56,7 @@ public class RecruitDO extends BaseDO {
 		this.salary = salary;
 		this.workAddr = workAddr;
 		this.memo = memo;
+		this.recruitStatus = recruitStatus;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -133,6 +136,14 @@ public class RecruitDO extends BaseDO {
 		this.memo = memo;
 	}
 
+	public String getRecruitStatus() {
+		return recruitStatus;
+	}
+
+	public void setRecruitStatus(String recruitStatus) {
+		this.recruitStatus = recruitStatus;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -178,6 +189,7 @@ public class RecruitDO extends BaseDO {
 				", salary = " + salary + 
 				", workAddr = " + workAddr + 
 				", memo = " + memo + 
+				", recruitStatus = " + recruitStatus + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

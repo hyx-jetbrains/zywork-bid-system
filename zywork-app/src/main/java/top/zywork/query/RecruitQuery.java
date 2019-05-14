@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * RecruitQuery查询对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-14<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class RecruitQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035849600286L;
+    private static final long serialVersionUID = -9223372035567184498L;
 
     // 招聘编号
 	private Long id;
@@ -47,6 +47,8 @@ public class RecruitQuery extends PageQuery {
 	private String workAddr;
 	// 职位描述
 	private String memo;
+	// 招聘状态
+	private String recruitStatus;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -80,7 +82,7 @@ public class RecruitQuery extends PageQuery {
 	
     public RecruitQuery () {}
 
-    public RecruitQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String jobTitle, Byte isFulltime, Byte isFulltimeMin, Byte isFulltimeMax, String workYear, String education, String salary, String workAddr, String memo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public RecruitQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String jobTitle, Byte isFulltime, Byte isFulltimeMin, Byte isFulltimeMax, String workYear, String education, String salary, String workAddr, String memo, String recruitStatus, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -96,6 +98,7 @@ public class RecruitQuery extends PageQuery {
 		this.salary = salary;
 		this.workAddr = workAddr;
 		this.memo = memo;
+		this.recruitStatus = recruitStatus;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -231,6 +234,14 @@ public class RecruitQuery extends PageQuery {
 		this.memo = memo;
 	}
 
+	public String getRecruitStatus() {
+		return recruitStatus;
+	}
+
+	public void setRecruitStatus(String recruitStatus) {
+		this.recruitStatus = recruitStatus;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -346,6 +357,7 @@ public class RecruitQuery extends PageQuery {
 				", salary = " + salary + 
 				", workAddr = " + workAddr + 
 				", memo = " + memo + 
+				", recruitStatus = " + recruitStatus + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

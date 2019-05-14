@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * RecruitVO值对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-05-14<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class RecruitVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034950246257L;
+    private static final long serialVersionUID = -9223372036760101301L;
 
     // 招聘编号
 	private Long id;
@@ -48,6 +48,9 @@ public class RecruitVO extends BaseVO {
 	// 职位描述
 	@Size(min = 0, max = 255, message = "必须小于255个字符")
 	private String memo;
+	// 招聘状态
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	private String recruitStatus;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -61,7 +64,7 @@ public class RecruitVO extends BaseVO {
 	
     public RecruitVO () {}
 
-    public RecruitVO (Long id, Long userId, String jobTitle, Byte isFulltime, String workYear, String education, String salary, String workAddr, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public RecruitVO (Long id, Long userId, String jobTitle, Byte isFulltime, String workYear, String education, String salary, String workAddr, String memo, String recruitStatus, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.jobTitle = jobTitle;
@@ -71,6 +74,7 @@ public class RecruitVO extends BaseVO {
 		this.salary = salary;
 		this.workAddr = workAddr;
 		this.memo = memo;
+		this.recruitStatus = recruitStatus;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -150,6 +154,14 @@ public class RecruitVO extends BaseVO {
 		this.memo = memo;
 	}
 
+	public String getRecruitStatus() {
+		return recruitStatus;
+	}
+
+	public void setRecruitStatus(String recruitStatus) {
+		this.recruitStatus = recruitStatus;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -195,6 +207,7 @@ public class RecruitVO extends BaseVO {
 				", salary = " + salary + 
 				", workAddr = " + workAddr + 
 				", memo = " + memo + 
+				", recruitStatus = " + recruitStatus + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

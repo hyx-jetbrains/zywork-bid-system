@@ -54,6 +54,9 @@
 <FormItem label="职位描述" prop="memo">
 	<Input v-model="form.memo" placeholder="请输入职位描述"/>
 </FormItem>
+<FormItem label="招聘状态" prop="recruitStatus">
+	<Input v-model="form.recruitStatus" placeholder="请输入招聘状态"/>
+</FormItem>
 
       </Form>
       <div slot="footer">
@@ -86,6 +89,9 @@
 </FormItem>
 <FormItem label="职位描述" prop="memo">
 	<Input v-model="form.memo" placeholder="请输入职位描述"/>
+</FormItem>
+<FormItem label="招聘状态" prop="recruitStatus">
+	<Input v-model="form.recruitStatus" placeholder="请输入招聘状态"/>
 </FormItem>
 
       </Form>
@@ -155,6 +161,9 @@
 </FormItem>
 <FormItem label="职位描述" prop="memo">
 	<Input v-model="searchForm.memo" placeholder="请输入职位描述"/>
+</FormItem>
+<FormItem label="招聘状态" prop="recruitStatus">
+	<Input v-model="searchForm.recruitStatus" placeholder="请输入招聘状态"/>
 </FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
@@ -230,6 +239,7 @@
 <p>提供月薪: <span v-text="form.salary"></span></p>
 <p>工作地: <span v-text="form.workAddr"></span></p>
 <p>职位描述: <span v-text="form.memo"></span></p>
+<p>招聘状态: <span v-text="form.recruitStatus"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
 <p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -283,6 +293,7 @@ education: null,
 salary: null,
 workAddr: null,
 memo: null,
+recruitStatus: null,
 version: null,
 createTime: null,
 updateTime: null,
@@ -315,6 +326,9 @@ workAddr: [
 memo: [
 {type: 'string', min: 1, max: 255, message: '必须1-255个字符', trigger: 'blur'}
 ],
+recruitStatus: [
+{type: 'string', min: 1, max: 10, message: '必须1-10个字符', trigger: 'blur'}
+],
 
         },
         searchForm: {
@@ -337,6 +351,7 @@ education: null,
 salary: null,
 workAddr: null,
 memo: null,
+recruitStatus: null,
 version: null,
 versionMin: null, 
 versionMax: null, 
@@ -420,6 +435,12 @@ sortable: true
 {
 title: '职位描述',
 key: 'memo',
+minWidth: 120,
+sortable: true
+},
+{
+title: '招聘状态',
+key: 'recruitStatus',
 minWidth: 120,
 sortable: true
 },
