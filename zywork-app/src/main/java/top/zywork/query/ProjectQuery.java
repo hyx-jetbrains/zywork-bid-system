@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectQuery查询对象类<br/>
  *
- * 创建于2019-05-08<br/>
+ * 创建于2019-05-14<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ProjectQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372034840754793L;
+    private static final long serialVersionUID = -9223372035046657404L;
 
     // 招投标项目编号
 	private Long id;
@@ -95,8 +95,8 @@ public class ProjectQuery extends PageQuery {
 	private Date openMarkTimeMax;
 	// 开标地点
 	private String openMarkAddr;
-	// 中标公示
-	private String inMarkPublicity;
+	// 开标状态
+	private String markStatus;
 	// 中标单位
 	private String inMarkComp;
 	// 公告时间
@@ -122,6 +122,8 @@ public class ProjectQuery extends PageQuery {
 	private Byte isElectronicMax;
 	// 源地址
 	private String sourceUrl;
+	// 内部地址
+	private String inwardHtmlUrl;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -155,7 +157,7 @@ public class ProjectQuery extends PageQuery {
 	
     public ProjectQuery () {}
 
-    public ProjectQuery (Long id, Long idMin, Long idMax, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, Float moneyToImplementMin, Float moneyToImplementMax, String tenderingAgent, String phone, Long offerPrice, Long offerPriceMin, Long offerPriceMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Date downloadEndTime, Date downloadEndTimeMin, Date downloadEndTimeMax, String otherDemand, String openMarkInfo, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Date noticeTimeMin, Date noticeTimeMax, Long clickCount, Long clickCountMin, Long clickCountMax, Byte isElectronic, Byte isElectronicMin, Byte isElectronicMax, String sourceUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ProjectQuery (Long id, Long idMin, Long idMax, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, Float moneyToImplementMin, Float moneyToImplementMax, String tenderingAgent, String phone, Long offerPrice, Long offerPriceMin, Long offerPriceMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Date downloadEndTime, Date downloadEndTimeMin, Date downloadEndTimeMax, String otherDemand, String openMarkInfo, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Date noticeTimeMin, Date noticeTimeMax, Long clickCount, Long clickCountMin, Long clickCountMax, Byte isElectronic, Byte isElectronicMin, Byte isElectronicMax, String sourceUrl, String inwardHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -192,7 +194,7 @@ public class ProjectQuery extends PageQuery {
 		this.openMarkTimeMin = openMarkTimeMin;
 		this.openMarkTimeMax = openMarkTimeMax;
 		this.openMarkAddr = openMarkAddr;
-		this.inMarkPublicity = inMarkPublicity;
+		this.markStatus = markStatus;
 		this.inMarkComp = inMarkComp;
 		this.noticeTime = noticeTime;
 		this.noticeTimeMin = noticeTimeMin;
@@ -204,6 +206,7 @@ public class ProjectQuery extends PageQuery {
 		this.isElectronicMin = isElectronicMin;
 		this.isElectronicMax = isElectronicMax;
 		this.sourceUrl = sourceUrl;
+		this.inwardHtmlUrl = inwardHtmlUrl;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -507,12 +510,12 @@ public class ProjectQuery extends PageQuery {
 		this.openMarkAddr = openMarkAddr;
 	}
 
-	public String getInMarkPublicity() {
-		return inMarkPublicity;
+	public String getMarkStatus() {
+		return markStatus;
 	}
 
-	public void setInMarkPublicity(String inMarkPublicity) {
-		this.inMarkPublicity = inMarkPublicity;
+	public void setMarkStatus(String markStatus) {
+		this.markStatus = markStatus;
 	}
 
 	public String getInMarkComp() {
@@ -601,6 +604,14 @@ public class ProjectQuery extends PageQuery {
 
 	public void setSourceUrl(String sourceUrl) {
 		this.sourceUrl = sourceUrl;
+	}
+
+	public String getInwardHtmlUrl() {
+		return inwardHtmlUrl;
+	}
+
+	public void setInwardHtmlUrl(String inwardHtmlUrl) {
+		this.inwardHtmlUrl = inwardHtmlUrl;
 	}
 
 	public Integer getVersion() {
@@ -739,7 +750,7 @@ public class ProjectQuery extends PageQuery {
 				", openMarkTimeMin = " + openMarkTimeMin + 
 				", openMarkTimeMax = " + openMarkTimeMax + 
 				", openMarkAddr = " + openMarkAddr + 
-				", inMarkPublicity = " + inMarkPublicity + 
+				", markStatus = " + markStatus + 
 				", inMarkComp = " + inMarkComp + 
 				", noticeTime = " + noticeTime + 
 				", noticeTimeMin = " + noticeTimeMin + 
@@ -751,6 +762,7 @@ public class ProjectQuery extends PageQuery {
 				", isElectronicMin = " + isElectronicMin + 
 				", isElectronicMax = " + isElectronicMax + 
 				", sourceUrl = " + sourceUrl + 
+				", inwardHtmlUrl = " + inwardHtmlUrl + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

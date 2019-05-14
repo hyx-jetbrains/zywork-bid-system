@@ -94,7 +94,7 @@
       </p>
       <p>
         中标公示:
-        <span v-text="form.inMarkPublicity"></span>
+        <span v-text="form.markStatus"></span>
       </p>
       <p>
         中标单位:

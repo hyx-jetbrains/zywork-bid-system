@@ -162,8 +162,8 @@
 <FormItem label="开标地点" prop="openMarkAddr">
 	<Input v-model="searchForm.openMarkAddr" placeholder="请输入开标地点"/>
 </FormItem>
-<FormItem label="中标公示" prop="inMarkPublicity">
-	<Input v-model="searchForm.inMarkPublicity" placeholder="请输入中标公示"/>
+<FormItem label="开标状态" prop="markStatus">
+	<Input v-model="searchForm.markStatus" placeholder="请输入开标状态"/>
 </FormItem>
 <FormItem label="中标单位" prop="inMarkComp">
 	<Input v-model="searchForm.inMarkComp" placeholder="请输入中标单位"/>
@@ -212,6 +212,9 @@
 </FormItem>
 <FormItem label="源地址" prop="sourceUrl">
 	<Input v-model="searchForm.sourceUrl" placeholder="请输入源地址"/>
+</FormItem>
+<FormItem label="内部地址" prop="inwardHtmlUrl">
+	<Input v-model="searchForm.inwardHtmlUrl" placeholder="请输入内部地址"/>
 </FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
@@ -300,12 +303,13 @@
 <p>开标信息: <span v-text="form.openMarkInfo"></span></p>
 <p>开标时间: <span v-text="form.openMarkTime"></span></p>
 <p>开标地点: <span v-text="form.openMarkAddr"></span></p>
-<p>中标公示: <span v-text="form.inMarkPublicity"></span></p>
+<p>开标状态: <span v-text="form.markStatus"></span></p>
 <p>中标单位: <span v-text="form.inMarkComp"></span></p>
 <p>公告时间: <span v-text="form.noticeTime"></span></p>
 <p>点击次数: <span v-text="form.clickCount"></span></p>
 <p>是否电子标: <span v-text="form.isElectronic"></span></p>
 <p>源地址: <span v-text="form.sourceUrl"></span></p>
+<p>内部地址: <span v-text="form.inwardHtmlUrl"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
 <p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -362,12 +366,13 @@ otherDemand: null,
 openMarkInfo: null,
 openMarkTime: null,
 openMarkAddr: null,
-inMarkPublicity: null,
+markStatus: null,
 inMarkComp: null,
 noticeTime: null,
 clickCount: null,
 isElectronic: null,
 sourceUrl: null,
+inwardHtmlUrl: null,
 version: null,
 createTime: null,
 updateTime: null,
@@ -415,7 +420,7 @@ openMarkTime: null,
 openMarkTimeMin: null, 
 openMarkTimeMax: null, 
 openMarkAddr: null,
-inMarkPublicity: null,
+markStatus: null,
 inMarkComp: null,
 noticeTime: null,
 noticeTimeMin: null, 
@@ -427,6 +432,7 @@ isElectronic: null,
 isElectronicMin: null, 
 isElectronicMax: null, 
 sourceUrl: null,
+inwardHtmlUrl: null,
 version: null,
 versionMin: null, 
 versionMax: null, 
@@ -592,8 +598,8 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '中标公示',
-key: 'inMarkPublicity',
+title: '开标状态',
+key: 'markStatus',
 minWidth: 120,
 sortable: true
 },
@@ -624,6 +630,12 @@ sortable: true
 {
 title: '源地址',
 key: 'sourceUrl',
+minWidth: 120,
+sortable: true
+},
+{
+title: '内部地址',
+key: 'inwardHtmlUrl',
 minWidth: 120,
 sortable: true
 },

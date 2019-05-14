@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectAnnounceQuery查询对象类<br/>
  *
- * 创建于2019-05-09<br/>
+ * 创建于2019-05-14<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ProjectAnnounceQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035661012474L;
+    private static final long serialVersionUID = -9223372036457956976L;
 
     // 公示编号
 	private Long id;
@@ -39,6 +39,8 @@ public class ProjectAnnounceQuery extends PageQuery {
 	private String thirdCandidate;
 	// 源地址
 	private String sourceUrl;
+	// 内部地址
+	private String inwordHtmlUrl;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -72,7 +74,7 @@ public class ProjectAnnounceQuery extends PageQuery {
 	
     public ProjectAnnounceQuery () {}
 
-    public ProjectAnnounceQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String announceDesc, String firstCandidate, String secondCandidate, String thirdCandidate, String sourceUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ProjectAnnounceQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String announceDesc, String firstCandidate, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -84,6 +86,7 @@ public class ProjectAnnounceQuery extends PageQuery {
 		this.secondCandidate = secondCandidate;
 		this.thirdCandidate = thirdCandidate;
 		this.sourceUrl = sourceUrl;
+		this.inwordHtmlUrl = inwordHtmlUrl;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -185,6 +188,14 @@ public class ProjectAnnounceQuery extends PageQuery {
 
 	public void setSourceUrl(String sourceUrl) {
 		this.sourceUrl = sourceUrl;
+	}
+
+	public String getInwordHtmlUrl() {
+		return inwordHtmlUrl;
+	}
+
+	public void setInwordHtmlUrl(String inwordHtmlUrl) {
+		this.inwordHtmlUrl = inwordHtmlUrl;
 	}
 
 	public Integer getVersion() {
@@ -298,6 +309,7 @@ public class ProjectAnnounceQuery extends PageQuery {
 				", secondCandidate = " + secondCandidate + 
 				", thirdCandidate = " + thirdCandidate + 
 				", sourceUrl = " + sourceUrl + 
+				", inwordHtmlUrl = " + inwordHtmlUrl + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

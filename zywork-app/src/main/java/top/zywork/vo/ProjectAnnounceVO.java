@@ -12,21 +12,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectAnnounceVO值对象类<br/>
  *
- * 创建于2019-05-09<br/>
+ * 创建于2019-05-14<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ProjectAnnounceVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035908067833L;
+    private static final long serialVersionUID = -9223372034924679324L;
 
     // 公示编号
 	private Long id;
 	// 项目编号
 	private Long projectId;
 	// 公示详情
-	@Size(min = 0, max = 2000, message = "必须小于2000个字符")
+	@Size(min = 0, max = 65535, message = "必须小于65535个字符")
 	private String announceDesc;
 	// 第一候选人
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
@@ -40,6 +40,9 @@ public class ProjectAnnounceVO extends BaseVO {
 	// 源地址
 	@Size(min = 0, max = 300, message = "必须小于300个字符")
 	private String sourceUrl;
+	// 内部地址
+	@Size(min = 0, max = 300, message = "必须小于300个字符")
+	private String inwordHtmlUrl;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -53,7 +56,7 @@ public class ProjectAnnounceVO extends BaseVO {
 	
     public ProjectAnnounceVO () {}
 
-    public ProjectAnnounceVO (Long id, Long projectId, String announceDesc, String firstCandidate, String secondCandidate, String thirdCandidate, String sourceUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectAnnounceVO (Long id, Long projectId, String announceDesc, String firstCandidate, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
 		this.announceDesc = announceDesc;
@@ -61,6 +64,7 @@ public class ProjectAnnounceVO extends BaseVO {
 		this.secondCandidate = secondCandidate;
 		this.thirdCandidate = thirdCandidate;
 		this.sourceUrl = sourceUrl;
+		this.inwordHtmlUrl = inwordHtmlUrl;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -124,6 +128,14 @@ public class ProjectAnnounceVO extends BaseVO {
 		this.sourceUrl = sourceUrl;
 	}
 
+	public String getInwordHtmlUrl() {
+		return inwordHtmlUrl;
+	}
+
+	public void setInwordHtmlUrl(String inwordHtmlUrl) {
+		this.inwordHtmlUrl = inwordHtmlUrl;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -167,6 +179,7 @@ public class ProjectAnnounceVO extends BaseVO {
 				", secondCandidate = " + secondCandidate + 
 				", thirdCandidate = " + thirdCandidate + 
 				", sourceUrl = " + sourceUrl + 
+				", inwordHtmlUrl = " + inwordHtmlUrl + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

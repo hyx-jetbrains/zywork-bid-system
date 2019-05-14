@@ -289,6 +289,8 @@ export default {
         firstCandidate: null,
         secondCandidate: null,
         thirdCandidate: null,
+        sourceUrl: null,
+        inwordHtmlUrl: null,
         version: null,
         createTime: null,
         updateTime: null,

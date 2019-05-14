@@ -73,8 +73,8 @@
 			<if test="openMarkAddr != null">
 				open_mark_addr,
 			</if>
-			<if test="inMarkPublicity != null">
-				in_mark_publicity,
+			<if test="markStatus != null">
+				mark_status,
 			</if>
 			<if test="inMarkComp != null">
 				in_mark_comp,
@@ -90,6 +90,9 @@
 			</if>
 			<if test="sourceUrl != null">
 				source_url,
+			</if>
+			<if test="inwardHtmlUrl != null">
+				inward_html_url,
 			</if>
 			<if test="version != null">
 				version,
@@ -169,8 +172,8 @@
 			<if test="openMarkAddr != null">
 				#{openMarkAddr},
 			</if>
-			<if test="inMarkPublicity != null">
-				#{inMarkPublicity},
+			<if test="markStatus != null">
+				#{markStatus},
 			</if>
 			<if test="inMarkComp != null">
 				#{inMarkComp},
@@ -186,6 +189,9 @@
 			</if>
 			<if test="sourceUrl != null">
 				#{sourceUrl},
+			</if>
+			<if test="inwardHtmlUrl != null">
+				#{inwardHtmlUrl},
 			</if>
 			<if test="version != null">
 				#{version},
@@ -273,8 +279,8 @@
 			<if test="item.openMarkAddr != null">
 				open_mark_addr,
 			</if>
-			<if test="item.inMarkPublicity != null">
-				in_mark_publicity,
+			<if test="item.markStatus != null">
+				mark_status,
 			</if>
 			<if test="item.inMarkComp != null">
 				in_mark_comp,
@@ -290,6 +296,9 @@
 			</if>
 			<if test="item.sourceUrl != null">
 				source_url,
+			</if>
+			<if test="item.inwardHtmlUrl != null">
+				inward_html_url,
 			</if>
 			<if test="item.version != null">
 				version,
@@ -369,8 +378,8 @@
 			<if test="item.openMarkAddr != null">
 				#{item.openMarkAddr},
 			</if>
-			<if test="item.inMarkPublicity != null">
-				#{item.inMarkPublicity},
+			<if test="item.markStatus != null">
+				#{item.markStatus},
 			</if>
 			<if test="item.inMarkComp != null">
 				#{item.inMarkComp},
@@ -386,6 +395,9 @@
 			</if>
 			<if test="item.sourceUrl != null">
 				#{item.sourceUrl},
+			</if>
+			<if test="item.inwardHtmlUrl != null">
+				#{item.inwardHtmlUrl},
 			</if>
 			<if test="item.version != null">
 				#{item.version},
@@ -481,8 +493,8 @@
 			<if test="openMarkAddr != null">
 				open_mark_addr = #{openMarkAddr},
 			</if>
-			<if test="inMarkPublicity != null">
-				in_mark_publicity = #{inMarkPublicity},
+			<if test="markStatus != null">
+				mark_status = #{markStatus},
 			</if>
 			<if test="inMarkComp != null">
 				in_mark_comp = #{inMarkComp},
@@ -498,6 +510,9 @@
 			</if>
 			<if test="sourceUrl != null">
 				source_url = #{sourceUrl},
+			</if>
+			<if test="inwardHtmlUrl != null">
+				inward_html_url = #{inwardHtmlUrl},
 			</if>
 			<if test="version != null">
 				version = #{version},
@@ -583,8 +598,8 @@
 			<if test="item.openMarkAddr != null">
 				open_mark_addr = #{item.openMarkAddr},
 			</if>
-			<if test="item.inMarkPublicity != null">
-				in_mark_publicity = #{item.inMarkPublicity},
+			<if test="item.markStatus != null">
+				mark_status = #{item.markStatus},
 			</if>
 			<if test="item.inMarkComp != null">
 				in_mark_comp = #{item.inMarkComp},
@@ -600,6 +615,9 @@
 			</if>
 			<if test="item.sourceUrl != null">
 				source_url = #{item.sourceUrl},
+			</if>
+			<if test="item.inwardHtmlUrl != null">
+				inward_html_url = #{item.inwardHtmlUrl},
 			</if>
 			<if test="item.version != null">
 				version = #{item.version},
@@ -623,7 +641,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, title as title, project_type as projectType, city as city, project_detail as projectDetail, release_status as releaseStatus, mark_unit_name as markUnitName, project_invest as projectInvest, check_pattern as checkPattern, comp_aptitude_type as compAptitudeType, builder_level as builderLevel, money_to_implement as moneyToImplement, tendering_agent as tenderingAgent, phone as phone, offer_price as offerPrice, assure_price as assurePrice, construction_period as constructionPeriod, download_end_time as downloadEndTime, other_demand as otherDemand, open_mark_info as openMarkInfo, open_mark_time as openMarkTime, open_mark_addr as openMarkAddr, in_mark_publicity as inMarkPublicity, in_mark_comp as inMarkComp, notice_time as noticeTime, click_count as clickCount, is_electronic as isElectronic, source_url as sourceUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, title as title, project_type as projectType, city as city, project_detail as projectDetail, release_status as releaseStatus, mark_unit_name as markUnitName, project_invest as projectInvest, check_pattern as checkPattern, comp_aptitude_type as compAptitudeType, builder_level as builderLevel, money_to_implement as moneyToImplement, tendering_agent as tenderingAgent, phone as phone, offer_price as offerPrice, assure_price as assurePrice, construction_period as constructionPeriod, download_end_time as downloadEndTime, other_demand as otherDemand, open_mark_info as openMarkInfo, open_mark_time as openMarkTime, open_mark_addr as openMarkAddr, mark_status as markStatus, in_mark_comp as inMarkComp, notice_time as noticeTime, click_count as clickCount, is_electronic as isElectronic, source_url as sourceUrl, inward_html_url as inwardHtmlUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -756,8 +774,8 @@
 		<if test="query != null and query.openMarkAddr != null and query.openMarkAddr != ''">
 			and open_mark_addr like concat('%', #{query.openMarkAddr}, '%')
 		</if>
-		<if test="query != null and query.inMarkPublicity != null and query.inMarkPublicity != ''">
-			and in_mark_publicity like concat('%', #{query.inMarkPublicity}, '%')
+		<if test="query != null and query.markStatus != null and query.markStatus != ''">
+			and mark_status like concat('%', #{query.markStatus}, '%')
 		</if>
 		<if test="query != null and query.inMarkComp != null and query.inMarkComp != ''">
 			and in_mark_comp like concat('%', #{query.inMarkComp}, '%')
@@ -800,6 +818,9 @@
 		</if>
 		<if test="query != null and query.sourceUrl != null and query.sourceUrl != ''">
 			and source_url like concat('%', #{query.sourceUrl}, '%')
+		</if>
+		<if test="query != null and query.inwardHtmlUrl != null and query.inwardHtmlUrl != ''">
+			and inward_html_url like concat('%', #{query.inwardHtmlUrl}, '%')
 		</if>
 		<if test="query != null and query.version != null">
 			and version = #{query.version}

@@ -442,6 +442,8 @@ export default {
         firstCandidate: null,
         secondCandidate: null,
         thirdCandidate: null,
+        sourceUrl: null,
+        inwodHtmlUrl: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -656,6 +658,12 @@ export default {
                 row.sourceUrl
               )
             }
+          },
+          {
+            title: '内部地址',
+            key: 'inwordHtmlUrl',
+            minWidth: 120,
+            sortable: true
           },
           {
             title: '版本号',

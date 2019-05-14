@@ -46,7 +46,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         // 开标时间
         Date openMarkDate = projectVO.getOpenMarkTime();
         // 默认公告中
-        String markPublicit = ProjectConstants.MARK_PUBLICIT_NOTICE;
+        String markStatus = ProjectConstants.MARK_PUBLICIT_NOTICE;
         if (openMarkDate != null && !"".equals(openMarkDate.toString())) {
             // 当前时间
             long currTime = DateUtils.millis(DateUtils.currentDate());
@@ -54,13 +54,13 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             long openMarkTime = DateUtils.millis(openMarkDate);
             if (openMarkTime < currTime) {
                 // 待开标
-                markPublicit = ProjectConstants.MARK_PUBLICIT_WAIT_MARK;
+                markStatus = ProjectConstants.MARK_PUBLICIT_WAIT_MARK;
             } else {
                 // 已开标
-                markPublicit = ProjectConstants.MARK_PUBLICIT_IN_MARK;
+                markStatus = ProjectConstants.MARK_PUBLICIT_IN_MARK;
             }
         }
-        projectVO.setInMarkPublicity(markPublicit);
+        projectVO.setMarkStatus(markStatus);
         return projectVO;
     }
 

@@ -254,8 +254,8 @@
         <FormItem label="开标地点" prop="openMarkAddr">
           <Input v-model="searchForm.openMarkAddr" placeholder="请输入开标地点"/>
         </FormItem>
-        <FormItem label="中标公示" prop="inMarkPublicity">
-          <Input v-model="searchForm.inMarkPublicity" placeholder="请输入中标公示"/>
+        <FormItem label="中标公示" prop="markStatus">
+          <Input v-model="searchForm.markStatus" placeholder="请输入中标公示"/>
         </FormItem>
         <FormItem label="中标单位" prop="inMarkComp">
           <Input v-model="searchForm.inMarkComp" placeholder="请输入中标单位"/>
@@ -549,7 +549,7 @@
       </p>
       <p>
         中标公示:
-        <span v-text="form.inMarkPublicity"></span>
+        <span v-text="form.markStatus"></span>
       </p>
       <p>
         中标单位:
@@ -642,7 +642,7 @@ export default {
         openMarkInfo: null,
         openMarkTime: null,
         openMarkAddr: null,
-        inMarkPublicity: null,
+        markStatus: null,
         inMarkComp: null,
         noticeTime: null,
         clickCount: null,
@@ -693,7 +693,7 @@ export default {
         openMarkTimeMin: null,
         openMarkTimeMax: null,
         openMarkAddr: null,
-        inMarkPublicity: null,
+        markStatus: null,
         inMarkComp: null,
         noticeTime: null,
         noticeTimeMin: null,
@@ -937,20 +937,20 @@ export default {
           },
           {
             title: '中标公示',
-            key: 'inMarkPublicity',
+            key: 'markStatus',
             minWidth: 120,
             sortable: true,
             render: (h, params) => {
               const row = params.row
-              const color = row.inMarkPublicity === '待开标' ? 'default' 
-                          : row.inMarkPublicity === '公告中' ? 'success' 
-                          : row.inMarkPublicity === '已开标' ? 'primary' : 'error'
+              const color = row.markStatus === '待开标' ? 'default' 
+                          : row.markStatus === '公告中' ? 'success' 
+                          : row.markStatus === '已开标' ? 'primary' : 'error'
               return h('Button', {
                   props: {
                     size: 'small',
                     type: color
                   }
-                }, row.inMarkPublicity)
+                }, row.markStatus)
             }
           },
           {

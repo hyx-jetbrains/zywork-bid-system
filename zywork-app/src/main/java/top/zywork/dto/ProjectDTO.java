@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * ProjectDTO数据传输对象类<br/>
  *
- * 创建于2019-05-08<br/>
+ * 创建于2019-05-14<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class ProjectDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372036137755834L;
+    private static final long serialVersionUID = -9223372036584410823L;
 
     // 招投标项目编号
 	private Long id;
@@ -59,8 +59,8 @@ public class ProjectDTO extends BaseDTO {
 	private Date openMarkTime;
 	// 开标地点
 	private String openMarkAddr;
-	// 中标公示
-	private String inMarkPublicity;
+	// 开标状态
+	private String markStatus;
 	// 中标单位
 	private String inMarkComp;
 	// 公告时间
@@ -71,6 +71,8 @@ public class ProjectDTO extends BaseDTO {
 	private Byte isElectronic;
 	// 源地址
 	private String sourceUrl;
+	// 内部地址
+	private String inwardHtmlUrl;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -82,7 +84,7 @@ public class ProjectDTO extends BaseDTO {
 	
     public ProjectDTO () {}
 
-    public ProjectDTO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String inMarkPublicity, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectDTO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, String inwardHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.projectType = projectType;
@@ -105,12 +107,13 @@ public class ProjectDTO extends BaseDTO {
 		this.openMarkInfo = openMarkInfo;
 		this.openMarkTime = openMarkTime;
 		this.openMarkAddr = openMarkAddr;
-		this.inMarkPublicity = inMarkPublicity;
+		this.markStatus = markStatus;
 		this.inMarkComp = inMarkComp;
 		this.noticeTime = noticeTime;
 		this.clickCount = clickCount;
 		this.isElectronic = isElectronic;
 		this.sourceUrl = sourceUrl;
+		this.inwardHtmlUrl = inwardHtmlUrl;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -294,12 +297,12 @@ public class ProjectDTO extends BaseDTO {
 		this.openMarkAddr = openMarkAddr;
 	}
 
-	public String getInMarkPublicity() {
-		return inMarkPublicity;
+	public String getMarkStatus() {
+		return markStatus;
 	}
 
-	public void setInMarkPublicity(String inMarkPublicity) {
-		this.inMarkPublicity = inMarkPublicity;
+	public void setMarkStatus(String markStatus) {
+		this.markStatus = markStatus;
 	}
 
 	public String getInMarkComp() {
@@ -340,6 +343,14 @@ public class ProjectDTO extends BaseDTO {
 
 	public void setSourceUrl(String sourceUrl) {
 		this.sourceUrl = sourceUrl;
+	}
+
+	public String getInwardHtmlUrl() {
+		return inwardHtmlUrl;
+	}
+
+	public void setInwardHtmlUrl(String inwardHtmlUrl) {
+		this.inwardHtmlUrl = inwardHtmlUrl;
 	}
 
 	public Integer getVersion() {
@@ -400,12 +411,13 @@ public class ProjectDTO extends BaseDTO {
 				", openMarkInfo = " + openMarkInfo + 
 				", openMarkTime = " + openMarkTime + 
 				", openMarkAddr = " + openMarkAddr + 
-				", inMarkPublicity = " + inMarkPublicity + 
+				", markStatus = " + markStatus + 
 				", inMarkComp = " + inMarkComp + 
 				", noticeTime = " + noticeTime + 
 				", clickCount = " + clickCount + 
 				", isElectronic = " + isElectronic + 
 				", sourceUrl = " + sourceUrl + 
+				", inwardHtmlUrl = " + inwardHtmlUrl + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

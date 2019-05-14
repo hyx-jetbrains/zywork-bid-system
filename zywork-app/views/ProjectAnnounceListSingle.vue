@@ -62,6 +62,9 @@
 <FormItem label="源地址" prop="sourceUrl">
 	<Input v-model="searchForm.sourceUrl" placeholder="请输入源地址"/>
 </FormItem>
+<FormItem label="内部地址" prop="inwordHtmlUrl">
+	<Input v-model="searchForm.inwordHtmlUrl" placeholder="请输入内部地址"/>
+</FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
 	<FormItem prop="versionMin">
@@ -134,6 +137,7 @@
 <p>第二候选人: <span v-text="form.secondCandidate"></span></p>
 <p>第三候选人: <span v-text="form.thirdCandidate"></span></p>
 <p>源地址: <span v-text="form.sourceUrl"></span></p>
+<p>内部地址: <span v-text="form.inwordHtmlUrl"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
 <p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -175,6 +179,7 @@ firstCandidate: null,
 secondCandidate: null,
 thirdCandidate: null,
 sourceUrl: null,
+inwordHtmlUrl: null,
 version: null,
 createTime: null,
 updateTime: null,
@@ -197,6 +202,7 @@ firstCandidate: null,
 secondCandidate: null,
 thirdCandidate: null,
 sourceUrl: null,
+inwordHtmlUrl: null,
 version: null,
 versionMin: null, 
 versionMax: null, 
@@ -261,6 +267,12 @@ sortable: true
 {
 title: '源地址',
 key: 'sourceUrl',
+minWidth: 120,
+sortable: true
+},
+{
+title: '内部地址',
+key: 'inwordHtmlUrl',
 minWidth: 120,
 sortable: true
 },

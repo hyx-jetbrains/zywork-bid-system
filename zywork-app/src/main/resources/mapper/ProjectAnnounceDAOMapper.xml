@@ -28,6 +28,9 @@
 			<if test="sourceUrl != null">
 				source_url,
 			</if>
+			<if test="inwordHtmlUrl != null">
+				inword_html_url,
+			</if>
 			<if test="version != null">
 				version,
 			</if>
@@ -60,6 +63,9 @@
 			</if>
 			<if test="sourceUrl != null">
 				#{sourceUrl},
+			</if>
+			<if test="inwordHtmlUrl != null">
+				#{inwordHtmlUrl},
 			</if>
 			<if test="version != null">
 				#{version},
@@ -102,6 +108,9 @@
 			<if test="item.sourceUrl != null">
 				source_url,
 			</if>
+			<if test="item.inwordHtmlUrl != null">
+				inword_html_url,
+			</if>
 			<if test="item.version != null">
 				version,
 			</if>
@@ -134,6 +143,9 @@
 			</if>
 			<if test="item.sourceUrl != null">
 				#{item.sourceUrl},
+			</if>
+			<if test="item.inwordHtmlUrl != null">
+				#{item.inwordHtmlUrl},
 			</if>
 			<if test="item.version != null">
 				#{item.version},
@@ -184,6 +196,9 @@
 			<if test="sourceUrl != null">
 				source_url = #{sourceUrl},
 			</if>
+			<if test="inwordHtmlUrl != null">
+				inword_html_url = #{inwordHtmlUrl},
+			</if>
 			<if test="version != null">
 				version = #{version},
 			</if>
@@ -223,6 +238,9 @@
 			<if test="item.sourceUrl != null">
 				source_url = #{item.sourceUrl},
 			</if>
+			<if test="item.inwordHtmlUrl != null">
+				inword_html_url = #{item.inwordHtmlUrl},
+			</if>
 			<if test="item.version != null">
 				version = #{item.version},
 			</if>
@@ -245,7 +263,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, project_id as projectId, announce_desc as announceDesc, first_candidate as firstCandidate, second_candidate as secondCandidate, third_candidate as thirdCandidate, source_url as sourceUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, project_id as projectId, announce_desc as announceDesc, first_candidate as firstCandidate, second_candidate as secondCandidate, third_candidate as thirdCandidate, source_url as sourceUrl, inword_html_url as inwordHtmlUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -287,6 +305,9 @@
 		</if>
 		<if test="query != null and query.sourceUrl != null and query.sourceUrl != ''">
 			and source_url like concat('%', #{query.sourceUrl}, '%')
+		</if>
+		<if test="query != null and query.inwordHtmlUrl != null and query.inwordHtmlUrl != ''">
+			and inword_html_url like concat('%', #{query.inwordHtmlUrl}, '%')
 		</if>
 		<if test="query != null and query.version != null">
 			and version = #{query.version}
