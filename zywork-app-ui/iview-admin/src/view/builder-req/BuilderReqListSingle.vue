@@ -56,6 +56,9 @@
 <FormItem label="说明" prop="memo">
 	<Input v-model="searchForm.memo" placeholder="请输入说明"/>
 </FormItem>
+<FormItem label="所需人才" prop="people">
+	<Input v-model="searchForm.people" placeholder="请输入所需人才"/>
+</FormItem>
 <FormItem label="所需人数"><Row>
 	<i-col span="11">
 	<FormItem prop="peopleCountMin">
@@ -160,6 +163,7 @@
 <p>姓名: <span v-text="form.name"></span></p>
 <p>手机号: <span v-text="form.phone"></span></p>
 <p>说明: <span v-text="form.memo"></span></p>
+<p>所需人才: <span v-text="form.people"></span></p>
 <p>所需人数: <span v-text="form.peopleCount"></span></p>
 <p>提供年薪: <span v-text="form.salary"></span></p>
 <p>企业地址: <span v-text="form.compAddr"></span></p>
@@ -203,6 +207,7 @@ userId: null,
 name: null,
 phone: null,
 memo: null,
+people: null,
 peopleCount: null,
 salary: null,
 compAddr: null,
@@ -227,6 +232,7 @@ userIdMax: null,
 name: null,
 phone: null,
 memo: null,
+people: null,
 peopleCount: null,
 peopleCountMin: null, 
 peopleCountMax: null, 
@@ -287,6 +293,12 @@ sortable: true
 {
 title: '说明',
 key: 'memo',
+minWidth: 120,
+sortable: true
+},
+{
+title: '所需人才',
+key: 'people',
 minWidth: 120,
 sortable: true
 },

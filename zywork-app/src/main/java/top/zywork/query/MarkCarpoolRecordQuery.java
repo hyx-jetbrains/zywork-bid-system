@@ -6,22 +6,22 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * BuilderReqQuery查询对象类<br/>
+ * MarkCarpoolRecordQuery查询对象类<br/>
  *
  * 创建于2019-05-14<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
-public class BuilderReqQuery extends PageQuery {
+public class MarkCarpoolRecordQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036717503424L;
+    private static final long serialVersionUID = -9223372034876721804L;
 
-    // 建造师需求编号
+    // 拼车记录编号
 	private Long id;
-	// 建造师需求编号（最小值）
+	// 拼车记录编号（最小值）
 	private Long idMin;
-	// 建造师需求编号（最大值）
+	// 拼车记录编号（最大值）
 	private Long idMax;
 	// 用户编号
 	private Long userId;
@@ -29,30 +29,12 @@ public class BuilderReqQuery extends PageQuery {
 	private Long userIdMin;
 	// 用户编号（最大值）
 	private Long userIdMax;
-	// 姓名
-	private String name;
-	// 手机号
-	private String phone;
-	// 说明
-	private String memo;
-	// 所需人才
-	private String people;
-	// 所需人数
-	private Integer peopleCount;
-	// 所需人数（最小值）
-	private Integer peopleCountMin;
-	// 所需人数（最大值）
-	private Integer peopleCountMax;
-	// 提供年薪
-	private Long salary;
-	// 提供年薪（最小值）
-	private Long salaryMin;
-	// 提供年薪（最大值）
-	private Long salaryMax;
-	// 企业地址
-	private String compAddr;
-	// 企业名称
-	private String compName;
+	// 拼车编号
+	private Long markCarpoolId;
+	// 拼车编号（最小值）
+	private Long markCarpoolIdMin;
+	// 拼车编号（最大值）
+	private Long markCarpoolIdMax;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -84,27 +66,18 @@ public class BuilderReqQuery extends PageQuery {
 	// 是否激活（最大值）
 	private Byte isActiveMax;
 	
-    public BuilderReqQuery () {}
+    public MarkCarpoolRecordQuery () {}
 
-    public BuilderReqQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, String name, String phone, String memo, String people, Integer peopleCount, Integer peopleCountMin, Integer peopleCountMax, Long salary, Long salaryMin, Long salaryMax, String compAddr, String compName, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public MarkCarpoolRecordQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long markCarpoolId, Long markCarpoolIdMin, Long markCarpoolIdMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
 		this.userId = userId;
 		this.userIdMin = userIdMin;
 		this.userIdMax = userIdMax;
-		this.name = name;
-		this.phone = phone;
-		this.memo = memo;
-		this.people = people;
-		this.peopleCount = peopleCount;
-		this.peopleCountMin = peopleCountMin;
-		this.peopleCountMax = peopleCountMax;
-		this.salary = salary;
-		this.salaryMin = salaryMin;
-		this.salaryMax = salaryMax;
-		this.compAddr = compAddr;
-		this.compName = compName;
+		this.markCarpoolId = markCarpoolId;
+		this.markCarpoolIdMin = markCarpoolIdMin;
+		this.markCarpoolIdMax = markCarpoolIdMax;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -168,100 +141,28 @@ public class BuilderReqQuery extends PageQuery {
 		this.userIdMax = userIdMax;
 	}
 
-	public String getName() {
-		return name;
+	public Long getMarkCarpoolId() {
+		return markCarpoolId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMarkCarpoolId(Long markCarpoolId) {
+		this.markCarpoolId = markCarpoolId;
 	}
 
-	public String getPhone() {
-		return phone;
+	public Long getMarkCarpoolIdMin() {
+		return markCarpoolIdMin;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setMarkCarpoolIdMin(Long markCarpoolIdMin) {
+		this.markCarpoolIdMin = markCarpoolIdMin;
 	}
 
-	public String getMemo() {
-		return memo;
+	public Long getMarkCarpoolIdMax() {
+		return markCarpoolIdMax;
 	}
 
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-
-	public String getPeople() {
-		return people;
-	}
-
-	public void setPeople(String people) {
-		this.people = people;
-	}
-
-	public Integer getPeopleCount() {
-		return peopleCount;
-	}
-
-	public void setPeopleCount(Integer peopleCount) {
-		this.peopleCount = peopleCount;
-	}
-
-	public Integer getPeopleCountMin() {
-		return peopleCountMin;
-	}
-
-	public void setPeopleCountMin(Integer peopleCountMin) {
-		this.peopleCountMin = peopleCountMin;
-	}
-
-	public Integer getPeopleCountMax() {
-		return peopleCountMax;
-	}
-
-	public void setPeopleCountMax(Integer peopleCountMax) {
-		this.peopleCountMax = peopleCountMax;
-	}
-
-	public Long getSalary() {
-		return salary;
-	}
-
-	public void setSalary(Long salary) {
-		this.salary = salary;
-	}
-
-	public Long getSalaryMin() {
-		return salaryMin;
-	}
-
-	public void setSalaryMin(Long salaryMin) {
-		this.salaryMin = salaryMin;
-	}
-
-	public Long getSalaryMax() {
-		return salaryMax;
-	}
-
-	public void setSalaryMax(Long salaryMax) {
-		this.salaryMax = salaryMax;
-	}
-
-	public String getCompAddr() {
-		return compAddr;
-	}
-
-	public void setCompAddr(String compAddr) {
-		this.compAddr = compAddr;
-	}
-
-	public String getCompName() {
-		return compName;
-	}
-
-	public void setCompName(String compName) {
-		this.compName = compName;
+	public void setMarkCarpoolIdMax(Long markCarpoolIdMax) {
+		this.markCarpoolIdMax = markCarpoolIdMax;
 	}
 
 	public Integer getVersion() {
@@ -363,25 +264,16 @@ public class BuilderReqQuery extends PageQuery {
 	
     @Override
     public String toString() {
-        return "BuilderReqQuery {" +
+        return "MarkCarpoolRecordQuery {" +
                 "id = " + id + 
 				", idMin = " + idMin + 
 				", idMax = " + idMax + 
 				", userId = " + userId + 
 				", userIdMin = " + userIdMin + 
 				", userIdMax = " + userIdMax + 
-				", name = " + name + 
-				", phone = " + phone + 
-				", memo = " + memo + 
-				", people = " + people + 
-				", peopleCount = " + peopleCount + 
-				", peopleCountMin = " + peopleCountMin + 
-				", peopleCountMax = " + peopleCountMax + 
-				", salary = " + salary + 
-				", salaryMin = " + salaryMin + 
-				", salaryMax = " + salaryMax + 
-				", compAddr = " + compAddr + 
-				", compName = " + compName + 
+				", markCarpoolId = " + markCarpoolId + 
+				", markCarpoolIdMin = " + markCarpoolIdMin + 
+				", markCarpoolIdMax = " + markCarpoolIdMax + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

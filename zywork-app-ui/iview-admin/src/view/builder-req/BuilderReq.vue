@@ -65,6 +65,9 @@
         <FormItem label="手机号" prop="phone">
           <Input v-model="form.phone" placeholder="请输入手机号"/>
         </FormItem>
+        <FormItem label="所需人才" prop="people">
+          <Input v-model="form.people" placeholder="请输入所需人才"/>
+        </FormItem>
         <FormItem label="所需人数" prop="peopleCount">
           <InputNumber v-model="form.peopleCount" placeholder="请输入所需人数" style="width: 100%;"/>
         </FormItem>
@@ -114,6 +117,9 @@
         </FormItem>
         <FormItem label="手机号" prop="phone">
           <Input v-model="form.phone" placeholder="请输入手机号"/>
+        </FormItem>
+        <FormItem label="所需人才" prop="people">
+          <Input v-model="form.people" placeholder="请输入所需人才"/>
         </FormItem>
         <FormItem label="所需人数" prop="peopleCount">
           <InputNumber v-model="form.peopleCount" placeholder="请输入所需人数" style="width: 100%;"/>
@@ -356,6 +362,10 @@
         <span v-text="form.memo"></span>
       </p>
       <p>
+        所需人才:
+        <span v-text="form.people"></span>
+      </p>
+      <p>
         所需人数:
         <span v-text="form.peopleCount"></span>
       </p>
@@ -483,6 +493,7 @@ export default {
         name: null,
         phone: null,
         memo: null,
+        people: null,
         peopleCount: null,
         salary: null,
         compAddr: null,
@@ -676,6 +687,12 @@ export default {
           {
             title: '说明',
             key: 'memo',
+            minWidth: 120,
+            sortable: true
+          },
+          {
+            title: '所需人才',
+            key: 'people',
             minWidth: 120,
             sortable: true
           },

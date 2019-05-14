@@ -8,7 +8,7 @@
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
           </Tooltip>
-          <Table ref="dataTable" stripe :loading="table.loading" :columns="table.tableColumns" :data="table.tableDetails" style="margin-top:20px;" @on-selection-change="changeSelection" @on-sort-change="changeSort"></Table>
+          <Table highlight-row ref="dataTable" stripe :loading="table.loading" :columns="table.tableColumns" :data="table.tableDetails" style="margin-top:20px;" @on-current-change="changeCurrent" @on-sort-change="changeSort"></Table>
           <div style="margin: 20px;overflow: hidden">
             <div style="float: right;">
               <Page :total="page.total" :current="searchForm.pageNo" @on-change="changePageNo" @on-page-size-change="changePageSize" showSizer showTotal></Page>
@@ -19,16 +19,16 @@
     </Row>
     <Modal v-model="modal.search" title="高级搜索">
       <Form ref="searchForm" :model="searchForm" :label-width="80">
-        <FormItem label="建造师需求编号"><Row>
+        <FormItem label="拼车记录编号"><Row>
 	<i-col span="11">
 	<FormItem prop="idMin">
-	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始建造师需求编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始拼车记录编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 	<i-col span="2" style="text-align: center">-</i-col>
 	<i-col span="11">
 	<FormItem prop="idMax">
-	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束建造师需求编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束拼车记录编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 </Row>
@@ -47,51 +47,19 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="姓名" prop="name">
-	<Input v-model="searchForm.name" placeholder="请输入姓名"/>
-</FormItem>
-<FormItem label="手机号" prop="phone">
-	<Input v-model="searchForm.phone" placeholder="请输入手机号"/>
-</FormItem>
-<FormItem label="说明" prop="memo">
-	<Input v-model="searchForm.memo" placeholder="请输入说明"/>
-</FormItem>
-<FormItem label="所需人才" prop="people">
-	<Input v-model="searchForm.people" placeholder="请输入所需人才"/>
-</FormItem>
-<FormItem label="所需人数"><Row>
+<FormItem label="找车编号"><Row>
 	<i-col span="11">
-	<FormItem prop="peopleCountMin">
-	<InputNumber v-model="searchForm.peopleCountMin" placeholder="请输入开始所需人数" style="width: 100%;"/>
+	<FormItem prop="markSeekcarIdMin">
+	<InputNumber v-model="searchForm.markSeekcarIdMin" placeholder="请输入开始找车编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 	<i-col span="2" style="text-align: center">-</i-col>
 	<i-col span="11">
-	<FormItem prop="peopleCountMax">
-	<InputNumber v-model="searchForm.peopleCountMax" placeholder="请输入结束所需人数" style="width: 100%;"/>
+	<FormItem prop="markSeekcarIdMax">
+	<InputNumber v-model="searchForm.markSeekcarIdMax" placeholder="请输入结束找车编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 </Row>
-</FormItem>
-<FormItem label="提供年薪"><Row>
-	<i-col span="11">
-	<FormItem prop="salaryMin">
-	<InputNumber v-model="searchForm.salaryMin" placeholder="请输入开始提供年薪" style="width: 100%;"/>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="salaryMax">
-	<InputNumber v-model="searchForm.salaryMax" placeholder="请输入结束提供年薪" style="width: 100%;"/>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="企业地址" prop="compAddr">
-	<Input v-model="searchForm.compAddr" placeholder="请输入企业地址"/>
-</FormItem>
-<FormItem label="企业名称" prop="compName">
-	<Input v-model="searchForm.compName" placeholder="请输入企业名称"/>
 </FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
@@ -158,16 +126,9 @@
       </div>
     </Modal>
     <Modal v-model="modal.detail" title="详情">
-      <p>建造师需求编号: <span v-text="form.id"></span></p>
+      <p>拼车记录编号: <span v-text="form.id"></span></p>
 <p>用户编号: <span v-text="form.userId"></span></p>
-<p>姓名: <span v-text="form.name"></span></p>
-<p>手机号: <span v-text="form.phone"></span></p>
-<p>说明: <span v-text="form.memo"></span></p>
-<p>所需人才: <span v-text="form.people"></span></p>
-<p>所需人数: <span v-text="form.peopleCount"></span></p>
-<p>提供年薪: <span v-text="form.salary"></span></p>
-<p>企业地址: <span v-text="form.compAddr"></span></p>
-<p>企业名称: <span v-text="form.compName"></span></p>
+<p>找车编号: <span v-text="form.markSeekcarId"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
 <p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -181,7 +142,7 @@
   import * as utils from '@/api/utils'
 
   export default {
-    name: 'BuilderReqList',
+    name: 'MarkSeekcarRecordListSingle',
     data() {
       return {
         modal: {
@@ -194,9 +155,9 @@
           search: false
         },
         urls: {
-          searchUrl: '/builder-req/admin/pager-cond',
-          allUrl: '/builder-req/admin/all',
-          detailUrl: '/builder-req/admin/one/'
+          searchUrl: '/mark-seekcar-record/admin/pager-cond',
+          allUrl: '/mark-seekcar-record/admin/all',
+          detailUrl: '/mark-seekcar-record/admin/one/'
         },
         page: {
           total: 0
@@ -204,14 +165,7 @@
         form: {
           id: null,
 userId: null,
-name: null,
-phone: null,
-memo: null,
-people: null,
-peopleCount: null,
-salary: null,
-compAddr: null,
-compName: null,
+markSeekcarId: null,
 version: null,
 createTime: null,
 updateTime: null,
@@ -229,18 +183,9 @@ idMax: null,
 userId: null,
 userIdMin: null, 
 userIdMax: null, 
-name: null,
-phone: null,
-memo: null,
-people: null,
-peopleCount: null,
-peopleCountMin: null, 
-peopleCountMax: null, 
-salary: null,
-salaryMin: null, 
-salaryMax: null, 
-compAddr: null,
-compName: null,
+markSeekcarId: null,
+markSeekcarIdMin: null, 
+markSeekcarIdMax: null, 
 version: null,
 versionMin: null, 
 versionMax: null, 
@@ -259,13 +204,6 @@ isActiveMax: null,
           loading: false,
           tableColumns: [
             {
-              type: 'selection',
-              width: 45,
-              key: "id",
-              align: 'center',
-              fixed: 'left'
-            },
-            {
               width: 60,
               align: 'center',
               fixed: "left",
@@ -274,7 +212,7 @@ isActiveMax: null,
               }
             },
             {
-title: '建造师需求编号',
+title: '拼车记录编号',
 key: 'id',
 minWidth: 120,
 sortable: true
@@ -286,50 +224,8 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '姓名',
-key: 'name',
-minWidth: 120,
-sortable: true
-},
-{
-title: '手机号',
-key: 'phone',
-minWidth: 120,
-sortable: true
-},
-{
-title: '说明',
-key: 'memo',
-minWidth: 120,
-sortable: true
-},
-{
-title: '所需人才',
-key: 'people',
-minWidth: 120,
-sortable: true
-},
-{
-title: '所需人数',
-key: 'peopleCount',
-minWidth: 120,
-sortable: true
-},
-{
-title: '提供年薪',
-key: 'salary',
-minWidth: 120,
-sortable: true
-},
-{
-title: '企业地址',
-key: 'compAddr',
-minWidth: 120,
-sortable: true
-},
-{
-title: '企业名称',
-key: 'compName',
+title: '找车编号',
+key: 'markSeekcarId',
 minWidth: 120,
 sortable: true
 },
@@ -385,7 +281,7 @@ sortable: true
             }
           ],
           tableDetails: [],
-          selections: []
+          currentRow: {}
         }
       }
     },
@@ -424,8 +320,8 @@ sortable: true
       search() {
         utils.search(this)
       },
-      changeSelection(selections) {
-        utils.changeSelections(this, selections)
+      changeCurrent(currentRow, oldCurrentRow) {
+        utils.changeCurrent(this, currentRow, oldCurrentRow)
       },
       changeSort(sortColumn) {
         utils.changeSort(this, sortColumn)

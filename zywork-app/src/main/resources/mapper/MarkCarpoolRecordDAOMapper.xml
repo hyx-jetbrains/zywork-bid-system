@@ -2,40 +2,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="top.zywork.dao.BuilderReqDAO">
+<mapper namespace="top.zywork.dao.MarkCarpoolRecordDAO">
 
-    <insert id="save" parameterType="builderReqDO">
+    <insert id="save" parameterType="markCarpoolRecordDO">
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
     		SELECT LAST_INSERT_ID()
     	</selectKey>
-        insert into t_builder_req
+        insert into t_mark_carpool_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
 				user_id,
 			</if>
-			<if test="name != null">
-				name,
-			</if>
-			<if test="phone != null">
-				phone,
-			</if>
-			<if test="memo != null">
-				memo,
-			</if>
-			<if test="people != null">
-				people,
-			</if>
-			<if test="peopleCount != null">
-				people_count,
-			</if>
-			<if test="salary != null">
-				salary,
-			</if>
-			<if test="compAddr != null">
-				comp_addr,
-			</if>
-			<if test="compName != null">
-				comp_name,
+			<if test="markCarpoolId != null">
+				mark_carpool_id,
 			</if>
 			<if test="version != null">
 				version,
@@ -55,29 +34,8 @@
             <if test="userId != null">
 				#{userId},
 			</if>
-			<if test="name != null">
-				#{name},
-			</if>
-			<if test="phone != null">
-				#{phone},
-			</if>
-			<if test="memo != null">
-				#{memo},
-			</if>
-			<if test="people != null">
-				#{people},
-			</if>
-			<if test="peopleCount != null">
-				#{peopleCount},
-			</if>
-			<if test="salary != null">
-				#{salary},
-			</if>
-			<if test="compAddr != null">
-				#{compAddr},
-			</if>
-			<if test="compName != null">
-				#{compName},
+			<if test="markCarpoolId != null">
+				#{markCarpoolId},
 			</if>
 			<if test="version != null">
 				#{version},
@@ -100,34 +58,13 @@
     		SELECT LAST_INSERT_ID()
     	</selectKey>
     	<foreach collection="list" item="item" separator=";">
-            insert into t_builder_req
+            insert into t_mark_carpool_record
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="item.userId != null">
 				user_id,
 			</if>
-			<if test="item.name != null">
-				name,
-			</if>
-			<if test="item.phone != null">
-				phone,
-			</if>
-			<if test="item.memo != null">
-				memo,
-			</if>
-			<if test="item.people != null">
-				people,
-			</if>
-			<if test="item.peopleCount != null">
-				people_count,
-			</if>
-			<if test="item.salary != null">
-				salary,
-			</if>
-			<if test="item.compAddr != null">
-				comp_addr,
-			</if>
-			<if test="item.compName != null">
-				comp_name,
+			<if test="item.markCarpoolId != null">
+				mark_carpool_id,
 			</if>
 			<if test="item.version != null">
 				version,
@@ -147,29 +84,8 @@
                 <if test="item.userId != null">
 				#{item.userId},
 			</if>
-			<if test="item.name != null">
-				#{item.name},
-			</if>
-			<if test="item.phone != null">
-				#{item.phone},
-			</if>
-			<if test="item.memo != null">
-				#{item.memo},
-			</if>
-			<if test="item.people != null">
-				#{item.people},
-			</if>
-			<if test="item.peopleCount != null">
-				#{item.peopleCount},
-			</if>
-			<if test="item.salary != null">
-				#{item.salary},
-			</if>
-			<if test="item.compAddr != null">
-				#{item.compAddr},
-			</if>
-			<if test="item.compName != null">
-				#{item.compName},
+			<if test="item.markCarpoolId != null">
+				#{item.markCarpoolId},
 			</if>
 			<if test="item.version != null">
 				#{item.version},
@@ -189,45 +105,24 @@
     </insert>
 
     <delete id="removeById" parameterType="long">
-        delete from t_builder_req where id = #{id}
+        delete from t_mark_carpool_record where id = #{id}
     </delete>
 
     <delete id="removeByIds">
-        delete from t_builder_req where id in
+        delete from t_mark_carpool_record where id in
         <foreach item="id" collection="array" separator="," open="(" close=")">
             #{id}
         </foreach>
     </delete>
 
-    <update id="update" parameterType="builderReqDO">
-        update t_builder_req
+    <update id="update" parameterType="markCarpoolRecordDO">
+        update t_mark_carpool_record
         <set>
             <if test="userId != null">
 				user_id = #{userId},
 			</if>
-			<if test="name != null">
-				name = #{name},
-			</if>
-			<if test="phone != null">
-				phone = #{phone},
-			</if>
-			<if test="memo != null">
-				memo = #{memo},
-			</if>
-			<if test="people != null">
-				people = #{people},
-			</if>
-			<if test="peopleCount != null">
-				people_count = #{peopleCount},
-			</if>
-			<if test="salary != null">
-				salary = #{salary},
-			</if>
-			<if test="compAddr != null">
-				comp_addr = #{compAddr},
-			</if>
-			<if test="compName != null">
-				comp_name = #{compName},
+			<if test="markCarpoolId != null">
+				mark_carpool_id = #{markCarpoolId},
 			</if>
 			<if test="version != null">
 				version = #{version},
@@ -248,34 +143,13 @@
 
     <update id="updateBatch" parameterType="java.util.List">
     	<foreach collection="list" item="item" separator=";">
-            update t_builder_req
+            update t_mark_carpool_record
             <set>
                 <if test="item.userId != null">
 				user_id = #{item.userId},
 			</if>
-			<if test="item.name != null">
-				name = #{item.name},
-			</if>
-			<if test="item.phone != null">
-				phone = #{item.phone},
-			</if>
-			<if test="item.memo != null">
-				memo = #{item.memo},
-			</if>
-			<if test="item.people != null">
-				people = #{item.people},
-			</if>
-			<if test="item.peopleCount != null">
-				people_count = #{item.peopleCount},
-			</if>
-			<if test="item.salary != null">
-				salary = #{item.salary},
-			</if>
-			<if test="item.compAddr != null">
-				comp_addr = #{item.compAddr},
-			</if>
-			<if test="item.compName != null">
-				comp_name = #{item.compName},
+			<if test="item.markCarpoolId != null">
+				mark_carpool_id = #{item.markCarpoolId},
 			</if>
 			<if test="item.version != null">
 				version = #{item.version},
@@ -299,7 +173,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, user_id as userId, name as name, phone as phone, memo as memo, people as people, people_count as peopleCount, salary as salary, comp_addr as compAddr, comp_name as compName, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, user_id as userId, mark_carpool_id as markCarpoolId, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -327,47 +201,17 @@
 		<if test="query != null and query.userIdMin != null and query.userIdMax != null">
 			and user_id <![CDATA[ >= ]]> #{query.userIdMin} and user_id <![CDATA[ <= ]]> #{query.userIdMax}
 		</if>
-		<if test="query != null and query.name != null and query.name != ''">
-			and name like concat('%', #{query.name}, '%')
+		<if test="query != null and query.markCarpoolId != null">
+			and mark_carpool_id = #{query.markCarpoolId}
 		</if>
-		<if test="query != null and query.phone != null and query.phone != ''">
-			and phone like concat('%', #{query.phone}, '%')
+		<if test="query != null and query.markCarpoolIdMin != null and query.markCarpoolIdMax == null">
+			and mark_carpool_id <![CDATA[ >= ]]> #{query.markCarpoolIdMin}
 		</if>
-		<if test="query != null and query.memo != null and query.memo != ''">
-			and memo like concat('%', #{query.memo}, '%')
+		<if test="query != null and query.markCarpoolIdMin == null and query.markCarpoolIdMax != null">
+			and mark_carpool_id <![CDATA[ <= ]]> #{query.markCarpoolIdMax}
 		</if>
-		<if test="query != null and query.people != null and query.people != ''">
-			and people like concat('%', #{query.people}, '%')
-		</if>
-		<if test="query != null and query.peopleCount != null">
-			and people_count = #{query.peopleCount}
-		</if>
-		<if test="query != null and query.peopleCountMin != null and query.peopleCountMax == null">
-			and people_count <![CDATA[ >= ]]> #{query.peopleCountMin}
-		</if>
-		<if test="query != null and query.peopleCountMin == null and query.peopleCountMax != null">
-			and people_count <![CDATA[ <= ]]> #{query.peopleCountMax}
-		</if>
-		<if test="query != null and query.peopleCountMin != null and query.peopleCountMax != null">
-			and people_count <![CDATA[ >= ]]> #{query.peopleCountMin} and people_count <![CDATA[ <= ]]> #{query.peopleCountMax}
-		</if>
-		<if test="query != null and query.salary != null">
-			and salary = #{query.salary}
-		</if>
-		<if test="query != null and query.salaryMin != null and query.salaryMax == null">
-			and salary <![CDATA[ >= ]]> #{query.salaryMin}
-		</if>
-		<if test="query != null and query.salaryMin == null and query.salaryMax != null">
-			and salary <![CDATA[ <= ]]> #{query.salaryMax}
-		</if>
-		<if test="query != null and query.salaryMin != null and query.salaryMax != null">
-			and salary <![CDATA[ >= ]]> #{query.salaryMin} and salary <![CDATA[ <= ]]> #{query.salaryMax}
-		</if>
-		<if test="query != null and query.compAddr != null and query.compAddr != ''">
-			and comp_addr like concat('%', #{query.compAddr}, '%')
-		</if>
-		<if test="query != null and query.compName != null and query.compName != ''">
-			and comp_name like concat('%', #{query.compName}, '%')
+		<if test="query != null and query.markCarpoolIdMin != null and query.markCarpoolIdMax != null">
+			and mark_carpool_id <![CDATA[ >= ]]> #{query.markCarpoolIdMin} and mark_carpool_id <![CDATA[ <= ]]> #{query.markCarpoolIdMax}
 		</if>
 		<if test="query != null and query.version != null">
 			and version = #{query.version}
@@ -420,27 +264,27 @@
 		
     </sql>
 
-    <select id="getById" parameterType="long" resultType="builderReqDO">
+    <select id="getById" parameterType="long" resultType="markCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_builder_req where id = #{id}
+        from t_mark_carpool_record where id = #{id}
     </select>
 
     <select id="getVersionById" parameterType="long" resultType="integer">
-        select version from t_builder_req where id = #{id}
+        select version from t_mark_carpool_record where id = #{id}
     </select>
 
-    <select id="listAll" resultType="builderReqDO">
+    <select id="listAll" resultType="markCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_builder_req
+        from t_mark_carpool_record
         order by update_time desc, create_time desc
     </select>
 
-    <select id="listAllByCondition" resultType="builderReqDO">
+    <select id="listAllByCondition" resultType="markCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_builder_req
+        from t_mark_carpool_record
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -453,10 +297,10 @@
         </if>
     </select>
 
-    <select id="listPageByCondition" resultType="builderReqDO">
+    <select id="listPageByCondition" resultType="markCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_builder_req
+        from t_mark_carpool_record
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -471,7 +315,7 @@
     </select>
 
     <select id="countByCondition" resultType="long">
-        select count(*) from t_builder_req
+        select count(*) from t_mark_carpool_record
         <where>
             <include refid="query_where_clause"/>
         </where>

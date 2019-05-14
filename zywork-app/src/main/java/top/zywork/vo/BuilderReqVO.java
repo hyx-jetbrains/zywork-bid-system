@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * BuilderReqVO值对象类<br/>
  *
- * 创建于2019-05-13<br/>
+ * 创建于2019-05-14<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class BuilderReqVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372036482570490L;
+    private static final long serialVersionUID = -9223372035899957464L;
 
     // 建造师需求编号
 	private Long id;
@@ -35,6 +35,9 @@ public class BuilderReqVO extends BaseVO {
 	// 说明
 	@Size(min = 0, max = 255, message = "必须小于255个字符")
 	private String memo;
+	// 所需人才
+	@Size(min = 0, max = 30, message = "必须小于30个字符")
+	private String people;
 	// 所需人数
 	private Integer peopleCount;
 	// 提供年薪
@@ -58,12 +61,13 @@ public class BuilderReqVO extends BaseVO {
 	
     public BuilderReqVO () {}
 
-    public BuilderReqVO (Long id, Long userId, String name, String phone, String memo, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public BuilderReqVO (Long id, Long userId, String name, String phone, String memo, String people, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
 		this.phone = phone;
 		this.memo = memo;
+		this.people = people;
 		this.peopleCount = peopleCount;
 		this.salary = salary;
 		this.compAddr = compAddr;
@@ -113,6 +117,14 @@ public class BuilderReqVO extends BaseVO {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getPeople() {
+		return people;
+	}
+
+	public void setPeople(String people) {
+		this.people = people;
 	}
 
 	public Integer getPeopleCount() {
@@ -188,6 +200,7 @@ public class BuilderReqVO extends BaseVO {
 				", name = " + name + 
 				", phone = " + phone + 
 				", memo = " + memo + 
+				", people = " + people + 
 				", peopleCount = " + peopleCount + 
 				", salary = " + salary + 
 				", compAddr = " + compAddr + 

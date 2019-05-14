@@ -3,7 +3,18 @@
     <Row>
       <i-col span="24">
         <Card>
-          <Button @click="confirmSelection" type="primary">确认选择</Button>&nbsp;
+          <Button @click="showModal('add')" type="primary">添加</Button>&nbsp;
+          <Dropdown @on-click="batchOpt">
+            <Button type="primary">
+              批量操作
+              <Icon type="ios-arrow-down"></Icon>
+            </Button>
+            <DropdownMenu slot="list">
+              <DropdownItem name="batchActive">批量激活</DropdownItem>
+              <DropdownItem name="batchInactive"><span style="color: red;">批量冻结</span></DropdownItem>
+              <DropdownItem name="batchRemove" divided><span style="color: red;">批量删除</span></DropdownItem>
+            </DropdownMenu>
+          </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
@@ -17,18 +28,48 @@
         </Card>
       </i-col>
     </Row>
+    <Modal v-model="modal.add" title="添加" @on-visible-change="changeModalVisibleResetForm('addForm', $event)">
+      <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
+        <FormItem label="用户编号" prop="userId">
+	<InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
+</FormItem>
+<FormItem label="拼车编号" prop="markCarpoolId">
+	<InputNumber v-model="form.markCarpoolId" placeholder="请输入拼车编号" style="width: 100%;"/>
+</FormItem>
+
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="resetFormCancelModal('addForm', 'add')">取消</Button>
+        <Button type="primary" size="large" @click="add" :loading="loading.add">添加</Button>
+      </div>
+    </Modal>
+    <Modal v-model="modal.edit" title="修改" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
+      <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
+        <FormItem label="用户编号" prop="userId">
+	<InputNumber v-model="form.userId" placeholder="请输入用户编号" style="width: 100%;"/>
+</FormItem>
+<FormItem label="拼车编号" prop="markCarpoolId">
+	<InputNumber v-model="form.markCarpoolId" placeholder="请输入拼车编号" style="width: 100%;"/>
+</FormItem>
+
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="resetFormCancelModal('editForm', 'edit')">取消</Button>
+        <Button type="primary" size="large" @click="edit" :loading="loading.edit">修改</Button>
+      </div>
+    </Modal>
     <Modal v-model="modal.search" title="高级搜索">
       <Form ref="searchForm" :model="searchForm" :label-width="80">
-        <FormItem label="建造师需求编号"><Row>
+        <FormItem label="拼车记录编号"><Row>
 	<i-col span="11">
 	<FormItem prop="idMin">
-	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始建造师需求编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始拼车记录编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 	<i-col span="2" style="text-align: center">-</i-col>
 	<i-col span="11">
 	<FormItem prop="idMax">
-	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束建造师需求编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束拼车记录编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 </Row>
@@ -47,51 +88,19 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="姓名" prop="name">
-	<Input v-model="searchForm.name" placeholder="请输入姓名"/>
-</FormItem>
-<FormItem label="手机号" prop="phone">
-	<Input v-model="searchForm.phone" placeholder="请输入手机号"/>
-</FormItem>
-<FormItem label="说明" prop="memo">
-	<Input v-model="searchForm.memo" placeholder="请输入说明"/>
-</FormItem>
-<FormItem label="所需人才" prop="people">
-	<Input v-model="searchForm.people" placeholder="请输入所需人才"/>
-</FormItem>
-<FormItem label="所需人数"><Row>
+<FormItem label="拼车编号"><Row>
 	<i-col span="11">
-	<FormItem prop="peopleCountMin">
-	<InputNumber v-model="searchForm.peopleCountMin" placeholder="请输入开始所需人数" style="width: 100%;"/>
+	<FormItem prop="markCarpoolIdMin">
+	<InputNumber v-model="searchForm.markCarpoolIdMin" placeholder="请输入开始拼车编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 	<i-col span="2" style="text-align: center">-</i-col>
 	<i-col span="11">
-	<FormItem prop="peopleCountMax">
-	<InputNumber v-model="searchForm.peopleCountMax" placeholder="请输入结束所需人数" style="width: 100%;"/>
+	<FormItem prop="markCarpoolIdMax">
+	<InputNumber v-model="searchForm.markCarpoolIdMax" placeholder="请输入结束拼车编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 </Row>
-</FormItem>
-<FormItem label="提供年薪"><Row>
-	<i-col span="11">
-	<FormItem prop="salaryMin">
-	<InputNumber v-model="searchForm.salaryMin" placeholder="请输入开始提供年薪" style="width: 100%;"/>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="salaryMax">
-	<InputNumber v-model="searchForm.salaryMax" placeholder="请输入结束提供年薪" style="width: 100%;"/>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="企业地址" prop="compAddr">
-	<Input v-model="searchForm.compAddr" placeholder="请输入企业地址"/>
-</FormItem>
-<FormItem label="企业名称" prop="compName">
-	<Input v-model="searchForm.compName" placeholder="请输入企业名称"/>
 </FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
@@ -154,20 +163,13 @@
       <div slot="footer">
         <Button type="text" size="large" @click="resetForm('searchForm')">清空</Button>
         <Button type="text" size="large" @click="cancelModal('search')">取消</Button>
-        <Button type="primary" size="large" @click="searchOkModal('search')" :loading="loading.search">确定</Button>
+        <Button type="primary" size="large" @click="searchOkModal('search')" :loading="loading.search">搜索</Button>
       </div>
     </Modal>
-    <Modal v-model="modal.detail" title="详情">
-      <p>建造师需求编号: <span v-text="form.id"></span></p>
+    <Modal v-model="modal.detail" title="详情" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
+      <p>拼车记录编号: <span v-text="form.id"></span></p>
 <p>用户编号: <span v-text="form.userId"></span></p>
-<p>姓名: <span v-text="form.name"></span></p>
-<p>手机号: <span v-text="form.phone"></span></p>
-<p>说明: <span v-text="form.memo"></span></p>
-<p>所需人才: <span v-text="form.people"></span></p>
-<p>所需人数: <span v-text="form.peopleCount"></span></p>
-<p>提供年薪: <span v-text="form.salary"></span></p>
-<p>企业地址: <span v-text="form.compAddr"></span></p>
-<p>企业名称: <span v-text="form.compName"></span></p>
+<p>拼车编号: <span v-text="form.markCarpoolId"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
 <p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -181,7 +183,7 @@
   import * as utils from '@/api/utils'
 
   export default {
-    name: 'BuilderReqList',
+    name: 'MarkCarpoolRecord',
     data() {
       return {
         modal: {
@@ -191,12 +193,22 @@
           detail: false
         },
         loading: {
+          add: false,
+          edit: false,
           search: false
         },
         urls: {
-          searchUrl: '/builder-req/admin/pager-cond',
-          allUrl: '/builder-req/admin/all',
-          detailUrl: '/builder-req/admin/one/'
+          addUrl: '/mark-carpool-record/admin/save',
+          batchAddUrl: '/mark-carpool-record/admin/batch-save',
+          editUrl: '/mark-carpool-record/admin/update',
+          batchEditUrl: '/mark-carpool-record/admin/batch-update',
+          searchUrl: '/mark-carpool-record/admin/pager-cond',
+          allUrl: '/mark-carpool-record/admin/all',
+          removeUrl: '/mark-carpool-record/admin/remove/',
+          batchRemoveUrl: '/mark-carpool-record/admin/batch-remove',
+          detailUrl: '/mark-carpool-record/admin/one/',
+          activeUrl: '/mark-carpool-record/admin/active',
+          batchActiveUrl: '/mark-carpool-record/admin/batch-active'
         },
         page: {
           total: 0
@@ -204,19 +216,15 @@
         form: {
           id: null,
 userId: null,
-name: null,
-phone: null,
-memo: null,
-people: null,
-peopleCount: null,
-salary: null,
-compAddr: null,
-compName: null,
+markCarpoolId: null,
 version: null,
 createTime: null,
 updateTime: null,
 isActive: null,
 
+        },
+        validateRules: {
+          
         },
         searchForm: {
           pageNo: 1,
@@ -229,18 +237,9 @@ idMax: null,
 userId: null,
 userIdMin: null, 
 userIdMax: null, 
-name: null,
-phone: null,
-memo: null,
-people: null,
-peopleCount: null,
-peopleCountMin: null, 
-peopleCountMax: null, 
-salary: null,
-salaryMin: null, 
-salaryMax: null, 
-compAddr: null,
-compName: null,
+markCarpoolId: null,
+markCarpoolIdMin: null, 
+markCarpoolIdMax: null, 
 version: null,
 versionMin: null, 
 versionMax: null, 
@@ -274,7 +273,7 @@ isActiveMax: null,
               }
             },
             {
-title: '建造师需求编号',
+title: '拼车记录编号',
 key: 'id',
 minWidth: 120,
 sortable: true
@@ -286,50 +285,8 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '姓名',
-key: 'name',
-minWidth: 120,
-sortable: true
-},
-{
-title: '手机号',
-key: 'phone',
-minWidth: 120,
-sortable: true
-},
-{
-title: '说明',
-key: 'memo',
-minWidth: 120,
-sortable: true
-},
-{
-title: '所需人才',
-key: 'people',
-minWidth: 120,
-sortable: true
-},
-{
-title: '所需人数',
-key: 'peopleCount',
-minWidth: 120,
-sortable: true
-},
-{
-title: '提供年薪',
-key: 'salary',
-minWidth: 120,
-sortable: true
-},
-{
-title: '企业地址',
-key: 'compAddr',
-minWidth: 120,
-sortable: true
-},
-{
-title: '企业名称',
-key: 'compName',
+title: '拼车编号',
+key: 'markCarpoolId',
 minWidth: 120,
 sortable: true
 },
@@ -359,27 +316,89 @@ sortable: true
 },
 
             {
+              title: '激活状态',
+              key: 'isActive',
+              minWidth: 100,
+              align: 'center',
+              render: (h, params) => {
+                return h('i-switch', {
+                  props: {
+                    size: 'large',
+                    value: params.row.isActive === 0
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    'on-change': (status) => {
+                      this.active(params.row)
+                    }
+                  }
+                }, [
+                  h('span', {
+                    slot: 'open'
+                  }, '激活'),
+                  h('span', {
+                    slot: 'close'
+                  }, '冻结')
+                ])
+              }
+            },
+            {
               title: '操作',
               key: 'action',
-              width: 80,
+              width: 120,
               align: 'center',
               fixed: 'right',
               render: (h, params) => {
-                return h('div', [
-                  h('Button', {
-                    props: {
-                      type: 'primary',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        this.showDetail('detail', params.row)
-                      }
+                return h('Dropdown', {
+                  on: {
+                    'on-click': (itemName) => {
+                      this.userOpt(itemName, params.row)
                     }
-                  }, '详情')
+                  },
+                  props: {
+                    transfer: true
+                  }
+                }, [
+                  h('Button', {
+                      props: {
+                        type: 'primary',
+                        size: 'small'
+                      }
+                    }, [
+                      '选择操作 ',
+                      h('Icon', {
+                        props: {
+                          type: 'ios-arrow-down'
+                        }
+                      })
+                  ]),
+                  h('DropdownMenu', {
+                      slot:"list"
+                    },[
+                      h('DropdownItem', {
+                        props:{
+                          name: 'showEdit'
+                        }
+                      }, '编辑'),
+                      h('DropdownItem', {
+                        props:{
+                          name: 'showDetail'
+                        }
+                      }, '详情'),
+                      h('DropdownItem', {
+                        props:{
+                          name: 'remove'
+                        }
+                      }, [
+                        h('span', {
+                          style: {
+                            color: 'red'
+                          }
+                        }, '删除')
+                      ])
+                  ])
                 ])
               }
             }
@@ -396,10 +415,6 @@ sortable: true
     methods: {
       showModal(modal) {
         utils.showModal(this, modal)
-      },
-      showDetail(modal, row) {
-        utils.showModal(this, modal)
-        this.form = row
       },
       changeModalVisibleResetForm(formRef, visible) {
         if (!visible) {
@@ -421,6 +436,35 @@ sortable: true
         this.searchForm.pageNo = 1
         utils.search(this)
       },
+      batchOpt(itemName) {
+        if (itemName === 'batchActive') {
+          utils.batchActive(this, 0)
+        } else if (itemName === 'batchInactive') {
+          utils.batchActive(this, 1)
+        } else if (itemName === 'batchRemove') {
+          utils.batchRemove(this)
+        }
+      },
+      userOpt(itemName, row) {
+        if (itemName === 'showEdit') {
+          utils.showModal(this, 'edit')
+          this.form = JSON.parse(JSON.stringify(row))
+        } else if (itemName === 'showDetail') {
+          utils.showModal(this, 'detail')
+          this.form = JSON.parse(JSON.stringify(row))
+        } else if (itemName === 'remove') {
+          utils.remove(this, row)
+        }
+      },
+      add() {
+        utils.add(this)
+      },
+      edit() {
+        utils.edit(this)
+      },
+      active(row) {
+        utils.active(this, row)
+      },
       search() {
         utils.search(this)
       },
@@ -435,9 +479,6 @@ sortable: true
       },
       changePageSize(pageSize) {
         utils.changePageSize(this, pageSize)
-      },
-      confirmSelection() {
-        // 确认选择的逻辑
       }
     }
   }

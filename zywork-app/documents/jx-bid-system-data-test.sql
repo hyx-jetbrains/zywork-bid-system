@@ -243,6 +243,7 @@ CREATE TABLE `t_builder_req`  (
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
   `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '手机号',
   `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '说明',
+  `people` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '所需人才',
   `people_count` int(10) NULL DEFAULT 0 COMMENT '所需人数',
   `salary` bigint(20) NULL DEFAULT 0 COMMENT '提供年薪',
   `comp_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业地址',
@@ -1247,6 +1248,21 @@ CREATE TABLE `t_mark_carpool`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for t_mark_carpool_record
+-- ----------------------------
+DROP TABLE IF EXISTS `t_mark_carpool_record`;
+CREATE TABLE `t_mark_carpool_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '拼车记录编号',
+  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
+  `mark_carpool_id` bigint(20) DEFAULT NULL COMMENT '拼车编号',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车申请记录表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for t_mark_seekcar
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_seekcar`;
@@ -1267,6 +1283,21 @@ CREATE TABLE `t_mark_seekcar`  (
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_mark_seekcar_record
+-- ----------------------------
+DROP TABLE IF EXISTS `t_mark_seekcar_record`;
+CREATE TABLE `t_mark_seekcar_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '拼车记录编号',
+  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
+  `mark_seekcar_id` bigint(20) DEFAULT NULL COMMENT '找车编号',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车申请记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_message

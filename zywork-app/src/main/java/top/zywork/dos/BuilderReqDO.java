@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * BuilderReqDO数据对象实体类<br/>
  *
- * 创建于2019-05-13<br/>
+ * 创建于2019-05-14<br/>
  *
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class BuilderReqDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372036616889836L;
+    private static final long serialVersionUID = -9223372035830671674L;
 
     // 建造师需求编号
 	private Long id;
@@ -25,6 +25,8 @@ public class BuilderReqDO extends BaseDO {
 	private String phone;
 	// 说明
 	private String memo;
+	// 所需人才
+	private String people;
 	// 所需人数
 	private Integer peopleCount;
 	// 提供年薪
@@ -44,12 +46,13 @@ public class BuilderReqDO extends BaseDO {
 	
     public BuilderReqDO () {}
 
-    public BuilderReqDO (Long id, Long userId, String name, String phone, String memo, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public BuilderReqDO (Long id, Long userId, String name, String phone, String memo, String people, Integer peopleCount, Long salary, String compAddr, String compName, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.name = name;
 		this.phone = phone;
 		this.memo = memo;
+		this.people = people;
 		this.peopleCount = peopleCount;
 		this.salary = salary;
 		this.compAddr = compAddr;
@@ -99,6 +102,14 @@ public class BuilderReqDO extends BaseDO {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getPeople() {
+		return people;
+	}
+
+	public void setPeople(String people) {
+		this.people = people;
 	}
 
 	public Integer getPeopleCount() {
@@ -174,6 +185,7 @@ public class BuilderReqDO extends BaseDO {
 				", name = " + name + 
 				", phone = " + phone + 
 				", memo = " + memo + 
+				", people = " + people + 
 				", peopleCount = " + peopleCount + 
 				", salary = " + salary + 
 				", compAddr = " + compAddr + 
