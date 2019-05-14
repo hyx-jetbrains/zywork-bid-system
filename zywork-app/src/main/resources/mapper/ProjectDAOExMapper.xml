@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.ProjectDAO">
+
+
+    <select id="listPageByUserId" resultType="projectDO">
+        select
+			id as id, title as title, project_type as projectType, city as city, project_detail as projectDetail, release_status as releaseStatus, mark_unit_name as markUnitName, project_invest as projectInvest, check_pattern as checkPattern, comp_aptitude_type as compAptitudeType, builder_level as builderLevel, money_to_implement as moneyToImplement, tendering_agent as tenderingAgent, phone as phone, offer_price as offerPrice, assure_price as assurePrice, construction_period as constructionPeriod, download_end_time as downloadEndTime, other_demand as otherDemand, open_mark_info as openMarkInfo, open_mark_time as openMarkTime, open_mark_addr as openMarkAddr, in_mark_publicity as inMarkPublicity, in_mark_comp as inMarkComp, notice_time as noticeTime, click_count as clickCount, is_electronic as isElectronic, source_url as sourceUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        from t_project, t_project_collection
+        <where>
+			<if test="query != null and query.projectType != null and query.projectType != ''">
+				and project_type like concat('%', #{query.projectType}, '%')
+			</if>
+			<if test="query != null and query.inMarkPublicity != null and query.inMarkPublicity != ''">
+				and in_mark_publicity like concat('%', #{query.inMarkPublicity}, '%')
+			</if>
+			and t_project.id = t_project_collection.project_id
+			and t_project_collection.user_id = #{userId}
+		</where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByUserId" resultType="long">
+        select count(*) from t_project, t_project_collection
+		<where>
+			<if test="query != null and query.projectType != null and query.projectType != ''">
+				and project_type like concat('%', #{query.projectType}, '%')
+			</if>
+			<if test="query != null and query.inMarkPublicity != null and query.inMarkPublicity != ''">
+				and in_mark_publicity like concat('%', #{query.inMarkPublicity}, '%')
+			</if>
+			and t_project.id = t_project_collection.project_id
+			and t_project_collection.user_id = #{userId}
+		</where>
+    </select>
+
+</mapper>

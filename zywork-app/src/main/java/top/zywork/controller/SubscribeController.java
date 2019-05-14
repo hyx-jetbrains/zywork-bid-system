@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.SubscribeDTO;
 import top.zywork.query.SubscribeQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.SubscribeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,52 @@ public class SubscribeController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), SubscribeVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 18:10
+     * Description: 根据UserId查询我的订阅
+     */
+    @PostMapping("user/getByUserId")
+    public ResponseStatusVO getByUserId() {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        SubscribeVO subscribeVO = new SubscribeVO();
+        Object obj = subscribeService.getByUserId(jwtUser.getUserId());
+        if(obj != null) {
+            subscribeVO = BeanUtils.copy(obj, SubscribeVO.class);
+        }
+        return ResponseStatusVO.ok("查询成功", subscribeVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 18:07
+     * Description: 我的订阅新增/修改
+     */
+    @PostMapping("user/save")
+    public ResponseStatusVO createSubscribe(@RequestBody @Validated SubscribeVO subscribeVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        Object obj = subscribeService.getByUserId(jwtUser.getUserId());
+
+        if(obj != null) {
+            SubscribeVO sub = BeanUtils.copy(obj, SubscribeVO.class);
+            subscribeVO.setId(sub.getId());
+            return update(subscribeVO, bindingResult);
+        }
+
+        subscribeVO.setUserId(jwtUser.getUserId());
+        return save(subscribeVO, bindingResult);
     }
 
     @Autowired

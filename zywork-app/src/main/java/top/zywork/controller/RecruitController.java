@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.RecruitDTO;
 import top.zywork.query.RecruitQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.RecruitService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,62 @@ public class RecruitController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), RecruitVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 11:46
+     * Description: 信息共享 -- 岗位招聘
+     */
+    @PostMapping("any/list-page")
+    public ResponseStatusVO listPage(@RequestBody RecruitQuery recruitQuery) {
+        return listPageByCondition(recruitQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 10:30
+     * Description: 根据ID查询详情
+     */
+    @GetMapping("any/getRecruitById/{id}")
+    public ResponseStatusVO getRecruitById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 11:46
+     * Description: 我发布的岗位招聘
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody RecruitQuery recruitQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        recruitQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(recruitQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 11:52
+     * Description: 发布岗位招聘
+     */
+    @PostMapping("user/release-recruit")
+    public ResponseStatusVO releaseRecruit(@RequestBody @Validated RecruitVO recruitVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        recruitVO.setUserId(jwtUser.getUserId());
+        return save(recruitVO, bindingResult);
     }
 
     @Autowired

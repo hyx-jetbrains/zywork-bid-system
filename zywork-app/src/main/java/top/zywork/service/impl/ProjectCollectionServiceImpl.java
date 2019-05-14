@@ -33,4 +33,9 @@ public class ProjectCollectionServiceImpl extends AbstractBaseService implements
     public void init() {
         super.init(ProjectCollectionDO.class, ProjectCollectionDTO.class);
     }
+
+    @Override
+    public Object getByUserAndProject(Long userId, Long projectId) {
+        return projectCollectionDAO.getByUserAndProject(userId, projectId);
+    }
 }

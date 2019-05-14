@@ -7,6 +7,7 @@ import top.zywork.common.DateUtils;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.dao.ProjectDAO;
 import top.zywork.dos.ProjectDO;
+import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.service.AbstractBaseService;
 import top.zywork.service.ProjectService;
@@ -72,6 +73,18 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             tempProjectVOList.add(one);
         }
         return tempProjectVOList;
+    }
+
+    @Override
+    public PagerDTO listPageByUserId(Object queryObj, Long userId) {
+        PagerDTO pagerDTO = new PagerDTO();
+        Long count = projectDAO.countByUserId(queryObj, userId);
+        if(count > 0) {
+            List<Object> list = projectDAO.listPageByUserId(queryObj, userId);
+            pagerDTO.setRows(list);
+            pagerDTO.setTotal(count);
+        }
+        return pagerDTO;
     }
 
 }

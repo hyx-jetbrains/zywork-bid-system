@@ -150,6 +150,23 @@ public class ExpertSubscribeController extends BaseController {
         return update(expertSubscribeVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 15:32
+     * Description: 我的预约
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody ExpertSubscribeQuery expertSubscribeQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        expertSubscribeQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(expertSubscribeQuery);
+    }
+
     @PostMapping("admin/replayPrice")
     public ResponseStatusVO replayPrice(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO, BindingResult bindingResult) {
         return update(expertSubscribeVO, bindingResult);

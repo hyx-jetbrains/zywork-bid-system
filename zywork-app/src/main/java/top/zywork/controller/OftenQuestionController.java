@@ -166,6 +166,28 @@ public class OftenQuestionController extends BaseController {
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 16:31
+     * Description: 常见问题
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPage(@RequestBody OftenQuestionQuery oftenQuestionQuery) {
+        return listPageByCondition(oftenQuestionQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 16:35
+     * Description: 常见问题详情
+     */
+    @GetMapping("user/one/{id}")
+    public ResponseStatusVO getOftenQuestionById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
     @Autowired
     public void setOftenQuestionService(OftenQuestionService oftenQuestionService) {
         this.oftenQuestionService = oftenQuestionService;

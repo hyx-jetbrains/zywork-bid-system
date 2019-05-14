@@ -25,4 +25,6 @@ public interface ProjectCollectionDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByUserAndProject(@Param("userId") Long userId, @Param("projectId") Long projectId);
 }

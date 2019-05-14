@@ -15,6 +15,9 @@ import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
+import top.zywork.service.ProjectCollectionService;
 import top.zywork.service.ProjectService;
 import top.zywork.service.UploadService;
 import top.zywork.vo.ResponseStatusVO;
@@ -193,6 +196,36 @@ public class ProjectController extends BaseController {
         return listPageByCondition(projectQuery);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 15:16
+     * Description: 我的收藏
+     */
+    @PostMapping("user/list-page-cond")
+    public ResponseStatusVO listPageCond(@RequestBody ProjectQuery projectQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        PagerDTO pagerDTO = projectService.listPageByUserId(projectQuery, jwtUser.getUserId());
+        PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
+        pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectVO.class));
+        return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 18:23
+     * Description: 招标详情
+     */
+    @GetMapping("user/getById/{id}")
+    public ResponseStatusVO getProjectById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
     @Autowired
     public void setProjectService(ProjectService projectService) {
         this.projectService = projectService;
@@ -202,5 +235,4 @@ public class ProjectController extends BaseController {
     public void setUploadService(UploadService uploadService) {
         this.uploadService = uploadService;
     }
-
 }

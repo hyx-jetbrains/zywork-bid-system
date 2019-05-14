@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.SeekDataDTO;
 import top.zywork.query.SeekDataQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.SeekDataService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,62 @@ public class SeekDataController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), SeekDataVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 11:48
+     * Description: 信息共享 -- 求带资料
+     */
+    @PostMapping("any/list-page")
+    public ResponseStatusVO listPage(@RequestBody SeekDataQuery seekDataQuery) {
+        return listPageByCondition(seekDataQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 10:27
+     * Description: 根据ID查询详情
+     */
+    @GetMapping("any/getSeekDataById/{id}")
+    public ResponseStatusVO getSeekDataById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 11:48
+     * Description: 我的求带资料
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody SeekDataQuery seekDataQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        seekDataQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(seekDataQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 11:56
+     * Description: 发布求带资料
+     */
+    @PostMapping("user/release-seekData")
+    public ResponseStatusVO releaseSeekData(@RequestBody @Validated SeekDataVO seekDataVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        seekDataVO.setUserId(jwtUser.getUserId());
+        return save(seekDataVO, bindingResult);
     }
 
     @Autowired

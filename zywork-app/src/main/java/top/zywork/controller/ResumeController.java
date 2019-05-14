@@ -136,6 +136,53 @@ public class ResumeController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 16:10
+     * Description: 我的简历查询
+     */
+    @PostMapping("user/getByUserId")
+    public ResponseStatusVO getByUserId() {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        ResumeVO resumeVO = new ResumeVO();
+        Object obj = resumeService.getByUserId(jwtUser.getUserId());
+        if(obj != null) {
+            resumeVO = BeanUtils.copy(obj, ResumeVO.class);
+        }
+
+        return ResponseStatusVO.ok("查询成功", resumeVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 16:04
+     * Description: 我的简历新增/修改
+     */
+    @PostMapping("user/save")
+    public ResponseStatusVO createResume(@RequestBody @Validated ResumeVO resumeVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        Object obj = resumeService.getByUserId(jwtUser.getUserId());
+        if(obj != null) {
+            ResumeVO re = BeanUtils.copy(obj, ResumeVO.class);
+            if(re != null) {
+                resumeVO.setId(re.getId());
+                return update(resumeVO, bindingResult);
+            }
+        }
+        resumeVO.setUserId(jwtUser.getUserId());
+        return save(resumeVO, bindingResult);
+    }
+
     @Autowired
     public void setResumeService(ResumeService resumeService) {
         this.resumeService = resumeService;

@@ -8,17 +8,19 @@ import java.util.Date;
  *
  * 创建于2019-05-13<br/>
  *
- * @author http://zywork.top 危锦辉
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class GuaranteeDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035067951004L;
+    private static final long serialVersionUID = -9223372035276731385L;
 
     // 保函编号
 	private Long id;
 	// 项目编号
 	private Long projectId;
+	// 用户编号
+	private Long userId;
 	// 项目名称
 	private String projectName;
 	// 开标时间
@@ -31,7 +33,7 @@ public class GuaranteeDTO extends BaseDTO {
 	private Long assurePrice;
 	// 担保公司
 	private String guaranteeComp;
-	// 保函费
+	// 保函费(元)
 	private Long guaranteePrice;
 	// 申请人
 	private String applicant;
@@ -52,9 +54,10 @@ public class GuaranteeDTO extends BaseDTO {
 	
     public GuaranteeDTO () {}
 
-    public GuaranteeDTO (Long id, Long projectId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public GuaranteeDTO (Long id, Long projectId, Long userId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
+		this.userId = userId;
 		this.projectName = projectName;
 		this.openMarkTime = openMarkTime;
 		this.markUnitName = markUnitName;
@@ -87,6 +90,14 @@ public class GuaranteeDTO extends BaseDTO {
 
 	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getProjectName() {
@@ -215,6 +226,7 @@ public class GuaranteeDTO extends BaseDTO {
         return "GuaranteeDTO {" +
                 "id = " + id + 
 				", projectId = " + projectId + 
+				", userId = " + userId + 
 				", projectName = " + projectName + 
 				", openMarkTime = " + openMarkTime + 
 				", markUnitName = " + markUnitName + 

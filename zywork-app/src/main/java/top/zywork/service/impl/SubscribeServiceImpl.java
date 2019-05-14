@@ -33,4 +33,9 @@ public class SubscribeServiceImpl extends AbstractBaseService implements Subscri
     public void init() {
         super.init(SubscribeDO.class, SubscribeDTO.class);
     }
+
+    @Override
+    public Object getByUserId(Long userId) {
+        return subscribeDAO.getByUserId(userId);
+    }
 }

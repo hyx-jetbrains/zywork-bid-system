@@ -137,6 +137,12 @@ public class ProjectAnnounceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", projectAnnounceVO);
     }
 
+    /**
+     * User: 危锦辉
+     * Date: 2019/05/13
+     * Time: 18:53
+     * Description: 根据项目ID获取公告详情
+     */
     @GetMapping("user/getByProjectId/{id}")
     public ResponseStatusVO getByProjectId(@PathVariable("id") Long id) {
         ProjectAnnounceVO projectAnnounceVO = new ProjectAnnounceVO();

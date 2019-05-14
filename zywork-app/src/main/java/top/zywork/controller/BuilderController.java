@@ -163,6 +163,62 @@ public class BuilderController extends BaseController {
         return responseStatusVO;
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 10:00
+     * Description: 信息共享 -- 建造师 -- 应聘信息
+     */
+    @PostMapping("any/list-page")
+    public ResponseStatusVO listPage(@RequestBody BuilderQuery builderQuery) {
+        return listPageByCondition(builderQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 10:58
+     * Description: 根据ID查询详情
+     */
+    @GetMapping("any/getBuilderById/{id}")
+    public ResponseStatusVO getBuilderById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 10:40
+     * Description: 我发布的建造师应聘信息
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody BuilderQuery builderQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        builderQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(builderQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 11:33
+     * Description: 发布建造师应聘信息
+     */
+    @PostMapping("user/release-builder")
+    public ResponseStatusVO releaseBuilder(@RequestBody @Validated BuilderVO builderVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        builderVO.setUserId(jwtUser.getUserId());
+        return save(builderVO, bindingResult);
+    }
+
     @Autowired
     public void setBuilderService(BuilderService builderService) {
         this.builderService = builderService;

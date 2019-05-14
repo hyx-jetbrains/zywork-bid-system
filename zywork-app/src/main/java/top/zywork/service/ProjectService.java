@@ -1,5 +1,7 @@
 package top.zywork.service;
 
+import org.apache.ibatis.annotations.Param;
+import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.vo.ProjectVO;
 
@@ -32,5 +34,13 @@ public interface ProjectService extends BaseService {
      * @date: 2019-04-23 11:21
      */
     List<ProjectVO> getOpenMarkList(List<ProjectVO> projectVOList);
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 15:11
+     * Description: 根据用户id查询收藏项目
+     */
+    PagerDTO listPageByUserId(@Param("query") Object queryObj, @Param("userId") Long userId);
 
 }

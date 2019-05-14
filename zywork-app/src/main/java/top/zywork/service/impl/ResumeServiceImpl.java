@@ -33,4 +33,9 @@ public class ResumeServiceImpl extends AbstractBaseService implements ResumeServ
     public void init() {
         super.init(ResumeDO.class, ResumeDTO.class);
     }
+
+    @Override
+    public Object getByUserId(Long userId) {
+        return resumeDAO.getByUserId(userId);
+    }
 }

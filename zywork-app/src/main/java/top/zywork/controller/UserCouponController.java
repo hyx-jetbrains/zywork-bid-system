@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.UserCouponDTO;
 import top.zywork.query.UserCouponQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.CouponService;
 import top.zywork.service.UserCouponService;
 import top.zywork.vo.CouponVO;
@@ -142,6 +144,23 @@ public class UserCouponController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), UserCouponVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 16:17
+     * Description: 抵扣券
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody UserCouponQuery userCouponQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        userCouponQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(userCouponQuery);
     }
 
     @Autowired

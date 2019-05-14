@@ -136,6 +136,62 @@ public class MarkSeekcarController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 11:07
+     * Description: 信息共享 -- 开标拼车 -- 我要找车
+     */
+    @PostMapping("any/list-page")
+    public ResponseStatusVO listPage(@RequestBody MarkSeekcarQuery markSeekcarQuery) {
+        return listPageByCondition(markSeekcarQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 10:32
+     * Description: 根据ID查询详情
+     */
+    @GetMapping("any/getMarkSeekcarById/{id}")
+    public ResponseStatusVO getMarkSeekcarById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 11:07
+     * Description: 开标拼车 -- 我要找车
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody MarkSeekcarQuery markSeekcarQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        markSeekcarQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(markSeekcarQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 11:49
+     * Description: 发布开标找车
+     */
+    @PostMapping("user/release-markSeekcar")
+    public ResponseStatusVO releaseMarkSeekcar(@RequestBody @Validated MarkSeekcarVO markSeekcarVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        markSeekcarVO.setUserId(jwtUser.getUserId());
+        return save(markSeekcarVO, bindingResult);
+    }
+
     @Autowired
     public void setMarkSeekcarService(MarkSeekcarService markSeekcarService) {
         this.markSeekcarService = markSeekcarService;

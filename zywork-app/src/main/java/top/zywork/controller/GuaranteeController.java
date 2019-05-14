@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.GuaranteeDTO;
 import top.zywork.query.GuaranteeQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.GuaranteeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,40 @@ public class GuaranteeController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), GuaranteeVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 13:44
+     * Description: 我的申请保函
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody GuaranteeQuery guaranteeQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        guaranteeQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(guaranteeQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 11:59
+     * Description: 保函申请
+     */
+    @PostMapping("user/release-guarantee")
+    public ResponseStatusVO releaseGuarantee(@RequestBody @Validated GuaranteeVO guaranteeVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        guaranteeVO.setUserId(jwtUser.getUserId());
+        return save(guaranteeVO, bindingResult);
     }
 
     @Autowired

@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `t_guarantee`;
 CREATE TABLE `t_guarantee` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '保函编号',
   `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
+  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
   `project_name` varchar(100) DEFAULT '' COMMENT '项目名称',
   `open_mark_time` datetime DEFAULT NULL COMMENT '开标时间',
   `mark_unit_name` varchar(32) DEFAULT '' COMMENT '招标单位名称',
@@ -1231,8 +1232,9 @@ CREATE TABLE `t_mark_carpool`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '开标拼车编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
-  `city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '城市',
+  `start_city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发城市',
   `start_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发地点',
+  `end_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '目的地城市',
   `end_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '目的地',
   `start_time` datetime(0) NULL DEFAULT NULL COMMENT '出发时间',
   `car_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '汽车类型',
@@ -1245,8 +1247,9 @@ CREATE TABLE `t_mark_carpool`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车表' ROW_FORMAT = Dynamic;
 
+SET FOREIGN_KEY_CHECKS = 1;
 -- ----------------------------
 -- Table structure for t_mark_carpool_record
 -- ----------------------------
@@ -1270,8 +1273,9 @@ CREATE TABLE `t_mark_seekcar`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '开标找车编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
-  `city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '城市',
+  `start_city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发城市',
   `start_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发地点',
+  `end_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '目的地城市',
   `end_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '目的地',
   `start_time` datetime(0) NULL DEFAULT NULL COMMENT '出发时间',
   `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人姓名',
@@ -1282,8 +1286,9 @@ CREATE TABLE `t_mark_seekcar`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车表' ROW_FORMAT = Dynamic;
 
+SET FOREIGN_KEY_CHECKS = 1;
 -- ----------------------------
 -- Table structure for t_mark_seekcar_record
 -- ----------------------------
@@ -5016,7 +5021,7 @@ CREATE TABLE `t_user_message`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户消息表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
+t_expert_question_type
 -- Records of t_user_message
 -- ----------------------------
 INSERT INTO `t_user_message` VALUES (1, 1, 40, 0, 1, '2019-01-24 16:20:13', NULL, 0);

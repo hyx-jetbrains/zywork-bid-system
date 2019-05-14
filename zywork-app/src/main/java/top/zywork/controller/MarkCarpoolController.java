@@ -112,6 +112,12 @@ public class MarkCarpoolController extends BaseController {
         return ResponseStatusVO.ok("查询成功", markCarpoolVO);
     }
 
+    /**
+     * User: 危锦辉
+     * Date: 2019/05/13
+     * Time: 19:03
+     * Description: 开标搭车
+     */
     @GetMapping("user/getByProjectId/{id}")
     public ResponseStatusVO getByProjectId(@PathVariable("id") Long id) {
         MarkCarpoolVO markCarpoolVO = new MarkCarpoolVO();
@@ -121,8 +127,6 @@ public class MarkCarpoolController extends BaseController {
         }
         return ResponseStatusVO.ok("查询成功", markCarpoolVO);
     }
-
-
 
     @GetMapping("admin/all")
     public ResponseStatusVO listAll() {
@@ -147,6 +151,63 @@ public class MarkCarpoolController extends BaseController {
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), MarkCarpoolVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 10:59
+     * Description: 信息共享 -- 开标拼车 -- 我是车主
+     */
+    @PostMapping("any/list-page")
+    public ResponseStatusVO listPage(@RequestBody MarkCarpoolQuery markCarpoolQuery) {
+        return listPageByCondition(markCarpoolQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 10:52
+     * Description: 根据ID查询详情
+     */
+    @GetMapping("any/getMarkCarpoolById/{id}")
+    public ResponseStatusVO getMarkCarpoolById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 10:59
+     * Description: 开标拼车 -- 我是车主
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody MarkCarpoolQuery markCarpoolQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        markCarpoolQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(markCarpoolQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 11:47
+     * Description: 发布开标拼车
+     */
+    @PostMapping("user/release-markCarpool")
+    public ResponseStatusVO releaseMarkCarpool(@RequestBody @Validated MarkCarpoolVO markCarpoolVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        markCarpoolVO.setUserId(jwtUser.getUserId());
+        return save(markCarpoolVO, bindingResult);
+    }
+
 
     @Autowired
     public void setMarkCarpoolService(MarkCarpoolService markCarpoolService) {

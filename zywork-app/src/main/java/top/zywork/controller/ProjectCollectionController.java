@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectCollectionDTO;
 import top.zywork.query.ProjectCollectionQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.ProjectCollectionService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,45 @@ public class ProjectCollectionController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectCollectionVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 18:35
+     * Description: 创建收藏
+     */
+    @PostMapping("user/save")
+    public ResponseStatusVO createProjectCollection(@RequestBody @Validated ProjectCollectionVO projectCollectionVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        projectCollectionVO.setUserId(jwtUser.getUserId());
+        return save(projectCollectionVO, bindingResult);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 19:18
+     * Description: 取消收藏
+     */
+    @GetMapping("user/cancel/{projectId}")
+    public ResponseStatusVO cancelProjectCollection(@PathVariable("projectId") Long projectId) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        Object obj = projectCollectionService.getByUserAndProject(jwtUser.getUserId(),projectId);
+        if(obj == null) {
+            return ResponseStatusVO.dataError("收藏不存在", null);
+        }
+
+        ProjectCollectionVO projectCollectionVO = BeanUtils.copy(obj, ProjectCollectionVO.class);
+        return removeById(projectCollectionVO.getId());
     }
 
     @Autowired

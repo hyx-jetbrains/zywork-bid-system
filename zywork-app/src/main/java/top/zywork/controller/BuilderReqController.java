@@ -141,6 +141,62 @@ public class BuilderReqController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 10:28
+     * Description: 信息共享 -- 建造师 -- 招聘信息
+     */
+    @PostMapping("any/list-page")
+    public ResponseStatusVO listPage(@RequestBody BuilderReqQuery builderReqQuery) {
+        return listPageByCondition(builderReqQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 10:57
+     * Description: 根据ID查询
+     */
+    @GetMapping("any/getBuilderReqById/{id}")
+    public ResponseStatusVO getBuilderReqById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 10:28
+     * Description: 我发布的建造师招聘信息
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody BuilderReqQuery builderReqQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        builderReqQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(builderReqQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/14
+     * Time: 11:39
+     * Description: 发布建造师招聘信息
+     */
+    @PostMapping("user/release-builderReq")
+    public ResponseStatusVO releaseBuilderReq(@RequestBody @Validated BuilderReqVO builderReqVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        builderReqVO.setUserId(jwtUser.getUserId());
+        return save(builderReqVO, bindingResult);
+    }
+
     @Autowired
     public void setBuilderReqService(BuilderReqService builderReqService) {
         this.builderReqService = builderReqService;

@@ -14,17 +14,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  *
  * 创建于2019-05-13<br/>
  *
- * @author http://zywork.top 危锦辉
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class GuaranteeVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035706433479L;
+    private static final long serialVersionUID = -9223372035380246206L;
 
     // 保函编号
 	private Long id;
 	// 项目编号
 	private Long projectId;
+	// 用户编号
+	private Long userId;
 	// 项目名称
 	@Size(min = 0, max = 100, message = "必须小于100个字符")
 	private String projectName;
@@ -41,7 +43,7 @@ public class GuaranteeVO extends BaseVO {
 	// 担保公司
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String guaranteeComp;
-	// 保函费
+	// 保函费(元)
 	private Long guaranteePrice;
 	// 申请人
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
@@ -68,9 +70,10 @@ public class GuaranteeVO extends BaseVO {
 	
     public GuaranteeVO () {}
 
-    public GuaranteeVO (Long id, Long projectId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public GuaranteeVO (Long id, Long projectId, Long userId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
+		this.userId = userId;
 		this.projectName = projectName;
 		this.openMarkTime = openMarkTime;
 		this.markUnitName = markUnitName;
@@ -103,6 +106,14 @@ public class GuaranteeVO extends BaseVO {
 
 	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getProjectName() {
@@ -231,6 +242,7 @@ public class GuaranteeVO extends BaseVO {
         return "GuaranteeVO {" +
                 "id = " + id + 
 				", projectId = " + projectId + 
+				", userId = " + userId + 
 				", projectName = " + projectName + 
 				", openMarkTime = " + openMarkTime + 
 				", markUnitName = " + markUnitName + 

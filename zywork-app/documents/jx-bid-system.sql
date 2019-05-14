@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `t_guarantee`;
 CREATE TABLE `t_guarantee` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '保函编号',
   `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
+  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
   `project_name` varchar(100) DEFAULT '' COMMENT '项目名称',
   `open_mark_time` datetime DEFAULT NULL COMMENT '开标时间',
   `mark_unit_name` varchar(32) DEFAULT '' COMMENT '招标单位名称',

@@ -13,6 +13,9 @@
             <if test="projectId != null">
 				project_id,
 			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
 			<if test="projectName != null">
 				project_name,
 			</if>
@@ -63,6 +66,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="projectId != null">
 				#{projectId},
+			</if>
+			<if test="userId != null">
+				#{userId},
 			</if>
 			<if test="projectName != null">
 				#{projectName},
@@ -123,6 +129,9 @@
                 <if test="item.projectId != null">
 				project_id,
 			</if>
+			<if test="item.userId != null">
+				user_id,
+			</if>
 			<if test="item.projectName != null">
 				project_name,
 			</if>
@@ -173,6 +182,9 @@
             <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="item.projectId != null">
 				#{item.projectId},
+			</if>
+			<if test="item.userId != null">
+				#{item.userId},
 			</if>
 			<if test="item.projectName != null">
 				#{item.projectName},
@@ -241,6 +253,9 @@
             <if test="projectId != null">
 				project_id = #{projectId},
 			</if>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
 			<if test="projectName != null">
 				project_name = #{projectName},
 			</if>
@@ -298,6 +313,9 @@
                 <if test="item.projectId != null">
 				project_id = #{item.projectId},
 			</if>
+			<if test="item.userId != null">
+				user_id = #{item.userId},
+			</if>
 			<if test="item.projectName != null">
 				project_name = #{item.projectName},
 			</if>
@@ -353,7 +371,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, project_id as projectId, project_name as projectName, open_mark_time as openMarkTime, mark_unit_name as markUnitName, construction_period as constructionPeriod, assure_price as assurePrice, guarantee_comp as guaranteeComp, guarantee_price as guaranteePrice, applicant as applicant, name as name, phone as phone, address as address, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, project_id as projectId, user_id as userId, project_name as projectName, open_mark_time as openMarkTime, mark_unit_name as markUnitName, construction_period as constructionPeriod, assure_price as assurePrice, guarantee_comp as guaranteeComp, guarantee_price as guaranteePrice, applicant as applicant, name as name, phone as phone, address as address, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -380,6 +398,18 @@
 		</if>
 		<if test="query != null and query.projectIdMin != null and query.projectIdMax != null">
 			and project_id <![CDATA[ >= ]]> #{query.projectIdMin} and project_id <![CDATA[ <= ]]> #{query.projectIdMax}
+		</if>
+		<if test="query != null and query.userId != null">
+			and user_id = #{query.userId}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax == null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin}
+		</if>
+		<if test="query != null and query.userIdMin == null and query.userIdMax != null">
+			and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax != null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin} and user_id <![CDATA[ <= ]]> #{query.userIdMax}
 		</if>
 		<if test="query != null and query.projectName != null and query.projectName != ''">
 			and project_name like concat('%', #{query.projectName}, '%')

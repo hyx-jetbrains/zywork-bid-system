@@ -150,6 +150,34 @@ public class ConsultController extends BaseController {
         return update(consultVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 15:43
+     * Description: 创建问题咨询
+     */
+    @PostMapping("user/save")
+    public ResponseStatusVO createConsult(@RequestBody @Validated ConsultVO consultVO, BindingResult bindingResult) {
+        return save(consultVO, bindingResult);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 15:41
+     * Description: 我的咨询反馈
+     */
+    @PostMapping("user/all")
+    public ResponseStatusVO listPageByUserId(@RequestBody ConsultQuery consultQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        consultQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(consultQuery);
+    }
+
     @Autowired
     public void setConsultService(ConsultService consultService) {
         this.consultService = consultService;

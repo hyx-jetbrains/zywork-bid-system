@@ -26,4 +26,8 @@ public interface ProjectDAO extends BaseDAO {
     @Override
     Long countByCondition(@Param("query") Object queryObj);
 
+    List<Object> listPageByUserId(@Param("query") Object queryObj, @Param("userId") Long userId);
+
+    Long countByUserId(@Param("query") Object queryObj, @Param("userId") Long userId);
+
 }
