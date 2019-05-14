@@ -81,6 +81,15 @@
             </i-col>
           </Row>
         </FormItem>
+				<FormItem label="问题类型编号">
+				  <FormItem prop="questionTypeId">
+				    <InputNumber
+				      v-model="searchForm.questionTypeId"
+				      placeholder="请输入问题类型编号"
+				      style="width: 100%;"
+				    />
+				  </FormItem>
+				</FormItem>
         <FormItem label="问题说明" prop="consultDesc">
           <Input v-model="searchForm.consultDesc" placeholder="请输入问题说明"/>
         </FormItem>

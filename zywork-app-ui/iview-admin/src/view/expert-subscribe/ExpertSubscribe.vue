@@ -139,6 +139,21 @@
 						</i-col>
 					</Row>
 				</FormItem>
+				<FormItem label="问题类型编号">
+					<Row>
+						<i-col span="11">
+							<FormItem prop="idMin">
+								<InputNumber v-model="searchForm.expertUserIdMin" placeholder="请输入开始问题类型编号" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+						<i-col span="2" style="text-align: center">-</i-col>
+						<i-col span="11">
+							<FormItem prop="idMax">
+								<InputNumber v-model="searchForm.iexpertUserIdMax" placeholder="请输入结束问题类型编号" style="width: 100%;" />
+							</FormItem>
+						</i-col>
+					</Row>
+				</FormItem>
 				<FormItem label="用户编号">
 					<Row>
 						<i-col span="11">

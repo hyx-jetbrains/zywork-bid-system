@@ -448,6 +448,10 @@
         项目编号:
         <span v-text="form.projectId"></span>
       </p>
+			<p>
+			  项目编号:
+			  <span v-text="form.userId"></span>
+			</p>
       <p>
         项目名称:
         <span v-text="form.projectName"></span>
@@ -622,6 +626,7 @@ export default {
       form: {
         id: null,
         projectId: null,
+				userId: null,
         projectName: null,
         openMarkTime: null,
         markUnitName: null,
@@ -830,6 +835,12 @@ export default {
               )
             }
           },
+					{
+					  title: '用户编号',
+					  key: 'userId',
+					  minWidth: 120,
+					  sortable: true
+					},
           {
             title: '项目名称',
             key: 'projectName',

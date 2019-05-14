@@ -103,6 +103,11 @@
             </i-col>
           </Row>
         </FormItem>
+				<FormItem label="问题类型编号">
+					<FormItem prop="questionTypeId">
+						<InputNumber v-model="searchForm.questionTypeId" placeholder="请输入开始问题类型编号" style="width: 100%;" />
+					</FormItem>
+				</FormItem>
         <FormItem label="回复用户编号">
           <Row>
             <i-col span="11">
