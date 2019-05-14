@@ -305,7 +305,7 @@ export const aptitudeTypeArray = ['求购', '转让']
 /**
  * 开标拼车数组
  */
-export const openMarkArray = ['我是车主', '我要找车']
+export const openMarkArray = ['车主找人', '人找车主']
 
 
 // 下面是分段器用到的数组

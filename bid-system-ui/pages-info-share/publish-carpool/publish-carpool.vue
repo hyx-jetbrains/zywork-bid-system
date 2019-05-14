@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<!-- 发布开标拼车 -->
 		<view style="background-color: #FFFFFF; padding: 20upx 0;">
 			<uni-segmented-control :current="type.current" :values="type.items" v-on:clickItem="onClickItem" styleType="button"
 			 activeColor="#108EE9"></uni-segmented-control>

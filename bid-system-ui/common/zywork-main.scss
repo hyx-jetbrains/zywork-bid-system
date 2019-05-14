@@ -70,6 +70,13 @@ button[type=primary][plain] {
 	border-bottom: none;
 }
 
+.zy-page-mini-headicon {
+	width: 80upx;
+	height: 80upx;
+	border-radius: 60upx;
+	margin-right: 20upx;
+}
+
 .zy-tab-bar {
 	background-color: $primary-backcolor;
 }
@@ -236,3 +243,16 @@ button[type=primary][plain] {
 	margin-bottom: 150upx;
 	padding-top: 20upx;
 }
+
+.zy-background-primary {
+	background-color: $primary-backcolor;
+}
+.zy-uni-segmented-control {
+	padding: 10upx 0;
+	background-color: $primary-backcolor;
+}
+
+.uni-common-mt {
+	margin-top: 10upx;
+}
+

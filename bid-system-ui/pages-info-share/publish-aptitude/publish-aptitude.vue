@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<!-- 发布资质转让 -->
 		<view class="uni-common-mt">
 			<form @submit="addAptitudeTransfer">
 				<view class="uni-list">

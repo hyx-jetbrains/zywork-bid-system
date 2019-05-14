@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view style="background-color: #FFFFFF; padding: 20upx 0;">
+		<view class="zy-uni-segmented-control">
 			<uni-segmented-control :current="type.current" :values="type.items" v-on:clickItem="onClickItem" styleType="button"
 			 activeColor="#108EE9"></uni-segmented-control>
 		</view>
@@ -15,6 +15,14 @@
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入真实姓名" v-model="builderReq.name"></input>
+							</view>
+						</view>
+						<view class="uni-list-cell">
+							<view class="uni-pd">
+								<view class="uni-label zy-text-bold zy-list-form-label">所需人才</view>
+							</view>
+							<view class="uni-list-cell-db">
+								<input class="uni-input" type="text" :disabled="false" placeholder="输入所需人才" v-model="builder.people"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
@@ -336,6 +344,7 @@
 					name: null,
 					phone: null,
 					memo: null,
+					people: null,
 					peopleCount: null,
 					salary: null,
 					compAddr: null,
