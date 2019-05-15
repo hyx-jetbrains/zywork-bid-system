@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<!-- 建造师应聘详情 -->
-		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.name}}</view>
+		<!-- 资质转让和求购详情 -->
+		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.title}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
 				
@@ -15,32 +15,16 @@
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">姓名</view>
-					<view class="zy-disable-flex-right">{{item.name}}</view>
+					<view class="zy-text-bold">资质等级</view>
+					<view class="zy-disable-flex-right">{{item.compAptitudeLevel}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">性别</view>
-					<view class="zy-disable-flex-right">{{item.gender === 1 ? '男' : item.gender === 2 ? '女' : '未知'}}</view>
+					<view class="zy-text-bold">资质类别</view>
+					<view class="zy-disable-flex-right">{{item.compAptitudeType}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
 					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书地址</view>
-					<view class="zy-disable-flex-right">{{item.certificateAddr}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书专业类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateMajorType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">期望薪水</view>
-					<view class="zy-disable-flex-right">{{item.salary}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">其他说明</view>
@@ -70,7 +54,7 @@
 				this.item = JSON.parse(payload);
 			}
 			uni.setNavigationBarTitle({
-				title: this.item.name
+				title: this.item.title
 			});
 		},
 		methods: {

@@ -24,7 +24,8 @@
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
-					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view>
+					<!-- <view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view> -->
+					<view class="zy-disable-flex-right">{{item.phone}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">证书地址</view>

@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<!-- 建造师应聘详情 -->
-		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.name}}</view>
+		<!-- 求带资料详情 -->
+		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.nickname}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
 				
@@ -15,32 +15,37 @@
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">姓名</view>
-					<view class="zy-disable-flex-right">{{item.name}}</view>
+					<view class="zy-text-bold">出发地</view>
+					<view class="zy-disable-flex-right">{{item.startAddr}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">性别</view>
-					<view class="zy-disable-flex-right">{{item.gender === 1 ? '男' : item.gender === 2 ? '女' : '未知'}}</view>
+					<view class="zy-text-bold">目的地</view>
+					<view class="zy-disable-flex-right">{{item.endAddr}}</view>
+				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">资料类型</view>
+					<view class="zy-disable-flex-right">{{item.dataType}}</view>
+				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">份数</view>
+					<view class="zy-disable-flex-right">{{item.dataCount}}</view>
+				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">最晚时间</view>
+					<view class="zy-disable-flex-right">{{item.latestTime}}</view>
+				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">赏金(元)</view>
+					<view class="zy-disable-flex-right">{{item.price / 100}}</view>
+				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">是否加急</view>
+					<view class="zy-disable-flex-right">{{item.isUrgent === 0 ? '是' : '否'}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
-					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书地址</view>
-					<view class="zy-disable-flex-right">{{item.certificateAddr}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书专业类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateMajorType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">期望薪水</view>
-					<view class="zy-disable-flex-right">{{item.salary}}</view>
+					<!-- <view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view> -->
+					<view class="zy-disable-flex-right">{{item.phone}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">其他说明</view>
@@ -48,7 +53,9 @@
 				</view>
 			</view>
 		</view>
-
+		<!-- <view class="zy-bottom-button">
+			<button type="primary" @click="callPhone">马上联系</button>
+		</view> -->
 
 	</view>
 </template>
@@ -70,7 +77,7 @@
 				this.item = JSON.parse(payload);
 			}
 			uni.setNavigationBarTitle({
-				title: this.item.name
+				title: this.item.nickname
 			});
 		},
 		methods: {

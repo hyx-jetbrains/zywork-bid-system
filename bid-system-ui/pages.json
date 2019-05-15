@@ -147,6 +147,41 @@
 						"navigationBarTitleText": "建造师需求详情",
 						"backgroundTextStyle": "light"
 					}
+				},
+				{
+					"path": "publish-aptitude-detail/publish-aptitude-detail",
+					"style": {
+						"navigationBarTitleText": "资质转让详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-carpool-detail/publish-carpool-detail",
+					"style": {
+						"navigationBarTitleText": "开标拼车详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-seekcar-detail/publish-seekcar-detail",
+					"style": {
+						"navigationBarTitleText": "开标找车详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-recruit-detail/publish-recruit-detail",
+					"style": {
+						"navigationBarTitleText": "招聘详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-seek-data-detail/publish-seek-data-detail",
+					"style": {
+						"navigationBarTitleText": "求带资料详情",
+						"backgroundTextStyle": "light"
+					}
 				}
 			]
 		},
@@ -330,6 +365,62 @@
 					"path": "publish-guarantee/publish-guarantee",
 					"style": {
 						"navigationBarTitleText": "我的申请保函",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-builder-detail/publish-builder-detail",
+					"style": {
+						"navigationBarTitleText": "我的建造师应聘详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-builder-req-detail/publish-builder-req-detail",
+					"style": {
+						"navigationBarTitleText": "我的建造师需求详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-aptitude-detail/publish-aptitude-detail",
+					"style": {
+						"navigationBarTitleText": "我的资质转让详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-carpool-detail/publish-carpool-detail",
+					"style": {
+						"navigationBarTitleText": "我的开标拼车详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-seekcar-detail/publish-seekcar-detail",
+					"style": {
+						"navigationBarTitleText": "我的开标找车详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-recruit-detail/publish-recruit-detail",
+					"style": {
+						"navigationBarTitleText": "我的招聘详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-seek-data-detail/publish-seek-data-detail",
+					"style": {
+						"navigationBarTitleText": "我的求带资料详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-guarantee-detail/publish-guarantee-detail",
+					"style": {
+						"navigationBarTitleText": "我的申请保函详情",
 						"backgroundTextStyle": "light"
 					}
 				},

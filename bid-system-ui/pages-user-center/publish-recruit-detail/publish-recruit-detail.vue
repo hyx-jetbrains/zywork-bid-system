@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<!-- 建造师应聘详情 -->
-		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.name}}</view>
+		<!-- 其他岗位招聘详情 -->
+		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.jobTitle}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
 				
@@ -15,35 +15,31 @@
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">姓名</view>
-					<view class="zy-disable-flex-right">{{item.name}}</view>
+					<view class="zy-text-bold">岗位名称</view>
+					<view class="zy-disable-flex-right">{{item.jobTitle}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">性别</view>
-					<view class="zy-disable-flex-right">{{item.gender === 1 ? '男' : item.gender === 2 ? '女' : '未知'}}</view>
+					<view class="zy-text-bold">岗位类型</view>
+					<view class="zy-disable-flex-right">{{item.isFulltime === 0 ? '全职' : '兼职'}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">手机号</view>
-					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view>
+					<view class="zy-text-bold">工作年限</view>
+					<view class="zy-disable-flex-right">{{item.workYear}}年</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书地址</view>
-					<view class="zy-disable-flex-right">{{item.certificateAddr}}</view>
+					<view class="zy-text-bold">学历要求</view>
+					<view class="zy-disable-flex-right">{{item.education}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书专业类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateMajorType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">期望薪水</view>
+					<view class="zy-text-bold">薪资范围</view>
 					<view class="zy-disable-flex-right">{{item.salary}}</view>
 				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">招聘状态</view>
+					<view class="zy-disable-flex-right">{{item.recruitStatus}}</view>
+				</view>
 				<view class="zy-page-list-item">
-					<view class="zy-text-bold">其他说明</view>
+					<view class="zy-text-bold">职位描述</view>
 					<view class="">{{item.memo}}</view>
 				</view>
 			</view>
@@ -70,19 +66,10 @@
 				this.item = JSON.parse(payload);
 			}
 			uni.setNavigationBarTitle({
-				title: this.item.name
+				title: this.item.jobTitle
 			});
 		},
 		methods: {
-			// 打电话
-			callPhone() {
-				uni.makePhoneCall({
-					phoneNumber: this.item.phone,
-					success: () => {
-						console.log("成功拨打电话")
-					}
-				})
-			},
 		}
 	}
 </script>

@@ -1,55 +1,56 @@
 <template>
 	<view>
-		<!-- 建造师应聘详情 -->
+		<!-- 开标找车详情 -->
 		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.name}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
-				
 				<view class="zy-disable-flex">
 					<image class="zy-page-mini-headicon" :src="item.headicon" />
 					<view>
 						<view>
 							<text class="zy-text-bold">{{item.nickname}}</text>
 						</view>
-						<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+						<view class="zy-text-mini zy-text-info">{{item.startTime}}</view>
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">姓名</view>
-					<view class="zy-disable-flex-right">{{item.name}}</view>
+					<view class="zy-text-bold">出发地</view>
+					<view class="zy-disable-flex-right">{{item.startCity}}{{item.startAddr}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">性别</view>
-					<view class="zy-disable-flex-right">{{item.gender === 1 ? '男' : item.gender === 2 ? '女' : '未知'}}</view>
+					<view class="zy-text-bold">目的地</view>
+					<view class="zy-disable-flex-right">{{item.endCity}}{{item.endAddr}}</view>
+				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">出发日期</view>
+					<view class="zy-disable-flex-right">{{item.startTime}}</view>
+				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">联系人</view>
+					<view class="zy-disable-flex-right">{{item.name}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
 					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view>
 				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书地址</view>
-					<view class="zy-disable-flex-right">{{item.certificateAddr}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">证书专业类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateMajorType}}</view>
-				</view>
-				<view class="zy-disable-flex zy-page-list-item">
-					<view class="zy-text-bold">期望薪水</view>
-					<view class="zy-disable-flex-right">{{item.salary}}</view>
-				</view>
 				<view class="zy-page-list-item">
-					<view class="zy-text-bold">其他说明</view>
+					<view class="zy-text-bold">备注</view>
 					<view class="">{{item.memo}}</view>
 				</view>
 			</view>
 		</view>
-
-
+		<view class="zy-type-title zy-text-bold">申请记录</view>
+		<view class="zy-page-list">
+			<view v-for="(item, index) in seekcarRecordList" :key="index" class="zy-disable-flex zy-page-list-item">
+				<image class="zy-page-mini-headicon" :src="item.headicon" />
+				<view>
+					<view>
+						<text class="zy-text-bold">{{item.nickname}}</text>
+					</view>
+					<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -57,7 +58,13 @@
 	export default {
 		data() {
 			return {
-				item: {}
+				item: {},
+				seekcarRecordList: [
+					{
+						nickname: 'Carter',
+						createTime: '2019-04-25 00:00:00'
+					}
+				]
 			}
 		},
 		onLoad(event) {

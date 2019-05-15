@@ -336,7 +336,7 @@
 	} from '@/common/picker.data.js'
 	import {
 		DEFAULT_HEADICON
-	} from '../../common/util.js'
+	} from '@/common/util.js'
 	
 	const INFO_BUILDER = 0
 	const INFO_APTITUDE = 1
@@ -376,12 +376,11 @@
 					current: 0,
 					items: openMarkArray
 				},
-				headicon: DEFAULT_HEADICON,
 				builderReqList: [
 					{
 						id: 1,
 						headicon: DEFAULT_HEADICON,
-						nickanme: 'Carter',
+						nickname: 'Carter',
 						name: '危锦辉',
 						people: '需要某某人才',
 						peopleCount: 3,
@@ -395,7 +394,7 @@
 					{
 						id: 2,
 						headicon: DEFAULT_HEADICON,
-						nickanme: 'Carter1',
+						nickname: 'Carter1',
 						name: '危锦辉1',
 						people: '需要某某人才1',
 						peopleCount: 5,
@@ -445,36 +444,28 @@
 					{
 						id: 1,
 						nickname: '张某',
-						createTime: '2019-04-24 17:24:01',
+						headicon: DEFAULT_HEADICON,
+						type: 0,
 						title: '本人急购一家一级房建市政资质的企业',
+						compAptitudeLevel: '三级',
+						compAptitudeType: '交通工程',
+						phone: '',
 						memo: '诚心求购，诚心合作请联系：18279700232',
-						headicon: DEFAULT_HEADICON
-					},
-					{
-						id: 2,
-						nickname: '李某',
-						createTime: '2019-04-24 17:24:01',
-						title: '本人急购一家二级房建市政资质的企业',
-						memo: '诚心求购，诚心合作请联系：18279700232',
-						headicon: DEFAULT_HEADICON
+						createTime: '2019-04-24 17:24:01'
 					}
 				],
 				aptitudeSellList: [
 					{
-						id: 3,
+						id: 2,
 						nickname: '张某',
-						createTime: '2019-04-24 17:24:01',
+						headicon: DEFAULT_HEADICON,
+						type: 1,
 						title: '本人急售一家一级房建市政资质的企业',
-						memo: '自己的公司，转让诚心滴滴',
-						headicon: DEFAULT_HEADICON
-					},
-					{
-						id: 4,
-						nickname: '李某',
-						createTime: '2019-04-24 17:24:01',
-						title: '本人急售一家二级房建市政资质的企业',
-						memo: '自家公司转让长内容长内容长内容长内容长内容长内容长内容长内容长内容长内容',
-						headicon: DEFAULT_HEADICON
+						compAptitudeLevel: '三级',
+						compAptitudeType: '交通工程',
+						phone: '18279700224',
+						memo: '诚心求购，诚心合作请联系：18279700232',
+						createTime: '2019-04-24 17:24:01'
 					}
 				],
 				carpoolList: [
@@ -483,24 +474,32 @@
 						nickname: '刘某某',
 						headicon: DEFAULT_HEADICON,
 						startTime: '2019-04-24 17:24:01',
+						startCity: '北京/北京市/东城区',
 						startAddr: '赣州',
+						endCity: '北京/北京市/东城区',
 						endAddr: '上饶',
 						price: 30000,
 						carType: '小轿车',
 						carpoolRecordCount: 1,
-						peopleCount: 3
+						peopleCount: 3,
+						name: '危锦辉',
+						phone: '18279700225'
 					},
 					{
-						id: 1,
+						id: 2,
 						nickname: '张某某',
 						headicon: DEFAULT_HEADICON,
 						startTime: '2019-04-24 17:24:01',
+						startCity: '北京/北京市/东城区',
 						startAddr: '赣州',
+						endCity: '北京/北京市/东城区',
 						endAddr: '上饶',
 						price: 60000,
 						carType: '小轿车',
+						peopleCount: 2,
+						name: '危锦辉',
+						phone: '18279700225',
 						carpoolRecordCount: 2,
-						peopleCount: 2
 					}
 				],
 				seekcarList: [
@@ -509,20 +508,14 @@
 						nickname: '张某某',
 						headicon: DEFAULT_HEADICON,
 						startTime: '2019-04-24 17:24:01',
+						startCity: '北京/北京市/东城区',
 						startAddr: '赣州',
+						endCity: '北京/北京市/东城区',
 						endAddr: '上饶',
 						memo: '去上饶，着急去，有意请联系',
+						name: '危锦辉',
+						phone: '18279700225',
 						seekcarRecordCount: 0
-					},
-					{
-						id: 2,
-						nickname: '曾某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startAddr: '赣州',
-						endAddr: '上饶',
-						memo: '去上饶，着急去，有意请联系',
-						seekcarRecordCount: 1
 					}
 				],
 				recruitList: [
@@ -536,7 +529,8 @@
 						salary: '5-10万元',
 						jobTitle: '建造师',
 						workYear: 1,
-						education: '大专'
+						education: '大专',
+						createTime: '2019-04-24 17:24:01'
 					},
 					{
 						id: 2,
@@ -548,7 +542,8 @@
 						salary: '一万元以下',
 						jobTitle: '建造师',
 						workYear: 2,
-						education: '大专'
+						education: '大专',
+						createTime: '2019-04-24 17:24:01'
 					},
 					{
 						id: 3,
@@ -560,7 +555,8 @@
 						salary: '一万元以下',
 						jobTitle: '建造师',
 						workYear: 2,
-						education: '大专'
+						education: '大专',
+						createTime: '2019-04-24 17:24:01'
 					}
 				],
 				seekDataList: [
@@ -568,27 +564,31 @@
 						id: 1,
 						nickname: '曾某某',
 						headicon: DEFAULT_HEADICON,
-						gender: 1,
 						dataType: '资料',
 						dataCount: 1,
 						latestTime: '2019-04-25 00:00:00',
 						price: 10000,
 						isUrgent: 0,
 						startAddr: '赣州',
-						endAddr: '吉安'
+						endAddr: '吉安',
+						phone: '18279700225',
+						memo: '没有说明',
+						createTime: '2019-04-24 17:24:01'
 					},
 					{
 						id: 2,
 						nickname: '曾某某',
 						headicon: DEFAULT_HEADICON,
-						gender: 2,
 						dataType: '资料',
 						dataCount: 1,
 						latestTime: '2019-04-25 00:00:00',
 						price: 20000,
 						isUrgent: 1,
 						startAddr: '赣州',
-						endAddr: '吉安'
+						endAddr: '吉安',
+						phone: '18279700225',
+						memo: '',
+						createTime: '2019-04-24 17:24:01'
 					}
 				]
 			}
@@ -626,37 +626,39 @@
 					url: '/pages-info-share/publish-choose/publish-choose'
 				});
 			},
+			/** 前往详情页面 */
+			toDetailPage(name, item) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-'+name+'-detail/publish-'+name+'-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+				});
+			},
 			/** 前往建造师需求详情页面 */
 			toBuilderReqDetailPage(item) {
-				uni.navigateTo({
-					url: '/pages-info-share/publish-builder-req-detail/publish-builder-req-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
-				});
+				this.toDetailPage('builder-req', item);
 			},
 			/** 前往建造师应聘详情页面 */
 			toBuilderDetailPage(item) {
-				uni.navigateTo({
-					url: '/pages-info-share/publish-builder-detail/publish-builder-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
-				});
+				this.toDetailPage('builder', item);
 			},
 			/** 前往资质转让详情页面 */
 			toAptitudeDetailPage(item) {
-				console.log(item)
+				this.toDetailPage('aptitude', item);
 			},
 			/** 前往拼车详情页面 */
 			toCarpoolDetailPage(item) {
-				console.log(item)
+				this.toDetailPage('carpool', item);
 			},
 			/** 前往找车详情页面 */
 			toSeekcarDetailPage(item) {
-				console.log(item)
+				this.toDetailPage('seekcar', item);
 			},
 			/** 前往其他岗位招聘详情页面 */
 			toRecruitDetailPage(item) {
-				console.log(item)
+				this.toDetailPage('recruit', item);
 			},
 			/** 前往求带资料详情页面 */
 			toSeekDataDetailPage(item) {
-				console.log(item)
+				this.toDetailPage('seek-data', item);
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {

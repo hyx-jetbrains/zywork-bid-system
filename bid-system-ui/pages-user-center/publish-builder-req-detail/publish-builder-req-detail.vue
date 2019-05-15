@@ -35,7 +35,8 @@
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">联系电话</view>
-					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view>
+					<!-- <view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view> -->
+					<view class="zy-disable-flex-right">{{item.phone}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">其他说明</view>
