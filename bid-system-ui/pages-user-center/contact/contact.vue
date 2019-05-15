@@ -103,6 +103,6 @@
 	}
 	.zy-company-memo-content {
 		padding: 0 30upx 30upx 30upx;
-		text-indent:2em;
+		text-indent: 2em;
 	}
 </style>
