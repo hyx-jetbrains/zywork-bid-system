@@ -118,7 +118,7 @@ public class MarkCarpoolController extends BaseController {
      * Time: 19:03
      * Description: 开标搭车
      */
-    @GetMapping("user/getByProjectId/{id}")
+    @GetMapping("any/getByProjectId/{id}")
     public ResponseStatusVO getByProjectId(@PathVariable("id") Long id) {
         MarkCarpoolVO markCarpoolVO = new MarkCarpoolVO();
         Object obj = markCarpoolService.getByprojectId(id);
@@ -154,17 +154,6 @@ public class MarkCarpoolController extends BaseController {
 
     /**
      * User: DengMin
-     * Date: 2019/05/13
-     * Time: 10:59
-     * Description: 信息共享 -- 开标拼车 -- 我是车主
-     */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody MarkCarpoolQuery markCarpoolQuery) {
-        return listPageByCondition(markCarpoolQuery);
-    }
-
-    /**
-     * User: DengMin
      * Date: 2019/05/14
      * Time: 10:52
      * Description: 根据ID查询详情
@@ -172,23 +161,6 @@ public class MarkCarpoolController extends BaseController {
     @GetMapping("any/getMarkCarpoolById/{id}")
     public ResponseStatusVO getMarkCarpoolById(@PathVariable("id") Long id) {
         return getById(id);
-    }
-
-    /**
-     * User: DengMin
-     * Date: 2019/05/13
-     * Time: 10:59
-     * Description: 开标拼车 -- 我是车主
-     */
-    @PostMapping("user/all")
-    public ResponseStatusVO listPageByUserId(@RequestBody MarkCarpoolQuery markCarpoolQuery) {
-        JwtUser jwtUser = SecurityUtils.getJwtUser();
-        if (jwtUser == null) {
-            return ResponseStatusVO.authenticationError();
-        }
-
-        markCarpoolQuery.setUserId(jwtUser.getUserId());
-        return listPageByCondition(markCarpoolQuery);
     }
 
     /**

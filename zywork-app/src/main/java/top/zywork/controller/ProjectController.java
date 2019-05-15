@@ -142,11 +142,6 @@ public class ProjectController extends BaseController {
         return ResponseStatusVO.ok("查询成功", projectVO);
     }
 
-    @GetMapping("user/one/{id}")
-    public ResponseStatusVO getProject(@PathVariable("id") Long id) {
-        return getById(id);
-    }
-
     @GetMapping("admin/all")
     public ResponseStatusVO listAll() {
         PagerDTO pagerDTO = projectService.listAll();
@@ -191,8 +186,15 @@ public class ProjectController extends BaseController {
         return ResponseStatusVO.ok("批量发布成功", null);
     }
 
-    @PostMapping("user/pager-cond")
+    /**
+     * User: DengMin
+     * Date: 2019/05/15
+     * Time: 11:01
+     * Description: 招标信息
+     */
+    @PostMapping("any/list-pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody ProjectQuery projectQuery) {
+        projectQuery.setIsActive((byte) 0);
         return listPageByCondition(projectQuery);
     }
 
@@ -202,13 +204,14 @@ public class ProjectController extends BaseController {
      * Time: 15:16
      * Description: 我的收藏
      */
-    @PostMapping("user/list-page-cond")
+    @PostMapping("user/list-projectCollection-page")
     public ResponseStatusVO listPageCond(@RequestBody ProjectQuery projectQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
 
+        projectQuery.setIsActive((byte)0);
         PagerDTO pagerDTO = projectService.listPageByUserId(projectQuery, jwtUser.getUserId());
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectVO.class));
@@ -221,7 +224,7 @@ public class ProjectController extends BaseController {
      * Time: 18:23
      * Description: 招标详情
      */
-    @GetMapping("user/getById/{id}")
+    @GetMapping("any/getById/{id}")
     public ResponseStatusVO getProjectById(@PathVariable("id") Long id) {
         return getById(id);
     }

@@ -158,6 +158,12 @@ public class ConsultController extends BaseController {
      */
     @PostMapping("user/save")
     public ResponseStatusVO createConsult(@RequestBody @Validated ConsultVO consultVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        consultVO.setUserId(jwtUser.getUserId());
         return save(consultVO, bindingResult);
     }
 
@@ -167,7 +173,7 @@ public class ConsultController extends BaseController {
      * Time: 15:41
      * Description: 我的咨询反馈
      */
-    @PostMapping("user/all")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPageByUserId(@RequestBody ConsultQuery consultQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (null == jwtUser) {
@@ -175,6 +181,7 @@ public class ConsultController extends BaseController {
         }
 
         consultQuery.setUserId(jwtUser.getUserId());
+        consultQuery.setIsActive((byte)0);
         return listPageByCondition(consultQuery);
     }
 

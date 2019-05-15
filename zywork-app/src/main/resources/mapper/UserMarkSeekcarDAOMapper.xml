@@ -1,0 +1,196 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserMarkSeekcarDAO">
+
+    <sql id="select_columns">
+        t_mark_seekcar.id as markSeekcarId, t_mark_seekcar.user_id as markSeekcarUserId, t_mark_seekcar.project_id as markSeekcarProjectId, t_mark_seekcar.start_city as markSeekcarStartCity, t_mark_seekcar.start_addr as markSeekcarStartAddr, t_mark_seekcar.end_city as markSeekcarEndCity, t_mark_seekcar.end_addr as markSeekcarEndAddr, t_mark_seekcar.start_time as markSeekcarStartTime, t_mark_seekcar.name as markSeekcarName, t_mark_seekcar.phone as markSeekcarPhone, t_mark_seekcar.memo as markSeekcarMemo, t_mark_seekcar.version as markSeekcarVersion, t_mark_seekcar.create_time as markSeekcarCreateTime, t_mark_seekcar.update_time as markSeekcarUpdateTime, t_mark_seekcar.is_active as markSeekcarIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.markSeekcarId != null">
+			and t_mark_seekcar.id = #{query.markSeekcarId}
+		</if>
+		<if test="query != null and query.markSeekcarIdMin != null and query.markSeekcarIdMax == null">
+			and t_mark_seekcar.id <![CDATA[ >= ]]> #{query.markSeekcarIdMin}
+		</if>
+		<if test="query != null and query.markSeekcarIdMin == null and query.markSeekcarIdMax != null">
+			and t_mark_seekcar.id <![CDATA[ <= ]]> #{query.markSeekcarIdMax}
+		</if>
+		<if test="query != null and query.markSeekcarIdMin != null and query.markSeekcarIdMax != null">
+			and t_mark_seekcar.id <![CDATA[ >= ]]> #{query.markSeekcarIdMin} and t_mark_seekcar.id <![CDATA[ <= ]]> #{query.markSeekcarIdMax}
+		</if>
+		<if test="query != null and query.markSeekcarUserId != null">
+			and t_mark_seekcar.user_id = #{query.markSeekcarUserId}
+		</if>
+		<if test="query != null and query.markSeekcarUserIdMin != null and query.markSeekcarUserIdMax == null">
+			and t_mark_seekcar.user_id <![CDATA[ >= ]]> #{query.markSeekcarUserIdMin}
+		</if>
+		<if test="query != null and query.markSeekcarUserIdMin == null and query.markSeekcarUserIdMax != null">
+			and t_mark_seekcar.user_id <![CDATA[ <= ]]> #{query.markSeekcarUserIdMax}
+		</if>
+		<if test="query != null and query.markSeekcarUserIdMin != null and query.markSeekcarUserIdMax != null">
+			and t_mark_seekcar.user_id <![CDATA[ >= ]]> #{query.markSeekcarUserIdMin} and t_mark_seekcar.user_id <![CDATA[ <= ]]> #{query.markSeekcarUserIdMax}
+		</if>
+		<if test="query != null and query.markSeekcarProjectId != null">
+			and t_mark_seekcar.project_id = #{query.markSeekcarProjectId}
+		</if>
+		<if test="query != null and query.markSeekcarProjectIdMin != null and query.markSeekcarProjectIdMax == null">
+			and t_mark_seekcar.project_id <![CDATA[ >= ]]> #{query.markSeekcarProjectIdMin}
+		</if>
+		<if test="query != null and query.markSeekcarProjectIdMin == null and query.markSeekcarProjectIdMax != null">
+			and t_mark_seekcar.project_id <![CDATA[ <= ]]> #{query.markSeekcarProjectIdMax}
+		</if>
+		<if test="query != null and query.markSeekcarProjectIdMin != null and query.markSeekcarProjectIdMax != null">
+			and t_mark_seekcar.project_id <![CDATA[ >= ]]> #{query.markSeekcarProjectIdMin} and t_mark_seekcar.project_id <![CDATA[ <= ]]> #{query.markSeekcarProjectIdMax}
+		</if>
+		<if test="query != null and query.markSeekcarStartCity != null and query.markSeekcarStartCity != ''">
+			and t_mark_seekcar.start_city like concat('%', #{query.markSeekcarStartCity}, '%')
+		</if>
+		<if test="query != null and query.markSeekcarStartAddr != null and query.markSeekcarStartAddr != ''">
+			and t_mark_seekcar.start_addr like concat('%', #{query.markSeekcarStartAddr}, '%')
+		</if>
+		<if test="query != null and query.markSeekcarEndCity != null and query.markSeekcarEndCity != ''">
+			and t_mark_seekcar.end_city like concat('%', #{query.markSeekcarEndCity}, '%')
+		</if>
+		<if test="query != null and query.markSeekcarEndAddr != null and query.markSeekcarEndAddr != ''">
+			and t_mark_seekcar.end_addr like concat('%', #{query.markSeekcarEndAddr}, '%')
+		</if>
+		<if test="query != null and query.markSeekcarStartTime != null">
+			and t_mark_seekcar.start_time = #{query.markSeekcarStartTime}
+		</if>
+		<if test="query != null and query.markSeekcarStartTimeMin != null and query.markSeekcarStartTimeMax == null">
+			and t_mark_seekcar.start_time <![CDATA[ >= ]]> #{query.markSeekcarStartTimeMin}
+		</if>
+		<if test="query != null and query.markSeekcarStartTimeMin == null and query.markSeekcarStartTimeMax != null">
+			and t_mark_seekcar.start_time <![CDATA[ <= ]]> #{query.markSeekcarStartTimeMax}
+		</if>
+		<if test="query != null and query.markSeekcarStartTimeMin != null and query.markSeekcarStartTimeMax != null">
+			and t_mark_seekcar.start_time <![CDATA[ >= ]]> #{query.markSeekcarStartTimeMin} and t_mark_seekcar.start_time <![CDATA[ <= ]]> #{query.markSeekcarStartTimeMax}
+		</if>
+		<if test="query != null and query.markSeekcarName != null and query.markSeekcarName != ''">
+			and t_mark_seekcar.name like concat('%', #{query.markSeekcarName}, '%')
+		</if>
+		<if test="query != null and query.markSeekcarPhone != null and query.markSeekcarPhone != ''">
+			and t_mark_seekcar.phone like concat('%', #{query.markSeekcarPhone}, '%')
+		</if>
+		<if test="query != null and query.markSeekcarMemo != null and query.markSeekcarMemo != ''">
+			and t_mark_seekcar.memo like concat('%', #{query.markSeekcarMemo}, '%')
+		</if>
+		<if test="query != null and query.markSeekcarVersion != null">
+			and t_mark_seekcar.version = #{query.markSeekcarVersion}
+		</if>
+		<if test="query != null and query.markSeekcarVersionMin != null and query.markSeekcarVersionMax == null">
+			and t_mark_seekcar.version <![CDATA[ >= ]]> #{query.markSeekcarVersionMin}
+		</if>
+		<if test="query != null and query.markSeekcarVersionMin == null and query.markSeekcarVersionMax != null">
+			and t_mark_seekcar.version <![CDATA[ <= ]]> #{query.markSeekcarVersionMax}
+		</if>
+		<if test="query != null and query.markSeekcarVersionMin != null and query.markSeekcarVersionMax != null">
+			and t_mark_seekcar.version <![CDATA[ >= ]]> #{query.markSeekcarVersionMin} and t_mark_seekcar.version <![CDATA[ <= ]]> #{query.markSeekcarVersionMax}
+		</if>
+		<if test="query != null and query.markSeekcarCreateTime != null">
+			and t_mark_seekcar.create_time = #{query.markSeekcarCreateTime}
+		</if>
+		<if test="query != null and query.markSeekcarCreateTimeMin != null and query.markSeekcarCreateTimeMax == null">
+			and t_mark_seekcar.create_time <![CDATA[ >= ]]> #{query.markSeekcarCreateTimeMin}
+		</if>
+		<if test="query != null and query.markSeekcarCreateTimeMin == null and query.markSeekcarCreateTimeMax != null">
+			and t_mark_seekcar.create_time <![CDATA[ <= ]]> #{query.markSeekcarCreateTimeMax}
+		</if>
+		<if test="query != null and query.markSeekcarCreateTimeMin != null and query.markSeekcarCreateTimeMax != null">
+			and t_mark_seekcar.create_time <![CDATA[ >= ]]> #{query.markSeekcarCreateTimeMin} and t_mark_seekcar.create_time <![CDATA[ <= ]]> #{query.markSeekcarCreateTimeMax}
+		</if>
+		<if test="query != null and query.markSeekcarUpdateTime != null">
+			and t_mark_seekcar.update_time = #{query.markSeekcarUpdateTime}
+		</if>
+		<if test="query != null and query.markSeekcarUpdateTimeMin != null and query.markSeekcarUpdateTimeMax == null">
+			and t_mark_seekcar.update_time <![CDATA[ >= ]]> #{query.markSeekcarUpdateTimeMin}
+		</if>
+		<if test="query != null and query.markSeekcarUpdateTimeMin == null and query.markSeekcarUpdateTimeMax != null">
+			and t_mark_seekcar.update_time <![CDATA[ <= ]]> #{query.markSeekcarUpdateTimeMax}
+		</if>
+		<if test="query != null and query.markSeekcarUpdateTimeMin != null and query.markSeekcarUpdateTimeMax != null">
+			and t_mark_seekcar.update_time <![CDATA[ >= ]]> #{query.markSeekcarUpdateTimeMin} and t_mark_seekcar.update_time <![CDATA[ <= ]]> #{query.markSeekcarUpdateTimeMax}
+		</if>
+		<if test="query != null and query.markSeekcarIsActive != null">
+			and t_mark_seekcar.is_active = #{query.markSeekcarIsActive}
+		</if>
+		<if test="query != null and query.markSeekcarIsActiveMin != null and query.markSeekcarIsActiveMax == null">
+			and t_mark_seekcar.is_active <![CDATA[ >= ]]> #{query.markSeekcarIsActiveMin}
+		</if>
+		<if test="query != null and query.markSeekcarIsActiveMin == null and query.markSeekcarIsActiveMax != null">
+			and t_mark_seekcar.is_active <![CDATA[ <= ]]> #{query.markSeekcarIsActiveMax}
+		</if>
+		<if test="query != null and query.markSeekcarIsActiveMin != null and query.markSeekcarIsActiveMax != null">
+			and t_mark_seekcar.is_active <![CDATA[ >= ]]> #{query.markSeekcarIsActiveMin} and t_mark_seekcar.is_active <![CDATA[ <= ]]> #{query.markSeekcarIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		
+        and
+        t_mark_seekcar.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userMarkSeekcarDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_seekcar, t_user_detail where t_mark_seekcar.id = #{id} and
+        t_mark_seekcar.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userMarkSeekcarDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_seekcar, t_user_detail
+        where
+        t_mark_seekcar.user_id = t_user_detail.id
+        order by t_mark_seekcar.update_time desc, t_mark_seekcar.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userMarkSeekcarDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_seekcar, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_mark_seekcar.update_time desc, t_mark_seekcar.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userMarkSeekcarDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_seekcar, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_mark_seekcar.update_time desc, t_mark_seekcar.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_mark_seekcar, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

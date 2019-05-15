@@ -164,17 +164,6 @@ public class AptitudeTransferController extends BaseController {
 
     /**
      * User: DengMin
-     * Date: 2019/05/13
-     * Time: 10:50
-     * Description: 信息共享 -- 资质转让 -- 转让/求购
-     */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody AptitudeTransferQuery aptitudeTransferQuery) {
-        return listPageByCondition(aptitudeTransferQuery);
-    }
-
-    /**
-     * User: DengMin
      * Date: 2019/05/14
      * Time: 10:55
      * Description: 根据ID查询
@@ -182,23 +171,6 @@ public class AptitudeTransferController extends BaseController {
     @GetMapping("any/getAptitudeTransferById/{id}")
     public ResponseStatusVO getAptitudeTransferById(@PathVariable("id") Long id) {
         return getById(id);
-    }
-
-    /**
-     * User: DengMin
-     * Date: 2019/05/13
-     * Time: 10:50
-     * Description: 我发布的资质转让/求购
-     */
-    @PostMapping("user/all")
-    public ResponseStatusVO listPageByUserId(@RequestBody AptitudeTransferQuery aptitudeTransferQuery) {
-        JwtUser jwtUser = SecurityUtils.getJwtUser();
-        if (jwtUser == null) {
-            return ResponseStatusVO.authenticationError();
-        }
-
-        aptitudeTransferQuery.setUserId(jwtUser.getUserId());
-        return listPageByCondition(aptitudeTransferQuery);
     }
 
     /**

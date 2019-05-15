@@ -135,11 +135,6 @@ public class HeadlinesController extends BaseController {
         return ResponseStatusVO.ok("查询成功", headlinesVO);
     }
 
-    @GetMapping("any/one/{id}")
-    public ResponseStatusVO getHeadlinesById(@PathVariable("id") Long id) {
-        return getById(id);
-    }
-
     @GetMapping("admin/all")
     public ResponseStatusVO listAll() {
         PagerDTO pagerDTO = headlinesService.listAll();
@@ -171,9 +166,27 @@ public class HeadlinesController extends BaseController {
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/15
+     * Time: 10:59
+     * Description: 头条新闻
+     */
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListAllByCondition(@RequestBody HeadlinesQuery headlinesQuery) {
+        headlinesQuery.setIsActive((byte)0);
         return listPageByCondition(headlinesQuery);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/15
+     * Time: 10:59
+     * Description: 头条新闻详情
+     */
+    @GetMapping("any/one/{id}")
+    public ResponseStatusVO getHeadlinesById(@PathVariable("id") Long id) {
+        return getById(id);
     }
 
     @Autowired

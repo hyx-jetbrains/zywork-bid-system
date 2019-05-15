@@ -1,0 +1,202 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserBuilderDAO">
+
+    <sql id="select_columns">
+        t_builder.id as builderId, t_builder.user_id as builderUserId, t_builder.name as builderName, t_builder.gender as builderGender, t_builder.birthday as builderBirthday, t_builder.certificate_address as builderCertificateAddress, t_builder.certificate_type as builderCertificateType, t_builder.certificate_major_type as builderCertificateMajorType, t_builder.certificate_status as builderCertificateStatus, t_builder.certificate_reg_status as builderCertificateRegStatus, t_builder.salary as builderSalary, t_builder.phone as builderPhone, t_builder.memo as builderMemo, t_builder.version as builderVersion, t_builder.create_time as builderCreateTime, t_builder.update_time as builderUpdateTime, t_builder.is_active as builderIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.builderId != null">
+			and t_builder.id = #{query.builderId}
+		</if>
+		<if test="query != null and query.builderIdMin != null and query.builderIdMax == null">
+			and t_builder.id <![CDATA[ >= ]]> #{query.builderIdMin}
+		</if>
+		<if test="query != null and query.builderIdMin == null and query.builderIdMax != null">
+			and t_builder.id <![CDATA[ <= ]]> #{query.builderIdMax}
+		</if>
+		<if test="query != null and query.builderIdMin != null and query.builderIdMax != null">
+			and t_builder.id <![CDATA[ >= ]]> #{query.builderIdMin} and t_builder.id <![CDATA[ <= ]]> #{query.builderIdMax}
+		</if>
+		<if test="query != null and query.builderUserId != null">
+			and t_builder.user_id = #{query.builderUserId}
+		</if>
+		<if test="query != null and query.builderUserIdMin != null and query.builderUserIdMax == null">
+			and t_builder.user_id <![CDATA[ >= ]]> #{query.builderUserIdMin}
+		</if>
+		<if test="query != null and query.builderUserIdMin == null and query.builderUserIdMax != null">
+			and t_builder.user_id <![CDATA[ <= ]]> #{query.builderUserIdMax}
+		</if>
+		<if test="query != null and query.builderUserIdMin != null and query.builderUserIdMax != null">
+			and t_builder.user_id <![CDATA[ >= ]]> #{query.builderUserIdMin} and t_builder.user_id <![CDATA[ <= ]]> #{query.builderUserIdMax}
+		</if>
+		<if test="query != null and query.builderName != null and query.builderName != ''">
+			and t_builder.name like concat('%', #{query.builderName}, '%')
+		</if>
+		<if test="query != null and query.builderGender != null">
+			and t_builder.gender = #{query.builderGender}
+		</if>
+		<if test="query != null and query.builderGenderMin != null and query.builderGenderMax == null">
+			and t_builder.gender <![CDATA[ >= ]]> #{query.builderGenderMin}
+		</if>
+		<if test="query != null and query.builderGenderMin == null and query.builderGenderMax != null">
+			and t_builder.gender <![CDATA[ <= ]]> #{query.builderGenderMax}
+		</if>
+		<if test="query != null and query.builderGenderMin != null and query.builderGenderMax != null">
+			and t_builder.gender <![CDATA[ >= ]]> #{query.builderGenderMin} and t_builder.gender <![CDATA[ <= ]]> #{query.builderGenderMax}
+		</if>
+		<if test="query != null and query.builderBirthday != null">
+			and t_builder.birthday = #{query.builderBirthday}
+		</if>
+		<if test="query != null and query.builderBirthdayMin != null and query.builderBirthdayMax == null">
+			and t_builder.birthday <![CDATA[ >= ]]> #{query.builderBirthdayMin}
+		</if>
+		<if test="query != null and query.builderBirthdayMin == null and query.builderBirthdayMax != null">
+			and t_builder.birthday <![CDATA[ <= ]]> #{query.builderBirthdayMax}
+		</if>
+		<if test="query != null and query.builderBirthdayMin != null and query.builderBirthdayMax != null">
+			and t_builder.birthday <![CDATA[ >= ]]> #{query.builderBirthdayMin} and t_builder.birthday <![CDATA[ <= ]]> #{query.builderBirthdayMax}
+		</if>
+		<if test="query != null and query.builderCertificateAddress != null and query.builderCertificateAddress != ''">
+			and t_builder.certificate_address like concat('%', #{query.builderCertificateAddress}, '%')
+		</if>
+		<if test="query != null and query.builderCertificateType != null and query.builderCertificateType != ''">
+			and t_builder.certificate_type like concat('%', #{query.builderCertificateType}, '%')
+		</if>
+		<if test="query != null and query.builderCertificateMajorType != null and query.builderCertificateMajorType != ''">
+			and t_builder.certificate_major_type like concat('%', #{query.builderCertificateMajorType}, '%')
+		</if>
+		<if test="query != null and query.builderCertificateStatus != null and query.builderCertificateStatus != ''">
+			and t_builder.certificate_status like concat('%', #{query.builderCertificateStatus}, '%')
+		</if>
+		<if test="query != null and query.builderCertificateRegStatus != null and query.builderCertificateRegStatus != ''">
+			and t_builder.certificate_reg_status like concat('%', #{query.builderCertificateRegStatus}, '%')
+		</if>
+		<if test="query != null and query.builderSalary != null and query.builderSalary != ''">
+			and t_builder.salary like concat('%', #{query.builderSalary}, '%')
+		</if>
+		<if test="query != null and query.builderPhone != null and query.builderPhone != ''">
+			and t_builder.phone like concat('%', #{query.builderPhone}, '%')
+		</if>
+		<if test="query != null and query.builderMemo != null and query.builderMemo != ''">
+			and t_builder.memo like concat('%', #{query.builderMemo}, '%')
+		</if>
+		<if test="query != null and query.builderVersion != null">
+			and t_builder.version = #{query.builderVersion}
+		</if>
+		<if test="query != null and query.builderVersionMin != null and query.builderVersionMax == null">
+			and t_builder.version <![CDATA[ >= ]]> #{query.builderVersionMin}
+		</if>
+		<if test="query != null and query.builderVersionMin == null and query.builderVersionMax != null">
+			and t_builder.version <![CDATA[ <= ]]> #{query.builderVersionMax}
+		</if>
+		<if test="query != null and query.builderVersionMin != null and query.builderVersionMax != null">
+			and t_builder.version <![CDATA[ >= ]]> #{query.builderVersionMin} and t_builder.version <![CDATA[ <= ]]> #{query.builderVersionMax}
+		</if>
+		<if test="query != null and query.builderCreateTime != null">
+			and t_builder.create_time = #{query.builderCreateTime}
+		</if>
+		<if test="query != null and query.builderCreateTimeMin != null and query.builderCreateTimeMax == null">
+			and t_builder.create_time <![CDATA[ >= ]]> #{query.builderCreateTimeMin}
+		</if>
+		<if test="query != null and query.builderCreateTimeMin == null and query.builderCreateTimeMax != null">
+			and t_builder.create_time <![CDATA[ <= ]]> #{query.builderCreateTimeMax}
+		</if>
+		<if test="query != null and query.builderCreateTimeMin != null and query.builderCreateTimeMax != null">
+			and t_builder.create_time <![CDATA[ >= ]]> #{query.builderCreateTimeMin} and t_builder.create_time <![CDATA[ <= ]]> #{query.builderCreateTimeMax}
+		</if>
+		<if test="query != null and query.builderUpdateTime != null">
+			and t_builder.update_time = #{query.builderUpdateTime}
+		</if>
+		<if test="query != null and query.builderUpdateTimeMin != null and query.builderUpdateTimeMax == null">
+			and t_builder.update_time <![CDATA[ >= ]]> #{query.builderUpdateTimeMin}
+		</if>
+		<if test="query != null and query.builderUpdateTimeMin == null and query.builderUpdateTimeMax != null">
+			and t_builder.update_time <![CDATA[ <= ]]> #{query.builderUpdateTimeMax}
+		</if>
+		<if test="query != null and query.builderUpdateTimeMin != null and query.builderUpdateTimeMax != null">
+			and t_builder.update_time <![CDATA[ >= ]]> #{query.builderUpdateTimeMin} and t_builder.update_time <![CDATA[ <= ]]> #{query.builderUpdateTimeMax}
+		</if>
+		<if test="query != null and query.builderIsActive != null">
+			and t_builder.is_active = #{query.builderIsActive}
+		</if>
+		<if test="query != null and query.builderIsActiveMin != null and query.builderIsActiveMax == null">
+			and t_builder.is_active <![CDATA[ >= ]]> #{query.builderIsActiveMin}
+		</if>
+		<if test="query != null and query.builderIsActiveMin == null and query.builderIsActiveMax != null">
+			and t_builder.is_active <![CDATA[ <= ]]> #{query.builderIsActiveMax}
+		</if>
+		<if test="query != null and query.builderIsActiveMin != null and query.builderIsActiveMax != null">
+			and t_builder.is_active <![CDATA[ >= ]]> #{query.builderIsActiveMin} and t_builder.is_active <![CDATA[ <= ]]> #{query.builderIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		
+        and
+        t_builder.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userBuilderDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder, t_user_detail where t_builder.id = #{id} and
+        t_builder.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userBuilderDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder, t_user_detail
+        where
+        t_builder.user_id = t_user_detail.id
+        order by t_builder.update_time desc, t_builder.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userBuilderDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_builder.update_time desc, t_builder.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userBuilderDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_builder.update_time desc, t_builder.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_builder, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

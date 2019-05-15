@@ -143,7 +143,7 @@ public class ProjectAnnounceController extends BaseController {
      * Time: 18:53
      * Description: 根据项目ID获取公告详情
      */
-    @GetMapping("user/getByProjectId/{id}")
+    @GetMapping("any/getByProjectId/{id}")
     public ResponseStatusVO getByProjectId(@PathVariable("id") Long id) {
         ProjectAnnounceVO projectAnnounceVO = new ProjectAnnounceVO();
         Object obj = projectAnnounceService.getByProjectId(id);

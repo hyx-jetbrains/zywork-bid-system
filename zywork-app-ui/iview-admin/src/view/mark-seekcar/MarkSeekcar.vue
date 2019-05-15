@@ -515,6 +515,13 @@
         <Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
       </div>
     </Modal>
+		
+		<Modal width="1000" v-model="modal.markSeekcarRecord" title="找车记录">
+		  <markSeekcarRecord-list-single ref="MarkSeekcarRecordListSingle" />
+		  <div slot="footer">
+		    <Button type="text" size="large" @click="cancelModal('markSeekcarRecord')">取消</Button>
+		  </div>
+		</Modal>
   </div>
 </template>
 
@@ -528,7 +535,8 @@ import ProjectList from '@/view/project/ProjectList.vue'
 import city from '@/api/city.json'
 import { isActiveSelect } from '@/api/select'
 import ProjectDetail from '@/view/project/ProjectDetail.vue'
-	import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
+import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
+import MarkSeekcarRecordListSingle from '@/view/mark-seekcar-record/MarkSeekcarRecordListSingle.vue'
 
 export default {
   name: 'MarkSeekcar',
@@ -538,7 +546,8 @@ export default {
     ProjectList,
     UserListChoice,
 		ProjectDetail,
-		ProjectListSingle
+		ProjectListSingle,
+		MarkSeekcarRecordListSingle
   },
   data() {
     return {
@@ -571,7 +580,8 @@ export default {
         project: false,
         userChoice: false,
 				projectDetail: false,
-				projectDetalSearch: false
+				projectDetalSearch: false,
+				markSeekcarRecord: false
       },
       loading: {
         add: false,
@@ -1035,6 +1045,15 @@ export default {
                       slot: 'list'
                     },
                     [
+											h(
+											  'DropdownItem',
+											  {
+											    props: {
+											      name: 'markSeekcarRecordSeach'
+											    }
+											  },
+											  '找车记录'
+											),
                       h(
                         'DropdownItem',
                         {
@@ -1158,8 +1177,10 @@ export default {
 			} else if (itemName === 'showSearch') {
         utils.showModal(this, 'userDetalSearch')
       } else if (itemName === 'projectShowSearch') {
-					utils.showModal(this, 'projectDetalSearch')
-				}
+				utils.showModal(this, 'projectDetalSearch')
+			} else if(itemName === 'markSeekcarRecordSeach') {
+				utils.showModal(this, 'markSeekcarRecord')
+			}
     },
     showUserDetailModal(id) {
       getUserById(id)

@@ -1,0 +1,220 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserMarkCarpoolDAO">
+
+    <sql id="select_columns">
+        t_mark_carpool.id as markCarpoolId, t_mark_carpool.user_id as markCarpoolUserId, t_mark_carpool.project_id as markCarpoolProjectId, t_mark_carpool.start_city as markCarpoolStartCity, t_mark_carpool.start_addr as markCarpoolStartAddr, t_mark_carpool.end_city as markCarpoolEndCity, t_mark_carpool.end_addr as markCarpoolEndAddr, t_mark_carpool.start_time as markCarpoolStartTime, t_mark_carpool.car_type as markCarpoolCarType, t_mark_carpool.people_count as markCarpoolPeopleCount, t_mark_carpool.price as markCarpoolPrice, t_mark_carpool.name as markCarpoolName, t_mark_carpool.phone as markCarpoolPhone, t_mark_carpool.version as markCarpoolVersion, t_mark_carpool.create_time as markCarpoolCreateTime, t_mark_carpool.update_time as markCarpoolUpdateTime, t_mark_carpool.is_active as markCarpoolIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.markCarpoolId != null">
+			and t_mark_carpool.id = #{query.markCarpoolId}
+		</if>
+		<if test="query != null and query.markCarpoolIdMin != null and query.markCarpoolIdMax == null">
+			and t_mark_carpool.id <![CDATA[ >= ]]> #{query.markCarpoolIdMin}
+		</if>
+		<if test="query != null and query.markCarpoolIdMin == null and query.markCarpoolIdMax != null">
+			and t_mark_carpool.id <![CDATA[ <= ]]> #{query.markCarpoolIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolIdMin != null and query.markCarpoolIdMax != null">
+			and t_mark_carpool.id <![CDATA[ >= ]]> #{query.markCarpoolIdMin} and t_mark_carpool.id <![CDATA[ <= ]]> #{query.markCarpoolIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolUserId != null">
+			and t_mark_carpool.user_id = #{query.markCarpoolUserId}
+		</if>
+		<if test="query != null and query.markCarpoolUserIdMin != null and query.markCarpoolUserIdMax == null">
+			and t_mark_carpool.user_id <![CDATA[ >= ]]> #{query.markCarpoolUserIdMin}
+		</if>
+		<if test="query != null and query.markCarpoolUserIdMin == null and query.markCarpoolUserIdMax != null">
+			and t_mark_carpool.user_id <![CDATA[ <= ]]> #{query.markCarpoolUserIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolUserIdMin != null and query.markCarpoolUserIdMax != null">
+			and t_mark_carpool.user_id <![CDATA[ >= ]]> #{query.markCarpoolUserIdMin} and t_mark_carpool.user_id <![CDATA[ <= ]]> #{query.markCarpoolUserIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolProjectId != null">
+			and t_mark_carpool.project_id = #{query.markCarpoolProjectId}
+		</if>
+		<if test="query != null and query.markCarpoolProjectIdMin != null and query.markCarpoolProjectIdMax == null">
+			and t_mark_carpool.project_id <![CDATA[ >= ]]> #{query.markCarpoolProjectIdMin}
+		</if>
+		<if test="query != null and query.markCarpoolProjectIdMin == null and query.markCarpoolProjectIdMax != null">
+			and t_mark_carpool.project_id <![CDATA[ <= ]]> #{query.markCarpoolProjectIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolProjectIdMin != null and query.markCarpoolProjectIdMax != null">
+			and t_mark_carpool.project_id <![CDATA[ >= ]]> #{query.markCarpoolProjectIdMin} and t_mark_carpool.project_id <![CDATA[ <= ]]> #{query.markCarpoolProjectIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolStartCity != null and query.markCarpoolStartCity != ''">
+			and t_mark_carpool.start_city like concat('%', #{query.markCarpoolStartCity}, '%')
+		</if>
+		<if test="query != null and query.markCarpoolStartAddr != null and query.markCarpoolStartAddr != ''">
+			and t_mark_carpool.start_addr like concat('%', #{query.markCarpoolStartAddr}, '%')
+		</if>
+		<if test="query != null and query.markCarpoolEndCity != null and query.markCarpoolEndCity != ''">
+			and t_mark_carpool.end_city like concat('%', #{query.markCarpoolEndCity}, '%')
+		</if>
+		<if test="query != null and query.markCarpoolEndAddr != null and query.markCarpoolEndAddr != ''">
+			and t_mark_carpool.end_addr like concat('%', #{query.markCarpoolEndAddr}, '%')
+		</if>
+		<if test="query != null and query.markCarpoolStartTime != null">
+			and t_mark_carpool.start_time = #{query.markCarpoolStartTime}
+		</if>
+		<if test="query != null and query.markCarpoolStartTimeMin != null and query.markCarpoolStartTimeMax == null">
+			and t_mark_carpool.start_time <![CDATA[ >= ]]> #{query.markCarpoolStartTimeMin}
+		</if>
+		<if test="query != null and query.markCarpoolStartTimeMin == null and query.markCarpoolStartTimeMax != null">
+			and t_mark_carpool.start_time <![CDATA[ <= ]]> #{query.markCarpoolStartTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolStartTimeMin != null and query.markCarpoolStartTimeMax != null">
+			and t_mark_carpool.start_time <![CDATA[ >= ]]> #{query.markCarpoolStartTimeMin} and t_mark_carpool.start_time <![CDATA[ <= ]]> #{query.markCarpoolStartTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolCarType != null and query.markCarpoolCarType != ''">
+			and t_mark_carpool.car_type like concat('%', #{query.markCarpoolCarType}, '%')
+		</if>
+		<if test="query != null and query.markCarpoolPeopleCount != null">
+			and t_mark_carpool.people_count = #{query.markCarpoolPeopleCount}
+		</if>
+		<if test="query != null and query.markCarpoolPeopleCountMin != null and query.markCarpoolPeopleCountMax == null">
+			and t_mark_carpool.people_count <![CDATA[ >= ]]> #{query.markCarpoolPeopleCountMin}
+		</if>
+		<if test="query != null and query.markCarpoolPeopleCountMin == null and query.markCarpoolPeopleCountMax != null">
+			and t_mark_carpool.people_count <![CDATA[ <= ]]> #{query.markCarpoolPeopleCountMax}
+		</if>
+		<if test="query != null and query.markCarpoolPeopleCountMin != null and query.markCarpoolPeopleCountMax != null">
+			and t_mark_carpool.people_count <![CDATA[ >= ]]> #{query.markCarpoolPeopleCountMin} and t_mark_carpool.people_count <![CDATA[ <= ]]> #{query.markCarpoolPeopleCountMax}
+		</if>
+		<if test="query != null and query.markCarpoolPrice != null">
+			and t_mark_carpool.price = #{query.markCarpoolPrice}
+		</if>
+		<if test="query != null and query.markCarpoolPriceMin != null and query.markCarpoolPriceMax == null">
+			and t_mark_carpool.price <![CDATA[ >= ]]> #{query.markCarpoolPriceMin}
+		</if>
+		<if test="query != null and query.markCarpoolPriceMin == null and query.markCarpoolPriceMax != null">
+			and t_mark_carpool.price <![CDATA[ <= ]]> #{query.markCarpoolPriceMax}
+		</if>
+		<if test="query != null and query.markCarpoolPriceMin != null and query.markCarpoolPriceMax != null">
+			and t_mark_carpool.price <![CDATA[ >= ]]> #{query.markCarpoolPriceMin} and t_mark_carpool.price <![CDATA[ <= ]]> #{query.markCarpoolPriceMax}
+		</if>
+		<if test="query != null and query.markCarpoolName != null and query.markCarpoolName != ''">
+			and t_mark_carpool.name like concat('%', #{query.markCarpoolName}, '%')
+		</if>
+		<if test="query != null and query.markCarpoolPhone != null and query.markCarpoolPhone != ''">
+			and t_mark_carpool.phone like concat('%', #{query.markCarpoolPhone}, '%')
+		</if>
+		<if test="query != null and query.markCarpoolVersion != null">
+			and t_mark_carpool.version = #{query.markCarpoolVersion}
+		</if>
+		<if test="query != null and query.markCarpoolVersionMin != null and query.markCarpoolVersionMax == null">
+			and t_mark_carpool.version <![CDATA[ >= ]]> #{query.markCarpoolVersionMin}
+		</if>
+		<if test="query != null and query.markCarpoolVersionMin == null and query.markCarpoolVersionMax != null">
+			and t_mark_carpool.version <![CDATA[ <= ]]> #{query.markCarpoolVersionMax}
+		</if>
+		<if test="query != null and query.markCarpoolVersionMin != null and query.markCarpoolVersionMax != null">
+			and t_mark_carpool.version <![CDATA[ >= ]]> #{query.markCarpoolVersionMin} and t_mark_carpool.version <![CDATA[ <= ]]> #{query.markCarpoolVersionMax}
+		</if>
+		<if test="query != null and query.markCarpoolCreateTime != null">
+			and t_mark_carpool.create_time = #{query.markCarpoolCreateTime}
+		</if>
+		<if test="query != null and query.markCarpoolCreateTimeMin != null and query.markCarpoolCreateTimeMax == null">
+			and t_mark_carpool.create_time <![CDATA[ >= ]]> #{query.markCarpoolCreateTimeMin}
+		</if>
+		<if test="query != null and query.markCarpoolCreateTimeMin == null and query.markCarpoolCreateTimeMax != null">
+			and t_mark_carpool.create_time <![CDATA[ <= ]]> #{query.markCarpoolCreateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolCreateTimeMin != null and query.markCarpoolCreateTimeMax != null">
+			and t_mark_carpool.create_time <![CDATA[ >= ]]> #{query.markCarpoolCreateTimeMin} and t_mark_carpool.create_time <![CDATA[ <= ]]> #{query.markCarpoolCreateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolUpdateTime != null">
+			and t_mark_carpool.update_time = #{query.markCarpoolUpdateTime}
+		</if>
+		<if test="query != null and query.markCarpoolUpdateTimeMin != null and query.markCarpoolUpdateTimeMax == null">
+			and t_mark_carpool.update_time <![CDATA[ >= ]]> #{query.markCarpoolUpdateTimeMin}
+		</if>
+		<if test="query != null and query.markCarpoolUpdateTimeMin == null and query.markCarpoolUpdateTimeMax != null">
+			and t_mark_carpool.update_time <![CDATA[ <= ]]> #{query.markCarpoolUpdateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolUpdateTimeMin != null and query.markCarpoolUpdateTimeMax != null">
+			and t_mark_carpool.update_time <![CDATA[ >= ]]> #{query.markCarpoolUpdateTimeMin} and t_mark_carpool.update_time <![CDATA[ <= ]]> #{query.markCarpoolUpdateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolIsActive != null">
+			and t_mark_carpool.is_active = #{query.markCarpoolIsActive}
+		</if>
+		<if test="query != null and query.markCarpoolIsActiveMin != null and query.markCarpoolIsActiveMax == null">
+			and t_mark_carpool.is_active <![CDATA[ >= ]]> #{query.markCarpoolIsActiveMin}
+		</if>
+		<if test="query != null and query.markCarpoolIsActiveMin == null and query.markCarpoolIsActiveMax != null">
+			and t_mark_carpool.is_active <![CDATA[ <= ]]> #{query.markCarpoolIsActiveMax}
+		</if>
+		<if test="query != null and query.markCarpoolIsActiveMin != null and query.markCarpoolIsActiveMax != null">
+			and t_mark_carpool.is_active <![CDATA[ >= ]]> #{query.markCarpoolIsActiveMin} and t_mark_carpool.is_active <![CDATA[ <= ]]> #{query.markCarpoolIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		
+        and
+        t_mark_carpool.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userMarkCarpoolDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool, t_user_detail where t_mark_carpool.id = #{id} and
+        t_mark_carpool.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userMarkCarpoolDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool, t_user_detail
+        where
+        t_mark_carpool.user_id = t_user_detail.id
+        order by t_mark_carpool.update_time desc, t_mark_carpool.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userMarkCarpoolDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_mark_carpool.update_time desc, t_mark_carpool.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userMarkCarpoolDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_mark_carpool.update_time desc, t_mark_carpool.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_mark_carpool, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

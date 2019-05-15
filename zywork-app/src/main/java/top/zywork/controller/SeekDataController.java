@@ -138,17 +138,6 @@ public class SeekDataController extends BaseController {
 
     /**
      * User: DengMin
-     * Date: 2019/05/13
-     * Time: 11:48
-     * Description: 信息共享 -- 求带资料
-     */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody SeekDataQuery seekDataQuery) {
-        return listPageByCondition(seekDataQuery);
-    }
-
-    /**
-     * User: DengMin
      * Date: 2019/05/14
      * Time: 10:27
      * Description: 根据ID查询详情
@@ -156,23 +145,6 @@ public class SeekDataController extends BaseController {
     @GetMapping("any/getSeekDataById/{id}")
     public ResponseStatusVO getSeekDataById(@PathVariable("id") Long id) {
         return getById(id);
-    }
-
-    /**
-     * User: DengMin
-     * Date: 2019/05/13
-     * Time: 11:48
-     * Description: 我的求带资料
-     */
-    @PostMapping("user/all")
-    public ResponseStatusVO listPageByUserId(@RequestBody SeekDataQuery seekDataQuery) {
-        JwtUser jwtUser = SecurityUtils.getJwtUser();
-        if (jwtUser == null) {
-            return ResponseStatusVO.authenticationError();
-        }
-
-        seekDataQuery.setUserId(jwtUser.getUserId());
-        return listPageByCondition(seekDataQuery);
     }
 
     /**

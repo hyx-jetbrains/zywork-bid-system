@@ -1,0 +1,181 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserRecruitDAO">
+
+    <sql id="select_columns">
+        t_recruit.id as recruitId, t_recruit.user_id as recruitUserId, t_recruit.job_title as recruitJobTitle, t_recruit.is_fulltime as recruitIsFulltime, t_recruit.work_year as recruitWorkYear, t_recruit.education as recruitEducation, t_recruit.salary as recruitSalary, t_recruit.work_addr as recruitWorkAddr, t_recruit.memo as recruitMemo, t_recruit.version as recruitVersion, t_recruit.create_time as recruitCreateTime, t_recruit.update_time as recruitUpdateTime, t_recruit.is_active as recruitIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.recruitId != null">
+			and t_recruit.id = #{query.recruitId}
+		</if>
+		<if test="query != null and query.recruitIdMin != null and query.recruitIdMax == null">
+			and t_recruit.id <![CDATA[ >= ]]> #{query.recruitIdMin}
+		</if>
+		<if test="query != null and query.recruitIdMin == null and query.recruitIdMax != null">
+			and t_recruit.id <![CDATA[ <= ]]> #{query.recruitIdMax}
+		</if>
+		<if test="query != null and query.recruitIdMin != null and query.recruitIdMax != null">
+			and t_recruit.id <![CDATA[ >= ]]> #{query.recruitIdMin} and t_recruit.id <![CDATA[ <= ]]> #{query.recruitIdMax}
+		</if>
+		<if test="query != null and query.recruitUserId != null">
+			and t_recruit.user_id = #{query.recruitUserId}
+		</if>
+		<if test="query != null and query.recruitUserIdMin != null and query.recruitUserIdMax == null">
+			and t_recruit.user_id <![CDATA[ >= ]]> #{query.recruitUserIdMin}
+		</if>
+		<if test="query != null and query.recruitUserIdMin == null and query.recruitUserIdMax != null">
+			and t_recruit.user_id <![CDATA[ <= ]]> #{query.recruitUserIdMax}
+		</if>
+		<if test="query != null and query.recruitUserIdMin != null and query.recruitUserIdMax != null">
+			and t_recruit.user_id <![CDATA[ >= ]]> #{query.recruitUserIdMin} and t_recruit.user_id <![CDATA[ <= ]]> #{query.recruitUserIdMax}
+		</if>
+		<if test="query != null and query.recruitJobTitle != null and query.recruitJobTitle != ''">
+			and t_recruit.job_title like concat('%', #{query.recruitJobTitle}, '%')
+		</if>
+		<if test="query != null and query.recruitIsFulltime != null">
+			and t_recruit.is_fulltime = #{query.recruitIsFulltime}
+		</if>
+		<if test="query != null and query.recruitIsFulltimeMin != null and query.recruitIsFulltimeMax == null">
+			and t_recruit.is_fulltime <![CDATA[ >= ]]> #{query.recruitIsFulltimeMin}
+		</if>
+		<if test="query != null and query.recruitIsFulltimeMin == null and query.recruitIsFulltimeMax != null">
+			and t_recruit.is_fulltime <![CDATA[ <= ]]> #{query.recruitIsFulltimeMax}
+		</if>
+		<if test="query != null and query.recruitIsFulltimeMin != null and query.recruitIsFulltimeMax != null">
+			and t_recruit.is_fulltime <![CDATA[ >= ]]> #{query.recruitIsFulltimeMin} and t_recruit.is_fulltime <![CDATA[ <= ]]> #{query.recruitIsFulltimeMax}
+		</if>
+		<if test="query != null and query.recruitWorkYear != null and query.recruitWorkYear != ''">
+			and t_recruit.work_year like concat('%', #{query.recruitWorkYear}, '%')
+		</if>
+		<if test="query != null and query.recruitEducation != null and query.recruitEducation != ''">
+			and t_recruit.education like concat('%', #{query.recruitEducation}, '%')
+		</if>
+		<if test="query != null and query.recruitSalary != null and query.recruitSalary != ''">
+			and t_recruit.salary like concat('%', #{query.recruitSalary}, '%')
+		</if>
+		<if test="query != null and query.recruitWorkAddr != null and query.recruitWorkAddr != ''">
+			and t_recruit.work_addr like concat('%', #{query.recruitWorkAddr}, '%')
+		</if>
+		<if test="query != null and query.recruitMemo != null and query.recruitMemo != ''">
+			and t_recruit.memo like concat('%', #{query.recruitMemo}, '%')
+		</if>
+		<if test="query != null and query.recruitVersion != null">
+			and t_recruit.version = #{query.recruitVersion}
+		</if>
+		<if test="query != null and query.recruitVersionMin != null and query.recruitVersionMax == null">
+			and t_recruit.version <![CDATA[ >= ]]> #{query.recruitVersionMin}
+		</if>
+		<if test="query != null and query.recruitVersionMin == null and query.recruitVersionMax != null">
+			and t_recruit.version <![CDATA[ <= ]]> #{query.recruitVersionMax}
+		</if>
+		<if test="query != null and query.recruitVersionMin != null and query.recruitVersionMax != null">
+			and t_recruit.version <![CDATA[ >= ]]> #{query.recruitVersionMin} and t_recruit.version <![CDATA[ <= ]]> #{query.recruitVersionMax}
+		</if>
+		<if test="query != null and query.recruitCreateTime != null">
+			and t_recruit.create_time = #{query.recruitCreateTime}
+		</if>
+		<if test="query != null and query.recruitCreateTimeMin != null and query.recruitCreateTimeMax == null">
+			and t_recruit.create_time <![CDATA[ >= ]]> #{query.recruitCreateTimeMin}
+		</if>
+		<if test="query != null and query.recruitCreateTimeMin == null and query.recruitCreateTimeMax != null">
+			and t_recruit.create_time <![CDATA[ <= ]]> #{query.recruitCreateTimeMax}
+		</if>
+		<if test="query != null and query.recruitCreateTimeMin != null and query.recruitCreateTimeMax != null">
+			and t_recruit.create_time <![CDATA[ >= ]]> #{query.recruitCreateTimeMin} and t_recruit.create_time <![CDATA[ <= ]]> #{query.recruitCreateTimeMax}
+		</if>
+		<if test="query != null and query.recruitUpdateTime != null">
+			and t_recruit.update_time = #{query.recruitUpdateTime}
+		</if>
+		<if test="query != null and query.recruitUpdateTimeMin != null and query.recruitUpdateTimeMax == null">
+			and t_recruit.update_time <![CDATA[ >= ]]> #{query.recruitUpdateTimeMin}
+		</if>
+		<if test="query != null and query.recruitUpdateTimeMin == null and query.recruitUpdateTimeMax != null">
+			and t_recruit.update_time <![CDATA[ <= ]]> #{query.recruitUpdateTimeMax}
+		</if>
+		<if test="query != null and query.recruitUpdateTimeMin != null and query.recruitUpdateTimeMax != null">
+			and t_recruit.update_time <![CDATA[ >= ]]> #{query.recruitUpdateTimeMin} and t_recruit.update_time <![CDATA[ <= ]]> #{query.recruitUpdateTimeMax}
+		</if>
+		<if test="query != null and query.recruitIsActive != null">
+			and t_recruit.is_active = #{query.recruitIsActive}
+		</if>
+		<if test="query != null and query.recruitIsActiveMin != null and query.recruitIsActiveMax == null">
+			and t_recruit.is_active <![CDATA[ >= ]]> #{query.recruitIsActiveMin}
+		</if>
+		<if test="query != null and query.recruitIsActiveMin == null and query.recruitIsActiveMax != null">
+			and t_recruit.is_active <![CDATA[ <= ]]> #{query.recruitIsActiveMax}
+		</if>
+		<if test="query != null and query.recruitIsActiveMin != null and query.recruitIsActiveMax != null">
+			and t_recruit.is_active <![CDATA[ >= ]]> #{query.recruitIsActiveMin} and t_recruit.is_active <![CDATA[ <= ]]> #{query.recruitIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		
+        and
+        t_recruit.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userRecruitDO">
+        select
+        <include refid="select_columns"/>
+        from t_recruit, t_user_detail where t_recruit.id = #{id} and
+        t_recruit.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userRecruitDO">
+        select
+        <include refid="select_columns"/>
+        from t_recruit, t_user_detail
+        where
+        t_recruit.user_id = t_user_detail.id
+        order by t_recruit.update_time desc, t_recruit.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userRecruitDO">
+        select
+        <include refid="select_columns"/>
+        from t_recruit, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_recruit.update_time desc, t_recruit.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userRecruitDO">
+        select
+        <include refid="select_columns"/>
+        from t_recruit, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_recruit.update_time desc, t_recruit.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_recruit, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

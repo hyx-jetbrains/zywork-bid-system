@@ -1,0 +1,214 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserSeekDataDAO">
+
+    <sql id="select_columns">
+        t_seek_data.id as seekDataId, t_seek_data.user_id as seekDataUserId, t_seek_data.start_addr as seekDataStartAddr, t_seek_data.end_addr as seekDataEndAddr, t_seek_data.data_type as seekDataDataType, t_seek_data.data_count as seekDataDataCount, t_seek_data.latest_time as seekDataLatestTime, t_seek_data.price as seekDataPrice, t_seek_data.phone as seekDataPhone, t_seek_data.is_urgent as seekDataIsUrgent, t_seek_data.memo as seekDataMemo, t_seek_data.version as seekDataVersion, t_seek_data.create_time as seekDataCreateTime, t_seek_data.update_time as seekDataUpdateTime, t_seek_data.is_active as seekDataIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.seekDataId != null">
+			and t_seek_data.id = #{query.seekDataId}
+		</if>
+		<if test="query != null and query.seekDataIdMin != null and query.seekDataIdMax == null">
+			and t_seek_data.id <![CDATA[ >= ]]> #{query.seekDataIdMin}
+		</if>
+		<if test="query != null and query.seekDataIdMin == null and query.seekDataIdMax != null">
+			and t_seek_data.id <![CDATA[ <= ]]> #{query.seekDataIdMax}
+		</if>
+		<if test="query != null and query.seekDataIdMin != null and query.seekDataIdMax != null">
+			and t_seek_data.id <![CDATA[ >= ]]> #{query.seekDataIdMin} and t_seek_data.id <![CDATA[ <= ]]> #{query.seekDataIdMax}
+		</if>
+		<if test="query != null and query.seekDataUserId != null">
+			and t_seek_data.user_id = #{query.seekDataUserId}
+		</if>
+		<if test="query != null and query.seekDataUserIdMin != null and query.seekDataUserIdMax == null">
+			and t_seek_data.user_id <![CDATA[ >= ]]> #{query.seekDataUserIdMin}
+		</if>
+		<if test="query != null and query.seekDataUserIdMin == null and query.seekDataUserIdMax != null">
+			and t_seek_data.user_id <![CDATA[ <= ]]> #{query.seekDataUserIdMax}
+		</if>
+		<if test="query != null and query.seekDataUserIdMin != null and query.seekDataUserIdMax != null">
+			and t_seek_data.user_id <![CDATA[ >= ]]> #{query.seekDataUserIdMin} and t_seek_data.user_id <![CDATA[ <= ]]> #{query.seekDataUserIdMax}
+		</if>
+		<if test="query != null and query.seekDataStartAddr != null and query.seekDataStartAddr != ''">
+			and t_seek_data.start_addr like concat('%', #{query.seekDataStartAddr}, '%')
+		</if>
+		<if test="query != null and query.seekDataEndAddr != null and query.seekDataEndAddr != ''">
+			and t_seek_data.end_addr like concat('%', #{query.seekDataEndAddr}, '%')
+		</if>
+		<if test="query != null and query.seekDataDataType != null and query.seekDataDataType != ''">
+			and t_seek_data.data_type like concat('%', #{query.seekDataDataType}, '%')
+		</if>
+		<if test="query != null and query.seekDataDataCount != null">
+			and t_seek_data.data_count = #{query.seekDataDataCount}
+		</if>
+		<if test="query != null and query.seekDataDataCountMin != null and query.seekDataDataCountMax == null">
+			and t_seek_data.data_count <![CDATA[ >= ]]> #{query.seekDataDataCountMin}
+		</if>
+		<if test="query != null and query.seekDataDataCountMin == null and query.seekDataDataCountMax != null">
+			and t_seek_data.data_count <![CDATA[ <= ]]> #{query.seekDataDataCountMax}
+		</if>
+		<if test="query != null and query.seekDataDataCountMin != null and query.seekDataDataCountMax != null">
+			and t_seek_data.data_count <![CDATA[ >= ]]> #{query.seekDataDataCountMin} and t_seek_data.data_count <![CDATA[ <= ]]> #{query.seekDataDataCountMax}
+		</if>
+		<if test="query != null and query.seekDataLatestTime != null">
+			and t_seek_data.latest_time = #{query.seekDataLatestTime}
+		</if>
+		<if test="query != null and query.seekDataLatestTimeMin != null and query.seekDataLatestTimeMax == null">
+			and t_seek_data.latest_time <![CDATA[ >= ]]> #{query.seekDataLatestTimeMin}
+		</if>
+		<if test="query != null and query.seekDataLatestTimeMin == null and query.seekDataLatestTimeMax != null">
+			and t_seek_data.latest_time <![CDATA[ <= ]]> #{query.seekDataLatestTimeMax}
+		</if>
+		<if test="query != null and query.seekDataLatestTimeMin != null and query.seekDataLatestTimeMax != null">
+			and t_seek_data.latest_time <![CDATA[ >= ]]> #{query.seekDataLatestTimeMin} and t_seek_data.latest_time <![CDATA[ <= ]]> #{query.seekDataLatestTimeMax}
+		</if>
+		<if test="query != null and query.seekDataPrice != null">
+			and t_seek_data.price = #{query.seekDataPrice}
+		</if>
+		<if test="query != null and query.seekDataPriceMin != null and query.seekDataPriceMax == null">
+			and t_seek_data.price <![CDATA[ >= ]]> #{query.seekDataPriceMin}
+		</if>
+		<if test="query != null and query.seekDataPriceMin == null and query.seekDataPriceMax != null">
+			and t_seek_data.price <![CDATA[ <= ]]> #{query.seekDataPriceMax}
+		</if>
+		<if test="query != null and query.seekDataPriceMin != null and query.seekDataPriceMax != null">
+			and t_seek_data.price <![CDATA[ >= ]]> #{query.seekDataPriceMin} and t_seek_data.price <![CDATA[ <= ]]> #{query.seekDataPriceMax}
+		</if>
+		<if test="query != null and query.seekDataPhone != null and query.seekDataPhone != ''">
+			and t_seek_data.phone like concat('%', #{query.seekDataPhone}, '%')
+		</if>
+		<if test="query != null and query.seekDataIsUrgent != null">
+			and t_seek_data.is_urgent = #{query.seekDataIsUrgent}
+		</if>
+		<if test="query != null and query.seekDataIsUrgentMin != null and query.seekDataIsUrgentMax == null">
+			and t_seek_data.is_urgent <![CDATA[ >= ]]> #{query.seekDataIsUrgentMin}
+		</if>
+		<if test="query != null and query.seekDataIsUrgentMin == null and query.seekDataIsUrgentMax != null">
+			and t_seek_data.is_urgent <![CDATA[ <= ]]> #{query.seekDataIsUrgentMax}
+		</if>
+		<if test="query != null and query.seekDataIsUrgentMin != null and query.seekDataIsUrgentMax != null">
+			and t_seek_data.is_urgent <![CDATA[ >= ]]> #{query.seekDataIsUrgentMin} and t_seek_data.is_urgent <![CDATA[ <= ]]> #{query.seekDataIsUrgentMax}
+		</if>
+		<if test="query != null and query.seekDataMemo != null and query.seekDataMemo != ''">
+			and t_seek_data.memo like concat('%', #{query.seekDataMemo}, '%')
+		</if>
+		<if test="query != null and query.seekDataVersion != null">
+			and t_seek_data.version = #{query.seekDataVersion}
+		</if>
+		<if test="query != null and query.seekDataVersionMin != null and query.seekDataVersionMax == null">
+			and t_seek_data.version <![CDATA[ >= ]]> #{query.seekDataVersionMin}
+		</if>
+		<if test="query != null and query.seekDataVersionMin == null and query.seekDataVersionMax != null">
+			and t_seek_data.version <![CDATA[ <= ]]> #{query.seekDataVersionMax}
+		</if>
+		<if test="query != null and query.seekDataVersionMin != null and query.seekDataVersionMax != null">
+			and t_seek_data.version <![CDATA[ >= ]]> #{query.seekDataVersionMin} and t_seek_data.version <![CDATA[ <= ]]> #{query.seekDataVersionMax}
+		</if>
+		<if test="query != null and query.seekDataCreateTime != null">
+			and t_seek_data.create_time = #{query.seekDataCreateTime}
+		</if>
+		<if test="query != null and query.seekDataCreateTimeMin != null and query.seekDataCreateTimeMax == null">
+			and t_seek_data.create_time <![CDATA[ >= ]]> #{query.seekDataCreateTimeMin}
+		</if>
+		<if test="query != null and query.seekDataCreateTimeMin == null and query.seekDataCreateTimeMax != null">
+			and t_seek_data.create_time <![CDATA[ <= ]]> #{query.seekDataCreateTimeMax}
+		</if>
+		<if test="query != null and query.seekDataCreateTimeMin != null and query.seekDataCreateTimeMax != null">
+			and t_seek_data.create_time <![CDATA[ >= ]]> #{query.seekDataCreateTimeMin} and t_seek_data.create_time <![CDATA[ <= ]]> #{query.seekDataCreateTimeMax}
+		</if>
+		<if test="query != null and query.seekDataUpdateTime != null">
+			and t_seek_data.update_time = #{query.seekDataUpdateTime}
+		</if>
+		<if test="query != null and query.seekDataUpdateTimeMin != null and query.seekDataUpdateTimeMax == null">
+			and t_seek_data.update_time <![CDATA[ >= ]]> #{query.seekDataUpdateTimeMin}
+		</if>
+		<if test="query != null and query.seekDataUpdateTimeMin == null and query.seekDataUpdateTimeMax != null">
+			and t_seek_data.update_time <![CDATA[ <= ]]> #{query.seekDataUpdateTimeMax}
+		</if>
+		<if test="query != null and query.seekDataUpdateTimeMin != null and query.seekDataUpdateTimeMax != null">
+			and t_seek_data.update_time <![CDATA[ >= ]]> #{query.seekDataUpdateTimeMin} and t_seek_data.update_time <![CDATA[ <= ]]> #{query.seekDataUpdateTimeMax}
+		</if>
+		<if test="query != null and query.seekDataIsActive != null">
+			and t_seek_data.is_active = #{query.seekDataIsActive}
+		</if>
+		<if test="query != null and query.seekDataIsActiveMin != null and query.seekDataIsActiveMax == null">
+			and t_seek_data.is_active <![CDATA[ >= ]]> #{query.seekDataIsActiveMin}
+		</if>
+		<if test="query != null and query.seekDataIsActiveMin == null and query.seekDataIsActiveMax != null">
+			and t_seek_data.is_active <![CDATA[ <= ]]> #{query.seekDataIsActiveMax}
+		</if>
+		<if test="query != null and query.seekDataIsActiveMin != null and query.seekDataIsActiveMax != null">
+			and t_seek_data.is_active <![CDATA[ >= ]]> #{query.seekDataIsActiveMin} and t_seek_data.is_active <![CDATA[ <= ]]> #{query.seekDataIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		
+        and
+        t_seek_data.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userSeekDataDO">
+        select
+        <include refid="select_columns"/>
+        from t_seek_data, t_user_detail where t_seek_data.id = #{id} and
+        t_seek_data.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userSeekDataDO">
+        select
+        <include refid="select_columns"/>
+        from t_seek_data, t_user_detail
+        where
+        t_seek_data.user_id = t_user_detail.id
+        order by t_seek_data.update_time desc, t_seek_data.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userSeekDataDO">
+        select
+        <include refid="select_columns"/>
+        from t_seek_data, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_seek_data.update_time desc, t_seek_data.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userSeekDataDO">
+        select
+        <include refid="select_columns"/>
+        from t_seek_data, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_seek_data.update_time desc, t_seek_data.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_seek_data, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

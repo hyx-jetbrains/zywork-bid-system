@@ -1,0 +1,193 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserBuilderReqDAO">
+
+    <sql id="select_columns">
+        t_builder_req.id as builderReqId, t_builder_req.user_id as builderReqUserId, t_builder_req.name as builderReqName, t_builder_req.phone as builderReqPhone, t_builder_req.memo as builderReqMemo, t_builder_req.people as builderReqPeople, t_builder_req.people_count as builderReqPeopleCount, t_builder_req.salary as builderReqSalary, t_builder_req.comp_addr as builderReqCompAddr, t_builder_req.comp_name as builderReqCompName, t_builder_req.version as builderReqVersion, t_builder_req.create_time as builderReqCreateTime, t_builder_req.update_time as builderReqUpdateTime, t_builder_req.is_active as builderReqIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.builderReqId != null">
+			and t_builder_req.id = #{query.builderReqId}
+		</if>
+		<if test="query != null and query.builderReqIdMin != null and query.builderReqIdMax == null">
+			and t_builder_req.id <![CDATA[ >= ]]> #{query.builderReqIdMin}
+		</if>
+		<if test="query != null and query.builderReqIdMin == null and query.builderReqIdMax != null">
+			and t_builder_req.id <![CDATA[ <= ]]> #{query.builderReqIdMax}
+		</if>
+		<if test="query != null and query.builderReqIdMin != null and query.builderReqIdMax != null">
+			and t_builder_req.id <![CDATA[ >= ]]> #{query.builderReqIdMin} and t_builder_req.id <![CDATA[ <= ]]> #{query.builderReqIdMax}
+		</if>
+		<if test="query != null and query.builderReqUserId != null">
+			and t_builder_req.user_id = #{query.builderReqUserId}
+		</if>
+		<if test="query != null and query.builderReqUserIdMin != null and query.builderReqUserIdMax == null">
+			and t_builder_req.user_id <![CDATA[ >= ]]> #{query.builderReqUserIdMin}
+		</if>
+		<if test="query != null and query.builderReqUserIdMin == null and query.builderReqUserIdMax != null">
+			and t_builder_req.user_id <![CDATA[ <= ]]> #{query.builderReqUserIdMax}
+		</if>
+		<if test="query != null and query.builderReqUserIdMin != null and query.builderReqUserIdMax != null">
+			and t_builder_req.user_id <![CDATA[ >= ]]> #{query.builderReqUserIdMin} and t_builder_req.user_id <![CDATA[ <= ]]> #{query.builderReqUserIdMax}
+		</if>
+		<if test="query != null and query.builderReqName != null and query.builderReqName != ''">
+			and t_builder_req.name like concat('%', #{query.builderReqName}, '%')
+		</if>
+		<if test="query != null and query.builderReqPhone != null and query.builderReqPhone != ''">
+			and t_builder_req.phone like concat('%', #{query.builderReqPhone}, '%')
+		</if>
+		<if test="query != null and query.builderReqMemo != null and query.builderReqMemo != ''">
+			and t_builder_req.memo like concat('%', #{query.builderReqMemo}, '%')
+		</if>
+		<if test="query != null and query.builderReqPeople != null and query.builderReqPeople != ''">
+			and t_builder_req.people like concat('%', #{query.builderReqPeople}, '%')
+		</if>
+		<if test="query != null and query.builderReqPeopleCount != null">
+			and t_builder_req.people_count = #{query.builderReqPeopleCount}
+		</if>
+		<if test="query != null and query.builderReqPeopleCountMin != null and query.builderReqPeopleCountMax == null">
+			and t_builder_req.people_count <![CDATA[ >= ]]> #{query.builderReqPeopleCountMin}
+		</if>
+		<if test="query != null and query.builderReqPeopleCountMin == null and query.builderReqPeopleCountMax != null">
+			and t_builder_req.people_count <![CDATA[ <= ]]> #{query.builderReqPeopleCountMax}
+		</if>
+		<if test="query != null and query.builderReqPeopleCountMin != null and query.builderReqPeopleCountMax != null">
+			and t_builder_req.people_count <![CDATA[ >= ]]> #{query.builderReqPeopleCountMin} and t_builder_req.people_count <![CDATA[ <= ]]> #{query.builderReqPeopleCountMax}
+		</if>
+		<if test="query != null and query.builderReqSalary != null">
+			and t_builder_req.salary = #{query.builderReqSalary}
+		</if>
+		<if test="query != null and query.builderReqSalaryMin != null and query.builderReqSalaryMax == null">
+			and t_builder_req.salary <![CDATA[ >= ]]> #{query.builderReqSalaryMin}
+		</if>
+		<if test="query != null and query.builderReqSalaryMin == null and query.builderReqSalaryMax != null">
+			and t_builder_req.salary <![CDATA[ <= ]]> #{query.builderReqSalaryMax}
+		</if>
+		<if test="query != null and query.builderReqSalaryMin != null and query.builderReqSalaryMax != null">
+			and t_builder_req.salary <![CDATA[ >= ]]> #{query.builderReqSalaryMin} and t_builder_req.salary <![CDATA[ <= ]]> #{query.builderReqSalaryMax}
+		</if>
+		<if test="query != null and query.builderReqCompAddr != null and query.builderReqCompAddr != ''">
+			and t_builder_req.comp_addr like concat('%', #{query.builderReqCompAddr}, '%')
+		</if>
+		<if test="query != null and query.builderReqCompName != null and query.builderReqCompName != ''">
+			and t_builder_req.comp_name like concat('%', #{query.builderReqCompName}, '%')
+		</if>
+		<if test="query != null and query.builderReqVersion != null">
+			and t_builder_req.version = #{query.builderReqVersion}
+		</if>
+		<if test="query != null and query.builderReqVersionMin != null and query.builderReqVersionMax == null">
+			and t_builder_req.version <![CDATA[ >= ]]> #{query.builderReqVersionMin}
+		</if>
+		<if test="query != null and query.builderReqVersionMin == null and query.builderReqVersionMax != null">
+			and t_builder_req.version <![CDATA[ <= ]]> #{query.builderReqVersionMax}
+		</if>
+		<if test="query != null and query.builderReqVersionMin != null and query.builderReqVersionMax != null">
+			and t_builder_req.version <![CDATA[ >= ]]> #{query.builderReqVersionMin} and t_builder_req.version <![CDATA[ <= ]]> #{query.builderReqVersionMax}
+		</if>
+		<if test="query != null and query.builderReqCreateTime != null">
+			and t_builder_req.create_time = #{query.builderReqCreateTime}
+		</if>
+		<if test="query != null and query.builderReqCreateTimeMin != null and query.builderReqCreateTimeMax == null">
+			and t_builder_req.create_time <![CDATA[ >= ]]> #{query.builderReqCreateTimeMin}
+		</if>
+		<if test="query != null and query.builderReqCreateTimeMin == null and query.builderReqCreateTimeMax != null">
+			and t_builder_req.create_time <![CDATA[ <= ]]> #{query.builderReqCreateTimeMax}
+		</if>
+		<if test="query != null and query.builderReqCreateTimeMin != null and query.builderReqCreateTimeMax != null">
+			and t_builder_req.create_time <![CDATA[ >= ]]> #{query.builderReqCreateTimeMin} and t_builder_req.create_time <![CDATA[ <= ]]> #{query.builderReqCreateTimeMax}
+		</if>
+		<if test="query != null and query.builderReqUpdateTime != null">
+			and t_builder_req.update_time = #{query.builderReqUpdateTime}
+		</if>
+		<if test="query != null and query.builderReqUpdateTimeMin != null and query.builderReqUpdateTimeMax == null">
+			and t_builder_req.update_time <![CDATA[ >= ]]> #{query.builderReqUpdateTimeMin}
+		</if>
+		<if test="query != null and query.builderReqUpdateTimeMin == null and query.builderReqUpdateTimeMax != null">
+			and t_builder_req.update_time <![CDATA[ <= ]]> #{query.builderReqUpdateTimeMax}
+		</if>
+		<if test="query != null and query.builderReqUpdateTimeMin != null and query.builderReqUpdateTimeMax != null">
+			and t_builder_req.update_time <![CDATA[ >= ]]> #{query.builderReqUpdateTimeMin} and t_builder_req.update_time <![CDATA[ <= ]]> #{query.builderReqUpdateTimeMax}
+		</if>
+		<if test="query != null and query.builderReqIsActive != null">
+			and t_builder_req.is_active = #{query.builderReqIsActive}
+		</if>
+		<if test="query != null and query.builderReqIsActiveMin != null and query.builderReqIsActiveMax == null">
+			and t_builder_req.is_active <![CDATA[ >= ]]> #{query.builderReqIsActiveMin}
+		</if>
+		<if test="query != null and query.builderReqIsActiveMin == null and query.builderReqIsActiveMax != null">
+			and t_builder_req.is_active <![CDATA[ <= ]]> #{query.builderReqIsActiveMax}
+		</if>
+		<if test="query != null and query.builderReqIsActiveMin != null and query.builderReqIsActiveMax != null">
+			and t_builder_req.is_active <![CDATA[ >= ]]> #{query.builderReqIsActiveMin} and t_builder_req.is_active <![CDATA[ <= ]]> #{query.builderReqIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		
+        and
+        t_builder_req.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userBuilderReqDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder_req, t_user_detail where t_builder_req.id = #{id} and
+        t_builder_req.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userBuilderReqDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder_req, t_user_detail
+        where
+        t_builder_req.user_id = t_user_detail.id
+        order by t_builder_req.update_time desc, t_builder_req.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userBuilderReqDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder_req, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_builder_req.update_time desc, t_builder_req.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userBuilderReqDO">
+        select
+        <include refid="select_columns"/>
+        from t_builder_req, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_builder_req.update_time desc, t_builder_req.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_builder_req, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

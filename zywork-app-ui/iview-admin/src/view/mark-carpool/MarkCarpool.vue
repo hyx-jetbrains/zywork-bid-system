@@ -395,6 +395,13 @@
 				<Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
 			</div>
 		</Modal>
+		
+		<Modal width="1000" v-model="modal.markCarpoolRecordSeach" title="拼车记录">
+			<markCarpoolRecord-list-single ref="MarkCarpoolRecordListSingle" />
+			<div slot="footer">
+				<Button type="text" size="large" @click="cancelModal('markCarpoolRecordSeach')">取消</Button>
+			</div>
+		</Modal>
 	</div>
 </template>
 
@@ -405,6 +412,7 @@
 	import UserListChoice from '@/view/user/UserListChoice.vue'
 	import ProjectDetail from '@/view/project/ProjectDetail.vue'
 	import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
+	import MarkCarpoolRecordListSingle from '@/view/mark-carpool-record/MarkCarpoolRecordListSingle.vue'
 	import {
 		getUserById,
 		getProjectById 
@@ -424,7 +432,8 @@
 			ProjectList,
 			UserListChoice,
 			ProjectDetail,
-			ProjectListSingle
+			ProjectListSingle,
+			MarkCarpoolRecordListSingle
 		},
 		data() {
 			return {
@@ -457,7 +466,8 @@
 					project: false,
 					userChoice: false,
 					projectDetail: false,
-					projectDetalSearch: false
+					projectDetalSearch: false,
+					markCarpoolRecordSeach: false
 				},
 				loading: {
 					add: false,
@@ -921,6 +931,14 @@
 												h(
 													'DropdownItem', {
 														props: {
+															name: 'showMarkCarpoolRecord'
+														}
+													},
+													'拼车记录'
+												),
+												h(
+													'DropdownItem', {
+														props: {
 															name: 'showEdit'
 														}
 													},
@@ -1039,6 +1057,8 @@
 					utils.showModal(this, 'userDetalSearch')
 				} else if (itemName === 'projectShowSearch') {
 					utils.showModal(this, 'projectDetalSearch')
+				} else if(itemName === 'showMarkCarpoolRecord') {
+					utils.showModal(this, 'markCarpoolRecordSeach')
 				}
 			},
 			showUserDetailModal(id) {

@@ -172,8 +172,9 @@ public class OftenQuestionController extends BaseController {
      * Time: 16:31
      * Description: 常见问题
      */
-    @PostMapping("user/all")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPage(@RequestBody OftenQuestionQuery oftenQuestionQuery) {
+        oftenQuestionQuery.setIsActive((byte)0);
         return listPageByCondition(oftenQuestionQuery);
     }
 
@@ -183,7 +184,7 @@ public class OftenQuestionController extends BaseController {
      * Time: 16:35
      * Description: 常见问题详情
      */
-    @GetMapping("user/one/{id}")
+    @GetMapping("user/getById/{id}")
     public ResponseStatusVO getOftenQuestionById(@PathVariable("id") Long id) {
         return getById(id);
     }

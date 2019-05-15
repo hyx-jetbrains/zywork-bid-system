@@ -143,17 +143,6 @@ public class BuilderReqController extends BaseController {
 
     /**
      * User: DengMin
-     * Date: 2019/05/13
-     * Time: 10:28
-     * Description: 信息共享 -- 建造师 -- 招聘信息
-     */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody BuilderReqQuery builderReqQuery) {
-        return listPageByCondition(builderReqQuery);
-    }
-
-    /**
-     * User: DengMin
      * Date: 2019/05/14
      * Time: 10:57
      * Description: 根据ID查询
@@ -161,23 +150,6 @@ public class BuilderReqController extends BaseController {
     @GetMapping("any/getBuilderReqById/{id}")
     public ResponseStatusVO getBuilderReqById(@PathVariable("id") Long id) {
         return getById(id);
-    }
-
-    /**
-     * User: DengMin
-     * Date: 2019/05/13
-     * Time: 10:28
-     * Description: 我发布的建造师招聘信息
-     */
-    @PostMapping("user/all")
-    public ResponseStatusVO listPageByUserId(@RequestBody BuilderReqQuery builderReqQuery) {
-        JwtUser jwtUser = SecurityUtils.getJwtUser();
-        if (jwtUser == null) {
-            return ResponseStatusVO.authenticationError();
-        }
-
-        builderReqQuery.setUserId(jwtUser.getUserId());
-        return listPageByCondition(builderReqQuery);
     }
 
     /**

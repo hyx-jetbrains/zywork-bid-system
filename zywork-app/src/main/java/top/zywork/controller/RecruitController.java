@@ -138,17 +138,6 @@ public class RecruitController extends BaseController {
 
     /**
      * User: DengMin
-     * Date: 2019/05/13
-     * Time: 11:46
-     * Description: 信息共享 -- 岗位招聘
-     */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody RecruitQuery recruitQuery) {
-        return listPageByCondition(recruitQuery);
-    }
-
-    /**
-     * User: DengMin
      * Date: 2019/05/14
      * Time: 10:30
      * Description: 根据ID查询详情
@@ -156,23 +145,6 @@ public class RecruitController extends BaseController {
     @GetMapping("any/getRecruitById/{id}")
     public ResponseStatusVO getRecruitById(@PathVariable("id") Long id) {
         return getById(id);
-    }
-
-    /**
-     * User: DengMin
-     * Date: 2019/05/13
-     * Time: 11:46
-     * Description: 我发布的岗位招聘
-     */
-    @PostMapping("user/all")
-    public ResponseStatusVO listPageByUserId(@RequestBody RecruitQuery recruitQuery) {
-        JwtUser jwtUser = SecurityUtils.getJwtUser();
-        if (jwtUser == null) {
-            return ResponseStatusVO.authenticationError();
-        }
-
-        recruitQuery.setUserId(jwtUser.getUserId());
-        return listPageByCondition(recruitQuery);
     }
 
     /**

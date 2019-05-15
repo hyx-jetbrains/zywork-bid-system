@@ -156,7 +156,7 @@ public class ExpertSubscribeController extends BaseController {
      * Time: 15:32
      * Description: 我的预约
      */
-    @PostMapping("user/all")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPageByUserId(@RequestBody ExpertSubscribeQuery expertSubscribeQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
@@ -164,6 +164,7 @@ public class ExpertSubscribeController extends BaseController {
         }
 
         expertSubscribeQuery.setUserId(jwtUser.getUserId());
+        expertSubscribeQuery.setIsActive((byte)0);
         return listPageByCondition(expertSubscribeQuery);
     }
 

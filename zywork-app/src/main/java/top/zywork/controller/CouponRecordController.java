@@ -142,7 +142,7 @@ public class CouponRecordController extends BaseController {
      * Time: 16:20
      * Description: 抵扣券使用记录
      */
-    @PostMapping("user/all")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPageByUserId(@RequestBody CouponRecordQuery couponRecordQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (null == jwtUser) {
@@ -150,6 +150,7 @@ public class CouponRecordController extends BaseController {
         }
 
         couponRecordQuery.setUserId(jwtUser.getUserId());
+        couponRecordQuery.setIsActive((byte)0);
         return listPageByCondition(couponRecordQuery);
     }
 

@@ -143,6 +143,12 @@ public class AdvertisementController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/15
+     * Time: 14:54
+     * Description: 轮播图
+     */
     @GetMapping("any/all")
     public ResponseStatusVO userlistAll() {
         return listAll();

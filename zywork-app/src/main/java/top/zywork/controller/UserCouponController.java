@@ -152,7 +152,7 @@ public class UserCouponController extends BaseController {
      * Time: 16:17
      * Description: 抵扣券
      */
-    @PostMapping("user/all")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPageByUserId(@RequestBody UserCouponQuery userCouponQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
@@ -160,6 +160,7 @@ public class UserCouponController extends BaseController {
         }
 
         userCouponQuery.setUserId(jwtUser.getUserId());
+        userCouponQuery.setIsActive((byte)0);
         return listPageByCondition(userCouponQuery);
     }
 
