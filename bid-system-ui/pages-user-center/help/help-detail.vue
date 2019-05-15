@@ -2,13 +2,13 @@
 	<view>
 		<view class="zy-detail-card">
 			<view class="zy-detail-card-title zy-text-bold zy-text-big">
-				{{question.title}}
+				{{item.title}}
 			</view>
 			<view class="zy-disable-flex">
-				<view class="zy-detail-card-type">{{question.type}}</view>
-				<view class="zy-text-info zy-disable-flex-right" v-text="question.createTime"></view>
+				<view class="zy-detail-card-type">{{item.type}}</view>
+				<view class="zy-text-info zy-disable-flex-right" v-text="item.createTime"></view>
 			</view>
-			<view v-html="question.content"></view>
+			<view v-html="item.content"></view>
 		</view>
 	</view>
 </template>
@@ -17,16 +17,22 @@
 	export default {
 		data() {
 			return {
-				question: {
-					id: '1',
-					type: 'CA证书',
-					title: 'CA证书问题长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试',
-					content: '<h2>内容</h2><p>内容内容内让</p>',
-					createTime: '2019-04-28 10:34:04'
-				}
+				item: {}
 			}
 		},
-		onLoad() {},
+		onLoad(event) {
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			try {
+				this.item = JSON.parse(decodeURIComponent(payload));
+			} catch (error) {
+				this.item = JSON.parse(payload);
+			}
+			uni.setNavigationBarTitle({
+				title: this.item.title
+			});
+		},
 		methods: {}
 	}
 </script>

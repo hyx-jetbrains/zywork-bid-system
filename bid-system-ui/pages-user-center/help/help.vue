@@ -15,7 +15,7 @@
 			
 		</view>
 		<view class="zy-disable-flex zy-help-list" v-for="(oftenQuestion, index) in oftenQuestionList" 
-				:key="index" @click="toOftenQuestionDetail(oftenQuestion.id)">
+				:key="index" @click="toOftenQuestionDetail(oftenQuestion)">
 			<zywork-icon type="iconbangzhu" color="#dd524d" size="24" style="display: inline-block;" />
 			<view class="zy-help-list-title">
 				{{oftenQuestion.title}}
@@ -48,13 +48,17 @@
 				oftenQuestionList: [
 					{
 						id: '1',
-						type: '',
-						title: 'CA证书问题长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试'
+						type: 'CA证书',
+						title: 'CA证书问题长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试',
+						content: '内容内容内容',
+						createTime: '2019-04-22 17:31:33'
 					},
 					{
 						id: '2',
-						type: '',
-						title: 'CA证书问题1'
+						type: '其他问题',
+						title: 'CA证书问题1',
+						content: '内容内容内容',
+						createTime: '2019-04-22 17:31:33'
 					}
 				]
 			}
@@ -84,9 +88,9 @@
 				}
 			},
 			// 前往问题详情页面
-			toOftenQuestionDetail(id) {
+			toOftenQuestionDetail(item) {
 				uni.navigateTo({
-					url: '/pages-user-center/help/help-detail'
+					url: '/pages-user-center/help/help-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			},
 		}

@@ -182,7 +182,8 @@
 				<view class="zy-uni-segmented-control">
 					<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
 				</view>
-				<view class="zy-page-list-item" style="padding-top: 10upx;">
+				<view style="height: 10upx; background-color: #F8F8F8;"></view>
+				<view class="zy-page-list-item" style="padding-top: 0upx;">
 					<view v-if="carPoolOpts.current === 0">
 						<!-- 拼车信息 -->
 						<view class="zy-page-list" v-if="carpoolList.length > 0">
@@ -323,42 +324,7 @@
 				isCollection: true,
 				collectionIconColor: '#BFBFBF',
 				currTabIndex: 0,
-				project: {
-					id: null,
-					title: '[南昌市本级]南昌市昌南城市防洪工程管理处防汛排涝信息系统建设工程项目监理招标公告',
-					projectType: '房建市政',
-					city: '南昌市',
-					projectDetail: null,
-					releaseStatus: null,
-					markUnitName: '宜春市实验小学',
-					projectInvest: '约2400万元',
-					checkPattern: '资格后审',
-					compAptitudeType: '建筑工程总承包二级（含）以上资质',
-					builderLevel: '建筑工程二级及以上（含临时）',
-					moneyToImplement: 100,
-					tenderingAgent: '江西锐创企业管理咨询有限公司',
-					phone: '13766445188',
-					offerPrice: 210000,
-					assurePrice: 4000,
-					constructionPeriod: 30,
-					downloadEndTime: '2019-04-22 17:31:33',
-					otherDemand: '八大员：基本户保函；计划竣工日期现变更为2020年05约14日；“信用中国”网站的查询系统中查询企业及建造师行贿犯罪档案查询结果截图；本次招标不解释联合体投标；',
-					openMarkInfo: null,
-					openMarkTime: '2019-04-22 17:31:33',
-					openMarkAddr: '赣州分布开标室一',
-					inMarkPublicity: null,
-					inMarkComp: '某某公司',
-					noticeTime: '2019-04-22 17:31:33',
-					markStatus: '待开标',
-					clickCount: null,
-					isElectronic: null,
-					sourceUrl: null,
-					version: null,
-					createTime: null,
-					updateTime: null,
-					isActive: null,
-					inwordHtmlUrl: 'http://localhost:8080/'
-				},
+				project: {},
 				projectAnnounce: {
 					id: 1,
 					projectId: 1,
@@ -366,7 +332,7 @@
 					firstCandidate: '江西某公司1',
 					secondCandidate: '江西某公司2',
 					thirdCandidate: '江西某公司3',
-					inwordHtmlUrl: 'http://localhost:8080/'
+					inwordHtmlUrl: 'http://www.baidu.com/'
 				},
 				carPoolOpts: {
 					current: 0,
@@ -424,7 +390,15 @@
 				],
 			}
 		},
-		onLoad() {
+		onLoad(event) {
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			try {
+				this.project = JSON.parse(decodeURIComponent(payload));
+			} catch (error) {
+				this.project = JSON.parse(payload);
+			}
 			this.initIconImg()
 			this.initCollectionIcon()
 		},

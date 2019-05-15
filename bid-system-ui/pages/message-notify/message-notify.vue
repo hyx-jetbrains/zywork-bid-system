@@ -5,7 +5,7 @@
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
 		<view v-if="messages.length > 0" class="zy-page-list" style="margin-top: 10upx;">
-			<view v-for="(message, index) in messages" :key="index" class="zy-page-list-item" @click="toMessageDetail">
+			<view v-for="(message, index) in messages" :key="index" class="zy-page-list-item" @click="toMessageDetail(message)">
 				<view class="zy-message-head">
 					<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{message.title}}</view>
 					<uni-tag v-if="message.isRead" text="已读" type="success" size="small" :inverted="true"></uni-tag>
@@ -64,9 +64,9 @@
 					this.current = index
 				}
 			},
-			toMessageDetail() {
+			toMessageDetail(item) {
 				uni.navigateTo({
-					url: '/pages-message-notify/message-detail/message-detail'
+					url: '/pages-message-notify/message-detail/message-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			}
 		}
