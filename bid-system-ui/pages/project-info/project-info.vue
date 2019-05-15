@@ -24,7 +24,7 @@
 		</view>
 
 		<view v-if="latestNotice !== null" style="margin-top: 10upx;">
-			<zywork-notice-bar @click="toNoticeDetail" @getmore="toNoticeList" :show-get-more="true" more-text="更多头条" show-icon="true" single="true" color="#108ee9" :text="latestNotice"></zywork-notice-bar>
+			<zywork-notice-bar @click="toNoticeDetail(latestNotice)" @getmore="toNoticeList" :show-get-more="true" more-text="更多头条" show-icon="true" single="true" color="#108ee9" :text="latestNotice.title"></zywork-notice-bar>
 		</view>
 
 		<view class="uni-tab-bar zy-tab-bar">
@@ -219,7 +219,12 @@
 				],
 				cityArray: jxCityArray,
 				cityIndex: 0,
-				latestNotice: '头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题',
+				latestNotice: {
+					id: 1,
+					title: '头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题',
+					content: '内日内那日嫩老实交代了冯佳',
+					createTime: '2019-04-24 18:00:00'
+				},
 				projectStatus: {
 					current: 0,
 					items: projectStatusArray
@@ -367,9 +372,9 @@
 					url: '/pages-project-info/notice-list/notice-list'
 				})
 			},
-			toNoticeDetail() {
+			toNoticeDetail(item) {
 				uni.navigateTo({
-					url: '/pages-project-info/notice-detail/notice-detail'
+					url: '/pages-project-info/notice-detail/notice-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			},
 			toProjectDetail() {
