@@ -123,21 +123,146 @@
 					<view class="zy-disable-flex-right">{{project.inMarkComp}}</view>
 				</view>
 			</view>
-			<!-- 公告详情 -->
-			<view v-if="currTabIndex === 1">
-				公告详情
-			</view>
 			<!-- 开标详情 -->
 			<view v-if="currTabIndex === 2">
-				开标详情
+				<view v-if="project.markStatus === '已开标'">
+					<view class="zy-project-desc-title zy-text-bold">
+						开标信息
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">开标时间</view>
+						<view class="zy-disable-flex-right">{{project.openMarkTime}}</view>
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">开标地点</view>
+						<view class="zy-disable-flex-right">{{project.openMarkTime}}</view>
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">开标状态</view>
+						<view class="zy-disable-flex-right">{{project.markStatus}}</view>
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">中标单位</view>
+						<view class="zy-disable-flex-right">{{project.inMarkComp}}</view>
+					</view>
+				</view>
+				<zyworkNoData v-else text="暂无开标信息"></zyworkNoData>
 			</view>
 			<!-- 公示详情 -->
 			<view v-if="currTabIndex === 3">
-				公示详情
+				<view v-if="projectAnnounce !== null && projectAnnounce !== undefined">
+					<view class="zy-project-desc-title zy-text-bold">
+						中标信息
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">第一中标单位</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.firstCandidate}}</view>
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">第二中标单位</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.secondCandidate}}</view>
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">第三中标单位</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.thirdCandidate}}</view>
+					</view>
+					<view class="zy-project-desc-title zy-text-bold">
+						中标公示
+					</view>
+					<view>
+						<button class="zy-detail-button" type="primary" @click="toWebViewPage(this.projectAnnounce.inwordHtmlUrl)">
+							查看详情
+						</button>
+					</view>
+				</view>
+				<zyworkNoData v-else text="暂无公示信息"></zyworkNoData>
 			</view>
 			<!-- 开标搭车 -->
 			<view v-if="currTabIndex === 4">
-				开标搭车
+				<view class="zy-uni-segmented-control">
+					<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
+				</view>
+				<view class="zy-page-list-item" style="padding-top: 10upx;">
+					<view v-if="carPoolOpts.current === 0">
+						<!-- 拼车信息 -->
+						<view class="zy-page-list" v-if="carpoolList.length > 0">
+							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
+								<view @click="toCarpoolDetailPage(item)">
+									<view class="zy-disable-flex">
+										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<view>
+											<view>
+												<text class="zy-text-bold">{{item.nickname}}</text>
+											</view>
+											<view class="zy-text-mini zy-text-info">
+												{{item.startTime}}
+												<text class="zy-text-mini" style="color: #108EE9; margin-left: 20upx;">{{item.carType}}</text>
+											</view>
+										</view>
+										<view class="zy-disable-flex-right">
+											¥{{item.price / 100}}
+										</view>
+									</view>
+									<view>
+										<view class="zy-text-big zy-text-bold">
+											{{item.startAddr}}
+											-
+											{{item.endAddr}}
+										</view>
+									</view>
+								</view>
+								<view class="zy-text-info zy-disable-flex">
+									<view>
+										<text style="margin-right: 20upx;">搭车人数:</text>
+										{{item.carpoolRecordCount}}/{{item.peopleCount}}
+									</view>
+									<view class="zy-disable-flex-right">
+										<uni-tag text="我要拼车" type="primary" size="small" :inverted="true" :circle="true" @click="addCarpoolRecord(item)"></uni-tag>
+									</view>
+								</view>
+							</view>
+						</view>
+						<zyworkNoData v-else text="暂无拼车信息"></zyworkNoData>
+					</view>
+					<view v-else>
+						<!-- 找车信息 -->
+						<view class="zy-page-list" v-if="seekcarList.length > 0">
+							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
+								<view @click="toSeekcarDetailPage(item)">
+									<view class="zy-disable-flex">
+										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<view>
+											<view>
+												<text class="zy-text-bold">{{item.nickname}}</text>
+											</view>
+											<view class="zy-text-mini zy-text-info">{{item.startTime}}</view>
+										</view>
+									</view>
+									<view>
+										<view class="zy-text-big zy-text-bold">
+											{{item.startAddr}}
+											-
+											{{item.endAddr}}
+										</view>
+										<view class="zy-text-info">
+											{{item.memo}}
+										</view>
+									</view>
+								</view>
+								<view class="zy-text-info zy-disable-flex">
+									<view>
+										<text style="margin-right: 20upx;">申请人数:</text>
+										{{item.seekcarRecordCount}}/1
+									</view>
+									<view class="zy-disable-flex-right">
+										<uni-tag text="我有车" type="primary" size="small" :inverted="true" :circle="true" @click="addSeekcarRecord(item)"></uni-tag>
+									</view>
+								</view>
+							</view>
+						</view>
+						<zyworkNoData v-else text="暂无找车信息"></zyworkNoData>
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -147,6 +272,14 @@
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
+	
+	import {
+		openMarkArray
+	} from '@/common/picker.data.js'
+	import {
+		DEFAULT_HEADICON
+	} from '@/common/util.js'
 	
 	/** 项目类型-房建市政 */
 	const PROJECT_TYPE_BUILDING = '房建市政'
@@ -181,7 +314,8 @@
 		components: {
 			zyworkIcon,
 			zyworkNoData,
-			uniTag
+			uniTag,
+			uniSegmentedControl
 		},
 		data() {
 			return {
@@ -215,14 +349,79 @@
 					inMarkPublicity: null,
 					inMarkComp: '某某公司',
 					noticeTime: '2019-04-22 17:31:33',
+					markStatus: '待开标',
 					clickCount: null,
 					isElectronic: null,
 					sourceUrl: null,
 					version: null,
 					createTime: null,
 					updateTime: null,
-					isActive: null
+					isActive: null,
+					inwordHtmlUrl: 'http://localhost:8080/'
 				},
+				projectAnnounce: {
+					id: 1,
+					projectId: 1,
+					announceDesc: '<p>中标公是</p>',
+					firstCandidate: '江西某公司1',
+					secondCandidate: '江西某公司2',
+					thirdCandidate: '江西某公司3',
+					inwordHtmlUrl: 'http://localhost:8080/'
+				},
+				carPoolOpts: {
+					current: 0,
+					items: openMarkArray
+				},
+				carpoolList: [
+					{
+						id: 1,
+						nickname: '刘某某',
+						headicon: DEFAULT_HEADICON,
+						startTime: '2019-04-24 17:24:01',
+						startCity: '北京/北京市/东城区',
+						startAddr: '赣州',
+						endCity: '北京/北京市/东城区',
+						endAddr: '上饶',
+						price: 30000,
+						carType: '小轿车',
+						carpoolRecordCount: 1,
+						peopleCount: 3,
+						name: '危锦辉',
+						phone: '18279700225'
+					},
+					{
+						id: 2,
+						nickname: '张某某',
+						headicon: DEFAULT_HEADICON,
+						startTime: '2019-04-24 17:24:01',
+						startCity: '北京/北京市/东城区',
+						startAddr: '赣州',
+						endCity: '北京/北京市/东城区',
+						endAddr: '上饶',
+						price: 60000,
+						carType: '小轿车',
+						peopleCount: 2,
+						name: '危锦辉',
+						phone: '18279700225',
+						carpoolRecordCount: 2,
+					}
+				],
+				seekcarList: [
+					{
+						id: 1,
+						nickname: '张某某',
+						headicon: DEFAULT_HEADICON,
+						startTime: '2019-04-24 17:24:01',
+						startCity: '北京/北京市/东城区',
+						startAddr: '赣州',
+						endCity: '北京/北京市/东城区',
+						endAddr: '上饶',
+						memo: '去上饶，着急去，有意请联系',
+						name: '危锦辉',
+						phone: '18279700225',
+						seekcarRecordCount: 0
+					}
+				],
 			}
 		},
 		onLoad() {
@@ -284,7 +483,18 @@
 			},
 			// 切换标签页
 			tapTab(type) {
-				this.currTabIndex = type;
+				if (type == 1) {
+					// 公告详情
+					this.toWebViewPage(this.project.inwordHtmlUrl)
+				} else {
+					this.currTabIndex = type;
+				}
+			},
+			/** 前往webview页面 */
+			toWebViewPage(url) {
+				uni.navigateTo({
+					url: '/pages-static/web-view/web-view?url=' + encodeURIComponent(url)
+				});
 			},
 			// 触发操作选项
 			actionSheetTap() {
@@ -312,7 +522,53 @@
 				} else if (SEE_FILE_TYPE_ZIZHI === type) {
 					console.log("查看资质文件");
 				}
-			}
+			},
+			/** 开标拼车和找车分段器 */
+			onClickCarPoolItem(index) {
+				if (this.carPoolOpts.current !== index) {
+					this.carPoolOpts.current = index
+				}
+			},
+			/** 点击我要拼车，增加拼车记录 */
+			addCarpoolRecord(item) {
+				if (item.carpoolRecordCount >= item.peopleCount) {
+					uni.showModal({
+						title: '操作提示',
+						content: '人数已满，不能申请',
+						showCancel: false,
+						confirmText: "确定"
+					})
+					return;
+				}
+				console.log('我要拼车：' + item.id);
+			},
+			/** 点击我要拼车，增加找车记录 */
+			addSeekcarRecord(item) {
+				if (item.seekcarRecordCount >= 1) {
+					uni.showModal({
+						title: '操作提示',
+						content: '人数已满，不能申请',
+						showCancel: false,
+						confirmText: "确定"
+					})
+					return;
+				}
+				console.log('我有车：' + item.id);
+			},
+			/** 前往详情页面 */
+			toDetailPage(name, item) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-'+name+'-detail/publish-'+name+'-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+				});
+			},
+			/** 前往拼车详情页面 */
+			toCarpoolDetailPage(item) {
+				this.toDetailPage('carpool', item);
+			},
+			/** 前往找车详情页面 */
+			toSeekcarDetailPage(item) {
+				this.toDetailPage('seekcar', item);
+			},
 		}
 	}
 </script>
@@ -373,4 +629,9 @@
 	.zy-project-desc-textarea {
 		padding: 0 20upx;
 	}
+	.zy-detail-button {
+		text-align: center;
+		margin: 30upx 25upx;
+		border-radius: 50upx 50upx;
+	} 
 </style>

@@ -512,6 +512,13 @@
 						"navigationBarTitleText": "用户协议与隐私声明",
 						"backgroundTextStyle": "light"
 					}
+				},
+				{
+					"path": "web-view/web-view",
+					"style": {
+						"navigationBarTitleText": "详情页面",
+						"backgroundTextStyle": "light"
+					}
 				}
 			]
 		}

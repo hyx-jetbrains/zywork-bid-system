@@ -2,10 +2,10 @@
 	<view>
 		<view class="zy-detail-card">
 			<view class="zy-detail-card-title zy-text-bold zy-text-big">
-				{{message.title}}
+				{{item.title}}
 			</view>
-			<view class="zy-content">{{message.content}}</view>
-			<view class="zy-text-info zy-disable-flex-right zy-create-time" v-text="message.createTime"></view>
+			<view class="zy-content">{{item.content}}</view>
+			<view class="zy-text-info zy-disable-flex-right zy-create-time" v-text="item.createTime"></view>
 		</view>
 	</view>
 </template>
@@ -14,15 +14,22 @@
 	export default {
 		data() {
 			return {
-				message: {
-					id: 1,
-					title: 'zywork-app体验版发布',
-					content: 'zywork-app体验版于2019-01-22晚上10点45分正式发布，邀请您使用！',
-					createTime: '2019-04-28 10:34:04'
-				}
+				item: {}
 			}
 		},
-		onLoad() {},
+		onLoad(event) {
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			try {
+				this.item = JSON.parse(decodeURIComponent(payload));
+			} catch (error) {
+				this.item = JSON.parse(payload);
+			}
+			uni.setNavigationBarTitle({
+				title: this.item.title
+			});
+		},
 		methods: {
 		}
 	}
