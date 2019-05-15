@@ -63,8 +63,6 @@ def get_from_table(project, article_info):
     imp_money = get_from_td(article_info, u'资金已落实')
     if imp_money is not None:
         project.moneyToImplement = imp_money[0: len(imp_money) - 1]
-    else:
-        project.moneyToImplement = None
     project.compAptitudeType = get_from_td(article_info, u'企业资质类别及等级')
     project.builderLevel = get_from_td(article_info, u'注册建造师类别和等级')
     project.phone = get_from_td(article_info, u'联系电话')

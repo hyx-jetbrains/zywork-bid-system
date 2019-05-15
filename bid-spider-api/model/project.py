@@ -18,7 +18,7 @@ class Project:
     # 建造师等级
     builderLevel = ''
     # 资金落实(%)
-    moneyToImplement = 100
+    moneyToImplement = 0
     # 招标代理
     tenderingAgent = ''
     # 联系电话
