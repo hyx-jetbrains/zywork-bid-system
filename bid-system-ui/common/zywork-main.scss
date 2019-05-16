@@ -269,3 +269,19 @@ button[type=primary][plain] {
 .zy-detail-phone {
 	color: $primary-color;
 }
+
+.zy-search-page-bar {
+	padding: 20upx 0;
+}
+.zy-search-page-bar .zy-search-page-cancel {
+	margin-left: 20upx;
+	color: $primary-color;
+}
+.zy-search-page-history-record {
+	margin-top: 30upx;
+}
+.zy-history-record view {
+	width: 50%;
+	padding-left: 20upx;
+}
+
