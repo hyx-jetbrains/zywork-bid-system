@@ -138,6 +138,27 @@ public class ProjectCollectionController extends BaseController {
 
     /**
      * User: DengMin
+     * Date: 2019/05/16
+     * Time: 12:42
+     * Description: 根据UserId和ProjectId查询
+     */
+    @GetMapping("user/getByProject/{projectId}")
+    public ResponseStatusVO getByUserAndProjectId(@PathVariable("projectId") Long projectId) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        ProjectCollectionVO projectCollectionVO = new ProjectCollectionVO();
+        Object obj = projectCollectionService.getByUserAndProject(jwtUser.getUserId(),projectId);
+        if(obj != null) {
+            projectCollectionVO = BeanUtils.copy(obj, ProjectCollectionVO.class);
+        }
+        return ResponseStatusVO.ok("查询成功", projectCollectionVO);
+    }
+
+    /**
+     * User: DengMin
      * Date: 2019/05/13
      * Time: 18:35
      * Description: 创建收藏
