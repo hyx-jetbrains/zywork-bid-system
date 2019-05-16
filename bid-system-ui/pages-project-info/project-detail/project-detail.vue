@@ -10,12 +10,19 @@
 						<text>{{project.projectType}}</text>
 						<text style="margin-left: 30upx;">[{{project.city}}]</text>
 					</view>
-					<view class="zy-text-mini zy-text-info">公告时间：{{project.noticeTime}}</view>
+					<view class="zy-text-mini zy-text-info">
+						公告时间：
+						<text v-if="project.noticeTime !== null && project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
+							{{project.noticeTime}}
+						</text>
+						<text v-else class="zy-text-mini zy-text-info">
+							暂无
+						</text>
+					</view>
 				</view>
 				<view class="zy-disable-flex-right">
-					<view class="zy-project-collection-button zy-text-info zy-text-small zy-disable-flex"
-						:class="isCollection ? 'zy-project-collection-button-active' : ''"
-						@click="collectionProject">
+					<view class="zy-project-collection-button zy-text-info zy-text-small zy-disable-flex" :class="isCollection ? 'zy-project-collection-button-active' : ''"
+					 @click="collectionProject">
 						<zywork-icon type="iconshoucang" :color="collectionIconColor" style="margin-right: 10upx;"></zywork-icon>
 						收藏
 					</view>
@@ -24,16 +31,11 @@
 			<!-- tab选项卡 -->
 			<view class="uni-tab-bar zy-tab-bar">
 				<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="projectType.scrollLeft">
-					<view class="swiper-tab-list" :class="currTabIndex === 0 ? 'active' : ''"
-						@click="tapTab(0)">项目介绍</view>
-					<view class="swiper-tab-list" :class="currTabIndex === 1 ? 'active' : ''"
-						@click="tapTab(1)">公告详情</view>
-					<view class="swiper-tab-list" :class="currTabIndex === 2 ? 'active' : ''"
-						@click="tapTab(2)">开标详情</view>
-					<view class="swiper-tab-list" :class="currTabIndex === 3 ? 'active' : ''"
-						@click="tapTab(3)">公示详情</view>
-					<view class="swiper-tab-list" :class="currTabIndex === 4 ? 'active' : ''"
-						@click="tapTab(4)">开标搭车</view>
+					<view class="swiper-tab-list" :class="currTabIndex === 0 ? 'active' : ''" @click="tapTab(0)">项目介绍</view>
+					<view class="swiper-tab-list" :class="currTabIndex === 1 ? 'active' : ''" @click="tapTab(1)">公告详情</view>
+					<view class="swiper-tab-list" :class="currTabIndex === 2 ? 'active' : ''" @click="tapTab(2)">开标详情</view>
+					<view class="swiper-tab-list" :class="currTabIndex === 3 ? 'active' : ''" @click="tapTab(3)">公示详情</view>
+					<view class="swiper-tab-list" :class="currTabIndex === 4 ? 'active' : ''" @click="tapTab(4)">开标搭车</view>
 				</scroll-view>
 			</view>
 			<!-- 项目介绍 -->
@@ -96,7 +98,7 @@
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">下载时间</view>
-					<view class="zy-disable-flex-right">{{project.downloadEndTime}}</view>
+					<view class="zy-disable-flex-right">{{project.downloadEndTime !== null ? project.downloadEndTime : ''}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">其他要求</view>
@@ -109,7 +111,7 @@
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">开标时间</view>
-					<view class="zy-disable-flex-right">{{project.openMarkTime}}</view>
+					<view class="zy-disable-flex-right">{{project.openMarkTime !== null ? project.openMarkTime : ''}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">开标地点</view>
@@ -150,27 +152,27 @@
 			</view>
 			<!-- 公示详情 -->
 			<view v-if="currTabIndex === 3">
-				<view v-if="projectAnnounce !== null && projectAnnounce !== undefined">
+				<view v-if="projectAnnounce.id !== null && projectAnnounce.id !== undefined">
 					<view class="zy-project-desc-title zy-text-bold">
 						中标信息
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">第一中标单位</view>
-						<view class="zy-disable-flex-right">{{projectAnnounce.firstCandidate}}</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.firstCandidate !== null ? projectAnnounce.firstCandidate : ''}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">第二中标单位</view>
-						<view class="zy-disable-flex-right">{{projectAnnounce.secondCandidate}}</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.secondCandidate !== null ? projectAnnounce.secondCandidate : ''}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">第三中标单位</view>
-						<view class="zy-disable-flex-right">{{projectAnnounce.thirdCandidate}}</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.thirdCandidate !== null ? projectAnnounce.thirdCandidate : ''}}</view>
 					</view>
 					<view class="zy-project-desc-title zy-text-bold">
 						中标公示
 					</view>
 					<view>
-						<button class="zy-detail-button" type="primary" @click="toWebViewPage(this.projectAnnounce.inwordHtmlUrl)">
+						<button class="zy-detail-button" type="primary" @click="toAnnounceDetail">
 							查看详情
 						</button>
 					</view>
@@ -180,7 +182,8 @@
 			<!-- 开标搭车 -->
 			<view v-if="currTabIndex === 4">
 				<view class="zy-uni-segmented-control">
-					<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
+					<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem"
+					 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 				</view>
 				<view style="height: 10upx; background-color: #F8F8F8;"></view>
 				<view class="zy-page-list-item" style="padding-top: 0upx;">
@@ -190,32 +193,32 @@
 							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
 								<view @click="toCarpoolDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.nickname}}</text>
+												<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 											</view>
 											<view class="zy-text-mini zy-text-info">
-												{{item.startTime}}
-												<text class="zy-text-mini" style="color: #108EE9; margin-left: 20upx;">{{item.carType}}</text>
+												{{item.markCarpoolStartTime}}
+												<text class="zy-text-mini" style="color: #108EE9; margin-left: 20upx;">{{item.markCarpoolCarType}}</text>
 											</view>
 										</view>
 										<view class="zy-disable-flex-right">
-											¥{{item.price / 100}}
+											¥{{item.markCarpoolPrice / 100}}
 										</view>
 									</view>
 									<view>
 										<view class="zy-text-big zy-text-bold">
-											{{item.startAddr}}
+											{{item.markCarpoolStartAddr}}
 											-
-											{{item.endAddr}}
+											{{item.markCarpoolEndAddr}}
 										</view>
 									</view>
 								</view>
 								<view class="zy-text-info zy-disable-flex">
 									<view>
 										<text style="margin-right: 20upx;">搭车人数:</text>
-										{{item.carpoolRecordCount}}/{{item.peopleCount}}
+										{{item.markCarpoolRecordCount}}/{{item.markCarpoolPeopleCount}}
 									</view>
 									<view class="zy-disable-flex-right">
 										<uni-tag text="我要拼车" type="primary" size="small" :inverted="true" :circle="true" @click="addCarpoolRecord(item)"></uni-tag>
@@ -231,29 +234,29 @@
 							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
 								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.nickname}}</text>
+												<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 											</view>
-											<view class="zy-text-mini zy-text-info">{{item.startTime}}</view>
+											<view class="zy-text-mini zy-text-info">{{item.markSeekcarStartTime}}</view>
 										</view>
 									</view>
 									<view>
 										<view class="zy-text-big zy-text-bold">
-											{{item.startAddr}}
+											{{item.markSeekcarStartAddr}}
 											-
-											{{item.endAddr}}
+											{{item.markSeekcarEndAddr}}
 										</view>
 										<view class="zy-text-info">
-											{{item.memo}}
+											{{item.markSeekcarMemo}}
 										</view>
 									</view>
 								</view>
 								<view class="zy-text-info zy-disable-flex">
 									<view>
 										<text style="margin-right: 20upx;">申请人数:</text>
-										{{item.seekcarRecordCount}}/1
+										{{item.markSeekcarRecordCount}}/1
 									</view>
 									<view class="zy-disable-flex-right">
 										<uni-tag text="我有车" type="primary" size="small" :inverted="true" :circle="true" @click="addSeekcarRecord(item)"></uni-tag>
@@ -274,14 +277,22 @@
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
-	
+
 	import {
 		openMarkArray
 	} from '@/common/picker.data.js'
 	import {
 		DEFAULT_HEADICON
 	} from '@/common/util.js'
-	
+	import {
+		getProjectCollectionInfo,
+		saveProjectCollection,
+		cancelProjectCollection,
+		getProjectAnnounce,
+		getCarpoolList,
+		getSeekcarList
+	} from '@/common/project-info.js'
+
 	/** 项目类型-房建市政 */
 	const PROJECT_TYPE_BUILDING = '房建市政'
 	/** 项目类型-水利工程 */
@@ -294,14 +305,15 @@
 	const PROJECT_TYPE_IMPORTANT = '重点项目'
 	/** 项目类型-其他项目 */
 	const PROJECT_TYPE_OTHER = '其他项目'
-	
+
 	const PROJECT_TYPE_ICONS = ['../../static/icon/building.png',
-								'../../static/icon/hydraulic.png',
-								'../../static/icon/traffic.png',
-								'../../static/icon/purchase.png',
-								'../../static/icon/important.png',
-								'../../static/icon/other.png']
-								
+		'../../static/icon/hydraulic.png',
+		'../../static/icon/traffic.png',
+		'../../static/icon/purchase.png',
+		'../../static/icon/important.png',
+		'../../static/icon/other.png'
+	]
+
 	/** 澄清文件标识-0 */
 	const SEE_FILE_TYPE_CHENGQING = 0
 	/** 招标文件标识-1 */
@@ -310,7 +322,7 @@
 	const SEE_FILE_TYPE_QINGDAN = 2
 	/** 资质文件标识-3 */
 	const SEE_FILE_TYPE_ZIZHI = 3
-								
+
 	export default {
 		components: {
 			zyworkIcon,
@@ -321,73 +333,23 @@
 		data() {
 			return {
 				imgIcon: PROJECT_TYPE_ICONS[0],
-				isCollection: true,
+				isCollection: false,
 				collectionIconColor: '#BFBFBF',
 				currTabIndex: 0,
 				project: {},
-				projectAnnounce: {
-					id: 1,
-					projectId: 1,
-					announceDesc: '<p>中标公是</p>',
-					firstCandidate: '江西某公司1',
-					secondCandidate: '江西某公司2',
-					thirdCandidate: '江西某公司3',
-					inwordHtmlUrl: 'http://www.baidu.com/'
-				},
+				projectAnnounce: {},
 				carPoolOpts: {
 					current: 0,
 					items: openMarkArray
 				},
-				carpoolList: [
-					{
-						id: 1,
-						nickname: '刘某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						price: 30000,
-						carType: '小轿车',
-						carpoolRecordCount: 1,
-						peopleCount: 3,
-						name: '危锦辉',
-						phone: '18279700225'
-					},
-					{
-						id: 2,
-						nickname: '张某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						price: 60000,
-						carType: '小轿车',
-						peopleCount: 2,
-						name: '危锦辉',
-						phone: '18279700225',
-						carpoolRecordCount: 2,
-					}
-				],
-				seekcarList: [
-					{
-						id: 1,
-						nickname: '张某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						memo: '去上饶，着急去，有意请联系',
-						name: '危锦辉',
-						phone: '18279700225',
-						seekcarRecordCount: 0
-					}
-				],
+				carpoolList: [],
+				seekcarList: [],
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					projectId: '',
+					isActive: 0
+				}
 			}
 		},
 		onLoad(event) {
@@ -399,61 +361,39 @@
 			} catch (error) {
 				this.project = JSON.parse(payload);
 			}
-			this.initIconImg()
-			this.initCollectionIcon()
+			this.initData();
 		},
 		methods: {
-			// 初始化图标
-			initIconImg() {
-				var projectType = this.project.projectType;
-				var currIndex = 0;
-				if (PROJECT_TYPE_BUILDING === projectType) {
-					// 房建市政
-					currIndex = 0;
-				} else if (PROJECT_TYPE_HYDRAULIC === projectType) {
-					// 水利工程
-					currIndex = 1;
-				} else if (PROJECT_TYPE_TRAFFIC === projectType) {
-					// 交通工程
-					currIndex = 2;
-				} else if (PROJECT_TYPE_PURCHASE === projectType) {
-					// 政府采购
-					currIndex = 3;
-				} else if (PROJECT_TYPE_IMPORTANT === projectType) {
-					// 重点项目
-					currIndex = 3;
-				} else if (PROJECT_TYPE_OTHER === projectType) {
-					// 其他项目
-					currIndex = 4;
-				}
-				this.imgIcon = PROJECT_TYPE_ICONS[currIndex]
+			/** 初始化数据 */
+			initData() {
+				this.initCollectionIcon();
+				getProjectAnnounce(this, this.project.id);
+				this.pager.projectId = this.project.id;
+				getCarpoolList(this, this.pager);
+				getSeekcarList(this, this.pager);
 			},
 			// 初始化项目图标
 			initCollectionIcon() {
 				// 请求后台判断该项目是否已经被当前用户收藏
-				// TODO 后面实现
-				
-				this.switchCollectionIconColor()
+				getProjectCollectionInfo(this, this.project.id)
 			},
 			// 切换项目收藏的图标颜色
-			switchCollectionIconColor() {
+			collectionOperation(projectId) {
 				if (this.isCollection) {
 					this.collectionIconColor = '#108EE9'
 				} else {
 					this.collectionIconColor = '#BFBFBF'
 				}
 			},
-			// 收藏项目
+			// 收藏项目或取消收藏项目
 			collectionProject() {
-				// 点击后请求后台，保存或删除收藏记录
-				// TODO 以后实现
-				
 				if (this.isCollection) {
-					this.isCollection = false
+					// 取消收藏
+					cancelProjectCollection(this, this.project.id);
 				} else {
-					this.isCollection = true
+					// 保存收藏
+					saveProjectCollection(this, this.project.id);
 				}
-				this.switchCollectionIconColor()
 			},
 			// 切换标签页
 			tapTab(type) {
@@ -470,10 +410,22 @@
 					url: '/pages-static/web-view/web-view?url=' + encodeURIComponent(url)
 				});
 			},
+			/** 公示详情 */
+			toAnnounceDetail() {
+				if (this.projectAnnounce.id !== null) {
+					this.toWebViewPage(this.projectAnnounce.inwordHtmlUrl);
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '没有公示信息',
+						showCancel: false
+					})
+				}
+			},
 			// 触发操作选项
 			actionSheetTap() {
 				uni.showActionSheet({
-					title:'标题',
+					title: '标题',
 					itemList: ['澄清文件', '招标文件', '清单文件', '资质文件'],
 					success: (e) => {
 						this.seeFile(e.tapIndex)
@@ -532,7 +484,8 @@
 			/** 前往详情页面 */
 			toDetailPage(name, item) {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-'+name+'-detail/publish-'+name+'-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-info-share/publish-' + name + '-detail/publish-' + name + '-detail?itemData=' + encodeURIComponent(
+						JSON.stringify(item))
 				});
 			},
 			/** 前往拼车详情页面 */
@@ -549,30 +502,28 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	
+
 	page {
 		background-color: #FFFFFF;
 	}
-	
-	.zy-project {
-		
-	}
-	
+
+	.zy-project {}
+
 	.zy-project-title {
 		padding: 20upx 20upx 0 20upx;
 	}
-	
+
 	.zy-project-head {
 		border-bottom: 2upx solid $border-color;
 		padding: 20upx;
 	}
-	
+
 	.zy-head-icon {
 		width: 60upx;
 		height: 60upx;
 		margin-right: 20upx;
 	}
-	
+
 	.zy-project-collection-button {
 		width: 110upx;
 		height: 45upx;
@@ -580,32 +531,37 @@
 		border-radius: 10upx;
 		padding-left: 10upx;
 	}
-	
+
 	.zy-project-collection-button-active {
 		border: 1upx solid $primary-color;
 		color: $primary-color;
 	}
-	
+
 	.zy-project-desc-title {
 		background-color: #F8F8F8;
 		padding: 5upx 20upx;
 		border-left: 5upx solid $primary-color;
 	}
+
 	.zy-project-desc-item {
 		padding: 5upx 0 5upx 20upx;
 	}
+
 	.zy-project-desc-item .zy-warning {
 		color: #dd524d;
 	}
+
 	.zy-project-desc-item .zy-primary {
 		color: #108EE9;
 	}
+
 	.zy-project-desc-textarea {
 		padding: 0 20upx;
 	}
+
 	.zy-detail-button {
 		text-align: center;
 		margin: 30upx 25upx;
 		border-radius: 50upx 50upx;
-	} 
+	}
 </style>

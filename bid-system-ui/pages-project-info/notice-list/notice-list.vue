@@ -18,6 +18,7 @@
 <script>
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import {getHeadlinesList} from '@/common/project-info.js'
 	export default {
 		components: {
 			zyworkNoData,
@@ -25,22 +26,23 @@
 		},
 		data() {
 			return {
-				notices: [
-					{
-						title: '头条标题长标题长标题长标题长标题长标题长标题长标题长标题长标题长标题长标题',
-						content: '内容内容内容内容内容',
-						createTime: '2019-04-28 10:30:00'
-					},
-					{
-						title: '头条标题',
-						content: '内容内容内容内容内容',
-						createTime: '2019-04-28 10:30:00'
-					}
-				]
+				notices: [],
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					sortColumn: 'createTime',
+					sortOrder: 'desc'
+				},
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData();
+		},
 		methods: {
+			/** 初始化数据 */
+			initData() {
+				getHeadlinesList(this, this.pager);
+			},
 			/** 前往公告详情 */
 			toNoticeDetail(item) {
 				uni.navigateTo({

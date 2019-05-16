@@ -16,8 +16,8 @@
 		<view class="swiper">
 			<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 				<swiper-item v-for="(item, index) in swiperItems" :key="index">
-					<view class="swiper-item" @click="showSwiperDetail(item.contentUrl)">
-						<image :src="item.imgUrl" />
+					<view class="swiper-item" @click="showSwiperDetail(item)">
+						<image :src="item.url" />
 					</view>
 				</swiper-item>
 			</swiper>
@@ -43,16 +43,25 @@
 
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
 			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
-				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap" />
+				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.id)" />
 				<view @click="toProjectDetail(project)">
 					<view class="zy-disable-flex">
 						<image class="zy-project-icon" :src="imgIcon" />
 						<view>
 							<view>
-								<text>{{projectTypeName}}</text>
+								<text>{{project.projectType}}</text>
 								<text style="margin-left: 30upx;">[{{project.city}}]</text>
 							</view>
-							<view class="zy-text-mini zy-text-info">公告时间：{{project.noticeTime}}</view>
+							<view class="zy-text-mini zy-text-info">
+								公告时间：
+								<text v-if="project.noticeTime !== null && project.noticeTime !== undefined"
+									class="zy-text-mini zy-text-info">
+								{{project.noticeTime}}
+								</text>
+								<text v-else class="zy-text-mini zy-text-info">
+									暂无
+								</text>
+							</view>
 						</view>
 						<view class="zy-project-head-right">
 							<view style="padding-right: 50upx;">
@@ -172,6 +181,7 @@
 		projectStatusArray,
 		jxCityArray
 	} from '@/common/picker.data.js'
+	import * as projectInfo from '@/common/project-info.js'
 
 	const PROJECT_STATUS_ALL = 0
 	const PROJECT_STATUS_SHOWING = 1
@@ -201,8 +211,8 @@
 	const SEE_FILE_TYPE_QINGDAN = 2
 	/** 资质文件标识-3 */
 	const SEE_FILE_TYPE_ZIZHI = 3
-	/** 取消收藏-4 */
-	const COLLECTION_PROJECT = 4
+	/** 收藏或取消收藏-4 */
+	const SEE_FILE_TYPE_SC_QXSC = 4
 
 	export default {
 		components: {
@@ -220,22 +230,16 @@
 				autoplay: true,
 				interval: 5000,
 				duration: 500,
-				swiperItems: [{
-						imgUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg",
-						contentUrl: "http://39.108.116.103:8080/"
-					},
-					{
-						imgUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111253594&di=5344d9889d61ccc8279bd26a7765e4b3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180106%2F4042bb85604c4609a1c7da9e45edb2b4.jpeg",
-						contentUrl: "http://39.108.116.103:8080/"
-					}
-				],
+				swiperItems: [],
 				cityArray: jxCityArray,
 				cityIndex: 0,
-				latestNotice: {
-					id: 1,
-					title: '头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题头条标题',
-					content: '内日内那日嫩老实交代了冯佳',
-					createTime: '2019-04-24 18:00:00'
+				latestNotice: {},
+				noticePager: {
+					pageNo: 1,
+					pageSize: 1,
+					sortColumn: 'createTime',
+					sortOrder: 'desc',
+					isActive: 0,
 				},
 				projectStatus: {
 					current: 0,
@@ -278,101 +282,58 @@
 					startDate: '',
 					date: '',
 					timeData: null,
-					currentFormatDate: ''
+					currentFormatDate: formatCalendarDate(new Date())
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
-				projectTypeName: '房建市政',
-				projects: [{
-						id: 1,
-						title: '[南昌市本级]南昌市昌南城市防洪工程管理处防汛排涝信息系统建设工程项目监理招标公告',
-						projectType: '房建市政',
-						city: '南昌市',
-						projectDetail: null,
-						releaseStatus: null,
-						markUnitName: '宜春市实验小学',
-						projectInvest: '约2400万元',
-						checkPattern: '资格后审',
-						compAptitudeType: '建筑工程总承包二级（含）以上资质',
-						builderLevel: '建筑工程二级及以上（含临时）',
-						moneyToImplement: 100,
-						tenderingAgent: '江西锐创企业管理咨询有限公司',
-						phone: '13766445188',
-						offerPrice: 210000,
-						assurePrice: 4000,
-						constructionPeriod: 30,
-						downloadEndTime: '2019-04-22 17:31:33',
-						otherDemand: '八大员：基本户保函；计划竣工日期现变更为2020年05约14日；“信用中国”网站的查询系统中查询企业及建造师行贿犯罪档案查询结果截图；本次招标不解释联合体投标；',
-						openMarkInfo: null,
-						openMarkTime: '2019-04-22 17:31',
-						openMarkAddr: '信誉是第一开标室',
-						inMarkPublicity: null,
-						inMarkComp: '某某公司',
-						noticeTime: '2019-04-22 17:31:33',
-						markStatus: '待开标',
-						clickCount: null,
-						isElectronic: null,
-						sourceUrl: null,
-						version: null,
-						createTime: null,
-						updateTime: null,
-						isActive: null,
-						inwordHtmlUrl: 'http://www.baidu.com/'
-					},
-					{
-						id: 2,
-						title: '[南昌市本级]南昌市昌南城市防洪工程管理处防汛排涝信息系统建设工程项目监理招标公告',
-						projectType: '房建市政',
-						city: '南昌市',
-						projectDetail: null,
-						releaseStatus: null,
-						markUnitName: '宜春市实验小学',
-						projectInvest: '约2400万元',
-						checkPattern: '资格后审',
-						compAptitudeType: '建筑工程总承包二级（含）以上资质',
-						builderLevel: '建筑工程二级及以上（含临时）',
-						moneyToImplement: 100,
-						tenderingAgent: '江西锐创企业管理咨询有限公司',
-						phone: '13766445188',
-						offerPrice: 210000,
-						assurePrice: 4000,
-						constructionPeriod: 30,
-						downloadEndTime: '2019-04-22 17:31:33',
-						otherDemand: '八大员：基本户保函；计划竣工日期现变更为2020年05约14日；“信用中国”网站的查询系统中查询企业及建造师行贿犯罪档案查询结果截图；本次招标不解释联合体投标；',
-						openMarkInfo: null,
-						openMarkTime: '2019-04-22 17:31',
-						openMarkAddr: '信誉是第一开标室',
-						inMarkPublicity: null,
-						inMarkComp: '某某公司',
-						noticeTime: '2019-04-22 17:31:33',
-						markStatus: '公告中',
-						clickCount: null,
-						isElectronic: null,
-						sourceUrl: null,
-						version: null,
-						createTime: null,
-						updateTime: null,
-						isActive: null,
-						inwordHtmlUrl: 'http://www.baidu.com/'
-					}
-				],
-				pager: {
+				projects: [],
+				projectPager: {
 					pageNo: 1,
-					pageSize: 10
+					pageSize: 10,
+					sortColumn: 'createTime',
+					sortOrder: 'desc',
+					projectType: '房建市政',
+					markStatus: '',
+					isActive: 0,
+					releaseStatus: '已发布',
+					city: ''
 				},
 				imgBaseUrl: IMAGE_BASE_URL,
-				headicon: DEFAULT_HEADICON
+				headicon: DEFAULT_HEADICON,
+				isCollection: false,
+				actionSheetArray: ['澄清文件', '招标文件', '清单文件', '资质文件']
 			}
 		},
 		onLoad() {
-			this.calendar.currentFormatDate = formatCalendarDate(new Date())
+			this.initData()
 		},
 		onPullDownRefresh() {},
 		methods: {
-			chooseCity(e) {
-				this.cityIndex = e.target.value
+			/** 初始化数据 */
+			initData() {
+				projectInfo.getAdvertisementInfo(this);
+				projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
+				this.updateProjectList();
 			},
-			showSwiperDetail(contentUrl) {
-				console.log(contentUrl)
+			/** 更新项目列表 */
+			updateProjectList() {
+				projectInfo.getProjectList(this, this.projectPager);
+			},
+			/** 选择城市 */
+			chooseCity(e) {
+				var index = e.target.value
+				this.cityIndex = index
+				if (index == 0) {
+					this.projectPager.city = '';
+				} else {
+					this.projectPager.city = this.cityArray[index]
+				}
+				this.updateProjectList();
+			},
+			/** 查看广告详情 */
+			showSwiperDetail(item) {
+				uni.navigateTo({
+					url: '/pages-project-info/advertisement-detail/advertisement-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+				})
 			},
 			getElSize(id) {
 				return new Promise((res, rej) => {
@@ -393,13 +354,20 @@
 						tabBarScrollLeft = tabBar.scrollLeft
 					this.projectType.scrollLeft = tabBarScrollLeft
 					this.projectType.tabIndex = tabIndex
-
 					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
+					this.projectPager.projectType = this.projectType.tabbars[tabIndex].name
+					this.updateProjectList();
 				}
 			},
 			onClickItem(index) {
 				if (this.projectStatus.current !== index) {
 					this.projectStatus.current = index
+					if (index === PROJECT_STATUS_ALL) {
+						this.projectPager.markStatus = '';
+					} else {
+						this.projectPager.markStatus = this.projectStatus.items[index]
+					}
+					this.updateProjectList();
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {
@@ -447,21 +415,11 @@
 				})
 			},
 			// 触发操作选项
-			actionSheetTap() {
-				uni.showActionSheet({
-					title: '标题',
-					itemList: ['澄清文件', '招标文件', '清单文件', '资质文件', '收藏项目'],
-					success: (e) => {
-						this.seeFile(e.tapIndex)
-						// uni.showToast({
-						// 	title:"点击了第" + e.tapIndex + "个选项",
-						// 	icon:"none"
-						// })
-					}
-				})
+			actionSheetTap(projectId) {
+				projectInfo.getProjectCollectionInfo(this, projectId);
 			},
 			// 查看文件
-			seeFile(type) {
+			seeFile(type, projectId) {
 				console.log(type)
 				if (SEE_FILE_TYPE_CHENGQING === type) {
 					console.log("查看澄清文件")
@@ -471,10 +429,38 @@
 					console.log("查看清单文件");
 				} else if (SEE_FILE_TYPE_ZIZHI === type) {
 					console.log("查看资质文件");
-				} else if (COLLECTION_PROJECT === type) {
-					console.log("收藏项目");
+				} else if (SEE_FILE_TYPE_SC_QXSC === type) {
+					const tempType = this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC];
+					if (tempType == '取消收藏') {
+						projectInfo.cancelProjectCollection(this, projectId);
+					} else if (tempType == '收藏项目') {
+						projectInfo.saveProjectCollection(this, projectId);
+					}
 				}
+			},
+			/** 获取到是否收藏后的操作 */
+			collectionOperation(projectId) {
+				if (this.isCollection) {
+					this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC] = "取消收藏";
+				} else {
+					this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC] = "收藏项目";
+				}
+				if (0 !== projectId) {
+					uni.showActionSheet({
+						title: '标题',
+						itemList: this.actionSheetArray,
+						success: (e) => {
+							this.seeFile(e.tapIndex, projectId);
+							// uni.showToast({
+							// 	title:"点击了第" + e.tapIndex + "个选项",
+							// 	icon:"none"
+							// })
+						}
+					})
+				}
+				
 			}
+			
 		}
 	}
 </script>

@@ -1,9 +1,15 @@
 <template>
 	<view>
 		<view class="zy-disable-flex zy-search-page-bar">
+			<picker @change="chooseCity" :value="cityIndex" :range="cityArray">
+				<view class="zy-disable-flex" style="margin-left: 10upx;">
+					<text>{{cityArray[cityIndex]}}</text>
+					<zywork-icon type="iconxiangxia" />
+				</view>
+			</picker>
 			<view class="zy-search-bar">
 				<zywork-icon type="iconchaxun" />
-				<input type="text" v-model="searchVal" placeholder="输入关键字搜索" @confirm="searchData" />
+				<input type="text" v-model="projectPager.title" placeholder="输入关键字搜索" @confirm="searchData" />
 			</view>
 			<view class="zy-disable-flex-right zy-search-page-cancel" @click="toBackPage">
 				取消
@@ -47,7 +53,16 @@
 									<text>{{projectTypeName}}</text>
 									<text style="margin-left: 30upx;">[{{project.city}}]</text>
 								</view>
-								<view class="zy-text-mini zy-text-info">公告时间：{{project.noticeTime}}</view>
+								<view class="zy-text-mini zy-text-info">
+									公告时间：
+									<text v-if="project.noticeTime !== null && project.noticeTime !== undefined"
+										class="zy-text-mini zy-text-info">
+									{{project.noticeTime}}
+									</text>
+									<text v-else class="zy-text-mini zy-text-info">
+										暂无
+									</text>
+								</view>
 							</view>
 							<view class="zy-project-head-right">
 								<view style="padding-right: 50upx;">
@@ -163,6 +178,9 @@
 		projectStatusArray,
 		jxCityArray
 	} from '@/common/picker.data.js'
+	import {
+		getProjectList
+	} from '@/common/project-info.js'
 
 	const PROJECT_STATUS_ALL = 0
 	const PROJECT_STATUS_SHOWING = 1
@@ -204,9 +222,11 @@
 		},
 		data() {
 			return {
-				searchVal: '',
+				space: '&#12288;',
 				oldKeywordList: [],
 				isShowHistroy: true,
+				cityArray: jxCityArray,
+				cityIndex: 0,
 				projectStatus: {
 					current: 0,
 					items: projectStatusArray
@@ -251,82 +271,18 @@
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				projectTypeName: '房建市政',
-				projects: [{
-						id: 1,
-						title: '[南昌市本级]南昌市昌南城市防洪工程管理处防汛排涝信息系统建设工程项目监理招标公告',
-						projectType: '房建市政',
-						city: '南昌市',
-						projectDetail: null,
-						releaseStatus: null,
-						markUnitName: '宜春市实验小学',
-						projectInvest: '约2400万元',
-						checkPattern: '资格后审',
-						compAptitudeType: '建筑工程总承包二级（含）以上资质',
-						builderLevel: '建筑工程二级及以上（含临时）',
-						moneyToImplement: 100,
-						tenderingAgent: '江西锐创企业管理咨询有限公司',
-						phone: '13766445188',
-						offerPrice: 210000,
-						assurePrice: 4000,
-						constructionPeriod: 30,
-						downloadEndTime: '2019-04-22 17:31:33',
-						otherDemand: '八大员：基本户保函；计划竣工日期现变更为2020年05约14日；“信用中国”网站的查询系统中查询企业及建造师行贿犯罪档案查询结果截图；本次招标不解释联合体投标；',
-						openMarkInfo: null,
-						openMarkTime: '2019-04-22 17:31',
-						openMarkAddr: '信誉是第一开标室',
-						inMarkPublicity: null,
-						inMarkComp: '某某公司',
-						noticeTime: '2019-04-22 17:31:33',
-						markStatus: '待开标',
-						clickCount: null,
-						isElectronic: null,
-						sourceUrl: null,
-						version: null,
-						createTime: null,
-						updateTime: null,
-						isActive: null,
-						inwordHtmlUrl: 'http://www.baidu.com/'
-					},
-					{
-						id: 2,
-						title: '[南昌市本级]南昌市昌南城市防洪工程管理处防汛排涝信息系统建设工程项目监理招标公告',
-						projectType: '房建市政',
-						city: '南昌市',
-						projectDetail: null,
-						releaseStatus: null,
-						markUnitName: '宜春市实验小学',
-						projectInvest: '约2400万元',
-						checkPattern: '资格后审',
-						compAptitudeType: '建筑工程总承包二级（含）以上资质',
-						builderLevel: '建筑工程二级及以上（含临时）',
-						moneyToImplement: 100,
-						tenderingAgent: '江西锐创企业管理咨询有限公司',
-						phone: '13766445188',
-						offerPrice: 210000,
-						assurePrice: 4000,
-						constructionPeriod: 30,
-						downloadEndTime: '2019-04-22 17:31:33',
-						otherDemand: '八大员：基本户保函；计划竣工日期现变更为2020年05约14日；“信用中国”网站的查询系统中查询企业及建造师行贿犯罪档案查询结果截图；本次招标不解释联合体投标；',
-						openMarkInfo: null,
-						openMarkTime: '2019-04-22 17:31',
-						openMarkAddr: '信誉是第一开标室',
-						inMarkPublicity: null,
-						inMarkComp: '某某公司',
-						noticeTime: '2019-04-22 17:31:33',
-						markStatus: '公告中',
-						clickCount: null,
-						isElectronic: null,
-						sourceUrl: null,
-						version: null,
-						createTime: null,
-						updateTime: null,
-						isActive: null,
-						inwordHtmlUrl: 'http://www.baidu.com/'
-					}
-				],
-				pager: {
+				projects: [],
+				projectPager: {
 					pageNo: 1,
-					pageSize: 10
+					pageSize: 10,
+					sortColumn: 'createTime',
+					sortOrder: 'desc',
+					projectType: '房建市政',
+					markStatus: '',
+					isActive: 0,
+					releaseStatus: '已发布',
+					title: '',
+					city: ''
 				},
 				imgBaseUrl: IMAGE_BASE_URL,
 				headicon: DEFAULT_HEADICON
@@ -336,6 +292,10 @@
 			this.initData();
 		},
 		methods: {
+			/** 更新项目列表 */
+			updateProjectList() {
+				getProjectList(this, this.projectPager);
+			},
 			/** 初始化数据 */
 			initData() {
 				// 加载历史搜索数据
@@ -349,17 +309,19 @@
 			},
 			/** 点击历史搜索执行搜索 */
 			doSearch(key) {
-				this.searchVal = key;
+				this.projectPager.title = key;
 				this.searchData();
 			},
 			/** 搜索数据 */
 			searchData() {
-				console.log(this.searchVal)
-				uni.showToast({
-					title: this.searchVal
-				})
+				// console.log(this.projectPager.title)
+				// uni.showToast({
+				// 	title: this.projectPager.title
+				// })
 				this.isShowHistroy = false;
-				this.saveKeyword(this.searchVal)
+				this.saveKeyword(this.projectPager.title)
+				
+				this.updateProjectList()
 			},
 			/** 保存关键字到历史记录 */
 			saveKeyword(keyword) {
@@ -416,21 +378,53 @@
 					}
 				});
 			},
+			/** 选择城市 */
+			chooseCity(e) {
+				var index = e.target.value
+				this.cityIndex = index
+				if (index == 0) {
+					this.projectPager.city = '';
+				} else {
+					this.projectPager.city = this.cityArray[index]
+				}
+				this.isShowHistroy = false;
+				this.updateProjectList();
+			},
+			getElSize(id) {
+				return new Promise((res, rej) => {
+					uni.createSelectorQuery().select("#" + id).fields({
+						size: true,
+						scrollOffset: true
+					}, (data) => {
+						res(data);
+					}).exec();
+				})
+			},
 			/** 导航栏切换 */
 			async tapTab(e) {
 				let tabIndex = e.target.dataset.current
 				if (this.projectType.tabIndex === tabIndex) {
 					return false
 				} else {
+					let tabBar = await this.getElSize("tab-bar"),
+						tabBarScrollLeft = tabBar.scrollLeft
+					this.projectType.scrollLeft = tabBarScrollLeft
 					this.projectType.tabIndex = tabIndex
-
 					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
+					this.projectPager.projectType = this.projectType.tabbars[tabIndex].name
+					this.updateProjectList();
 				}
 			},
 			/** 项目状态切换 */
 			onClickItem(index) {
 				if (this.projectStatus.current !== index) {
 					this.projectStatus.current = index
+					if (index === PROJECT_STATUS_ALL) {
+						this.projectPager.markStatus = '';
+					} else {
+						this.projectPager.markStatus = this.projectStatus.items[index]
+					}
+					this.updateProjectList();
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {

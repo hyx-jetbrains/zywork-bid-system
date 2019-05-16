@@ -72,6 +72,13 @@
 						"navigationBarTitleText": "招标详情",
 						"backgroundTextStyle": "light"
 					}
+				},
+				{
+					"path": "advertisement-detail/advertisement-detail",
+					"style": {
+						"navigationBarTitleText": "轮播广告详情",
+						"backgroundTextStyle": "light"
+					}
 				}
 			]
 		},
