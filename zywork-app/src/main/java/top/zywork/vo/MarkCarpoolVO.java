@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * MarkCarpoolVO值对象类<br/>
  *
- * 创建于2019-05-05<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class MarkCarpoolVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034791049269L;
+    private static final long serialVersionUID = -9223372035421631521L;
 
     // 开标拼车编号
 	private Long id;
@@ -30,16 +30,16 @@ public class MarkCarpoolVO extends BaseVO {
 	@NotNull(message = "此项是必须项")
 	private Long projectId;
 	// 出发城市
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String startCity;
 	// 出发地点
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String startAddr;
 	// 目的地城市
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String endCity;
 	// 目的地
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String endAddr;
 	// 出发时间
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -49,6 +49,8 @@ public class MarkCarpoolVO extends BaseVO {
 	private String carType;
 	// 搭载人数
 	private Integer peopleCount;
+	// 申请人数
+	private Integer recordCount;
 	// 价格
 	private Long price;
 	// 联系人姓名
@@ -70,7 +72,7 @@ public class MarkCarpoolVO extends BaseVO {
 	
     public MarkCarpoolVO () {}
 
-    public MarkCarpoolVO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String carType, Integer peopleCount, Long price, String name, String phone, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public MarkCarpoolVO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String carType, Integer peopleCount, Integer recordCount, Long price, String name, String phone, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.projectId = projectId;
@@ -81,6 +83,7 @@ public class MarkCarpoolVO extends BaseVO {
 		this.startTime = startTime;
 		this.carType = carType;
 		this.peopleCount = peopleCount;
+		this.recordCount = recordCount;
 		this.price = price;
 		this.name = name;
 		this.phone = phone;
@@ -171,6 +174,14 @@ public class MarkCarpoolVO extends BaseVO {
 		this.peopleCount = peopleCount;
 	}
 
+	public Integer getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(Integer recordCount) {
+		this.recordCount = recordCount;
+	}
+
 	public Long getPrice() {
 		return price;
 	}
@@ -241,6 +252,7 @@ public class MarkCarpoolVO extends BaseVO {
 				", startTime = " + startTime + 
 				", carType = " + carType + 
 				", peopleCount = " + peopleCount + 
+				", recordCount = " + recordCount + 
 				", price = " + price + 
 				", name = " + name + 
 				", phone = " + phone + 

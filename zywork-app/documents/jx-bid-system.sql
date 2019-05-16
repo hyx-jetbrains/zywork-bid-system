@@ -1066,6 +1066,7 @@ CREATE TABLE `t_mark_carpool`  (
   `start_time` datetime(0) NULL DEFAULT NULL COMMENT '出发时间',
   `car_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '汽车类型',
   `people_count` int(2) NULL DEFAULT 0 COMMENT '搭载人数',
+  `record_count` int(2) NULL DEFAULT 0 COMMENT '申请人数',
   `price` bigint(20) NULL DEFAULT 0 COMMENT '价格',
   `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人姓名',
   `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人电话',
@@ -1106,6 +1107,7 @@ CREATE TABLE `t_mark_seekcar`  (
   `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人姓名',
   `phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人电话',
   `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `record_count` int(2) NULL DEFAULT 0 COMMENT '申请人数',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -1252,7 +1254,7 @@ CREATE TABLE `t_process`  (
 DROP TABLE IF EXISTS `t_project`;
 CREATE TABLE `t_project` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '招投标项目编号',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '项目名称',
+  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '项目名称',
   `project_type` varchar(10) DEFAULT '' COMMENT '项目类型',
   `city` varchar(10) DEFAULT '' COMMENT '城市',
   `project_detail` text COMMENT '项目详情',
@@ -1321,6 +1323,7 @@ CREATE TABLE `t_project_collection`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
+  UNIQUE KEY `uni_user_id_project_id` (`user_id`,`project_id`) COMMENT '用户ID和项目ID唯一索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目收藏表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------

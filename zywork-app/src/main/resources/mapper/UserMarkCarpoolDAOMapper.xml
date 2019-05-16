@@ -5,7 +5,7 @@
 <mapper namespace="top.zywork.dao.UserMarkCarpoolDAO">
 
     <sql id="select_columns">
-        t_mark_carpool.id as markCarpoolId, t_mark_carpool.user_id as markCarpoolUserId, t_mark_carpool.project_id as markCarpoolProjectId, t_mark_carpool.start_city as markCarpoolStartCity, t_mark_carpool.start_addr as markCarpoolStartAddr, t_mark_carpool.end_city as markCarpoolEndCity, t_mark_carpool.end_addr as markCarpoolEndAddr, t_mark_carpool.start_time as markCarpoolStartTime, t_mark_carpool.car_type as markCarpoolCarType, t_mark_carpool.people_count as markCarpoolPeopleCount, t_mark_carpool.price as markCarpoolPrice, t_mark_carpool.name as markCarpoolName, t_mark_carpool.phone as markCarpoolPhone, t_mark_carpool.version as markCarpoolVersion, t_mark_carpool.create_time as markCarpoolCreateTime, t_mark_carpool.update_time as markCarpoolUpdateTime, t_mark_carpool.is_active as markCarpoolIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+        t_mark_carpool.id as markCarpoolId, t_mark_carpool.user_id as markCarpoolUserId, t_mark_carpool.project_id as markCarpoolProjectId, t_mark_carpool.start_city as markCarpoolStartCity, t_mark_carpool.start_addr as markCarpoolStartAddr, t_mark_carpool.end_city as markCarpoolEndCity, t_mark_carpool.end_addr as markCarpoolEndAddr, t_mark_carpool.start_time as markCarpoolStartTime, t_mark_carpool.car_type as markCarpoolCarType, t_mark_carpool.people_count as markCarpoolPeopleCount, t_mark_carpool.record_count as markCarpoolRecordCount, t_mark_carpool.price as markCarpoolPrice, t_mark_carpool.name as markCarpoolName, t_mark_carpool.phone as markCarpoolPhone, t_mark_carpool.version as markCarpoolVersion, t_mark_carpool.create_time as markCarpoolCreateTime, t_mark_carpool.update_time as markCarpoolUpdateTime, t_mark_carpool.is_active as markCarpoolIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
     </sql>
 
     <sql id="query_where_clause">
@@ -84,6 +84,18 @@
 		<if test="query != null and query.markCarpoolPeopleCountMin != null and query.markCarpoolPeopleCountMax != null">
 			and t_mark_carpool.people_count <![CDATA[ >= ]]> #{query.markCarpoolPeopleCountMin} and t_mark_carpool.people_count <![CDATA[ <= ]]> #{query.markCarpoolPeopleCountMax}
 		</if>
+		<if test="query != null and query.markCarpoolRecordCount != null">
+			and t_mark_carpool.record_count = #{query.markCarpoolRecordCount}
+		</if>
+		<if test="query != null and query.markCarpoolRecordCountMin != null and query.markCarpoolRecordCountMax == null">
+			and t_mark_carpool.record_count <![CDATA[ >= ]]> #{query.markCarpoolRecordCountMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordCountMin == null and query.markCarpoolRecordCountMax != null">
+			and t_mark_carpool.record_count <![CDATA[ <= ]]> #{query.markCarpoolRecordCountMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordCountMin != null and query.markCarpoolRecordCountMax != null">
+			and t_mark_carpool.record_count <![CDATA[ >= ]]> #{query.markCarpoolRecordCountMin} and t_mark_carpool.record_count <![CDATA[ <= ]]> #{query.markCarpoolRecordCountMax}
+		</if>
 		<if test="query != null and query.markCarpoolPrice != null">
 			and t_mark_carpool.price = #{query.markCarpoolPrice}
 		</if>
@@ -155,6 +167,18 @@
 		</if>
 		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
 			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		<if test="query != null and query.userDetailGender != null">
+			and t_user_detail.gender = #{query.userDetailGender}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax == null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin}
+		</if>
+		<if test="query != null and query.userDetailGenderMin == null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
 		</if>
 		
         and

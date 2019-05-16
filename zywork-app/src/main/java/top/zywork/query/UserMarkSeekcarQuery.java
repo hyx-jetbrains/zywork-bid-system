@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * UserMarkSeekcarQuery查询对象类<br/>
  *
- * 创建于2019-05-15<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserMarkSeekcarQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036038801431L;
+    private static final long serialVersionUID = -9223372035126827873L;
 
     //t_mark_seekcar表的字段对应的属性
 	// 开标找车编号
@@ -59,6 +59,12 @@ public class UserMarkSeekcarQuery extends PageQuery {
 	private String markSeekcarPhone;
 	// 备注
 	private String markSeekcarMemo;
+	// 申请人数
+	private Integer markSeekcarRecordCount;
+	// 申请人数（最小值）
+	private Integer markSeekcarRecordCountMin;
+	// 申请人数（最大值）
+	private Integer markSeekcarRecordCountMax;
 	// 版本号
 	private Integer markSeekcarVersion;
 	// 版本号（最小值）
@@ -94,10 +100,16 @@ public class UserMarkSeekcarQuery extends PageQuery {
 	private String userDetailNickname;
 	// 头像地址
 	private String userDetailHeadicon;
+	// 性别
+	private Byte userDetailGender;
+	// 性别（最小值）
+	private Byte userDetailGenderMin;
+	// 性别（最大值）
+	private Byte userDetailGenderMax;
 	
     public UserMarkSeekcarQuery () {}
 
-    public UserMarkSeekcarQuery (Long markSeekcarId, Long markSeekcarIdMin, Long markSeekcarIdMax, Long markSeekcarUserId, Long markSeekcarUserIdMin, Long markSeekcarUserIdMax, Long markSeekcarProjectId, Long markSeekcarProjectIdMin, Long markSeekcarProjectIdMax, String markSeekcarStartCity, String markSeekcarStartAddr, String markSeekcarEndCity, String markSeekcarEndAddr, Date markSeekcarStartTime, Date markSeekcarStartTimeMin, Date markSeekcarStartTimeMax, String markSeekcarName, String markSeekcarPhone, String markSeekcarMemo, Integer markSeekcarVersion, Integer markSeekcarVersionMin, Integer markSeekcarVersionMax, Date markSeekcarCreateTime, Date markSeekcarCreateTimeMin, Date markSeekcarCreateTimeMax, Date markSeekcarUpdateTime, Date markSeekcarUpdateTimeMin, Date markSeekcarUpdateTimeMax, Byte markSeekcarIsActive, Byte markSeekcarIsActiveMin, Byte markSeekcarIsActiveMax, String userDetailNickname, String userDetailHeadicon) {
+    public UserMarkSeekcarQuery (Long markSeekcarId, Long markSeekcarIdMin, Long markSeekcarIdMax, Long markSeekcarUserId, Long markSeekcarUserIdMin, Long markSeekcarUserIdMax, Long markSeekcarProjectId, Long markSeekcarProjectIdMin, Long markSeekcarProjectIdMax, String markSeekcarStartCity, String markSeekcarStartAddr, String markSeekcarEndCity, String markSeekcarEndAddr, Date markSeekcarStartTime, Date markSeekcarStartTimeMin, Date markSeekcarStartTimeMax, String markSeekcarName, String markSeekcarPhone, String markSeekcarMemo, Integer markSeekcarRecordCount, Integer markSeekcarRecordCountMin, Integer markSeekcarRecordCountMax, Integer markSeekcarVersion, Integer markSeekcarVersionMin, Integer markSeekcarVersionMax, Date markSeekcarCreateTime, Date markSeekcarCreateTimeMin, Date markSeekcarCreateTimeMax, Date markSeekcarUpdateTime, Date markSeekcarUpdateTimeMin, Date markSeekcarUpdateTimeMax, Byte markSeekcarIsActive, Byte markSeekcarIsActiveMin, Byte markSeekcarIsActiveMax, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender, Byte userDetailGenderMin, Byte userDetailGenderMax) {
         this.markSeekcarId = markSeekcarId;
 		this.markSeekcarIdMin = markSeekcarIdMin;
 		this.markSeekcarIdMax = markSeekcarIdMax;
@@ -117,6 +129,9 @@ public class UserMarkSeekcarQuery extends PageQuery {
 		this.markSeekcarName = markSeekcarName;
 		this.markSeekcarPhone = markSeekcarPhone;
 		this.markSeekcarMemo = markSeekcarMemo;
+		this.markSeekcarRecordCount = markSeekcarRecordCount;
+		this.markSeekcarRecordCountMin = markSeekcarRecordCountMin;
+		this.markSeekcarRecordCountMax = markSeekcarRecordCountMax;
 		this.markSeekcarVersion = markSeekcarVersion;
 		this.markSeekcarVersionMin = markSeekcarVersionMin;
 		this.markSeekcarVersionMax = markSeekcarVersionMax;
@@ -131,6 +146,9 @@ public class UserMarkSeekcarQuery extends PageQuery {
 		this.markSeekcarIsActiveMax = markSeekcarIsActiveMax;
 		this.userDetailNickname = userDetailNickname;
 		this.userDetailHeadicon = userDetailHeadicon;
+		this.userDetailGender = userDetailGender;
+		this.userDetailGenderMin = userDetailGenderMin;
+		this.userDetailGenderMax = userDetailGenderMax;
 		
     }
 
@@ -286,6 +304,30 @@ public class UserMarkSeekcarQuery extends PageQuery {
 		this.markSeekcarMemo = markSeekcarMemo;
 	}
 
+	public Integer getMarkSeekcarRecordCount() {
+		return markSeekcarRecordCount;
+	}
+
+	public void setMarkSeekcarRecordCount(Integer markSeekcarRecordCount) {
+		this.markSeekcarRecordCount = markSeekcarRecordCount;
+	}
+
+	public Integer getMarkSeekcarRecordCountMin() {
+		return markSeekcarRecordCountMin;
+	}
+
+	public void setMarkSeekcarRecordCountMin(Integer markSeekcarRecordCountMin) {
+		this.markSeekcarRecordCountMin = markSeekcarRecordCountMin;
+	}
+
+	public Integer getMarkSeekcarRecordCountMax() {
+		return markSeekcarRecordCountMax;
+	}
+
+	public void setMarkSeekcarRecordCountMax(Integer markSeekcarRecordCountMax) {
+		this.markSeekcarRecordCountMax = markSeekcarRecordCountMax;
+	}
+
 	public Integer getMarkSeekcarVersion() {
 		return markSeekcarVersion;
 	}
@@ -398,6 +440,30 @@ public class UserMarkSeekcarQuery extends PageQuery {
 		this.userDetailHeadicon = userDetailHeadicon;
 	}
 
+	public Byte getUserDetailGender() {
+		return userDetailGender;
+	}
+
+	public void setUserDetailGender(Byte userDetailGender) {
+		this.userDetailGender = userDetailGender;
+	}
+
+	public Byte getUserDetailGenderMin() {
+		return userDetailGenderMin;
+	}
+
+	public void setUserDetailGenderMin(Byte userDetailGenderMin) {
+		this.userDetailGenderMin = userDetailGenderMin;
+	}
+
+	public Byte getUserDetailGenderMax() {
+		return userDetailGenderMax;
+	}
+
+	public void setUserDetailGenderMax(Byte userDetailGenderMax) {
+		this.userDetailGenderMax = userDetailGenderMax;
+	}
+
 	
     @Override
     public String toString() {
@@ -421,6 +487,9 @@ public class UserMarkSeekcarQuery extends PageQuery {
 				", markSeekcarName = " + markSeekcarName + 
 				", markSeekcarPhone = " + markSeekcarPhone + 
 				", markSeekcarMemo = " + markSeekcarMemo + 
+				", markSeekcarRecordCount = " + markSeekcarRecordCount + 
+				", markSeekcarRecordCountMin = " + markSeekcarRecordCountMin + 
+				", markSeekcarRecordCountMax = " + markSeekcarRecordCountMax + 
 				", markSeekcarVersion = " + markSeekcarVersion + 
 				", markSeekcarVersionMin = " + markSeekcarVersionMin + 
 				", markSeekcarVersionMax = " + markSeekcarVersionMax + 
@@ -435,6 +504,9 @@ public class UserMarkSeekcarQuery extends PageQuery {
 				", markSeekcarIsActiveMax = " + markSeekcarIsActiveMax + 
 				", userDetailNickname = " + userDetailNickname + 
 				", userDetailHeadicon = " + userDetailHeadicon + 
+				", userDetailGender = " + userDetailGender + 
+				", userDetailGenderMin = " + userDetailGenderMin + 
+				", userDetailGenderMax = " + userDetailGenderMax + 
 				" }";
     }
 

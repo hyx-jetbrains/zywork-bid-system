@@ -36,11 +36,14 @@
 <FormItem label="项目编号" prop="projectId">
 	<InputNumber v-model="form.projectId" placeholder="请输入项目编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="城市" prop="city">
-	<Input v-model="form.city" placeholder="请输入城市"/>
+<FormItem label="出发城市" prop="startCity">
+	<Input v-model="form.startCity" placeholder="请输入出发城市"/>
 </FormItem>
 <FormItem label="出发地点" prop="startAddr">
 	<Input v-model="form.startAddr" placeholder="请输入出发地点"/>
+</FormItem>
+<FormItem label="目的地城市" prop="endCity">
+	<Input v-model="form.endCity" placeholder="请输入目的地城市"/>
 </FormItem>
 <FormItem label="目的地" prop="endAddr">
 	<Input v-model="form.endAddr" placeholder="请输入目的地"/>
@@ -53,6 +56,9 @@
 </FormItem>
 <FormItem label="搭载人数" prop="peopleCount">
 	<InputNumber v-model="form.peopleCount" placeholder="请输入搭载人数" style="width: 100%;"/>
+</FormItem>
+<FormItem label="申请人数" prop="recordCount">
+	<InputNumber v-model="form.recordCount" placeholder="请输入申请人数" style="width: 100%;"/>
 </FormItem>
 <FormItem label="价格" prop="price">
 	<InputNumber v-model="form.price" placeholder="请输入价格" style="width: 100%;"/>
@@ -78,11 +84,14 @@
 <FormItem label="项目编号" prop="projectId">
 	<InputNumber v-model="form.projectId" placeholder="请输入项目编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="城市" prop="city">
-	<Input v-model="form.city" placeholder="请输入城市"/>
+<FormItem label="出发城市" prop="startCity">
+	<Input v-model="form.startCity" placeholder="请输入出发城市"/>
 </FormItem>
 <FormItem label="出发地点" prop="startAddr">
 	<Input v-model="form.startAddr" placeholder="请输入出发地点"/>
+</FormItem>
+<FormItem label="目的地城市" prop="endCity">
+	<Input v-model="form.endCity" placeholder="请输入目的地城市"/>
 </FormItem>
 <FormItem label="目的地" prop="endAddr">
 	<Input v-model="form.endAddr" placeholder="请输入目的地"/>
@@ -95,6 +104,9 @@
 </FormItem>
 <FormItem label="搭载人数" prop="peopleCount">
 	<InputNumber v-model="form.peopleCount" placeholder="请输入搭载人数" style="width: 100%;"/>
+</FormItem>
+<FormItem label="申请人数" prop="recordCount">
+	<InputNumber v-model="form.recordCount" placeholder="请输入申请人数" style="width: 100%;"/>
 </FormItem>
 <FormItem label="价格" prop="price">
 	<InputNumber v-model="form.price" placeholder="请输入价格" style="width: 100%;"/>
@@ -156,11 +168,14 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="城市" prop="city">
-	<Input v-model="searchForm.city" placeholder="请输入城市"/>
+<FormItem label="出发城市" prop="startCity">
+	<Input v-model="searchForm.startCity" placeholder="请输入出发城市"/>
 </FormItem>
 <FormItem label="出发地点" prop="startAddr">
 	<Input v-model="searchForm.startAddr" placeholder="请输入出发地点"/>
+</FormItem>
+<FormItem label="目的地城市" prop="endCity">
+	<Input v-model="searchForm.endCity" placeholder="请输入目的地城市"/>
 </FormItem>
 <FormItem label="目的地" prop="endAddr">
 	<Input v-model="searchForm.endAddr" placeholder="请输入目的地"/>
@@ -192,6 +207,20 @@
 	<i-col span="11">
 	<FormItem prop="peopleCountMax">
 	<InputNumber v-model="searchForm.peopleCountMax" placeholder="请输入结束搭载人数" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
+</FormItem>
+<FormItem label="申请人数"><Row>
+	<i-col span="11">
+	<FormItem prop="recordCountMin">
+	<InputNumber v-model="searchForm.recordCountMin" placeholder="请输入开始申请人数" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="recordCountMax">
+	<InputNumber v-model="searchForm.recordCountMax" placeholder="请输入结束申请人数" style="width: 100%;"/>
 </FormItem>
 </i-col>
 </Row>
@@ -284,12 +313,14 @@
       <p>开标拼车编号: <span v-text="form.id"></span></p>
 <p>用户编号: <span v-text="form.userId"></span></p>
 <p>项目编号: <span v-text="form.projectId"></span></p>
-<p>城市: <span v-text="form.city"></span></p>
+<p>出发城市: <span v-text="form.startCity"></span></p>
 <p>出发地点: <span v-text="form.startAddr"></span></p>
+<p>目的地城市: <span v-text="form.endCity"></span></p>
 <p>目的地: <span v-text="form.endAddr"></span></p>
 <p>出发时间: <span v-text="form.startTime"></span></p>
 <p>汽车类型: <span v-text="form.carType"></span></p>
 <p>搭载人数: <span v-text="form.peopleCount"></span></p>
+<p>申请人数: <span v-text="form.recordCount"></span></p>
 <p>价格: <span v-text="form.price"></span></p>
 <p>联系人姓名: <span v-text="form.name"></span></p>
 <p>联系人电话: <span v-text="form.phone"></span></p>
@@ -340,12 +371,14 @@
           id: null,
 userId: null,
 projectId: null,
-city: null,
+startCity: null,
 startAddr: null,
+endCity: null,
 endAddr: null,
 startTime: null,
 carType: null,
 peopleCount: null,
+recordCount: null,
 price: null,
 name: null,
 phone: null,
@@ -362,11 +395,14 @@ isActive: null,
 projectId: [
 {type: 'integer', required: true, message: '此项为必须项', trigger: 'blur, change'}
 ],
-city: [
+startCity: [
 {type: 'string', min: 1, max: 10, message: '必须1-10个字符', trigger: 'blur'}
 ],
 startAddr: [
 {type: 'string', min: 1, max: 10, message: '必须1-10个字符', trigger: 'blur'}
+],
+endCity: [
+{type: 'string', min: 1, max: 20, message: '必须1-20个字符', trigger: 'blur'}
 ],
 endAddr: [
 {type: 'string', min: 1, max: 10, message: '必须1-10个字符', trigger: 'blur'}
@@ -396,8 +432,9 @@ userIdMax: null,
 projectId: null,
 projectIdMin: null, 
 projectIdMax: null, 
-city: null,
+startCity: null,
 startAddr: null,
+endCity: null,
 endAddr: null,
 startTime: null,
 startTimeMin: null, 
@@ -406,6 +443,9 @@ carType: null,
 peopleCount: null,
 peopleCountMin: null, 
 peopleCountMax: null, 
+recordCount: null,
+recordCountMin: null, 
+recordCountMax: null, 
 price: null,
 priceMin: null, 
 priceMax: null, 
@@ -462,14 +502,20 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '城市',
-key: 'city',
+title: '出发城市',
+key: 'startCity',
 minWidth: 120,
 sortable: true
 },
 {
 title: '出发地点',
 key: 'startAddr',
+minWidth: 120,
+sortable: true
+},
+{
+title: '目的地城市',
+key: 'endCity',
 minWidth: 120,
 sortable: true
 },
@@ -494,6 +540,12 @@ sortable: true
 {
 title: '搭载人数',
 key: 'peopleCount',
+minWidth: 120,
+sortable: true
+},
+{
+title: '申请人数',
+key: 'recordCount',
 minWidth: 120,
 sortable: true
 },

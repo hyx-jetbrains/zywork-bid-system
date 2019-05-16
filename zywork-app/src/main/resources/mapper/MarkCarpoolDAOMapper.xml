@@ -37,6 +37,9 @@
 			<if test="peopleCount != null">
 				people_count,
 			</if>
+			<if test="recordCount != null">
+				record_count,
+			</if>
 			<if test="price != null">
 				price,
 			</if>
@@ -87,6 +90,9 @@
 			</if>
 			<if test="peopleCount != null">
 				#{peopleCount},
+			</if>
+			<if test="recordCount != null">
+				#{recordCount},
 			</if>
 			<if test="price != null">
 				#{price},
@@ -147,6 +153,9 @@
 			<if test="item.peopleCount != null">
 				people_count,
 			</if>
+			<if test="item.recordCount != null">
+				record_count,
+			</if>
 			<if test="item.price != null">
 				price,
 			</if>
@@ -197,6 +206,9 @@
 			</if>
 			<if test="item.peopleCount != null">
 				#{item.peopleCount},
+			</if>
+			<if test="item.recordCount != null">
+				#{item.recordCount},
 			</if>
 			<if test="item.price != null">
 				#{item.price},
@@ -265,6 +277,9 @@
 			<if test="peopleCount != null">
 				people_count = #{peopleCount},
 			</if>
+			<if test="recordCount != null">
+				record_count = #{recordCount},
+			</if>
 			<if test="price != null">
 				price = #{price},
 			</if>
@@ -322,6 +337,9 @@
 			<if test="item.peopleCount != null">
 				people_count = #{item.peopleCount},
 			</if>
+			<if test="item.recordCount != null">
+				record_count = #{item.recordCount},
+			</if>
 			<if test="item.price != null">
 				price = #{item.price},
 			</if>
@@ -353,7 +371,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, user_id as userId, project_id as projectId, start_city as startCity, start_addr as startAddr, end_city as endCity, end_addr as endAddr, start_time as startTime, car_type as carType, people_count as peopleCount, price as price, name as name, phone as phone, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, user_id as userId, project_id as projectId, start_city as startCity, start_addr as startAddr, end_city as endCity, end_addr as endAddr, start_time as startTime, car_type as carType, people_count as peopleCount, record_count as recordCount, price as price, name as name, phone as phone, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -431,6 +449,18 @@
 		</if>
 		<if test="query != null and query.peopleCountMin != null and query.peopleCountMax != null">
 			and people_count <![CDATA[ >= ]]> #{query.peopleCountMin} and people_count <![CDATA[ <= ]]> #{query.peopleCountMax}
+		</if>
+		<if test="query != null and query.recordCount != null">
+			and record_count = #{query.recordCount}
+		</if>
+		<if test="query != null and query.recordCountMin != null and query.recordCountMax == null">
+			and record_count <![CDATA[ >= ]]> #{query.recordCountMin}
+		</if>
+		<if test="query != null and query.recordCountMin == null and query.recordCountMax != null">
+			and record_count <![CDATA[ <= ]]> #{query.recordCountMax}
+		</if>
+		<if test="query != null and query.recordCountMin != null and query.recordCountMax != null">
+			and record_count <![CDATA[ >= ]]> #{query.recordCountMin} and record_count <![CDATA[ <= ]]> #{query.recordCountMax}
 		</if>
 		<if test="query != null and query.price != null">
 			and price = #{query.price}

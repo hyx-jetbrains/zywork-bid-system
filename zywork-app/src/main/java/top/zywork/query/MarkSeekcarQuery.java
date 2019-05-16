@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * MarkSeekcarQuery查询对象类<br/>
  *
- * 创建于2019-05-05<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class MarkSeekcarQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035531949125L;
+    private static final long serialVersionUID = -9223372035654348224L;
 
     // 开标找车编号
 	private Long id;
@@ -58,6 +58,12 @@ public class MarkSeekcarQuery extends PageQuery {
 	private String phone;
 	// 备注
 	private String memo;
+	// 申请人数
+	private Integer recordCount;
+	// 申请人数（最小值）
+	private Integer recordCountMin;
+	// 申请人数（最大值）
+	private Integer recordCountMax;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -91,7 +97,7 @@ public class MarkSeekcarQuery extends PageQuery {
 	
     public MarkSeekcarQuery () {}
 
-    public MarkSeekcarQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long projectId, Long projectIdMin, Long projectIdMax, String startCity, String startAddr, String endCity, String endAddr, Date startTime, Date startTimeMin, Date startTimeMax, String name, String phone, String memo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public MarkSeekcarQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long projectId, Long projectIdMin, Long projectIdMax, String startCity, String startAddr, String endCity, String endAddr, Date startTime, Date startTimeMin, Date startTimeMax, String name, String phone, String memo, Integer recordCount, Integer recordCountMin, Integer recordCountMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -111,6 +117,9 @@ public class MarkSeekcarQuery extends PageQuery {
 		this.name = name;
 		this.phone = phone;
 		this.memo = memo;
+		this.recordCount = recordCount;
+		this.recordCountMin = recordCountMin;
+		this.recordCountMax = recordCountMax;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -278,6 +287,30 @@ public class MarkSeekcarQuery extends PageQuery {
 		this.memo = memo;
 	}
 
+	public Integer getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(Integer recordCount) {
+		this.recordCount = recordCount;
+	}
+
+	public Integer getRecordCountMin() {
+		return recordCountMin;
+	}
+
+	public void setRecordCountMin(Integer recordCountMin) {
+		this.recordCountMin = recordCountMin;
+	}
+
+	public Integer getRecordCountMax() {
+		return recordCountMax;
+	}
+
+	public void setRecordCountMax(Integer recordCountMax) {
+		this.recordCountMax = recordCountMax;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -397,6 +430,9 @@ public class MarkSeekcarQuery extends PageQuery {
 				", name = " + name + 
 				", phone = " + phone + 
 				", memo = " + memo + 
+				", recordCount = " + recordCount + 
+				", recordCountMin = " + recordCountMin + 
+				", recordCountMax = " + recordCountMax + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * MarkCarpoolQuery查询对象类<br/>
  *
- * 创建于2019-05-05<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class MarkCarpoolQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036202181814L;
+    private static final long serialVersionUID = -9223372036682293981L;
 
     // 开标拼车编号
 	private Long id;
@@ -60,6 +60,12 @@ public class MarkCarpoolQuery extends PageQuery {
 	private Integer peopleCountMin;
 	// 搭载人数（最大值）
 	private Integer peopleCountMax;
+	// 申请人数
+	private Integer recordCount;
+	// 申请人数（最小值）
+	private Integer recordCountMin;
+	// 申请人数（最大值）
+	private Integer recordCountMax;
 	// 价格
 	private Long price;
 	// 价格（最小值）
@@ -103,7 +109,7 @@ public class MarkCarpoolQuery extends PageQuery {
 	
     public MarkCarpoolQuery () {}
 
-    public MarkCarpoolQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long projectId, Long projectIdMin, Long projectIdMax, String startCity, String startAddr, String endCity, String endAddr, Date startTime, Date startTimeMin, Date startTimeMax, String carType, Integer peopleCount, Integer peopleCountMin, Integer peopleCountMax, Long price, Long priceMin, Long priceMax, String name, String phone, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public MarkCarpoolQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long projectId, Long projectIdMin, Long projectIdMax, String startCity, String startAddr, String endCity, String endAddr, Date startTime, Date startTimeMin, Date startTimeMax, String carType, Integer peopleCount, Integer peopleCountMin, Integer peopleCountMax, Integer recordCount, Integer recordCountMin, Integer recordCountMax, Long price, Long priceMin, Long priceMax, String name, String phone, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -124,6 +130,9 @@ public class MarkCarpoolQuery extends PageQuery {
 		this.peopleCount = peopleCount;
 		this.peopleCountMin = peopleCountMin;
 		this.peopleCountMax = peopleCountMax;
+		this.recordCount = recordCount;
+		this.recordCountMin = recordCountMin;
+		this.recordCountMax = recordCountMax;
 		this.price = price;
 		this.priceMin = priceMin;
 		this.priceMax = priceMax;
@@ -304,6 +313,30 @@ public class MarkCarpoolQuery extends PageQuery {
 		this.peopleCountMax = peopleCountMax;
 	}
 
+	public Integer getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(Integer recordCount) {
+		this.recordCount = recordCount;
+	}
+
+	public Integer getRecordCountMin() {
+		return recordCountMin;
+	}
+
+	public void setRecordCountMin(Integer recordCountMin) {
+		this.recordCountMin = recordCountMin;
+	}
+
+	public Integer getRecordCountMax() {
+		return recordCountMax;
+	}
+
+	public void setRecordCountMax(Integer recordCountMax) {
+		this.recordCountMax = recordCountMax;
+	}
+
 	public Long getPrice() {
 		return price;
 	}
@@ -464,6 +497,9 @@ public class MarkCarpoolQuery extends PageQuery {
 				", peopleCount = " + peopleCount + 
 				", peopleCountMin = " + peopleCountMin + 
 				", peopleCountMax = " + peopleCountMax + 
+				", recordCount = " + recordCount + 
+				", recordCountMin = " + recordCountMin + 
+				", recordCountMax = " + recordCountMax + 
 				", price = " + price + 
 				", priceMin = " + priceMin + 
 				", priceMax = " + priceMax + 

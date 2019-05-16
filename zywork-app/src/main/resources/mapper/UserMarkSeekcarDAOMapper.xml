@@ -5,7 +5,7 @@
 <mapper namespace="top.zywork.dao.UserMarkSeekcarDAO">
 
     <sql id="select_columns">
-        t_mark_seekcar.id as markSeekcarId, t_mark_seekcar.user_id as markSeekcarUserId, t_mark_seekcar.project_id as markSeekcarProjectId, t_mark_seekcar.start_city as markSeekcarStartCity, t_mark_seekcar.start_addr as markSeekcarStartAddr, t_mark_seekcar.end_city as markSeekcarEndCity, t_mark_seekcar.end_addr as markSeekcarEndAddr, t_mark_seekcar.start_time as markSeekcarStartTime, t_mark_seekcar.name as markSeekcarName, t_mark_seekcar.phone as markSeekcarPhone, t_mark_seekcar.memo as markSeekcarMemo, t_mark_seekcar.version as markSeekcarVersion, t_mark_seekcar.create_time as markSeekcarCreateTime, t_mark_seekcar.update_time as markSeekcarUpdateTime, t_mark_seekcar.is_active as markSeekcarIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon
+        t_mark_seekcar.id as markSeekcarId, t_mark_seekcar.user_id as markSeekcarUserId, t_mark_seekcar.project_id as markSeekcarProjectId, t_mark_seekcar.start_city as markSeekcarStartCity, t_mark_seekcar.start_addr as markSeekcarStartAddr, t_mark_seekcar.end_city as markSeekcarEndCity, t_mark_seekcar.end_addr as markSeekcarEndAddr, t_mark_seekcar.start_time as markSeekcarStartTime, t_mark_seekcar.name as markSeekcarName, t_mark_seekcar.phone as markSeekcarPhone, t_mark_seekcar.memo as markSeekcarMemo, t_mark_seekcar.record_count as markSeekcarRecordCount, t_mark_seekcar.version as markSeekcarVersion, t_mark_seekcar.create_time as markSeekcarCreateTime, t_mark_seekcar.update_time as markSeekcarUpdateTime, t_mark_seekcar.is_active as markSeekcarIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
     </sql>
 
     <sql id="query_where_clause">
@@ -78,6 +78,18 @@
 		<if test="query != null and query.markSeekcarMemo != null and query.markSeekcarMemo != ''">
 			and t_mark_seekcar.memo like concat('%', #{query.markSeekcarMemo}, '%')
 		</if>
+		<if test="query != null and query.markSeekcarRecordCount != null">
+			and t_mark_seekcar.record_count = #{query.markSeekcarRecordCount}
+		</if>
+		<if test="query != null and query.markSeekcarRecordCountMin != null and query.markSeekcarRecordCountMax == null">
+			and t_mark_seekcar.record_count <![CDATA[ >= ]]> #{query.markSeekcarRecordCountMin}
+		</if>
+		<if test="query != null and query.markSeekcarRecordCountMin == null and query.markSeekcarRecordCountMax != null">
+			and t_mark_seekcar.record_count <![CDATA[ <= ]]> #{query.markSeekcarRecordCountMax}
+		</if>
+		<if test="query != null and query.markSeekcarRecordCountMin != null and query.markSeekcarRecordCountMax != null">
+			and t_mark_seekcar.record_count <![CDATA[ >= ]]> #{query.markSeekcarRecordCountMin} and t_mark_seekcar.record_count <![CDATA[ <= ]]> #{query.markSeekcarRecordCountMax}
+		</if>
 		<if test="query != null and query.markSeekcarVersion != null">
 			and t_mark_seekcar.version = #{query.markSeekcarVersion}
 		</if>
@@ -131,6 +143,18 @@
 		</if>
 		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
 			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		<if test="query != null and query.userDetailGender != null">
+			and t_user_detail.gender = #{query.userDetailGender}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax == null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin}
+		</if>
+		<if test="query != null and query.userDetailGenderMin == null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
 		</if>
 		
         and

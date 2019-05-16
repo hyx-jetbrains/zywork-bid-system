@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * UserMarkCarpoolQuery查询对象类<br/>
  *
- * 创建于2019-05-15<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserMarkCarpoolQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036131439971L;
+    private static final long serialVersionUID = -9223372036709819725L;
 
     //t_mark_carpool表的字段对应的属性
 	// 开标拼车编号
@@ -61,6 +61,12 @@ public class UserMarkCarpoolQuery extends PageQuery {
 	private Integer markCarpoolPeopleCountMin;
 	// 搭载人数（最大值）
 	private Integer markCarpoolPeopleCountMax;
+	// 申请人数
+	private Integer markCarpoolRecordCount;
+	// 申请人数（最小值）
+	private Integer markCarpoolRecordCountMin;
+	// 申请人数（最大值）
+	private Integer markCarpoolRecordCountMax;
 	// 价格
 	private Long markCarpoolPrice;
 	// 价格（最小值）
@@ -106,10 +112,16 @@ public class UserMarkCarpoolQuery extends PageQuery {
 	private String userDetailNickname;
 	// 头像地址
 	private String userDetailHeadicon;
+	// 性别
+	private Byte userDetailGender;
+	// 性别（最小值）
+	private Byte userDetailGenderMin;
+	// 性别（最大值）
+	private Byte userDetailGenderMax;
 	
     public UserMarkCarpoolQuery () {}
 
-    public UserMarkCarpoolQuery (Long markCarpoolId, Long markCarpoolIdMin, Long markCarpoolIdMax, Long markCarpoolUserId, Long markCarpoolUserIdMin, Long markCarpoolUserIdMax, Long markCarpoolProjectId, Long markCarpoolProjectIdMin, Long markCarpoolProjectIdMax, String markCarpoolStartCity, String markCarpoolStartAddr, String markCarpoolEndCity, String markCarpoolEndAddr, Date markCarpoolStartTime, Date markCarpoolStartTimeMin, Date markCarpoolStartTimeMax, String markCarpoolCarType, Integer markCarpoolPeopleCount, Integer markCarpoolPeopleCountMin, Integer markCarpoolPeopleCountMax, Long markCarpoolPrice, Long markCarpoolPriceMin, Long markCarpoolPriceMax, String markCarpoolName, String markCarpoolPhone, Integer markCarpoolVersion, Integer markCarpoolVersionMin, Integer markCarpoolVersionMax, Date markCarpoolCreateTime, Date markCarpoolCreateTimeMin, Date markCarpoolCreateTimeMax, Date markCarpoolUpdateTime, Date markCarpoolUpdateTimeMin, Date markCarpoolUpdateTimeMax, Byte markCarpoolIsActive, Byte markCarpoolIsActiveMin, Byte markCarpoolIsActiveMax, String userDetailNickname, String userDetailHeadicon) {
+    public UserMarkCarpoolQuery (Long markCarpoolId, Long markCarpoolIdMin, Long markCarpoolIdMax, Long markCarpoolUserId, Long markCarpoolUserIdMin, Long markCarpoolUserIdMax, Long markCarpoolProjectId, Long markCarpoolProjectIdMin, Long markCarpoolProjectIdMax, String markCarpoolStartCity, String markCarpoolStartAddr, String markCarpoolEndCity, String markCarpoolEndAddr, Date markCarpoolStartTime, Date markCarpoolStartTimeMin, Date markCarpoolStartTimeMax, String markCarpoolCarType, Integer markCarpoolPeopleCount, Integer markCarpoolPeopleCountMin, Integer markCarpoolPeopleCountMax, Integer markCarpoolRecordCount, Integer markCarpoolRecordCountMin, Integer markCarpoolRecordCountMax, Long markCarpoolPrice, Long markCarpoolPriceMin, Long markCarpoolPriceMax, String markCarpoolName, String markCarpoolPhone, Integer markCarpoolVersion, Integer markCarpoolVersionMin, Integer markCarpoolVersionMax, Date markCarpoolCreateTime, Date markCarpoolCreateTimeMin, Date markCarpoolCreateTimeMax, Date markCarpoolUpdateTime, Date markCarpoolUpdateTimeMin, Date markCarpoolUpdateTimeMax, Byte markCarpoolIsActive, Byte markCarpoolIsActiveMin, Byte markCarpoolIsActiveMax, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender, Byte userDetailGenderMin, Byte userDetailGenderMax) {
         this.markCarpoolId = markCarpoolId;
 		this.markCarpoolIdMin = markCarpoolIdMin;
 		this.markCarpoolIdMax = markCarpoolIdMax;
@@ -130,6 +142,9 @@ public class UserMarkCarpoolQuery extends PageQuery {
 		this.markCarpoolPeopleCount = markCarpoolPeopleCount;
 		this.markCarpoolPeopleCountMin = markCarpoolPeopleCountMin;
 		this.markCarpoolPeopleCountMax = markCarpoolPeopleCountMax;
+		this.markCarpoolRecordCount = markCarpoolRecordCount;
+		this.markCarpoolRecordCountMin = markCarpoolRecordCountMin;
+		this.markCarpoolRecordCountMax = markCarpoolRecordCountMax;
 		this.markCarpoolPrice = markCarpoolPrice;
 		this.markCarpoolPriceMin = markCarpoolPriceMin;
 		this.markCarpoolPriceMax = markCarpoolPriceMax;
@@ -149,6 +164,9 @@ public class UserMarkCarpoolQuery extends PageQuery {
 		this.markCarpoolIsActiveMax = markCarpoolIsActiveMax;
 		this.userDetailNickname = userDetailNickname;
 		this.userDetailHeadicon = userDetailHeadicon;
+		this.userDetailGender = userDetailGender;
+		this.userDetailGenderMin = userDetailGenderMin;
+		this.userDetailGenderMax = userDetailGenderMax;
 		
     }
 
@@ -312,6 +330,30 @@ public class UserMarkCarpoolQuery extends PageQuery {
 		this.markCarpoolPeopleCountMax = markCarpoolPeopleCountMax;
 	}
 
+	public Integer getMarkCarpoolRecordCount() {
+		return markCarpoolRecordCount;
+	}
+
+	public void setMarkCarpoolRecordCount(Integer markCarpoolRecordCount) {
+		this.markCarpoolRecordCount = markCarpoolRecordCount;
+	}
+
+	public Integer getMarkCarpoolRecordCountMin() {
+		return markCarpoolRecordCountMin;
+	}
+
+	public void setMarkCarpoolRecordCountMin(Integer markCarpoolRecordCountMin) {
+		this.markCarpoolRecordCountMin = markCarpoolRecordCountMin;
+	}
+
+	public Integer getMarkCarpoolRecordCountMax() {
+		return markCarpoolRecordCountMax;
+	}
+
+	public void setMarkCarpoolRecordCountMax(Integer markCarpoolRecordCountMax) {
+		this.markCarpoolRecordCountMax = markCarpoolRecordCountMax;
+	}
+
 	public Long getMarkCarpoolPrice() {
 		return markCarpoolPrice;
 	}
@@ -464,6 +506,30 @@ public class UserMarkCarpoolQuery extends PageQuery {
 		this.userDetailHeadicon = userDetailHeadicon;
 	}
 
+	public Byte getUserDetailGender() {
+		return userDetailGender;
+	}
+
+	public void setUserDetailGender(Byte userDetailGender) {
+		this.userDetailGender = userDetailGender;
+	}
+
+	public Byte getUserDetailGenderMin() {
+		return userDetailGenderMin;
+	}
+
+	public void setUserDetailGenderMin(Byte userDetailGenderMin) {
+		this.userDetailGenderMin = userDetailGenderMin;
+	}
+
+	public Byte getUserDetailGenderMax() {
+		return userDetailGenderMax;
+	}
+
+	public void setUserDetailGenderMax(Byte userDetailGenderMax) {
+		this.userDetailGenderMax = userDetailGenderMax;
+	}
+
 	
     @Override
     public String toString() {
@@ -488,6 +554,9 @@ public class UserMarkCarpoolQuery extends PageQuery {
 				", markCarpoolPeopleCount = " + markCarpoolPeopleCount + 
 				", markCarpoolPeopleCountMin = " + markCarpoolPeopleCountMin + 
 				", markCarpoolPeopleCountMax = " + markCarpoolPeopleCountMax + 
+				", markCarpoolRecordCount = " + markCarpoolRecordCount + 
+				", markCarpoolRecordCountMin = " + markCarpoolRecordCountMin + 
+				", markCarpoolRecordCountMax = " + markCarpoolRecordCountMax + 
 				", markCarpoolPrice = " + markCarpoolPrice + 
 				", markCarpoolPriceMin = " + markCarpoolPriceMin + 
 				", markCarpoolPriceMax = " + markCarpoolPriceMax + 
@@ -507,6 +576,9 @@ public class UserMarkCarpoolQuery extends PageQuery {
 				", markCarpoolIsActiveMax = " + markCarpoolIsActiveMax + 
 				", userDetailNickname = " + userDetailNickname + 
 				", userDetailHeadicon = " + userDetailHeadicon + 
+				", userDetailGender = " + userDetailGender + 
+				", userDetailGenderMin = " + userDetailGenderMin + 
+				", userDetailGenderMax = " + userDetailGenderMax + 
 				" }";
     }
 

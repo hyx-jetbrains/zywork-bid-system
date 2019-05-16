@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * MarkSeekcarVO值对象类<br/>
  *
- * 创建于2019-05-05<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class MarkSeekcarVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372036279723668L;
+    private static final long serialVersionUID = -9223372035966818791L;
 
     // 开标找车编号
 	private Long id;
@@ -30,16 +30,16 @@ public class MarkSeekcarVO extends BaseVO {
 	@NotNull(message = "此项是必须项")
 	private Long projectId;
 	// 出发城市
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String startCity;
 	// 出发地点
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String startAddr;
 	// 目的地城市
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String endCity;
 	// 目的地
-	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String endAddr;
 	// 出发时间
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -53,6 +53,8 @@ public class MarkSeekcarVO extends BaseVO {
 	// 备注
 	@Size(min = 0, max = 255, message = "必须小于255个字符")
 	private String memo;
+	// 申请人数
+	private Integer recordCount;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -66,7 +68,7 @@ public class MarkSeekcarVO extends BaseVO {
 	
     public MarkSeekcarVO () {}
 
-    public MarkSeekcarVO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String name, String phone, String memo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public MarkSeekcarVO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String name, String phone, String memo, Integer recordCount, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.projectId = projectId;
@@ -78,6 +80,7 @@ public class MarkSeekcarVO extends BaseVO {
 		this.name = name;
 		this.phone = phone;
 		this.memo = memo;
+		this.recordCount = recordCount;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -173,6 +176,14 @@ public class MarkSeekcarVO extends BaseVO {
 		this.memo = memo;
 	}
 
+	public Integer getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(Integer recordCount) {
+		this.recordCount = recordCount;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -220,6 +231,7 @@ public class MarkSeekcarVO extends BaseVO {
 				", name = " + name + 
 				", phone = " + phone + 
 				", memo = " + memo + 
+				", recordCount = " + recordCount + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

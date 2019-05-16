@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * UserMarkSeekcarVO值对象类<br/>
  *
- * 创建于2019-05-15<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserMarkSeekcarVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034754410771L;
+    private static final long serialVersionUID = -9223372035689575990L;
 
     //t_mark_seekcar表的字段对应的属性
 	// 开标找车编号
@@ -54,6 +54,8 @@ public class UserMarkSeekcarVO extends BaseVO {
 	// 备注
 	@Size(min = 0, max = 255, message = "必须小于255个字符")
 	private String markSeekcarMemo;
+	// 申请人数
+	private Integer markSeekcarRecordCount;
 	// 版本号
 	private Integer markSeekcarVersion;
 	// 创建时间
@@ -71,10 +73,12 @@ public class UserMarkSeekcarVO extends BaseVO {
 	// 头像地址
 	@Size(min = 0, max = 500, message = "必须小于500个字符")
 	private String userDetailHeadicon;
+	// 性别
+	private Byte userDetailGender;
 	
     public UserMarkSeekcarVO () {}
 
-    public UserMarkSeekcarVO (Long markSeekcarId, Long markSeekcarUserId, Long markSeekcarProjectId, String markSeekcarStartCity, String markSeekcarStartAddr, String markSeekcarEndCity, String markSeekcarEndAddr, Date markSeekcarStartTime, String markSeekcarName, String markSeekcarPhone, String markSeekcarMemo, Integer markSeekcarVersion, Date markSeekcarCreateTime, Date markSeekcarUpdateTime, Byte markSeekcarIsActive, String userDetailNickname, String userDetailHeadicon) {
+    public UserMarkSeekcarVO (Long markSeekcarId, Long markSeekcarUserId, Long markSeekcarProjectId, String markSeekcarStartCity, String markSeekcarStartAddr, String markSeekcarEndCity, String markSeekcarEndAddr, Date markSeekcarStartTime, String markSeekcarName, String markSeekcarPhone, String markSeekcarMemo, Integer markSeekcarRecordCount, Integer markSeekcarVersion, Date markSeekcarCreateTime, Date markSeekcarUpdateTime, Byte markSeekcarIsActive, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender) {
         this.markSeekcarId = markSeekcarId;
 		this.markSeekcarUserId = markSeekcarUserId;
 		this.markSeekcarProjectId = markSeekcarProjectId;
@@ -86,12 +90,14 @@ public class UserMarkSeekcarVO extends BaseVO {
 		this.markSeekcarName = markSeekcarName;
 		this.markSeekcarPhone = markSeekcarPhone;
 		this.markSeekcarMemo = markSeekcarMemo;
+		this.markSeekcarRecordCount = markSeekcarRecordCount;
 		this.markSeekcarVersion = markSeekcarVersion;
 		this.markSeekcarCreateTime = markSeekcarCreateTime;
 		this.markSeekcarUpdateTime = markSeekcarUpdateTime;
 		this.markSeekcarIsActive = markSeekcarIsActive;
 		this.userDetailNickname = userDetailNickname;
 		this.userDetailHeadicon = userDetailHeadicon;
+		this.userDetailGender = userDetailGender;
 		
     }
 
@@ -183,6 +189,14 @@ public class UserMarkSeekcarVO extends BaseVO {
 		this.markSeekcarMemo = markSeekcarMemo;
 	}
 
+	public Integer getMarkSeekcarRecordCount() {
+		return markSeekcarRecordCount;
+	}
+
+	public void setMarkSeekcarRecordCount(Integer markSeekcarRecordCount) {
+		this.markSeekcarRecordCount = markSeekcarRecordCount;
+	}
+
 	public Integer getMarkSeekcarVersion() {
 		return markSeekcarVersion;
 	}
@@ -231,6 +245,14 @@ public class UserMarkSeekcarVO extends BaseVO {
 		this.userDetailHeadicon = userDetailHeadicon;
 	}
 
+	public Byte getUserDetailGender() {
+		return userDetailGender;
+	}
+
+	public void setUserDetailGender(Byte userDetailGender) {
+		this.userDetailGender = userDetailGender;
+	}
+
 	
     @Override
     public String toString() {
@@ -246,12 +268,14 @@ public class UserMarkSeekcarVO extends BaseVO {
 				", markSeekcarName = " + markSeekcarName + 
 				", markSeekcarPhone = " + markSeekcarPhone + 
 				", markSeekcarMemo = " + markSeekcarMemo + 
+				", markSeekcarRecordCount = " + markSeekcarRecordCount + 
 				", markSeekcarVersion = " + markSeekcarVersion + 
 				", markSeekcarCreateTime = " + markSeekcarCreateTime + 
 				", markSeekcarUpdateTime = " + markSeekcarUpdateTime + 
 				", markSeekcarIsActive = " + markSeekcarIsActive + 
 				", userDetailNickname = " + userDetailNickname + 
 				", userDetailHeadicon = " + userDetailHeadicon + 
+				", userDetailGender = " + userDetailGender + 
 				" }";
     }
 

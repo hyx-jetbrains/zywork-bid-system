@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * MarkCarpoolDTO数据传输对象类<br/>
  *
- * 创建于2019-05-05<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class MarkCarpoolDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372034726134281L;
+    private static final long serialVersionUID = -9223372035813953795L;
 
     // 开标拼车编号
 	private Long id;
@@ -35,6 +35,8 @@ public class MarkCarpoolDTO extends BaseDTO {
 	private String carType;
 	// 搭载人数
 	private Integer peopleCount;
+	// 申请人数
+	private Integer recordCount;
 	// 价格
 	private Long price;
 	// 联系人姓名
@@ -52,7 +54,7 @@ public class MarkCarpoolDTO extends BaseDTO {
 	
     public MarkCarpoolDTO () {}
 
-    public MarkCarpoolDTO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String carType, Integer peopleCount, Long price, String name, String phone, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public MarkCarpoolDTO (Long id, Long userId, Long projectId, String startCity, String startAddr, String endCity, String endAddr, Date startTime, String carType, Integer peopleCount, Integer recordCount, Long price, String name, String phone, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.projectId = projectId;
@@ -63,6 +65,7 @@ public class MarkCarpoolDTO extends BaseDTO {
 		this.startTime = startTime;
 		this.carType = carType;
 		this.peopleCount = peopleCount;
+		this.recordCount = recordCount;
 		this.price = price;
 		this.name = name;
 		this.phone = phone;
@@ -153,6 +156,14 @@ public class MarkCarpoolDTO extends BaseDTO {
 		this.peopleCount = peopleCount;
 	}
 
+	public Integer getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(Integer recordCount) {
+		this.recordCount = recordCount;
+	}
+
 	public Long getPrice() {
 		return price;
 	}
@@ -223,6 +234,7 @@ public class MarkCarpoolDTO extends BaseDTO {
 				", startTime = " + startTime + 
 				", carType = " + carType + 
 				", peopleCount = " + peopleCount + 
+				", recordCount = " + recordCount + 
 				", price = " + price + 
 				", name = " + name + 
 				", phone = " + phone + 

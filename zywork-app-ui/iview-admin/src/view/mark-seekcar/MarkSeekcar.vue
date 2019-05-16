@@ -456,6 +456,10 @@
         <span v-text="form.memo"></span>
       </p>
       <p>
+        申请人数:
+        <span v-text="form.recordCount"></span>
+      </p>
+      <p>
         版本号:
         <span v-text="form.version"></span>
       </p>
@@ -616,6 +620,7 @@ export default {
         name: null,
         phone: null,
         memo: null,
+        recordCount: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -933,6 +938,12 @@ export default {
           {
             title: '备注',
             key: 'memo',
+            minWidth: 120,
+            sortable: true
+          },
+          {
+            title: '申请人数',
+            key: 'recordCount',
             minWidth: 120,
             sortable: true
           },

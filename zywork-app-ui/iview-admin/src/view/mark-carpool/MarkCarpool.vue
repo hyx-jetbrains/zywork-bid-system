@@ -330,6 +330,10 @@
 				搭载人数:
 				<span v-text="form.peopleCount"></span>
 			</p>
+      <p>
+				申请人数:
+				<span v-text="form.recordCount"></span>
+			</p>
 			<p>
 				价格:
 				<span v-text="form.price"></span>
@@ -500,7 +504,8 @@
 					endAddr: null,
 					startTime: null,
 					carType: null,
-					peopleCount: null,
+          peopleCount: null,
+          recordCOunt: null,
 					price: null,
 					name: null,
 					phone: null,
@@ -805,6 +810,12 @@
 						{
 							title: '汽车类型',
 							key: 'carType',
+							minWidth: 120,
+							sortable: true
+            },
+            {
+							title: '申请人数',
+							key: 'reocrdCount',
 							minWidth: 120,
 							sortable: true
 						},

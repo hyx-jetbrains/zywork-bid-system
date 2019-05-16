@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * UserMarkCarpoolDTO数据传输对象类<br/>
  *
- * 创建于2019-05-15<br/>
+ * 创建于2019-05-16<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserMarkCarpoolDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035712054851L;
+    private static final long serialVersionUID = -9223372035475706149L;
 
     //t_mark_carpool表的字段对应的属性
 	// 开标拼车编号
@@ -36,6 +36,8 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 	private String markCarpoolCarType;
 	// 搭载人数
 	private Integer markCarpoolPeopleCount;
+	// 申请人数
+	private Integer markCarpoolRecordCount;
 	// 价格
 	private Long markCarpoolPrice;
 	// 联系人姓名
@@ -55,10 +57,12 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 	private String userDetailNickname;
 	// 头像地址
 	private String userDetailHeadicon;
+	// 性别
+	private Byte userDetailGender;
 	
     public UserMarkCarpoolDTO () {}
 
-    public UserMarkCarpoolDTO (Long markCarpoolId, Long markCarpoolUserId, Long markCarpoolProjectId, String markCarpoolStartCity, String markCarpoolStartAddr, String markCarpoolEndCity, String markCarpoolEndAddr, Date markCarpoolStartTime, String markCarpoolCarType, Integer markCarpoolPeopleCount, Long markCarpoolPrice, String markCarpoolName, String markCarpoolPhone, Integer markCarpoolVersion, Date markCarpoolCreateTime, Date markCarpoolUpdateTime, Byte markCarpoolIsActive, String userDetailNickname, String userDetailHeadicon) {
+    public UserMarkCarpoolDTO (Long markCarpoolId, Long markCarpoolUserId, Long markCarpoolProjectId, String markCarpoolStartCity, String markCarpoolStartAddr, String markCarpoolEndCity, String markCarpoolEndAddr, Date markCarpoolStartTime, String markCarpoolCarType, Integer markCarpoolPeopleCount, Integer markCarpoolRecordCount, Long markCarpoolPrice, String markCarpoolName, String markCarpoolPhone, Integer markCarpoolVersion, Date markCarpoolCreateTime, Date markCarpoolUpdateTime, Byte markCarpoolIsActive, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender) {
         this.markCarpoolId = markCarpoolId;
 		this.markCarpoolUserId = markCarpoolUserId;
 		this.markCarpoolProjectId = markCarpoolProjectId;
@@ -69,6 +73,7 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 		this.markCarpoolStartTime = markCarpoolStartTime;
 		this.markCarpoolCarType = markCarpoolCarType;
 		this.markCarpoolPeopleCount = markCarpoolPeopleCount;
+		this.markCarpoolRecordCount = markCarpoolRecordCount;
 		this.markCarpoolPrice = markCarpoolPrice;
 		this.markCarpoolName = markCarpoolName;
 		this.markCarpoolPhone = markCarpoolPhone;
@@ -78,6 +83,7 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 		this.markCarpoolIsActive = markCarpoolIsActive;
 		this.userDetailNickname = userDetailNickname;
 		this.userDetailHeadicon = userDetailHeadicon;
+		this.userDetailGender = userDetailGender;
 		
     }
 
@@ -161,6 +167,14 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 		this.markCarpoolPeopleCount = markCarpoolPeopleCount;
 	}
 
+	public Integer getMarkCarpoolRecordCount() {
+		return markCarpoolRecordCount;
+	}
+
+	public void setMarkCarpoolRecordCount(Integer markCarpoolRecordCount) {
+		this.markCarpoolRecordCount = markCarpoolRecordCount;
+	}
+
 	public Long getMarkCarpoolPrice() {
 		return markCarpoolPrice;
 	}
@@ -233,6 +247,14 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 		this.userDetailHeadicon = userDetailHeadicon;
 	}
 
+	public Byte getUserDetailGender() {
+		return userDetailGender;
+	}
+
+	public void setUserDetailGender(Byte userDetailGender) {
+		this.userDetailGender = userDetailGender;
+	}
+
 	
     @Override
     public String toString() {
@@ -247,6 +269,7 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 				", markCarpoolStartTime = " + markCarpoolStartTime + 
 				", markCarpoolCarType = " + markCarpoolCarType + 
 				", markCarpoolPeopleCount = " + markCarpoolPeopleCount + 
+				", markCarpoolRecordCount = " + markCarpoolRecordCount + 
 				", markCarpoolPrice = " + markCarpoolPrice + 
 				", markCarpoolName = " + markCarpoolName + 
 				", markCarpoolPhone = " + markCarpoolPhone + 
@@ -256,6 +279,7 @@ public class UserMarkCarpoolDTO extends BaseDTO {
 				", markCarpoolIsActive = " + markCarpoolIsActive + 
 				", userDetailNickname = " + userDetailNickname + 
 				", userDetailHeadicon = " + userDetailHeadicon + 
+				", userDetailGender = " + userDetailGender + 
 				" }";
     }
 
