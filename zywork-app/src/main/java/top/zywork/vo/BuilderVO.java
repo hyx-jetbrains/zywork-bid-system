@@ -24,7 +24,6 @@ public class BuilderVO extends BaseVO {
     // 建造师编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 姓名
 	@Size(min = 0, max = 10, message = "必须小于10个字符")

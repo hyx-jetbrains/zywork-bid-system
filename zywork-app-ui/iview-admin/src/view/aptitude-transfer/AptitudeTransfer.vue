@@ -117,7 +117,7 @@
               <p>单击或拖动文件到此处上传</p>
             </div>
           </Upload>
-          <p style="color: red">请方向上传你的资质证书，我们平台承诺仅为核实企业真实性，不会对外透露贵公司信息。</p>
+          <p style="color: red">请放心上传你的资质证书，我们平台承诺仅为核实企业真实性，不会对外透露贵公司信息。</p>
         </FormItem>
       </Form>
       <div slot="footer">

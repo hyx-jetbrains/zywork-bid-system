@@ -2,6 +2,7 @@ package top.zywork.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.zywork.constant.AptitudeTransferConstants;
 import top.zywork.dao.AptitudeResourceDAO;
 import top.zywork.dao.AptitudeTransferDAO;
 import top.zywork.dos.AptitudeTransferDO;
@@ -54,12 +55,15 @@ public class AptitudeTransferServiceImpl extends AbstractBaseService implements 
     public int saveAptitudeTransfer(AptitudeTransferVO aptitudeTransferVO) {
         Long[] resourceIdArr = aptitudeTransferVO.getResourceId();
         int res = aptitudeTransferDAO.save(aptitudeTransferVO);
-        if (resourceIdArr.length > 0) {
-            for (Long resourceId : resourceIdArr) {
-                AptitudeResourceDTO aptitudeResourceDTO = new AptitudeResourceDTO();
-                aptitudeResourceDTO.setAptitudeId(aptitudeTransferVO.getId());
-                aptitudeResourceDTO.setResourceId(resourceId);
-                aptitudeResourceDAO.save(aptitudeResourceDTO);
+        if (AptitudeTransferConstants.APTITUDE_TRANSFER_TYPE_SELL == aptitudeTransferVO.getType().intValue()) {
+            // 转让的才有附件
+            if (resourceIdArr != null && resourceIdArr.length > 0) {
+                for (Long resourceId : resourceIdArr) {
+                    AptitudeResourceDTO aptitudeResourceDTO = new AptitudeResourceDTO();
+                    aptitudeResourceDTO.setAptitudeId(aptitudeTransferVO.getId());
+                    aptitudeResourceDTO.setResourceId(resourceId);
+                    aptitudeResourceDAO.save(aptitudeResourceDTO);
+                }
             }
         }
         return res;

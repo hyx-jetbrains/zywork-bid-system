@@ -99,7 +99,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请填写说明" v-model="builderReq.memo" />
-						</view>
+							</view>
 					</view>
 					<view class="zy-bottom-button">
 						<button type="primary" @click="addBuilderReq" :disabled="disabled.buildeReqBtn">发布信息</button>
@@ -254,11 +254,11 @@
 						<view class="uni-list list-pd" style="margin-bottom: 150upx;">
 							<view class="uni-list-cell cell-pd">
 								<view class="uni-uploader">
-									<view class="uni-uploader-head">
+									<view class="uni-uploader-head zy-upload-head">
 										<view class="uni-uploader-title">点击可预览选好的图片</view>
 										<view class="uni-uploader-info">{{imageList.length}}/5</view>
 									</view>
-									<view class="uni-uploader-body">
+									<view class="uni-uploader-body zy-upload-body">
 										<view class="uni-uploader__files">
 											<block v-for="(image,index) in imageList" :key="index">
 												<view class="uni-uploader__file">
@@ -269,6 +269,7 @@
 												<view class="uni-uploader__input" @tap="chooseImage"></view>
 											</view>
 										</view>
+										<view class="zy-text-warning">上传证书/证件，不超过5张(非必填)</view>
 									</view>
 								</view>
 							</view>
@@ -301,9 +302,14 @@
 	} from '@/common/picker.data.js'
 	import {
 		getDate,
-		showInfoToast
+		showInfoToast,
+		BASE_URL,
+		getUserToken,
+		networkError,
+		showSuccessToast
 	} from '@/common/util.js'
 	import * as infoPublish from '@/common/info-publish.js'
+	import * as ResponseStatus from '@/common/response-status.js'
 	
 	var sourceType = [
 		['camera'],
@@ -474,17 +480,44 @@
 			chooseImage: async function() {
 				if (this.imageList.length === 5) {
 					let isContinue = await this.isFullImg();
-					console.log("是否继续?", isContinue);
 					if (!isContinue) {
 						return;
 					}
 				}
+				var myThis = this;
 				uni.chooseImage({
 					sourceType: sourceType[this.sourceTypeIndex],
 					sizeType: sizeType[this.sizeTypeIndex],
 					count: this.imageList.length + this.count[this.countIndex] > 5 ? 5 - this.imageList.length : this.count[this.countIndex],
-					success: (res) => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
+					success: (chooseImageRes) => {
+						const tempFilePaths = chooseImageRes.tempFilePaths;
+						uni.showLoading({
+							title: '正在上传'
+						})
+						uni.uploadFile({
+							url: BASE_URL + '/builder/admin/upload-res',
+							filePath: tempFilePaths[0],
+							name: 'file',
+							header: {
+								'Authorization': 'Bearer ' + getUserToken()
+							},
+							success: function (res) {
+								const data = JSON.parse(res.data);
+								if (data.code = ResponseStatus.OK) {
+									showSuccessToast(data.message);
+									myThis.builder.resourceId.push(data.data.id);
+									myThis.imageList = myThis.imageList.concat(tempFilePaths);
+								} else {
+									showInfoToast(data.message);
+								}
+							},
+							fail: () => {
+								networkError()
+							},
+							complete: () => {
+								uni.hideLoading()
+							}
+						});
 					}
 				})
 			},

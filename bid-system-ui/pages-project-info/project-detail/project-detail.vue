@@ -292,7 +292,8 @@
 		openMarkArray
 	} from '@/common/picker.data.js'
 	import {
-		DEFAULT_HEADICON
+		DEFAULT_HEADICON,
+		showInfoToast
 	} from '@/common/util.js'
 	import {
 		getProjectCollectionInfo,
@@ -302,6 +303,7 @@
 		getCarpoolList,
 		getSeekcarList
 	} from '@/common/project-info.js'
+	import * as infoShare from '@/common/info-share.js'
 
 	/** 项目类型-房建市政 */
 	const PROJECT_TYPE_BUILDING = '房建市政'
@@ -468,29 +470,21 @@
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {
-				if (item.carpoolRecordCount >= item.peopleCount) {
-					uni.showModal({
-						title: '操作提示',
-						content: '人数已满，不能申请',
-						showCancel: false,
-						confirmText: "确定"
-					})
+				if (item.markCarpoolRecordCount >= item.markCarpoolPeopleCount) {
+					showInfoToast('人数已满，不能申请')
 					return;
 				}
-				console.log('我要拼车：' + item.id);
+				// 调用接口保存拼车记录
+				infoShare.saveMarkCarpoolRecord(this, item.markCarpoolId);
 			},
-			/** 点击我要拼车，增加找车记录 */
+			/** 点击我有车，增加找车记录 */
 			addSeekcarRecord(item) {
-				if (item.seekcarRecordCount >= 1) {
-					uni.showModal({
-						title: '操作提示',
-						content: '人数已满，不能申请',
-						showCancel: false,
-						confirmText: "确定"
-					})
+				if (item.markSeekcarRecordCount >= 1) {
+					showInfoToast('人数已满，不能申请')
 					return;
 				}
-				console.log('我有车：' + item.id);
+				// 调用接口保存找车记录
+				infoShare.saveMarkSeekcarRecord(this, item.markSeekcarId);
 			},
 			/** 前往详情页面 */
 			toDetailPage(name, item) {

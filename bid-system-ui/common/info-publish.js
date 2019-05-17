@@ -77,7 +77,7 @@ export const saveBuilderReq = (self, params) => {
 					url: '/pages-info-share/publish-result/publish-result'
 				})
 				self.builderReq = {}
-				self.vinitPicker();
+				self.initPicker();
 			} else {
 				showInfoToast(res.data.message);
 			}
@@ -135,7 +135,9 @@ export const saveBuilder = (self, params) => {
 					url: '/pages-info-share/publish-result/publish-result'
 				})
 				self.builder = {}
-				self.vinitPicker();
+				self.builder.resourceId = []
+				self.imageList = []
+				self.initPicker();
 			} else {
 				showInfoToast(res.data.message);
 			}
@@ -147,6 +149,60 @@ export const saveBuilder = (self, params) => {
 		complete: () => {
 			uni.hideLoading();
 			self.disabled.buildeBtn = false;
+		}
+	})
+}
+
+/** 
+ * 发布资质转让表单验证
+ */
+export const checkAptitude = (self) => {
+	if (self.aptitude.phone === null
+		|| self.aptitude.phone === undefined) {
+		showInfoToast("请输入手机号");
+		return false;
+	}
+	return true;
+}
+/**
+ * 发布资质转让-保存资质转让记录
+ */
+export const saveAptitude = (self, params) => {
+	self.disabled.aptitudeBtn = true;
+	if (!checkAptitude(self)) {
+		self.disabled.aptitudeBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	uni.request({
+		url: BASE_URL + '/aptitude-transfer/user/release-aptitudeTransfer',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+				self.aptitude = {}
+				self.aptitude.resourceId = []
+				self.imageList = []
+				self.initPicker();
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.aptitudeBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.aptitudeBtn = false;
 		}
 	})
 }

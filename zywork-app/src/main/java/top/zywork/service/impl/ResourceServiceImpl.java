@@ -110,9 +110,8 @@ public class ResourceServiceImpl extends AbstractBaseService implements Resource
         if (!responseStatusVO.getCode().equals(ResponseStatusEnum.OK.getCode())) {
             return responseStatusVO;
         }
-        String fileName = file.getOriginalFilename();
-        String extension = fileName.split("\\.")[1];
         String url = responseStatusVO.getData().toString();
+        String extension = url.split("\\.")[1];
         ResourceDTO resourceDTO = saveResourceData(jwtUser.getUserId(), resourceType, url, extension);
         ResourceVO resourceVO = BeanUtils.copy(resourceDTO, ResourceVO.class);
         return ResponseStatusVO.ok("上传成功", resourceVO);
