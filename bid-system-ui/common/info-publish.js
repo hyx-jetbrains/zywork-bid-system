@@ -63,7 +63,7 @@ export const saveBuilderReq = (self, params) => {
 	uni.showLoading({
 		title: '发布中'
 	})
-	self.builderReq.salary = self.builderReq.salary * 100;
+	self.builderReq.salary *= 100;
 	uni.request({
 		url: BASE_URL + '/builder-req/user/release-builderReq',
 		method: 'POST',
@@ -203,6 +203,184 @@ export const saveAptitude = (self, params) => {
 		complete: () => {
 			uni.hideLoading();
 			self.disabled.aptitudeBtn = false;
+		}
+	})
+}
+
+/** 
+ * 发布开标拼车表单验证
+ */
+export const checkCarpool = (self) => {
+	if (self.carpool.projectName === null
+		|| self.carpool.projectName === undefined) {
+		showInfoToast("请选择开标项目");
+		return false;
+	}
+	if (self.carpool.startCity === null
+		|| self.carpool.startCity === undefined) {
+		showInfoToast("请选择出发城市");
+		return false;
+	}
+	if (self.carpool.startAddr === null
+		|| self.carpool.startAddr === undefined) {
+		showInfoToast("请输入出发地点");
+		return false;
+	}
+	if (self.carpool.endCity === null
+		|| self.carpool.endCity === undefined) {
+		showInfoToast("请选择目的地城市");
+		return false;
+	}
+	if (self.carpool.endAddr === null
+		|| self.carpool.endAddr === undefined) {
+		showInfoToast("请输入目的地地点");
+		return false;
+	}
+	if (self.carpool.carType === null
+		|| self.carpool.carType === undefined) {
+		showInfoToast("请选择汽车类型");
+		return false;
+	}
+	if (self.carpool.peopleCount === null
+		|| self.carpool.peopleCount === undefined) {
+		showInfoToast("请输入搭载人数");
+		return false;
+	}
+	if (self.carpool.price === null
+		|| self.carpool.price === undefined) {
+		showInfoToast("请输入价格");
+		return false;
+	}
+	if (self.carpool.name === null
+		|| self.carpool.name === undefined) {
+		showInfoToast("请输入姓名");
+		return false;
+	}
+	if (self.carpool.phone === null
+		|| self.carpool.phone === undefined) {
+		showInfoToast("请输入手机号");
+		return false;
+	}
+	return true;
+}
+/**
+ * 发布开标拼车-保存开标拼车记录
+ */
+export const saveCarpool = (self, params) => {
+	self.disabled.carpoolBtn = true;
+	if (!checkCarpool(self)) {
+		self.disabled.carpoolBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	self.carpool.price *= 100;
+	uni.request({
+		url: BASE_URL + '/mark-carpool/user/release-markCarpool',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+				self.carpool = {}
+				self.initPicker();
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.carpoolBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.carpoolBtn = false;
+		}
+	})
+}
+/** 
+ * 发布开标找车表单验证
+ */
+export const checkSeekcar = (self) => {
+	if (self.seekcar.projectName === null
+		|| self.seekcar.projectName === undefined) {
+		showInfoToast("请选择开标项目");
+		return false;
+	}
+	if (self.seekcar.startCity === null
+		|| self.seekcar.startCity === undefined) {
+		showInfoToast("请选择出发城市");
+		return false;
+	}
+	if (self.seekcar.startAddr === null
+		|| self.seekcar.startAddr === undefined) {
+		showInfoToast("请输入出发地点");
+		return false;
+	}
+	if (self.seekcar.endCity === null
+		|| self.seekcar.endCity === undefined) {
+		showInfoToast("请选择目的地城市");
+		return false;
+	}
+	if (self.seekcar.endAddr === null
+		|| self.seekcar.endAddr === undefined) {
+		showInfoToast("请输入目的地地点");
+		return false;
+	}
+	if (self.seekcar.name === null
+		|| self.seekcar.name === undefined) {
+		showInfoToast("请输入姓名");
+		return false;
+	}
+	if (self.seekcar.phone === null
+		|| self.seekcar.phone === undefined) {
+		showInfoToast("请输入手机号");
+		return false;
+	}
+	return true;
+}
+/**
+ * 发布开标找车-保存开标找车记录
+ */
+export const saveSeekcar = (self, params) => {
+	self.disabled.seekcarBtn = true;
+	if (!checkSeekcar(self)) {
+		self.disabled.seekcarBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	uni.request({
+		url: BASE_URL + '/mark-seekcar/user/release-markSeekcar',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+				self.seekcar = {}
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.seekcarBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.seekcarBtn = false;
 		}
 	})
 }

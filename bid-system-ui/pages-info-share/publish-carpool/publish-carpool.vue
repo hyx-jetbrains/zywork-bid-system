@@ -7,11 +7,14 @@
 		</view>
 		<view v-if="type.current == 0">
 			<view class="uni-common-mt">
-				<form @submit="addCarpool">
+				<form>
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">绑定开标项目</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									绑定开标项目
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" 
@@ -27,7 +30,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">出发城市</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									出发城市
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" placeholder="选择出发城市" v-model="carpool.startCity" @tap="chooseStartCity"></input>
@@ -35,7 +41,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">出发地</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+									出发地
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入出发地点" v-model="carpool.startAddr"></input>
@@ -43,7 +52,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">目的地城市</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									目的地城市
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" placeholder="选择目的地城市" v-model="carpool.endCity" @tap="chooseEndCity"></input>
@@ -51,7 +63,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">目的地</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									目的地
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入目的地地点" v-model="carpool.endAddr"></input>
@@ -81,7 +96,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">汽车车型</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									汽车车型
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<picker @change="chooseCarType" :range="carTypeArray">
@@ -94,7 +112,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">搭载人数</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									搭载人数
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="number" :disabled="false" placeholder="输入搭载人数" v-model="carpool.peopleCount"></input>
@@ -102,7 +123,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">价格</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									价格
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="number" :disabled="false" placeholder="输入价格" v-model="carpool.price"></input>
@@ -110,7 +134,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">联系姓名</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									联系姓名
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入联系姓名" v-model="carpool.name"></input>
@@ -118,26 +145,32 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">联系手机</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									联系手机
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="false" placeholder="输入联系手机" v-model="carpool.phone"></input>
+								<input class="uni-input" type="number" :disabled="false" placeholder="输入联系手机" v-model="carpool.phone"></input>
 							</view>
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">发布信息</button>
+						<button type="primary" @click="addCarpool" :disabled="disabled.carpoolBtn">发布信息</button>
 					</view>
 				</form>
 			</view>
 		</view>
 		<view v-else>
 			<view class="uni-common-mt">
-				<form @submit="addSeekcar">
+				<form>
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">绑定开标项目</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									绑定开标项目
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" 
@@ -153,7 +186,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">出发城市</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									出发城市
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" placeholder="选择出发城市" v-model="seekcar.startCity" @tap="chooseStartCity"></input>
@@ -161,7 +197,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">出发地</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									出发地
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入出发地点" v-model="seekcar.startAddr"></input>
@@ -169,7 +208,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">目的地城市</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									目的地城市
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" placeholder="选择目的地城市" v-model="seekcar.endCity" @tap="chooseEndCity"></input>
@@ -177,7 +219,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">目的地</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									目的地
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入目的地地点" v-model="seekcar.endAddr"></input>
@@ -207,7 +252,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">联系姓名</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									联系姓名
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入联系姓名" v-model="seekcar.name"></input>
@@ -215,10 +263,13 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">联系手机</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									联系手机
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="false" placeholder="输入联系手机" v-model="seekcar.phone"></input>
+								<input class="uni-input" type="number" :disabled="false" placeholder="输入联系手机" v-model="seekcar.phone"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
@@ -234,7 +285,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">发布信息</button>
+						<button type="primary" @click="addSeekcar" :disabled="disabled.seekcarBtn">发布信息</button>
 					</view>
 				</form>
 			</view>
@@ -261,6 +312,7 @@
 	import {
 		getDate
 	} from '@/common/util.js'
+	import * as infoPublish from '@/common/info-publish.js'
 	
 	export default {
 		components: {
@@ -276,6 +328,10 @@
 				type: {
 					current: 0,
 					items: openMarkArray,
+				},
+				disabled: {
+					carpoolBtn: false,
+					seekcarBtn: false
 				},
 				tempStartDate: getDate({
 					format: true
@@ -417,22 +473,19 @@
 			/** 提交设置出发时间 */
 			setStartTime() {
 				this.carpool.startTime = this.seekcar.startTime
-					= this.tempStartDate + ' ' + this.tempStartTime
+					= this.tempStartDate + ' ' + this.tempStartTime + ':00'
 			},
 			/** 发布开标拼车信息 */
 			addCarpool: function(e) {
 				this.setStartTime()
-				this.carpool.price *= 100
-				var formObj = e.detail.value;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.carpool)
+				// var formObj = e.detail.value;
+				infoPublish.saveCarpool(this, this.carpool);
 			},
 			/** 发布开标找车信息 */
 			addSeekcar: function(e) {
 				this.setStartTime()
-				var formObj = e.detail.value;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.seekcar)
+				// var formObj = e.detail.value;
+				infoPublish.saveSeekcar(this, this.seekcar);
 			}
 		}
 	}
