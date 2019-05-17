@@ -488,10 +488,8 @@
 							if (this.aptitudeOpts.current === 0) {
 								// 求购
 								this.aptitudeBuyList = res.data.data.rows;
-								console.log('求购');
 							} else {
 								// 转让
-								console.log('转让');
 								this.aptitudeSellList = res.data.data.rows;
 							}
 						} else {

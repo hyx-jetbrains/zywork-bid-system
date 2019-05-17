@@ -193,7 +193,9 @@
 							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
 								<view @click="toCarpoolDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+											:src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view class="zy-disable-flex">
 												<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
@@ -238,7 +240,7 @@
 								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
 										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+											:src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view class="zy-disable-flex">
@@ -340,6 +342,7 @@
 		},
 		data() {
 			return {
+				defaultIcon: DEFAULT_HEADICON,
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				isCollection: false,
 				collectionIconColor: '#BFBFBF',

@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<!-- 招标信息搜索页面 -->
 		<view class="zy-disable-flex zy-search-page-bar">
 			<picker @change="chooseCity" :value="cityIndex" :range="cityArray">
 				<view class="zy-disable-flex" style="margin-left: 10upx;">
@@ -23,8 +24,8 @@
 				</view>
 			</view>
 
-			<view class="zy-history-record zy-disable-flex">
-				<view v-for="(oldKey, index) in oldKeywordList" @click="doSearch(oldKey)" :key="index">{{oldKey}}</view>
+			<view class="zy-history-record">
+				<text v-for="(oldKey, index) in oldKeywordList" @click="doSearch(oldKey)" :key="index">{{oldKey}}</text>
 			</view>
 		</view>
 		<view v-else>
