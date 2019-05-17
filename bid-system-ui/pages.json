@@ -189,6 +189,13 @@
 						"navigationBarTitleText": "求带资料详情",
 						"backgroundTextStyle": "light"
 					}
+				},
+				{
+					"path": "publish-result/publish-result",
+					"style": {
+						"navigationBarTitleText": "发布结果",
+						"backgroundTextStyle": "light"
+					}
 				}
 			]
 		},

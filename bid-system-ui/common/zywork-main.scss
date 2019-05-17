@@ -15,6 +15,8 @@ $border-color: #BFBFBF;
 
 $seperator-color: #F0F0F0;
 
+$button-background-disabed-color: #a7a8a9;
+
 page {
 	background-color: $primary-page-backcolor;
 }
@@ -33,7 +35,7 @@ button[type=primary] {
 }
 
 button[disabled][type=primary] {
-	background-color: #9ED99D;
+	background-color: $button-background-disabed-color;
 }
 
 button[type=primary][plain] {
@@ -247,6 +249,9 @@ button[type=primary][plain] {
 	margin-left: 40upx;
 	margin-bottom: 150upx;
 	padding-top: 20upx;
+}
+.zy-list-form-required {
+	color: $warning-text-color;
 }
 
 .zy-background-primary {

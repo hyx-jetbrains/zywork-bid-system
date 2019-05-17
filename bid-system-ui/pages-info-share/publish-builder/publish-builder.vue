@@ -7,11 +7,14 @@
 		<!-- 招聘 -->
 		<view v-if="type.current == 0">
 			<view class="uni-common-mt">
-				<form @submit="addBuilderReq">
+				<form>
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">姓名</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									姓名
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入真实姓名" v-model="builderReq.name"></input>
@@ -19,18 +22,24 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">所需人才</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									所需人才
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="false" placeholder="输入所需人才" v-model="builder.people"></input>
+								<input class="uni-input" type="text" :disabled="false" placeholder="输入所需人才" v-model="builderReq.people"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">所需人数</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									所需人数
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="number" :disabled="false" placeholder="输入所需人才数量" v-model="builder.peopleCount"></input>
+								<input class="uni-input" type="number" :disabled="false" placeholder="输入所需人才数量" v-model="builderReq.peopleCount"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
@@ -38,17 +47,21 @@
 								<view class="uni-label zy-text-bold zy-list-form-label">薪资</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<picker @change="chooseSalary" :range="salaryArray">
+								<!-- <picker @change="chooseSalary" :range="salaryArray">
 									<view class="zy-disable-flex">
 										<text class="zy-list-form-picker zy-text-info">{{builderReq.salary}}</text>
 										<zywork-icon type="iconxiangxia" />
 									</view>
-								</picker>
+								</picker> -->
+								<input class="uni-input" type="number" :disabled="false" placeholder="输入薪资(元/年)" v-model="builderReq.salary"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">公司地址</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									公司地址
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" placeholder="选择公司地址" v-model="builderReq.compAddr" @tap="chooseCity"></input>
@@ -56,7 +69,10 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">公司名称</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									公司名称
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入公司名称" v-model="builderReq.compName"></input>
@@ -64,10 +80,13 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">手机号</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									手机号
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="false" placeholder="输入手机号" v-model="builderReq.phone"></input>
+								<input class="uni-input" type="number" :disabled="false" placeholder="输入手机号" v-model="builderReq.phone"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
@@ -83,7 +102,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">发布信息</button>
+						<button type="primary" @click="addBuilderReq" :disabled="disabled.buildeReqBtn">发布信息</button>
 					</view>
 				</form>
 			</view>
@@ -91,11 +110,14 @@
 		<!-- 应聘 -->
 		<view v-else>
 			<view class="uni-common-mt">
-				<form @submit="addBuilder">
+				<form>
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">姓名</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									姓名
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="false" placeholder="输入真实姓名" v-model="builder.name"></input>
@@ -178,7 +200,7 @@
 								<view class="uni-label zy-text-bold zy-list-form-label">证书注册状态</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<picker @change="chooseCertificateRgeStatus" :range="certificateRegStatusArray">
+								<picker @change="chooseCertificateRegStatus" :range="certificateRegStatusArray">
 									<view class="zy-disable-flex">
 										<text class="zy-list-form-picker zy-text-info">{{builder.certificateRegStatus}}</text>
 										<zywork-icon type="iconxiangxia" />
@@ -201,10 +223,13 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">手机号</view>
+								<view class="uni-label zy-text-bold zy-list-form-label">
+									<text class="zy-list-form-required">*</text>
+									手机号
+								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="false" placeholder="输入手机号" v-model="builder.phone"></input>
+								<input class="uni-input" type="number" :disabled="false" placeholder="输入手机号" v-model="builder.phone"></input>
 							</view>
 						</view>
 						<view class="uni-list-cell">
@@ -250,7 +275,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">发布信息</button>
+						<button type="primary" @click="addBuilder" :disabled="disabled.buildeBtn">发布信息</button>
 					</view>
 				</form>
 			</view>
@@ -275,8 +300,10 @@
 		certificateRegStatusArray
 	} from '@/common/picker.data.js'
 	import {
-		getDate
+		getDate,
+		showInfoToast
 	} from '@/common/util.js'
+	import * as infoPublish from '@/common/info-publish.js'
 	
 	var sourceType = [
 		['camera'],
@@ -302,14 +329,16 @@
 					items: builderTypeArray,
 				},
 				genderArray: genderArray,
+				disabled: {
+					buildeReqBtn: false,
+					builderBtn: false
+				},
 				builder: {
 					id: null,
 					userId: null,
 					name: null,
 					gender: 0,
-					birthday: getDate({
-						format: true
-					}),
+					birthday: null,
 					certificateAddress: null,
 					certificateType: null,
 					certificateMajorType: null,
@@ -353,21 +382,25 @@
 					createTime: null,
 					updateTime: null,
 					isActive: null
-				}
+				},
 			}
 		},
 		onLoad() {
-			this.initPicker()
+			this.initPicker();
 		},
 		methods: {
 			/** 初始化选择器 */
 			initPicker() {
 				// 证书类别默认选中第一个
-				this.builder.certificateType = this.certificateTypeArray[0]
-				this.initCertificateMajorType(this.builder.certificateType)
-				this.builder.certificateStatus = this.certificateStatusArray[0]
-				this.builder.certificateRegStatus = this.certificateRegStatusArray[0]
-				this.builder.salary = this.builderReq.salary = this.salaryArray[0]
+				this.builder.gender = 0;
+				this.builder.birthday = getDate({
+					format: true
+				})
+				this.builder.certificateType = this.certificateTypeArray[0];
+				this.initCertificateMajorType(this.builder.certificateType);
+				this.builder.certificateStatus = this.certificateStatusArray[0];
+				this.builder.certificateRegStatus = this.certificateRegStatusArray[0];
+				this.builder.salary = this.salaryArray[0];
 			},
 			/** 分段器选择类别 */
 			onClickItem(index) {
@@ -378,6 +411,10 @@
 			/** 监听生日选择器 */
 			birdayChange: function(e) {
 				this.builder.birthday = e.target.value
+			},
+			/** 监听性别选择器 */
+			chooseGender: function(e) {
+				this.builder.gender = e.target.value
 			},
 			/** 监听证书类别选择器 */
 			chooseCertificateType: function(e) {
@@ -478,18 +515,17 @@
 					urls: this.imageList
 				})
 			},
-			/** 发布应聘信息 */
-			addBuilder: function(e) {
-				var formObj = e.detail.value;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.builder)
-			},
 			/** 发布招聘信息 */
 			addBuilderReq: function(e) {
-				var formObj = e.detail.value;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.builderReq)
-			}
+				// var formObj = e.detail.value;
+				infoPublish.saveBuilderReq(this, this.builderReq);
+				
+			},
+			/** 发布应聘信息 */
+			addBuilder: function(e) {
+				// var formObj = e.detail.value;
+				infoPublish.saveBuilder(this, this.builder);
+			},
 		}
 	}
 </script>
