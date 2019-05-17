@@ -195,8 +195,11 @@
 									<view class="zy-disable-flex">
 										<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<view>
-											<view>
-												<text class="zy-text-bold">{{item.userDetailNickname}}</text>
+											<view class="zy-disable-flex">
+												<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
+												<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+												<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
+												<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
 											</view>
 											<view class="zy-text-mini zy-text-info">
 												{{item.markCarpoolStartTime}}
@@ -234,10 +237,15 @@
 							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
 								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										 :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
-											<view>
-												<text class="zy-text-bold">{{item.userDetailNickname}}</text>
+											<view class="zy-disable-flex">
+												<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
+												<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+												<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
+												<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
 											</view>
 											<view class="zy-text-mini zy-text-info">{{item.markSeekcarStartTime}}</view>
 										</view>

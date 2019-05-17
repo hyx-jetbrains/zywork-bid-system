@@ -166,9 +166,7 @@ export const saveProjectCollection = (self, projectId) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.isCollection = true;
 				self.collectionOperation(0);
-				uni.showToast({
-					title: '收藏成功'
-				})
+				showSuccessToast('收藏成功');
 			} else {
 				self.isCollection = false;
 				showInfoToast(res.data.message)
@@ -197,9 +195,7 @@ export const cancelProjectCollection = (self, projectId) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.isCollection = false;
 				self.collectionOperation(0);
-				uni.showToast({
-					title: '取消成功'
-				})
+				showSuccessToast('取消成功');
 			} else {
 				self.isCollection = true;
 				showInfoToast(res.data.message)

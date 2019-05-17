@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * UserRecruitVO值对象类<br/>
  *
- * 创建于2019-05-15<br/>
+ * 创建于2019-05-17<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserRecruitVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035822355208L;
+    private static final long serialVersionUID = -9223372036169381321L;
 
     //t_recruit表的字段对应的属性
 	// 招聘编号
@@ -49,6 +49,9 @@ public class UserRecruitVO extends BaseVO {
 	// 职位描述
 	@Size(min = 0, max = 255, message = "必须小于255个字符")
 	private String recruitMemo;
+	// 招聘状态
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	private String recruitRecruitStatus;
 	// 版本号
 	private Integer recruitVersion;
 	// 创建时间
@@ -66,10 +69,12 @@ public class UserRecruitVO extends BaseVO {
 	// 头像地址
 	@Size(min = 0, max = 500, message = "必须小于500个字符")
 	private String userDetailHeadicon;
+	// 性别
+	private Byte userDetailGender;
 	
     public UserRecruitVO () {}
 
-    public UserRecruitVO (Long recruitId, Long recruitUserId, String recruitJobTitle, Byte recruitIsFulltime, String recruitWorkYear, String recruitEducation, String recruitSalary, String recruitWorkAddr, String recruitMemo, Integer recruitVersion, Date recruitCreateTime, Date recruitUpdateTime, Byte recruitIsActive, String userDetailNickname, String userDetailHeadicon) {
+    public UserRecruitVO (Long recruitId, Long recruitUserId, String recruitJobTitle, Byte recruitIsFulltime, String recruitWorkYear, String recruitEducation, String recruitSalary, String recruitWorkAddr, String recruitMemo, String recruitRecruitStatus, Integer recruitVersion, Date recruitCreateTime, Date recruitUpdateTime, Byte recruitIsActive, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender) {
         this.recruitId = recruitId;
 		this.recruitUserId = recruitUserId;
 		this.recruitJobTitle = recruitJobTitle;
@@ -79,12 +84,14 @@ public class UserRecruitVO extends BaseVO {
 		this.recruitSalary = recruitSalary;
 		this.recruitWorkAddr = recruitWorkAddr;
 		this.recruitMemo = recruitMemo;
+		this.recruitRecruitStatus = recruitRecruitStatus;
 		this.recruitVersion = recruitVersion;
 		this.recruitCreateTime = recruitCreateTime;
 		this.recruitUpdateTime = recruitUpdateTime;
 		this.recruitIsActive = recruitIsActive;
 		this.userDetailNickname = userDetailNickname;
 		this.userDetailHeadicon = userDetailHeadicon;
+		this.userDetailGender = userDetailGender;
 		
     }
 
@@ -160,6 +167,14 @@ public class UserRecruitVO extends BaseVO {
 		this.recruitMemo = recruitMemo;
 	}
 
+	public String getRecruitRecruitStatus() {
+		return recruitRecruitStatus;
+	}
+
+	public void setRecruitRecruitStatus(String recruitRecruitStatus) {
+		this.recruitRecruitStatus = recruitRecruitStatus;
+	}
+
 	public Integer getRecruitVersion() {
 		return recruitVersion;
 	}
@@ -208,6 +223,14 @@ public class UserRecruitVO extends BaseVO {
 		this.userDetailHeadicon = userDetailHeadicon;
 	}
 
+	public Byte getUserDetailGender() {
+		return userDetailGender;
+	}
+
+	public void setUserDetailGender(Byte userDetailGender) {
+		this.userDetailGender = userDetailGender;
+	}
+
 	
     @Override
     public String toString() {
@@ -221,12 +244,14 @@ public class UserRecruitVO extends BaseVO {
 				", recruitSalary = " + recruitSalary + 
 				", recruitWorkAddr = " + recruitWorkAddr + 
 				", recruitMemo = " + recruitMemo + 
+				", recruitRecruitStatus = " + recruitRecruitStatus + 
 				", recruitVersion = " + recruitVersion + 
 				", recruitCreateTime = " + recruitCreateTime + 
 				", recruitUpdateTime = " + recruitUpdateTime + 
 				", recruitIsActive = " + recruitIsActive + 
 				", userDetailNickname = " + userDetailNickname + 
 				", userDetailHeadicon = " + userDetailHeadicon + 
+				", userDetailGender = " + userDetailGender + 
 				" }";
     }
 

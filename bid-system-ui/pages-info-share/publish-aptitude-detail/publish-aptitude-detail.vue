@@ -1,34 +1,36 @@
 <template>
 	<view>
 		<!-- 资质转让和求购详情 -->
-		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.title}}</view>
+		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.aptitudeTransferTitle}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
-				
+
 				<view class="zy-disable-flex">
-					<image class="zy-page-mini-headicon" :src="item.headicon" />
+					<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+						:src="item.userDetailHeadicon" />
+					<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 					<view>
 						<view>
-							<text class="zy-text-bold">{{item.nickname}}</text>
+							<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 						</view>
-						<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+						<view class="zy-text-mini zy-text-info">{{item.aptitudeTransferCreateTime}}</view>
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">资质等级</view>
-					<view class="zy-disable-flex-right">{{item.compAptitudeLevel}}</view>
+					<view class="zy-disable-flex-right">{{item.aptitudeTransferCompAptitudeLevel}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">资质类别</view>
-					<view class="zy-disable-flex-right">{{item.compAptitudeType}}</view>
+					<view class="zy-disable-flex-right">{{item.aptitudeTransferCompAptitudeType}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
-					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.aptitudeTransferPhone}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">其他说明</view>
-					<view class="">{{item.memo}}</view>
+					<view class="">{{item.aptitudeTransferMemo}}</view>
 				</view>
 			</view>
 		</view>
@@ -38,9 +40,13 @@
 </template>
 
 <script>
+	import {
+		DEFAULT_HEADICON
+	} from '@/common/util.js'
 	export default {
 		data() {
 			return {
+				defaultIcon: DEFAULT_HEADICON,
 				item: {}
 			}
 		},
@@ -54,14 +60,14 @@
 				this.item = JSON.parse(payload);
 			}
 			uni.setNavigationBarTitle({
-				title: this.item.title
+				title: this.item.aptitudeTransferTitle
 			});
 		},
 		methods: {
 			// 打电话
 			callPhone() {
 				uni.makePhoneCall({
-					phoneNumber: this.item.phone,
+					phoneNumber: this.item.aptitudeTransferPhone,
 					success: () => {
 						console.log("成功拨打电话")
 					}

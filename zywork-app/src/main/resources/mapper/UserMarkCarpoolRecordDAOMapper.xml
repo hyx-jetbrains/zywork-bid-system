@@ -1,0 +1,175 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserMarkCarpoolRecordDAO">
+
+    <sql id="select_columns">
+        t_mark_carpool_record.id as markCarpoolRecordId, t_mark_carpool_record.user_id as markCarpoolRecordUserId, t_mark_carpool_record.mark_carpool_id as markCarpoolRecordMarkCarpoolId, t_mark_carpool_record.version as markCarpoolRecordVersion, t_mark_carpool_record.create_time as markCarpoolRecordCreateTime, t_mark_carpool_record.update_time as markCarpoolRecordUpdateTime, t_mark_carpool_record.is_active as markCarpoolRecordIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.markCarpoolRecordId != null">
+			and t_mark_carpool_record.id = #{query.markCarpoolRecordId}
+		</if>
+		<if test="query != null and query.markCarpoolRecordIdMin != null and query.markCarpoolRecordIdMax == null">
+			and t_mark_carpool_record.id <![CDATA[ >= ]]> #{query.markCarpoolRecordIdMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordIdMin == null and query.markCarpoolRecordIdMax != null">
+			and t_mark_carpool_record.id <![CDATA[ <= ]]> #{query.markCarpoolRecordIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordIdMin != null and query.markCarpoolRecordIdMax != null">
+			and t_mark_carpool_record.id <![CDATA[ >= ]]> #{query.markCarpoolRecordIdMin} and t_mark_carpool_record.id <![CDATA[ <= ]]> #{query.markCarpoolRecordIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUserId != null">
+			and t_mark_carpool_record.user_id = #{query.markCarpoolRecordUserId}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUserIdMin != null and query.markCarpoolRecordUserIdMax == null">
+			and t_mark_carpool_record.user_id <![CDATA[ >= ]]> #{query.markCarpoolRecordUserIdMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUserIdMin == null and query.markCarpoolRecordUserIdMax != null">
+			and t_mark_carpool_record.user_id <![CDATA[ <= ]]> #{query.markCarpoolRecordUserIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUserIdMin != null and query.markCarpoolRecordUserIdMax != null">
+			and t_mark_carpool_record.user_id <![CDATA[ >= ]]> #{query.markCarpoolRecordUserIdMin} and t_mark_carpool_record.user_id <![CDATA[ <= ]]> #{query.markCarpoolRecordUserIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordMarkCarpoolId != null">
+			and t_mark_carpool_record.mark_carpool_id = #{query.markCarpoolRecordMarkCarpoolId}
+		</if>
+		<if test="query != null and query.markCarpoolRecordMarkCarpoolIdMin != null and query.markCarpoolRecordMarkCarpoolIdMax == null">
+			and t_mark_carpool_record.mark_carpool_id <![CDATA[ >= ]]> #{query.markCarpoolRecordMarkCarpoolIdMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordMarkCarpoolIdMin == null and query.markCarpoolRecordMarkCarpoolIdMax != null">
+			and t_mark_carpool_record.mark_carpool_id <![CDATA[ <= ]]> #{query.markCarpoolRecordMarkCarpoolIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordMarkCarpoolIdMin != null and query.markCarpoolRecordMarkCarpoolIdMax != null">
+			and t_mark_carpool_record.mark_carpool_id <![CDATA[ >= ]]> #{query.markCarpoolRecordMarkCarpoolIdMin} and t_mark_carpool_record.mark_carpool_id <![CDATA[ <= ]]> #{query.markCarpoolRecordMarkCarpoolIdMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordVersion != null">
+			and t_mark_carpool_record.version = #{query.markCarpoolRecordVersion}
+		</if>
+		<if test="query != null and query.markCarpoolRecordVersionMin != null and query.markCarpoolRecordVersionMax == null">
+			and t_mark_carpool_record.version <![CDATA[ >= ]]> #{query.markCarpoolRecordVersionMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordVersionMin == null and query.markCarpoolRecordVersionMax != null">
+			and t_mark_carpool_record.version <![CDATA[ <= ]]> #{query.markCarpoolRecordVersionMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordVersionMin != null and query.markCarpoolRecordVersionMax != null">
+			and t_mark_carpool_record.version <![CDATA[ >= ]]> #{query.markCarpoolRecordVersionMin} and t_mark_carpool_record.version <![CDATA[ <= ]]> #{query.markCarpoolRecordVersionMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordCreateTime != null">
+			and t_mark_carpool_record.create_time = #{query.markCarpoolRecordCreateTime}
+		</if>
+		<if test="query != null and query.markCarpoolRecordCreateTimeMin != null and query.markCarpoolRecordCreateTimeMax == null">
+			and t_mark_carpool_record.create_time <![CDATA[ >= ]]> #{query.markCarpoolRecordCreateTimeMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordCreateTimeMin == null and query.markCarpoolRecordCreateTimeMax != null">
+			and t_mark_carpool_record.create_time <![CDATA[ <= ]]> #{query.markCarpoolRecordCreateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordCreateTimeMin != null and query.markCarpoolRecordCreateTimeMax != null">
+			and t_mark_carpool_record.create_time <![CDATA[ >= ]]> #{query.markCarpoolRecordCreateTimeMin} and t_mark_carpool_record.create_time <![CDATA[ <= ]]> #{query.markCarpoolRecordCreateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUpdateTime != null">
+			and t_mark_carpool_record.update_time = #{query.markCarpoolRecordUpdateTime}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUpdateTimeMin != null and query.markCarpoolRecordUpdateTimeMax == null">
+			and t_mark_carpool_record.update_time <![CDATA[ >= ]]> #{query.markCarpoolRecordUpdateTimeMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUpdateTimeMin == null and query.markCarpoolRecordUpdateTimeMax != null">
+			and t_mark_carpool_record.update_time <![CDATA[ <= ]]> #{query.markCarpoolRecordUpdateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordUpdateTimeMin != null and query.markCarpoolRecordUpdateTimeMax != null">
+			and t_mark_carpool_record.update_time <![CDATA[ >= ]]> #{query.markCarpoolRecordUpdateTimeMin} and t_mark_carpool_record.update_time <![CDATA[ <= ]]> #{query.markCarpoolRecordUpdateTimeMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordIsActive != null">
+			and t_mark_carpool_record.is_active = #{query.markCarpoolRecordIsActive}
+		</if>
+		<if test="query != null and query.markCarpoolRecordIsActiveMin != null and query.markCarpoolRecordIsActiveMax == null">
+			and t_mark_carpool_record.is_active <![CDATA[ >= ]]> #{query.markCarpoolRecordIsActiveMin}
+		</if>
+		<if test="query != null and query.markCarpoolRecordIsActiveMin == null and query.markCarpoolRecordIsActiveMax != null">
+			and t_mark_carpool_record.is_active <![CDATA[ <= ]]> #{query.markCarpoolRecordIsActiveMax}
+		</if>
+		<if test="query != null and query.markCarpoolRecordIsActiveMin != null and query.markCarpoolRecordIsActiveMax != null">
+			and t_mark_carpool_record.is_active <![CDATA[ >= ]]> #{query.markCarpoolRecordIsActiveMin} and t_mark_carpool_record.is_active <![CDATA[ <= ]]> #{query.markCarpoolRecordIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		<if test="query != null and query.userDetailGender != null">
+			and t_user_detail.gender = #{query.userDetailGender}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax == null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin}
+		</if>
+		<if test="query != null and query.userDetailGenderMin == null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		
+        and
+        t_mark_carpool_record.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userMarkCarpoolRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool_record, t_user_detail where t_mark_carpool_record.id = #{id} and
+        t_mark_carpool_record.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userMarkCarpoolRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool_record, t_user_detail
+        where
+        t_mark_carpool_record.user_id = t_user_detail.id
+        order by t_mark_carpool_record.update_time desc, t_mark_carpool_record.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userMarkCarpoolRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool_record, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_mark_carpool_record.update_time desc, t_mark_carpool_record.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userMarkCarpoolRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_mark_carpool_record, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_mark_carpool_record.update_time desc, t_mark_carpool_record.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_mark_carpool_record, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.dto.MarkCarpoolDTO;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.MarkCarpoolRecordDTO;
 import top.zywork.query.MarkCarpoolRecordQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.MarkCarpoolRecordService;
+import top.zywork.service.MarkCarpoolService;
+import top.zywork.vo.MarkCarpoolVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.MarkCarpoolRecordVO;
@@ -35,6 +40,8 @@ public class MarkCarpoolRecordController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(MarkCarpoolRecordController.class);
 
     private MarkCarpoolRecordService markCarpoolRecordService;
+
+    private MarkCarpoolService markCarpoolService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated MarkCarpoolRecordVO markCarpoolRecordVO, BindingResult bindingResult) {
@@ -134,8 +141,52 @@ public class MarkCarpoolRecordController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /***
+     * @description: 我要拼车-保存拼车记录
+     * @param carpoolId 拼车编号
+     * @return: top.zywork.vo.ResponseStatusVO
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-05-17 10:37
+     */
+    @GetMapping("any/save-carpool-record/{carpoolId}")
+    public ResponseStatusVO saveCarpoolRecord(@PathVariable("carpoolId") Long carpoolId) {
+        if (null == carpoolId || 0 == carpoolId) {
+            return ResponseStatusVO.error("拼车失败，请刷新重试", null);
+        }
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.error("拼车失败", null);
+        }
+        MarkCarpoolVO markCarpoolVO = BeanUtils.copy(markCarpoolService.getById(carpoolId), MarkCarpoolVO.class);
+        if (null == markCarpoolVO) {
+            return ResponseStatusVO.error("拼车失败", null);
+        }
+        long userId = jwtUser.getUserId();
+        long tempUserId = markCarpoolVO.getUserId();
+        if (userId == tempUserId) {
+            return ResponseStatusVO.error("拼车失败,不能拼自己发布的拼车信息", null);
+        }
+        MarkCarpoolRecordDTO markCarpoolRecordDTO = markCarpoolRecordService.getByUserIdAndCarpoolId(userId, carpoolId);
+        if (markCarpoolRecordDTO != null) {
+            return ResponseStatusVO.error("拼车失败，已经拼过该车了", null);
+        }
+        int recordCount = markCarpoolVO.getRecordCount();
+        markCarpoolVO.setRecordCount(++recordCount);
+        markCarpoolService.update(BeanUtils.copy(markCarpoolVO, MarkCarpoolDTO.class));
+        MarkCarpoolRecordVO markCarpoolRecordVO = new MarkCarpoolRecordVO();
+        markCarpoolRecordVO.setUserId(userId);
+        markCarpoolRecordVO.setMarkCarpoolId(carpoolId);
+        markCarpoolRecordService.save(BeanUtils.copy(markCarpoolRecordVO, MarkCarpoolRecordDTO.class));
+        return ResponseStatusVO.ok("拼车成功", null);
+    }
+
     @Autowired
     public void setMarkCarpoolRecordService(MarkCarpoolRecordService markCarpoolRecordService) {
         this.markCarpoolRecordService = markCarpoolRecordService;
+    }
+
+    @Autowired
+    public void setMarkCarpoolService(MarkCarpoolService markCarpoolService) {
+        this.markCarpoolService = markCarpoolService;
     }
 }

@@ -25,4 +25,15 @@ public interface MarkCarpoolRecordDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    /***
+     * @description: 根据用户id和拼车id查询拼车记录
+     * @param userId 用户id
+     * @param markCarpoolId 拼车id
+     * @return: java.lang.Object
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-05-17 11:40
+     */
+    Object getByUserIdAndCarpoolId(@Param("userId") Long userId, @Param("markCarpoolId") Long markCarpoolId);
+
 }

@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.dto.MarkSeekcarDTO;
+import top.zywork.dto.MarkSeekcarRecordDTO;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.MarkSeekcarRecordDTO;
 import top.zywork.query.MarkSeekcarRecordQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.MarkSeekcarRecordService;
-import top.zywork.vo.ResponseStatusVO;
-import top.zywork.vo.PagerVO;
-import top.zywork.vo.MarkSeekcarRecordVO;
+import top.zywork.service.MarkSeekcarService;
+import top.zywork.vo.*;
 
 import java.util.List;
 
@@ -35,6 +38,8 @@ public class MarkSeekcarRecordController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(MarkSeekcarRecordController.class);
 
     private MarkSeekcarRecordService markSeekcarRecordService;
+
+    private MarkSeekcarService markSeekcarService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated MarkSeekcarRecordVO markSeekcarRecordVO, BindingResult bindingResult) {
@@ -134,8 +139,52 @@ public class MarkSeekcarRecordController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /***
+     * @description: 我有车-保存找车记录
+     * @param seekcarId 找车编号
+     * @return: top.zywork.vo.ResponseStatusVO
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-05-17 10:37
+     */
+    @GetMapping("any/save-seekcar-record/{seekcarId}")
+    public ResponseStatusVO saveSeekcarRecord(@PathVariable("seekcarId") Long seekcarId) {
+        if (null == seekcarId || 0 == seekcarId) {
+            return ResponseStatusVO.error("申请失败，请刷新重试", null);
+        }
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.error("申请失败", null);
+        }
+        MarkSeekcarVO markSeekcarVO = BeanUtils.copy(markSeekcarService.getById(seekcarId), MarkSeekcarVO.class);
+        if (null == markSeekcarVO) {
+            return ResponseStatusVO.error("申请失败", null);
+        }
+        long userId = jwtUser.getUserId();
+        long tempUserId = markSeekcarVO.getUserId();
+        if (userId == tempUserId) {
+            return ResponseStatusVO.error("申请失败,不能申请自己发布的找车信息", null);
+        }
+        MarkSeekcarRecordDTO markSeekcarRecordDTO = markSeekcarRecordService.getByUserIdAndSeekcarId(userId, seekcarId);
+        if (markSeekcarRecordDTO != null) {
+            return ResponseStatusVO.error("申请失败，已经申请过了", null);
+        }
+        int recordCount = markSeekcarVO.getRecordCount();
+        markSeekcarVO.setRecordCount(++recordCount);
+        markSeekcarService.update(BeanUtils.copy(markSeekcarVO, MarkSeekcarDTO.class));
+        MarkSeekcarRecordVO markSeekcarRecordVO = new MarkSeekcarRecordVO();
+        markSeekcarRecordVO.setUserId(userId);
+        markSeekcarRecordVO.setMarkSeekcarId(seekcarId);
+        markSeekcarRecordService.save(BeanUtils.copy(markSeekcarRecordVO, MarkSeekcarRecordDTO.class));
+        return ResponseStatusVO.ok("申请成功", null);
+    }
+
     @Autowired
     public void setMarkSeekcarRecordService(MarkSeekcarRecordService markSeekcarRecordService) {
         this.markSeekcarRecordService = markSeekcarRecordService;
+    }
+
+    @Autowired
+    public void setMarkSeekcarService(MarkSeekcarService markSeekcarService) {
+        this.markSeekcarService = markSeekcarService;
     }
 }

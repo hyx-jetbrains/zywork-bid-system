@@ -2,11 +2,11 @@
 	<view>
 		<view class="zy-top-search">
 			<view class="zy-search-bar" @click="toSearchPage">
-				<zywork-icon type="iconchaxun"/>
-				<input type="text" placeholder="我要搜索" disabled/>
+				<zywork-icon type="iconchaxun" />
+				<input type="text" placeholder="我要搜索" disabled />
 			</view>
 			<view style="margin-left: 10upx;">
-				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toPublishChoose"/>
+				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toPublishChoose" />
 			</view>
 		</view>
 		<view class="uni-tab-bar zy-tab-bar">
@@ -15,12 +15,13 @@
 				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
 			</scroll-view>
 		</view>
-		
+
 		<view>
 			<!-- 建造师 -->
 			<view v-if="infoType.tabIndex === 0">
 				<view class="zy-uni-segmented-control">
-					<uni-segmented-control :current="builderOpts.current" :values="builderOpts.items" v-on:clickItem="onClickBuilderItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
+					<uni-segmented-control :current="builderOpts.current" :values="builderOpts.items" v-on:clickItem="onClickBuilderItem"
+					 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 				</view>
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
 					<view v-if="builderOpts.current === 0">
@@ -29,21 +30,22 @@
 							<view class="zy-page-list-item" v-for="(item, index) in builderReqList" :key="index">
 								<view @click="toBuilderReqDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-if="item.headicon !== null && item.headicon !== undefined" class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.compName}}</text>
+												<text class="zy-text-bold">{{item.builderReqCompName}}</text>
 											</view>
-											<view class="zy-text-mini zy-text-info">公告时间：{{item.createTime}}</view>
+											<view class="zy-text-mini zy-text-info">公告时间：{{item.builderReqCreateTime}}</view>
 										</view>
 										<view class="zy-disable-flex-right">
-											¥{{item.salary / 100}}
+											¥{{item.builderReqSalary / 100}}
 										</view>
 									</view>
 									<view>
 										<view class="zy-text-big zy-text-bold">建筑工程</view>
 										<view class="zy-text-info">
-											{{item.memo}}
+											{{item.builderReqMemo}}
 										</view>
 									</view>
 								</view>
@@ -57,18 +59,20 @@
 							<view class="zy-page-list-item" v-for="(item, index) in builderList" :key="index">
 								<view @click="toBuilderDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										 :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.name}}</text>
+												<text class="zy-text-bold">{{item.builderName}}</text>
 											</view>
-											<view class="zy-text-mini zy-text-info">公告时间：{{item.createTime}}</view>
+											<view class="zy-text-mini zy-text-info">公告时间：{{item.builderCreateTime}}</view>
 										</view>
 									</view>
 									<view>
-										<view class="zy-text-big zy-text-bold">{{item.certificateMajorType}}</view>
+										<view class="zy-text-big zy-text-bold">{{item.builderCertificateMajorType}}</view>
 										<view class="zy-text-info">
-											{{item.memo}}
+											{{item.builderMemo}}
 										</view>
 									</view>
 								</view>
@@ -78,11 +82,12 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<!-- 资质转让 -->
 			<view v-if="infoType.tabIndex === 1">
 				<view class="zy-uni-segmented-control">
-					<uni-segmented-control :current="aptitudeOpts.current" :values="aptitudeOpts.items" v-on:clickItem="onClickAptitudeItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
+					<uni-segmented-control :current="aptitudeOpts.current" :values="aptitudeOpts.items" v-on:clickItem="onClickAptitudeItem"
+					 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 				</view>
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
 					<view v-if="aptitudeOpts.current === 0">
@@ -91,18 +96,20 @@
 							<view class="zy-page-list-item" v-for="(item, index) in aptitudeBuyList" :key="index">
 								<view @click="toAptitudeDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										 :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.nickname}}</text>
+												<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 											</view>
-											<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+											<view class="zy-text-mini zy-text-info">{{item.aptitudeTransferCreateTime}}</view>
 										</view>
 									</view>
 									<view>
-										<view class="zy-text-big zy-text-bold">{{item.title}}</view>
+										<view class="zy-text-big zy-text-bold">{{item.aptitudeTransferTitle}}</view>
 										<view class="zy-text-info">
-											{{item.memo}}
+											{{item.aptitudeTransferMemo}}
 										</view>
 									</view>
 								</view>
@@ -116,18 +123,20 @@
 							<view class="zy-page-list-item" v-for="(item, index) in aptitudeSellList" :key="index">
 								<view @click="toAptitudeDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										 :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.nickname}}</text>
+												<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 											</view>
-											<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+											<view class="zy-text-mini zy-text-info">{{item.aptitudeTransferCreateTime}}</view>
 										</view>
 									</view>
 									<view>
-										<view class="zy-text-big zy-text-bold">{{item.title}}</view>
+										<view class="zy-text-big zy-text-bold">{{item.aptitudeTransferTitle}}</view>
 										<view class="zy-text-info">
-											{{item.memo}}
+											{{item.aptitudeTransferMemo}}
 										</view>
 									</view>
 								</view>
@@ -137,11 +146,12 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<!-- 开标拼车 -->
 			<view v-if="infoType.tabIndex === 2">
 				<view class="zy-uni-segmented-control">
-					<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
+					<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem"
+					 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 				</view>
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
 					<view v-if="carPoolOpts.current === 0">
@@ -150,32 +160,39 @@
 							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
 								<view @click="toCarpoolDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										 :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.nickname}}</text>
+												<view class="zy-disable-flex">
+													<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
+													<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+													<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
+													<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
+												</view>
 											</view>
 											<view class="zy-text-mini zy-text-info">
-												{{item.startTime}}
-												<text class="zy-text-mini" style="color: #108EE9; margin-left: 20upx;">{{item.carType}}</text>
+												{{item.markCarpoolStartTime}}
+												<text class="zy-text-mini" style="color: #108EE9; margin-left: 20upx;">{{item.markCarpoolCarType}}</text>
 											</view>
 										</view>
 										<view class="zy-disable-flex-right">
-											¥{{item.price / 100}}
+											¥{{item.markCarpoolPrice / 100}}
 										</view>
 									</view>
 									<view>
 										<view class="zy-text-big zy-text-bold">
-											{{item.startAddr}}
+											{{item.markCarpoolStartAddr}}
 											-
-											{{item.endAddr}}
+											{{item.markCarpoolEndAddr}}
 										</view>
 									</view>
 								</view>
 								<view class="zy-text-info zy-disable-flex">
 									<view>
 										<text style="margin-right: 20upx;">搭车人数:</text>
-										{{item.carpoolRecordCount}}/{{item.peopleCount}}
+										{{item.markCarpoolRecordCount}}/{{item.markCarpoolPeopleCount}}
 									</view>
 									<view class="zy-disable-flex-right">
 										<uni-tag text="我要拼车" type="primary" size="small" :inverted="true" :circle="true" @click="addCarpoolRecord(item)"></uni-tag>
@@ -191,29 +208,36 @@
 							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
 								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										 :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
-												<text class="zy-text-bold">{{item.nickname}}</text>
+												<view class="zy-disable-flex">
+													<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
+													<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+													<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
+													<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
+												</view>
 											</view>
-											<view class="zy-text-mini zy-text-info">{{item.startTime}}</view>
+											<view class="zy-text-mini zy-text-info">{{item.markSeekcarStartTime}}</view>
 										</view>
 									</view>
 									<view>
 										<view class="zy-text-big zy-text-bold">
-											{{item.startAddr}}
+											{{item.markSeekcarStartAddr}}
 											-
-											{{item.endAddr}}
+											{{item.markSeekcarEndAddr}}
 										</view>
 										<view class="zy-text-info">
-											{{item.memo}}
+											{{item.markSeekcarMemo}}
 										</view>
 									</view>
 								</view>
 								<view class="zy-text-info zy-disable-flex">
 									<view>
 										<text style="margin-right: 20upx;">申请人数:</text>
-										{{item.seekcarRecordCount}}/1
+										{{item.markSeekcarRecordCount}}/1
 									</view>
 									<view class="zy-disable-flex-right">
 										<uni-tag text="我有车" type="primary" size="small" :inverted="true" :circle="true" @click="addSeekcarRecord(item)"></uni-tag>
@@ -225,7 +249,7 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<!-- 岗位招聘 -->
 			<view v-if="infoType.tabIndex === 3">
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
@@ -234,39 +258,41 @@
 						<view class="zy-page-list-item" v-for="(item, index) in recruitList" :key="index">
 							<view @click="toRecruitDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="item.headicon" />
+									<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+									 :src="item.userDetailHeadicon" />
+									<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 									<view>
 										<view class="zy-disable-flex">
-											<text class="zy-text-bold" style="margin-right: 20upx;">{{item.nickname}}</text>
-											<zywork-icon v-if="item.gender === 0" type="iconyincang" color="#BFBFBF" size="20" />
-											<zywork-icon v-else-if="item.gender === 1" type="iconnan" color="#108EE9" size="20" />
-											<zywork-icon v-else-if="item.gender === 2" type="iconnv" color="#dd524d" size="20" />
+											<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
+											<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+											<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
+											<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
 										</view>
 									</view>
 									<view class="zy-disable-flex-right">
-										{{item.recruitStatus}}
+										{{item.recruitRecruitStatus}}
 									</view>
 								</view>
 								<view>
 									<view class="zy-disable-flex">
 										<view class="zy-text-bold">
 											招聘岗位：
-											<text class="zy-text-info">{{item.jobTitle}}</text>
+											<text class="zy-text-info">{{item.recruitJobTitle}}</text>
 										</view>
 										<view class="zy-disable-flex-right">
-											{{item.isFulltime === 0 ? '全职' : '兼职'}}
+											{{item.recruitIsFulltime === 0 ? '全职' : '兼职'}}
 											：
-											¥{{item.salary}}/月
+											¥{{item.recruitSalary}}/月
 										</view>
 									</view>
 									<view class="zy-text-info zy-disable-flex">
 										<view class="zy-text-bold">
 											工作经验：
-											<text class="zy-text-info">{{item.workYear}}年</text>
+											<text class="zy-text-info">{{item.recruitWorkYear}}年</text>
 										</view>
 										<view class="zy-text-bold zy-disable-flex-right">
 											学历：
-											<text class="zy-text-info">{{item.education}}</text>
+											<text class="zy-text-info">{{item.recruitEducation}}</text>
 										</view>
 									</view>
 								</view>
@@ -276,47 +302,49 @@
 					<zyworkNoData v-else text="暂无招聘信息"></zyworkNoData>
 				</view>
 			</view>
-			
+
 			<!-- 求带资料 -->
 			<view v-if="infoType.tabIndex === 4">
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
 					<!-- 求带资料信息 -->
-						<view class="zy-page-list" v-if="seekDataList.length > 0">
-							<view class="zy-page-list-item" v-for="(item, index) in seekDataList" :key="index">
-								<view @click="toSeekDataDetailPage(item)">
-									<view class="zy-disable-flex">
-										<image class="zy-page-mini-headicon" :src="item.headicon" />
-										<view>
-											<view class="zy-disable-flex">
-												<text class="zy-text-bold" style="margin-right: 20upx;">{{item.dataType}}</text>
-												<text class="zy-text-bold">{{item.dataCount}}份</text>
-											</view>
-											<view class="zy-text-mini zy-text-info" style="color: #108EE9">最晚时间：{{item.latestTime}}</view>
-										</view>
-										<view class="zy-disable-flex-right">
-											<view class="zy-disable-flex">
-												赏金：
-												<text style="margin-right: 10upx;">¥{{item.price / 100}}</text>
-												<!-- <uni-tag v-if="item.isUrgent === 0" text="急" type="error" size="small" :inverted="true" :circle="false"></uni-tag> -->
-												<zywork-icon v-if="item.isUrgent === 0" type="iconjinjidingdan" color="#dd524d" size="20" />
-											</view>
-										</view>
-										
-									</view>
+					<view class="zy-page-list" v-if="seekDataList.length > 0">
+						<view class="zy-page-list-item" v-for="(item, index) in seekDataList" :key="index">
+							<view @click="toSeekDataDetailPage(item)">
+								<view class="zy-disable-flex">
+									<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+									 :src="item.userDetailHeadicon" />
+									<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 									<view>
-										<view class="zy-text-bold">
-											出发地：
-											<text class="zy-text-info">{{item.startAddr}}</text>
+										<view class="zy-disable-flex">
+											<text class="zy-text-bold" style="margin-right: 20upx;">{{item.seekDataDataType}}</text>
+											<text class="zy-text-bold">{{item.seekDataDataCount}}份</text>
 										</view>
-										<view class="zy-text-bold">
-											目的地：
-											<text class="zy-text-info">{{item.endAddr}}</text>
+										<view class="zy-text-mini zy-text-info" style="color: #108EE9">最晚时间：{{item.seekDataLatestTime}}</view>
+									</view>
+									<view class="zy-disable-flex-right">
+										<view class="zy-disable-flex">
+											赏金：
+											<text style="margin-right: 10upx;">¥{{item.seekDataPrice / 100}}</text>
+											<!-- <uni-tag v-if="item.isUrgent === 0" text="急" type="error" size="small" :inverted="true" :circle="false"></uni-tag> -->
+											<zywork-icon v-if="item.seekDataIsUrgent === 0" type="iconjinjidingdan" color="#dd524d" size="20" />
 										</view>
+									</view>
+
+								</view>
+								<view>
+									<view class="zy-text-bold">
+										出发地：
+										<text class="zy-text-info">{{item.seekDataStartAddr}}</text>
+									</view>
+									<view class="zy-text-bold">
+										目的地：
+										<text class="zy-text-info">{{item.seekDataEndAddr}}</text>
 									</view>
 								</view>
 							</view>
 						</view>
-						<zyworkNoData v-else text="暂无求带资料信息"></zyworkNoData>
+					</view>
+					<zyworkNoData v-else text="暂无求带资料信息"></zyworkNoData>
 				</view>
 			</view>
 		</view>
@@ -335,15 +363,18 @@
 		hireArray
 	} from '@/common/picker.data.js'
 	import {
-		DEFAULT_HEADICON
+		DEFAULT_HEADICON,
+		showInfoToast
 	} from '@/common/util.js'
-	
+	import * as ResponseStatus from '@/common/response-status.js'
+	import * as infoShare from '@/common/info-share.js'
+
 	const INFO_BUILDER = 0
 	const INFO_APTITUDE = 1
 	const INFO_CARPOOL = 2
 	const INFO_HIRE = 3
 	const INFO_MATERIAL = 4
-	
+
 	export default {
 		components: {
 			zyworkIcon,
@@ -353,15 +384,44 @@
 		},
 		data() {
 			return {
+				urls: {
+					builderUrl: '/UserBuilder/any/list-page',
+					builderReqUrl: '/UserBuilderReq/any/list-page',
+					aptitudeUrl: '/UserAptitudeTransfer/any/list-page',
+					carpoolUrl: '/UserMarkCarpool/any/list-page',
+					seekcarUrl: '/UserMarkSeekcar/any/list-page',
+					recruitUrl: '/UserRecruit/any/list-page',
+					seekDataUrl: '/UserSeekData/any/list-page'
+				},
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0
+				},
+				defaultIcon: DEFAULT_HEADICON,
 				infoType: {
 					scrollLeft: 0,
 					tabIndex: 0,
-					tabbars: [
-						{id: 'builder', name: '建造师'},
-						{id: 'aptitude', name: '资质转让'},
-						{id: 'carPool', name: '开标拼车'},
-						{id: 'hire', name: '岗位招聘'},
-						{id: 'material', name: '求带资料'}
+					tabbars: [{
+							id: 'builder',
+							name: '建造师'
+						},
+						{
+							id: 'aptitude',
+							name: '资质转让'
+						},
+						{
+							id: 'carPool',
+							name: '开标拼车'
+						},
+						{
+							id: 'hire',
+							name: '岗位招聘'
+						},
+						{
+							id: 'material',
+							name: '求带资料'
+						}
 					]
 				},
 				builderOpts: {
@@ -376,225 +436,117 @@
 					current: 0,
 					items: openMarkArray
 				},
-				builderReqList: [
-					{
-						id: 1,
-						headicon: DEFAULT_HEADICON,
-						nickname: 'Carter',
-						name: '危锦辉',
-						people: '需要某某人才',
-						peopleCount: 3,
-						compName: '赣州智悦科技有限公司',
-						compAddr: '山西/长治市/襄垣县',
-						createTime: '2019-04-24 17:24:01',
-						salary: '30000',
-						phone: '18279700225',
-						memo: '公司急招聘市政工程师，有意请联系18279700223'
-					},
-					{
-						id: 2,
-						headicon: DEFAULT_HEADICON,
-						nickname: 'Carter1',
-						name: '危锦辉1',
-						people: '需要某某人才1',
-						peopleCount: 5,
-						compName: '赣州智悦科技有限公司1',
-						compAddr: '山西/长治市/襄垣县',
-						createTime: '2019-04-24 17:24:01',
-						salary: '50000',
-						phone: '18279700225',
-						memo: '公司急招聘市政工程师，有意请联系18279700223',
-					}
-				],
-				builderList: [
-					{
-						id: 1,
-						nickname: 'Carter',
-						name: '危锦辉',
-						certificateMajorType: '机电工程',
-						createTime: '2019-04-24 17:24:01',
-						memo: '找工作，诚心的',
-						headicon: DEFAULT_HEADICON,
-						phone: '18279700225',
-						gender: 1,
-						certificateType: '建筑师',
-						certificateMajorType: '一级建筑师',
-						certificateAddr: '北京/北京市/东城区',
-						salary: '5-10万元',
-						memo: '无其他要求'
-					},
-					{
-						id: 2,
-						nickname: '刘某某',
-						name: '刘某',
-						certificateMajorType: '机电工程',
-						createTime: '2019-04-24 17:24:01',
-						memo: '找工作，诚心的',
-						headicon: DEFAULT_HEADICON,
-						phone: '18279700225',
-						gender: 1,
-						certificateType: '建筑师',
-						certificateMajorType: '一级建筑师',
-						certificateAddr: '北京/北京市/东城区',
-						salary: '5-10万元',
-						memo: '无其他要求'
-					}
-				],
-				aptitudeBuyList: [
-					{
-						id: 1,
-						nickname: '张某',
-						headicon: DEFAULT_HEADICON,
-						type: 0,
-						title: '本人急购一家一级房建市政资质的企业',
-						compAptitudeLevel: '三级',
-						compAptitudeType: '交通工程',
-						phone: '',
-						memo: '诚心求购，诚心合作请联系：18279700232',
-						createTime: '2019-04-24 17:24:01'
-					}
-				],
-				aptitudeSellList: [
-					{
-						id: 2,
-						nickname: '张某',
-						headicon: DEFAULT_HEADICON,
-						type: 1,
-						title: '本人急售一家一级房建市政资质的企业',
-						compAptitudeLevel: '三级',
-						compAptitudeType: '交通工程',
-						phone: '18279700224',
-						memo: '诚心求购，诚心合作请联系：18279700232',
-						createTime: '2019-04-24 17:24:01'
-					}
-				],
-				carpoolList: [
-					{
-						id: 1,
-						nickname: '刘某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						price: 30000,
-						carType: '小轿车',
-						carpoolRecordCount: 1,
-						peopleCount: 3,
-						name: '危锦辉',
-						phone: '18279700225'
-					},
-					{
-						id: 2,
-						nickname: '张某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						price: 60000,
-						carType: '小轿车',
-						peopleCount: 2,
-						name: '危锦辉',
-						phone: '18279700225',
-						carpoolRecordCount: 2,
-					}
-				],
-				seekcarList: [
-					{
-						id: 1,
-						nickname: '张某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						memo: '去上饶，着急去，有意请联系',
-						name: '危锦辉',
-						phone: '18279700225',
-						seekcarRecordCount: 0
-					}
-				],
-				recruitList: [
-					{
-						id: 1,
-						nickname: '曾某某',
-						headicon: DEFAULT_HEADICON,
-						gender: 1,
-						recruitStatus: '招聘中',
-						isFulltime: 1,
-						salary: '5-10万元',
-						jobTitle: '建造师',
-						workYear: 1,
-						education: '大专',
-						createTime: '2019-04-24 17:24:01'
-					},
-					{
-						id: 2,
-						nickname: '曾某某',
-						headicon: DEFAULT_HEADICON,
-						gender: 2,
-						recruitStatus: '招聘中',
-						isFulltime: 0,
-						salary: '一万元以下',
-						jobTitle: '建造师',
-						workYear: 2,
-						education: '大专',
-						createTime: '2019-04-24 17:24:01'
-					},
-					{
-						id: 3,
-						nickname: '曾某某',
-						headicon: DEFAULT_HEADICON,
-						gender: 0,
-						recruitStatus: '已停止',
-						isFulltime: 0,
-						salary: '一万元以下',
-						jobTitle: '建造师',
-						workYear: 2,
-						education: '大专',
-						createTime: '2019-04-24 17:24:01'
-					}
-				],
-				seekDataList: [
-					{
-						id: 1,
-						nickname: '曾某某',
-						headicon: DEFAULT_HEADICON,
-						dataType: '资料',
-						dataCount: 1,
-						latestTime: '2019-04-25 00:00:00',
-						price: 10000,
-						isUrgent: 0,
-						startAddr: '赣州',
-						endAddr: '吉安',
-						phone: '18279700225',
-						memo: '没有说明',
-						createTime: '2019-04-24 17:24:01'
-					},
-					{
-						id: 2,
-						nickname: '曾某某',
-						headicon: DEFAULT_HEADICON,
-						dataType: '资料',
-						dataCount: 1,
-						latestTime: '2019-04-25 00:00:00',
-						price: 20000,
-						isUrgent: 1,
-						startAddr: '赣州',
-						endAddr: '吉安',
-						phone: '18279700225',
-						memo: '',
-						createTime: '2019-04-24 17:24:01'
-					}
-				]
+				builderReqList: [],
+				builderList: [],
+				aptitudeBuyList: [],
+				aptitudeSellList: [],
+				carpoolList: [],
+				seekcarList: [],
+				recruitList: [],
+				seekDataList: []
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData();
+		},
 		methods: {
+			/** 初始化数据 */
+			initData() {
+				this.refreshBuilderReqList();
+			},
+			/** 刷新建造师需求列表 */
+			refreshBuilderReqList() {
+				infoShare.getListInfoToPost(this, this.urls.builderReqUrl, this.pager)
+					.then(data => {
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.builderReqList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新建造师列表 */
+			refreshBuilderList() {
+				infoShare.getListInfoToPost(this, this.urls.builderUrl, this.pager)
+					.then(data => {
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.builderList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新资质转让列表 */
+			refreshAptitudeList() {
+				this.pager.aptitudeTransferType = this.aptitudeOpts.current;
+				infoShare.getListInfoToPost(this, this.urls.aptitudeUrl, this.pager)
+					.then(data => {
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							if (this.aptitudeOpts.current === 0) {
+								// 求购
+								this.aptitudeBuyList = res.data.data.rows;
+								console.log('求购');
+							} else {
+								// 转让
+								console.log('转让');
+								this.aptitudeSellList = res.data.data.rows;
+							}
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新开标拼车列表 */
+			refreshCarpoolList() {
+				infoShare.getListInfoToPost(this, this.urls.carpoolUrl, this.pager)
+					.then(data => {
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.carpoolList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新开标找车列表 */
+			refreshSeekcarList() {
+				infoShare.getListInfoToPost(this, this.urls.seekcarUrl, this.pager)
+					.then(data => {
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.seekcarList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新其他招聘列表 */
+			refreshRecruitList() {
+				infoShare.getListInfoToPost(this, this.urls.recruitUrl, this.pager)
+					.then(data => {
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.recruitList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新求带资料列表 */
+			refreshSeekDataList() {
+				infoShare.getListInfoToPost(this, this.urls.seekDataUrl, this.pager)
+					.then(data => {
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.seekDataList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
 			getElSize(id) {
 				return new Promise((res, rej) => {
 					uni.createSelectorQuery().select("#" + id).fields({
@@ -614,6 +566,30 @@
 						tabBarScrollLeft = tabBar.scrollLeft
 					this.infoType.scrollLeft = tabBarScrollLeft
 					this.infoType.tabIndex = tabIndex
+					if (INFO_BUILDER === tabIndex) {
+						// 建造师
+						if (this.builderOpts.current === 0) {
+							this.refreshBuilderReqList();
+						} else {
+							this.refreshBuilderList();
+						}
+					} else if (INFO_APTITUDE === tabIndex) {
+						// 资质转让
+						this.refreshAptitudeList();
+					} else if (INFO_CARPOOL === tabIndex) {
+						// 开标拼车
+						if (this.carPoolOpts.current === 0) {
+							this.refreshCarpoolList();
+						} else {
+							this.refreshSeekcarList();
+						}
+					} else if (INFO_HIRE === tabIndex) {
+						// 其他岗位招聘
+						this.refreshRecruitList();
+					} else if (INFO_MATERIAL === tabIndex) {
+						// 求带资料
+						this.refreshSeekDataList();
+					}
 				}
 			},
 			toSearchPage() {
@@ -629,7 +605,8 @@
 			/** 前往详情页面 */
 			toDetailPage(name, item) {
 				uni.navigateTo({
-					url: '/pages-info-share/publish-'+name+'-detail/publish-'+name+'-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-info-share/publish-' + name + '-detail/publish-' + name + '-detail?itemData=' + encodeURIComponent(
+						JSON.stringify(item))
 				});
 			},
 			/** 前往建造师需求详情页面 */
@@ -662,43 +639,49 @@
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {
-				if (item.carpoolRecordCount >= item.peopleCount) {
-					uni.showModal({
-						title: '操作提示',
-						content: '人数已满，不能申请',
-						showCancel: false,
-						confirmText: "确定"
-					})
+				if (item.markCarpoolRecordCount >= item.markCarpoolPeopleCount) {
+					showInfoToast('人数已满，不能申请')
 					return;
 				}
-				console.log('我要拼车：' + item.id);
+				// 调用接口保存拼车记录
+				infoShare.saveMarkCarpoolRecord(this, item.markCarpoolId);
 			},
-			/** 点击我要拼车，增加找车记录 */
+			/** 点击我有车，增加找车记录 */
 			addSeekcarRecord(item) {
-				if (item.seekcarRecordCount >= 1) {
-					uni.showModal({
-						title: '操作提示',
-						content: '人数已满，不能申请',
-						showCancel: false,
-						confirmText: "确定"
-					})
+				if (item.markSeekcarRecordCount >= 1) {
+					showInfoToast('人数已满，不能申请')
 					return;
 				}
-				console.log('我有车：' + item.id);
+				// 调用接口保存找车记录
+				infoShare.saveMarkSeekcarRecord(this, item.markSeekcarId);
 			},
+			/** 建造师分段器选择器 */
 			onClickBuilderItem(index) {
 				if (this.builderOpts.current !== index) {
 					this.builderOpts.current = index
+					if (index === 0) {
+						this.refreshBuilderReqList();
+					} else {
+						this.refreshBuilderList();
+					}
 				}
 			},
+			/** 资质转让分段器选择器 */
 			onClickAptitudeItem(index) {
 				if (this.aptitudeOpts.current !== index) {
 					this.aptitudeOpts.current = index
+					this.refreshAptitudeList();
 				}
 			},
+			/** 开标拼车分段器选择器 */
 			onClickCarPoolItem(index) {
 				if (this.carPoolOpts.current !== index) {
 					this.carPoolOpts.current = index
+					if (index === 0) {
+						this.refreshCarpoolList();
+					} else {
+						this.refreshSeekcarList();
+					}
 				}
 			},
 		}
@@ -707,7 +690,7 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	
+
 	.zy-icon view {
 		line-height: 1.0;
 	}

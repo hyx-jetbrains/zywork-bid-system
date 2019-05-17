@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * UserRecruitQuery查询对象类<br/>
  *
- * 创建于2019-05-15<br/>
+ * 创建于2019-05-17<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserRecruitQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372034814715336L;
+    private static final long serialVersionUID = -9223372034967962123L;
 
     //t_recruit表的字段对应的属性
 	// 招聘编号
@@ -48,6 +48,8 @@ public class UserRecruitQuery extends PageQuery {
 	private String recruitWorkAddr;
 	// 职位描述
 	private String recruitMemo;
+	// 招聘状态
+	private String recruitRecruitStatus;
 	// 版本号
 	private Integer recruitVersion;
 	// 版本号（最小值）
@@ -83,10 +85,16 @@ public class UserRecruitQuery extends PageQuery {
 	private String userDetailNickname;
 	// 头像地址
 	private String userDetailHeadicon;
+	// 性别
+	private Byte userDetailGender;
+	// 性别（最小值）
+	private Byte userDetailGenderMin;
+	// 性别（最大值）
+	private Byte userDetailGenderMax;
 	
     public UserRecruitQuery () {}
 
-    public UserRecruitQuery (Long recruitId, Long recruitIdMin, Long recruitIdMax, Long recruitUserId, Long recruitUserIdMin, Long recruitUserIdMax, String recruitJobTitle, Byte recruitIsFulltime, Byte recruitIsFulltimeMin, Byte recruitIsFulltimeMax, String recruitWorkYear, String recruitEducation, String recruitSalary, String recruitWorkAddr, String recruitMemo, Integer recruitVersion, Integer recruitVersionMin, Integer recruitVersionMax, Date recruitCreateTime, Date recruitCreateTimeMin, Date recruitCreateTimeMax, Date recruitUpdateTime, Date recruitUpdateTimeMin, Date recruitUpdateTimeMax, Byte recruitIsActive, Byte recruitIsActiveMin, Byte recruitIsActiveMax, String userDetailNickname, String userDetailHeadicon) {
+    public UserRecruitQuery (Long recruitId, Long recruitIdMin, Long recruitIdMax, Long recruitUserId, Long recruitUserIdMin, Long recruitUserIdMax, String recruitJobTitle, Byte recruitIsFulltime, Byte recruitIsFulltimeMin, Byte recruitIsFulltimeMax, String recruitWorkYear, String recruitEducation, String recruitSalary, String recruitWorkAddr, String recruitMemo, String recruitRecruitStatus, Integer recruitVersion, Integer recruitVersionMin, Integer recruitVersionMax, Date recruitCreateTime, Date recruitCreateTimeMin, Date recruitCreateTimeMax, Date recruitUpdateTime, Date recruitUpdateTimeMin, Date recruitUpdateTimeMax, Byte recruitIsActive, Byte recruitIsActiveMin, Byte recruitIsActiveMax, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender, Byte userDetailGenderMin, Byte userDetailGenderMax) {
         this.recruitId = recruitId;
 		this.recruitIdMin = recruitIdMin;
 		this.recruitIdMax = recruitIdMax;
@@ -102,6 +110,7 @@ public class UserRecruitQuery extends PageQuery {
 		this.recruitSalary = recruitSalary;
 		this.recruitWorkAddr = recruitWorkAddr;
 		this.recruitMemo = recruitMemo;
+		this.recruitRecruitStatus = recruitRecruitStatus;
 		this.recruitVersion = recruitVersion;
 		this.recruitVersionMin = recruitVersionMin;
 		this.recruitVersionMax = recruitVersionMax;
@@ -116,6 +125,9 @@ public class UserRecruitQuery extends PageQuery {
 		this.recruitIsActiveMax = recruitIsActiveMax;
 		this.userDetailNickname = userDetailNickname;
 		this.userDetailHeadicon = userDetailHeadicon;
+		this.userDetailGender = userDetailGender;
+		this.userDetailGenderMin = userDetailGenderMin;
+		this.userDetailGenderMax = userDetailGenderMax;
 		
     }
 
@@ -239,6 +251,14 @@ public class UserRecruitQuery extends PageQuery {
 		this.recruitMemo = recruitMemo;
 	}
 
+	public String getRecruitRecruitStatus() {
+		return recruitRecruitStatus;
+	}
+
+	public void setRecruitRecruitStatus(String recruitRecruitStatus) {
+		this.recruitRecruitStatus = recruitRecruitStatus;
+	}
+
 	public Integer getRecruitVersion() {
 		return recruitVersion;
 	}
@@ -351,6 +371,30 @@ public class UserRecruitQuery extends PageQuery {
 		this.userDetailHeadicon = userDetailHeadicon;
 	}
 
+	public Byte getUserDetailGender() {
+		return userDetailGender;
+	}
+
+	public void setUserDetailGender(Byte userDetailGender) {
+		this.userDetailGender = userDetailGender;
+	}
+
+	public Byte getUserDetailGenderMin() {
+		return userDetailGenderMin;
+	}
+
+	public void setUserDetailGenderMin(Byte userDetailGenderMin) {
+		this.userDetailGenderMin = userDetailGenderMin;
+	}
+
+	public Byte getUserDetailGenderMax() {
+		return userDetailGenderMax;
+	}
+
+	public void setUserDetailGenderMax(Byte userDetailGenderMax) {
+		this.userDetailGenderMax = userDetailGenderMax;
+	}
+
 	
     @Override
     public String toString() {
@@ -370,6 +414,7 @@ public class UserRecruitQuery extends PageQuery {
 				", recruitSalary = " + recruitSalary + 
 				", recruitWorkAddr = " + recruitWorkAddr + 
 				", recruitMemo = " + recruitMemo + 
+				", recruitRecruitStatus = " + recruitRecruitStatus + 
 				", recruitVersion = " + recruitVersion + 
 				", recruitVersionMin = " + recruitVersionMin + 
 				", recruitVersionMax = " + recruitVersionMax + 
@@ -384,6 +429,9 @@ public class UserRecruitQuery extends PageQuery {
 				", recruitIsActiveMax = " + recruitIsActiveMax + 
 				", userDetailNickname = " + userDetailNickname + 
 				", userDetailHeadicon = " + userDetailHeadicon + 
+				", userDetailGender = " + userDetailGender + 
+				", userDetailGenderMin = " + userDetailGenderMin + 
+				", userDetailGenderMax = " + userDetailGenderMax + 
 				" }";
     }
 

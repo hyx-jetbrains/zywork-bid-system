@@ -24,7 +24,6 @@ public class ProjectCollectionVO extends BaseVO {
     // 项目收藏编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 项目编号
 	@NotNull(message = "此项是必须项")
