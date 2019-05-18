@@ -51,8 +51,8 @@ export const jobStatusSelect = [
  */
 export const projectType = [
   {
-    value: '房建工程',
-    label: '房建工程'
+    value: '房建市政',
+    label: '房建市政'
   },
   {
     value: '水利工程',

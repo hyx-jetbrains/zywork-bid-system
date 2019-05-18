@@ -1847,7 +1847,7 @@ CREATE TABLE `t_project_collection`  (
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uni_user_id_project_id` (`user_id`,`project_id`) COMMENT '用户ID和项目ID唯一索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目收藏表' ROW_FORMAT = Dynamic;
 
@@ -5025,7 +5025,7 @@ CREATE TABLE `t_user_message`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户消息表' ROW_FORMAT = Dynamic;
 
-t_expert_question_type
+-- ----------------------------
 -- Records of t_user_message
 -- ----------------------------
 INSERT INTO `t_user_message` VALUES (1, 1, 40, 0, 1, '2019-01-24 16:20:13', NULL, 0);

@@ -17,13 +17,38 @@
 								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="true" 
-									placeholder="请选择开标项目" v-model="carpool.projectName"
-									@click="projectDrawer = true" />
+								<input class="uni-input" type="text" :disabled="true" placeholder="请选择开标项目" v-model="carpool.projectName"
+								 @click="showProjectDrawer" />
 								<uni-drawer :visible="projectDrawer" mode="right" @close="projectDrawer = false">
 									<uni-list>
-										<zywork-list-item v-for="(projectItem, index) in projectList" :key="index" :title="projectItem.title" note="点击选择"
-											@click="chooseProject(projectItem.id, projectItem.title)"></zywork-list-item>
+										<view class="zy-search-bar zy-project-search">
+											<zywork-icon type="iconchaxun" />
+											<input type="text" v-model="projectPager.title" placeholder="输入项目名称搜索" @confirm="searchProject" />
+										</view>
+										<view class="zy-project-item" v-for="(projectItem, index) in projects" :key="index" @click="chooseProject(projectItem.id, projectItem.title)">
+											<view class="zy-disable-flex">
+												<view>
+													<text>{{projectItem.projectType}}</text>
+													<text style="margin-left: 30upx;">[{{projectItem.city}}]</text>
+												</view>
+												<view class="zy-disable-flex-right" style="color: #108EE9">{{projectItem.markStatus}}</view>
+											</view>
+											<view class="zy-text-mini" style="color: #dd524d; text-align: right;">
+												开标时间：
+												<text v-if="projectItem.openMarkTime !== null && projectItem.openMarkTime !== undefined"
+													 class="zy-text-mini" style="color: #dd524d;">
+													{{projectItem.openMarkTime}}
+												</text>
+												<text v-else class="zy-text-mini" style="color: #dd524d;">
+													暂无
+												</text>
+											</view>
+											<view class="zy-text-bold">
+												{{projectItem.title}}
+											</view>
+										</view>
+										<!-- <zywork-list-item v-for="(projectItem, index) in projects" :key="index" :title="projectItem.title" note="点击选择"
+										 @click="chooseProject(projectItem.id, projectItem.title)"></zywork-list-item> -->
 									</uni-list>
 								</uni-drawer>
 							</view>
@@ -42,7 +67,7 @@
 						<view class="uni-list-cell">
 							<view class="uni-pd">
 								<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+									<text class="zy-list-form-required">*</text>
 									出发地
 								</view>
 							</view>
@@ -77,8 +102,7 @@
 								<view class="uni-label zy-text-bold zy-list-form-label">出发日期</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<picker mode="date" :value="tempStartDate" :start="startDate" :end="endDate" placeholder="选择出发日期"
-									@change="startDateChange">
+								<picker mode="date" :value="tempStartDate" :start="startDate" :end="endDate" placeholder="选择出发日期" @change="startDateChange">
 									<view class="uni-input">{{tempStartDate}}</view>
 								</picker>
 							</view>
@@ -88,8 +112,7 @@
 								<view class="uni-label zy-text-bold zy-list-form-label">出发时间</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<picker mode="time" :value="tempStartTime" start="09:01" end="21:01" placeholder="选择出发时间"
-									@change="startTimeChange">
+								<picker mode="time" :value="tempStartTime" start="09:01" end="21:01" placeholder="选择出发时间" @change="startTimeChange">
 									<view class="uni-input">{{tempStartTime}}</view>
 								</picker>
 							</view>
@@ -173,13 +196,38 @@
 								</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<input class="uni-input" type="text" :disabled="true" 
-									placeholder="请选择开标项目" v-model="seekcar.projectName"
-									@click="projectDrawer = true" />
+								<input class="uni-input" type="text" :disabled="true" placeholder="请选择开标项目" v-model="seekcar.projectName"
+								 @click="showProjectDrawer" />
 								<uni-drawer :visible="projectDrawer" mode="right" @close="projectDrawer = false">
 									<uni-list>
-										<zywork-list-item v-for="(projectItem, index) in projectList" :key="index" :title="projectItem.title" note="点击选择"
-											@click="chooseProject(projectItem.id, projectItem.title)"></zywork-list-item>
+										<view class="zy-search-bar zy-project-search">
+											<zywork-icon type="iconchaxun" />
+											<input type="text" v-model="projectPager.title" placeholder="输入项目名称搜索" @confirm="searchProject" />
+										</view>
+										<view class="zy-project-item" v-for="(projectItem, index) in projects" :key="index" @click="chooseProject(projectItem.id, projectItem.title)">
+											<view class="zy-disable-flex">
+												<view>
+													<text>{{projectItem.projectType}}</text>
+													<text style="margin-left: 30upx;">[{{projectItem.city}}]</text>
+												</view>
+												<view class="zy-disable-flex-right" style="color: #108EE9">{{projectItem.markStatus}}</view>
+											</view>
+											<view class="zy-text-mini" style="color: #dd524d; text-align: right;">
+												开标时间：
+												<text v-if="projectItem.openMarkTime !== null && projectItem.openMarkTime !== undefined"
+													 class="zy-text-mini" style="color: #dd524d;">
+													{{projectItem.openMarkTime}}
+												</text>
+												<text v-else class="zy-text-mini" style="color: #dd524d;">
+													暂无
+												</text>
+											</view>
+											<view class="zy-text-bold">
+												{{projectItem.title}}
+											</view>
+										</view>
+										<!-- <zywork-list-item v-for="(projectItem, index) in projectList" :key="index" :title="projectItem.title" note="点击选择"
+										 @click="chooseProject(projectItem.id, projectItem.title)"></zywork-list-item> -->
 									</uni-list>
 								</uni-drawer>
 							</view>
@@ -233,8 +281,7 @@
 								<view class="uni-label zy-text-bold zy-list-form-label">出发日期</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<picker mode="date" :value="tempStartDate" :start="startDate" :end="endDate" placeholder="选择出发日期"
-									@change="startDateChange">
+								<picker mode="date" :value="tempStartDate" :start="startDate" :end="endDate" placeholder="选择出发日期" @change="startDateChange">
 									<view class="uni-input">{{tempStartDate}}</view>
 								</picker>
 							</view>
@@ -244,8 +291,7 @@
 								<view class="uni-label zy-text-bold zy-list-form-label">出发时间</view>
 							</view>
 							<view class="uni-list-cell-db">
-								<picker mode="time" :value="tempStartTime" start="09:01" end="21:01" placeholder="选择出发时间"
-									@change="startTimeChange">
+								<picker mode="time" :value="tempStartTime" start="09:01" end="21:01" placeholder="选择出发时间" @change="startTimeChange">
 									<view class="uni-input">{{tempStartTime}}</view>
 								</picker>
 							</view>
@@ -282,7 +328,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请填写备注" v-model="seekcar.memo" />
-						</view>
+							</view>
 					</view>
 					<view class="zy-bottom-button">
 						<button type="primary" @click="addSeekcar" :disabled="disabled.seekcarBtn">发布信息</button>
@@ -305,6 +351,7 @@
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	import cityData from '@/common/city.data.js';
+	
 	import { 
 		openMarkArray,
 		carTypeArray
@@ -313,6 +360,9 @@
 		getDate
 	} from '@/common/util.js'
 	import * as infoPublish from '@/common/info-publish.js'
+	import {
+		getProjectList
+	} from '@/common/project-info.js'
 	
 	export default {
 		components: {
@@ -358,28 +408,15 @@
 					isActive: null
 				},
 				projectDrawer: false,
-				projectList: [
-					{
-						id: 1,
-						title: '项目1'
-					},
-					{
-						id: 2,
-						title: '项目2'
-					},
-					{
-						id: 3,
-						title: '项目3'
-					},
-					{
-						id: 4,
-						title: '项目4'
-					},
-					{
-						id: 5,
-						title: '项目5'
-					}
-				],
+				projectPager: {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0,
+					releaseStatus: '已发布',
+					markStatus: '待开标',
+					title: ''
+				},
+				projects: [],
 				cityPickerValueDefault: [0, 0, 1],
 				themeColor: '#007AFF',
 				startDate: getDate('start'),
@@ -486,11 +523,33 @@
 				this.setStartTime()
 				// var formObj = e.detail.value;
 				infoPublish.saveSeekcar(this, this.seekcar);
+			},
+			/** 显示项目选择抽屉 */
+			showProjectDrawer() {
+				this.projectDrawer = true;
+				this.searchProject();
+			},
+			/** 查询项目 */
+			searchProject() {
+				getProjectList(this, this.projectPager);
 			}
+			
 		}
 	}
 </script>
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+	.zy-project-search {
+		margin: 20upx auto;
+		width: 90%;
+	}
+	
+	.zy-project-item {
+		padding: 10upx 20upx;
+		border-bottom: 1upx solid $border-color;
+	}
+	.zy-project-item:last-child {
+		border-bottom: none;
+	}
 </style>
