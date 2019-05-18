@@ -41,7 +41,7 @@ public class SubscribeVO extends BaseVO {
 	private String tenderee;
 	// 资质类别
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
-	private String aptitudeType;
+		private String aptitudeType;
 	// 关键字
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String keyword;

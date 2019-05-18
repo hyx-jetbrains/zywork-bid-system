@@ -164,7 +164,7 @@ public class SubscribeController extends BaseController {
      * Description: 我的订阅新增/修改
      */
     @PostMapping("user/save")
-    public ResponseStatusVO createSubscribe(@RequestBody @Validated SubscribeVO subscribeVO, BindingResult bindingResult) {
+    public ResponseStatusVO createSubscribe(@RequestBody SubscribeVO subscribeVO, BindingResult bindingResult) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();

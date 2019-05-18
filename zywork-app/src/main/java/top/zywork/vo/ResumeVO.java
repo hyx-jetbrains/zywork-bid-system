@@ -24,7 +24,6 @@ public class ResumeVO extends BaseVO {
     // 简历编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 姓名
 	@Size(min = 0, max = 20, message = "必须小于20个字符")

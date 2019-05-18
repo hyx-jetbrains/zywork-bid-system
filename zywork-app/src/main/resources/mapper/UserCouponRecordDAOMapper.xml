@@ -1,0 +1,208 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserCouponRecordDAO">
+
+    <sql id="select_columns">
+        t_coupon_record.id as couponRecordId, t_coupon_record.user_id as couponRecordUserId, t_coupon_record.coupon_id as couponRecordCouponId, t_coupon_record.old_price as couponRecordOldPrice, t_coupon_record.coupon_price as couponRecordCouponPrice, t_coupon_record.price as couponRecordPrice, t_coupon_record.version as couponRecordVersion, t_coupon_record.create_time as couponRecordCreateTime, t_coupon_record.update_time as couponRecordUpdateTime, t_coupon_record.is_active as couponRecordIsActive, t_coupon.type as couponType, t_coupon.money as couponMoney
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.couponRecordId != null">
+			and t_coupon_record.id = #{query.couponRecordId}
+		</if>
+		<if test="query != null and query.couponRecordIdMin != null and query.couponRecordIdMax == null">
+			and t_coupon_record.id <![CDATA[ >= ]]> #{query.couponRecordIdMin}
+		</if>
+		<if test="query != null and query.couponRecordIdMin == null and query.couponRecordIdMax != null">
+			and t_coupon_record.id <![CDATA[ <= ]]> #{query.couponRecordIdMax}
+		</if>
+		<if test="query != null and query.couponRecordIdMin != null and query.couponRecordIdMax != null">
+			and t_coupon_record.id <![CDATA[ >= ]]> #{query.couponRecordIdMin} and t_coupon_record.id <![CDATA[ <= ]]> #{query.couponRecordIdMax}
+		</if>
+		<if test="query != null and query.couponRecordUserId != null">
+			and t_coupon_record.user_id = #{query.couponRecordUserId}
+		</if>
+		<if test="query != null and query.couponRecordUserIdMin != null and query.couponRecordUserIdMax == null">
+			and t_coupon_record.user_id <![CDATA[ >= ]]> #{query.couponRecordUserIdMin}
+		</if>
+		<if test="query != null and query.couponRecordUserIdMin == null and query.couponRecordUserIdMax != null">
+			and t_coupon_record.user_id <![CDATA[ <= ]]> #{query.couponRecordUserIdMax}
+		</if>
+		<if test="query != null and query.couponRecordUserIdMin != null and query.couponRecordUserIdMax != null">
+			and t_coupon_record.user_id <![CDATA[ >= ]]> #{query.couponRecordUserIdMin} and t_coupon_record.user_id <![CDATA[ <= ]]> #{query.couponRecordUserIdMax}
+		</if>
+		<if test="query != null and query.couponRecordCouponId != null">
+			and t_coupon_record.coupon_id = #{query.couponRecordCouponId}
+		</if>
+		<if test="query != null and query.couponRecordCouponIdMin != null and query.couponRecordCouponIdMax == null">
+			and t_coupon_record.coupon_id <![CDATA[ >= ]]> #{query.couponRecordCouponIdMin}
+		</if>
+		<if test="query != null and query.couponRecordCouponIdMin == null and query.couponRecordCouponIdMax != null">
+			and t_coupon_record.coupon_id <![CDATA[ <= ]]> #{query.couponRecordCouponIdMax}
+		</if>
+		<if test="query != null and query.couponRecordCouponIdMin != null and query.couponRecordCouponIdMax != null">
+			and t_coupon_record.coupon_id <![CDATA[ >= ]]> #{query.couponRecordCouponIdMin} and t_coupon_record.coupon_id <![CDATA[ <= ]]> #{query.couponRecordCouponIdMax}
+		</if>
+		<if test="query != null and query.couponRecordOldPrice != null">
+			and t_coupon_record.old_price = #{query.couponRecordOldPrice}
+		</if>
+		<if test="query != null and query.couponRecordOldPriceMin != null and query.couponRecordOldPriceMax == null">
+			and t_coupon_record.old_price <![CDATA[ >= ]]> #{query.couponRecordOldPriceMin}
+		</if>
+		<if test="query != null and query.couponRecordOldPriceMin == null and query.couponRecordOldPriceMax != null">
+			and t_coupon_record.old_price <![CDATA[ <= ]]> #{query.couponRecordOldPriceMax}
+		</if>
+		<if test="query != null and query.couponRecordOldPriceMin != null and query.couponRecordOldPriceMax != null">
+			and t_coupon_record.old_price <![CDATA[ >= ]]> #{query.couponRecordOldPriceMin} and t_coupon_record.old_price <![CDATA[ <= ]]> #{query.couponRecordOldPriceMax}
+		</if>
+		<if test="query != null and query.couponRecordCouponPrice != null">
+			and t_coupon_record.coupon_price = #{query.couponRecordCouponPrice}
+		</if>
+		<if test="query != null and query.couponRecordCouponPriceMin != null and query.couponRecordCouponPriceMax == null">
+			and t_coupon_record.coupon_price <![CDATA[ >= ]]> #{query.couponRecordCouponPriceMin}
+		</if>
+		<if test="query != null and query.couponRecordCouponPriceMin == null and query.couponRecordCouponPriceMax != null">
+			and t_coupon_record.coupon_price <![CDATA[ <= ]]> #{query.couponRecordCouponPriceMax}
+		</if>
+		<if test="query != null and query.couponRecordCouponPriceMin != null and query.couponRecordCouponPriceMax != null">
+			and t_coupon_record.coupon_price <![CDATA[ >= ]]> #{query.couponRecordCouponPriceMin} and t_coupon_record.coupon_price <![CDATA[ <= ]]> #{query.couponRecordCouponPriceMax}
+		</if>
+		<if test="query != null and query.couponRecordPrice != null">
+			and t_coupon_record.price = #{query.couponRecordPrice}
+		</if>
+		<if test="query != null and query.couponRecordPriceMin != null and query.couponRecordPriceMax == null">
+			and t_coupon_record.price <![CDATA[ >= ]]> #{query.couponRecordPriceMin}
+		</if>
+		<if test="query != null and query.couponRecordPriceMin == null and query.couponRecordPriceMax != null">
+			and t_coupon_record.price <![CDATA[ <= ]]> #{query.couponRecordPriceMax}
+		</if>
+		<if test="query != null and query.couponRecordPriceMin != null and query.couponRecordPriceMax != null">
+			and t_coupon_record.price <![CDATA[ >= ]]> #{query.couponRecordPriceMin} and t_coupon_record.price <![CDATA[ <= ]]> #{query.couponRecordPriceMax}
+		</if>
+		<if test="query != null and query.couponRecordVersion != null">
+			and t_coupon_record.version = #{query.couponRecordVersion}
+		</if>
+		<if test="query != null and query.couponRecordVersionMin != null and query.couponRecordVersionMax == null">
+			and t_coupon_record.version <![CDATA[ >= ]]> #{query.couponRecordVersionMin}
+		</if>
+		<if test="query != null and query.couponRecordVersionMin == null and query.couponRecordVersionMax != null">
+			and t_coupon_record.version <![CDATA[ <= ]]> #{query.couponRecordVersionMax}
+		</if>
+		<if test="query != null and query.couponRecordVersionMin != null and query.couponRecordVersionMax != null">
+			and t_coupon_record.version <![CDATA[ >= ]]> #{query.couponRecordVersionMin} and t_coupon_record.version <![CDATA[ <= ]]> #{query.couponRecordVersionMax}
+		</if>
+		<if test="query != null and query.couponRecordCreateTime != null">
+			and t_coupon_record.create_time = #{query.couponRecordCreateTime}
+		</if>
+		<if test="query != null and query.couponRecordCreateTimeMin != null and query.couponRecordCreateTimeMax == null">
+			and t_coupon_record.create_time <![CDATA[ >= ]]> #{query.couponRecordCreateTimeMin}
+		</if>
+		<if test="query != null and query.couponRecordCreateTimeMin == null and query.couponRecordCreateTimeMax != null">
+			and t_coupon_record.create_time <![CDATA[ <= ]]> #{query.couponRecordCreateTimeMax}
+		</if>
+		<if test="query != null and query.couponRecordCreateTimeMin != null and query.couponRecordCreateTimeMax != null">
+			and t_coupon_record.create_time <![CDATA[ >= ]]> #{query.couponRecordCreateTimeMin} and t_coupon_record.create_time <![CDATA[ <= ]]> #{query.couponRecordCreateTimeMax}
+		</if>
+		<if test="query != null and query.couponRecordUpdateTime != null">
+			and t_coupon_record.update_time = #{query.couponRecordUpdateTime}
+		</if>
+		<if test="query != null and query.couponRecordUpdateTimeMin != null and query.couponRecordUpdateTimeMax == null">
+			and t_coupon_record.update_time <![CDATA[ >= ]]> #{query.couponRecordUpdateTimeMin}
+		</if>
+		<if test="query != null and query.couponRecordUpdateTimeMin == null and query.couponRecordUpdateTimeMax != null">
+			and t_coupon_record.update_time <![CDATA[ <= ]]> #{query.couponRecordUpdateTimeMax}
+		</if>
+		<if test="query != null and query.couponRecordUpdateTimeMin != null and query.couponRecordUpdateTimeMax != null">
+			and t_coupon_record.update_time <![CDATA[ >= ]]> #{query.couponRecordUpdateTimeMin} and t_coupon_record.update_time <![CDATA[ <= ]]> #{query.couponRecordUpdateTimeMax}
+		</if>
+		<if test="query != null and query.couponRecordIsActive != null">
+			and t_coupon_record.is_active = #{query.couponRecordIsActive}
+		</if>
+		<if test="query != null and query.couponRecordIsActiveMin != null and query.couponRecordIsActiveMax == null">
+			and t_coupon_record.is_active <![CDATA[ >= ]]> #{query.couponRecordIsActiveMin}
+		</if>
+		<if test="query != null and query.couponRecordIsActiveMin == null and query.couponRecordIsActiveMax != null">
+			and t_coupon_record.is_active <![CDATA[ <= ]]> #{query.couponRecordIsActiveMax}
+		</if>
+		<if test="query != null and query.couponRecordIsActiveMin != null and query.couponRecordIsActiveMax != null">
+			and t_coupon_record.is_active <![CDATA[ >= ]]> #{query.couponRecordIsActiveMin} and t_coupon_record.is_active <![CDATA[ <= ]]> #{query.couponRecordIsActiveMax}
+		</if>
+		<if test="query != null and query.couponType != null and query.couponType != ''">
+			and t_coupon.type like concat('%', #{query.couponType}, '%')
+		</if>
+		<if test="query != null and query.couponMoney != null">
+			and t_coupon.money = #{query.couponMoney}
+		</if>
+		<if test="query != null and query.couponMoneyMin != null and query.couponMoneyMax == null">
+			and t_coupon.money <![CDATA[ >= ]]> #{query.couponMoneyMin}
+		</if>
+		<if test="query != null and query.couponMoneyMin == null and query.couponMoneyMax != null">
+			and t_coupon.money <![CDATA[ <= ]]> #{query.couponMoneyMax}
+		</if>
+		<if test="query != null and query.couponMoneyMin != null and query.couponMoneyMax != null">
+			and t_coupon.money <![CDATA[ >= ]]> #{query.couponMoneyMin} and t_coupon.money <![CDATA[ <= ]]> #{query.couponMoneyMax}
+		</if>
+		
+        and
+        t_coupon_record.coupon_id = t_coupon.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userCouponRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_coupon_record, t_coupon where t_coupon_record.id = #{id} and
+        t_coupon_record.coupon_id = t_coupon.id
+    </select>
+
+    <select id="listAll" resultType="userCouponRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_coupon_record, t_coupon
+        where
+        t_coupon_record.coupon_id = t_coupon.id
+        order by t_coupon_record.update_time desc, t_coupon_record.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userCouponRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_coupon_record, t_coupon
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_coupon_record.update_time desc, t_coupon_record.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userCouponRecordDO">
+        select
+        <include refid="select_columns"/>
+        from t_coupon_record, t_coupon
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_coupon_record.update_time desc, t_coupon_record.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_coupon_record, t_coupon
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

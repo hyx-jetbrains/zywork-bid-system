@@ -24,7 +24,7 @@
             ${query.sortColumn} ${query.sortOrder}
         </if>
         <if test="query.sortColumn == null or query.sortColumn == ''">
-            create_time desc
+			t_project.create_time desc
         </if>
         limit #{query.beginIndex}, #{query.pageSize}
     </select>

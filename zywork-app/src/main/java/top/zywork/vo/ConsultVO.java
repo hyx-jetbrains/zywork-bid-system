@@ -24,7 +24,6 @@ public class ConsultVO extends BaseVO {
     // 咨询编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 问题类别编号
 	@NotNull(message = "此项是必须项")

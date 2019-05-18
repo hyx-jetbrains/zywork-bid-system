@@ -211,10 +211,11 @@ public class ProjectController extends BaseController {
             return ResponseStatusVO.authenticationError();
         }
 
-        projectQuery.setIsActive((byte)0);
         PagerDTO pagerDTO = projectService.listPageByUserId(projectQuery, jwtUser.getUserId());
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
-        pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectVO.class));
+        if (null != pagerDTO && null != pagerDTO.getRows()) {
+            pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectVO.class));
+        }
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
