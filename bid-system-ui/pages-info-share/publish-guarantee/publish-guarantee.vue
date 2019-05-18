@@ -2,20 +2,48 @@
 	<view>
 		<!-- 发布申请保函 -->
 		<view class="uni-common-mt">
-			<form @submit="addGuarantee">
+			<form>
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">绑定开标项目</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								绑定开标项目
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<input class="uni-input" type="text" :disabled="true" 
-								placeholder="请选择开标项目" v-model="guarantee.projectName"
-								@click="projectDrawer = true" />
+							<input class="uni-input" type="text" :disabled="true" placeholder="请选择开标项目" v-model="guarantee.projectName"
+							 @click="showProjectDrawer" />
 							<uni-drawer :visible="projectDrawer" mode="right" @close="projectDrawer = false">
 								<uni-list>
-									<zywork-list-item v-for="(projectItem, index) in projectList" :key="index" :title="projectItem.title" note="点击选择"
-										@click="chooseProject(projectItem)"></zywork-list-item>
+									<view class="zy-search-bar zy-project-search">
+										<zywork-icon type="iconchaxun" />
+										<input type="text" v-model="projectPager.title" placeholder="输入项目名称搜索" @confirm="searchProject" />
+									</view>
+									<view class="zy-project-item" v-for="(projectItem, index) in projects" :key="index" @click="chooseProject(projectItem)">
+										<view class="zy-disable-flex">
+											<view>
+												<text>{{projectItem.projectType}}</text>
+												<text style="margin-left: 30upx;">[{{projectItem.city}}]</text>
+											</view>
+											<view class="zy-disable-flex-right" style="color: #108EE9">{{projectItem.markStatus}}</view>
+										</view>
+										<view class="zy-text-mini" style="color: #dd524d; text-align: right;">
+											开标时间：
+											<text v-if="projectItem.openMarkTime !== null && projectItem.openMarkTime !== undefined" class="zy-text-mini"
+											 style="color: #dd524d;">
+												{{projectItem.openMarkTime}}
+											</text>
+											<text v-else class="zy-text-mini" style="color: #dd524d;">
+												暂无
+											</text>
+										</view>
+										<view class="zy-text-bold">
+											{{projectItem.title}}
+										</view>
+									</view>
+									<!-- <zywork-list-item v-for="(projectItem, index) in projects" :key="index" :title="projectItem.title" note="点击选择"
+										 @click="chooseProject(projectItem.id, projectItem.title)"></zywork-list-item> -->
 								</uni-list>
 							</uni-drawer>
 						</view>
@@ -60,14 +88,17 @@
 							<picker @change="chooseGuaranteeCompany" :range="guaranteeCompanyArray">
 								<view class="zy-disable-flex">
 									<text class="zy-list-form-picker zy-text-info">{{guarantee.guaranteeComp}}</text>
-									<zywork-icon type="iconxiangxia"/>
+									<zywork-icon type="iconxiangxia" />
 								</view>
 							</picker>
 						</view>
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">保函费(元)</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								保函费(元)
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入保函费" v-model="guarantee.guaranteePrice"></input>
@@ -75,7 +106,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">申请人</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								申请人
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入申请人(建筑单位)" v-model="guarantee.applicant"></input>
@@ -83,7 +117,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">联系人</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								联系人
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入联系人" v-model="guarantee.name"></input>
@@ -91,7 +128,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">手机号</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								手机号
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入手机号" v-model="guarantee.phone"></input>
@@ -106,7 +146,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">确认申请</button>
+						<button type="primary" @click="addGuarantee" :disabled="disabled.guaranteeBtn">确认申请</button>
 					</view>
 				</view>
 			</form>
@@ -119,6 +159,10 @@
 	import uniDrawer from '@/components/uni-drawer/uni-drawer.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
+	import * as infoPublish from '@/common/info-publish.js'
+	import {
+		getProjectList
+	} from '@/common/project-info.js'
 	import {
 		guaranteeCompanyArray
 	} from '@/common/picker.data.js'
@@ -131,49 +175,18 @@
 		},
 		data() {
 			return {
+				disabled: {
+					guaranteeBtn: false
+				},
 				projectDrawer: false,
-				projectList: [
-					{
-						id: 1,
-						title: '项目1',
-						openMarkTime: '2019-04-30 00:00:00 ',
-						markUnitName: '某某公司',
-						constructionPeriod: 30,
-						assurePrice: 10000
-					},
-					{
-						id: 2,
-						title: '项目2',
-						openMarkTime: '2019-04-30 00:00:00',
-						markUnitName: '某某公司',
-						constructionPeriod: 30,
-						assurePrice: 10000
-					},
-					{
-						id: 3,
-						title: '项目3',
-						openMarkTime: '2019-04-30 00:00:00',
-						markUnitName: '某某公司',
-						constructionPeriod: 30,
-						assurePrice: 10000
-					},
-					{
-						id: 4,
-						title: '项目4',
-						openMarkTime: '2019-04-30 00:00:00',
-						markUnitName: '某某公司',
-						constructionPeriod: 30,
-						assurePrice: 10000
-					},
-					{
-						id: 5,
-						title: '项目5',
-						openMarkTime: '2019-04-30 00:00:00',
-						markUnitName: '某某公司',
-						constructionPeriod: 30,
-						assurePrice: 10000
-					}
-				],
+				projectPager: {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0,
+					releaseStatus: '已发布',
+					title: ''
+				},
+				projects: [],
 				guarantee: {
 					id: null,
 					projectId: null,
@@ -209,7 +222,9 @@
 			chooseProject(project) {
 				this.guarantee.projectId = project.id
 				this.guarantee.projectName = project.title
-				this.guarantee.openMarkTime = project.openMarkTime.split(' ')[0]
+				if (project.openMarkTime != null && project.openMarkTime != undefined) {
+					this.guarantee.openMarkTime = project.openMarkTime.split(' ')[0]
+				}
 				this.guarantee.markUnitName = project.markUnitName
 				this.guarantee.constructionPeriod = project.constructionPeriod
 				this.guarantee.assurePrice = project.assurePrice / 100
@@ -220,13 +235,20 @@
 				this.guaranteeCompanyIndex = e.target.value
 				this.guarantee.guaranteeComp = this.guaranteeCompanyArray[this.guaranteeCompanyIndex]
 			},
+			/** 显示项目选择抽屉 */
+			showProjectDrawer() {
+				this.projectDrawer = true;
+				this.searchProject();
+			},
+			/** 查询项目 */
+			searchProject() {
+				getProjectList(this, this.projectPager);
+			},
 			/** 确认申请保函 */
-			addGuarantee: function(e) {
-				var formObj = e.detail.value;
-				this.guarantee.assurePrice *= this.guarantee.assurePrice
-				this.guarantee.guaranteePrice *= this.guarantee.guaranteePrice
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.guarantee)
+			addGuarantee() {
+				this.guarantee.assurePrice *= 100;
+				this.guarantee.guaranteePrice *= 100;
+				infoPublish.saveGuarantee(this, this.guarantee);
 			}
 		}
 	}
@@ -234,4 +256,18 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+
+	.zy-project-search {
+		margin: 20upx auto;
+		width: 90%;
+	}
+
+	.zy-project-item {
+		padding: 10upx 20upx;
+		border-bottom: 1upx solid $border-color;
+	}
+
+	.zy-project-item:last-child {
+		border-bottom: none;
+	}
 </style>

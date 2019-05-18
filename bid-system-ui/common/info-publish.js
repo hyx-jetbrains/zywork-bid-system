@@ -384,3 +384,202 @@ export const saveSeekcar = (self, params) => {
 		}
 	})
 }
+/** 
+ * 发布其他岗位招聘表单验证
+ */
+export const checkRecruit = (self) => {
+	if (self.recruit.jobTitle === null
+		|| self.recruit.jobTitle === undefined) {
+		showInfoToast("请输入招聘岗位");
+		return false;
+	}
+	if (self.recruit.workYear === null
+		|| self.recruit.workYear === undefined) {
+		showInfoToast("请输入工作年限");
+		return false;
+	}
+	return true;
+}
+/**
+ * 发布岗位招聘-保存岗位招聘记录
+ */
+export const saveRecruit = (self, params) => {
+	self.disabled.recruitBtn = true;
+	if (!checkRecruit(self)) {
+		self.disabled.recruitBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	uni.request({
+		url: BASE_URL + '/recruit/user/release-recruit',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+				self.recruit = {}
+				self.initPicker();
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.recruitBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.recruitBtn = false;
+		}
+	})
+}
+/** 
+ * 发布求带资料表单验证
+ */
+export const checkSeekData = (self) => {
+	if (self.seekData.startAddr === null
+		|| self.seekData.startAddr === undefined) {
+		showInfoToast("请输入出发地点");
+		return false;
+	}
+	if (self.seekData.endAddr === null
+		|| self.seekData.endAddr === undefined) {
+		showInfoToast("请输入目的地地点");
+		return false;
+	}
+	if (self.seekData.dataCount === null
+		|| self.seekData.dataCount === undefined) {
+		showInfoToast("请输入资料数量");
+		return false;
+	}
+	if (self.seekData.price === null
+		|| self.seekData.price === undefined) {
+		showInfoToast("请输入赏金");
+		return false;
+	}
+	if (self.seekData.phone === null
+		|| self.seekData.phone === undefined) {
+		showInfoToast("请输入手机号");
+		return false;
+	}
+	return true;
+}
+/**
+ * 发布求带资料-保存求带资料记录
+ */
+export const saveSeekData = (self, params) => {
+	self.disabled.seekDataBtn = true;
+	if (!checkSeekData(self)) {
+		self.disabled.seekDataBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	uni.request({
+		url: BASE_URL + '/seek-data/user/release-seekData',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+				self.seekData = {}
+				self.initPicker();
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.seekDataBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.seekDataBtn = false;
+		}
+	})
+}
+
+/** 
+ * 申请保函表单验证
+ */
+export const checkGuarantee = (self) => {
+	if (self.guarantee.projectName === null
+		|| self.guarantee.projectName === undefined) {
+		showInfoToast("请选择招标项目");
+		return false;
+	}
+	if (self.guarantee.guaranteePrice === null
+		|| self.guarantee.guaranteePrice === undefined) {
+		showInfoToast("请输入保函费");
+		return false;
+	}
+	if (self.guarantee.applicant === null
+		|| self.guarantee.applicant === undefined) {
+		showInfoToast("请输入申请人");
+		return false;
+	}
+	if (self.guarantee.name === null
+		|| self.guarantee.name === undefined) {
+		showInfoToast("请输入联系人");
+		return false;
+	}
+	if (self.guarantee.phone === null
+		|| self.guarantee.phone === undefined) {
+		showInfoToast("请输入联系人");
+		return false;
+	}
+	return true;
+}
+/**
+ * 申请保函-保存申请保函记录
+ */
+export const saveGuarantee = (self, params) => {
+	self.disabled.guaranteeBtn = true;
+	if (!checkGuarantee(self)) {
+		self.disabled.guaranteeBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	uni.request({
+		url: BASE_URL + '/guarantee/user/release-guarantee',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+				self.guarantee = {}
+				self.initPicker();
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.guaranteeBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.guaranteeBtn = false;
+		}
+	})
+}

@@ -2,11 +2,14 @@
 	<view>
 		<!-- 发布求带资料 -->
 		<view class="uni-common-mt">
-			<form @submit="addSeekData">
+			<form>
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">出发地点</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								出发地点
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入出发地点" v-model="seekData.startAddr"></input>
@@ -14,7 +17,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">目的地地点</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								目的地地点
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入目的地地点" v-model="seekData.endAddr"></input>
@@ -35,7 +41,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">资料数量</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								资料数量
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入资料数量" v-model="seekData.dataCount"></input>
@@ -65,7 +74,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">赏金</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								赏金
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入赏金" v-model="seekData.price"></input>
@@ -73,7 +85,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">联系电话</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								联系电话
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入联系电话" v-model="seekData.phone"></input>
@@ -99,7 +114,7 @@
 						<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请输入备注" v-model="seekData.memo" />
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">发布信息</button>
+						<button type="primary" @click="addSeekData" :disabled="disabled.seekDataBtn">发布信息</button>
 					</view>
 				</view>
 			</form>
@@ -109,6 +124,7 @@
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import * as infoPublish from '@/common/info-publish.js'
 	import {
 		dataTypeArray
 	} from '@/common/picker.data.js'
@@ -121,6 +137,9 @@
 		},
 		data() {
 			return {
+				disabled: {
+					seekDataBtn: false
+				},
 				seekData: {
 					id: null,
 					userId: null,
@@ -148,8 +167,15 @@
 				endDate: getDate('end'),
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initPicker();
+		},
 		methods: {
+			/** 初始化下拉框 */	
+			initPicker() {
+				this.seekData.dataType = this.dataTypeArray[0];
+				this.setStartTime();
+			},
 			/** 监听资料类型选择器 */
 			chooseDataType: function(e) {
 				this.dataTypeIndex = e.target.value
@@ -173,15 +199,13 @@
 			},
 			/** 提交设置出发时间 */
 			setStartTime() {
-				this.seekData.latestTime = this.tempStartDate + ' ' + this.tempStartTime
+				this.seekData.latestTime = this.tempStartDate + ' ' + this.tempStartTime + ':00'
 			},
 			/** 发布求带资料信息 */
-			addSeekData: function(e) {
+			addSeekData() {
 				this.setStartTime()
 				this.seekData.price *= 100
-				var formObj = e.detail.value;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.seekData)
+				infoPublish.saveSeekData(this, this.seekData);
 			}
 		}
 	}

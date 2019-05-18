@@ -484,15 +484,7 @@
 			/** 取地址信息 */
 			getAddressInfo(e) {
 				var tempAddrLabel = e.label
-				var tempAddr = ''
-				var tempAddrArray = tempAddrLabel.split('-')
-				for (var i = 0; i < tempAddrArray.length; i++) {
-					if (tempAddr == '') {
-						tempAddr = tempAddrArray[i]
-					} else {
-						tempAddr += '/' + tempAddrArray[i]
-					}
-				}
+				var tempAddr = tempAddrLabel.replace(/-/g, '/');
 				return tempAddr
 			},
 			/** 监听出发日期选择器 */
@@ -513,15 +505,14 @@
 					= this.tempStartDate + ' ' + this.tempStartTime + ':00'
 			},
 			/** 发布开标拼车信息 */
-			addCarpool: function(e) {
+			addCarpool() {
 				this.setStartTime()
 				// var formObj = e.detail.value;
 				infoPublish.saveCarpool(this, this.carpool);
 			},
 			/** 发布开标找车信息 */
-			addSeekcar: function(e) {
+			addSeekcar() {
 				this.setStartTime()
-				// var formObj = e.detail.value;
 				infoPublish.saveSeekcar(this, this.seekcar);
 			},
 			/** 显示项目选择抽屉 */

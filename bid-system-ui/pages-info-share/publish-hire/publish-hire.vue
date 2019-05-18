@@ -2,11 +2,14 @@
 	<view>
 		<!-- 发布其他岗位招聘 -->
 		<view class="uni-common-mt">
-			<form @submit="addRecruit">
+			<form>
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">招聘岗位</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								招聘岗位
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入招聘岗位" v-model="recruit.jobTitle"></input>
@@ -27,7 +30,10 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">工作时间(年)</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">
+								<text class="zy-list-form-required">*</text>
+								工作时间(年)
+							</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入工作时间/年" v-model="recruit.workYear"></input>
@@ -80,7 +86,7 @@
 						<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请输入职位描述" v-model="recruit.memo" />
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" formType="submit">发布信息</button>
+						<button type="primary" @click="addRecruit" :disabled="disabled.recruitBtn">发布信息</button>
 					</view>
 				</view>
 			</form>
@@ -98,6 +104,7 @@
 		educationArray,
 		salaryArray
 	} from '@/common/picker.data.js'
+	import * as infoPublish from '@/common/info-publish.js'
 	export default {
 		components: {
 			mpvueCityPicker,
@@ -105,6 +112,9 @@
 		},
 		data() {
 			return {
+				disabled: {
+					recruitBtn: false
+				},
 				recruit: {
 					id: null,
 					userId: null,
@@ -131,6 +141,12 @@
 		},
 		onLoad() {},
 		methods: {
+			/** 初始下拉框 */
+			initPicker() {
+				this.recruit.isFulltime = 0;
+				this.recruit.education = this.educationArray[0];
+				this.recruit.salary = this.salaryArray[0]
+			},
 			// 监听招聘类型
 			chooseFulltime(e) {
 				this.recruit.isFulltime = e.target.value
@@ -152,15 +168,7 @@
 			/** 地区选择框确认 */
 			onConfirm(e) {
 				var tempAddrLabel = e.label
-				var tempAddr = ''
-				var tempAddrArray = tempAddrLabel.split('-')
-				for (var i = 0; i < tempAddrArray.length; i++) {
-					if (tempAddr == '') {
-						tempAddr = tempAddrArray[i]
-					} else {
-						tempAddr += '/' + tempAddrArray[i]
-					}
-				}
+				var tempAddr = tempAddrLabel.replace(/-/g, '/');
 				this.recruit.workAddr = tempAddr
 			},
 			/** 地区选择框取消 */
@@ -168,10 +176,10 @@
 				console.log(e)
 			},
 			/** 发布招聘信息 */
-			addRecruit: function(e) {
-				var formObj = e.detail.value;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.recruit)
+			addRecruit() {
+				this.recruit.salary = this.salaryArray[this.salaryIndex]
+				this.recruit.education = this.educationArray[this.educationIndex]
+				infoPublish.saveRecruit(this, this.recruit);
 			}
 		}
 	}

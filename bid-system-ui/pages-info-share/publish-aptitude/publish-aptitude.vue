@@ -291,8 +291,7 @@
 				})
 			},
 			/** 发布资质转让信息 */
-			addAptitudeTransfer: function(e) {
-				// var formObj = e.detail.value;
+			addAptitudeTransfer() {
 				infoPublish.saveAptitude(this, this.aptitude);
 			}
 		}

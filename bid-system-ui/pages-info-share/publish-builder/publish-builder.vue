@@ -461,15 +461,7 @@
 				console.log(e);
 				// this.pickerText = JSON.stringify(e)
 				var tempAddrLabel = e.label
-				var tempAddr = ''
-				var tempAddrArray = tempAddrLabel.split('-')
-				for (var i = 0; i < tempAddrArray.length; i++) {
-					if (tempAddr == '') {
-						tempAddr = tempAddrArray[i]
-					} else {
-						tempAddr += '/' + tempAddrArray[i]
-					}
-				}
+				var tempAddr = tempAddrLabel.replace(/-/g, '/');
 				this.builder.certificateAddress = this.builderReq.compAddr = tempAddr
 			},
 			/** 地区选择框取消 */
@@ -549,14 +541,12 @@
 				})
 			},
 			/** 发布招聘信息 */
-			addBuilderReq: function(e) {
-				// var formObj = e.detail.value;
+			addBuilderReq() {
 				infoPublish.saveBuilderReq(this, this.builderReq);
 				
 			},
 			/** 发布应聘信息 */
-			addBuilder: function(e) {
-				// var formObj = e.detail.value;
+			addBuilder() {
 				infoPublish.saveBuilder(this, this.builder);
 			},
 		}
