@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<view class="zy-uni-segmented-control">
-			<uni-segmented-control :current="type.current" :values="type.items" v-on:clickItem="onClickItem" styleType="button"
-			 activeColor="#108EE9"></uni-segmented-control>
+			<uni-segmented-control :current="builderType.current" :values="builderType.items" v-on:clickItem="onClickItem" styleType="button"
+				activeColor="#108EE9"></uni-segmented-control>
 		</view>
 		<!-- 招聘 -->
-		<view v-if="type.current == 0">
+		<view v-if="builderType.current == 0">
 			<view class="uni-common-mt">
 				<form>
 					<view class="uni-list">
@@ -330,7 +330,7 @@
 		},
 		data() {
 			return {
-				type: {
+				builderType: {
 					current: 0,
 					items: builderTypeArray,
 				},
@@ -410,8 +410,8 @@
 			},
 			/** 分段器选择类别 */
 			onClickItem(index) {
-				if (this.type.current !== index) {
-					this.type.current = index
+				if (this.builderType.current !== index) {
+					this.builderType.current = index
 				}
 			},
 			/** 监听生日选择器 */
