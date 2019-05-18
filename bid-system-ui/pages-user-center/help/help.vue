@@ -27,6 +27,10 @@
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import {
+		getOftenQuerstion
+	} from '@/common/user-center.js'
+	
 	export default {
 		components: {
 			zyworkIcon
@@ -45,26 +49,12 @@
 				],
 				questionTypeArray: [],
 				questionTypeIndex: 0,
-				oftenQuestionList: [
-					{
-						id: '1',
-						type: 'CA证书',
-						title: 'CA证书问题长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试长标题测试',
-						content: '内容内容内容',
-						createTime: '2019-04-22 17:31:33'
-					},
-					{
-						id: '2',
-						type: '其他问题',
-						title: 'CA证书问题1',
-						content: '内容内容内容',
-						createTime: '2019-04-22 17:31:33'
-					}
-				]
+				oftenQuestionList: []
 			}
 		},
 		onLoad() {
 			this.initQuestionType()
+			this.initData()
 		},
 		methods: {
 			// 初始化问题类型
@@ -80,12 +70,17 @@
 			// 监听类别选择
 			chooseType: function(e) {
 				let index = e.target.value
+				let id = null
 				this.questionTypeIndex = index
 				// 等于0表示取全部数据
 				if (index !== '0') {
 					console.log(this.questionTypeList[index - 1].id)
 					console.log(this.questionTypeList[index - 1].name)
+					id = this.questionTypeList[index - 1].id
+				} else {
+					id = null
 				}
+				getOftenQuerstion(this, id)
 			},
 			// 前往问题详情页面
 			toOftenQuestionDetail(item) {
@@ -93,6 +88,9 @@
 					url: '/pages-user-center/help/help-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			},
+			initData() {
+				getOftenQuerstion(this, null)
+			}
 		}
 	}
 </script>

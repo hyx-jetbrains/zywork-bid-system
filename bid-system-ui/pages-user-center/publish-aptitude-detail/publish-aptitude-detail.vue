@@ -1,35 +1,35 @@
 <template>
 	<view>
 		<!-- 资质转让和求购详情 -->
-		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.title}}</view>
+		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.aptitudeTransferTitle}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
 				
 				<view class="zy-disable-flex">
-					<image class="zy-page-mini-headicon" :src="item.headicon" />
+					<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 					<view>
 						<view>
-							<text class="zy-text-bold">{{item.nickname}}</text>
+							<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 						</view>
-						<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+						<view class="zy-text-mini zy-text-info">{{item.aptitudeTransferCreateTime}}</view>
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">资质等级</view>
-					<view class="zy-disable-flex-right">{{item.compAptitudeLevel}}</view>
+					<view class="zy-disable-flex-right">{{item.aptitudeTransferCompAptitudeLevel}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">资质类别</view>
-					<view class="zy-disable-flex-right">{{item.compAptitudeType}}</view>
+					<view class="zy-disable-flex-right">{{item.aptitudeTransferCompAptitudeType}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
 					<!-- <view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view> -->
-					<view class="zy-disable-flex-right">{{item.phone}}</view>
+					<view class="zy-disable-flex-right">{{item.aptitudeTransferPhone}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">其他说明</view>
-					<view class="">{{item.memo}}</view>
+					<view class="">{{item.aptitudeTransferMemo}}</view>
 				</view>
 			</view>
 		</view>

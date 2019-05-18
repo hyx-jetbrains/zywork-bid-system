@@ -1,51 +1,51 @@
 <template>
 	<view>
 		<!-- 建造师应聘详情 -->
-		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.name}}</view>
+		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.builderName}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
 				
 				<view class="zy-disable-flex">
-					<image class="zy-page-mini-headicon" :src="item.headicon" />
+					<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 					<view>
 						<view>
-							<text class="zy-text-bold">{{item.nickname}}</text>
+							<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 						</view>
-						<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+						<view class="zy-text-mini zy-text-info">{{item.builderCreateTime}}</view>
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">姓名</view>
-					<view class="zy-disable-flex-right">{{item.name}}</view>
+					<view class="zy-disable-flex-right">{{item.builderName}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">性别</view>
-					<view class="zy-disable-flex-right">{{item.gender === 1 ? '男' : item.gender === 2 ? '女' : '未知'}}</view>
+					<view class="zy-disable-flex-right">{{item.builderGender === 1 ? '男' : item.builderGender === 2 ? '女' : '未知'}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
 					<!-- <view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view> -->
-					<view class="zy-disable-flex-right">{{item.phone}}</view>
+					<view class="zy-disable-flex-right">{{item.builderPhone}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">证书地址</view>
-					<view class="zy-disable-flex-right">{{item.certificateAddr}}</view>
+					<view class="zy-disable-flex-right">{{item.builderCertificateAddress}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">证书类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateType}}</view>
+					<view class="zy-disable-flex-right">{{item.builderCertificateType}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">证书专业类别</view>
-					<view class="zy-disable-flex-right">{{item.certificateMajorType}}</view>
+					<view class="zy-disable-flex-right">{{item.builderCertificateMajorType}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">期望薪水</view>
-					<view class="zy-disable-flex-right">{{item.salary}}</view>
+					<view class="zy-disable-flex-right">{{item.builderSalary}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">其他说明</view>
-					<view class="">{{item.memo}}</view>
+					<view class="">{{item.builderMemo}}</view>
 				</view>
 			</view>
 		</view>

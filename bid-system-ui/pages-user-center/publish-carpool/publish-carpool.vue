@@ -9,35 +9,35 @@
 				<!-- 拼车信息 -->
 				<view class="zy-page-list" v-if="carpoolList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
-						<uni-swipe-action :options="options" @click="confirmOptions(item.id)">
+						<uni-swipe-action :options="options" @click="confirmOptions(item.markCarpoolId)">
 							<view @click="toCarpoolDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="item.headicon" />
+									<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<view>
 										<view>
-											<text class="zy-text-bold">{{item.nickname}}</text>
+											<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 										</view>
 										<view class="zy-text-mini zy-text-info">
-											{{item.startTime}}
-											<text class="zy-text-mini" style="color: #108EE9; margin-left: 20upx;">{{item.carType}}</text>
+											{{item.markCarpoolStartTime}}
+											<text class="zy-text-mini" style="color: #108EE9; margin-left: 20upx;">{{item.markCarpoolCarType}}</text>
 										</view>
 									</view>
 									<view class="zy-disable-flex-right">
-										¥{{item.price / 100}}
+										¥{{item.markCarpoolPrice / 100}}
 									</view>
 								</view>
 								<view>
 									<view class="zy-text-big zy-text-bold">
-										{{item.startAddr}}
+										{{item.markCarpoolStartAddr}}
 										-
-										{{item.endAddr}}
+										{{item.markCarpoolEndAddr}}
 									</view>
 								</view>
 							</view>
 							<view class="zy-text-info zy-disable-flex">
 								<view>
 									<text style="margin-right: 20upx;">搭车人数:</text>
-									{{item.carpoolRecordCount}}/{{item.peopleCount}}
+									{{item.markCarpoolPeopleCount}}/{{item.markCarpoolPeopleCount}}
 								</view>
 							</view>
 						</uni-swipe-action>
@@ -49,25 +49,25 @@
 				<!-- 找车信息 -->
 				<view class="zy-page-list" v-if="seekcarList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
-						<uni-swipe-action :options="options" @click="confirmOptions(item.id)">
+						<uni-swipe-action :options="options" @click="confirmOptions(item.markSeekcarId)">
 							<view @click="toSeekcarDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="item.headicon" />
+									<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<view>
 										<view>
-											<text class="zy-text-bold">{{item.nickname}}</text>
+											<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 										</view>
-										<view class="zy-text-mini zy-text-info">{{item.startTime}}</view>
+										<view class="zy-text-mini zy-text-info">{{item.markSeekcarStartTime}}</view>
 									</view>
 								</view>
 								<view>
 									<view class="zy-text-big zy-text-bold">
-										{{item.startAddr}}
+										{{item.markSeekcarStartAddr}}
 										-
-										{{item.endAddr}}
+										{{item.markSeekcarEndAddr}}
 									</view>
 									<view class="zy-text-info">
-										{{item.memo}}
+										{{item.markSeekcarMemo}}
 									</view>
 								</view>
 							</view>
@@ -95,6 +95,10 @@
 		openMarkArray
 	} from '@/common/picker.data.js'
 	import {
+		getMarkCarpoolByUserId,
+		getMarkSeekcarByUserId
+	} from '@/common/user-center.js'
+	import {
 		DEFAULT_HEADICON
 	} from '@/common/util.js'
 	export default {
@@ -116,62 +120,25 @@
 					current: 0,
 					items: openMarkArray
 				},
-				carpoolList: [{
-						id: 1,
-						nickname: '刘某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						price: 30000,
-						carType: '小轿车',
-						carpoolRecordCount: 1,
-						peopleCount: 3,
-						name: '危锦辉',
-						phone: '18279700225'
-					},
-					{
-						id: 2,
-						nickname: '张某某',
-						headicon: DEFAULT_HEADICON,
-						startTime: '2019-04-24 17:24:01',
-						startCity: '北京/北京市/东城区',
-						startAddr: '赣州',
-						endCity: '北京/北京市/东城区',
-						endAddr: '上饶',
-						price: 60000,
-						carType: '小轿车',
-						peopleCount: 2,
-						name: '危锦辉',
-						phone: '18279700225',
-						carpoolRecordCount: 2,
-					}
-				],
-				seekcarList: [{
-					id: 1,
-					nickname: '张某某',
-					headicon: DEFAULT_HEADICON,
-					startTime: '2019-04-24 17:24:01',
-					startCity: '北京/北京市/东城区',
-					startAddr: '赣州',
-					endCity: '北京/北京市/东城区',
-					endAddr: '上饶',
-					memo: '去上饶，着急去，有意请联系',
-					name: '危锦辉',
-					phone: '18279700225',
-					seekcarRecordCount: 0
-				}],
+				carpoolList: [],
+				seekcarList: [],
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData()
+		},
 		methods: {
 			/** 分段器选择类别 */
 			onClickItem(index) {
 				if (this.type.current !== index) {
 					this.type.current = index
+					if(index == 0) {
+						getMarkCarpoolByUserId(this)
+					} else {
+						getMarkSeekcarByUserId(this)
+					}
 				}
+				
 			},
 			/** 前往详情页面 */
 			toDetailPage(name, item) {
@@ -204,6 +171,9 @@
 					})
 				}
 				
+			},
+			initData() {
+				getMarkCarpoolByUserId(this)
 			}
 		}
 	}

@@ -152,6 +152,10 @@
 		fulltimeArray,
 		salaryArray
 	} from '@/common/picker.data.js'
+	import {
+		resume,
+		saveResume
+	} from '@/common/user-center.js'
 	
 	export default {
 		components: {
@@ -247,7 +251,9 @@
 				]
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData()
+		},
 		methods: {
 			// 监听性别选中
 			chooseGender(e) {
@@ -309,9 +315,11 @@
 						}
 					}
 				}
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.formInfo)
+				saveResume(this,this.formInfo)
 			},
+			initData() {
+				resume(this)
+			}
 		}
 	}
 </script>

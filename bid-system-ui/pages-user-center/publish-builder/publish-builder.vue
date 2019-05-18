@@ -9,24 +9,24 @@
 				<!-- 招聘信息 -->
 				<view class="zy-page-list" v-if="builderReqList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in builderReqList" :key="index">
-						<uni-swipe-action :options="options" @click="confirmOptions(item.id)">
+						<uni-swipe-action :options="options" @click="confirmOptions(item.builderReqId)">
 							<view @click="toBuilderReqDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="item.headicon" />
+									<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<view>
 										<view>
-											<text class="zy-text-bold">{{item.compName}}</text>
+											<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 										</view>
-										<view class="zy-text-mini zy-text-info">公告时间：{{item.createTime}}</view>
+										<view class="zy-text-mini zy-text-info">公告时间：{{item.builderReqCreateTime}}</view>
 									</view>
 									<view class="zy-disable-flex-right">
-										¥{{item.salary / 100}}
+										¥{{item.builderReqSalary / 100}}
 									</view>
 								</view>
 								<view>
 									<view class="zy-text-big zy-text-bold">建筑工程</view>
 									<view class="zy-text-info">
-										{{item.memo}}
+										{{item.builderReqMemo}}
 									</view>
 								</view>
 							</view>
@@ -39,21 +39,21 @@
 				<!-- 应聘信息 -->
 				<view class="zy-page-list" v-if="builderList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in builderList" :key="index">
-						<uni-swipe-action :options="options" @click="confirmOptions(item.id)">
+						<uni-swipe-action :options="options" @click="confirmOptions(item.builderId)">
 							<view @click="toBuilderDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="item.headicon" />
+									<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<view>
 										<view>
-											<text class="zy-text-bold">{{item.name}}</text>
+											<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 										</view>
-										<view class="zy-text-mini zy-text-info">公告时间：{{item.createTime}}</view>
+										<view class="zy-text-mini zy-text-info">公告时间：{{item.builderCreateTime}}</view>
 									</view>
 								</view>
 								<view>
-									<view class="zy-text-big zy-text-bold">{{item.certificateMajorType}}</view>
+									<view class="zy-text-big zy-text-bold">{{item.builderCertificateType}}</view>
 									<view class="zy-text-info">
-										{{item.memo}}
+										{{item.builderMemo}}
 									</view>
 								</view>
 							</view>
@@ -77,6 +77,10 @@
 	import {
 		DEFAULT_HEADICON
 	} from '@/common/util.js'
+	import {
+		getBuilderByUserId,
+		getBuilderReqByUserId
+	} from '@/common/user-center.js'
 	export default {
 		components: {
 			uniSegmentedControl,
@@ -96,73 +100,13 @@
 					current: 0,
 					items: builderTypeArray
 				},
-				builderReqList: [
-					{
-						id: 1,
-						headicon: DEFAULT_HEADICON,
-						nickname: 'Carter',
-						name: '危锦辉',
-						people: '需要某某人才',
-						peopleCount: 3,
-						compName: '赣州智悦科技有限公司',
-						compAddr: '山西/长治市/襄垣县',
-						createTime: '2019-04-24 17:24:01',
-						salary: '30000',
-						phone: '18279700225',
-						memo: '公司急招聘市政工程师，有意请联系18279700223'
-					},
-					{
-						id: 2,
-						headicon: DEFAULT_HEADICON,
-						nickname: 'Carter1',
-						name: '危锦辉1',
-						people: '需要某某人才1',
-						peopleCount: 5,
-						compName: '赣州智悦科技有限公司1',
-						compAddr: '山西/长治市/襄垣县',
-						createTime: '2019-04-24 17:24:01',
-						salary: '50000',
-						phone: '18279700225',
-						memo: '公司急招聘市政工程师，有意请联系18279700223',
-					}
-				],
-				builderList: [
-					{
-						id: 1,
-						nickname: 'Carter',
-						name: '危锦辉',
-						certificateMajorType: '机电工程',
-						createTime: '2019-04-24 17:24:01',
-						memo: '找工作，诚心的',
-						headicon: DEFAULT_HEADICON,
-						phone: '18279700225',
-						gender: 1,
-						certificateType: '建筑师',
-						certificateMajorType: '一级建筑师',
-						certificateAddr: '北京/北京市/东城区',
-						salary: '5-10万元',
-						memo: '无其他要求'
-					},
-					{
-						id: 2,
-						nickname: '刘某某',
-						name: '刘某',
-						certificateMajorType: '机电工程',
-						createTime: '2019-04-24 17:24:01',
-						memo: '找工作，诚心的',
-						headicon: DEFAULT_HEADICON,
-						phone: '18279700225',
-						gender: 1,
-						certificateType: '建筑师',
-						certificateMajorType: '一级建筑师',
-						certificateAddr: '北京/北京市/东城区',
-						salary: '5-10万元',
-						memo: '无其他要求'
-					}
-				],
+				builderReqList: [],
+				builderList: [],
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initdata()
+		},
 		methods: {
 			// 分段器选择类别
 			onClickItem(index) {
@@ -200,6 +144,10 @@
 					})
 				}
 				
+			},
+			initdata() {
+				getBuilderByUserId(this)
+				getBuilderReqByUserId(this)
 			}
 		}
 	}

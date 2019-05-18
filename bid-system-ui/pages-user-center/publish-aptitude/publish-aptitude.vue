@@ -9,21 +9,21 @@
 				<!-- 求购信息 -->
 				<view class="zy-page-list" v-if="aptitudeBuyList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in aptitudeBuyList" :key="index">
-						<uni-swipe-action :options="options" @click="confirmOptions(item.id)">
+						<uni-swipe-action :options="options" @click="confirmOptions(item.aptitudeTransferId)">
 							<view @click="toAptitudeDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="item.headicon" />
+									<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<view>
 										<view>
-											<text class="zy-text-bold">{{item.nickname}}</text>
+											<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 										</view>
-										<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+										<view class="zy-text-mini zy-text-info">{{item.aptitudeTransferCreateTime}}</view>
 									</view>
 								</view>
 								<view>
-									<view class="zy-text-big zy-text-bold">{{item.title}}</view>
+									<view class="zy-text-big zy-text-bold">{{item.aptitudeTransferTitle}}</view>
 									<view class="zy-text-info">
-										{{item.memo}}
+										{{item.aptitudeTransferMemo}}
 									</view>
 								</view>
 							</view>
@@ -36,21 +36,21 @@
 				<!-- 转让信息 -->
 				<view class="zy-page-list" v-if="aptitudeSellList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in aptitudeSellList" :key="index">
-						<uni-swipe-action :options="options" @click="confirmOptions(item.id)">
+						<uni-swipe-action :options="options" @click="confirmOptions(item.aptitudeTransferId)">
 							<view @click="toAptitudeDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="item.headicon" />
+									<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<view>
 										<view>
-											<text class="zy-text-bold">{{item.nickname}}</text>
+											<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 										</view>
-										<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+										<view class="zy-text-mini zy-text-info">{{item.aptitudeTransferCreateTime}}</view>
 									</view>
 								</view>
 								<view>
-									<view class="zy-text-big zy-text-bold">{{item.title}}</view>
+									<view class="zy-text-big zy-text-bold">{{item.aptitudeTransferTitle}}</view>
 									<view class="zy-text-info">
-										{{item.memo}}
+										{{item.aptitudeTransferMemo}}
 									</view>
 								</view>
 							</view>
@@ -74,6 +74,9 @@
 	import {
 		DEFAULT_HEADICON
 	} from '@/common/util.js'
+	import {
+		getAptitudeTransfeByUserId
+	} from '@/common/user-center.js'
 	export default {
 		components: {
 			uniSegmentedControl,
@@ -93,42 +96,19 @@
 					current: 0,
 					items: aptitudeTypeArray
 				},
-				aptitudeBuyList: [
-					{
-						id: 1,
-						nickname: '张某',
-						headicon: DEFAULT_HEADICON,
-						type: 0,
-						title: '本人急购一家一级房建市政资质的企业',
-						compAptitudeLevel: '三级',
-						compAptitudeType: '交通工程',
-						phone: '',
-						memo: '诚心求购，诚心合作请联系：18279700232',
-						createTime: '2019-04-24 17:24:01'
-					}
-				],
-				aptitudeSellList: [
-					{
-						id: 2,
-						nickname: '张某',
-						headicon: DEFAULT_HEADICON,
-						type: 1,
-						title: '本人急售一家一级房建市政资质的企业',
-						compAptitudeLevel: '三级',
-						compAptitudeType: '交通工程',
-						phone: '18279700224',
-						memo: '诚心求购，诚心合作请联系：18279700232',
-						createTime: '2019-04-24 17:24:01'
-					}
-				],
+				aptitudeBuyList: [],
+				aptitudeSellList: [],
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData()
+		},
 		methods: {
 			// 分段器选择类别
 			onClickItem(index) {
 				if (this.type.current !== index) {
 					this.type.current = index
+					getAptitudeTransfeByUserId(this,this.type.current)
 				}
 			},
 			/** 前往详情页面 */
@@ -148,6 +128,9 @@
 					title: '删除：' + id,
 					icon: 'none'
 				})
+			},
+			initData() {
+				getAptitudeTransfeByUserId(this,this.type.current)
 			}
 		}
 	}

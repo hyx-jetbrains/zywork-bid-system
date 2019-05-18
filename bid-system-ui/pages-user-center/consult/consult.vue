@@ -32,6 +32,9 @@
 	import uniCard from "@/components/uni-card/uni-card.vue"
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import {
+		getConsultByUserId
+	} from '@/common/user-center.js'
 	export default {
 		components: {
 			uniCard,
@@ -40,25 +43,12 @@
 		},
 		data() {
 			return {
-				consultList: [
-					{
-						consultType: 'CA证书',
-						consultDesc: '遇到个什么问题',
-						replyContent: '',
-						replyTime: '',
-						createTime: '2019-04-26 10:51:19'
-					},
-					{
-						consultType: 'CA证书',
-						consultDesc: '遇到个什么问题',
-						replyContent: '问题的答案',
-						replyTime: '2019-04-26 10:51:19',
-						createTime: '2019-04-26 10:51:19'
-					},
-				]
+				consultList: []
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData()
+		},
 		methods: {
 			// 前往搜索页面
 			toSearchPage() {
@@ -89,6 +79,9 @@
 			// 选择支付方式
 			choosePayStatus: function(e) {
 				this.payStatusIndex = e.target.value;
+			},
+			initData() {
+				getConsultByUserId(this)
 			}
 		}
 	}

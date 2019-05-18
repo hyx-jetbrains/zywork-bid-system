@@ -18,6 +18,9 @@
 
 <script>
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import {
+		createConsult
+	} from '@/common/user-center.js'
 	export default {
 		components: {
 			uniTag
@@ -74,8 +77,7 @@
 			},
 			// 咨询
 			addConsult() {
-				console.log('咨询')
-				console.log(this.formInfo)
+				createConsult(this, this.formInfo)
 			}
 		}
 	}

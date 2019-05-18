@@ -15,42 +15,56 @@
 		
 		<!-- 列表 -->
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
-			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index" >
-				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap" />
-				<view @click="toProjectDetail">
-					<view class="zy-project-head">
-						<image class="zy-icon" :src="imgIcon"/>
+			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
+				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.id)" />
+				<view @click="toProjectDetail(project)">
+					<view class="zy-disable-flex">
+						<image class="zy-project-icon" :src="imgIcon" />
 						<view>
 							<view>
-								<text>{{projectTypeName}}</text>
+								<text>{{project.projectType}}</text>
 								<text style="margin-left: 30upx;">[{{project.city}}]</text>
 							</view>
-							<view class="zy-text-mini zy-text-info">公告时间：{{project.noticeTime}}</view>
+							<view class="zy-text-mini zy-text-info">
+								公告时间：
+								<text v-if="project.noticeTime !== null && project.noticeTime !== undefined"
+									class="zy-text-mini zy-text-info">
+								{{project.noticeTime}}
+								</text>
+								<text v-else class="zy-text-mini zy-text-info">
+									暂无
+								</text>
+							</view>
 						</view>
 						<view class="zy-project-head-right">
 							<view style="padding-right: 50upx;">
 								<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
-								<uni-tag :text="project.status" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>	
+								<uni-tag :text="project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
 							</view>
-							<view class="zy-text-mini zy-text-warning" v-if="project.time !== null">开标时间：{{project.time}}</view>
-							<view class="zy-text-mini zy-text-warning" v-else>开标时间：暂无</view>
+							<view v-html="space"></view>
+							<!-- <view class="zy-text-mini zy-text-warning" 
+								v-if="project.openMarkTime !== null && project.openMarkTime !== undefined">
+								开标日期：{{project.openMarkTime}}
+							</view>
+							<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view> -->
 						</view>
 					</view>
+					
 					<!-- 全部内容部分 -->
 					<view v-if="projectStatus.current === 0">
 						<!-- 公告中内容部分 -->
-						<view v-if="project.status === '公告中'">
+						<view v-if="project.markStatus === '公告中'">
 							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
 							<view class="zy-project-item-row">
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkWay}}</view>
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money / 100}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkPattern}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.projectInvest}}</view>
 							</view>
 						</view>
 						<!-- 待开标内容部分 -->
-						<view v-else-if="project.status === '待开标'">
+						<view v-else-if="project.markStatus === '待开标'">
 							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
 							<view class="zy-project-item-row">
@@ -58,26 +72,29 @@
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.offerPrice / 100}}</view>
 							</view>
 							<view class="zy-project-item-row">
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.constructionPeriod}}</view>
+								<view class="zy-text-info">
+									<text class="zy-text-info zy-text-bold">工期(天)：</text>
+									{{project.constructionPeriod}}
+								</view>
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.openMarkAddr}}</view>
 							</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.otherDemand}}</view>
 						</view>
 						<!-- 已开标内容部分 -->
-						<view v-else-if="project.status === '已开标'">
+						<view v-else-if="project.markStatus === '已开标'">
 							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.inMarkComp}}</view>
 						</view>
 					</view>
 					<!-- 公告中内容部分 -->
-					<view v-if="projectStatus.current === 1">
+					<view v-else-if="projectStatus.current === 1">
 						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
 						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
 						<view class="zy-project-item-row">
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkWay}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.money / 100}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkPattern}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.projectInvest}}</view>
 						</view>
 					</view>
 					<!-- 待开标内容部分 -->
@@ -101,7 +118,6 @@
 					</view>
 				</view>
 			</view>
-			
 		</view>
 		
 		<!-- 没有数据 -->
@@ -126,6 +142,9 @@
 	import {
 		projectStatusArray
 	} from '@/common/picker.data.js'
+	import {
+		getProjectCollectionByUserId
+	} from '@/common/user-center.js'
 	
 	const PROJECT_STATUS_ALL = 0
 	const PROJECT_STATUS_SHOWING = 1
@@ -182,51 +201,22 @@
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				projectTypeName: '房建市政',
-				projects: [
-					{
-						title: '赣州中学工程招标',
-						city: '南昌市',
-						compAptitudeType: '市政公用工程施工总承包三级',
-						builderLevel: '市政公用工程三级',
-						markUnitName: '赣州中学工程招标',
-						noticeTime: '2019-04-24 18:00:00',
-						status: '公告中',
-						time: null,
-						checkWay: '资格后审',
-						money: 300000,
-						assurePrice: 20000,
-						offerPrice: 200000000,
-						constructionPeriod: 30,
-						openMarkAddr: '开标室一',
-						otherDemand: '没有其他要求',
-						inMarkComp: '某公司'
-					},
-					{
-						title: '赣州中学工程招标',
-						city: '南昌市',
-						compAptitudeType: '市政公用工程施工总承包三级',
-						builderLevel: '市政公用工程三级',
-						markUnitName: '赣州中学工程招标',
-						noticeTime: '2019-04-24 18:00:00',
-						status: '待开标',
-						time: '2019-04-25 10:30',
-						checkWay: '资格后审',
-						money: 300000,
-						assurePrice: 20000,
-						offerPrice: 200000000,
-						constructionPeriod: 30,
-						openMarkAddr: '开标室一',
-						otherDemand: '没有其他要求',
-						inMarkComp: '某公司'
-					}
-				],
+				projects: [],
 				pager: {
 					pageNo: 1,
-					pageSize: 10
+					pageSize: 10,
+					sortColumn: 'createTime',
+					sortOrder: 'desc',
+					projectType: '房建市政',
+					markStatus: '',
+					isActive: 0,
+					releaseStatus: '已发布',
+					city: ''
 				},
 			}
 		},
 		onLoad() {
+			this.initData()
 		},
 		methods: {
 			getElSize(id) {
@@ -249,7 +239,7 @@
 						tabBarScrollLeft = tabBar.scrollLeft
 					this.projectType.scrollLeft = tabBarScrollLeft
 					this.projectType.tabIndex = tabIndex
-					
+					this.updateProjectList();
 					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
 				}
 			},
@@ -257,6 +247,12 @@
 			onClickItem(index) {
 				if (this.projectStatus.current !== index) {
 					this.projectStatus.current = index
+					if (index === PROJECT_STATUS_ALL) {
+						this.pager.markStatus = '';
+					} else {
+						this.pager.markStatus = this.projectStatus.items[index]
+					}
+					this.updateProjectList();
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {
@@ -265,9 +261,9 @@
 				}
 			},
 			// 前往项目详情
-			toProjectDetail() {
+			toProjectDetail(item) {
 				uni.navigateTo({
-					url: '/pages-project-info/project-detail/project-detail'
+					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			},
 			// 触发操作选项
@@ -298,7 +294,14 @@
 				} else if (CANCEL_COLLECTION_PROJECT === type) {
 					console.log("取消收藏");
 				}
-			}
+			},
+			initData() {
+				this.updateProjectList();
+			},
+			/** 更新项目列表 */
+			updateProjectList() {
+				getProjectCollectionByUserId(this, this.pager)
+			},
 		}
 	}
 </script>

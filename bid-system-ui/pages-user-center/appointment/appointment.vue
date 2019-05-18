@@ -73,6 +73,9 @@
 		operationArray,
 		payStatusArray
 	} from '@/common/picker.data.js'
+	import {
+		getExpertSubscribeByUserId
+	} from '@/common/user-center.js'
 	export default {
 		components: {
 			uniCard,
@@ -86,62 +89,31 @@
 					current: 0,
 					items: operationArray
 				},
+				params: {
+					subscribeStatus: null,
+					payStatus: null
+				},
 				payStatusArray: payStatusArray,
 				payStatusIndex: 0,
-				expertSubscribeList: [
-					{
-						questionType: 'CA证书',
-						questionDesc: '遇到个什么问题',
-						replyContent: '',
-						replyTime: '',
-						subscribeStatus: '未处理',
-						price: 0,
-						payStatus: '待支付',
-						transactionNo: '',
-						createTime: '2019-04-26 10:51:19'
-					},
-					{
-						questionType: 'CA证书',
-						questionDesc: '遇到个什么问题',
-						replyContent: '',
-						replyTime: '',
-						subscribeStatus: '已处理',
-						price: 100,
-						payStatus: '待支付',
-						transactionNo: '',
-						createTime: '2019-04-26 10:51:19'
-					},
-					{
-						questionType: 'CA证书',
-						questionDesc: '遇到个什么问题',
-						replyContent: '',
-						replyTime: '',
-						subscribeStatus: '已处理',
-						price: 100,
-						payStatus: '已支付',
-						transactionNo: 'ABC123456789',
-						createTime: '2019-04-26 10:51:19'
-					},
-					{
-						questionType: 'CA证书',
-						questionDesc: '遇到个什么问题,长问题测试长问题测试长问题测试长问题测试长问题测试长问题测试长问题测试长问题测试长问题测试长问题测试长问题测试长问题测试',
-						replyContent: '这个问题的解决方案是什么什么什么',
-						replyTime: '2019-04-26 10:51:19',
-						subscribeStatus: '已处理',
-						price: 100,
-						payStatus: '已支付',
-						transactionNo: 'ABC123456',
-						createTime: '2019-04-26 10:51:19'
-					},
-				]
+				expertSubscribeList: []
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData()
+		},
 		methods: {
 			// 分段器选择是否处理
 			onClickItem(index) {
 				if (this.appointmentStatus.current !== index) {
 					this.appointmentStatus.current = index
+					if(index == 0) {
+						this.params.subscribeStatus = null
+					} else if(index == 1) {
+						this.params.subscribeStatus = "未处理"
+					} else if(index == 2) {
+						this.params.subscribeStatus = "已处理"
+					}
+					getExpertSubscribeByUserId(this, this.params)
 				}
 			},
 			// 立即支付
@@ -153,6 +125,17 @@
 			// 选择支付方式
 			choosePayStatus: function(e) {
 				this.payStatusIndex = e.target.value;
+				if(this.payStatusIndex == 0) {
+					this.params.payStatus = null
+				} else if(this.payStatusIndex == 1) {
+					this.params.payStatus = "待支付"
+				} else if(this.payStatusIndex == 2) {
+					this.params.payStatus = "已支付"
+				}
+				getExpertSubscribeByUserId(this, this.params)
+			},
+			initData() {
+				getExpertSubscribeByUserId(this, this.params)
 			}
 		}
 	}
