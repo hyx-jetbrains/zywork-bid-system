@@ -142,7 +142,7 @@ public class GuaranteeController extends BaseController {
      * Time: 13:44
      * Description: 我的申请保函
      */
-    @PostMapping("user/all")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPageByUserId(@RequestBody GuaranteeQuery guaranteeQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
