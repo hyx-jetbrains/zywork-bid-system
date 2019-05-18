@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://192.168.203.244:8088'
+export const BASE_URL = 'http://192.168.203.208:8088'
 export const IMAGE_BASE_URL = 'http://localhost'
 export const USER_TOKEN_KEY = 'userToken'
 export const USER_OPENID = 'openid'
@@ -109,14 +109,47 @@ export const formatCalendarDate = (date) => {
 	let w = dd.getDay()
 	let week = '星期'
 	switch (w) {
-		case 0 : week = week + '日'; break;
-		case 1 : week = week + '一'; break;
-		case 2 : week = week + '二'; break;
-		case 3 : week = week + '三'; break;
-		case 4 : week = week + '四'; break;
-		case 5 : week = week + '五'; break;
-		case 6 : week = week + '六'; break;
-		default: break;
+		case 0:
+			week = week + '日';
+			break;
+		case 1:
+			week = week + '一';
+			break;
+		case 2:
+			week = week + '二';
+			break;
+		case 3:
+			week = week + '三';
+			break;
+		case 4:
+			week = week + '四';
+			break;
+		case 5:
+			week = week + '五';
+			break;
+		case 6:
+			week = week + '六';
+			break;
+		default:
+			break;
 	}
 	return y + '-' + m + '-' + d + ' ' + week
+}
+
+export const getDate = (type) => {
+	const date = new Date();
+
+	let year = date.getFullYear();
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+
+	if (type === 'start') {
+		year = year - 60;
+	} else if (type === 'end') {
+		year = year + 2;
+	}
+	month = month > 9 ? month : '0' + month;;
+	day = day > 9 ? day : '0' + day;
+
+	return `${year}-${month}-${day}`;
 }
