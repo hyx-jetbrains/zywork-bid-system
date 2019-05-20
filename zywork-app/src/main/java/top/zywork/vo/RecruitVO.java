@@ -24,7 +24,6 @@ public class RecruitVO extends BaseVO {
     // 招聘编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 招聘岗位
 	@NotBlank(message = "此项是必须项")
@@ -43,7 +42,7 @@ public class RecruitVO extends BaseVO {
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String salary;
 	// 工作地
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String workAddr;
 	// 职位描述
 	@Size(min = 0, max = 255, message = "必须小于255个字符")

@@ -2,10 +2,10 @@
 	<view>
 		<view class="zy-detail-card">
 			<view class="zy-detail-card-title zy-text-bold zy-text-big">
-				{{item.title}}
+				{{item.messageTitle}}
 			</view>
-			<view class="zy-content">{{item.content}}</view>
-			<view class="zy-text-info zy-disable-flex-right zy-create-time" v-text="item.createTime"></view>
+			<view class="zy-content">{{item.messageContent}}</view>
+			<view class="zy-text-info zy-disable-flex-right zy-create-time" v-text="item.userMessageCreateTime"></view>
 		</view>
 	</view>
 </template>
@@ -27,7 +27,7 @@
 				this.item = JSON.parse(payload);
 			}
 			uni.setNavigationBarTitle({
-				title: this.item.title
+				title: this.item.messageTitle
 			});
 		},
 		methods: {
