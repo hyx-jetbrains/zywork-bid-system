@@ -36,7 +36,7 @@
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">招聘状态</view>
-					<view class="zy-disable-flex-right">{{item.recruitStatus}}</view>
+					<view class="zy-disable-flex-right">{{item.recruitRecruitStatus}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">职位描述</view>

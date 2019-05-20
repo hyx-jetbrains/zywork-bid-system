@@ -53,7 +53,8 @@
 		DEFAULT_HEADICON
 	} from '@/common/util.js'
 	import {
-		getSeeDataByUserId
+		getSeeDataByUserId,
+		deleteSeekDataById
 	} from '@/common/user-center.js'
 	export default {
 		components: {
@@ -89,11 +90,7 @@
 			},
 			/** 确认操作 */
 			confirmOptions(id) {
-				console.log(id);
-				uni.showToast({
-					title: '删除：' + id,
-					icon: 'none'
-				})
+				deleteSeekDataById(this,id)
 			},
 			initData() {
 				getSeeDataByUserId(this)

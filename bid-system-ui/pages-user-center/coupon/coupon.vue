@@ -3,6 +3,17 @@
 		<view class="zy-uni-segmented-control">
 			<uni-segmented-control :current="functionType.current" :values="functionType.items" v-on:clickItem="onClickItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
+		<view class="zy-type-title zy-disable-flex" v-if="functionType.current == 0">
+			<text class="zy-text-bold">抵扣券类型</text>
+			<view class="zy-disable-flex-right">
+				<picker @change="chooseCouponStatus" :value="couponStatusIndex" :range="couponStatusArray">
+					<view class="zy-disable-flex">
+						<text>{{couponStatusArray[couponStatusIndex]}}</text>
+						<zywork-icon type="iconxiangxia"/>
+					</view>
+				</picker>
+			</view>
+		</view>
 		<!-- 抵用券 -->
 		<view v-if="functionType.current == 0">
 			<view v-if="couponList.length > 0">
@@ -77,8 +88,13 @@
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	
 	import {
-		getCalendarDate
+		getCalendarDate,
+		getDate
 	} from '../../common/util.js'
+	
+	import {
+		couponStatusArray
+	} from '../../common/picker.data.js'
 	
 	import {
 		getCouponByUserId,
@@ -95,12 +111,22 @@
 		data() {
 			return {
 				currDate: getCalendarDate(new Date()),
+				couponStatusIndex: 0,
+				couponStatusArray: couponStatusArray,
+				projectPager: {
+					pageNo: 1,
+					pageSize: 10,
+					sortColumn: 'couponValidTime',
+					sortOrder: 'desc',
+					status: 0,
+				},
 				functionType: {
 					current: 0,
 					items: ['抵用券', '使用记录']
 				},
 				couponList: [],
 				couponRecordlList: []
+				
 			}
 		},
 		onLoad() {
@@ -112,11 +138,20 @@
 				if (this.functionType.current !== index) {
 					this.functionType.current = index
 					if(index == 0) {
-						getCouponByUserId(this)
+						getCouponByUserId(this, this.projectPager)
 					} else if(index == 1) {
 						getCouponRecordByUserId(this)
 					}
 				}
+			},
+			chooseCouponStatus: function(e) {
+				this.couponStatusIndex = e.target.value;
+				if(this.couponStatusIndex == 1) {
+					this.projectPager.status = 1
+				} else if(this.couponStatusIndex == 2) {
+					this.projectPager.status = 2
+				}
+				getCouponByUserId(this, this.projectPager)
 			},
 			// 使用抵用券
 			useCouupon() {
@@ -125,7 +160,7 @@
 				})
 			},
 			initData() {
-				getCouponByUserId(this)
+				getCouponByUserId(this, this.projectPager)
 			}
 		}
 	}

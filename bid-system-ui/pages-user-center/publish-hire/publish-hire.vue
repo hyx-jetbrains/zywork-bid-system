@@ -18,7 +18,7 @@
 									</view>
 								</view>
 								<view class="zy-disable-flex-right">
-									{{item.recruitStatus}}
+									{{item.recruitRecruitStatus}}
 								</view>
 							</view>
 							<view>

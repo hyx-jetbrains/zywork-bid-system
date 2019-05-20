@@ -223,7 +223,7 @@
 				this.guarantee.projectId = project.id
 				this.guarantee.projectName = project.title
 				if (project.openMarkTime != null && project.openMarkTime != undefined) {
-					this.guarantee.openMarkTime = project.openMarkTime.split(' ')[0]
+					this.guarantee.openMarkTime = project.openMarkTime
 				}
 				this.guarantee.markUnitName = project.markUnitName
 				this.guarantee.constructionPeriod = project.constructionPeriod

@@ -74,7 +74,7 @@
 							<view class="zy-text-info zy-disable-flex">
 								<view>
 									<text style="margin-right: 20upx;">申请人数:</text>
-									{{item.seekcarRecordCount}}/1
+									{{item.markSeekcarRecordCount}}/1
 								</view>
 							</view>
 						</uni-swipe-action>
