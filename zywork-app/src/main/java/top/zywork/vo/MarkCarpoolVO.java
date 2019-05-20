@@ -24,22 +24,21 @@ public class MarkCarpoolVO extends BaseVO {
     // 开标拼车编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 项目编号
 	@NotNull(message = "此项是必须项")
 	private Long projectId;
 	// 出发城市
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String startCity;
 	// 出发地点
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String startAddr;
 	// 目的地城市
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String endCity;
 	// 目的地
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String endAddr;
 	// 出发时间
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

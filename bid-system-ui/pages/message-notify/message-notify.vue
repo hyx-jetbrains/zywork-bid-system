@@ -4,15 +4,15 @@
 			<uni-segmented-control :current="messageStatus.current" :values="messageStatus.items" v-on:clickItem="onClickItem"
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
-		<view v-if="messages.length > 0" class="zy-page-list" style="margin-top: 10upx;">
-			<view v-for="(message, index) in messages" :key="index" class="zy-page-list-item" @click="toMessageDetail(message)">
+		<view v-if="messageList.length > 0" class="zy-page-list" style="margin-top: 10upx;">
+			<view v-for="(message, index) in messageList" :key="index" class="zy-page-list-item" @click="toMessageDetail(message)">
 				<view class="zy-message-head">
-					<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{message.title}}</view>
-					<uni-tag v-if="message.isRead" text="已读" type="success" size="small" :inverted="true"></uni-tag>
-					<uni-tag v-else text="未读" type="error" size="small" :inverted="true"></uni-tag>
+					<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{message.messageTitle}}</view>
+					<uni-tag v-if="message.userMessageIsRead === 0" text="未读" type="error" size="small" :inverted="true"></uni-tag>
+					<uni-tag v-else text="已读" type="success" size="small" :inverted="true"></uni-tag>
 				</view>
-				<view class="zy-message-content zy-overflow-hidden">{{message.content}}</view>
-				<view class="zy-text-info zy-text-small zy-message-time">{{message.createTime}}</view>
+				<view class="zy-message-content zy-overflow-hidden">{{message.messageContent}}</view>
+				<view class="zy-text-info zy-text-small zy-message-time">{{message.userMessageCreateTime}}</view>
 			</view>
 		</view>
 		<zywork-no-data v-else text="暂无消息通知"></zywork-no-data>
@@ -26,6 +26,11 @@
 	import {
 		messageReadTypeArray
 	} from '@/common/picker.data.js'
+	import {
+		loadMessage,
+		readMessage
+	} from '@/common/message.js'
+	
 	const MESSAGE_ALL = 0
 	const MESSAGE_UNREAD = 1
 	const MESSAGE_READ = 2
@@ -41,30 +46,39 @@
 					current: 0,
 					items: messageReadTypeArray
 				},
-				messages: [
-					{
-						title: '消息标题',
-						content: '消息内容',
-						createTime: '2019-04-28 10:00:00',
-						isRead: false,
-					},
-					{
-						title: '消息标题',
-						content: '消息内容',
-						createTime: '2019-04-28 10:00:00',
-						isRead: true,
-					}
-				]
+				messageList: [],
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					userMessageIsRead: ''
+				}
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initMessage();
+		},
 		methods: {
+			/** 初始化消息 */
+			initMessage() {
+				loadMessage(this, this.pager, 'init');
+			},
+			/** 分段器选择器 */
 			onClickItem(index) {
-				if (this.current !== index) {
-					this.current = index
+				if (this.messageStatus.current !== index) {
+					this.messageStatus.current = index
+					if (MESSAGE_ALL === index) {
+						this.pager.userMessageIsRead = '';
+					} else {
+						this.pager.userMessageIsRead = --index;
+					}
+					this.initMessage();
 				}
 			},
+			/** 查看消息详情 */
 			toMessageDetail(item) {
+				if (item.userMessageIsRead === 0) {
+					readMessage(this, item.messageId)
+				}
 				uni.navigateTo({
 					url: '/pages-message-notify/message-detail/message-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})

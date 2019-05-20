@@ -24,7 +24,6 @@ public class SeekDataVO extends BaseVO {
     // 求带资料编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 出发地点
 	@NotBlank(message = "此项是必须项")
