@@ -10,7 +10,7 @@
 			</picker>
 			<view class="zy-search-bar">
 				<zywork-icon type="iconchaxun" />
-				<input type="text" v-model="projectPager.title" placeholder="输入关键字搜索" @confirm="searchData" />
+				<input type="text" v-model="projectPager.title" :focus="true" placeholder="输入关键字搜索" @confirm="searchData" />
 			</view>
 			<view class="zy-disable-flex-right zy-search-page-cancel" @click="toBackPage">
 				取消

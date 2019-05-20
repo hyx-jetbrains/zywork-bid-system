@@ -4,7 +4,7 @@
 		<view class="zy-disable-flex zy-search-page-bar">
 			<view class="zy-search-bar">
 				<zywork-icon type="iconchaxun" />
-				<input type="text" v-model="searchVal" placeholder="输入关键字搜索" @confirm="searchData" />
+				<input type="text" v-model="searchVal" :focus="true" placeholder="输入关键字搜索" @confirm="searchData" />
 			</view>
 			<view class="zy-disable-flex-right zy-search-page-cancel" @click="toBackPage">
 				取消

@@ -16,6 +16,35 @@ import {
 import * as ResponseStatus from './response-status.js'
 
 /**
+ * 查询公司信息
+ */
+export const getCompanyList = (self, params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/company/any/pager-cond',
+		method: 'POST',
+		data: params,
+		header: '',
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.companyList = res.data.data.rows;
+				self.initCheckBoxSelected();
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
  * 根据UserId查询我的订阅
  */
 export const getSubscribeByUserId = (self) => {
@@ -31,8 +60,13 @@ export const getSubscribeByUserId = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.subscrible = res.data.data
-				self.setValue();
+				if (res.data.data.id !== null) {
+					// 有查询到之前保存的订阅信息
+					self.subscrible = res.data.data
+					self.subscrible.minMoney /= 100;
+					self.subscrible.maxMoney /= 100;
+					self.setValue();
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}

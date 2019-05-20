@@ -106,7 +106,24 @@
 					usableIntegral: 0,
 					frezeeIntegral: 0
 				},
-				headicon: DEFAULT_HEADICON
+				headicon: DEFAULT_HEADICON,
+				subscrible: {
+					id: null,
+					userId: null,
+					city: '全省',
+					projectType: null,
+					minMoney: null,
+					maxMoney: null,
+					tenderee: null,
+					aptitudeType: null,
+					keyword: null,
+					isSubscribe: null,
+					version: null,
+					createTime: null,
+					updateTime: null,
+					isActive: null,
+					isRequest: true
+				},
 			}
 		},
 		onLoad() {
@@ -160,7 +177,7 @@
 			},
 			toSubscrible() {
 				uni.navigateTo({
-					url: '/pages-user-center/subscrible/subscrible'
+					url: '/pages-user-center/subscrible/subscrible?itemData=' + encodeURIComponent(JSON.stringify(this.subscrible))
 				})
 			},
 			toPublish() {

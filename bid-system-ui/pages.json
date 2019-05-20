@@ -334,6 +334,13 @@
 					}
 				},
 				{
+					"path": "choose-comp/choose-comp",
+					"style": {
+						"navigationBarTitleText": "我的订阅-选择招标人",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "publish/publish",
 					"style": {
 						"navigationBarTitleText": "我的发布",
