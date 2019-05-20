@@ -146,7 +146,9 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addGuarantee" :disabled="disabled.guaranteeBtn">确认申请</button>
+						<cover-view>
+							<button type="primary" @click="addGuarantee" :disabled="disabled.guaranteeBtn">确认申请</button>
+						</cover-view>
 					</view>
 				</view>
 			</form>

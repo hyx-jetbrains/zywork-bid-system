@@ -114,7 +114,9 @@
 						<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请输入备注" v-model="seekData.memo" />
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addSeekData" :disabled="disabled.seekDataBtn">发布信息</button>
+						<cover-view>
+							<button type="primary" @click="addSeekData" :disabled="disabled.seekDataBtn">发布信息</button>
+						</cover-view>
 					</view>
 				</view>
 			</form>

@@ -108,7 +108,9 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addAptitudeTransfer" :disabled="disabled.aptitudeBtn">发布信息</button>
+						<cover-view>
+							<button type="primary" @click="addAptitudeTransfer" :disabled="disabled.aptitudeBtn">发布信息</button>
+						</cover-view>
 					</view>
 				</form>
 			</view>

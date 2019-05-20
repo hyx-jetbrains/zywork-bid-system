@@ -319,5 +319,10 @@ export const operationArray = ['全部', '未处理', '已处理']
  */
 export const projectStatusArray = ['全部', '公告中', '待开标', '已开标']
 
+/**
+ * 抵扣券状态数组
+ */
+export const couponStatusArray = ['全部', '未使用', '已过期']
+
 
 

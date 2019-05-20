@@ -86,7 +86,9 @@
 						<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请输入职位描述" v-model="recruit.memo" />
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addRecruit" :disabled="disabled.recruitBtn">发布信息</button>
+						<cover-view>
+							<button type="primary" @click="addRecruit" :disabled="disabled.recruitBtn">发布信息</button>
+						</cover-view>
 					</view>
 				</view>
 			</form>

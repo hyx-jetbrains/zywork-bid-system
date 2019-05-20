@@ -179,7 +179,9 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addCarpool" :disabled="disabled.carpoolBtn">发布信息</button>
+						<cover-view>
+							<button type="primary" @click="addCarpool" :disabled="disabled.carpoolBtn">发布信息</button>
+						</cover-view>
 					</view>
 				</form>
 			</view>
@@ -331,7 +333,9 @@
 							</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addSeekcar" :disabled="disabled.seekcarBtn">发布信息</button>
+						<cover-view>
+							<button type="primary" @click="addSeekcar" :disabled="disabled.seekcarBtn">发布信息</button>
+						</cover-view>
 					</view>
 				</form>
 			</view>

@@ -102,7 +102,9 @@
 							</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addBuilderReq" :disabled="disabled.buildeReqBtn">发布信息</button>
+						<cover-view>
+							<button type="primary" @click="addBuilderReq" :disabled="disabled.buildeReqBtn">发布信息</button>
+						</cover-view>
 					</view>
 				</form>
 			</view>
@@ -276,7 +278,9 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<button type="primary" @click="addBuilder" :disabled="disabled.buildeBtn">发布信息</button>
+						<cover-view>
+							<button type="primary" @click="addBuilder" :disabled="disabled.buildeBtn">发布信息</button>
+						</cover-view>
 					</view>
 				</form>
 			</view>
