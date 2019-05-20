@@ -89,6 +89,31 @@ export const getBuilderByUserId = (self) => {
 }
 
 /**
+ * 删除我发布的建造师应聘信息
+ */
+export const deleteBuilderById = (self,id) => {
+	uni.request({
+		url: BASE_URL + '/builder/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast(res.data.message)
+				getBuilderByUserId(self)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
  * 我发布的建造师招聘信息
  */
 export const getBuilderReqByUserId = (self) => {
@@ -102,6 +127,31 @@ export const getBuilderReqByUserId = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.builderReqList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
+ * 删除我发布的建造师招聘信息
+ */
+export const deleteBuilderReqById = (self,id) => {
+	uni.request({
+		url: BASE_URL + '/builder-req/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast(res.data.message)
+				getBuilderReqByUserId(self)
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -143,6 +193,31 @@ export const getAptitudeTransfeByUserId = (self,type) => {
 }
 
 /**
+ * 删除我发布的资质转让
+ */
+export const deleteAptitudeTransferById = (self,id,type) => {
+	uni.request({
+		url: BASE_URL + '/aptitude-transfer/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showInfoToast(res.data.message)
+				getAptitudeTransfeByUserId(self, type)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
  * 我的开标拼车--车主找人
  */
 export const getMarkCarpoolByUserId = (self) => {
@@ -156,6 +231,31 @@ export const getMarkCarpoolByUserId = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.carpoolList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
+ * 删除我的开标拼车--车主找人
+ */
+export const deleteMarkCarpoolById = (self,id) => {
+	uni.request({
+		url: BASE_URL + '/mark-carpool/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showInfoToast(res.data.message)
+				getMarkCarpoolByUserId(self)
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -191,6 +291,31 @@ export const getMarkSeekcarByUserId = (self) => {
 }
 
 /**
+ * 删除我的开标拼车--人找车
+ */
+export const deleteMarkSeekcarById = (self,id) => {
+	uni.request({
+		url: BASE_URL + '/mark-seekcar/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showInfoToast(res.data.message)
+				getMarkSeekcarByUserId(self)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
  * 我发布岗位招聘
  */
 export const getRecruitByUserId = (self) => {
@@ -204,6 +329,31 @@ export const getRecruitByUserId = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.recruitList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
+ * 删除我发布岗位招聘
+ */
+export const deleteRecruitById = (self,id) => {
+	uni.request({
+		url: BASE_URL + '/recruit/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showInfoToast(res.data.message)
+				getRecruitByUserId(self)
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -231,6 +381,70 @@ export const getSeeDataByUserId = (self) => {
 			} else {
 				showInfoToast(res.data.message)
 			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
+ * 删除我的求带资料
+ */
+export const deleteSeekDataById = (self,id) => {
+	uni.request({
+		url: BASE_URL + '/seek-data/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			showInfoToast(res.data.message)
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
+ * 我的申请保函
+ */
+export const getGuaranteeByUserId = (self) => {
+	uni.request({
+		url: BASE_URL + '/UserGuarantee/user/list-page',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.guaranteeList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
+ * 删除我的申请保函
+ */
+export const deleteGuaranteeById = (self,id) => {
+	uni.request({
+		url: BASE_URL + '/guarantee/user/delete/'+id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			showInfoToast(res.data.message)
 		},
 		fail: () => {
 			networkError()

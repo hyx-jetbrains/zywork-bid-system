@@ -79,7 +79,9 @@
 	} from '@/common/util.js'
 	import {
 		getBuilderByUserId,
-		getBuilderReqByUserId
+		getBuilderReqByUserId,
+		deleteBuilderById,
+		deleteBuilderReqById
 	} from '@/common/user-center.js'
 	export default {
 		components: {
@@ -105,13 +107,18 @@
 			}
 		},
 		onLoad() {
-			this.initdata()
+			this.initData()
 		},
 		methods: {
 			// 分段器选择类别
 			onClickItem(index) {
 				if (this.type.current !== index) {
 					this.type.current = index
+					if(index == 0) {
+						getBuilderReqByUserId(this)
+					} else {
+						getBuilderByUserId(this)
+					}
 				}
 			},
 			/** 前往详情页面 */
@@ -131,22 +138,12 @@
 			/** 确认操作 */
 			confirmOptions(id) {
 				if (this.type.current === 0) {
-					console.log(id);
-					uni.showToast({
-						title: '删除招聘：' + id,
-						icon: 'none'
-					})
+					deleteBuilderReqById(this,id)
 				} else {
-					console.log(id);
-					uni.showToast({
-						title: '删除应聘：' + id,
-						icon: 'none'
-					})
+					deleteBuilderById(this,id)
 				}
-				
 			},
-			initdata() {
-				getBuilderByUserId(this)
+			initData() {
 				getBuilderReqByUserId(this)
 			}
 		}

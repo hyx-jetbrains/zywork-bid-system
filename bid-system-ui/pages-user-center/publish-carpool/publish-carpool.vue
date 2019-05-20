@@ -96,7 +96,9 @@
 	} from '@/common/picker.data.js'
 	import {
 		getMarkCarpoolByUserId,
-		getMarkSeekcarByUserId
+		getMarkSeekcarByUserId,
+		deleteMarkCarpoolById,
+		deleteMarkSeekcarById
 	} from '@/common/user-center.js'
 	import {
 		DEFAULT_HEADICON
@@ -138,7 +140,6 @@
 						getMarkSeekcarByUserId(this)
 					}
 				}
-				
 			},
 			/** 前往详情页面 */
 			toDetailPage(name, item) {
@@ -158,19 +159,10 @@
 			/** 确认操作 */
 			confirmOptions(id) {
 				if (this.type.current === 0) {
-					console.log(id);
-					uni.showToast({
-						title: '删除拼车：' + id,
-						icon: 'none'
-					})
+					deleteMarkCarpoolById(this, id)
 				} else {
-					console.log(id);
-					uni.showToast({
-						title: '删除找车：' + id,
-						icon: 'none'
-					})
+					deleteMarkSeekcarById(this, id)
 				}
-				
 			},
 			initData() {
 				getMarkCarpoolByUserId(this)

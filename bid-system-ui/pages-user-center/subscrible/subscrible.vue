@@ -197,7 +197,6 @@
 				}
 				
 				saveSubscribe(this, JSON.stringify(formObj))
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
 			},
 			// 重置form表单
 			formReset: function(e) {
@@ -219,30 +218,34 @@
 			},
 			setValue() {
 				var items = this.tendereeList
-				var tenderee = this.subscrible.tenderee.split(",")
-				for (var i = 0, lenI = items.length; i < lenI; ++i) {
-					const item = items[i]
-					for(var j = 0, lenJ = tenderee.length; j< lenJ; j++) {
-						if(tenderee[j] == item.value) {
-							this.$set(item,'checked',true)
+				if(this.subscrible.tenderee != null) {
+					var tenderee = this.subscrible.tenderee.split(",")
+					for (var i = 0, lenI = items.length; i < lenI; ++i) {
+						const item = items[i]
+						for(var j = 0, lenJ = tenderee.length; j< lenJ; j++) {
+							if(tenderee[j] == item.value) {
+								this.$set(item,'checked',true)
+							}
 						}
 					}
 				}
 				
-				var projectType = this.subscrible.projectType.split(",")
-				for(var i = 0, lenI = projectType.length; i < lenI; ++i) {
-					if(projectType[i] == "房建市政") {
-						this.building = true
-					} else if(projectType[i] == "水利工程") {
-						this.hydraulic = true
-					} else if(projectType[i] == "交通工程") {
-						this.traffic = true
-					}else if(projectType[i] == "政府采购") {
-						this.purchase = true
-					}else if(projectType[i] == "重点项目") {
-						this.important = true
-					}else if(projectType[i] == "其他项目") {
-						this.other = true
+				if(this.subscrible.projectType != null) {
+					var projectType = this.subscrible.projectType.split(",")
+					for(var i = 0, lenI = projectType.length; i < lenI; ++i) {
+						if(projectType[i] == "房建市政") {
+							this.building = true
+						} else if(projectType[i] == "水利工程") {
+							this.hydraulic = true
+						} else if(projectType[i] == "交通工程") {
+							this.traffic = true
+						}else if(projectType[i] == "政府采购") {
+							this.purchase = true
+						}else if(projectType[i] == "重点项目") {
+							this.important = true
+						}else if(projectType[i] == "其他项目") {
+							this.other = true
+						}
 					}
 				}
 				
@@ -252,17 +255,19 @@
 					this.isSubscribe = true
 				}
 				
-				var aptitudeType = this.subscrible.aptitudeType.split(",")
-				var typeIndex = 0;
-				var levelIndex = 0;
-				for(var i=0; i<aptitudeType.length; i++) {
-	
-					 if(i == 0) {
-						  typeIndex = this.conditionArray[0].findIndex(item => item===aptitudeType[i])
-					 } else {
-						 levelIndex = this.conditionArray[1].findIndex(item => item===aptitudeType[i])
-					 }
-					 this.conditionIndex =[[typeIndex],[levelIndex]]
+				if(this.subscrible.aptitudeType != null) {
+					var aptitudeType = this.subscrible.aptitudeType.split(",")
+					var typeIndex = 0;
+					var levelIndex = 0;
+					for(var i=0; i<aptitudeType.length; i++) {
+						
+						 if(i == 0) {
+							  typeIndex = this.conditionArray[0].findIndex(item => item===aptitudeType[i])
+						 } else {
+							 levelIndex = this.conditionArray[1].findIndex(item => item===aptitudeType[i])
+						 }
+						 this.conditionIndex =[[typeIndex],[levelIndex]]
+					}
 				}
 				
 				this.cityIndex = jxCityArray.findIndex(item => item===this.subscrible.city)

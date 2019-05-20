@@ -1,63 +1,63 @@
 <template>
 	<view>
 		<!-- 我的申请保函详情 -->
-		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.projectName}}</view>
+		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.guaranteeProjectName}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
 				
 				<view class="zy-disable-flex">
-					<image class="zy-page-mini-headicon" :src="item.headicon" />
+					<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 					<view>
 						<view>
-							<text class="zy-text-bold">{{item.nickname}}</text>
+							<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 						</view>
-						<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+						<view class="zy-text-mini zy-text-info">{{item.guaranteeCreateTime}}</view>
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">项目名称</view>
-					<view class="zy-disable-flex-right">{{item.projectName}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeProjectName}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">开标时间</view>
-					<view class="zy-disable-flex-right">{{item.openMarkTime}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeOpenMarkTime}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">招标单位名称</view>
-					<view class="zy-disable-flex-right">{{item.markUnitName}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeMarkUnitName}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">工期(天)</view>
-					<view class="zy-disable-flex-right">{{item.constructionPeriod}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeConstructionPeriod}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">担保金额(万元)</view>
-					<view class="zy-disable-flex-right">{{item.assurePrice / 100}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeGuaranteePrice / 100}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">担保公司</view>
-					<view class="zy-disable-flex-right">{{item.guaranteeComp}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeGuaranteeComp}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">保函费</view>
-					<view class="zy-disable-flex-right">{{item.guaranteePrice / 100}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeAssurePrice / 100}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">申请人</view>
-					<view class="zy-disable-flex-right">{{item.applicant}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeApplicant}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">联系人</view>
-					<view class="zy-disable-flex-right">{{item.name}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeName}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
 					<!-- <view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.phone}}</view> -->
-					<view class="zy-disable-flex-right">{{item.phone}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteePhone}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">邮寄地址</view>
-					<view class="zy-disable-flex-right">{{item.address}}</view>
+					<view class="zy-disable-flex-right">{{item.guaranteeAddress}}</view>
 				</view>
 			</view>
 		</view>

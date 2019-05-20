@@ -75,7 +75,8 @@
 		DEFAULT_HEADICON
 	} from '@/common/util.js'
 	import {
-		getAptitudeTransfeByUserId
+		getAptitudeTransfeByUserId,
+		deleteAptitudeTransferById
 	} from '@/common/user-center.js'
 	export default {
 		components: {
@@ -123,11 +124,7 @@
 			},
 			/** 确认操作 */
 			confirmOptions(id) {
-				console.log(id);
-				uni.showToast({
-					title: '删除：' + id,
-					icon: 'none'
-				})
+				deleteAptitudeTransferById(this, id, this.type.current)
 			},
 			initData() {
 				getAptitudeTransfeByUserId(this,this.type.current)

@@ -61,7 +61,8 @@
 		DEFAULT_HEADICON
 	} from '@/common/util.js'
 	import {
-		getRecruitByUserId
+		getRecruitByUserId,
+		deleteRecruitById
 	} from '@/common/user-center.js'
 	export default {
 		components: {
@@ -96,11 +97,7 @@
 			},
 			/** 确认操作 */
 			confirmOptions(id) {
-				console.log(id);
-				uni.showToast({
-					title: '删除：' + id,
-					icon: 'none'
-				})
+				deleteRecruitById(this, id)
 			},
 			initData() {
 				getRecruitByUserId(this)
