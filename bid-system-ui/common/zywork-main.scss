@@ -44,6 +44,13 @@ button[type=primary][plain] {
 	background-color:transparent;
 }
 
+.uni-list-cell-db {
+	height: 100upx;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
 .zy-page {
 	width: 100%;
 }
