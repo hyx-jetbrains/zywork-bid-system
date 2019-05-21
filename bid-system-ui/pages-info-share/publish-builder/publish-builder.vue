@@ -102,7 +102,7 @@
 							</view>
 					</view>
 					<view class="zy-bottom-button">
-						<cover-view>
+						<cover-view v-if="showBtn">
 							<button type="primary" @click="addBuilderReq" :disabled="disabled.buildeReqBtn">发布信息</button>
 						</cover-view>
 					</view>
@@ -278,7 +278,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<cover-view>
+						<cover-view v-if="showBtn">
 							<button type="primary" @click="addBuilder" :disabled="disabled.buildeBtn">发布信息</button>
 						</cover-view>
 					</view>
@@ -393,6 +393,7 @@
 					updateTime: null,
 					isActive: null
 				},
+				showBtn: true
 			}
 		},
 		onLoad() {
@@ -459,6 +460,7 @@
 			/** 选择地区 */
 			chooseCity() {
 				this.$refs.mpvueCityPicker.show()
+				this.showBtn = false
 			},
 			/** 地区选择框确认 */
 			onConfirm(e) {
@@ -467,10 +469,12 @@
 				var tempAddrLabel = e.label
 				var tempAddr = tempAddrLabel.replace(/-/g, '/');
 				this.builder.certificateAddress = this.builderReq.compAddr = tempAddr
+				this.showBtn = true
 			},
 			/** 地区选择框取消 */
 			onCancel(e) {
 				console.log(e)
+				this.showBtn = true
 			},
 			/** 选择图片上传 */
 			chooseImage: async function() {

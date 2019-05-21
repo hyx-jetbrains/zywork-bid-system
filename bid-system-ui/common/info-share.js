@@ -30,6 +30,9 @@ export const getListInfoToPost = (self, url, params) => {
  * 我要拼车-保存拼车记录
  */
 export const saveMarkCarpoolRecord = (self, carpoolId) => {
+	uni.showLoading({
+		title: '正在发布'
+	})
 	uni.request({
 		url: BASE_URL + '/mark-carpool-record/any/save-carpool-record/' + carpoolId,
 		method: 'GET',
@@ -48,7 +51,9 @@ export const saveMarkCarpoolRecord = (self, carpoolId) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {}
+		complete: () => {
+			uni.hideLoading()
+		}
 	})
 }
 
@@ -56,6 +61,9 @@ export const saveMarkCarpoolRecord = (self, carpoolId) => {
  * 我要拼车-获取拼车记录
  */
 export const getMarkCarpoolRecord = (self, params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
 	uni.request({
 		url: BASE_URL + '/UserMarkCarpoolRecord/any/list-page',
 		method: 'POST',
@@ -71,7 +79,9 @@ export const getMarkCarpoolRecord = (self, params) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {}
+		complete: () => {
+			uni.hideLoading()
+		}
 	})
 }
 
@@ -79,6 +89,9 @@ export const getMarkCarpoolRecord = (self, params) => {
  * 我要找车-保存找车记录
  */
 export const saveMarkSeekcarRecord = (self, seekcarId) => {
+	uni.showLoading({
+		title: '正在发布'
+	})
 	uni.request({
 		url: BASE_URL + '/mark-seekcar-record/any/save-seekcar-record/' + seekcarId,
 		method: 'GET',
@@ -97,7 +110,9 @@ export const saveMarkSeekcarRecord = (self, seekcarId) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {}
+		complete: () => {
+			uni.hideLoading()
+		}
 	})
 }
 
@@ -105,6 +120,9 @@ export const saveMarkSeekcarRecord = (self, seekcarId) => {
  * 我要找车-获取找车记录
  */
 export const getMarkSeekcarRecord = (self, params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
 	uni.request({
 		url: BASE_URL + '/UserMarkSeekcarRecord/any/list-page',
 		method: 'POST',
@@ -120,7 +138,9 @@ export const getMarkSeekcarRecord = (self, params) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {}
+		complete: () => {
+			uni.hideLoading()
+		}
 	})
 }
 /** 发布招聘信息表单验证 */
@@ -167,7 +187,7 @@ export const saveBuilderReq = (self, params) => {
 		return;
 	}
 	uni.showLoading({
-		title: '发布中'
+		title: '正在发布'
 	})
 	self.builderReq.salary = self.builderReq.salary * 100;
 	uni.request({

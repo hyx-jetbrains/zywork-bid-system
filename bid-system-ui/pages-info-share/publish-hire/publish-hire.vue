@@ -86,7 +86,7 @@
 						<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请输入职位描述" v-model="recruit.memo" />
 					</view>
 					<view class="zy-bottom-button">
-						<cover-view>
+						<cover-view v-if="showBtn">
 							<button type="primary" @click="addRecruit" :disabled="disabled.recruitBtn">发布信息</button>
 						</cover-view>
 					</view>
@@ -139,6 +139,7 @@
 				salaryIndex: 0,
 				cityPickerValueDefault: [0, 0, 1],
 				themeColor: '#007AFF',
+				showBtn: true
 			}
 		},
 		onLoad() {},
@@ -166,16 +167,19 @@
 			/** 选择地区 */
 			chooseCity() {
 				this.$refs.mpvueCityPicker.show()
+				this.showBtn = false
 			},
 			/** 地区选择框确认 */
 			onConfirm(e) {
 				var tempAddrLabel = e.label
 				var tempAddr = tempAddrLabel.replace(/-/g, '/');
 				this.recruit.workAddr = tempAddr
+				this.showBtn = true
 			},
 			/** 地区选择框取消 */
 			onCancel(e) {
 				console.log(e)
+				this.showBtn = true
 			},
 			/** 发布招聘信息 */
 			addRecruit() {

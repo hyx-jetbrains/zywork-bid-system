@@ -179,7 +179,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<cover-view>
+						<cover-view v-if="showBtn">
 							<button type="primary" @click="addCarpool" :disabled="disabled.carpoolBtn">发布信息</button>
 						</cover-view>
 					</view>
@@ -333,7 +333,7 @@
 							</view>
 					</view>
 					<view class="zy-bottom-button">
-						<cover-view>
+						<cover-view v-if="showBtn">
 							<button type="primary" @click="addSeekcar" :disabled="disabled.seekcarBtn">发布信息</button>
 						</cover-view>
 					</view>
@@ -442,7 +442,8 @@
 					createTime: null,
 					updateTime: null,
 					isActive: null
-				}
+				},
+				showBtn: true
 			}
 		},
 		onLoad() {
@@ -468,22 +469,27 @@
 			/** 选择出发城市 */
 			chooseStartCity() {
 				this.$refs.startCityPicker.show()
+				this.showBtn = false
 			},
 			/** 选择目的地城市 */
 			chooseEndCity() {
 				this.$refs.endCityPicker.show()
+				this.showBtn = false
 			},
 			/** 出发城市地区选择框确认 */
 			onStartConfirm(e) {
 				this.carpool.startCity = this.seekcar.startCity = this.getAddressInfo(e) 
+				this.showBtn = true
 			},
 			/** 目的地城市地区选择框确认 */
 			onEndConfirm(e) {
 				this.carpool.endCity = this.seekcar.endCity = this.getAddressInfo(e) 
+				this.showBtn = true
 			},
 			/** 地区选择框取消 */
 			onCancel(e) {
 				console.log(e)
+				this.showBtn = true
 			},
 			/** 取地址信息 */
 			getAddressInfo(e) {
