@@ -550,6 +550,9 @@
 			},
 			/** 刷新建造师需求列表 */
 			refreshBuilderReqList() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.builderReqCompName = this.searchVal;
 				} else {
@@ -557,6 +560,7 @@
 				}
 				infoShare.getListInfoToPost(this, this.urls.builderReqUrl, this.pager)
 					.then(data => {
+						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
 							this.builderReqList = res.data.data.rows;
@@ -567,6 +571,9 @@
 			},
 			/** 刷新建造师列表 */
 			refreshBuilderList() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.builderCertificateMajorType = this.searchVal;
 				} else {
@@ -574,6 +581,7 @@
 				}
 				infoShare.getListInfoToPost(this, this.urls.builderUrl, this.pager)
 					.then(data => {
+						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
 							this.builderList = res.data.data.rows;
@@ -584,6 +592,9 @@
 			},
 			/** 刷新资质转让列表 */
 			refreshAptitudeList() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.aptitudeTransferTitle = this.searchVal;
 				} else {
@@ -592,6 +603,7 @@
 				this.pager.aptitudeTransferType = this.aptitudeOpts.current;
 				infoShare.getListInfoToPost(this, this.urls.aptitudeUrl, this.pager)
 					.then(data => {
+						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
 							if (this.aptitudeOpts.current === 0) {
@@ -608,6 +620,9 @@
 			},
 			/** 刷新开标拼车列表 */
 			refreshCarpoolList() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.markCarpoolCarType = this.searchVal;
 				} else {
@@ -615,6 +630,7 @@
 				}
 				infoShare.getListInfoToPost(this, this.urls.carpoolUrl, this.pager)
 					.then(data => {
+						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
 							this.carpoolList = res.data.data.rows;
@@ -625,6 +641,9 @@
 			},
 			/** 刷新开标找车列表 */
 			refreshSeekcarList() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.markSeekcarMemo = this.searchVal;
 				} else {
@@ -632,6 +651,7 @@
 				}
 				infoShare.getListInfoToPost(this, this.urls.seekcarUrl, this.pager)
 					.then(data => {
+						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
 							this.seekcarList = res.data.data.rows;
@@ -642,6 +662,9 @@
 			},
 			/** 刷新其他招聘列表 */
 			refreshRecruitList() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.recruitJobTitle = this.searchVal;
 				} else {
@@ -649,6 +672,7 @@
 				}
 				infoShare.getListInfoToPost(this, this.urls.recruitUrl, this.pager)
 					.then(data => {
+						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
 							this.recruitList = res.data.data.rows;
@@ -659,6 +683,9 @@
 			},
 			/** 刷新求带资料列表 */
 			refreshSeekDataList() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.seekDataStartAddr = this.searchVal;
 				} else {
@@ -666,6 +693,7 @@
 				}
 				infoShare.getListInfoToPost(this, this.urls.seekDataUrl, this.pager)
 					.then(data => {
+						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
 							this.seekDataList = res.data.data.rows;
