@@ -28,7 +28,7 @@
 		methods: {
 			/** 前往我发布的页面 */
 			toMePublish() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '/pages-user-center/publish/publish'
 				})
 			}

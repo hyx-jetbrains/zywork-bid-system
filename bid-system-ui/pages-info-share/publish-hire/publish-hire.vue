@@ -6,8 +6,7 @@
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								招聘岗位
 							</view>
 						</view>
@@ -30,8 +29,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								工作时间(年)
 							</view>
 						</view>

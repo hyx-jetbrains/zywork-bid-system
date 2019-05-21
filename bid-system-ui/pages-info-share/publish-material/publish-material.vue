@@ -6,8 +6,7 @@
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								出发地点
 							</view>
 						</view>
@@ -17,8 +16,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								目的地地点
 							</view>
 						</view>
@@ -41,8 +39,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								资料数量
 							</view>
 						</view>
@@ -74,8 +71,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								赏金
 							</view>
 						</view>
@@ -85,8 +81,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								联系电话
 							</view>
 						</view>

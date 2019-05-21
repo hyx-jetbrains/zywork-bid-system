@@ -11,8 +11,7 @@
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									姓名
 								</view>
 							</view>
@@ -22,8 +21,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									所需人才
 								</view>
 							</view>
@@ -33,8 +31,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									所需人数
 								</view>
 							</view>
@@ -58,8 +55,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									公司地址
 								</view>
 							</view>
@@ -69,8 +65,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									公司名称
 								</view>
 							</view>
@@ -80,8 +75,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									手机号
 								</view>
 							</view>
@@ -116,8 +110,7 @@
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									姓名
 								</view>
 							</view>
@@ -225,8 +218,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									手机号
 								</view>
 							</view>

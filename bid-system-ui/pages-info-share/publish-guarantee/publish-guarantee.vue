@@ -6,8 +6,7 @@
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								绑定开标项目
 							</view>
 						</view>
@@ -95,8 +94,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								保函费(元)
 							</view>
 						</view>
@@ -106,8 +104,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								申请人
 							</view>
 						</view>
@@ -117,8 +114,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								联系人
 							</view>
 						</view>
@@ -128,8 +124,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								手机号
 							</view>
 						</view>

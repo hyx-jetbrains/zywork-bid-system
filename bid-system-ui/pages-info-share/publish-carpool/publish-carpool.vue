@@ -11,8 +11,7 @@
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									绑定开标项目
 								</view>
 							</view>
@@ -55,8 +54,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									出发城市
 								</view>
 							</view>
@@ -66,8 +64,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									出发地
 								</view>
 							</view>
@@ -77,8 +74,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									目的地城市
 								</view>
 							</view>
@@ -88,8 +84,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									目的地
 								</view>
 							</view>
@@ -119,8 +114,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									汽车车型
 								</view>
 							</view>
@@ -135,8 +129,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									搭载人数
 								</view>
 							</view>
@@ -146,8 +139,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									价格
 								</view>
 							</view>
@@ -157,8 +149,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									联系姓名
 								</view>
 							</view>
@@ -168,8 +159,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									联系手机
 								</view>
 							</view>
@@ -192,8 +182,7 @@
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									绑定开标项目
 								</view>
 							</view>
@@ -236,8 +225,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									出发城市
 								</view>
 							</view>
@@ -247,8 +235,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									出发地
 								</view>
 							</view>
@@ -258,8 +245,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									目的地城市
 								</view>
 							</view>
@@ -269,8 +255,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									目的地
 								</view>
 							</view>
@@ -300,8 +285,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									联系姓名
 								</view>
 							</view>
@@ -311,8 +295,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold zy-list-form-label">
-									<text class="zy-list-form-required">*</text>
+								<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 									联系手机
 								</view>
 							</view>

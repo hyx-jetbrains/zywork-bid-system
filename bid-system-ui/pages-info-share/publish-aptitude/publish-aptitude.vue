@@ -19,7 +19,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">标题</view>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">标题</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入标题" v-model="aptitude.title"></input>
@@ -53,8 +53,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">
-								<text class="zy-list-form-required">*</text>
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
 								手机号
 							</view>
 						</view>
