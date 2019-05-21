@@ -219,3 +219,38 @@ export const updateNickname = (self) => {
 		}
 	})
 }
+
+/**
+ * 查询专家申请记录
+ */
+export const getUserExpertByUserId = (self) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/user-expert/user/getByUserId',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.userExpert = res.data.data
+				if(self.userExpert.examineStatus == 1) {
+					self.expertIconColor = '#FFF'
+				} else {
+					self.expertIconColor = '#ccc'
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}

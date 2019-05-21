@@ -45,6 +45,79 @@ export const getCompanyList = (self, params) => {
 }
 
 /**
+ * 查询专家问题
+ */
+export const getExpertQuesTionTypeByUserId = (self) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/experquestion-type/user/list-all',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.expertTypeList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
+ * 申请成为专家
+ */
+export const saveExpert = (self, params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/user-expert/user/saveExpert/'+ params.expertQuestionTypeId,
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast(res.data.message)
+				
+				setTimeout(function() {
+					uni.switchTab({
+						url: '/pages/user-center/user-center',
+						success() {
+							let page = getCurrentPages().pop();
+							if(page==undefined || page==null){
+								return;
+							}
+							page.onLoad();
+						}
+					})
+				}, 2000)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
  * 根据UserId查询我的订阅
  */
 export const getSubscribeByUserId = (self) => {
@@ -743,6 +816,7 @@ export const resume = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.formInfo = res.data.data
+				self.setValue()
 			} else {
 				showInfoToast(res.data.message)
 			}

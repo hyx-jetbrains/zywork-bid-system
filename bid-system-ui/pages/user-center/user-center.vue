@@ -13,7 +13,7 @@
 					</view>
 					<view style="margin-left: 100upx;">
 						<zywork-icon type="iconVIP" color="#CCCCCC" size="24" style="display: inline-block; margin-right: 20upx;" @click.native="toUserVip"/>
-						<zywork-icon type="iconzhuanjiarenzheng" color="#CCCCCC" size="24" style="display: inline-block;" @click.native="toUserExpert"/>
+						<zywork-icon type="iconzhuanjiarenzheng" :color="expertIconColor" size="24" style="display: inline-block;" @click.native="toUserExpert"/>
 					</view>
 				</view>
 				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF" @click.native="toUserSetting"/>
@@ -73,15 +73,16 @@
 	import {
 		DEFAULT_HEADICON,
 		getOpenid
-	} from '../../common/util.js'
+	} from '@/common/util.js'
 	import {
 		judgeLogin,
 		saveUserDetail,
-		saveUserPhone
-	} from '../../common/user.js'
+		saveUserPhone,
+		getUserExpertByUserId
+	} from '@/common/user.js'
 	import {
 		userWallet
-	} from '../../common/funds.js'
+	} from '@/common/funds.js'
 
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
@@ -96,6 +97,8 @@
 			return {
 				isUserLogin: false,
 				getUserInfo: false,
+				userExpert: null,
+				expertIconColor: '#ccc',
 				user: {
 					headicon: '',
 					nickname: '',
@@ -128,6 +131,7 @@
 		},
 		onLoad() {
 			judgeLogin(this)
+			this.initData()
 		},
 		onShow() {
 			userWallet(this)
@@ -162,7 +166,7 @@
 			},
 			toUserExpert() {
 				uni.navigateTo({
-					url: '/pages-user-center/user-expert/user-expert'
+					url: '/pages-user-center/user-expert/user-expert?itemData=' + encodeURIComponent(JSON.stringify(this.userExpert))
 				})
 			},
 			toComission() {
@@ -229,6 +233,9 @@
 				uni.navigateTo({
 					url: '/pages-user-center/contact/contact'
 				})
+			},
+			initData() {
+				getUserExpertByUserId(this)
 			}
 		}
 	}

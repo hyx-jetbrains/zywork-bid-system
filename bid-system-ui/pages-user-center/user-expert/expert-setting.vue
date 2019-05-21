@@ -101,6 +101,10 @@
 		genderArray,
 		fulltimeArray
 	} from '@/common/picker.data.js'
+	import {
+		getExpertQuesTionTypeByUserId,
+		saveExpert
+	} from '@/common/user-center.js'
 	export default {
 		components: {
 			zyworkIcon
@@ -115,51 +119,29 @@
 					isFulltime: 0,
 					phone: null,
 					memo: null,
+					examineStatus: 0,
+					expertQuestionTypeId: null,
 				},
-				expertTypeList: [
-					{
-						id: 1,
-						name: '系统注册登录'
-					},
-					{
-						id: 2,
-						name: 'CA锁办理及绑定激活'
-					},
-					{
-						id: 3,
-						name: '招标文件制作'
-					},
-					{
-						id: 4,
-						name: '投标文件制作'
-					},
-					{
-						id: 5,
-						name: '工程量清单编制'
-					},
-					{
-						id: 6,
-						name: '工程造价'
-					},
-					{
-						id: 7,
-						name: '电子虚拟保证金缴纳'
-					},
-					{
-						id: 8,
-						name: '其他'
-					}
-				],
+				expertTypeList: [],
 				fulltimeArray: fulltimeArray
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData()
+		},
 		methods: {
 			// 申请成为专家
 			addExpertInfo: function(e) {
 				var formObj = e.detail.value;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(formObj));
-				console.log(this.formInfo)
+				for(var i = 0,lenI = formObj.expertType.length; i < lenI; ++i) {
+					if(this.formInfo.expertQuestionTypeId == null) {
+						this.formInfo.expertQuestionTypeId = formObj.expertType[i]
+					} else {
+						this.formInfo.expertQuestionTypeId += "," + formObj.expertType[i]
+					}
+				}
+				console.log(this.formInfo.expertQuestionTypeId)
+				saveExpert(this, this.formInfo)
 			},
 			// 监听性别选中
 			chooseGender(e) {
@@ -182,6 +164,9 @@
 					}
 				}
 			},
+			initData() {
+				getExpertQuesTionTypeByUserId(this)
+			}
 		}
 	}
 </script>

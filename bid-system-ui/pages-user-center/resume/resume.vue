@@ -308,7 +308,7 @@
 				var len = formObj.aptitude.length;
 				if (len > 0) {
 					for (var i = 0; i < len; i++) {
-						if (this.formInfo.aptitude === null) {
+						if (this.formInfo.aptitude == null) {
 							this.formInfo.aptitude = formObj.aptitude[i]
 						} else {
 							this.formInfo.aptitude += "," + formObj.aptitude[i]
@@ -316,6 +316,25 @@
 					}
 				}
 				saveResume(this,this.formInfo)
+			},
+			setValue() {
+				/* var items = this.aptitudeList;
+				if(this.formInfo.aptitude != null) {
+					var value = this.formInfo.aptitude.split(',');
+					for (var i = 0, lenI = items.length; i < lenI; ++i) {
+						const item = items[i]
+						for(var j = 0, lenJ = value.length; i < lenJ; ++j) {
+							if(value[j].includes(item.value)){
+								this.$set(item,'checked',true)
+							}else{
+								this.$set(item,'checked',false)
+							}
+						}
+					}
+				} */
+				
+				this.salaryIndex = this.salaryArray.findIndex(item => item === this.formInfo.salary)
+				this.educationIndex = this.educationArray.findIndex(item=>item===this.formInfo.education)
 			},
 			initData() {
 				resume(this)

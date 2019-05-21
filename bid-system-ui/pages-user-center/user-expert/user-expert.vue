@@ -2,13 +2,14 @@
 	<view>
 		<view class="zy-type-title zy-text-bold">专家信息</view>
 		<view class="zy-expert-tag">
-			<uni-tag text="非专家" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
+			<uni-tag v-if="userExpert.examineStatus == 1" text="专家" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
+			<uni-tag v-else text="非专家" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
 		</view>
 		<view class="zy-expert-icon">
-			<zywork-icon type="iconzhuanjiarenzheng" color="#ccc" size="80" style="display: inline-block;"></zywork-icon>
+			<zywork-icon type="iconzhuanjiarenzheng" :color="expertIconColor" size="80" style="display: inline-block;"></zywork-icon>
 		</view>
-		<button type="primary" @click="appExpert()">申请成为专家</button>
-		
+		<button v-if="userExpert.examineStatus == null" type="primary" @click="appExpert()">申请成为专家</button>
+		<button v-else-if="userExpert.examineStatus == 0" type="primary" disabled="true">审核中</button>
 		<view class="zy-type-title zy-text-bold zy-expert-equity">专家权益</view>
 		<label class="uni-list-cell uni-list-cell-pd">
 			<text>1、第一条好处</text>	
@@ -35,18 +36,32 @@
 		},
 		data() {
 			return {
-
+				userExpert: null,
+				expertIconColor: '#ccc',
 			}
 		},
-		onLoad() {},
+		onLoad(event) {
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			try {
+				this.userExpert = JSON.parse(decodeURIComponent(payload));
+			} catch (error) {
+				this.userExpert = JSON.parse(payload);
+			}
+			if(this.userExpert.examineStatus == 1) {
+				this.expertIconColor = '#108EE9'
+			} else {
+				this.expertIconColor = '#ccc'
+			}
+		},
 		methods: {
 			// 申请成为专家
 			appExpert() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '/pages-user-center/user-expert/expert-setting'
 				})
-			}
-			
+			},
 		}
 	}
 </script>
