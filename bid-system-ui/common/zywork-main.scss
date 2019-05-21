@@ -257,7 +257,9 @@ button[type=primary][plain] {
 	margin-bottom: 150upx;
 	padding-top: 20upx;
 }
-.zy-list-form-required {
+
+.zy-required::before {
+	content: '*';
 	color: $warning-text-color;
 }
 
