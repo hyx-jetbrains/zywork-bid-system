@@ -7,15 +7,15 @@ import top.zywork.query.PageQuery;
 import java.util.List;
 
 /**
- * UserExpertDAO数据访问接口<br/>
+ * UserGuaranteeDAO数据访问接口<br/>
  *
- * 创建于2019-05-06<br/>
+ * 创建于2019-05-18<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 @Repository
-public interface UserExpertDAO extends BaseDAO {
+public interface UserGuaranteeDAO extends BaseDAO {
 
     @Override
     List<Object> listAllByCondition(@Param("query") Object queryObj);
@@ -25,6 +25,4 @@ public interface UserExpertDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
-
-    Object getByUserId(Long userId);
 }

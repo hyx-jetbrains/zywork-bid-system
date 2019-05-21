@@ -169,6 +169,22 @@ public class BuilderReqController extends BaseController {
         return save(builderReqVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/20
+     * Time: 9:53
+     * Description: 删除我发布的建造师招聘记录
+     */
+    @GetMapping("user/delete/{id}")
+    public ResponseStatusVO delete(@PathVariable("id") Long id) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        return removeById(id);
+    }
+
     @Autowired
     public void setBuilderReqService(BuilderReqService builderReqService) {
         this.builderReqService = builderReqService;

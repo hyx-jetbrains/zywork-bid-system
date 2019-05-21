@@ -10,11 +10,20 @@
 		t_project.id as id, t_project.title as title, t_project.project_type as projectType, t_project.city as city, t_project.project_detail as projectDetail, t_project.release_status as releaseStatus, t_project.mark_unit_name as markUnitName, t_project.project_invest as projectInvest, t_project.check_pattern as checkPattern, t_project.comp_aptitude_type as compAptitudeType, t_project.builder_level as builderLevel, t_project.money_to_implement as moneyToImplement, t_project.tendering_agent as tenderingAgent, t_project.phone as phone, t_project.offer_price as offerPrice, t_project.assure_price as assurePrice, t_project.construction_period as constructionPeriod, t_project.download_end_time as downloadEndTime, t_project.other_demand as otherDemand, t_project.open_mark_info as openMarkInfo, t_project.open_mark_time as openMarkTime, t_project.open_mark_addr as openMarkAddr, t_project.mark_status as markStatus, t_project.in_mark_comp as inMarkComp, t_project.notice_time as noticeTime, t_project.click_count as clickCount, t_project.is_electronic as isElectronic, t_project.source_url as sourceUrl, t_project.version as version, t_project.create_time as createTime, t_project.update_time as updateTime, t_project.is_active as isActive
         from t_project, t_project_collection
         <where>
+			<if test="query != null and query.title != null and query.title != ''">
+				and title like concat('%', #{query.title}, '%')
+			</if>
 			<if test="query != null and query.projectType != null and query.projectType != ''">
 				and project_type like concat('%', #{query.projectType}, '%')
 			</if>
+			<if test="query != null and query.city != null and query.city != ''">
+				and city like concat('%', #{query.city}, '%')
+			</if>
 			<if test="query != null and query.markStatus != null and query.markStatus != ''">
 				and mark_status like concat('%', #{query.markStatus}, '%')
+			</if>
+			<if test="query != null and query.releaseStatus != null and query.releaseStatus != ''">
+				and release_status like concat('%', #{query.releaseStatus}, '%')
 			</if>
 			and t_project.id = t_project_collection.project_id
 			and t_project_collection.user_id = #{userId}

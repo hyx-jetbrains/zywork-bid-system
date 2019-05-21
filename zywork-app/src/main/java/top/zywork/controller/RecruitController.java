@@ -164,6 +164,22 @@ public class RecruitController extends BaseController {
         return save(recruitVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/20
+     * Time: 10:03
+     * Description: 删除我发布的岗位招聘
+     */
+    @GetMapping("user/delete/{id}")
+    public ResponseStatusVO delete(@PathVariable("id") Long id) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        return removeById(id);
+    }
+
     @Autowired
     public void setRecruitService(RecruitService recruitService) {
         this.recruitService = recruitService;

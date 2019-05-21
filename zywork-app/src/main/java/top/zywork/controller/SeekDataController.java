@@ -164,6 +164,22 @@ public class SeekDataController extends BaseController {
         return save(seekDataVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/20
+     * Time: 10:04
+     * Description: 删除我发布的求带资料
+     */
+    @GetMapping("user/delete/{id}")
+    public ResponseStatusVO delete(@PathVariable("id") Long id) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        return removeById(id);
+    }
+
     @Autowired
     public void setSeekDataService(SeekDataService seekDataService) {
         this.seekDataService = seekDataService;

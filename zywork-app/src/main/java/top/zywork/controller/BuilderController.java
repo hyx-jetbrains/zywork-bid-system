@@ -191,6 +191,22 @@ public class BuilderController extends BaseController {
         return save(builderVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/20
+     * Time: 9:52
+     * Description: 删除我发布的建造师应聘记录
+     */
+    @GetMapping("user/delete/{id}")
+    public ResponseStatusVO delete(@PathVariable("id") Long id) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        return removeById(id);
+    }
+
     @Autowired
     public void setBuilderService(BuilderService builderService) {
         this.builderService = builderService;

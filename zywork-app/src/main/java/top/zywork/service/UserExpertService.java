@@ -1,5 +1,7 @@
 package top.zywork.service;
 
+import top.zywork.vo.UserExpertVO;
+
 /**
  * UserExpertService服务接口<br/>
  *
@@ -9,4 +11,8 @@ package top.zywork.service;
  * @version 1.0
  */
 public interface UserExpertService extends BaseService {
+
+    void saveExpert(UserExpertVO userExpertVO, String questionTypeId);
+
+    Object getByUserId(Long userId);
 }

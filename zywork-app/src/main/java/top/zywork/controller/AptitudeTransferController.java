@@ -190,6 +190,22 @@ public class AptitudeTransferController extends BaseController {
         return save(aptitudeTransferVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/20
+     * Time: 9:56
+     * Description: 删除我发布的资质转让
+     */
+    @GetMapping("user/delete/{id}")
+    public ResponseStatusVO delete(@PathVariable("id") Long id) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        return removeById(id);
+    }
+
     @Autowired
     public void setAptitudeTransferService(AptitudeTransferService aptitudeTransferService) {
         this.aptitudeTransferService = aptitudeTransferService;

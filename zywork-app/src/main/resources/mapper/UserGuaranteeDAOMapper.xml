@@ -1,0 +1,244 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserGuaranteeDAO">
+
+    <sql id="select_columns">
+        t_guarantee.id as guaranteeId, t_guarantee.project_id as guaranteeProjectId, t_guarantee.user_id as guaranteeUserId, t_guarantee.project_name as guaranteeProjectName, t_guarantee.open_mark_time as guaranteeOpenMarkTime, t_guarantee.mark_unit_name as guaranteeMarkUnitName, t_guarantee.construction_period as guaranteeConstructionPeriod, t_guarantee.assure_price as guaranteeAssurePrice, t_guarantee.guarantee_comp as guaranteeGuaranteeComp, t_guarantee.guarantee_price as guaranteeGuaranteePrice, t_guarantee.applicant as guaranteeApplicant, t_guarantee.name as guaranteeName, t_guarantee.phone as guaranteePhone, t_guarantee.address as guaranteeAddress, t_guarantee.version as guaranteeVersion, t_guarantee.create_time as guaranteeCreateTime, t_guarantee.update_time as guaranteeUpdateTime, t_guarantee.is_active as guaranteeIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.guaranteeId != null">
+			and t_guarantee.id = #{query.guaranteeId}
+		</if>
+		<if test="query != null and query.guaranteeIdMin != null and query.guaranteeIdMax == null">
+			and t_guarantee.id <![CDATA[ >= ]]> #{query.guaranteeIdMin}
+		</if>
+		<if test="query != null and query.guaranteeIdMin == null and query.guaranteeIdMax != null">
+			and t_guarantee.id <![CDATA[ <= ]]> #{query.guaranteeIdMax}
+		</if>
+		<if test="query != null and query.guaranteeIdMin != null and query.guaranteeIdMax != null">
+			and t_guarantee.id <![CDATA[ >= ]]> #{query.guaranteeIdMin} and t_guarantee.id <![CDATA[ <= ]]> #{query.guaranteeIdMax}
+		</if>
+		<if test="query != null and query.guaranteeProjectId != null">
+			and t_guarantee.project_id = #{query.guaranteeProjectId}
+		</if>
+		<if test="query != null and query.guaranteeProjectIdMin != null and query.guaranteeProjectIdMax == null">
+			and t_guarantee.project_id <![CDATA[ >= ]]> #{query.guaranteeProjectIdMin}
+		</if>
+		<if test="query != null and query.guaranteeProjectIdMin == null and query.guaranteeProjectIdMax != null">
+			and t_guarantee.project_id <![CDATA[ <= ]]> #{query.guaranteeProjectIdMax}
+		</if>
+		<if test="query != null and query.guaranteeProjectIdMin != null and query.guaranteeProjectIdMax != null">
+			and t_guarantee.project_id <![CDATA[ >= ]]> #{query.guaranteeProjectIdMin} and t_guarantee.project_id <![CDATA[ <= ]]> #{query.guaranteeProjectIdMax}
+		</if>
+		<if test="query != null and query.guaranteeUserId != null">
+			and t_guarantee.user_id = #{query.guaranteeUserId}
+		</if>
+		<if test="query != null and query.guaranteeUserIdMin != null and query.guaranteeUserIdMax == null">
+			and t_guarantee.user_id <![CDATA[ >= ]]> #{query.guaranteeUserIdMin}
+		</if>
+		<if test="query != null and query.guaranteeUserIdMin == null and query.guaranteeUserIdMax != null">
+			and t_guarantee.user_id <![CDATA[ <= ]]> #{query.guaranteeUserIdMax}
+		</if>
+		<if test="query != null and query.guaranteeUserIdMin != null and query.guaranteeUserIdMax != null">
+			and t_guarantee.user_id <![CDATA[ >= ]]> #{query.guaranteeUserIdMin} and t_guarantee.user_id <![CDATA[ <= ]]> #{query.guaranteeUserIdMax}
+		</if>
+		<if test="query != null and query.guaranteeProjectName != null and query.guaranteeProjectName != ''">
+			and t_guarantee.project_name like concat('%', #{query.guaranteeProjectName}, '%')
+		</if>
+		<if test="query != null and query.guaranteeOpenMarkTime != null">
+			and t_guarantee.open_mark_time = #{query.guaranteeOpenMarkTime}
+		</if>
+		<if test="query != null and query.guaranteeOpenMarkTimeMin != null and query.guaranteeOpenMarkTimeMax == null">
+			and t_guarantee.open_mark_time <![CDATA[ >= ]]> #{query.guaranteeOpenMarkTimeMin}
+		</if>
+		<if test="query != null and query.guaranteeOpenMarkTimeMin == null and query.guaranteeOpenMarkTimeMax != null">
+			and t_guarantee.open_mark_time <![CDATA[ <= ]]> #{query.guaranteeOpenMarkTimeMax}
+		</if>
+		<if test="query != null and query.guaranteeOpenMarkTimeMin != null and query.guaranteeOpenMarkTimeMax != null">
+			and t_guarantee.open_mark_time <![CDATA[ >= ]]> #{query.guaranteeOpenMarkTimeMin} and t_guarantee.open_mark_time <![CDATA[ <= ]]> #{query.guaranteeOpenMarkTimeMax}
+		</if>
+		<if test="query != null and query.guaranteeMarkUnitName != null and query.guaranteeMarkUnitName != ''">
+			and t_guarantee.mark_unit_name like concat('%', #{query.guaranteeMarkUnitName}, '%')
+		</if>
+		<if test="query != null and query.guaranteeConstructionPeriod != null">
+			and t_guarantee.construction_period = #{query.guaranteeConstructionPeriod}
+		</if>
+		<if test="query != null and query.guaranteeConstructionPeriodMin != null and query.guaranteeConstructionPeriodMax == null">
+			and t_guarantee.construction_period <![CDATA[ >= ]]> #{query.guaranteeConstructionPeriodMin}
+		</if>
+		<if test="query != null and query.guaranteeConstructionPeriodMin == null and query.guaranteeConstructionPeriodMax != null">
+			and t_guarantee.construction_period <![CDATA[ <= ]]> #{query.guaranteeConstructionPeriodMax}
+		</if>
+		<if test="query != null and query.guaranteeConstructionPeriodMin != null and query.guaranteeConstructionPeriodMax != null">
+			and t_guarantee.construction_period <![CDATA[ >= ]]> #{query.guaranteeConstructionPeriodMin} and t_guarantee.construction_period <![CDATA[ <= ]]> #{query.guaranteeConstructionPeriodMax}
+		</if>
+		<if test="query != null and query.guaranteeAssurePrice != null">
+			and t_guarantee.assure_price = #{query.guaranteeAssurePrice}
+		</if>
+		<if test="query != null and query.guaranteeAssurePriceMin != null and query.guaranteeAssurePriceMax == null">
+			and t_guarantee.assure_price <![CDATA[ >= ]]> #{query.guaranteeAssurePriceMin}
+		</if>
+		<if test="query != null and query.guaranteeAssurePriceMin == null and query.guaranteeAssurePriceMax != null">
+			and t_guarantee.assure_price <![CDATA[ <= ]]> #{query.guaranteeAssurePriceMax}
+		</if>
+		<if test="query != null and query.guaranteeAssurePriceMin != null and query.guaranteeAssurePriceMax != null">
+			and t_guarantee.assure_price <![CDATA[ >= ]]> #{query.guaranteeAssurePriceMin} and t_guarantee.assure_price <![CDATA[ <= ]]> #{query.guaranteeAssurePriceMax}
+		</if>
+		<if test="query != null and query.guaranteeGuaranteeComp != null and query.guaranteeGuaranteeComp != ''">
+			and t_guarantee.guarantee_comp like concat('%', #{query.guaranteeGuaranteeComp}, '%')
+		</if>
+		<if test="query != null and query.guaranteeGuaranteePrice != null">
+			and t_guarantee.guarantee_price = #{query.guaranteeGuaranteePrice}
+		</if>
+		<if test="query != null and query.guaranteeGuaranteePriceMin != null and query.guaranteeGuaranteePriceMax == null">
+			and t_guarantee.guarantee_price <![CDATA[ >= ]]> #{query.guaranteeGuaranteePriceMin}
+		</if>
+		<if test="query != null and query.guaranteeGuaranteePriceMin == null and query.guaranteeGuaranteePriceMax != null">
+			and t_guarantee.guarantee_price <![CDATA[ <= ]]> #{query.guaranteeGuaranteePriceMax}
+		</if>
+		<if test="query != null and query.guaranteeGuaranteePriceMin != null and query.guaranteeGuaranteePriceMax != null">
+			and t_guarantee.guarantee_price <![CDATA[ >= ]]> #{query.guaranteeGuaranteePriceMin} and t_guarantee.guarantee_price <![CDATA[ <= ]]> #{query.guaranteeGuaranteePriceMax}
+		</if>
+		<if test="query != null and query.guaranteeApplicant != null and query.guaranteeApplicant != ''">
+			and t_guarantee.applicant like concat('%', #{query.guaranteeApplicant}, '%')
+		</if>
+		<if test="query != null and query.guaranteeName != null and query.guaranteeName != ''">
+			and t_guarantee.name like concat('%', #{query.guaranteeName}, '%')
+		</if>
+		<if test="query != null and query.guaranteePhone != null and query.guaranteePhone != ''">
+			and t_guarantee.phone like concat('%', #{query.guaranteePhone}, '%')
+		</if>
+		<if test="query != null and query.guaranteeAddress != null and query.guaranteeAddress != ''">
+			and t_guarantee.address like concat('%', #{query.guaranteeAddress}, '%')
+		</if>
+		<if test="query != null and query.guaranteeVersion != null">
+			and t_guarantee.version = #{query.guaranteeVersion}
+		</if>
+		<if test="query != null and query.guaranteeVersionMin != null and query.guaranteeVersionMax == null">
+			and t_guarantee.version <![CDATA[ >= ]]> #{query.guaranteeVersionMin}
+		</if>
+		<if test="query != null and query.guaranteeVersionMin == null and query.guaranteeVersionMax != null">
+			and t_guarantee.version <![CDATA[ <= ]]> #{query.guaranteeVersionMax}
+		</if>
+		<if test="query != null and query.guaranteeVersionMin != null and query.guaranteeVersionMax != null">
+			and t_guarantee.version <![CDATA[ >= ]]> #{query.guaranteeVersionMin} and t_guarantee.version <![CDATA[ <= ]]> #{query.guaranteeVersionMax}
+		</if>
+		<if test="query != null and query.guaranteeCreateTime != null">
+			and t_guarantee.create_time = #{query.guaranteeCreateTime}
+		</if>
+		<if test="query != null and query.guaranteeCreateTimeMin != null and query.guaranteeCreateTimeMax == null">
+			and t_guarantee.create_time <![CDATA[ >= ]]> #{query.guaranteeCreateTimeMin}
+		</if>
+		<if test="query != null and query.guaranteeCreateTimeMin == null and query.guaranteeCreateTimeMax != null">
+			and t_guarantee.create_time <![CDATA[ <= ]]> #{query.guaranteeCreateTimeMax}
+		</if>
+		<if test="query != null and query.guaranteeCreateTimeMin != null and query.guaranteeCreateTimeMax != null">
+			and t_guarantee.create_time <![CDATA[ >= ]]> #{query.guaranteeCreateTimeMin} and t_guarantee.create_time <![CDATA[ <= ]]> #{query.guaranteeCreateTimeMax}
+		</if>
+		<if test="query != null and query.guaranteeUpdateTime != null">
+			and t_guarantee.update_time = #{query.guaranteeUpdateTime}
+		</if>
+		<if test="query != null and query.guaranteeUpdateTimeMin != null and query.guaranteeUpdateTimeMax == null">
+			and t_guarantee.update_time <![CDATA[ >= ]]> #{query.guaranteeUpdateTimeMin}
+		</if>
+		<if test="query != null and query.guaranteeUpdateTimeMin == null and query.guaranteeUpdateTimeMax != null">
+			and t_guarantee.update_time <![CDATA[ <= ]]> #{query.guaranteeUpdateTimeMax}
+		</if>
+		<if test="query != null and query.guaranteeUpdateTimeMin != null and query.guaranteeUpdateTimeMax != null">
+			and t_guarantee.update_time <![CDATA[ >= ]]> #{query.guaranteeUpdateTimeMin} and t_guarantee.update_time <![CDATA[ <= ]]> #{query.guaranteeUpdateTimeMax}
+		</if>
+		<if test="query != null and query.guaranteeIsActive != null">
+			and t_guarantee.is_active = #{query.guaranteeIsActive}
+		</if>
+		<if test="query != null and query.guaranteeIsActiveMin != null and query.guaranteeIsActiveMax == null">
+			and t_guarantee.is_active <![CDATA[ >= ]]> #{query.guaranteeIsActiveMin}
+		</if>
+		<if test="query != null and query.guaranteeIsActiveMin == null and query.guaranteeIsActiveMax != null">
+			and t_guarantee.is_active <![CDATA[ <= ]]> #{query.guaranteeIsActiveMax}
+		</if>
+		<if test="query != null and query.guaranteeIsActiveMin != null and query.guaranteeIsActiveMax != null">
+			and t_guarantee.is_active <![CDATA[ >= ]]> #{query.guaranteeIsActiveMin} and t_guarantee.is_active <![CDATA[ <= ]]> #{query.guaranteeIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		<if test="query != null and query.userDetailGender != null">
+			and t_user_detail.gender = #{query.userDetailGender}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax == null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin}
+		</if>
+		<if test="query != null and query.userDetailGenderMin == null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		
+        and
+        t_guarantee.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userGuaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee, t_user_detail where t_guarantee.id = #{id} and
+        t_guarantee.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userGuaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee, t_user_detail
+        where
+        t_guarantee.user_id = t_user_detail.id
+        order by t_guarantee.update_time desc, t_guarantee.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userGuaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_guarantee.update_time desc, t_guarantee.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userGuaranteeDO">
+        select
+        <include refid="select_columns"/>
+        from t_guarantee, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_guarantee.update_time desc, t_guarantee.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_guarantee, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

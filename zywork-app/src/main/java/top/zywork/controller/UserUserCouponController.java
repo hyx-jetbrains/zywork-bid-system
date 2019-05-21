@@ -1,8 +1,10 @@
 package top.zywork.controller;
 
+import com.beust.jcommander.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
@@ -14,6 +16,8 @@ import top.zywork.service.UserUserCouponService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.UserUserCouponVO;
+
+import java.util.Date;
 
 /**
  * UserUserCouponController控制器类<br/>
@@ -69,11 +73,19 @@ public class UserUserCouponController extends BaseController {
      * Time: 11:31
      * Description: 抵扣券
      */
-    @PostMapping("user/list-page")
-    public ResponseStatusVO listPageByUserId(@RequestBody UserUserCouponQuery userUserCouponQuery) {
+    @PostMapping("user/list-page/{status}")
+    public ResponseStatusVO listPageByUserId(@RequestBody UserUserCouponQuery userUserCouponQuery,@PathVariable("status") Integer status) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
+        }
+
+        if(status != null) {
+            if(status == 1) {
+                userUserCouponQuery.setCouponValidTimeMin(new Date());
+            } else if(status == 2) {
+                userUserCouponQuery.setCouponValidTimeMax(new Date());
+            }
         }
 
         userUserCouponQuery.setUserCouponUserId(jwtUser.getUserId());

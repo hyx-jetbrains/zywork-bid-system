@@ -13,6 +13,9 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.UserExpertDTO;
 import top.zywork.query.UserExpertQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
+import top.zywork.service.UserExpertQuestionTypeService;
 import top.zywork.service.UserExpertService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +135,50 @@ public class UserExpertController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), UserExpertVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/21
+     * Time: 12:03
+     * Description: 专家申请
+     */
+    @PostMapping("user/saveExpert/{questionTypeId}")
+    public ResponseStatusVO saveExpert(@RequestBody @Validated UserExpertVO userExpertVO, @PathVariable("questionTypeId") String questionTypeId,
+         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
+        }
+
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        userExpertVO.setUserId(jwtUser.getUserId());
+        userExpertService.saveExpert(userExpertVO, questionTypeId);
+        return ResponseStatusVO.ok("添加成功", null);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/21
+     * Time: 15:28
+     * Description: 查询专家申请记录
+     */
+    @PostMapping("user/getByUserId")
+    public ResponseStatusVO getByUserId() {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        Object obj = userExpertService.getByUserId(jwtUser.getUserId());
+        UserExpertVO userExpertVO = new UserExpertVO();
+        if(obj != null) {
+            userExpertVO = BeanUtils.copy(obj, UserExpertVO.class);
+        }
+        return ResponseStatusVO.ok("查询成功", userExpertVO);
     }
 
     @Autowired

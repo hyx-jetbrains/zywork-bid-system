@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ExpertQuestionTypeDTO;
 import top.zywork.query.ExpertQuestionTypeQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.ExpertQuestionTypeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,22 @@ public class ExpertQuestionTypeController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ExpertQuestionTypeVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/21
+     * Time: 12:06
+     * Description: 查询全部问题
+     */
+    @PostMapping("user/list-all")
+    public ResponseStatusVO getAll() {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        return listAll();
     }
 
     @Autowired

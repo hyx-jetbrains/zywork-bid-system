@@ -170,6 +170,22 @@ public class GuaranteeController extends BaseController {
         return save(guaranteeVO, bindingResult);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/20
+     * Time: 10:06
+     * Description: 删除我发布的保函申请
+     */
+    @GetMapping("user/delete/{id}")
+    public ResponseStatusVO delete(@PathVariable("id") Long id) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        return removeById(id);
+    }
+
     @Autowired
     public void setGuaranteeService(GuaranteeService guaranteeService) {
         this.guaranteeService = guaranteeService;
