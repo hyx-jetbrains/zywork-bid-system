@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.FundsTransferDTO;
 import top.zywork.query.FundsTransferQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.FundsTransferService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,23 @@ public class FundsTransferController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), FundsTransferVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * User: DengMin
+     * Date: 2019/05/21
+     * Time: 18:45
+     * Description: 账户佣金明细
+     */
+    @PostMapping("user/list-page")
+    public ResponseStatusVO listPage(@RequestBody FundsTransferQuery fundsTransferQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        fundsTransferQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(fundsTransferQuery);
     }
 
     @Autowired
