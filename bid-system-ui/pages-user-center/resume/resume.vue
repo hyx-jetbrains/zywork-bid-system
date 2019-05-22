@@ -109,7 +109,7 @@
 								<label class="zy-disable-flex uni-list-cell-pd" 
 										v-for="item in aptitudeList" :key="item.name">
 									<view>
-										<checkbox :value="item.name" color="#108ee9"/>
+										<checkbox :value="item.name" :checked="item.checked" color="#108ee9"/>
 									</view>
 									<view>{{item.name}}</view>
 								</label>
@@ -150,7 +150,8 @@
 		genderArray,
 		educationArray,
 		fulltimeArray,
-		salaryArray
+		salaryArray,
+		certificateTypeArray
 	} from '@/common/picker.data.js'
 	import {
 		resume,
@@ -183,6 +184,7 @@
 				educationIndex: 0,
 				salaryArray: salaryArray,
 				salaryIndex: 0,
+				aptitudeArray: certificateTypeArray,
 				aptitudeList: [
 					{
 						id: 1,
@@ -255,6 +257,12 @@
 			this.initData()
 		},
 		methods: {
+			initPicker() {
+				this.formInfo.gender = 0;
+				this.formInfo.isFulltime = 0;
+				this.formInfo.isRecommend = 0;
+				this.formInfo.isShow = 0;
+			},
 			// 监听性别选中
 			chooseGender(e) {
 				this.formInfo.gender = e.target.value
@@ -304,6 +312,7 @@
 			},
 			// 提交简历信息
 			addResumeInfo: function(e) {
+				this.formInfo.aptitude = null;
 				var formObj = e.detail.value;
 				var len = formObj.aptitude.length;
 				if (len > 0) {
@@ -317,21 +326,27 @@
 				}
 				saveResume(this,this.formInfo)
 			},
+			/** 设置值，用于回显 */
 			setValue() {
-				/* var items = this.aptitudeList;
-				if(this.formInfo.aptitude != null) {
-					var value = this.formInfo.aptitude.split(',');
+				var items = this.aptitudeList;
+				var tempItems = this.aptitudeArray;
+				var tempAptitude = this.formInfo.aptitude;
+				if(tempAptitude != null) {
+					var value = tempAptitude.split(',');
+					var valueLen = value.length;
+					// 对所有的ceckbox进行循环
 					for (var i = 0, lenI = items.length; i < lenI; ++i) {
 						const item = items[i]
-						for(var j = 0, lenJ = value.length; i < lenJ; ++j) {
-							if(value[j].includes(item.value)){
-								this.$set(item,'checked',true)
-							}else{
-								this.$set(item,'checked',false)
+						if (i < valueLen) {
+							if(tempItems.includes(value[i])){
+								let index = this.aptitudeArray.findIndex(item => item === value[i])
+								this.aptitudeList[index].checked = true;
 							}
+						} else {
+							break;
 						}
 					}
-				} */
+				}
 				
 				this.salaryIndex = this.salaryArray.findIndex(item => item === this.formInfo.salary)
 				this.educationIndex = this.educationArray.findIndex(item=>item===this.formInfo.education)

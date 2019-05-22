@@ -145,6 +145,7 @@
 	import {
 		getProjectCollectionByUserId
 	} from '@/common/user-center.js'
+	import * as projectInfo from '@/common/project-info.js'
 	
 	const PROJECT_STATUS_ALL = 0
 	const PROJECT_STATUS_SHOWING = 1
@@ -172,8 +173,8 @@
 	const SEE_FILE_TYPE_QINGDAN = 2
 	/** 资质文件标识-3 */
 	const SEE_FILE_TYPE_ZIZHI = 3
-	/** 取消收藏-4 */
-	const CANCEL_COLLECTION_PROJECT = 4
+	/** 收藏或取消收藏-4 */
+	const SEE_FILE_TYPE_SC_QXSC = 4
 	export default {
 		components: {
 			zyworkIcon,
@@ -229,6 +230,8 @@
 					releaseStatus: '已发布',
 					city: ''
 				},
+				isCollection: false,
+				actionSheetArray: ['澄清文件', '招标文件', '清单文件', '资质文件']
 			}
 		},
 		onLoad() {
@@ -284,21 +287,11 @@
 				})
 			},
 			// 触发操作选项
-			actionSheetTap() {
-				uni.showActionSheet({
-					title:'标题',
-					itemList: ['澄清文件', '招标文件', '清单文件', '资质文件', '取消收藏'],
-					success: (e) => {
-						this.seeFile(e.tapIndex)
-						// uni.showToast({
-						// 	title:"点击了第" + e.tapIndex + "个选项",
-						// 	icon:"none"
-						// })
-					}
-				})
+			actionSheetTap(projectId) {
+				projectInfo.getProjectCollectionInfo(this, projectId);
 			},
 			// 查看文件
-			seeFile(type) {
+			seeFile(type, projectId) {
 				console.log(type)
 				if (SEE_FILE_TYPE_CHENGQING === type) {
 					console.log("查看澄清文件")
@@ -308,9 +301,36 @@
 					console.log("查看清单文件");
 				} else if (SEE_FILE_TYPE_ZIZHI === type) {
 					console.log("查看资质文件");
-				} else if (CANCEL_COLLECTION_PROJECT === type) {
-					console.log("取消收藏");
+				} else if (SEE_FILE_TYPE_SC_QXSC === type) {
+					const tempType = this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC];
+					if (tempType == '取消收藏') {
+						projectInfo.cancelProjectCollection(this, projectId);
+					} else if (tempType == '收藏项目') {
+						projectInfo.saveProjectCollection(this, projectId);
+					}
 				}
+			},
+			/** 获取到是否收藏后的操作 */
+			collectionOperation(projectId) {
+				if (this.isCollection) {
+					this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC] = "取消收藏";
+				} else {
+					this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC] = "收藏项目";
+				}
+				if (0 !== projectId) {
+					uni.showActionSheet({
+						title: '标题',
+						itemList: this.actionSheetArray,
+						success: (e) => {
+							this.seeFile(e.tapIndex, projectId);
+							// uni.showToast({
+							// 	title:"点击了第" + e.tapIndex + "个选项",
+							// 	icon:"none"
+							// })
+						}
+					})
+				}
+				this.updateProjectList();
 			},
 			initData() {
 				this.updateProjectList();

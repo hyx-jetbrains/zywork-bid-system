@@ -1922,7 +1922,7 @@ CREATE TABLE `t_resume`  (
   `education` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '学历',
   `salary` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '要求薪资/月',
   `is_recommend` int(4) NULL DEFAULT 0 COMMENT '是否允许平台推荐',
-  `aptitude` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '我的资质',
+  `aptitude` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '我的资质',
   `intorduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '个人简介',
   `is_show` int(4) NULL DEFAULT 0 COMMENT '是否开放简历',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',

@@ -49,7 +49,7 @@ public class ResumeVO extends BaseVO {
 	// 是否允许平台推荐
 	private Integer isRecommend;
 	// 我的资质
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String aptitude;
 	// 个人简介
 	@Size(min = 0, max = 255, message = "必须小于255个字符")
