@@ -58,7 +58,7 @@
 			},
 			// 前往添加咨询页面
 			toAddConsultPage() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '/pages-user-center/consult/add-consult'
 				})
 			},

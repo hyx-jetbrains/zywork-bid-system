@@ -186,13 +186,30 @@
 				projectType: {
 					scrollLeft: 0,
 					tabIndex: 0,
-					tabbars: [
-						{id: 'building', name: '房建市政'},
-						{id: 'hydraulic', name: '水利工程'},
-						{id: 'traffic', name: '交通工程'},
-						{id: 'purchase', name: '政府采购'},
-						{id: 'important', name: '重点项目'},
-						{id: 'other', name: '其他项目'}
+					tabbars: [{
+							id: 'building',
+							name: '房建市政'
+						},
+						{
+							id: 'hydraulic',
+							name: '水利工程'
+						},
+						{
+							id: 'traffic',
+							name: '交通工程'
+						},
+						{
+							id: 'purchase',
+							name: '政府采购'
+						},
+						{
+							id: 'important',
+							name: '重点项目'
+						},
+						{
+							id: 'other',
+							name: '其他项目'
+						}
 					]
 				},
 				projectStatus: {
@@ -200,7 +217,6 @@
 					items: projectStatusArray
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
-				projectTypeName: '房建市政',
 				projects: [],
 				pager: {
 					pageNo: 1,
@@ -239,6 +255,7 @@
 						tabBarScrollLeft = tabBar.scrollLeft
 					this.projectType.scrollLeft = tabBarScrollLeft
 					this.projectType.tabIndex = tabIndex
+					this.pager.projectType = this.projectType.tabbars[tabIndex].name
 					this.updateProjectList();
 					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
 				}

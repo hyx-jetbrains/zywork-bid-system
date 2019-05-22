@@ -32,11 +32,11 @@
 		</view>
 		<view class="zy-user-balance">
 			<view class="zy-user-balance-item" @click="toComission">
-				<text class="zy-text-primary zy-text-big zy-text-bold">0</text>
+				<text class="zy-text-primary zy-text-big zy-text-bold">{{userWallet.rmbBalance/100}}</text>
 				<text class="zy-text-info">佣金</text>
 			</view>
 			<view class="zy-user-balance-item" @click="toIntegral">
-				<text class="zy-text-primary zy-text-big zy-text-bold">20</text>
+				<text class="zy-text-primary zy-text-big zy-text-bold">{{userWallet.integral/100}}</text>
 				<text class="zy-text-info">积分</text>
 			</view>
 		</view>
@@ -78,11 +78,9 @@
 		judgeLogin,
 		saveUserDetail,
 		saveUserPhone,
+		geUserWalletByUserId,
 		getUserExpertByUserId
 	} from '@/common/user.js'
-	import {
-		userWallet
-	} from '@/common/funds.js'
 
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
@@ -104,11 +102,7 @@
 					nickname: '',
 					phone: ''
 				},
-				userWallet: {
-					integral: 0,
-					usableIntegral: 0,
-					frezeeIntegral: 0
-				},
+				userWallet: {},
 				headicon: DEFAULT_HEADICON,
 				subscrible: {
 					id: null,
@@ -132,9 +126,6 @@
 		onLoad() {
 			judgeLogin(this)
 			this.initData()
-		},
-		onShow() {
-			userWallet(this)
 		},
 		methods: {
 			bindGetUserInfo(e) {
@@ -171,12 +162,12 @@
 			},
 			toComission() {
 				uni.navigateTo({
-					url: '/pages-user-center/commission/commission'
+					url: '/pages-user-center/commission/commission?itemData='  + encodeURIComponent(JSON.stringify(this.userWallet))
 				})
 			},
 			toIntegral() {
 				uni.navigateTo({
-					url: '/pages-user-center/integral/integral'
+					url: '/pages-user-center/integral/integral?itemData=' + encodeURIComponent(JSON.stringify(this.userWallet))
 				})
 			},
 			toSubscrible() {
@@ -235,6 +226,7 @@
 				})
 			},
 			initData() {
+				geUserWalletByUserId(this)
 				getUserExpertByUserId(this)
 			}
 		}

@@ -2,7 +2,7 @@
 	<view>
 		<view class="zy-commission-card">
 			<view style="color: #7bc0f1">我的佣金</view>
-			<view class="zy-commission zy-text-bold">{{commission}}</view>
+			<view class="zy-commission zy-text-bold">{{userWallet.rmbBalance/100}}</view>
 		</view>
 		<view class="zy-disable-flex">
 			<view class="zy-type-title zy-text-bold">佣金记录</view>
@@ -21,9 +21,9 @@
 			<view v-if="commissionList.length > 0" class="zy-page-list" style="padding: 0upx 30upx;">
 				<view v-for="(commissionItem, index) in commissionList" :key="index" class="zy-page-list-item">
 					<view class="zy-disable-flex">
-						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{commissionItem.title}}</view>
+						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{commissionItem.transferDescription}}</view>
 						<view class="zy-text-info zy-text-small zy-disable-flex-right" style="color: #F0AD4E">
-							{{commissionItem.count > 0 ? '+' : ''}}{{commissionItem.count}}
+							{{commissionItem.amount > 0 ? '+' : ''}}{{commissionItem.amount}}
 						</view>
 					</view>
 					<view>{{commissionItem.createTime}}</view>
@@ -41,6 +41,9 @@
 	import {
 		revenueExpenditureStatusArray
 	} from '@/common/picker.data.js'
+	import {
+		getFundsTransferByUserId
+	} from '@/common/user-center.js'
 	
 	export default {
 		components: {
@@ -49,67 +52,43 @@
 		},
 		data() {
 			return {
-				commission: 9188,
-				commissionList: [
-					{
-						title: '回复问题咨询',
-						type: 0,
-						count: 1,
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						title: '回复问题咨询',
-						type: 1,
-						count: -10,
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						title: '回复问题咨询',
-						type: 0,
-						count: 11,
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						title: '回复问题咨询',
-						type: 1,
-						count: -11,
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						title: '回复问题咨询',
-						type: 0,
-						count: 11,
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						title: '回复问题咨询',
-						type: 0,
-						count: 11,
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						title: '回复问题咨询',
-						type: 0,
-						count: 11,
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						title: '回复问题咨询',
-						type: 0,
-						count: 11,
-						createTime: '2019-04-28 10:00:00'
-					}
-				],
+				userWallet: {},
+				commissionList: [],
+				params: {
+					transferType: null,
+					pageNo: 1,
+					pageSize: 10
+				},
 				typeIndex: 0,
 				typeArray: revenueExpenditureStatusArray,
 			}
 		},
-		onLoad() {},
+		onLoad(event) {
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			try {
+				this.userWallet = JSON.parse(decodeURIComponent(payload));
+			} catch (error) {
+				this.userWallet = JSON.parse(payload);
+			}
+			
+			this.initData()
+		},
 		methods: {
 			// 选择收支类别
 			chooseType: function(e) {
 				this.typeIndex = e.target.value
+				if(this.typeIndex == 0) {
+					this.params.transferType = null
+				} else {
+					this.params.transferType = this.typeArray[this.typeIndex]
+				}
+				getFundsTransferByUserId(this, this.params)
 			},
+			initData() {
+				getFundsTransferByUserId(this, this.params)
+			}
 		}
 	}
 </script>

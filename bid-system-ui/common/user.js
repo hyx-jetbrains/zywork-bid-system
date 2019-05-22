@@ -221,6 +221,30 @@ export const updateNickname = (self) => {
 }
 
 /**
+ * 用户钱包信息
+ */
+export const geUserWalletByUserId = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-wallet/user/one',
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.userWallet = res.data.data
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
+
+/**
  * 查询专家申请记录
  */
 export const getUserExpertByUserId = (self) => {

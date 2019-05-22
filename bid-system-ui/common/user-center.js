@@ -15,6 +15,67 @@ import {
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
+
+/**
+ * 用户账户佣金明细
+ */
+export const getFundsTransferByUserId = (self,params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/funds-transfer/user/list-page',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.commissionList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
+ * 用户账户积分明细
+ */
+export const getAccountDetailByUserId = (self,params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/accoundetail/user/pager-cond',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.integralList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
 /**
  * 查询公司信息
  */
@@ -788,7 +849,17 @@ export const createConsult = (self, params) => {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
-			showInfoToast(res.data.message)
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast(res.data.message)
+				
+				setTimeout(function() {
+					uni.redirectTo({
+						url:'/pages-user-center/consult/consult'
+					})
+				}, 1500)
+			} else {
+				showInfoToast(res.data.message)
+			}
 		},
 		fail: () => {
 			networkError()

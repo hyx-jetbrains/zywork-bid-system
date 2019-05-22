@@ -146,7 +146,10 @@
 			},
 			chooseCouponStatus: function(e) {
 				this.couponStatusIndex = e.target.value;
-				if(this.couponStatusIndex == 1) {
+				
+				if(this.couponStatusIndex == 0) {
+					this.projectPager.status = 0
+				} else if(this.couponStatusIndex == 1) {
 					this.projectPager.status = 1
 				} else if(this.couponStatusIndex == 2) {
 					this.projectPager.status = 2
