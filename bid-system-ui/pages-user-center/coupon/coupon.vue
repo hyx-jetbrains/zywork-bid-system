@@ -90,16 +90,16 @@
 	import {
 		getCalendarDate,
 		getDate
-	} from '../../common/util.js'
+	} from '@/common/util.js'
 	
 	import {
 		couponStatusArray
-	} from '../../common/picker.data.js'
+	} from '@/common/picker.data.js'
 	
 	import {
 		getCouponByUserId,
 		getCouponRecordByUserId
-	} from '../../common/user-center.js'
+	} from '@/common/user-center.js'
 	
 	export default {
 		components: {

@@ -26,7 +26,7 @@
 				<text class="zy-text-warning zy-text-big">¥199</text>
 			</view>
 			<view class="zy-vip-button">
-				<button type="primary" @click="openVIP('1')">立即开通</button>
+				<button type="primary" @click="openVIP(0)">立即开通</button>
 			</view>
 		</uni-card>
 		
@@ -44,7 +44,7 @@
 				<text class="zy-text-warning zy-text-big">¥299</text>
 			</view>
 			<view class="zy-vip-button">
-				<button type="primary" @click="openVIP('2')">立即开通</button>
+				<button type="primary" @click="openVIP(1)">立即开通</button>
 			</view>
 		</uni-card>
 		
@@ -62,7 +62,7 @@
 				<text class="zy-text-warning zy-text-big">¥399</text>
 			</view>
 			<view class="zy-vip-button">
-				<button type="primary" @click="openVIP('3')">立即开通</button>
+				<button type="primary" @click="openVIP(2)">立即开通</button>
 			</view>
 		</uni-card>
 	</view>
@@ -86,7 +86,7 @@
 			// 开通VIP
 			openVIP(type) {
 				uni.navigateTo({
-					url: '/pages-user-center/user-vip/vip-record'
+					url: '/pages-user-center/user-vip/vip-record?level=' + encodeURIComponent(type)
 				})
 			}
 		}

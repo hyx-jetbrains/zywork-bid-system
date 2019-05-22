@@ -45,16 +45,20 @@
 				<view class="zy-disable-flex zy-record-card-item">
 					<view class="zy-record-card-title">抵用券：</view>
 					<view>
-						<view class="zy-disable-flex" @click="couponDrawer = true">
-							<text>
+						<view class="zy-disable-flex" @click="showCouponDrawer">
+							<text v-if="recordInfo.couponMoney != 0">
 								¥{{recordInfo.couponMoney / 100}}
 							</text>
+							<text v-else>选择抵用券</text>
 							<zywork-icon type="iconiconfonti" />
 						</view>
 						<uni-drawer :visible="couponDrawer" mode="right" @close="couponDrawer = false">
 							<uni-list>
-								<zywork-list-item v-for="(couponItem, index) in couponList" :key="index" :title="'¥' + couponItem.money / 100" note="点击使用"
-									@click="useCoupon(couponItem.id, couponItem.money)"></zywork-list-item>
+								<view v-if="couponList.length > 0">
+									<zywork-list-item v-for="(couponItem, index) in couponList" :key="index" :title="'¥' + couponItem.couponMoney / 100" note="点击使用"
+										@click="useCoupon(couponItem.userCouponId, couponItem.couponMoney)"></zywork-list-item>
+								</view>
+								<zywork-no-data v-else text="暂无可用的抵用券"></zywork-no-data>
 							</uni-list>
 						</uni-drawer>
 					</view>
@@ -67,7 +71,7 @@
 		</view>
 		<view class="zy-record-card-left"></view>
 		<view class="zy-record-card-right"></view>
-		<view class="zy-bottom-button">
+		<view class="zy-bottom-button" v-if="showBtn">
 			<button type="primary" @click="payRecord">立即支付</button>
 		</view>
 	</view>
@@ -78,10 +82,14 @@
 	import uniDrawer from '@/components/uni-drawer/uni-drawer.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
+	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import {
 		vipLevelArray,
 		payTypeArray
 	} from '@/common/picker.data.js'
+	import {
+		getCouponByUserId
+	} from '@/common/user-center.js'
 	
 	const VIP_LEVEL_MONEY_ONE = 19900
 	const VIP_LEVEL_MONEY_TWO = 29900
@@ -96,7 +104,8 @@
 			zyworkIcon,
 			uniDrawer,
 			uniList,
-			zyworkListItem
+			zyworkListItem,
+			zyworkNoData
 		},
 		data() {
 			return {
@@ -105,20 +114,19 @@
 				payTypeArray: payTypeArray,
 				payTypeIndex: 0,
 				couponDrawer: false,
-				couponList: [
-					{
-						id: 1,
-						money: 500
-					},
-					{
-						id: 2,
-						money: 1000
-					}
-				],
+				showBtn: true,
+				couponPager: {
+					pageNo: 1,
+					pageSize: 10,
+					sortColumn: 'couponValidTime',
+					sortOrder: 'desc',
+					status: 1
+				},
+				couponList: [],
 				recordInfo: {
-					oldMoney: 19900,
-					couponMoney: 500,
-					money: 19500
+					oldMoney: 0,
+					couponMoney: 0,
+					money: 0
 				}
 			}
 		},
@@ -138,22 +146,42 @@
 				this.recordInfo.money = this.recordInfo.oldMoney - val
 			}
 		},
-		onLoad() {},
+		onLoad(event) {
+			// TODO 后面把参数名替换成 payload
+			const payload = event.level || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			try {
+				this.levelIndex = decodeURIComponent(payload);
+			} catch (error) {
+				this.levelIndex = payload;
+			}
+			this.setRecordMoneyByLevel(this.levelIndex);
+		},
 		methods: {
 			// 监听等级选中
 			chooseLevel(e) {
 				this.levelIndex = e.target.value
-				if (this.levelIndex == VIP_LEVEL_ONE) {
+				this.setRecordMoneyByLevel(this.levelIndex);
+			},
+			/** 设置订单价格 */
+			setRecordMoneyByLevel(level) {
+				if (level == VIP_LEVEL_ONE) {
 					this.recordInfo.oldMoney = VIP_LEVEL_MONEY_ONE
-				} else if (this.levelIndex == VIP_LEVEL_TWO) {
+				} else if (level == VIP_LEVEL_TWO) {
 					this.recordInfo.oldMoney = VIP_LEVEL_MONEY_TWO
-				} else if (this.levelIndex == VIP_LEVEL_THREE) {
+				} else if (level == VIP_LEVEL_THREE) {
 					this.recordInfo.oldMoney = VIP_LEVEL_MONEY_THREE
 				}
 			},
 			// 监听支付方式选中
 			choosePayType(e) {
 				this.payTypeIndex = e.target.value
+			},
+			/** 显示选择抵用券的弹窗 */
+			showCouponDrawer() {
+				this.couponDrawer = true;
+				this.showBtn = false;
+				getCouponByUserId(this, this.couponPager);
 			},
 			// 使用抵用券
 			useCoupon(id, money) {
@@ -164,6 +192,7 @@
 			// 隐藏抵用券弹窗
 			hideCouponDrawer() {
 				this.couponDrawer = false
+				this.showBtn = true
 			},
 			// 支付订单
 			payRecord() {
