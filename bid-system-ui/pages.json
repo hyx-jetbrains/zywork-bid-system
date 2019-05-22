@@ -220,6 +220,20 @@
 						"navigationBarTitleText": "企业征信搜索",
 						"backgroundTextStyle": "light"
 					}
+				},
+				{
+					"path": "company-detail/company-detail",
+					"style": {
+						"navigationBarTitleText": "企业详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "company-achievement-detail/company-achievement-detail",
+					"style": {
+						"navigationBarTitleText": "企业业绩详情",
+						"backgroundTextStyle": "light"
+					}
 				}
 			]
 		},

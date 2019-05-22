@@ -134,6 +134,11 @@ public class CompWaterDeviseAchievementController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompWaterDeviseAchievementQuery compWaterDeviseAchievementQuery) {
+        return listAllByCondition(compWaterDeviseAchievementQuery);
+    }
+
     @Autowired
     public void setCompWaterDeviseAchievementService(CompWaterDeviseAchievementService compWaterDeviseAchievementService) {
         this.compWaterDeviseAchievementService = compWaterDeviseAchievementService;

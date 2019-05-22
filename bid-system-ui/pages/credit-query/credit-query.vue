@@ -1,37 +1,694 @@
 <template>
 	<view>
+		<!-- 征信查询 -->
 		<view class="zy-top-search">
 			<view class="zy-search-bar" @click="toSearchPage">
-				<zywork-icon type="iconchaxun"/>
-				<input type="text" placeholder="我要搜索" disabled/>
+				<zywork-icon type="iconchaxun" />
+				<input type="text" placeholder="我要搜索" disabled />
 			</view>
 		</view>
-		征信查询
+
+		<view class="uni-tab-bar zy-tab-bar">
+			<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="infoType.scrollLeft">
+				<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
+				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
+			</scroll-view>
+		</view>
+
+		<!-- 企业信息 -->
+		<view v-if="infoType.tabIndex === 0">
+			<view class="zy-page-list zy-page-card" v-if="companyList.length > 0">
+				<view class="zy-page-list-item" v-for="(item, index) in companyList" :key="index">
+					<view @click="toCompanyDetail(item)">
+						<!-- 头部 -->
+						<view class="zy-disable-flex">
+							<zywork-icon type="iconqiyejianjie" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+							<view>
+								<view>
+									<text class="zy-text-bold">{{item.compName}}</text>
+								</view>
+								<view class="zy-text-mini zy-text-info">
+									法人：
+									<text v-if="item.legalPerson !== null && item.legalPerson !== undefined" class="zy-text-mini zy-text-info">
+										{{item.legalPerson}}
+									</text>
+									<text v-else class="zy-text-mini zy-text-info">
+										暂无
+									</text>
+								</view>
+							</view>
+							<view class="zy-disable-flex-right">
+								<view>
+									<uni-tag :text="item.compType" type="primary" size="small" :inverted="true" :circle="true" style="margin-right: 20upx;"></uni-tag>
+									<uni-tag v-if="item.jurisdictionType === 0" text="省内" type="primary" size="small" :inverted="true" :circle="true"></uni-tag>
+									<uni-tag v-else text="省外" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
+								</view>
+								<view v-html="space"></view>
+							</view>
+						</view>
+						<!-- 内容部分 -->
+						<view>
+							<view class="zy-page-item-row zy-disable-flex">
+								<view class="zy-text-info">
+									<text class="zy-text-info zy-text-bold">
+										行业分类：
+									</text>
+									<text v-if="item.industryType != null && item.industryType != '' && item.industryType != undefined" class="zy-text-info">
+										{{item.industryType}}
+									</text>
+									<text v-else class="zy-text-info">
+										暂无
+									</text>
+								</view>
+								<view class="zy-text-info">
+									<text class="zy-text-info zy-text-bold">
+										单位电话：
+									</text>
+									<text v-if="item.compPhone != null && item.compPhone != '' && item.compPhone != undefined" class="zy-text-info">
+										{{item.compPhone}}
+									</text>
+									<text v-else class="zy-text-info">
+										暂无
+									</text>
+								</view>
+							</view>
+							<view>
+								<view class="zy-text-info zy-text-bold">联系地址:</view>
+								<view v-if="item.compAddr != null && item.compAddr != '' && item.compAddr != undefined" class="zy-text-info">
+									{{item.compAddr}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<zywork-no-data v-else text="暂无企业信息"></zywork-no-data>
+		</view>
+
+		<!-- 业绩信息 -->
+		<view v-if="infoType.tabIndex === 1">
+			<!-- <view class="zy-uni-segmented-control">
+				<uni-segmented-control :current="achievementOpts.current" :values="achievementOpts.items" v-on:clickItem="onClickAchievementItem"
+					styleType="button" activeColor="#108EE9"></uni-segmented-control>
+			</view> -->
+			<view class="zy-disable-flex zy-achievement-type">
+				<view class="zy-type-title zy-text-bold">选择业绩类别</view>
+				<view class="zy-disable-flex-right">
+					<view class="uni-list-cell-db">
+						<picker @change="onClickAchievementItem" :value="achievementOpts.current" :range="achievementOpts.items">
+							<view class="zy-disable-flex">
+								<text>{{achievementOpts.items[achievementOpts.current]}}</text>
+								<zywork-icon type="iconxiangxia" />
+							</view>
+						</picker>
+					</view>
+				</view>
+			</view>
+			<view class="zy-page-list zy-page-card" v-if="achievementList.length > 0">
+				<view class="zy-page-list-item" v-for="(item, index) in achievementList" :key="index">
+					<view @click="toAchievementDetail(item)">
+						<!-- 头部 -->
+						<view class="zy-disable-flex">
+							<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+							<view>
+								<view>
+									<text class="zy-text-bold">{{item.projectName}}</text>
+								</view>
+								<view class="zy-text-mini zy-text-info">
+									<text class="zy-text-mini zy-text-info">
+										{{item.createTime}}
+									</text>
+								</view>
+							</view>
+						</view>
+						<!-- 内容部分 -->
+						<view v-if="achievementOpts.current == 0">
+							<!-- 房建业绩 -->
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">注册建造师:</view>
+								<view v-if="item.builderName != null && item.builderName != '' && item.builderName != undefined" class="zy-text-info">
+									{{item.builderName}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
+								<view v-if="item.markMoney != null && item.markMoney != '' && item.markMoney != undefined" class="zy-text-info">
+									{{item.markMoney / 100}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">建设单位:</view>
+								<view v-if="item.buildComp != null && item.buildComp != '' && item.buildComp != undefined" class="zy-text-info">
+									{{item.buildComp}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+						<view v-else-if="achievementOpts.current == 4">
+							<!-- 水利监理业绩 -->
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">项目类型:</view>
+								<view v-if="item.projectType != null && item.projectType != '' && item.projectType != undefined" class="zy-text-info">
+									{{item.projectType}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
+								<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined" class="zy-text-info">
+									{{item.contractAmount / 100}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">开工时间:</view>
+								<view v-if="item.startDate != null && item.startDate != '' && item.startDate != undefined" class="zy-text-info">
+									{{item.startDate}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+						<view v-else-if="achievementOpts.current == 5">
+							<!-- 水利勘查设计业绩 -->
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">项目类型:</view>
+								<view v-if="item.tenderingComp != null && item.tenderingComp != '' && item.tenderingComp != undefined" class="zy-text-info">
+									{{item.tenderingComp}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
+								<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined" class="zy-text-info">
+									{{item.contractAmount / 100}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
+								<view v-if="item.name != null && item.name != '' && item.name != undefined" class="zy-text-info">
+									{{item.name}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+						<view v-else>
+							<!-- 水利业绩和交通业绩和重点工程 -->
+							<view v-if="achievementOpts.current == 3" class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
+								<view v-if="item.markMoney != null && item.markMoney != '' && item.markMoney != undefined" class="zy-text-info">
+									{{item.markMoney / 100}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view v-else class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
+								<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined" class="zy-text-info">
+									{{item.contractAmount / 100}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">开工时间:</view>
+								<view v-if="item.startDate != null && item.startDate != '' && item.startDate != undefined" class="zy-text-info">
+									{{item.startDate}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">竣工时间:</view>
+								<view v-if="item.endDate != null && item.endDate != '' && item.endDate != undefined" class="zy-text-info">
+									{{item.endDate}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<zywork-no-data v-else text="暂无企业业绩信息"></zywork-no-data>
+		</view>
+
+		<!-- 建造师信息 -->
+		<view v-if="infoType.tabIndex === 2">
+			<view class="zy-page-list zy-page-card" v-if="builderList.length > 0">
+				<view class="zy-page-list-item" v-for="(item, index) in builderList" :key="index">
+					<view>
+						<!-- 头部 -->
+						<view class="zy-disable-flex">
+							<zywork-icon type="iconjiaozaoshi" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+							<view>
+								<view class="zy-disable-flex">
+									<text class="zy-text-bold" style="margin-right: 20upx;">{{item.name}}</text>
+									<zywork-icon v-if="item.gender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+									<zywork-icon v-else-if="item.gender === 1" type="iconnan" color="#108EE9" size="20" />
+									<zywork-icon v-else-if="item.gender === 2" type="iconnv" color="#dd524d" size="20" />
+								</view>
+								<view class="zy-text-mini zy-text-info">
+									<text class="zy-text-mini zy-text-info">
+										{{item.createTime}}
+									</text>
+								</view>
+							</view>
+						</view>
+						<!-- 内容部分 -->
+						<view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
+								<view v-if="item.regNum != null && item.regNum != '' && item.regNum != undefined" class="zy-text-info">
+									{{item.regNum}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
+								<view v-if="item.majorLevel != null && item.majorLevel != '' && item.majorLevel != undefined" class="zy-text-info">
+									{{item.majorLevel}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<zywork-no-data v-else text="暂无企业建造师信息"></zywork-no-data>
+		</view>
+
+		<!-- 资质信息 -->
+		<view v-if="infoType.tabIndex === 3">
+			<view class="zy-page-list zy-page-card" v-if="aptitudeList.length > 0">
+				<view class="zy-page-list-item" v-for="(item, index) in aptitudeList" :key="index">
+					<view>
+						<!-- 头部 -->
+						<view class="zy-disable-flex">
+							<zywork-icon type="iconrongyu" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+							<view>
+								<text class="zy-text-bold">企业资质</text>
+								<view class="zy-text-mini zy-text-info">
+									<text class="zy-text-mini zy-text-info">
+										{{item.createTime}}
+									</text>
+								</view>
+							</view>
+						</view>
+						<!-- 内容部分 -->
+						<view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">证件号码:</view>
+								<view v-if="item.certificateNum != null && item.certificateNum != '' && item.certificateNum != undefined" class="zy-text-info">
+									{{item.certificateNum}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">资质详情:</view>
+								<view v-if="item.certificateDetail != null && item.certificateDetail != '' && item.certificateDetail != undefined" class="zy-text-info">
+									{{item.certificateDetail}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<zywork-no-data v-else text="暂无企业资质信息"></zywork-no-data>
+		</view>
+
+		<!-- 中标记录 -->
+		<view v-if="infoType.tabIndex === 4">
+			<view class="zy-page-list zy-page-card" v-if="projectAnnounceList.length > 0">
+				<view class="zy-page-list-item" v-for="(item, index) in projectAnnounceList" :key="index">
+					<view>
+						<!-- 头部 -->
+						<view class="zy-disable-flex">
+							<zywork-icon type="iconzhongbiao" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+							<view>
+								<text class="zy-text-bold">中标记录</text>
+								<view class="zy-text-mini zy-text-info">
+									<text class="zy-text-mini zy-text-info">
+										{{item.createTime}}
+									</text>
+								</view>
+							</view>
+						</view>
+						<!-- 内容部分 -->
+						<view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">第一中标人:</view>
+								<view v-if="item.firstCandidate != null && item.firstCandidate != '' && item.firstCandidate != undefined" class="zy-text-info">
+									{{item.firstCandidate}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">第二中标人:</view>
+								<view v-if="item.secondCandidate != null && item.secondCandidate != '' && item.secondCandidate != undefined" class="zy-text-info">
+									{{item.secondCandidate}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+							<view class="zy-disable-flex">
+								<view class="zy-text-info zy-text-bold zy-content-label">第三中标人:</view>
+								<view v-if="item.thirdCandidate != null && item.thirdCandidate != '' && item.thirdCandidate != undefined" class="zy-text-info">
+									{{item.thirdCandidate}}
+								</view>
+								<view v-else class="zy-text-info">
+									暂无
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<zywork-no-data v-else text="暂无中标记录"></zywork-no-data>
+		</view>
 	</view>
 </template>
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import {
+		showInfoToast
+	} from '@/common/util.js'
+	import * as ResponseStatus from '@/common/response-status.js'
+	import * as creditQuery from '@/common/credit-query.js'
+	import {
+		achievementTypeArray
+	} from '@/common/picker.data.js'
+
+	/** 企业信息 */
+	const INFO_COMPANY = 0
+	/** 业绩信息 */
+	const INFO_ACHIEVEMENT = 1
+	/** 企业建造师信息 */
+	const INFO_BUILDER = 2
+	/** 企业资质信息 */
+	const INFO_APTITUDE = 3
+	/** 中标记录 */
+	const INFO_MARK = 4
+
 	export default {
 		components: {
-			zyworkIcon
+			zyworkIcon,
+			zyworkNoData,
+			uniTag
 		},
 		data() {
 			return {
-
+				space: '&#12288;',
+				infoType: {
+					scrollLeft: 0,
+					tabIndex: 0,
+					tabbars: [{
+							id: 'company',
+							name: '查企业'
+						},
+						{
+							id: 'achievement',
+							name: '查业绩'
+						},
+						{
+							id: 'builder',
+							name: '查建造师'
+						},
+						{
+							id: 'aptitude',
+							name: '查资质'
+						},
+						{
+							id: 'mark',
+							name: '中标记录'
+						}
+					]
+				},
+				urls: {
+					companyUrl: '/company/any/pager-cond',
+					houseAchievementUrl: '/comp-house-achievement/any/pager-cond',
+					waterAchievementUrl: '/comp-water-achievement/any/pager-cond',
+					trafficAchievementUrl: '/comp-traffic-achievement/any/pager-cond',
+					keyProjectAchievementUrl: '/comp-key-projecachievement/any/pager-cond',
+					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/any/pager-cond',
+					waterDeviseAchievementUrl: '/comp-water-devise-achievement/any/pager-cond',
+					builderUrl: '/comp-builder/any/pager-cond',
+					aptitudeUrl: '/comp-aptitude/any/pager-cond',
+					projectAnnounceUrl: '/projecannounce/any/pager-cond',
+				},
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0
+				},
+				companyList: [],
+				achievementList: [],
+				builderList: [],
+				aptitudeList: [],
+				projectAnnounceList: [],
+				achievementOpts: {
+					current: 0,
+					items: achievementTypeArray
+				},
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.initData();
+		},
 		methods: {
+			/** 初始化数据 */
+			initData() {
+				this.refreshCompanyList();
+			},
+			/** 前往查询页面 */
 			toSearchPage() {
 				uni.navigateTo({
 					url: '/pages-credit-query/search-page/search-page'
 				})
-			}
+			},
+			/** 查看企业详情 */
+			toCompanyDetail(item) {
+				uni.navigateTo({
+					url: '/pages-credit-query/company-detail/company-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+				})
+			},
+			/** 查看企业业绩详情 */
+			toAchievementDetail(item) {
+				item.achievementType = this.achievementOpts.current;
+				uni.navigateTo({
+					url: '/pages-credit-query/company-achievement-detail/company-achievement-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+				})
+			},
+			getElSize(id) {
+				return new Promise((res, rej) => {
+					uni.createSelectorQuery().select("#" + id).fields({
+						size: true,
+						scrollOffset: true
+					}, (data) => {
+						res(data);
+					}).exec();
+				})
+			},
+			async tapTab(e) {
+				let tabIndex = e.target.dataset.current
+				if (this.infoType.tabIndex === tabIndex) {
+					return false
+				} else {
+					let tabBar = await this.getElSize("tab-bar"),
+						tabBarScrollLeft = tabBar.scrollLeft
+					this.infoType.scrollLeft = tabBarScrollLeft
+					this.infoType.tabIndex = tabIndex
+					if (INFO_COMPANY === tabIndex) {
+						// 企业信息
+						this.refreshCompanyList()
+					} else if (INFO_ACHIEVEMENT === tabIndex) {
+						// 业绩信息
+						this.refreshAchievementList(this.achievementOpts.current);
+					} else if (INFO_BUILDER === tabIndex) {
+						// 建造师信息
+						this.refreshBuilderList();
+					} else if (INFO_APTITUDE === tabIndex) {
+						// 资质信息
+						this.refreshAptitudeList();
+					} else if (INFO_MARK === tabIndex) {
+						// 中标记录
+						this.refreshProjectAnnounceList();
+					}
+				}
+			},
+			/** 刷新企业信息列表 */
+			refreshCompanyList() {
+				uni.showLoading({
+					title: '加载中'
+				})
+				creditQuery.getListInfoToPost(this, this.urls.companyUrl, this.pager)
+					.then(data => {
+						uni.hideLoading()
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.companyList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新业绩信息列表 */
+			refreshAchievementList(index) {
+				var url = '';
+				if (index == 0) {
+					// 房屋业绩
+					url = this.urls.houseAchievementUrl;
+				} else if (index == 1) {
+					// 水利业绩
+					url = this.urls.waterAchievementUrl;
+				} else if (index == 2) {
+					// 交通业绩
+					url = this.urls.trafficAchievementUrl;
+				} else if (index == 3) {
+					// 重点工程业绩
+					url = this.urls.keyProjectAchievementUrl;
+				} else if (index == 4) {
+					// 水利监理业绩
+					url = this.urls.waterMonitorAchievementUrl;
+				} else if (index == 5) {
+					// 水利勘查设计业绩
+					url = this.urls.waterDeviseAchievementUrl;
+				} else {
+					showInfoToast('查询错误')
+					return;
+				}
+				uni.showLoading({
+					title: '加载中'
+				})
+				creditQuery.getListInfoToPost(this, url, this.pager)
+					.then(data => {
+						uni.hideLoading()
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.achievementList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新企业建造师信息列表 */
+			refreshBuilderList() {
+				uni.showLoading({
+					title: '加载中'
+				})
+				creditQuery.getListInfoToPost(this, this.urls.builderUrl, this.pager)
+					.then(data => {
+						uni.hideLoading()
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.builderList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新企业资质信息列表 */
+			refreshAptitudeList() {
+				uni.showLoading({
+					title: '加载中'
+				})
+				creditQuery.getListInfoToPost(this, this.urls.aptitudeUrl, this.pager)
+					.then(data => {
+						uni.hideLoading()
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.aptitudeList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 刷新中标记录列表 */
+			refreshProjectAnnounceList() {
+				uni.showLoading({
+					title: '加载中'
+				})
+				creditQuery.getListInfoToPost(this, this.urls.projectAnnounceUrl, this.pager)
+					.then(data => {
+						uni.hideLoading()
+						var [error, res] = data;
+						if (res.data.code === ResponseStatus.OK) {
+							this.projectAnnounceList = res.data.data.rows;
+						} else {
+							showInfoToast(res.data.message)
+						}
+					})
+			},
+			/** 业绩类型选择器 */
+			onClickAchievementItem: function(e) {
+				let index = e.target.value
+				if (this.achievementOpts.current !== index) {
+					this.achievementOpts.current = index
+					this.refreshAchievementList(index);
+				}
+			},
 		}
 	}
 </script>
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+
+	.zy-page-card {
+		margin-top: 10upx;
+	}
+
+	.zy-content-label {
+		margin-right: 20upx;
+	}
+
+	.zy-page-item-row view {
+		width: 50%;
+	}
+
+	.zy-achievement-type {
+		background-color: #FFF;
+	}
 </style>

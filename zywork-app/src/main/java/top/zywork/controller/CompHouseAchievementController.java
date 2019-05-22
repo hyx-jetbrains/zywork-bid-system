@@ -134,6 +134,11 @@ public class CompHouseAchievementController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompHouseAchievementQuery compHouseAchievementQuery) {
+        return listAllByCondition(compHouseAchievementQuery);
+    }
+
     @Autowired
     public void setCompHouseAchievementService(CompHouseAchievementService compHouseAchievementService) {
         this.compHouseAchievementService = compHouseAchievementService;

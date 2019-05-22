@@ -134,6 +134,11 @@ public class CompTrafficAchievementController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompTrafficAchievementQuery compTrafficAchievementQuery) {
+        return listAllByCondition(compTrafficAchievementQuery);
+    }
+
     @Autowired
     public void setCompTrafficAchievementService(CompTrafficAchievementService compTrafficAchievementService) {
         this.compTrafficAchievementService = compTrafficAchievementService;

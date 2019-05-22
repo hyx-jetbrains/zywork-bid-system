@@ -134,6 +134,11 @@ public class CompPersonnelController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompPersonnelQuery compPersonnelQuery) {
+        return listAllByCondition(compPersonnelQuery);
+    }
+
     @Autowired
     public void setCompPersonnelService(CompPersonnelService compPersonnelService) {
         this.compPersonnelService = compPersonnelService;

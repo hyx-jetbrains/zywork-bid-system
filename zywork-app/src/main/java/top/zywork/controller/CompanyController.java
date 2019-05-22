@@ -134,6 +134,16 @@ public class CompanyController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompanyQuery companyQuery) {
+        return listAllByCondition(companyQuery);
+    }
+
+    @GetMapping("any/one/{id}")
+    public ResponseStatusVO userGetById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
     @Autowired
     public void setCompanyService(CompanyService companyService) {
         this.companyService = companyService;

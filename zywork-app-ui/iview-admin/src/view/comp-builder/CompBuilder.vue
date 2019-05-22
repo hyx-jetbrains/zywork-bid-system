@@ -358,7 +358,7 @@
 						trigger: 'blur'
 					}],
 					gender: [{
-						type: 'string',
+						type: 'integer',
 						min: 1,
 						max: 10,
 						message: '必须1-10个字符',

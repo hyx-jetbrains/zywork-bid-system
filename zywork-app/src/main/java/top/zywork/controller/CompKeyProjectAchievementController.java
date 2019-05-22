@@ -134,6 +134,11 @@ public class CompKeyProjectAchievementController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompKeyProjectAchievementQuery compKeyProjectAchievementQuery) {
+        return listAllByCondition(compKeyProjectAchievementQuery);
+    }
+
     @Autowired
     public void setCompKeyProjectAchievementService(CompKeyProjectAchievementService compKeyProjectAchievementService) {
         this.compKeyProjectAchievementService = compKeyProjectAchievementService;

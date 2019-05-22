@@ -134,6 +134,11 @@ public class CompBuilderController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompBuilderQuery compBuilderQuery) {
+        return listAllByCondition(compBuilderQuery);
+    }
+
     @Autowired
     public void setCompBuilderService(CompBuilderService compBuilderService) {
         this.compBuilderService = compBuilderService;

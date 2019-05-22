@@ -134,6 +134,11 @@ public class CompAptitudeController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompAptitudeQuery compAptitudeQuery) {
+        return listAllByCondition(compAptitudeQuery);
+    }
+
     @Autowired
     public void setCompAptitudeService(CompAptitudeService compAptitudeService) {
         this.compAptitudeService = compAptitudeService;

@@ -194,6 +194,11 @@ public class ProjectAnnounceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", projectVOList);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody ProjectAnnounceQuery projectAnnounceQuery) {
+        return listAllByCondition(projectAnnounceQuery);
+    }
+
     @Autowired
     public void setProjectAnnounceService(ProjectAnnounceService projectAnnounceService) {
         this.projectAnnounceService = projectAnnounceService;

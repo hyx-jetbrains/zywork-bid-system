@@ -548,11 +548,20 @@
 					}
 				});
 			},
+			/** 初始化查询条件 */
+			initPager() {
+				this.pager = {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0
+				}
+			},
 			/** 刷新建造师需求列表 */
 			refreshBuilderReqList() {
 				uni.showLoading({
 					title: '加载中'
 				})
+				this.initPager();
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.builderReqCompName = this.searchVal;
 				} else {
@@ -574,6 +583,7 @@
 				uni.showLoading({
 					title: '加载中'
 				})
+				this.initPager();
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.builderCertificateMajorType = this.searchVal;
 				} else {
@@ -595,6 +605,7 @@
 				uni.showLoading({
 					title: '加载中'
 				})
+				this.initPager();
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.aptitudeTransferTitle = this.searchVal;
 				} else {
@@ -623,6 +634,7 @@
 				uni.showLoading({
 					title: '加载中'
 				})
+				this.initPager();
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.markCarpoolCarType = this.searchVal;
 				} else {
@@ -665,6 +677,7 @@
 				uni.showLoading({
 					title: '加载中'
 				})
+				this.initPager();
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.recruitJobTitle = this.searchVal;
 				} else {
@@ -686,6 +699,7 @@
 				uni.showLoading({
 					title: '加载中'
 				})
+				this.initPager();
 				if (this.searchVal != null && this.searchVal != '') {
 					this.pager.seekDataStartAddr = this.searchVal;
 				} else {
