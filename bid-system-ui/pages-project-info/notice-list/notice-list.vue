@@ -12,6 +12,8 @@
 			</view>
 		</view>
 		<zywork-no-data v-else text="暂无头条"></zywork-no-data>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -26,6 +28,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				notices: [],
 				pager: {
 					pageNo: 1,
@@ -38,10 +42,19 @@
 		onLoad() {
 			this.initData();
 		},
+		onPullDownRefresh() {
+			this.pager.pageNo = 1
+			getHeadlinesList(this, 'pullDown', this.pager);
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			getHeadlinesList(this, 'reachBottom', this.pager);
+		},
 		methods: {
 			/** 初始化数据 */
 			initData() {
-				getHeadlinesList(this, this.pager);
+				getHeadlinesList(this, 'init', this.pager);
 			},
 			/** 前往公告详情 */
 			toNoticeDetail(item) {

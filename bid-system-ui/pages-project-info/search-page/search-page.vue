@@ -45,7 +45,7 @@
 			<view style="height: 10upx; background-color: #F8F8F8;"></view>
 			<view class="zy-page-list zy-project" v-if="projects.length > 0">
 				<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
-					<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap" />
+					<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.id)" />
 					<view @click="toProjectDetail(project)">
 						<view class="zy-disable-flex">
 							<image class="zy-project-icon" :src="imgIcon" />
@@ -157,6 +157,7 @@
 			</view>
 		</view>
 
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -180,7 +181,9 @@
 		jxCityArray
 	} from '@/common/picker.data.js'
 	import {
-		getProjectList
+		getProjectList,
+		getProjectCollectionInfo,
+		saveProjectCollection
 	} from '@/common/project-info.js'
 
 	const PROJECT_STATUS_ALL = 0
@@ -211,8 +214,8 @@
 	const SEE_FILE_TYPE_QINGDAN = 2
 	/** 资质文件标识-3 */
 	const SEE_FILE_TYPE_ZIZHI = 3
-	/** 取消收藏-4 */
-	const COLLECTION_PROJECT = 4
+	/** 收藏或取消收藏-4 */
+	const SEE_FILE_TYPE_SC_QXSC = 4
 	export default {
 		components: {
 			zyworkIcon,
@@ -223,6 +226,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				space: '&#12288;',
 				oldKeywordList: [],
 				isShowHistroy: true,
@@ -286,21 +291,38 @@
 					city: ''
 				},
 				imgBaseUrl: IMAGE_BASE_URL,
-				headicon: DEFAULT_HEADICON
+				headicon: DEFAULT_HEADICON,
+				isCollection: false,
+				actionSheetArray: ['澄清文件', '招标文件', '清单文件', '资质文件']
 			}
 		},
 		onLoad() {
-			this.initData();
+			this.projectPager.pageNo = 1
+			this.initData()
+		},
+		onPullDownRefresh() {
+			this.projectPager.pageNo = 1
+			this.updateProjectList('pullDown');
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.projectPager.pageNo += 1
+			this.updateProjectList('reachBottom');
 		},
 		methods: {
 			/** 更新项目列表 */
-			updateProjectList() {
-				getProjectList(this, this.projectPager);
+			updateProjectList(type) {
+				getProjectList(this, type, this.projectPager);
 			},
 			/** 初始化数据 */
 			initData() {
 				// 加载历史搜索数据
 				this.loadOldKeyword();
+			},
+			/** 初始化查询数据 */
+			initPager() {
+				this.projectPager.pageNo = 1;
+				this.showLoadMore = false;
 			},
 			/** 返回上个页面 */
 			toBackPage() {
@@ -315,14 +337,10 @@
 			},
 			/** 搜索数据 */
 			searchData() {
-				// console.log(this.projectPager.title)
-				// uni.showToast({
-				// 	title: this.projectPager.title
-				// })
 				this.isShowHistroy = false;
 				this.saveKeyword(this.projectPager.title)
-				
-				this.updateProjectList()
+				this.initPager();
+				this.updateProjectList('init')
 			},
 			/** 保存关键字到历史记录 */
 			saveKeyword(keyword) {
@@ -389,7 +407,8 @@
 					this.projectPager.city = this.cityArray[index]
 				}
 				this.isShowHistroy = false;
-				this.updateProjectList();
+				this.initPager();
+				this.updateProjectList('init');
 			},
 			getElSize(id) {
 				return new Promise((res, rej) => {
@@ -413,7 +432,8 @@
 					this.projectType.tabIndex = tabIndex
 					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
 					this.projectPager.projectType = this.projectType.tabbars[tabIndex].name
-					this.updateProjectList();
+					this.initPager();
+					this.updateProjectList('init');
 				}
 			},
 			/** 项目状态切换 */
@@ -425,7 +445,8 @@
 					} else {
 						this.projectPager.markStatus = this.projectStatus.items[index]
 					}
-					this.updateProjectList();
+					this.initPager();
+					this.updateProjectList('init');
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {
@@ -460,21 +481,11 @@
 				})
 			},
 			// 触发操作选项
-			actionSheetTap() {
-				uni.showActionSheet({
-					title: '标题',
-					itemList: ['澄清文件', '招标文件', '清单文件', '资质文件', '收藏项目'],
-					success: (e) => {
-						this.seeFile(e.tapIndex)
-						// uni.showToast({
-						// 	title:"点击了第" + e.tapIndex + "个选项",
-						// 	icon:"none"
-						// })
-					}
-				})
+			actionSheetTap(projectId) {
+				getProjectCollectionInfo(this, projectId);
 			},
 			// 查看文件
-			seeFile(type) {
+			seeFile(type, projectId) {
 				console.log(type)
 				if (SEE_FILE_TYPE_CHENGQING === type) {
 					console.log("查看澄清文件")
@@ -484,9 +495,36 @@
 					console.log("查看清单文件");
 				} else if (SEE_FILE_TYPE_ZIZHI === type) {
 					console.log("查看资质文件");
-				} else if (COLLECTION_PROJECT === type) {
-					console.log("收藏项目");
+				} else if (SEE_FILE_TYPE_SC_QXSC === type) {
+					const tempType = this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC];
+					if (tempType == '取消收藏') {
+						cancelProjectCollection(this, projectId);
+					} else if (tempType == '收藏项目') {
+						saveProjectCollection(this, projectId);
+					}
 				}
+			},
+			/** 获取到是否收藏后的操作 */
+			collectionOperation(projectId) {
+				if (this.isCollection) {
+					this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC] = "取消收藏";
+				} else {
+					this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC] = "收藏项目";
+				}
+				if (0 !== projectId) {
+					uni.showActionSheet({
+						title: '标题',
+						itemList: this.actionSheetArray,
+						success: (e) => {
+							this.seeFile(e.tapIndex, projectId);
+							// uni.showToast({
+							// 	title:"点击了第" + e.tapIndex + "个选项",
+							// 	icon:"none"
+							// })
+						}
+					})
+				}
+				
 			}
 		}
 	}

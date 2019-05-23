@@ -886,8 +886,12 @@ export const resume = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.formInfo = res.data.data
-				self.setValue()
+				if (res.data.data.id == null) {
+					self.initPicker();
+				} else {
+					self.formInfo = res.data.data
+					self.setValue()
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -916,7 +920,11 @@ export const saveResume = (self, params) => {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
-			showInfoToast(res.data.message)
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast("保存成功")
+			} else {
+				showInfoToast(res.data.message)
+			}
 		},
 		fail: () => {
 			networkError()

@@ -65,7 +65,7 @@ export const getFirstHeadlinesInfo = (self, params) => {
 /**
  * 获取头条列表
  */
-export const getHeadlinesList = (self, params) => {
+export const getHeadlinesList = (self, type, params) => {
 	uni.showLoading({
 		title: '加载中'
 	})
@@ -76,7 +76,21 @@ export const getHeadlinesList = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.notices = res.data.data.rows;
+				if (type === 'init') {
+					self.notices = res.data.data.rows;
+				} else if (type === 'pullDown') {
+					self.notices = res.data.data.rows;
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.notices = self.notices.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -93,7 +107,7 @@ export const getHeadlinesList = (self, params) => {
 /**
  * 获取项目列表
  */
-export const getProjectList = (self, params) => {
+export const getProjectList = (self, type, params) => {
 	uni.showLoading({
 		title: '加载中'
 	})
@@ -104,7 +118,21 @@ export const getProjectList = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.projects = res.data.data.rows;
+				if (type === 'init') {
+					self.projects = res.data.data.rows;
+				} else if (type === 'pullDown') {
+					self.projects = res.data.data.rows;
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.projects = self.projects.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}

@@ -159,6 +159,8 @@
 				</view>
 			</view>
 		</view>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -225,6 +227,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				space: '&#12288;',
 				indicatorDots: true,
 				autoplay: true,
@@ -304,19 +308,33 @@
 			}
 		},
 		onLoad() {
+			this.projectPager.pageNo = 1
 			this.initData()
 		},
-		onPullDownRefresh() {},
+		onPullDownRefresh() {
+			this.projectPager.pageNo = 1
+			this.updateProjectList('pullDown');
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.projectPager.pageNo += 1
+			this.updateProjectList('reachBottom');
+		},
 		methods: {
 			/** 初始化数据 */
 			initData() {
 				projectInfo.getAdvertisementInfo(this);
 				projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
-				this.updateProjectList();
+				this.updateProjectList('init');
+			},
+			/** 初始化查询数据 */
+			initPager() {
+				this.projectPager.pageNo = 1;
+				this.showLoadMore = false;
 			},
 			/** 更新项目列表 */
-			updateProjectList() {
-				projectInfo.getProjectList(this, this.projectPager);
+			updateProjectList(type) {
+				projectInfo.getProjectList(this, type, this.projectPager);
 			},
 			/** 选择城市 */
 			chooseCity(e) {
@@ -327,7 +345,8 @@
 				} else {
 					this.projectPager.city = this.cityArray[index]
 				}
-				this.updateProjectList();
+				this.initPager();
+				this.updateProjectList('init');
 			},
 			/** 查看广告详情 */
 			showSwiperDetail(item) {
@@ -356,7 +375,8 @@
 					this.projectType.tabIndex = tabIndex
 					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
 					this.projectPager.projectType = this.projectType.tabbars[tabIndex].name
-					this.updateProjectList();
+					this.initPager();
+					this.updateProjectList('init');
 				}
 			},
 			onClickItem(index) {
@@ -367,7 +387,8 @@
 					} else {
 						this.projectPager.markStatus = this.projectStatus.items[index]
 					}
-					this.updateProjectList();
+					this.initPager();
+					this.updateProjectList('init');
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {

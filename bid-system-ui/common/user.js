@@ -248,9 +248,6 @@ export const geUserWalletByUserId = (self) => {
  * 查询专家申请记录
  */
 export const getUserExpertByUserId = (self) => {
-	uni.showLoading({
-		title: '加载中'
-	})
 	uni.request({
 		url: BASE_URL + '/user-expert/user/getByUserId',
 		method: 'POST',
@@ -274,7 +271,7 @@ export const getUserExpertByUserId = (self) => {
 			networkError()
 		},
 		complete: () => {
-			uni.hideLoading()
+			
 		}
 	})
 }

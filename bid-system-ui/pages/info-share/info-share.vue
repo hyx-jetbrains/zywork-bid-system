@@ -348,6 +348,8 @@
 				</view>
 			</view>
 		</view>
+
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -384,6 +386,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				urls: {
 					builderUrl: '/UserBuilder/any/list-page',
 					builderReqUrl: '/UserBuilderReq/any/list-page',
@@ -449,13 +453,27 @@
 		onLoad() {
 			this.initData();
 		},
+		onPullDownRefresh() {
+			this.pager.pageNo = 1
+			this.checkRefresh(this.infoType.tabIndex, 'pullDown');
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			this.checkRefresh(this.infoType.tabIndex, 'reachBottom');
+		},
 		methods: {
 			/** 初始化数据 */
 			initData() {
-				this.refreshBuilderReqList();
+				this.checkRefresh(this.infoType.tabIndex, 'init');
+			},
+			/** 初始化查询数据 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
 			},
 			/** 刷新建造师需求列表 */
-			refreshBuilderReqList() {
+			refreshBuilderReqList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -464,15 +482,15 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.builderReqList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
-					
+
 			},
 			/** 刷新建造师列表 */
-			refreshBuilderList() {
+			refreshBuilderList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -481,14 +499,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.builderList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新资质转让列表 */
-			refreshAptitudeList() {
+			refreshAptitudeList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -498,20 +516,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							if (this.aptitudeOpts.current === 0) {
-								// 求购
-								this.aptitudeBuyList = res.data.data.rows;
-							} else {
-								// 转让
-								this.aptitudeSellList = res.data.data.rows;
-							}
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新开标拼车列表 */
-			refreshCarpoolList() {
+			refreshCarpoolList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -520,14 +532,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.carpoolList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新开标找车列表 */
-			refreshSeekcarList() {
+			refreshSeekcarList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -536,14 +548,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.seekcarList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新其他招聘列表 */
-			refreshRecruitList() {
+			refreshRecruitList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -552,14 +564,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.recruitList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新求带资料列表 */
-			refreshSeekDataList() {
+			refreshSeekDataList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -568,11 +580,102 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.seekDataList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
+			},
+			/** 
+			 * 请求成功之后的操作 
+			 * @param tabIndex 当前选择的类型
+			 * @param type 刷新的类型：init、pullDown、reachBottom
+			 * @param rows 请求到的数据
+			 */
+			requestSuccess(tabIndex, type, rows) {
+				if (type === 'init') {
+					this.setListValue(tabIndex, rows, 'use');
+				} else if (type === 'pullDown') {
+					this.setListValue(tabIndex, rows, 'use');
+					uni.stopPullDownRefresh()
+					this.showLoadMore = false
+					this.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (rows.length > 0) {
+						this.setListValue(tabIndex, rows, 'add');
+						this.loadMoreText = '加载更多'
+					} else {
+						this.loadMoreText = '已加载全部'
+					}
+				}
+			},
+			/**
+			 * 设置list的值
+			 * @param {Object} tabIndex 当前选择的类型
+			 * @param {Object} rows 刷新的类型：init、pullDown、reachBottom
+			 * @param {Object} type 是赋值还是追加数据：use、add
+			 */
+			setListValue(tabIndex, rows, type) {
+				if (INFO_BUILDER === tabIndex) {
+					// 建造师
+					if (this.builderOpts.current === 0) {
+						if (type === 'add') {
+							this.builderReqList = this.builderReqList.concat(rows);
+						} else {
+							this.builderReqList = rows;
+						}
+					} else {
+						if (type === 'add') {
+							this.builderList = this.builderList.concat(rows);
+						} else {
+							this.builderList = rows;
+						}
+					}
+				} else if (INFO_APTITUDE === tabIndex) {
+					// 资质转让
+					if (this.aptitudeOpts.current === 0) {
+						if (type === 'add') {
+							this.aptitudeBuyList = this.aptitudeBuyList.concat(rows);
+						} else {
+							this.aptitudeBuyList = rows;
+						}
+					} else {
+						if (type === 'add') {
+							this.aptitudeSellList = this.aptitudeSellList.concat(rows);
+						} else {
+							this.aptitudeSellList = rows;
+						}
+					}
+				} else if (INFO_CARPOOL === tabIndex) {
+					// 开标拼车
+					if (this.carPoolOpts.current === 0) {
+						if (type === 'add') {
+							this.carpoolList = this.carpoolList.concat(rows);
+						} else {
+							this.carpoolList = rows;
+						}
+					} else {
+						if (type === 'add') {
+							this.seekcarList = this.seekcarList.concat(rows);
+						} else {
+							this.seekcarList = rows;
+						}
+					}
+				} else if (INFO_HIRE === tabIndex) {
+					// 其他岗位招聘
+					if (type === 'add') {
+						this.recruitList = this.recruitList.concat(rows);
+					} else {
+						this.recruitList = rows;
+					}
+				} else if (INFO_MATERIAL === tabIndex) {
+					// 求带资料
+					if (type === 'add') {
+						this.seekDataList = this.seekDataList.concat(rows);
+					} else {
+						this.seekDataList = rows;
+					}
+				}
 			},
 			getElSize(id) {
 				return new Promise((res, rej) => {
@@ -589,34 +692,39 @@
 				if (this.infoType.tabIndex === tabIndex) {
 					return false
 				} else {
+					this.initPager();
 					let tabBar = await this.getElSize("tab-bar"),
 						tabBarScrollLeft = tabBar.scrollLeft
 					this.infoType.scrollLeft = tabBarScrollLeft
 					this.infoType.tabIndex = tabIndex
-					if (INFO_BUILDER === tabIndex) {
-						// 建造师
-						if (this.builderOpts.current === 0) {
-							this.refreshBuilderReqList();
-						} else {
-							this.refreshBuilderList();
-						}
-					} else if (INFO_APTITUDE === tabIndex) {
-						// 资质转让
-						this.refreshAptitudeList();
-					} else if (INFO_CARPOOL === tabIndex) {
-						// 开标拼车
-						if (this.carPoolOpts.current === 0) {
-							this.refreshCarpoolList();
-						} else {
-							this.refreshSeekcarList();
-						}
-					} else if (INFO_HIRE === tabIndex) {
-						// 其他岗位招聘
-						this.refreshRecruitList();
-					} else if (INFO_MATERIAL === tabIndex) {
-						// 求带资料
-						this.refreshSeekDataList();
+					this.checkRefresh(tabIndex, 'init')
+				}
+			},
+			/** 检查刷新 */
+			checkRefresh(tabIndex, type) {
+				if (INFO_BUILDER === tabIndex) {
+					// 建造师
+					if (this.builderOpts.current === 0) {
+						this.refreshBuilderReqList(type);
+					} else {
+						this.refreshBuilderList(type);
 					}
+				} else if (INFO_APTITUDE === tabIndex) {
+					// 资质转让
+					this.refreshAptitudeList(type);
+				} else if (INFO_CARPOOL === tabIndex) {
+					// 开标拼车
+					if (this.carPoolOpts.current === 0) {
+						this.refreshCarpoolList(type);
+					} else {
+						this.refreshSeekcarList(type);
+					}
+				} else if (INFO_HIRE === tabIndex) {
+					// 其他岗位招聘
+					this.refreshRecruitList(type);
+				} else if (INFO_MATERIAL === tabIndex) {
+					// 求带资料
+					this.refreshSeekDataList(type);
 				}
 			},
 			toSearchPage() {
@@ -685,30 +793,25 @@
 			/** 建造师分段器选择器 */
 			onClickBuilderItem(index) {
 				if (this.builderOpts.current !== index) {
+					this.initPager()
 					this.builderOpts.current = index
-					if (index === 0) {
-						this.refreshBuilderReqList();
-					} else {
-						this.refreshBuilderList();
-					}
+					this.checkRefresh(this.infoType.tabIndex, 'init')
 				}
 			},
 			/** 资质转让分段器选择器 */
 			onClickAptitudeItem(index) {
+				this.initPager()
 				if (this.aptitudeOpts.current !== index) {
 					this.aptitudeOpts.current = index
-					this.refreshAptitudeList();
+					this.checkRefresh(this.infoType.tabIndex, 'init')
 				}
 			},
 			/** 开标拼车分段器选择器 */
 			onClickCarPoolItem(index) {
+				this.initPager()
 				if (this.carPoolOpts.current !== index) {
 					this.carPoolOpts.current = index
-					if (index === 0) {
-						this.refreshCarpoolList();
-					} else {
-						this.refreshSeekcarList();
-					}
+					this.checkRefresh(this.infoType.tabIndex, 'init')
 				}
 			},
 		}
