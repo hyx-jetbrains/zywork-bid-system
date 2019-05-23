@@ -60,14 +60,14 @@
         <FormItem label="抵扣券编号" prop="couponId">
           <InputNumber v-model="form.couponId" placeholder="请输入抵扣券编号" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="原价" prop="oldPrice">
-          <InputNumber v-model="form.oldPrice" placeholder="请输入原价" style="width: 100%;"/>
+        <FormItem label="原价" prop="oldPriceDisplay">
+          <InputNumber v-model="form.oldPriceDisplay" placeholder="请输入原价" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="优惠价" prop="couponPrice">
-          <InputNumber v-model="form.couponPrice" placeholder="请输入优惠价" style="width: 100%;"/>
+        <FormItem label="优惠价" prop="couponPriceDisplay">
+          <InputNumber v-model="form.couponPriceDisplay" placeholder="请输入优惠价" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="价格" prop="price">
-          <InputNumber v-model="form.price" placeholder="请输入价格" style="width: 100%;"/>
+        <FormItem label="价格" prop="priceDisplay">
+          <InputNumber v-model="form.priceDisplay" placeholder="请输入价格" style="width: 100%;"/>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -87,14 +87,14 @@
         <FormItem label="抵扣券编号" prop="couponId">
           <InputNumber v-model="form.couponId" placeholder="请输入抵扣券编号" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="原价" prop="oldPrice">
-          <InputNumber v-model="form.oldPrice" placeholder="请输入原价" style="width: 100%;"/>
+        <FormItem label="原价" prop="oldPriceDisplay">
+          <InputNumber v-model="form.oldPriceDisplay" placeholder="请输入原价" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="优惠价" prop="couponPrice">
-          <InputNumber v-model="form.couponPrice" placeholder="请输入优惠价" style="width: 100%;"/>
+        <FormItem label="优惠价" prop="couponPriceDisplay">
+          <InputNumber v-model="form.couponPriceDisplay" placeholder="请输入优惠价" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="价格" prop="price">
-          <InputNumber v-model="form.price" placeholder="请输入价格" style="width: 100%;"/>
+        <FormItem label="价格" prop="priceDisplay">
+          <InputNumber v-model="form.priceDisplay" placeholder="请输入价格" style="width: 100%;"/>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -363,15 +363,15 @@
       </p>
       <p>
         原价:
-        <span v-text="form.oldPrice"></span>
+        <span v-text="form.oldPrice/100"></span>
       </p>
       <p>
         优惠价:
-        <span v-text="form.couponPrice"></span>
+        <span v-text="form.couponPrice/100"></span>
       </p>
       <p>
         价格:
-        <span v-text="form.price"></span>
+        <span v-text="form.price/100"></span>
       </p>
       <p>
         版本号:
@@ -506,6 +506,9 @@ export default {
         oldPrice: null,
         couponPrice: null,
         price: null,
+				oldPriceDisplay: null,
+				couponPriceDisplay: null,
+				priceDisplay: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -697,25 +700,31 @@ export default {
             title: '原价',
             key: 'oldPrice',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.oldPrice/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '优惠价',
             key: 'couponPrice',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.couponPrice/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '价格',
             key: 'price',
             minWidth: 120,
-            sortable: true
-          },
-          {
-            title: '版本号',
-            key: 'version',
-            minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.price/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '创建时间',
@@ -729,6 +738,12 @@ export default {
             minWidth: 150,
             sortable: true
           },
+					 {
+					  title: '版本号',
+					  key: 'version',
+					  minWidth: 120,
+					  sortable: true
+					},
           {
             title: '激活状态',
             key: 'isActive',
@@ -904,6 +919,7 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
+				this.setPrice(0)
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -970,10 +986,35 @@ export default {
     confirmCoupon() {
       this.$refs.couponList.confirmSelection()
     },
+		setPrice(type) {
+		  if (type === 0) {
+		    if (this.form.oldPrice !== null && this.form.oldPrice !== 0) {
+		      this.form.oldPriceDisplay = this.form.oldPrice / 100
+		    }
+				 if (this.form.couponPrice !== null && this.form.couponPrice !== 0) {
+				  this.form.couponPriceDisplay = this.form.couponPrice / 100
+				}
+				 if (this.form.price !== null && this.form.price !== 0) {
+				  this.form.priceDisplay = this.form.price / 100
+				}
+		  } else if (type === 1) {
+		    if (this.form.oldPriceDisplay !== null && this.form.oldPriceDisplay !== 0) {
+		      this.form.oldPrice = this.form.oldPriceDisplay * 100
+		    }
+				 if (this.form.couponPriceDisplay !== null && this.form.couponPriceDisplay !== 0) {
+				  this.form.couponPrice = this.form.couponPriceDisplay * 100
+				}
+				 if (this.form.priceDisplay !== null && this.form.priceDisplay !== 0) {
+				  this.form.price = this.form.priceDisplay * 100
+				}
+		  }
+		},
     add() {
+			this.setPrice(1)
       utils.add(this)
     },
     edit() {
+			this.setPrice(1)
       utils.edit(this)
     },
     active(row) {

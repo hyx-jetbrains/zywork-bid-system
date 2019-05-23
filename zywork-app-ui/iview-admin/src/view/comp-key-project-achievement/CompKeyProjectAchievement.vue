@@ -43,8 +43,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="中标金额" prop="markMoney">
-					<Input v-model="form.markMoney" placeholder="请输入中标金额" />
+				<FormItem label="中标金额" prop="markMoneyDisplay">
+					<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"
@@ -74,8 +74,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="中标金额" prop="markMoney">
-					<Input v-model="form.markMoney" placeholder="请输入中标金额" />
+				<FormItem label="中标金额" prop="markMoneyDisplay">
+					<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"
@@ -244,7 +244,7 @@
 			<p>企业编号: <span v-text="form.compId"></span></p>
 			<p>工程名称: <span v-text="form.projectName"></span></p>
 			<p>建设单位: <span v-text="form.buildComp"></span></p>
-			<p>中标金额: <span v-text="form.markMoney"></span></p>
+			<p>中标金额: <span v-text="form.markMoney/100"></span></p>
 			<p>开工时间: <span v-text="form.startDate"></span></p>
 			<p>竣工时间: <span v-text="form.endDate"></span></p>
 			<p>版本号: <span v-text="form.version"></span></p>
@@ -321,6 +321,7 @@
 					projectName: null,
 					buildComp: null,
 					markMoney: null,
+					markMoneyDisplay: null,
 					startDate: null,
 					endDate: null,
 					version: null,
@@ -515,7 +516,11 @@
 							title: '中标金额',
 							key: 'markMoney',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.markMoney/100;
+								return h('span', '￥'+text)
+							}
 						},
 						{
 							title: '开工时间',
@@ -689,6 +694,7 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
+					this.setPrice(0)
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
 					this.form = JSON.parse(JSON.stringify(row))
@@ -729,10 +735,23 @@
 			confirm() {
 			  this.$refs.CompanyListSingle.confirmSelection()
 			},
+			setPrice(type) {
+				if (type === 0) {
+					if (this.form.markMoney !== null && this.form.markMoney !== 0) {
+						this.form.markMoneyDisplay = this.form.markMoney / 100
+					}
+				} else if (type === 1) {
+					if (this.form.markMoneyDisplay !== null && this.form.markMoneyDisplay !== 0) {
+						this.form.markMoney = this.form.markMoneyDisplay * 100
+					}
+				}
+			},
 			add() {
+				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
+				this.setPrice(1)
 				utils.edit(this)
 			},
 			active(row) {

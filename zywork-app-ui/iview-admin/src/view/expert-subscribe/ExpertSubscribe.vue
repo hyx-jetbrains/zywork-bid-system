@@ -328,7 +328,7 @@
 			<p>回复内容: <span v-text="form.replyContent"></span></p>
 			<p>回复时间: <span v-text="form.replyTime"></span></p>
 			<p>预约状态: <span v-text="form.subscribeStatus"></span></p>
-			<p>预约价格: <span v-text="form.price"></span></p>
+			<p>预约价格: <span v-text="form.price/100"></span></p>
 			<p>支付状态: <span v-text="form.payStatus"></span></p>
 			<p>支付方式: <span v-text="form.payType"></span></p>
 			<p>交易编号: <span v-text="form.transactionNo"></span></p>
@@ -974,6 +974,7 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
+					this.setPrice(0)
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
 					this.form = JSON.parse(JSON.stringify(row))
@@ -1031,10 +1032,23 @@
 			confirm() {
 			  this.$refs.UserListSingle.confirmSelection()
 			},
+			setPrice(type) {
+			  if (type === 0) {
+			    if (this.form.price !== null && this.form.price !== 0) {
+			      this.form.price = this.form.price / 100
+			    }
+			  } else if (type === 1) {
+			    if (this.form.price !== null && this.form.price !== 0) {
+			      this.form.price = this.form.price * 100
+			    }
+			  }
+			},
 			add() {
+				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
+				this.setPrice(1)
 				utils.edit(this)
 			},
 			active(row) {

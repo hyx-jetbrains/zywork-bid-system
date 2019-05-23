@@ -303,7 +303,7 @@
 						{
 							title: '头像地址',
 							key: 'userDetailHeadicon',
-							minWidth: 120,
+							minWidth: 300,
 							sortable: true
 						},
 						{

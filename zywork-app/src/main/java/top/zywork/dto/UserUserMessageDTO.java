@@ -4,27 +4,35 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * UserMessageDTO数据传输对象类<br/>
+ * UserUserMessageDTO数据传输对象类<br/>
  *
- * 创建于2019-01-24<br/>
+ * 创建于2019-05-23<br/>
  *
- * @author http://zywork.top 王振宇
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class UserUserMessageDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035189671565L;
+    private static final long serialVersionUID = -9223372036028746845L;
 
-    //t_user表的字段对应的属性
-	// 用户编号
-	private Long userId;
-	// 手机号
-	private String userPhone;
-	// 用户邮箱
-	private String userEmail;
-	//t_message表的字段对应的属性
+    //t_user_message表的字段对应的属性
+	// 消息发送编号
+	private Long userMessageId;
 	// 消息编号
-	private Long messageId;
+	private Long userMessageMessageId;
+	// 用户编号
+	private Long userMessageUserId;
+	// 是否已读
+	private Byte userMessageIsRead;
+	// 版本号
+	private Integer userMessageVersion;
+	// 创建时间
+	private Date userMessageCreateTime;
+	// 更新时间
+	private Date userMessageUpdateTime;
+	// 是否激活
+	private Byte userMessageIsActive;
+	//t_message表的字段对应的属性
 	// 消息标题
 	private String messageTitle;
 	// 消息摘要
@@ -33,61 +41,87 @@ public class UserUserMessageDTO extends BaseDTO {
 	private String messageContent;
 	// 消息类型
 	private String messageMessageType;
-	//t_user_message表的字段对应的属性
-	// 是否已读
-	private Byte userMessageIsRead;
-	// 创建时间
-	private Date userMessageCreateTime;
-	// 更新时间
-	private Date userMessageUpdateTime;
 	
-    public UserUserMessageDTO() {}
+    public UserUserMessageDTO () {}
 
-    public UserUserMessageDTO(Long userId, String userPhone, String userEmail, Long messageId, String messageTitle, String messageSummary, String messageContent, String messageMessageType, Byte userMessageIsRead, Date userMessageCreateTime, Date userMessageUpdateTime) {
-        this.userId = userId;
-		this.userPhone = userPhone;
-		this.userEmail = userEmail;
-		this.messageId = messageId;
+    public UserUserMessageDTO (Long userMessageId, Long userMessageMessageId, Long userMessageUserId, Byte userMessageIsRead, Integer userMessageVersion, Date userMessageCreateTime, Date userMessageUpdateTime, Byte userMessageIsActive, String messageTitle, String messageSummary, String messageContent, String messageMessageType) {
+        this.userMessageId = userMessageId;
+		this.userMessageMessageId = userMessageMessageId;
+		this.userMessageUserId = userMessageUserId;
+		this.userMessageIsRead = userMessageIsRead;
+		this.userMessageVersion = userMessageVersion;
+		this.userMessageCreateTime = userMessageCreateTime;
+		this.userMessageUpdateTime = userMessageUpdateTime;
+		this.userMessageIsActive = userMessageIsActive;
 		this.messageTitle = messageTitle;
 		this.messageSummary = messageSummary;
 		this.messageContent = messageContent;
 		this.messageMessageType = messageMessageType;
-		this.userMessageIsRead = userMessageIsRead;
-		this.userMessageCreateTime = userMessageCreateTime;
-		this.userMessageUpdateTime = userMessageUpdateTime;
 		
     }
 
-    public Long getUserId() {
-		return userId;
+    public Long getUserMessageId() {
+		return userMessageId;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUserMessageId(Long userMessageId) {
+		this.userMessageId = userMessageId;
 	}
 
-	public String getUserPhone() {
-		return userPhone;
+	public Long getUserMessageMessageId() {
+		return userMessageMessageId;
 	}
 
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
+	public void setUserMessageMessageId(Long userMessageMessageId) {
+		this.userMessageMessageId = userMessageMessageId;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public Long getUserMessageUserId() {
+		return userMessageUserId;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setUserMessageUserId(Long userMessageUserId) {
+		this.userMessageUserId = userMessageUserId;
 	}
 
-	public Long getMessageId() {
-		return messageId;
+	public Byte getUserMessageIsRead() {
+		return userMessageIsRead;
 	}
 
-	public void setMessageId(Long messageId) {
-		this.messageId = messageId;
+	public void setUserMessageIsRead(Byte userMessageIsRead) {
+		this.userMessageIsRead = userMessageIsRead;
+	}
+
+	public Integer getUserMessageVersion() {
+		return userMessageVersion;
+	}
+
+	public void setUserMessageVersion(Integer userMessageVersion) {
+		this.userMessageVersion = userMessageVersion;
+	}
+
+	public Date getUserMessageCreateTime() {
+		return userMessageCreateTime;
+	}
+
+	public void setUserMessageCreateTime(Date userMessageCreateTime) {
+		this.userMessageCreateTime = userMessageCreateTime;
+	}
+
+	public Date getUserMessageUpdateTime() {
+		return userMessageUpdateTime;
+	}
+
+	public void setUserMessageUpdateTime(Date userMessageUpdateTime) {
+		this.userMessageUpdateTime = userMessageUpdateTime;
+	}
+
+	public Byte getUserMessageIsActive() {
+		return userMessageIsActive;
+	}
+
+	public void setUserMessageIsActive(Byte userMessageIsActive) {
+		this.userMessageIsActive = userMessageIsActive;
 	}
 
 	public String getMessageTitle() {
@@ -122,45 +156,22 @@ public class UserUserMessageDTO extends BaseDTO {
 		this.messageMessageType = messageMessageType;
 	}
 
-	public Byte getUserMessageIsRead() {
-		return userMessageIsRead;
-	}
-
-	public void setUserMessageIsRead(Byte userMessageIsRead) {
-		this.userMessageIsRead = userMessageIsRead;
-	}
-
-	public Date getUserMessageCreateTime() {
-		return userMessageCreateTime;
-	}
-
-	public void setUserMessageCreateTime(Date userMessageCreateTime) {
-		this.userMessageCreateTime = userMessageCreateTime;
-	}
-
-	public Date getUserMessageUpdateTime() {
-		return userMessageUpdateTime;
-	}
-
-	public void setUserMessageUpdateTime(Date userMessageUpdateTime) {
-		this.userMessageUpdateTime = userMessageUpdateTime;
-	}
-
 	
     @Override
     public String toString() {
         return "UserUserMessageDTO {" +
-                "userId = " + userId + 
-				", userPhone = " + userPhone + 
-				", userEmail = " + userEmail + 
-				", messageId = " + messageId + 
+                "userMessageId = " + userMessageId + 
+				", userMessageMessageId = " + userMessageMessageId + 
+				", userMessageUserId = " + userMessageUserId + 
+				", userMessageIsRead = " + userMessageIsRead + 
+				", userMessageVersion = " + userMessageVersion + 
+				", userMessageCreateTime = " + userMessageCreateTime + 
+				", userMessageUpdateTime = " + userMessageUpdateTime + 
+				", userMessageIsActive = " + userMessageIsActive + 
 				", messageTitle = " + messageTitle + 
 				", messageSummary = " + messageSummary + 
 				", messageContent = " + messageContent + 
 				", messageMessageType = " + messageMessageType + 
-				", userMessageIsRead = " + userMessageIsRead + 
-				", userMessageCreateTime = " + userMessageCreateTime + 
-				", userMessageUpdateTime = " + userMessageUpdateTime + 
 				" }";
     }
 

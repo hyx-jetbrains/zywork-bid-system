@@ -967,7 +967,7 @@ export default {
           {
             title: '证书专业类型',
             key: 'certificateMajorType',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {

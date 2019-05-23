@@ -33,45 +33,20 @@
 		<Modal v-model="modal.add" title="添加" @on-visible-change="changeModalVisibleResetForm('addForm', $event)">
 			<Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
 				<FormItem label="辖区类别" prop="jurisdictionType">
-					<Select
-					  v-model="form.jurisdictionType"
-					  placeholder="请输入辖区类别"
-					  clearable
-					  filterable
-						@on-change="initJurisdictionType"
-					>
+					<Select v-model="form.jurisdictionType" placeholder="请输入辖区类别" clearable filterable @on-change="initJurisdictionType">
 						<i-option v-for="item in regionList" :value="item.value" :key="item.key">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
 				<FormItem label="市区" prop="city">
-					<Cascader
-					  :data="cityData"
-					  v-model="tempAddress"
-					  trigger="hover"
-					  change-on-select
-					  filterable
-					  clearable
-					/>
+					<Cascader :data="cityData" v-model="tempAddress" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="企业类型" prop="compType">
-					<Select
-					  v-model="form.compType"
-					  placeholder="请输入企业类型"
-					  clearable
-					  filterable
-						@on-change="initcompType"
-					>
+					<Select v-model="form.compType" placeholder="请输入企业类型" clearable filterable @on-change="initcompType">
 						<i-option v-for="item in compTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
 				<FormItem label="行业分类" prop="industryType">
-					<Select
-					  v-model="form.industryType"
-					  placeholder="请输入行业分类"
-					  clearable
-					  filterable
-					  @on-change="initIndustryType"
-					>
+					<Select v-model="form.industryType" placeholder="请输入行业分类" clearable filterable @on-change="initIndustryType">
 						<i-option v-for="item in industryTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
@@ -85,14 +60,7 @@
 					<Input v-model="form.legalPersonPhone" placeholder="请输入法人电话" />
 				</FormItem>
 				<FormItem label="注册地区" prop="regAddress">
-					<Cascader
-					  :data="cityData"
-					  v-model="regAddress"
-					  trigger="hover"
-					  change-on-select
-					  filterable
-					  clearable
-					/>
+					<Cascader :data="cityData" v-model="regAddress" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="负责人" prop="responsible">
 					<Input v-model="form.responsible" placeholder="请输入负责人" />
@@ -104,35 +72,20 @@
 					<Input v-model="form.compPhone" placeholder="请输入单位电话" />
 				</FormItem>
 				<FormItem label="联系地址" prop="compAddr">
-					<Cascader
-					  :data="cityData"
-					  v-model="compAddr"
-					  trigger="hover"
-					  change-on-select
-					  filterable
-					  clearable
-					/>
+					<Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
-				<FormItem label="注册资本" prop="regCapital">
-					<Input v-model="form.regCapital" placeholder="请输入注册资本" />
+				<FormItem label="注册资本" prop="regCapitalDisplay">
+					<Input v-model="form.regCapitalDisplay" placeholder="请输入注册资本" />
 				</FormItem>
 				<FormItem label="经营范围" prop="businessScope">
-					<Input
-						v-model="form.businessScope"
-						type="textarea"
-						:autosize="descriptionAutoSize"
-						placeholder="请输入经营范围" />
+					<Input v-model="form.businessScope" type="textarea" :autosize="descriptionAutoSize" placeholder="请输入经营范围" />
 				</FormItem>
 				<FormItem label="可承担业务" prop="affordableBusiness">
-					<Input 
-						v-model="form.affordableBusiness"
-						type="textarea"
-						:autosize="descriptionAutoSize"
-						placeholder="请输入可承担业务" />
+					<Input v-model="form.affordableBusiness" type="textarea" :autosize="descriptionAutoSize" placeholder="请输入可承担业务" />
 				</FormItem>
-        <FormItem label="源地址" prop="sourceUrl">
-          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
-        </FormItem>
+				<FormItem label="源地址" prop="sourceUrl">
+					<Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+				</FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="resetFormCancelModal('addForm', 'add')">取消</Button>
@@ -142,34 +95,15 @@
 		<Modal v-model="modal.edit" title="修改" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
 			<Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
 				<FormItem label="辖区类别" prop="jurisdictionType">
-					<Select
-					  v-model="form.jurisdictionType"
-					  placeholder="请输入辖区类别"
-					  clearable
-					  filterable
-						@on-change="initJurisdictionType"
-					>
+					<Select v-model="form.jurisdictionType" placeholder="请输入辖区类别" clearable filterable @on-change="initJurisdictionType">
 						<i-option v-for="item in regionList" :value="item.value" :key="item.key">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
 				<FormItem label="市区" prop="city">
-					<Cascader
-					  :data="cityData"
-					  v-model="tempAddress"
-					  trigger="hover"
-					  change-on-select
-					  filterable
-					  clearable
-					/>
+					<Cascader :data="cityData" v-model="tempAddress" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="企业类型" prop="compType">
-					<Select
-					  v-model="form.compType"
-					  placeholder="请输入企业类型"
-					  clearable
-					  filterable
-						@on-change="initcompType"
-					>
+					<Select v-model="form.compType" placeholder="请输入企业类型" clearable filterable @on-change="initcompType">
 						<i-option v-for="item in compTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
@@ -186,14 +120,7 @@
 					<Input v-model="form.legalPersonPhone" placeholder="请输入法人电话" />
 				</FormItem>
 				<FormItem label="注册地区" prop="regAddress">
-					<Cascader
-					  :data="cityData"
-					  v-model="regAddress"
-					  trigger="hover"
-					  change-on-select
-					  filterable
-					  clearable
-					/>
+					<Cascader :data="cityData" v-model="regAddress" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="负责人" prop="responsible">
 					<Input v-model="form.responsible" placeholder="请输入负责人" />
@@ -205,35 +132,20 @@
 					<Input v-model="form.compPhone" placeholder="请输入单位电话" />
 				</FormItem>
 				<FormItem label="联系地址" prop="compAddr">
-					<Cascader
-					  :data="cityData"
-					  v-model="compAddr"
-					  trigger="hover"
-					  change-on-select
-					  filterable
-					  clearable
-					/>
+					<Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
-				<FormItem label="注册资本" prop="regCapital">
-					<Input v-model="form.regCapital" placeholder="请输入注册资本" />
+				<FormItem label="注册资本" prop="regCapitalDisplay">
+					<Input v-model="form.regCapitalDisplay" placeholder="请输入注册资本" />
 				</FormItem>
 				<FormItem label="经营范围" prop="businessScope">
-					<Input
-						v-model="form.businessScope"
-						type="textarea"
-						:autosize="descriptionAutoSize"
-						placeholder="请输入经营范围" />
+					<Input v-model="form.businessScope" type="textarea" :autosize="descriptionAutoSize" placeholder="请输入经营范围" />
 				</FormItem>
 				<FormItem label="可承担业务" prop="affordableBusiness">
-					<Input 
-						v-model="form.affordableBusiness"
-						type="textarea"
-						:autosize="descriptionAutoSize"
-						placeholder="请输入可承担业务" />
+					<Input v-model="form.affordableBusiness" type="textarea" :autosize="descriptionAutoSize" placeholder="请输入可承担业务" />
 				</FormItem>
-        <FormItem label="源地址" prop="sourceUrl">
-          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
-        </FormItem>
+				<FormItem label="源地址" prop="sourceUrl">
+					<Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+				</FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="resetFormCancelModal('editForm', 'edit')">取消</Button>
@@ -303,14 +215,7 @@
 					<Input v-model="searchForm.compPhone" placeholder="请输入单位电话" />
 				</FormItem>
 				<FormItem label="联系地址" prop="compAddr">
-					<Cascader
-					  :data="cityData"
-					  v-model="compAddr"
-					  trigger="hover"
-					  change-on-select
-					  filterable
-					  clearable
-					/>
+					<Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="注册资本" prop="regCapital">
 					<Input v-model="searchForm.regCapital" placeholder="请输入注册资本" />
@@ -407,13 +312,13 @@
 			<p>负责人电话: <span v-text="form.responsiblePhone"></span></p>
 			<p>单位电话: <span v-text="form.compPhone"></span></p>
 			<p>联系地址: <span v-text="form.compAddr"></span></p>
-			<p>注册资本: <span v-text="form.regCapital"></span></p>
+			<p>注册资本: <span v-text="form.regCapital/100"></span></p>
 			<p>经营范围: <span v-text="form.businessScope"></span></p>
 			<p>可承担业务: <span v-text="form.affordableBusiness"></span></p>
-       <p>
-        源地址：
-        <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
-      </p>
+			<p>
+				源地址：
+				<a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
+			</p>
 			<p>版本号: <span v-text="form.version"></span></p>
 			<p>创建时间: <span v-text="form.createTime"></span></p>
 			<p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -486,9 +391,10 @@
 					compPhone: null,
 					compAddr: null,
 					regCapital: null,
+					regCapitalDisplay: null,
 					businessScope: null,
-          affordableBusiness: null,
-          sourceUrl: null,
+					affordableBusiness: null,
+					sourceUrl: null,
 					version: null,
 					createTime: null,
 					updateTime: null,
@@ -584,7 +490,7 @@
 						type: 'string',
 						min: 1,
 						max: 20,
-						message: '必须1-20个字符',
+						message: '必须1-25个字符',
 						trigger: 'blur'
 					}],
 					businessScope: [{
@@ -673,9 +579,9 @@
 							sortable: true,
 							render: (h, params) => {
 								let text = null;
-								if(params.row.jurisdictionType == 1) {
+								if (params.row.jurisdictionType == 0) {
 									text = '省内'
-								} else if(params.row.jurisdictionType == 2) {
+								} else if (params.row.jurisdictionType == 1) {
 									text = '省外'
 								}
 								return h('span', text)
@@ -751,7 +657,11 @@
 							title: '注册资本',
 							key: 'regCapital',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.regCapital/100;
+								return h('span', '￥'+text)
+							}
 						},
 						{
 							title: '经营范围',
@@ -764,26 +674,25 @@
 							key: 'affordableBusiness',
 							minWidth: 350,
 							sortable: true
-            },
-            {
-            title: '源地址',
-            key: 'sourceUrl',
-            minWidth: 120,
-            sortable: true,
-            render: (h, params) => {
-              const row = params.row
-              return h(
-                'a',
-                {
-                  attrs: {
-                    href: row.sourceUrl,
-                    target: '_blank'
-                  }
-                },
-                row.sourceUrl
-              )
-            }
-          },
+						},
+						{
+							title: '源地址',
+							key: 'sourceUrl',
+							minWidth: 150,
+							sortable: true,
+							render: (h, params) => {
+								const row = params.row
+								return h(
+									'a', {
+										attrs: {
+											href: row.sourceUrl,
+											target: '_blank'
+										}
+									},
+									row.sourceUrl
+								)
+							}
+						},
 						{
 							title: '版本号',
 							key: 'version',
@@ -901,11 +810,11 @@
 					],
 					tableDetails: [],
 					selections: []
-        },
-        descriptionAutoSize: {
-          minRows: 3,
-          maxRows: 5
-        },
+				},
+				descriptionAutoSize: {
+					minRows: 3,
+					maxRows: 5
+				},
 			}
 		},
 		computed: {},
@@ -954,19 +863,19 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
-					
+					this.setPrice(0)
 					var tempAddress = this.form.city.split("/")
-					for(var i=0; tempAddress.length>i; i++) {
+					for (var i = 0; tempAddress.length > i; i++) {
 						this.tempAddress.push(tempAddress[i])
 					}
-					
+
 					var regAddress = this.form.regAddress.split("/")
-					for(var i=0; regAddress.length>i; i++) {
+					for (var i = 0; regAddress.length > i; i++) {
 						this.regAddress.push(regAddress[i])
 					}
-					
+
 					var compAddr = this.form.compAddr.split("/")
-					for(var i=0; compAddr.length>i; i++) {
+					for (var i = 0; compAddr.length > i; i++) {
 						this.compAddr.push(compAddr[i])
 					}
 				} else if (itemName === 'showDetail') {
@@ -977,22 +886,35 @@
 				}
 			},
 			setAddress() {
-				if(this.tempAddress.length > 0) {
-					this.form.city = this.tempAddress[0]+ '/' +this.tempAddress[1]+ '/' + this.tempAddress[2]
+				if (this.tempAddress.length > 0) {
+					this.form.city = this.tempAddress[0] + '/' + this.tempAddress[1] + '/' + this.tempAddress[2]
 				}
-				if(this.regAddress.length > 0) {
+				if (this.regAddress.length > 0) {
 					this.form.regAddress = this.regAddress[0] + '/' + this.regAddress[1] + '/' + this.regAddress[2]
 				}
-				if(this.compAddr.length > 0) {
+				if (this.compAddr.length > 0) {
 					this.form.compAddr = this.compAddr[0] + '/' + this.compAddr[1] + '/' + this.compAddr[2]
+				}
+			},
+			setPrice(type) {
+				if (type === 0) {
+					if (this.form.regCapital !== null && this.form.regCapital !== 0) {
+						this.form.regCapitalDisplay = this.form.regCapital / 100
+					}
+				} else if (type === 1) {
+					if (this.form.regCapitalDisplay !== null && this.form.regCapitalDisplay !== 0) {
+						this.form.regCapital = this.form.regCapitalDisplay * 100
+					}
 				}
 			},
 			add() {
 				this.setAddress()
+				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
 				this.setAddress()
+				this.setPrice(1)
 				utils.edit(this)
 			},
 			active(row) {

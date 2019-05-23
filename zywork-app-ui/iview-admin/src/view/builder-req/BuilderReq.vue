@@ -71,8 +71,8 @@
         <FormItem label="所需人数" prop="peopleCount">
           <InputNumber v-model="form.peopleCount" placeholder="请输入所需人数" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="提供年薪" prop="salary">
-          <InputNumber v-model="form.salary" placeholder="请输入提供年薪（元/年）" style="width: 100%;"/>
+        <FormItem label="提供年薪" prop="salaryDisplay">
+          <InputNumber v-model="form.salaryDisplay" placeholder="请输入提供年薪（元/年）" style="width: 100%;"/>
         </FormItem>
         <FormItem label="企业地址" prop="compAddr">
           <Cascader
@@ -124,8 +124,8 @@
         <FormItem label="所需人数" prop="peopleCount">
           <InputNumber v-model="form.peopleCount" placeholder="请输入所需人数" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="提供年薪" prop="salary">
-          <InputNumber v-model="form.salary" placeholder="请输入提供年薪（元/年）" style="width: 100%;"/>
+        <FormItem label="提供年薪" prop="salaryDisplay">
+          <InputNumber v-model="form.salaryDisplay" placeholder="请输入提供年薪（元/年）" style="width: 100%;"/>
         </FormItem>
         <FormItem label="企业地址" prop="compAddr">
           <Cascader
@@ -371,7 +371,7 @@
       </p>
       <p>
         提供年薪:
-        <span v-text="form.salary"></span>
+        <span v-text="form.salary/100"></span>
       </p>
       <p>
         企业地址:
@@ -496,6 +496,7 @@ export default {
         people: null,
         peopleCount: null,
         salary: null,
+				salaryDisplay: null,
         compAddr: null,
         compName: null,
         version: null,
@@ -706,7 +707,11 @@ export default {
             title: '提供年薪',
             key: 'salary',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.salary/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '企业地址',
@@ -920,6 +925,7 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
+				this.setPrice(0)
         var tempAddrArr = this.form.compAddr.split('/')
         for (var i = 0; i < tempAddrArr.length; i++) {
           this.tempAddress.push(tempAddrArr[i])
@@ -983,12 +989,25 @@ export default {
           this.tempAddress[2]
       }
     },
+		setPrice(type) {
+			if (type === 0) {
+				if (this.form.salary !== null && this.form.salary !== 0) {
+					this.form.salaryDisplay = this.form.salary / 100
+				}
+			} else if (type === 1) {
+				if (this.form.salaryDisplay !== null && this.form.salaryDisplay !== 0) {
+					this.form.salary = this.form.salaryDisplay * 100
+				}
+			}
+		},
     add() {
       this.setAddress()
+			this.setPrice(1)
       utils.add(this)
     },
     edit() {
       this.setAddress()
+			this.setPrice(1)
       utils.edit(this)
     },
     active(row) {

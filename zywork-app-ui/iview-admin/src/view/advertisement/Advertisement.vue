@@ -434,7 +434,7 @@ export default {
           {
             title: '轮播广告编号',
             key: 'id',
-            minWidth: 120,
+            minWidth: 130,
             sortable: true
           },
           {
@@ -461,13 +461,13 @@ export default {
           {
             title: '图片地址',
             key: 'imgUrl',
-            minWidth: 120,
+            minWidth: 180,
             sortable: true
           },
           {
             title: 'URL链接',
             key: 'url',
-            minWidth: 120,
+            minWidth: 180,
             sortable: true
           },
           {
@@ -479,13 +479,13 @@ export default {
           {
             title: '创建时间',
             key: 'createTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
             title: '更新时间',
             key: 'updateTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {

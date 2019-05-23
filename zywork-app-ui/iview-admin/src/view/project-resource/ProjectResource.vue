@@ -546,7 +546,7 @@ export default {
           {
             title: '项目资源表主键',
             key: 'id',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {

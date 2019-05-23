@@ -41,11 +41,11 @@
 				<FormItem label="项目类型" prop="projectType">
 					<Input v-model="form.projectType" placeholder="请输入项目类型" />
 				</FormItem>
-				<FormItem label="最小金额" prop="minMoney">
-					<InputNumber v-model="form.minMoney" placeholder="请输入最小金额" style="width: 100%;" />
+				<FormItem label="最小金额" prop="minMoneyDisplay">
+					<InputNumber v-model="form.minMoneyDisplay" placeholder="请输入最小金额" style="width: 100%;" />
 				</FormItem>
-				<FormItem label="最大金额" prop="maxMoney">
-					<InputNumber v-model="form.maxMoney" placeholder="请输入最大金额" style="width: 100%;" />
+				<FormItem label="最大金额" prop="maxMoneyDisplay">
+					<InputNumber v-model="form.maxMoneyDisplay" placeholder="请输入最大金额" style="width: 100%;" />
 				</FormItem>
 				<FormItem label="招标人" prop="tenderee">
 					<Input v-model="form.tenderee" placeholder="请输入招标人" />
@@ -77,11 +77,11 @@
 				<FormItem label="项目类型" prop="projectType">
 					<Input v-model="form.projectType" placeholder="请输入项目类型" />
 				</FormItem>
-				<FormItem label="最小金额" prop="minMoney">
-					<InputNumber v-model="form.minMoney" placeholder="请输入最小金额" style="width: 100%;" />
+				<FormItem label="最小金额" prop="minMoneyDisplay">
+					<InputNumber v-model="form.minMoneyDisplay" placeholder="请输入最小金额" style="width: 100%;" />
 				</FormItem>
-				<FormItem label="最大金额" prop="maxMoney">
-					<InputNumber v-model="form.maxMoney" placeholder="请输入最大金额" style="width: 100%;" />
+				<FormItem label="最大金额" prop="maxMoneyDisplay">
+					<InputNumber v-model="form.maxMoneyDisplay" placeholder="请输入最大金额" style="width: 100%;" />
 				</FormItem>
 				<FormItem label="招标人" prop="tenderee">
 					<Input v-model="form.tenderee" placeholder="请输入招标人" />
@@ -271,8 +271,8 @@
 			<p>用户编号: <span v-text="form.userId"></span></p>
 			<p>城市: <span v-text="form.city"></span></p>
 			<p>项目类型: <span v-text="form.projectType"></span></p>
-			<p>最小金额: <span v-text="form.minMoney"></span></p>
-			<p>最大金额: <span v-text="form.maxMoney"></span></p>
+			<p>最小金额: <span v-text="form.minMoney/100"></span></p>
+			<p>最大金额: <span v-text="form.maxMoney/100"></span></p>
 			<p>招标人: <span v-text="form.tenderee"></span></p>
 			<p>资质类别: <span v-text="form.aptitudeType"></span></p>
 			<p>关键字: <span v-text="form.keyword"></span></p>
@@ -356,6 +356,8 @@
 					projectType: null,
 					minMoney: null,
 					maxMoney: null,
+					minMoneyDisplay: null,
+					maxMoneyDisplay: null,
 					tenderee: null,
 					aptitudeType: null,
 					keyword: null,
@@ -549,13 +551,21 @@
 							title: '最小金额',
 							key: 'minMoney',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.minMoney/100;
+								return h('span', '￥' + text)
+							}
 						},
 						{
 							title: '最大金额',
 							key: 'maxMoney',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.maxMoney/100;
+								return h('span', '￥' + text)
+							}
 						},
 						{
 							title: '招标人',
@@ -739,6 +749,7 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
+					this.setPrice(0)
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
 					this.form = JSON.parse(JSON.stringify(row))
@@ -777,10 +788,31 @@
 			confirm() {
 			  this.$refs.UserListSingle.confirmSelection()
 			},
+			setPrice(type) {
+				if (type === 0) {
+					if (this.form.minMoney !== null && this.form.minMoney !== 0) {
+						this.form.minMoneyDisplay = this.form.minMoney / 100
+					}
+					
+					if (this.form.maxMoney !== null && this.form.maxMoney !== 0) {
+						this.form.maxMoneyDisplay = this.form.maxMoney / 100
+					}
+				} else if (type === 1) {
+					if (this.form.minMoneyDisplay !== null && this.form.minMoneyDisplay !== 0) {
+						this.form.minMoney = this.form.minMoneyDisplay * 100
+					}
+					
+					if (this.form.maxMoneyDisplay !== null && this.form.maxMoneyDisplay !== 0) {
+						this.form.maxMoney = this.form.maxMoneyDisplay * 100
+					}
+				}
+			},
 			add() {
+				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
+				this.setPrice(1)
 				utils.edit(this)
 			},
 			active(row) {

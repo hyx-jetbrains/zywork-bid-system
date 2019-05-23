@@ -56,14 +56,14 @@
         <FormItem label="支付密码" prop="payPassword">
           <Input v-model="form.payPassword" placeholder="请输入支付密码"/>
         </FormItem>
-        <FormItem label="人民币余额" prop="rmbBalance">
-          <InputNumber v-model="form.rmbBalance" placeholder="请输入人民币余额" style="width: 100%;"/>
+        <FormItem label="人民币余额" prop="rmbBalanceDisplay">
+          <InputNumber v-model="form.rmbBalanceDisplay" placeholder="请输入人民币余额" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="可用余额" prop="usableRmbBalance">
-          <InputNumber v-model="form.usableRmbBalance" placeholder="请输入可用余额" style="width: 100%;"/>
+        <FormItem label="可用余额" prop="usableRmbBalanceDisplay">
+          <InputNumber v-model="form.usableRmbBalanceDisplay" placeholder="请输入可用余额" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="冻结余额" prop="frozenRmbBalance">
-          <InputNumber v-model="form.frozenRmbBalance" placeholder="请输入冻结余额" style="width: 100%;"/>
+        <FormItem label="冻结余额" prop="frozenRmbBalanceDisplay">
+          <InputNumber v-model="form.frozenRmbBalanceDisplay" placeholder="请输入冻结余额" style="width: 100%;"/>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -80,14 +80,14 @@
         <FormItem label="支付密码" prop="payPassword">
           <Input v-model="form.payPassword" placeholder="请输入支付密码"/>
         </FormItem>
-        <FormItem label="人民币余额" prop="rmbBalance">
-          <InputNumber v-model="form.rmbBalance" placeholder="请输入人民币余额" style="width: 100%;"/>
+        <FormItem label="人民币余额" prop="rmbBalanceDisplay">
+          <InputNumber v-model="form.rmbBalanceDisplay" placeholder="请输入人民币余额" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="可用余额" prop="usableRmbBalance">
-          <InputNumber v-model="form.usableRmbBalance" placeholder="请输入可用余额" style="width: 100%;"/>
+        <FormItem label="可用余额" prop="usableRmbBalanceDisplay">
+          <InputNumber v-model="form.usableRmbBalanceDisplay" placeholder="请输入可用余额" style="width: 100%;"/>
         </FormItem>
-        <FormItem label="冻结余额" prop="frozenRmbBalance">
-          <InputNumber v-model="form.frozenRmbBalance" placeholder="请输入冻结余额" style="width: 100%;"/>
+        <FormItem label="冻结余额" prop="frozenRmbBalanceDisplay">
+          <InputNumber v-model="form.frozenRmbBalanceDisplay" placeholder="请输入冻结余额" style="width: 100%;"/>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -317,13 +317,13 @@
         <span v-text="form.id"></span>
       </p>
       <p>人民币余额:
-        <span v-text="form.rmbBalance"></span>
+        <span v-text="form.rmbBalance/100"></span>
       </p>
       <p>可用余额:
-        <span v-text="form.usableRmbBalance"></span>
+        <span v-text="form.usableRmbBalance/100"></span>
       </p>
       <p>冻结余额:
-        <span v-text="form.frozenRmbBalance"></span>
+        <span v-text="form.frozenRmbBalance/100"></span>
       </p>
       <p>总积分:
         <span v-text="form.integral"></span>
@@ -388,6 +388,9 @@ export default {
         rmbBalance: null,
         usableRmbBalance: null,
         frozenRmbBalance: null,
+				rmbBalanceDisplay: null,
+				usableRmbBalanceDisplay: null,
+				frozenRmbBalanceDisplay: null,
         integral: null,
         usableIntegral: null,
         frozenIntegral: null,
@@ -471,19 +474,31 @@ export default {
             title: '人民币余额',
             key: 'rmbBalance',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.rmbBalance/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '可用余额',
             key: 'usableRmbBalance',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.usableRmbBalance/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '冻结余额',
             key: 'frozenRmbBalance',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.frozenRmbBalance/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '总积分',
@@ -694,6 +709,7 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
+				this.setPrice(0)
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -701,10 +717,35 @@ export default {
         utils.remove(this, row)
       }
     },
+		setPrice(type) {
+		  if (type === 0) {
+		    if (this.form.rmbBalance !== null && this.form.rmbBalance !== 0) {
+		      this.form.rmbBalanceDisplay = this.form.rmbBalance / 100
+		    }
+		    if (this.form.usableRmbBalance !== null && this.form.usableRmbBalance !== 0) {
+		      this.form.usableRmbBalanceDisplay = this.form.usableRmbBalance / 100
+		    }
+				if (this.form.frozenRmbBalance !== null && this.form.frozenRmbBalance !== 0) {
+				  this.form.frozenRmbBalanceDisplay = this.form.frozenRmbBalance / 100
+				}
+		  } else if (type === 1) {
+		    if (this.form.rmbBalanceDisplay !== null && this.form.rmbBalanceDisplay !== 0) {
+		      this.form.rmbBalance = this.form.rmbBalanceDisplay * 100
+		    }
+		    if (this.form.usableRmbBalanceDisplay !== null && this.form.usableRmbBalanceDisplay !== 0) {
+		      this.form.usableRmbBalance = this.form.usableRmbBalanceDisplay * 100
+		    }
+				if (this.form.frozenRmbBalanceDisplay !== null && this.form.frozenRmbBalanceDisplay !== 0) {
+				  this.form.frozenRmbBalance = this.form.frozenRmbBalanceDisplay / 100
+				}
+		  }
+		},
     add() {
+			this.setPrice(1)
       utils.add(this)
     },
     edit() {
+			this.setPrice(1)
       utils.edit(this)
     },
     active(row) {

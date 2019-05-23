@@ -357,13 +357,6 @@
 						message: '必须1-10个字符',
 						trigger: 'blur'
 					}],
-					gender: [{
-						type: 'integer',
-						min: 1,
-						max: 10,
-						message: '必须1-10个字符',
-						trigger: 'blur'
-					}],
 					regNum: [{
 						type: 'string',
 						min: 1,

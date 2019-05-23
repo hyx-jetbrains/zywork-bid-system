@@ -69,8 +69,8 @@
 				<FormItem label="搭载人数" prop="peopleCount">
 					<InputNumber v-model="form.peopleCount" placeholder="请输入搭载人数" style="width: 100%;" />
 				</FormItem>
-				<FormItem label="价格" prop="price">
-					<InputNumber v-model="form.price" placeholder="请输入价格" style="width: 100%;" />
+				<FormItem label="价格" prop="priceDisplay">
+					<InputNumber v-model="form.priceDisplay" placeholder="请输入价格" style="width: 100%;" />
 				</FormItem>
 				<FormItem label="联系人姓名" prop="name">
 					<Input v-model="form.name" placeholder="请输入联系人姓名" />
@@ -119,8 +119,8 @@
 				<FormItem label="搭载人数" prop="peopleCount">
 					<InputNumber v-model="form.peopleCount" placeholder="请输入搭载人数" style="width: 100%;" />
 				</FormItem>
-				<FormItem label="价格" prop="price">
-					<InputNumber v-model="form.price" placeholder="请输入价格" style="width: 100%;" />
+				<FormItem label="价格" prop="priceDisplay">
+					<InputNumber v-model="form.priceDisplay" placeholder="请输入价格" style="width: 100%;" />
 				</FormItem>
 				<FormItem label="联系人姓名" prop="name">
 					<Input v-model="form.name" placeholder="请输入联系人姓名" />
@@ -330,13 +330,13 @@
 				搭载人数:
 				<span v-text="form.peopleCount"></span>
 			</p>
-      <p>
+			<p>
 				申请人数:
 				<span v-text="form.recordCount"></span>
 			</p>
 			<p>
 				价格:
-				<span v-text="form.price"></span>
+				<span v-text="form.price/100"></span>
 			</p>
 			<p>
 				联系人姓名:
@@ -374,7 +374,7 @@
 				<Button type="primary" size="large" @click="confirm">确认选择</Button>
 			</div>
 		</Modal>
-		
+
 		<Modal :transfer="false" v-model="modal.projectDetail" title="项目详情">
 			<ProjectDetail :form="projectDetailForm" v-on:setDetail="setProjectDetailModal" />
 		</Modal>
@@ -385,7 +385,7 @@
 				<Button type="primary" size="large" @click="projectConfirm">确认选择</Button>
 			</div>
 		</Modal>
-		
+
 		<Modal v-model="modal.project" title="选择招投标项目" :closable="false" :mask-closable="false" width="1000">
 			<project-list ref="projectListItem" @initData="initData"></project-list>
 			<div slot="footer">
@@ -399,7 +399,7 @@
 				<Button type="text" size="large" @click="cancelModal('userChoice')">取消</Button>
 			</div>
 		</Modal>
-		
+
 		<Modal width="1000" v-model="modal.markCarpoolRecordSeach" title="拼车记录">
 			<markCarpoolRecord-list-single ref="MarkCarpoolRecordListSingle" />
 			<div slot="footer">
@@ -419,7 +419,7 @@
 	import MarkCarpoolRecordListSingle from '@/view/mark-carpool-record/MarkCarpoolRecordListSingle.vue'
 	import {
 		getUserById,
-		getProjectById 
+		getProjectById
 	} from '@/api/module'
 	import ProjectList from '@/view/project/ProjectList.vue'
 	import city from '@/api/city.json'
@@ -504,9 +504,10 @@
 					endAddr: null,
 					startTime: null,
 					carType: null,
-          peopleCount: null,
-          recordCOunt: null,
+					peopleCount: null,
+					recordCOunt: null,
 					price: null,
+					priceDisplay: null,
 					name: null,
 					phone: null,
 					version: null,
@@ -515,37 +516,37 @@
 					isActive: null
 				},
 				projectDetailForm: {
-				  id: null,
-				  title: null,
-				  projectType: null,
-				  startCity: null,
-				  projectDetail: null,
-				  releaseStatus: null,
-				  markUnitName: null,
-				  projectInvest: null,
-				  checkPattern: null,
-				  compAptitudeType: null,
-				  builderLevel: null,
-				  moneyToImplement: null,
-				  tenderingAgent: null,
-				  phone: null,
-				  offerPrice: null,
-				  assurePrice: null,
-				  constructionPeriod: null,
-				  downloadEndTime: null,
-				  otherDemand: null,
-				  openMarkInfo: null,
-				  openMarkTime: null,
-				  openMarkAddr: null,
-				  inMarkPublicity: null,
-				  inMarkComp: null,
-				  noticeTime: null,
-				  clickCount: null,
-				  isElectronic: null,
-				  version: null,
-				  createTime: null,
-				  updateTime: null,
-				  isActive: null
+					id: null,
+					title: null,
+					projectType: null,
+					startCity: null,
+					projectDetail: null,
+					releaseStatus: null,
+					markUnitName: null,
+					projectInvest: null,
+					checkPattern: null,
+					compAptitudeType: null,
+					builderLevel: null,
+					moneyToImplement: null,
+					tenderingAgent: null,
+					phone: null,
+					offerPrice: null,
+					assurePrice: null,
+					constructionPeriod: null,
+					downloadEndTime: null,
+					otherDemand: null,
+					openMarkInfo: null,
+					openMarkTime: null,
+					openMarkAddr: null,
+					inMarkPublicity: null,
+					inMarkComp: null,
+					noticeTime: null,
+					clickCount: null,
+					isElectronic: null,
+					version: null,
+					createTime: null,
+					updateTime: null,
+					isActive: null
 				},
 				validateRules: {
 					startAddr: [{
@@ -812,8 +813,8 @@
 							key: 'carType',
 							minWidth: 120,
 							sortable: true
-            },
-            {
+						},
+						{
 							title: '申请人数',
 							key: 'reocrdCount',
 							minWidth: 120,
@@ -829,7 +830,11 @@
 							title: '价格',
 							key: 'price',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.price/100;
+								return h('span', '￥'+text)
+							}
 						},
 						{
 							title: '联系人姓名',
@@ -1046,6 +1051,8 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
+					
+					this.setPrice(0)
 					var tempAddrArr = this.form.startCity.split('/')
 					for (var i = 0; i < tempAddrArr.length; i++) {
 						this.tempAddress.push(tempAddrArr[i])
@@ -1053,7 +1060,7 @@
 					
 					var endCityAddress = this.form.endCity.split('/')
 					for (var i = 0; i < endCityAddress.length; i++) {
-						this.endCityAddress.push(endCityAddress[i]) 
+						this.endCityAddress.push(endCityAddress[i])
 					}
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
@@ -1068,7 +1075,7 @@
 					utils.showModal(this, 'userDetalSearch')
 				} else if (itemName === 'projectShowSearch') {
 					utils.showModal(this, 'projectDetalSearch')
-				} else if(itemName === 'showMarkCarpoolRecord') {
+				} else if (itemName === 'showMarkCarpoolRecord') {
 					utils.showModal(this, 'markCarpoolRecordSeach')
 				}
 			},
@@ -1143,13 +1150,24 @@
 						this.tempAddress[1] +
 						'/' +
 						this.tempAddress[2]
-						
+
 					this.form.endCity =
 						this.endCityAddress[0] +
 						'/' +
 						this.endCityAddress[1] +
 						'/' +
 						this.endCityAddress[2]
+				}
+			},
+			setPrice(type) {
+				if (type === 0) {
+					if (this.form.price !== null && this.form.price !== 0) {
+						this.form.priceDisplay = this.form.price / 100
+					}
+				} else if (type === 1) {
+					if (this.form.priceDisplay !== null && this.form.priceDisplay !== 0) {
+						this.form.price = this.form.priceDisplay * 100
+					}
 				}
 			},
 			add() {
@@ -1161,10 +1179,13 @@
 					this.$Message.error('请选择项目')
 					return
 				}
+				
+				this.setPrice(1)
 				this.setAddress()
 				utils.add(this)
 			},
 			edit() {
+				this.setPrice(1)
 				this.setAddress()
 				utils.edit(this)
 			},

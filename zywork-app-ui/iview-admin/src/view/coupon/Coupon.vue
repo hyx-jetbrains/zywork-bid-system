@@ -63,8 +63,8 @@
             >{{item.label}}</i-option>
           </Select>
         </FormItem>
-        <FormItem label="金额" prop="money">
-          <InputNumber v-model="form.money" placeholder="请输入金额" style="width: 100%;"/>
+        <FormItem label="金额" prop="moneyDisplay">
+          <InputNumber v-model="form.moneyDisplay" placeholder="请输入金额" style="width: 100%;"/>
         </FormItem>
         <FormItem label="数量" prop="couponCount">
           <InputNumber v-model="form.couponCount" placeholder="请输入数量" style="width: 100%;"/>
@@ -100,8 +100,8 @@
             >{{item.label}}</i-option>
           </Select>
         </FormItem>
-        <FormItem label="金额" prop="money">
-          <InputNumber v-model="form.money" placeholder="请输入金额" style="width: 100%;"/>
+        <FormItem label="金额" prop="moneyDisplay">
+          <InputNumber v-model="form.moneyDisplay" placeholder="请输入金额" style="width: 100%;"/>
         </FormItem>
         <FormItem label="数量" prop="couponCount">
           <InputNumber v-model="form.couponCount" placeholder="请输入数量" style="width: 100%;"/>
@@ -342,7 +342,7 @@
       </p>
       <p>
         金额:
-        <span v-text="form.money"></span>
+        <span v-text="form.money/100"></span>
       </p>
       <p>
         数量:
@@ -414,6 +414,7 @@ export default {
         id: null,
         type: null,
         money: null,
+				moneyDisplay: null,
         couponCount: null,
         validTime: null,
         version: null,
@@ -502,7 +503,11 @@ export default {
             title: '金额',
             key: 'money',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.money/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '数量',
@@ -513,27 +518,27 @@ export default {
           {
             title: '有效期至',
             key: 'validTime',
-            minWidth: 120,
-            sortable: true
-          },
-          {
-            title: '版本号',
-            key: 'version',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
             title: '创建时间',
             key: 'createTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
             title: '更新时间',
             key: 'updateTime',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
+					{
+					  title: '版本号',
+					  key: 'version',
+					  minWidth: 120,
+					  sortable: true
+					},
           {
             title: '激活状态',
             key: 'isActive',
@@ -713,6 +718,7 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
+				this.setPrice(0)
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -720,10 +726,23 @@ export default {
         utils.remove(this, row)
       }
     },
+		setPrice(type) {
+		  if (type === 0) {
+		    if (this.form.money !== null && this.form.money !== 0) {
+		      this.form.moneyDisplay = this.form.money / 100
+		    }
+		  } else if (type === 1) {
+		    if (this.form.moneyDisplay !== null && this.form.moneyDisplay !== 0) {
+		      this.form.money = this.form.moneyDisplay * 100
+		    }
+		  }
+		},
     add() {
+			this.setPrice(1)
       utils.add(this)
     },
     edit() {
+			this.setPrice(1)
       utils.edit(this)
     },
     active(row) {

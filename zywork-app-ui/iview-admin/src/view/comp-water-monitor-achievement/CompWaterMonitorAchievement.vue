@@ -54,8 +54,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmount">
-					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
+				<FormItem label="合同金额" prop="contractAmountDisplay">
+					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="合同签订日期" prop="contractDate">
 					<DatePicker @on-change="form.contractDate=$event" :value="form.contractDate" placeholder="请输入合同签订日期" type="datetime"
@@ -96,8 +96,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmount">
-					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
+				<FormItem label="合同金额" prop="contractAmountDisplay">
+					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="合同签订日期" prop="contractDate">
 					<DatePicker @on-change="form.contractDate=$event" :value="form.contractDate" placeholder="请输入合同签订日期" type="datetime"
@@ -270,7 +270,7 @@
 			<p>工程名称: <span v-text="form.projectName"></span></p>
 			<p>项目类型: <span v-text="form.projectType"></span></p>
 			<p>建设单位: <span v-text="form.buildComp"></span></p>
-			<p>合同金额: <span v-text="form.contractAmount"></span></p>
+			<p>合同金额: <span v-text="form.contractAmount/100"></span></p>
 			<p>合同签订日期: <span v-text="form.contractDate"></span></p>
 			<p>开工时间: <span v-text="form.startDate"></span></p>
 			<p>版本号: <span v-text="form.version"></span></p>
@@ -350,6 +350,7 @@
 					projectType: null,
 					buildComp: null,
 					contractAmount: null,
+					contractAmountDisplay: null,
 					contractDate: null,
 					startDate: null,
 					version: null,
@@ -558,7 +559,11 @@
 							title: '合同金额',
 							key: 'contractAmount',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.contractAmount/100;
+								return h('span', '￥'+text)
+							}
 						},
 						{
 							title: '合同签订日期',
@@ -732,6 +737,7 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
+					this.setPrice(0)
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
 					this.form = JSON.parse(JSON.stringify(row))
@@ -772,10 +778,23 @@
 			confirm() {
 			  this.$refs.CompanyListSingle.confirmSelection()
 			},
+			setPrice(type) {
+				if (type === 0) {
+					if (this.form.contractAmount !== null && this.form.contractAmount !== 0) {
+						this.form.contractAmountDisplay = this.form.contractAmount / 100
+					}
+				} else if (type === 1) {
+					if (this.form.contractAmountDisplay !== null && this.form.contractAmountDisplay !== 0) {
+						this.form.contractAmount = this.form.contractAmountDisplay * 100
+					}
+				}
+			},
 			add() {
+				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
+				this.setPrice(1)
 				utils.edit(this)
 			},
 			active(row) {

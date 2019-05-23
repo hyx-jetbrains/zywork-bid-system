@@ -189,43 +189,29 @@
 			<p>是否激活: <span v-text="form.isActive"></span></p>
 
 		</Modal>
-		
-		<Modal
-		  :transfer="false"
-		  v-model="modal.userDetail"
-		  title="用户详情">
-			<userDetail :form="userDetailForm" v-on:setDetail="setDetailModal"/>
-		</Modal>
-		
-		<Modal
-		  :transfer="false"
-		  fullscreen
-		  v-model="modal.userDetalSearch"
-		  title="搜索主表信息">
-		  <user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection"/>
-		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
-		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
-		  </div>
+
+		<Modal :transfer="false" v-model="modal.userDetail" title="用户详情">
+			<userDetail :form="userDetailForm" v-on:setDetail="setDetailModal" />
 		</Modal>
 
-    <Modal
-		  :transfer="false"
-		  v-model="modal.projectDetail"
-		  title="项目详情">
-			<projectDetail :form="projectDetailForm"/>
+		<Modal :transfer="false" fullscreen v-model="modal.userDetalSearch" title="搜索主表信息">
+			<user-list-single ref="UserListSingle" v-on:confirmSelection="confirmSelection" />
+			<div slot="footer">
+				<Button type="text" size="large" @click="cancelModal('userDetalSearch')">取消</Button>
+				<Button type="primary" size="large" @click="confirm">确认选择</Button>
+			</div>
 		</Modal>
-		
-		<Modal
-		  :transfer="false"
-		  fullscreen
-		  v-model="modal.projectDetalSearch"
-		  title="搜索主表信息">
-		  <project-list ref="ProjectList" v-on:initData="initData"/>
-		  <div slot="footer">
-		    <Button type="text" size="large" @click="cancelModal('projectDetalSearch')">取消</Button>
-		    <Button type="primary" size="large" @click="confirmProject">确认选择</Button>
-		  </div>
+
+		<Modal :transfer="false" v-model="modal.projectDetail" title="项目详情">
+			<projectDetail :form="projectDetailForm" />
+		</Modal>
+
+		<Modal :transfer="false" fullscreen v-model="modal.projectDetalSearch" title="搜索主表信息">
+			<project-list ref="ProjectList" v-on:initData="initData" />
+			<div slot="footer">
+				<Button type="text" size="large" @click="cancelModal('projectDetalSearch')">取消</Button>
+				<Button type="primary" size="large" @click="confirmProject">确认选择</Button>
+			</div>
 		</Modal>
 	</div>
 </template>
@@ -239,7 +225,7 @@
 	import ProjectDetail from '@/view/project/ProjectDetail.vue'
 	import {
 		getUserById,
-		getProjectById  
+		getProjectById
 	} from '@/api/module'
 
 	export default {
@@ -252,66 +238,66 @@
 		},
 		data() {
 			return {
-        userDetailForm: {
-        userId: null,
-        userPhone: null,
-        userEmail: null,
-        userCreateTime: null,
-        userDetailNickname: null,
-        userDetailHeadicon: null,
-        userDetailGender: null,
-        userDetailBirthday: null,
-        userDetailAge: null,
-        userDetailQq: null,
-        userDetailQqQrcode: null,
-        userDetailWechat: null,
-        userDetailWechatQrcode: null,
-        userDetailAlipay: null,
-        userDetailAlipayQrcode: null,
-        userDetailShareCode: null,
-        userDetailVersion: null
-      },
-      projectDetailForm: {
-        id: null,
-        title: null,
-        projectType: null,
-        city: null,
-        projectDetail: null,
-        releaseStatus: null,
-        markUnitName: null,
-        projectInvest: null,
-        checkPattern: null,
-        compAptitudeType: null,
-        builderLevel: null,
-        moneyToImplement: null,
-        tenderingAgent: null,
-        phone: null,
-        offerPrice: null,
-        assurePrice: null,
-        constructionPeriod: null,
-        downloadEndTime: null,
-        otherDemand: null,
-        openMarkInfo: null,
-        openMarkTime: null,
-        openMarkAddr: null,
-        inMarkPublicity: null,
-        inMarkComp: null,
-        noticeTime: null,
-        clickCount: null,
-        isElectronic: null,
-        version: null,
-        createTime: null,
-        updateTime: null,
-        isActive: null
-      },
+				userDetailForm: {
+					userId: null,
+					userPhone: null,
+					userEmail: null,
+					userCreateTime: null,
+					userDetailNickname: null,
+					userDetailHeadicon: null,
+					userDetailGender: null,
+					userDetailBirthday: null,
+					userDetailAge: null,
+					userDetailQq: null,
+					userDetailQqQrcode: null,
+					userDetailWechat: null,
+					userDetailWechatQrcode: null,
+					userDetailAlipay: null,
+					userDetailAlipayQrcode: null,
+					userDetailShareCode: null,
+					userDetailVersion: null
+				},
+				projectDetailForm: {
+					id: null,
+					title: null,
+					projectType: null,
+					city: null,
+					projectDetail: null,
+					releaseStatus: null,
+					markUnitName: null,
+					projectInvest: null,
+					checkPattern: null,
+					compAptitudeType: null,
+					builderLevel: null,
+					moneyToImplement: null,
+					tenderingAgent: null,
+					phone: null,
+					offerPrice: null,
+					assurePrice: null,
+					constructionPeriod: null,
+					downloadEndTime: null,
+					otherDemand: null,
+					openMarkInfo: null,
+					openMarkTime: null,
+					openMarkAddr: null,
+					inMarkPublicity: null,
+					inMarkComp: null,
+					noticeTime: null,
+					clickCount: null,
+					isElectronic: null,
+					version: null,
+					createTime: null,
+					updateTime: null,
+					isActive: null
+				},
 				modal: {
 					add: false,
 					edit: false,
 					search: false,
 					detail: false,
 					userDetail: false,
-          userDetalSearch: false,
-          projectDetail: false,
+					userDetalSearch: false,
+					projectDetail: false,
 					projectDetalSearch: false
 				},
 				loading: {
@@ -408,7 +394,7 @@
 						{
 							title: '项目收藏编号',
 							key: 'id',
-							minWidth: 120,
+							minWidth: 130,
 							sortable: true
 						},
 						{
@@ -417,120 +403,112 @@
 							minWidth: 120,
 							sortable: true,
 							render: (h, params) => {
-							  return h(
-							    'Dropdown',
-							    {
-							      on: {
-							        'on-click': itemName => {
-							          this.userOpt(itemName, params.row)
-							        }
-							      },
-							        props: {
-							          transfer: true
-							        }
-							    },
-							    [
-							      h(
-							        'span',
-							        [
-							          params.row.userId,
-							          h('Icon', {
-							            props: {
-							              type: 'ios-list',
-							              size: '25'
-							            }
-							          })
-							        ]
-							      ),
-							      h(
-							        'DropdownMenu',
-							        {
-							          slot: 'list'
-							        },
-							        [
-							          h(
-							            'DropdownItem',
-							            {
-							              props: {
-							                name: 'moduleDetail'
-							              }
-							            },
-							            '详情'
-							          ),
-							          h(
-							            'DropdownItem',
-							            {
-							              props: {
-							                name: 'showSearch'
-							              }
-							            },
-							            '搜索'
-							          )
-							        ]
-							      )
-							    ]
-							  )
+								return h(
+									'Dropdown', {
+										on: {
+											'on-click': itemName => {
+												this.userOpt(itemName, params.row)
+											}
+										},
+										props: {
+											transfer: true
+										}
+									},
+									[
+										h(
+											'span',
+											[
+												params.row.userId,
+												h('Icon', {
+													props: {
+														type: 'ios-list',
+														size: '25'
+													}
+												})
+											]
+										),
+										h(
+											'DropdownMenu', {
+												slot: 'list'
+											},
+											[
+												h(
+													'DropdownItem', {
+														props: {
+															name: 'moduleDetail'
+														}
+													},
+													'详情'
+												),
+												h(
+													'DropdownItem', {
+														props: {
+															name: 'showSearch'
+														}
+													},
+													'搜索'
+												)
+											]
+										)
+									]
+								)
 							}
 						},
 						{
 							title: '项目编号',
 							key: 'projectId',
 							minWidth: 120,
-              sortable: true,
-              render: (h, params) => {
-							  return h(
-							    'Dropdown',
-							    {
-							      on: {
-							        'on-click': itemName => {
-							          this.userOpt(itemName, params.row)
-							        }
-							      },
-							        props: {
-							          transfer: true
-							        }
-							    },
-							    [
-							      h(
-							        'span',
-							        [
-							          params.row.projectId,
-							          h('Icon', {
-							            props: {
-							              type: 'ios-list',
-							              size: '25'
-							            }
-							          })
-							        ]
-							      ),
-							      h(
-							        'DropdownMenu',
-							        {
-							          slot: 'list'
-							        },
-							        [
-							          h(
-							            'DropdownItem',
-							            {
-							              props: {
-							                name: 'moduleDetailProject'
-							              }
-							            },
-							            '详情'
-							          ),
-							          h(
-							            'DropdownItem',
-							            {
-							              props: {
-							                name: 'showSearchProject'
-							              }
-							            },
-							            '搜索'
-							          )
-							        ]
-							      )
-							    ]
-							  )
+							sortable: true,
+							render: (h, params) => {
+								return h(
+									'Dropdown', {
+										on: {
+											'on-click': itemName => {
+												this.userOpt(itemName, params.row)
+											}
+										},
+										props: {
+											transfer: true
+										}
+									},
+									[
+										h(
+											'span',
+											[
+												params.row.projectId,
+												h('Icon', {
+													props: {
+														type: 'ios-list',
+														size: '25'
+													}
+												})
+											]
+										),
+										h(
+											'DropdownMenu', {
+												slot: 'list'
+											},
+											[
+												h(
+													'DropdownItem', {
+														props: {
+															name: 'moduleDetailProject'
+														}
+													},
+													'详情'
+												),
+												h(
+													'DropdownItem', {
+														props: {
+															name: 'showSearchProject'
+														}
+													},
+													'搜索'
+												)
+											]
+										)
+									]
+								)
 							}
 						},
 						{
@@ -708,61 +686,57 @@
 				}
 			},
 			showUserDetailModal(id) {
-			  getUserById(id)
-			    .then(res => {
-			      const data = res.data
-			      if (data.code === ResponseStatus.OK) {
-			        this.userDetailForm = data.data.rows[0]
-			        this.modal.userDetail = true
-			      } else {
-			        this.$Message.error(data.message)
-			      }
-			    })
-			    .catch(err => {
-			      this.$Message.error(err)
-			    })
-      },
-      showProjectDetailModal(id) {
-			  getProjectById(id)
-			    .then(res => {
-            const data = res.data
-			      if (data.code === ResponseStatus.OK) {
-              this.projectDetailForm = data.data
-			        this.showModal('projectDetail')
-			      } else {
-			        this.$Message.error(data.message)
-			      }
-			    })
-			    .catch(err => {
-			      this.$Message.error(err)
-			    })
+				getUserById(id)
+					.then(res => {
+						const data = res.data
+						if (data.code === ResponseStatus.OK) {
+							this.userDetailForm = data.data.rows[0]
+							this.modal.userDetail = true
+						} else {
+							this.$Message.error(data.message)
+						}
+					})
+					.catch(err => {
+						this.$Message.error(err)
+					})
+			},
+			showProjectDetailModal(id) {
+				getProjectById(id)
+					.then(res => {
+						const data = res.data
+						if (data.code === ResponseStatus.OK) {
+							this.projectDetailForm = data.data
+							this.showModal('projectDetail')
+						} else {
+							this.$Message.error(data.message)
+						}
+					})
+					.catch(err => {
+						this.$Message.error(err)
+					})
 			},
 			setDetailModal(val) {
-			  this.modal.userDetail = val
-      },
-      // 确认用户选择
+				this.modal.userDetail = val
+			},
+			// 确认用户选择
 			confirmSelection(id) {
-			  this.cancelModal('userDetalSearch')
-        this.searchForm.userIdMin
-              = this.searchForm.userIdMax
-              = id
-			  utils.search(this)
-      },
-      // 确认用户选择
+				this.cancelModal('userDetalSearch')
+				this.searchForm.userIdMin = this.searchForm.userIdMax = id
+				utils.search(this)
+			},
+			// 确认用户选择
 			confirm() {
-			  this.$refs.UserListSingle.confirmSelection()
-      },
-      // 选择招标项目确认
-      initData(id) {
-			  this.cancelModal('projectDetalSearch')
-        this.searchForm.projectIdMin
-              = this.searchForm.projectIdMax
-              = id
-			  utils.search(this)
-      },
-      // 确认招标项目
+				this.$refs.UserListSingle.confirmSelection()
+			},
+			// 选择招标项目确认
+			initData(id) {
+				this.cancelModal('projectDetalSearch')
+				this.searchForm.projectIdMin = this.searchForm.projectIdMax = id
+				utils.search(this)
+			},
+			// 确认招标项目
 			confirmProject() {
-			  this.$refs.ProjectList.confirmSelection()
+				this.$refs.ProjectList.confirmSelection()
 			},
 			add() {
 				utils.add(this)

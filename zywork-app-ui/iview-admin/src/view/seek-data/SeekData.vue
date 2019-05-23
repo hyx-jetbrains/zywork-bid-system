@@ -90,8 +90,8 @@
             style="width: 100%;"
           ></DatePicker>
         </FormItem>
-        <FormItem label="赏金" prop="price">
-          <InputNumber v-model="form.price" placeholder="请输入赏金（元）" style="width: 100%;"/>
+        <FormItem label="赏金" prop="priceDisplay">
+          <InputNumber v-model="form.priceDisplay" placeholder="请输入赏金（元）" style="width: 100%;"/>
         </FormItem>
         <FormItem label="联系电话" prop="phone">
           <Input v-model="form.phone" placeholder="请输入联系电话"/>
@@ -158,8 +158,8 @@
             style="width: 100%;"
           ></DatePicker>
         </FormItem>
-        <FormItem label="赏金" prop="price">
-          <InputNumber v-model="form.price" placeholder="请输入赏金（元）" style="width: 100%;"/>
+        <FormItem label="赏金" prop="priceDisplay">
+          <InputNumber v-model="form.priceDisplay" placeholder="请输入赏金（元）" style="width: 100%;"/>
         </FormItem>
         <FormItem label="联系电话" prop="phone">
           <Input v-model="form.phone" placeholder="请输入联系电话"/>
@@ -462,7 +462,7 @@
       </p>
       <p>
         赏金:
-        <span v-text="form.price"></span>
+        <span v-text="form.price/100"></span>
       </p>
       <p>
         联系电话:
@@ -598,6 +598,7 @@ export default {
         dataCount: null,
         latestTime: null,
         price: null,
+				priceDisplay: null,
         phone: null,
         isUrgent: null,
         memo: null,
@@ -849,7 +850,11 @@ export default {
             title: '赏金',
             key: 'price',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.price/100;
+						  return h('span', '￥'+text)
+						}
           },
           {
             title: '联系电话',
@@ -1114,6 +1119,7 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
+				this.setPrice(0)
         this.setSwitchData(row)
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
@@ -1160,12 +1166,25 @@ export default {
         this.form.isUrgent = 1
       }
     },
+		setPrice(type) {
+			if (type === 0) {
+				if (this.form.price !== null && this.form.price !== 0) {
+					this.form.priceDisplay = this.form.price / 100
+				}
+			} else if (type === 1) {
+				if (this.form.priceDisplay !== null && this.form.priceDisplay !== 0) {
+					this.form.price = this.form.priceDisplay * 100
+				}
+			}
+		},
     add() {
       this.setSwitch()
+			this.setPrice(1)
       utils.add(this)
     },
     edit() {
       this.setSwitch()
+			this.setPrice(1)
       utils.edit(this)
     },
     active(row) {

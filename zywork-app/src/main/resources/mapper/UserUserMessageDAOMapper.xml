@@ -5,51 +5,45 @@
 <mapper namespace="top.zywork.dao.UserUserMessageDAO">
 
     <sql id="select_columns">
-        t_user.id as userId, t_user.phone as userPhone, t_user.email as userEmail, t_message.id as messageId, t_message.title as messageTitle, t_message.summary as messageSummary, t_message.content as messageContent, t_message.message_type as messageMessageType, t_user_message.is_read as userMessageIsRead, t_user_message.create_time as userMessageCreateTime, t_user_message.update_time as userMessageUpdateTime
+        t_user_message.id as userMessageId, t_user_message.message_id as userMessageMessageId, t_user_message.user_id as userMessageUserId, t_user_message.is_read as userMessageIsRead, t_user_message.version as userMessageVersion, t_user_message.create_time as userMessageCreateTime, t_user_message.update_time as userMessageUpdateTime, t_user_message.is_active as userMessageIsActive, t_message.title as messageTitle, t_message.summary as messageSummary, t_message.content as messageContent, t_message.message_type as messageMessageType
     </sql>
 
     <sql id="query_where_clause">
-        <if test="query != null and query.userId != null">
-			and t_user.id = #{query.userId}
+        <if test="query != null and query.userMessageId != null">
+			and t_user_message.id = #{query.userMessageId}
 		</if>
-		<if test="query != null and query.userIdMin != null and query.userIdMax == null">
-			and t_user.id <![CDATA[ >= ]]> #{query.userIdMin}
+		<if test="query != null and query.userMessageIdMin != null and query.userMessageIdMax == null">
+			and t_user_message.id <![CDATA[ >= ]]> #{query.userMessageIdMin}
 		</if>
-		<if test="query != null and query.userIdMin == null and query.userIdMax != null">
-			and t_user.id <![CDATA[ <= ]]> #{query.userIdMax}
+		<if test="query != null and query.userMessageIdMin == null and query.userMessageIdMax != null">
+			and t_user_message.id <![CDATA[ <= ]]> #{query.userMessageIdMax}
 		</if>
-		<if test="query != null and query.userIdMin != null and query.userIdMax != null">
-			and t_user.id <![CDATA[ >= ]]> #{query.userIdMin} and t_user.id <![CDATA[ <= ]]> #{query.userIdMax}
+		<if test="query != null and query.userMessageIdMin != null and query.userMessageIdMax != null">
+			and t_user_message.id <![CDATA[ >= ]]> #{query.userMessageIdMin} and t_user_message.id <![CDATA[ <= ]]> #{query.userMessageIdMax}
 		</if>
-		<if test="query != null and query.userPhone != null and query.userPhone != ''">
-			and t_user.phone like concat('%', #{query.userPhone}, '%')
+		<if test="query != null and query.userMessageMessageId != null">
+			and t_user_message.message_id = #{query.userMessageMessageId}
 		</if>
-		<if test="query != null and query.userEmail != null and query.userEmail != ''">
-			and t_user.email like concat('%', #{query.userEmail}, '%')
+		<if test="query != null and query.userMessageMessageIdMin != null and query.userMessageMessageIdMax == null">
+			and t_user_message.message_id <![CDATA[ >= ]]> #{query.userMessageMessageIdMin}
 		</if>
-		<if test="query != null and query.messageId != null">
-			and t_message.id = #{query.messageId}
+		<if test="query != null and query.userMessageMessageIdMin == null and query.userMessageMessageIdMax != null">
+			and t_user_message.message_id <![CDATA[ <= ]]> #{query.userMessageMessageIdMax}
 		</if>
-		<if test="query != null and query.messageIdMin != null and query.messageIdMax == null">
-			and t_message.id <![CDATA[ >= ]]> #{query.messageIdMin}
+		<if test="query != null and query.userMessageMessageIdMin != null and query.userMessageMessageIdMax != null">
+			and t_user_message.message_id <![CDATA[ >= ]]> #{query.userMessageMessageIdMin} and t_user_message.message_id <![CDATA[ <= ]]> #{query.userMessageMessageIdMax}
 		</if>
-		<if test="query != null and query.messageIdMin == null and query.messageIdMax != null">
-			and t_message.id <![CDATA[ <= ]]> #{query.messageIdMax}
+		<if test="query != null and query.userMessageUserId != null">
+			and t_user_message.user_id = #{query.userMessageUserId}
 		</if>
-		<if test="query != null and query.messageIdMin != null and query.messageIdMax != null">
-			and t_message.id <![CDATA[ >= ]]> #{query.messageIdMin} and t_message.id <![CDATA[ <= ]]> #{query.messageIdMax}
+		<if test="query != null and query.userMessageUserIdMin != null and query.userMessageUserIdMax == null">
+			and t_user_message.user_id <![CDATA[ >= ]]> #{query.userMessageUserIdMin}
 		</if>
-		<if test="query != null and query.messageTitle != null and query.messageTitle != ''">
-			and t_message.title like concat('%', #{query.messageTitle}, '%')
+		<if test="query != null and query.userMessageUserIdMin == null and query.userMessageUserIdMax != null">
+			and t_user_message.user_id <![CDATA[ <= ]]> #{query.userMessageUserIdMax}
 		</if>
-		<if test="query != null and query.messageSummary != null and query.messageSummary != ''">
-			and t_message.summary like concat('%', #{query.messageSummary}, '%')
-		</if>
-		<if test="query != null and query.messageContent != null and query.messageContent != ''">
-			and t_message.content like concat('%', #{query.messageContent}, '%')
-		</if>
-		<if test="query != null and query.messageMessageType != null and query.messageMessageType != ''">
-			and t_message.message_type like concat('%', #{query.messageMessageType}, '%')
+		<if test="query != null and query.userMessageUserIdMin != null and query.userMessageUserIdMax != null">
+			and t_user_message.user_id <![CDATA[ >= ]]> #{query.userMessageUserIdMin} and t_user_message.user_id <![CDATA[ <= ]]> #{query.userMessageUserIdMax}
 		</if>
 		<if test="query != null and query.userMessageIsRead != null">
 			and t_user_message.is_read = #{query.userMessageIsRead}
@@ -62,6 +56,18 @@
 		</if>
 		<if test="query != null and query.userMessageIsReadMin != null and query.userMessageIsReadMax != null">
 			and t_user_message.is_read <![CDATA[ >= ]]> #{query.userMessageIsReadMin} and t_user_message.is_read <![CDATA[ <= ]]> #{query.userMessageIsReadMax}
+		</if>
+		<if test="query != null and query.userMessageVersion != null">
+			and t_user_message.version = #{query.userMessageVersion}
+		</if>
+		<if test="query != null and query.userMessageVersionMin != null and query.userMessageVersionMax == null">
+			and t_user_message.version <![CDATA[ >= ]]> #{query.userMessageVersionMin}
+		</if>
+		<if test="query != null and query.userMessageVersionMin == null and query.userMessageVersionMax != null">
+			and t_user_message.version <![CDATA[ <= ]]> #{query.userMessageVersionMax}
+		</if>
+		<if test="query != null and query.userMessageVersionMin != null and query.userMessageVersionMax != null">
+			and t_user_message.version <![CDATA[ >= ]]> #{query.userMessageVersionMin} and t_user_message.version <![CDATA[ <= ]]> #{query.userMessageVersionMax}
 		</if>
 		<if test="query != null and query.userMessageCreateTime != null">
 			and t_user_message.create_time = #{query.userMessageCreateTime}
@@ -87,47 +93,55 @@
 		<if test="query != null and query.userMessageUpdateTimeMin != null and query.userMessageUpdateTimeMax != null">
 			and t_user_message.update_time <![CDATA[ >= ]]> #{query.userMessageUpdateTimeMin} and t_user_message.update_time <![CDATA[ <= ]]> #{query.userMessageUpdateTimeMax}
 		</if>
+		<if test="query != null and query.userMessageIsActive != null">
+			and t_user_message.is_active = #{query.userMessageIsActive}
+		</if>
+		<if test="query != null and query.userMessageIsActiveMin != null and query.userMessageIsActiveMax == null">
+			and t_user_message.is_active <![CDATA[ >= ]]> #{query.userMessageIsActiveMin}
+		</if>
+		<if test="query != null and query.userMessageIsActiveMin == null and query.userMessageIsActiveMax != null">
+			and t_user_message.is_active <![CDATA[ <= ]]> #{query.userMessageIsActiveMax}
+		</if>
+		<if test="query != null and query.userMessageIsActiveMin != null and query.userMessageIsActiveMax != null">
+			and t_user_message.is_active <![CDATA[ >= ]]> #{query.userMessageIsActiveMin} and t_user_message.is_active <![CDATA[ <= ]]> #{query.userMessageIsActiveMax}
+		</if>
+		<if test="query != null and query.messageTitle != null and query.messageTitle != ''">
+			and t_message.title like concat('%', #{query.messageTitle}, '%')
+		</if>
+		<if test="query != null and query.messageSummary != null and query.messageSummary != ''">
+			and t_message.summary like concat('%', #{query.messageSummary}, '%')
+		</if>
+		<if test="query != null and query.messageContent != null and query.messageContent != ''">
+			and t_message.content like concat('%', #{query.messageContent}, '%')
+		</if>
+		<if test="query != null and query.messageMessageType != null and query.messageMessageType != ''">
+			and t_message.message_type like concat('%', #{query.messageMessageType}, '%')
+		</if>
 		
         and
-        t_user.id = t_user_message.user_id and t_message.id = t_user_message.message_id
+        t_user_message.message_id = t_message.id
     </sql>
 
     <select id="listById" parameterType="long" resultType="userUserMessageDO">
         select
         <include refid="select_columns"/>
-        from t_user, t_message, t_user_message where t_user.id = #{id} and
-        t_user.id = t_user_message.user_id and t_message.id = t_user_message.message_id
+        from t_user_message, t_message where t_user_message.id = #{id} and
+        t_user_message.message_id = t_message.id
     </select>
 
     <select id="listAll" resultType="userUserMessageDO">
         select
         <include refid="select_columns"/>
-        from t_user, t_message, t_user_message
+        from t_user_message, t_message
         where
-        t_user.id = t_user_message.user_id and t_message.id = t_user_message.message_id
-        order by t_user.update_time desc, t_user.create_time desc
+        t_user_message.message_id = t_message.id
+        order by t_user_message.update_time desc, t_user_message.create_time desc
     </select>
 
-	<select id="listAllByCondition" resultType="userUserMessageDO">
-		select
-		<include refid="select_columns"/>
-		from t_user, t_message, t_user_message
-		<where>
-			<include refid="query_where_clause"/>
-		</where>
-		order by
-		<if test="query.sortColumn != null and query.sortColumn != ''">
-			${query.sortColumn} ${query.sortOrder}
-		</if>
-		<if test="query.sortColumn == null or query.sortColumn == ''">
-			t_user.update_time desc, t_user.create_time desc
-		</if>
-	</select>
-
-    <select id="listPageByCondition" resultType="userUserMessageDO">
+    <select id="listAllByCondition" resultType="userUserMessageDO">
         select
         <include refid="select_columns"/>
-        from t_user, t_message, t_user_message
+        from t_user_message, t_message
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -136,13 +150,29 @@
             ${query.sortColumn} ${query.sortOrder}
         </if>
         <if test="query.sortColumn == null or query.sortColumn == ''">
-            t_user.update_time desc, t_user.create_time desc
+            t_user_message.update_time desc, t_user_message.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userUserMessageDO">
+        select
+        <include refid="select_columns"/>
+        from t_user_message, t_message
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_user_message.update_time desc, t_user_message.create_time desc
         </if>
         limit #{query.beginIndex}, #{query.pageSize}
     </select>
 
     <select id="countByCondition" resultType="long">
-        select count(*) from t_user, t_message, t_user_message
+        select count(*) from t_user_message, t_message
         <where>
             <include refid="query_where_clause"/>
         </where>

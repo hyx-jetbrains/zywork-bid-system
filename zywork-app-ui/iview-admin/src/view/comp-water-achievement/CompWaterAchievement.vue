@@ -43,8 +43,8 @@
 				<FormItem label="项目负责人" prop="name">
 					<Input v-model="form.name" placeholder="请输入项目负责人" />
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmount">
-					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
+				<FormItem label="合同金额" prop="contractAmountDisplay">
+					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"
@@ -74,8 +74,8 @@
 				<FormItem label="项目负责人" prop="name">
 					<Input v-model="form.name" placeholder="请输入项目负责人" />
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmount">
-					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
+				<FormItem label="合同金额" prop="contractAmountDisplay">
+					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"
@@ -244,7 +244,7 @@
 			<p>企业编号: <span v-text="form.compId"></span></p>
 			<p>工程名称: <span v-text="form.projectName"></span></p>
 			<p>项目负责人: <span v-text="form.name"></span></p>
-			<p>合同金额: <span v-text="form.contractAmount"></span></p>
+			<p>合同金额: <span v-text="form.contractAmount/100"></span></p>
 			<p>开工时间: <span v-text="form.startDate"></span></p>
 			<p>竣工时间: <span v-text="form.endDate"></span></p>
 			<p>版本号: <span v-text="form.version"></span></p>
@@ -321,6 +321,7 @@
 					projectName: null,
 					name: null,
 					contractAmount: null,
+					contractAmountDisplay: null,
 					startDate: null,
 					endDate: null,
 					version: null,
@@ -515,7 +516,11 @@
 							title: '合同金额',
 							key: 'contractAmount',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.contractAmount/100;
+								return h('span', '￥'+text)
+							}
 						},
 						{
 							title: '开工时间',
@@ -689,6 +694,7 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
+					this.setPrice(0)
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
 					this.form = JSON.parse(JSON.stringify(row))
@@ -729,10 +735,23 @@
 			confirm() {
 			  this.$refs.CompanyListSingle.confirmSelection()
 			},
+			setPrice(type) {
+				if (type === 0) {
+					if (this.form.contractAmount !== null && this.form.contractAmount !== 0) {
+						this.form.contractAmountDisplay = this.form.contractAmount / 100
+					}
+				} else if (type === 1) {
+					if (this.form.contractAmountDisplay !== null && this.form.contractAmountDisplay !== 0) {
+						this.form.contractAmount = this.form.contractAmountDisplay * 100
+					}
+				}
+			},
 			add() {
+				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
+				this.setPrice(1)
 				utils.edit(this)
 			},
 			active(row) {

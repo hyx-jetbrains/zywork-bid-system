@@ -61,8 +61,8 @@
 				</Row>
 				<Row>
 					<i-col span="12">
-						<FormItem label="中标金额" prop="markMoney">
-							<Input v-model="form.markMoney" placeholder="请输入中标金额" />
+						<FormItem label="中标金额" prop="markMoneyDisplay">
+							<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -297,8 +297,8 @@
 				</Row>
 				<Row>
 					<i-col span="12">
-						<FormItem label="中标金额" prop="markMoney">
-							<Input v-model="form.markMoney" placeholder="请输入中标金额" />
+						<FormItem label="中标金额" prop="markMoneyDisplay">
+							<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -743,7 +743,7 @@
 			<p>企业编号: <span v-text="form.compId"></span></p>
 			<p>工程名称: <span v-text="form.projectName"></span></p>
 			<p>注册建造师: <span v-text="form.builderName"></span></p>
-			<p>中标金额: <span v-text="form.markMoney"></span></p>
+			<p>中标金额: <span v-text="form.markMoney/100"></span></p>
 			<p>建设规模: <span v-text="form.buildScale"></span></p>
 			<p>项目所属地区归类: <span v-text="form.regionType"></span></p>
 			<p>建设单位: <span v-text="form.buildComp"></span></p>
@@ -854,6 +854,7 @@
 					projectName: null,
 					builderName: null,
 					markMoney: null,
+					markMoneyDisplay: null,
 					buildScale: null,
 					regionType: null,
 					buildComp: null,
@@ -1318,7 +1319,11 @@
 							title: '中标金额',
 							key: 'markMoney',
 							minWidth: 120,
-							sortable: true
+							sortable: true,
+							render: (h, params) => {
+								let text = params.row.markMoney/100;
+								return h('span', '￥'+text)
+							}
 						},
 						{
 							title: '建设规模',
@@ -1672,7 +1677,7 @@
 				if (itemName === 'showEdit') {
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
-					
+					this.setPrice(0)
 					var projectAddr = this.form.projectAddr.split("/")
 					for(var i=0; projectAddr.length>i; i++) {
 						this.projectAddr.push(projectAddr[i])
@@ -1731,12 +1736,25 @@
 					this.form.regionType = this.regionType[0]+ '/' + this.regionType[1]+ '/' + this.regionType[2]
 				}
 			},
+			setPrice(type) {
+				if (type === 0) {
+					if (this.form.markMoney !== null && this.form.markMoney !== 0) {
+						this.form.markMoneyDisplay = this.form.markMoney / 100
+					}
+				} else if (type === 1) {
+					if (this.form.markMoneyDisplay !== null && this.form.markMoneyDisplay !== 0) {
+						this.form.markMoney = this.form.markMoneyDisplay * 100
+					}
+				}
+			},
 			add() {
 				this.setAddress()
+				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
 				this.setAddress()
+				this.setPrice(1)
 				utils.edit(this)
 			},
 			active(row) {

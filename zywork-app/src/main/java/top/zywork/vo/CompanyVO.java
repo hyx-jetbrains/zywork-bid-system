@@ -60,7 +60,7 @@ public class CompanyVO extends BaseVO {
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String compAddr;
 	// 注册资本
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 25, message = "必须小于20个字符")
 	private String regCapital;
 	// 经营范围
 	@Size(min = 0, max = 255, message = "必须小于255个字符")
@@ -80,7 +80,6 @@ public class CompanyVO extends BaseVO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
 	// 是否激活
-	@NotNull(message = "此项是必须项")
 	private Byte isActive;
 	
     public CompanyVO () {}

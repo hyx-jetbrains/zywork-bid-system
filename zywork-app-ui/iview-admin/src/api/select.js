@@ -124,11 +124,11 @@ export const projectMarkStatus = [
  */
 export const region = [
 	{
-		value: 1,
+		value: 0,
 		label: '省内'
 	},
 	{
-		value: 2,
+		value: 1,
 		label: '省外'
 	}
 ]
@@ -138,12 +138,12 @@ export const region = [
  */
 export const compType = [
 	{
-		value: '有限责任公司',
-		label: '有限责任公司'
+		value: '代理机构',
+		label: '代理机构'
 	},
 	{
-		value: '股份有限公司',
-		label: '股份有限公司'
+		value: '投标人',
+		label: '投标人'
 	}
 ]
 

@@ -105,8 +105,8 @@
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="项目投资" prop="projectInvest">
-              <Input v-model="form.projectInvest" placeholder="请输入项目投资"/>
+            <FormItem label="项目投资" prop="projectInvestDisplay">
+              <Input v-model="form.projectInvestDisplay" placeholder="请输入项目投资"/>
             </FormItem>
           </i-col>
         </Row>
@@ -159,14 +159,14 @@
         </Row>
         <Row>
           <i-col span="12">
-            <FormItem label="要约价(元)" prop="offerPrice">
-              <InputNumber v-model="form.offerPrice" placeholder="请输入要约价(元)" style="width: 100%;"/>
+            <FormItem label="要约价(元)" prop="offerPriceDisplay">
+              <InputNumber v-model="form.offerPriceDisplay" placeholder="请输入要约价(元)" style="width: 100%;"/>
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="保证金(万元)" prop="assurePrice">
+            <FormItem label="保证金(万元)" prop="assurePriceDisplay">
               <InputNumber
-                v-model="form.assurePrice"
+                v-model="form.assurePriceDisplay"
                 placeholder="请输入保证金(万元)"
                 style="width: 100%;"
               />
@@ -317,8 +317,8 @@
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="项目投资" prop="projectInvest">
-              <Input v-model="form.projectInvest" placeholder="请输入项目投资"/>
+            <FormItem label="项目投资" prop="projectInvestDisplay">
+              <Input v-model="form.projectInvestDisplay" placeholder="请输入项目投资"/>
             </FormItem>
           </i-col>
         </Row>
@@ -371,14 +371,14 @@
         </Row>
         <Row>
           <i-col span="12">
-            <FormItem label="要约价(元)" prop="offerPrice">
-              <InputNumber v-model="form.offerPrice" placeholder="请输入要约价(元)" style="width: 100%;"/>
+            <FormItem label="要约价(元)" prop="offerPriceDisplay">
+              <InputNumber v-model="form.offerPriceDisplay" placeholder="请输入要约价(元)" style="width: 100%;"/>
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="保证金(万元)" prop="assurePrice">
+            <FormItem label="保证金(万元)" prop="assurePriceDisplay">
               <InputNumber
-                v-model="form.assurePrice"
+                v-model="form.assurePriceDisplay"
                 placeholder="请输入保证金(万元)"
                 style="width: 100%;"
               />
@@ -758,7 +758,7 @@
       </p>
       <p>
         项目投资:
-        <span v-text="form.projectInvest"></span>
+        <span v-text="form.projectInvest/100"></span>
       </p>
       <p>
         审查方式:
@@ -786,11 +786,11 @@
       </p>
       <p>
         要约价(元):
-        <span v-text="form.offerPrice"></span>
+        <span v-text="form.offerPrice/100"></span>
       </p>
       <p>
         保证金(万元):
-        <span v-text="form.assurePrice"></span>
+        <span v-text="form.assurePrice/100"></span>
       </p>
       <p>
         工期(天):
@@ -955,6 +955,7 @@ export default {
         releaseStatus: null,
         markUnitName: null,
         projectInvest: null,
+				projectInvestDisplay: null,
         checkPattern: null,
         compAptitudeType: null,
         builderLevel: null,
@@ -962,7 +963,9 @@ export default {
         tenderingAgent: null,
         phone: null,
         offerPrice: 0,
+				offerPriceDisplay: 0,
         assurePrice: 0,
+				assurePriceDisplay: 0,
         constructionPeriod: null,
         downloadEndTime: null,
         otherDemand: null,
@@ -1355,7 +1358,11 @@ export default {
             title: '项目投资',
             key: 'projectInvest',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+							let text = params.row.projectInvest/100;
+						  return h('span', '￥' + text)
+						}
           },
           {
             title: '审查方式',
@@ -1412,13 +1419,8 @@ export default {
             minWidth: 120,
             sortable: true,
             render: (h, params) => {
-              const row = params.row
-              const text = row.offerPrice / 100
-              return h(
-                'span',
-                {},
-                '¥' + text
-              )
+							let text = params.row.offerPrice/100;
+							return h('span', '￥' + text)
             }
           },
           {
@@ -1427,13 +1429,8 @@ export default {
             minWidth: 130,
             sortable: true,
             render: (h, params) => {
-              const row = params.row
-              const text = row.assurePrice / 100
-              return h(
-                'span',
-                {},
-                '¥' + text
-              )
+            	let text = params.row.assurePrice/100;
+            	return h('span', '￥' + text)
             }
           },
           {
@@ -1838,18 +1835,28 @@ export default {
     setPrice(type) {
       if (type === 0) {
         if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
-          this.form.offerPrice = this.form.offerPrice / 100
+          this.form.offerPriceDisplay = this.form.offerPrice / 100
         }
+				
         if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
-          this.form.assurePrice = this.form.assurePrice / 100
+          this.form.assurePriceDisplay = this.form.assurePrice / 100
         }
+				
+				if(this.form.projectInvest !== null && this.form.projectInvest !== 0) {
+					this.form.projectInvestDisplay = this.form.projectInvest / 100
+				}
       } else if (type === 1) {
-        if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
-          this.form.offerPrice = this.form.offerPrice * 100
+        if (this.form.offerPriceDisplay !== null && this.form.offerPriceDisplay !== 0) {
+          this.form.offerPrice = this.form.offerPriceDisplay * 100
         }
-        if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
-          this.form.assurePrice = this.form.assurePrice * 100
+				
+        if (this.form.assurePriceDisplay !== null && this.form.assurePriceDisplay !== 0) {
+          this.form.assurePrice = this.form.assurePriceDisplay * 100
         }
+				
+				if(this.form.projectInvestDisplay !== null && this.form.projectInvestDisplay !== 0) {
+					this.form.projectInvest = this.form.projectInvestDisplay * 100
+				}
       }
     },
     add() {
