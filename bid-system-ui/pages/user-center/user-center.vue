@@ -124,10 +124,17 @@
 			}
 		},
 		onLoad() {
-			judgeLogin(this)
-			this.initData()
+			this.initData('init')
+		},
+		onPullDownRefresh() {
+			this.initData('pullDown')
 		},
 		methods: {
+			initData(type) {
+				judgeLogin(this, type)
+				geUserWalletByUserId(this)
+				getUserExpertByUserId(this)
+			},
 			bindGetUserInfo(e) {
 				saveUserDetail(this, {
 					openid: getOpenid(),
@@ -225,10 +232,7 @@
 					url: '/pages-user-center/contact/contact'
 				})
 			},
-			initData() {
-				geUserWalletByUserId(this)
-				getUserExpertByUserId(this)
-			}
+			
 		}
 	}
 </script>

@@ -71,7 +71,6 @@ public class UserBuilderController extends BaseController {
      */
     @PostMapping("any/list-page")
     public ResponseStatusVO listPage(@RequestBody UserBuilderQuery userBuilderQuery) {
-        userBuilderQuery.setBuilderIsActive((byte)0);
         return listPageByCondition(userBuilderQuery);
     }
 

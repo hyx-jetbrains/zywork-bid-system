@@ -429,6 +429,8 @@
 				<zywork-no-data v-else text="暂无中标记录"></zywork-no-data>
 			</view>
 		</view>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -464,6 +466,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				searchVal: '',
 				oldKeywordList: [],
 				isShowHistroy: true,
@@ -524,11 +528,21 @@
 		onLoad() {
 			this.initData();
 		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			this.checkRefresh(this.infoType.tabIndex, 'reachBottom');
+		},
 		methods: {
 			/** 初始化数据 */
 			initData() {
 				// 加载历史搜索数据
 				this.loadOldKeyword();
+			},
+			/** 初始化查询数据 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
 			},
 			/** 返回上个页面 */
 			toBackPage() {
@@ -545,7 +559,7 @@
 			searchData() {
 				this.isShowHistroy = false;
 				this.saveKeyword(this.searchVal);
-				this.searchCheck(this.infoType.tabIndex);
+				this.checkRefresh(this.infoType.tabIndex, 'init');
 			},
 			/** 保存关键字到历史记录 */
 			saveKeyword(keyword) {
@@ -602,25 +616,6 @@
 					}
 				});
 			},
-			/** 搜索判断 */
-			searchCheck(tabIndex) {
-				if (INFO_COMPANY === tabIndex) {
-					// 查企业
-					this.refreshCompanyList();
-				} else if (INFO_ACHIEVEMENT === tabIndex) {
-					// 业绩信息
-					this.refreshAchievementList(this.achievementOpts.current);
-				}  else if (INFO_BUILDER === tabIndex) {
-					// 建造师
-					this.refreshBuilderList();
-				} else if (INFO_APTITUDE === tabIndex) {
-					// 企业资质信息
-					this.refreshAptitudeList();
-				}else if (INFO_MARK === tabIndex) {
-					// 中标记录
-					this.refreshProjectAnnounceList();
-				}
-			},
 			/** 查看企业详情 */
 			toCompanyDetail(item) {
 				uni.navigateTo({
@@ -654,25 +649,12 @@
 						tabBarScrollLeft = tabBar.scrollLeft
 					this.infoType.scrollLeft = tabBarScrollLeft
 					this.infoType.tabIndex = tabIndex
-					this.searchCheck(tabIndex)
-				}
-			},
-			/** 初始化查询条件 */
-			initPager() {
-				this.pager = {
-					pageNo: 1,
-					pageSize: 10,
-					isActive: 0
+					this.initPager();
+					this.checkRefresh(tabIndex, 'init');
 				}
 			},
 			/** 刷新企业信息列表 */
-			refreshCompanyList() {
-				this.initPager();
-				if (this.searchVal != null && this.searchVal != '') {
-					this.pager.compName = this.searchVal;
-				} else {
-					this.pager.compName = ''
-				}
+			refreshCompanyList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -681,20 +663,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.companyList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新业绩信息列表 */
-			refreshAchievementList(index) {
-				this.initPager();
-				if (this.searchVal != null && this.searchVal != '') {
-					this.pager.projectName = this.searchVal;
-				} else {
-					this.pager.projectName = ''
-				}
+			refreshAchievementList(index, type) {
 				var url = '';
 				if (index == 0) {
 					// 房屋业绩
@@ -726,20 +702,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.achievementList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新企业建造师信息列表 */
-			refreshBuilderList() {
-				this.initPager();
-				if (this.searchVal != null && this.searchVal != '') {
-					this.pager.name = this.searchVal;
-				} else {
-					this.pager.name = ''
-				}
+			refreshBuilderList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -748,20 +718,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.builderList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新企业资质信息列表 */
-			refreshAptitudeList() {
-				this.initPager();
-				if (this.searchVal != null && this.searchVal != '') {
-					this.pager.certificateDetail = this.searchVal;
-				} else {
-					this.pager.certificateDetail = ''
-				}
+			refreshAptitudeList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -770,20 +734,14 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.aptitudeList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
 			},
 			/** 刷新中标记录列表 */
-			refreshProjectAnnounceList() {
-				this.initPager();
-				if (this.searchVal != null && this.searchVal != '') {
-					this.pager.firstCandidate = this.searchVal;
-				} else {
-					this.pager.firstCandidate = ''
-				}
+			refreshProjectAnnounceList(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
@@ -792,18 +750,115 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.projectAnnounceList = res.data.data.rows;
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
 					})
+			},
+			/** 
+			 * 请求成功之后的操作 
+			 * @param tabIndex 当前选择的类型
+			 * @param type 刷新的类型：init、pullDown、reachBottom
+			 * @param rows 请求到的数据
+			 */
+			requestSuccess(tabIndex, type, rows) {
+				if (type === 'init') {
+					this.setListValue(tabIndex, rows, 'use');
+				} else if (type === 'pullDown') {
+					this.setListValue(tabIndex, rows, 'use');
+					uni.stopPullDownRefresh()
+					this.showLoadMore = false
+					this.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (rows.length > 0) {
+						this.setListValue(tabIndex, rows, 'add');
+						this.loadMoreText = '加载更多'
+					} else {
+						this.loadMoreText = '已加载全部'
+					}
+				}
+			},
+			/**
+			 * 设置list的值
+			 * @param {Object} tabIndex 当前选择的类型
+			 * @param {Object} rows 刷新的类型：init、pullDown、reachBottom
+			 * @param {Object} type 是赋值还是追加数据：use、add
+			 */
+			setListValue(tabIndex, rows, type) {
+				if (INFO_COMPANY === tabIndex) {
+					// 企业信息
+					if (type === 'add') {
+						this.companyList = this.companyList.concat(rows);
+					} else {
+						this.companyList = rows;
+					}
+				} else if (INFO_ACHIEVEMENT === tabIndex) {
+					// 业绩信息
+					if (type === 'add') {
+						this.achievementList = this.achievementList.concat(rows);
+					} else {
+						this.achievementList = rows;
+					}
+
+				} else if (INFO_BUILDER === tabIndex) {
+					// 企业建造师信息
+					if (type === 'add') {
+						this.builderList = this.builderList.concat(rows);
+					} else {
+						this.builderList = rows;
+					}
+				} else if (INFO_APTITUDE === tabIndex) {
+					// 企业资质信息
+					if (type === 'add') {
+						this.aptitudeList = this.aptitudeList.concat(rows);
+					} else {
+						this.aptitudeList = rows;
+					}
+				} else if (INFO_MARK === tabIndex) {
+					// 中标记录
+					if (type === 'add') {
+						this.projectAnnounceList = this.projectAnnounceList.concat(rows);
+					} else {
+						this.projectAnnounceList = rows;
+					}
+				}
+			},
+			/** 检查刷新 */
+			checkRefresh(tabIndex, type) {
+				var tempSearchVal = '';
+				if (this.searchVal != null && this.searchVal != '') {
+					tempSearchVal = this.searchVal;
+				}
+				if (INFO_COMPANY === tabIndex) {
+					// 企业信息
+					this.pager.compName = tempSearchVal;
+					this.refreshCompanyList(type);
+				} else if (INFO_ACHIEVEMENT === tabIndex) {
+					// 业绩信息
+					this.pager.projectName = tempSearchVal;
+					this.refreshAchievementList(this.achievementOpts.current, type);
+				} else if (INFO_BUILDER === tabIndex) {
+					// 企业建造师信息
+					this.pager.name = tempSearchVal;
+					this.refreshBuilderList(type);
+				} else if (INFO_APTITUDE === tabIndex) {
+					// 企业资质信息
+					this.pager.certificateDetail = tempSearchVal;
+					this.refreshAptitudeList(type);
+				} else if (INFO_MARK === tabIndex) {
+					// 中标记录
+					this.pager.firstCandidate = tempSearchVal;
+					this.refreshProjectAnnounceList(type);
+				}
 			},
 			/** 业绩类型选择器 */
 			onClickAchievementItem: function(e) {
 				let index = e.target.value
 				if (this.achievementOpts.current !== index) {
 					this.achievementOpts.current = index
-					this.refreshAchievementList(index);
+					this.initPager();
+					this.checkRefresh(this.infoType.tabIndex, 'init');
 				}
 			},
 		}

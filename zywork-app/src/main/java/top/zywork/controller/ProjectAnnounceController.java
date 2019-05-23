@@ -196,7 +196,7 @@ public class ProjectAnnounceController extends BaseController {
 
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody ProjectAnnounceQuery projectAnnounceQuery) {
-        return listAllByCondition(projectAnnounceQuery);
+        return listPageByCondition(projectAnnounceQuery);
     }
 
     @Autowired

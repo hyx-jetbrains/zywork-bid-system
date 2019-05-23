@@ -136,7 +136,7 @@ public class CompPersonnelController extends BaseController {
 
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody CompPersonnelQuery compPersonnelQuery) {
-        return listAllByCondition(compPersonnelQuery);
+        return listPageByCondition(compPersonnelQuery);
     }
 
     @Autowired

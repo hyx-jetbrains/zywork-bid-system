@@ -136,7 +136,7 @@ public class CompTrafficAchievementController extends BaseController {
 
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody CompTrafficAchievementQuery compTrafficAchievementQuery) {
-        return listAllByCondition(compTrafficAchievementQuery);
+        return listPageByCondition(compTrafficAchievementQuery);
     }
 
     @Autowired

@@ -136,7 +136,7 @@ public class CompAptitudeController extends BaseController {
 
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody CompAptitudeQuery compAptitudeQuery) {
-        return listAllByCondition(compAptitudeQuery);
+        return listPageByCondition(compAptitudeQuery);
     }
 
     @Autowired

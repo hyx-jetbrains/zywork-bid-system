@@ -136,7 +136,7 @@ public class CompanyController extends BaseController {
 
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody CompanyQuery companyQuery) {
-        return listAllByCondition(companyQuery);
+        return listPageByCondition(companyQuery);
     }
 
     @GetMapping("any/one/{id}")

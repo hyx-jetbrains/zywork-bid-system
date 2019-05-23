@@ -136,7 +136,7 @@ public class CompHouseAchievementController extends BaseController {
 
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody CompHouseAchievementQuery compHouseAchievementQuery) {
-        return listAllByCondition(compHouseAchievementQuery);
+        return listPageByCondition(compHouseAchievementQuery);
     }
 
     @Autowired

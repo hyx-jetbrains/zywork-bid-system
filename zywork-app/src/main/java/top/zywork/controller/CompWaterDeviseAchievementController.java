@@ -136,7 +136,7 @@ public class CompWaterDeviseAchievementController extends BaseController {
 
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody CompWaterDeviseAchievementQuery compWaterDeviseAchievementQuery) {
-        return listAllByCondition(compWaterDeviseAchievementQuery);
+        return listPageByCondition(compWaterDeviseAchievementQuery);
     }
 
     @Autowired

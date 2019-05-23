@@ -17,7 +17,7 @@ import * as ResponseStatus from './response-status.js'
 
 const graceChecker = require("./graceChecker.js");
 
-export const judgeLogin = (self) => {
+export const judgeLogin = (self, type) => {
 	if (isUserTokenExist()) {
 		self.isUserLogin = true
 		getUserDetail(self)
@@ -25,6 +25,9 @@ export const judgeLogin = (self) => {
 		// #ifdef MP-WEIXIN
 		xcxLogin(self)
 		// #endif
+	}
+	if (type === 'pullDown') {
+		uni.stopPullDownRefresh();
 	}
 }
 
