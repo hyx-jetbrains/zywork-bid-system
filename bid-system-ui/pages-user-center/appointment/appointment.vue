@@ -61,6 +61,8 @@
 			</uni-card>
 		</view>
 		<zywork-no-data v-else text="暂无预约记录"></zywork-no-data>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -85,13 +87,17 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					subscribeStatus: null,
+					payStatus: null
+				},
 				appointmentStatus: {
 					current: 0,
 					items: operationArray
-				},
-				params: {
-					subscribeStatus: null,
-					payStatus: null
 				},
 				payStatusArray: payStatusArray,
 				payStatusIndex: 0,
@@ -99,21 +105,27 @@
 			}
 		},
 		onLoad() {
-			this.initData()
+			getExpertSubscribeByUserId(this, 'init')
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			getExpertSubscribeByUserId(this, 'reachBottom')
 		},
 		methods: {
 			// 分段器选择是否处理
 			onClickItem(index) {
 				if (this.appointmentStatus.current !== index) {
 					this.appointmentStatus.current = index
+					this.showLoadMore = false
 					if(index == 0) {
-						this.params.subscribeStatus = null
+						this.pager.subscribeStatus = null
 					} else if(index == 1) {
-						this.params.subscribeStatus = "未处理"
+						this.pager.subscribeStatus = "未处理"
 					} else if(index == 2) {
-						this.params.subscribeStatus = "已处理"
+						this.pager.subscribeStatus = "已处理"
 					}
-					getExpertSubscribeByUserId(this, this.params)
+					getExpertSubscribeByUserId(this, 'init')
 				}
 			},
 			// 立即支付
@@ -125,18 +137,16 @@
 			// 选择支付方式
 			choosePayStatus: function(e) {
 				this.payStatusIndex = e.target.value;
+				this.showLoadMore = false
 				if(this.payStatusIndex == 0) {
-					this.params.payStatus = null
+					this.pager.payStatus = null
 				} else if(this.payStatusIndex == 1) {
-					this.params.payStatus = "待支付"
+					this.pager.payStatus = "待支付"
 				} else if(this.payStatusIndex == 2) {
-					this.params.payStatus = "已支付"
+					this.pager.payStatus = "已支付"
 				}
-				getExpertSubscribeByUserId(this, this.params)
+				getExpertSubscribeByUserId(this, 'init')
 			},
-			initData() {
-				getExpertSubscribeByUserId(this, this.params)
-			}
 		}
 	}
 </script>

@@ -10,7 +10,7 @@
 					<view class="zy-time zy-text-info zy-text-small">{{consult.createTime}}</view>
 				</view>
 				
-				<view v-if="consult.replyContent != ''">
+				<view v-if="consult.replyContent != '' && consult.replyContent != null">
 					<view class="zy-bottom-border" />
 					<view class="zy-text-bold">
 						咨询回复：
@@ -25,6 +25,8 @@
 			</uni-card>
 		</view>
 		<zywork-no-data v-else text="暂无咨询记录"></zywork-no-data>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -43,11 +45,22 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
+				pager: {
+					pageNo: 1,
+					pageSize: 10
+				},
 				consultList: []
 			}
 		},
 		onLoad() {
-			this.initData()
+			getConsultByUserId(this, 'init')
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			getConsultByUserId(this, 'reachBottom')
 		},
 		methods: {
 			// 前往搜索页面
@@ -62,27 +75,6 @@
 					url: '/pages-user-center/consult/add-consult'
 				})
 			},
-			// 分段器选择是否处理
-			onClickItem(index) {
-				console.log(index)
-				console.log(this.current)
-				if (this.current !== index) {
-					this.current = index
-				}
-			},
-			// 立即支付
-			pay() {
-				uni.showModal({
-					title: '立即支付'
-				})
-			},
-			// 选择支付方式
-			choosePayStatus: function(e) {
-				this.payStatusIndex = e.target.value;
-			},
-			initData() {
-				getConsultByUserId(this)
-			}
 		}
 	}
 </script>

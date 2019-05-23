@@ -1,7 +1,8 @@
 <template>
 	<view>
 		<view class="zy-uni-segmented-control">
-			<uni-segmented-control :current="functionType.current" :values="functionType.items" v-on:clickItem="onClickItem" styleType="button" activeColor="#108EE9"></uni-segmented-control>
+			<uni-segmented-control :current="functionType.current" :values="functionType.items" v-on:clickItem="onClickItem"
+			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
 		<view class="zy-type-title zy-disable-flex" v-if="functionType.current == 0">
 			<text class="zy-text-bold">抵扣券类型</text>
@@ -9,7 +10,7 @@
 				<picker @change="chooseCouponStatus" :value="couponStatusIndex" :range="couponStatusArray">
 					<view class="zy-disable-flex">
 						<text>{{couponStatusArray[couponStatusIndex]}}</text>
-						<zywork-icon type="iconxiangxia"/>
+						<zywork-icon type="iconxiangxia" />
 					</view>
 				</picker>
 			</view>
@@ -78,6 +79,8 @@
 				<zywork-no-data v-else text="暂无使用记录"></zywork-no-data>
 			</view>
 		</view>
+
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -86,21 +89,21 @@
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
-	
+
 	import {
 		getCalendarDate,
 		getDate
 	} from '@/common/util.js'
-	
+
 	import {
 		couponStatusArray
 	} from '@/common/picker.data.js'
-	
+
 	import {
 		getCouponByUserId,
 		getCouponRecordByUserId
 	} from '@/common/user-center.js'
-	
+
 	export default {
 		components: {
 			uniSegmentedControl,
@@ -110,10 +113,12 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				currDate: getCalendarDate(new Date()),
 				couponStatusIndex: 0,
 				couponStatusArray: couponStatusArray,
-				projectPager: {
+				pager: {
 					pageNo: 1,
 					pageSize: 10,
 					sortColumn: 'couponValidTime',
@@ -126,35 +131,53 @@
 				},
 				couponList: [],
 				couponRecordlList: []
-				
+
 			}
 		},
 		onLoad() {
-			this.initData()
+			this.checkRefresh('init')
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			this.checkRefresh('reachBottom')
 		},
 		methods: {
+			/** 检查刷新 */
+			checkRefresh(type) {
+				if (this.functionType.current == 0) {
+					// 刷新我的抵用券
+					getCouponByUserId(this, type)
+				} else {
+					// 刷新用户抵用券使用记录
+					getCouponRecordByUserId(this, type)
+				}
+			},
+			/** 初始化查询数据 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
+			},
 			// 分段器选择类别
 			onClickItem(index) {
 				if (this.functionType.current !== index) {
 					this.functionType.current = index
-					if(index == 0) {
-						getCouponByUserId(this, this.projectPager)
-					} else if(index == 1) {
-						getCouponRecordByUserId(this)
-					}
+					this.initPager()
+					this.checkRefresh('init')
+					this.showLoadMore = false;
 				}
 			},
 			chooseCouponStatus: function(e) {
 				this.couponStatusIndex = e.target.value;
-				
-				if(this.couponStatusIndex == 0) {
-					this.projectPager.status = 0
-				} else if(this.couponStatusIndex == 1) {
-					this.projectPager.status = 1
-				} else if(this.couponStatusIndex == 2) {
-					this.projectPager.status = 2
+				this.showLoadMore = false;
+				if (this.couponStatusIndex == 0) {
+					this.pager.status = 0
+				} else if (this.couponStatusIndex == 1) {
+					this.pager.status = 1
+				} else if (this.couponStatusIndex == 2) {
+					this.pager.status = 2
 				}
-				getCouponByUserId(this, this.projectPager)
+				getCouponByUserId(this, 'init')
 			},
 			// 使用抵用券
 			useCouupon() {
@@ -162,48 +185,47 @@
 					url: '/pages-user-center/user-vip/user-vip'
 				})
 			},
-			initData() {
-				getCouponByUserId(this, this.projectPager)
-			}
 		}
 	}
 </script>
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	
+
 	.zy-coupon-card {
 		background-color: #fff;
 		border-radius: 10upx;
 		padding: 40upx;
 		margin: 20upx;
 	}
+
 	.zy-coupon-money {
 		width: 100upx;
 		text-align: center;
 		margin-right: 30upx;
 	}
+
 	.zy-coupon-money-detail {
 		color: red;
 	}
-	
+
 	.zy-coupon-record {
 		margin-top: 20upx
 	}
-	
+
 	.zy-coupon-title {
 		text-align: center;
 	}
-	
+
 	.zy-icon-yishiyong {
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
+
 	.zy-icon-yiguoqi {
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
-	
 </style>

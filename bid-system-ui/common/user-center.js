@@ -122,6 +122,7 @@ export const getExpertQuesTionTypeByUserId = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.expertTypeList = res.data.data.rows
+				self.questionTypeId = res.data.data.rows[0].id
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -931,7 +932,7 @@ export const getProjectCollectionByUserId = (self, type, params) => {
 /**
  * 我的预约
  */
-export const getExpertSubscribeByUserId = (self, params) => {
+export const getExpertSubscribeByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
@@ -939,15 +940,31 @@ export const getExpertSubscribeByUserId = (self, params) => {
 		url: BASE_URL + '/expersubscribe/user/list-page',
 		method: 'POST',
 		data: {
-			'subscribeStatus': params.subscribeStatus,
-			'payStatus': params.payStatus
+			'subscribeStatus': self.pager.subscribeStatus,
+			'payStatus': self.pager.payStatus,
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
 		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.expertSubscribeList = res.data.data.rows
+				if (type === 'init') {
+					self.expertSubscribeList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.expertSubscribeList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.expertSubscribeList = self.expertSubscribeList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -962,22 +979,39 @@ export const getExpertSubscribeByUserId = (self, params) => {
 }
 
 /**
- * 我的咨询
+ * 我的咨询-获取我的咨询记录
  */
-export const getConsultByUserId = (self) => {
+export const getConsultByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/consult/user/list-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.consultList = res.data.data.rows
+				if (type === 'init') {
+					self.consultList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.consultList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.consultList = self.consultList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -992,18 +1026,18 @@ export const getConsultByUserId = (self) => {
 }
 
 /**
- * 咨询
+ * 我的咨询-添加咨询
  */
-export const createConsult = (self, params) => {
+export const createConsult = (self) => {
 	uni.showLoading({
-		title: '正在保存'
+		title: '咨询中'
 	})
 	uni.request({
 		url: BASE_URL + '/consult/user/save',
 		method: 'POST',
 		data: {
-			'questionTypeId': params.questionTypeId,
-			'consultDesc': params.consultDesc
+			'questionTypeId': self.questionTypeId,
+			'consultDesc': self.consultDesc
 		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
@@ -1011,7 +1045,6 @@ export const createConsult = (self, params) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				showSuccessToast(res.data.message)
-
 				setTimeout(function() {
 					uni.redirectTo({
 						url: '/pages-user-center/consult/consult'
@@ -1098,20 +1131,34 @@ export const saveResume = (self, params) => {
 /**
  * 我的抵扣券
  */
-export const getCouponByUserId = (self, params) => {
+export const getCouponByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/UserUserCoupon/user/list-page/' + params.status,
+		url: BASE_URL + '/UserUserCoupon/user/list-page/' + self.pager.status,
 		method: 'POST',
-		data: params,
+		data: self.pager,
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.couponList = res.data.data.rows
+				if (type === 'init') {
+					self.couponList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.couponList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.couponList = self.couponList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -1128,20 +1175,34 @@ export const getCouponByUserId = (self, params) => {
 /**
  * 我的抵扣券使用记录
  */
-export const getCouponRecordByUserId = (self) => {
+export const getCouponRecordByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserCouponRecord/user/list-page',
 		method: 'POST',
-		data: {},
+		data: self.pager,
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.couponRecordlList = res.data.data.rows
+				if (type === 'init') {
+					self.couponRecordlList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.couponRecordlList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.couponRecordlList = self.couponRecordlList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
