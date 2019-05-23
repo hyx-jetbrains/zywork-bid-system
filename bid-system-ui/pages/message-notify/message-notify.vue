@@ -16,6 +16,8 @@
 			</view>
 		</view>
 		<zywork-no-data v-else text="暂无消息通知"></zywork-no-data>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -42,6 +44,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				messageStatus: {
 					current: 0,
 					items: messageReadTypeArray
@@ -57,10 +61,24 @@
 		onLoad() {
 			this.initMessage();
 		},
+		onPullDownRefresh() {
+			this.pager.pageNo = 1
+			loadMessage(this, this.pager, 'pullDown');
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			loadMessage(this, this.pager, 'reachBottom');
+		},
 		methods: {
 			/** 初始化消息 */
 			initMessage() {
 				loadMessage(this, this.pager, 'init');
+			},
+			/** 初始查询信息 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
 			},
 			/** 分段器选择器 */
 			onClickItem(index) {
@@ -71,13 +89,14 @@
 					} else {
 						this.pager.userMessageIsRead = --index;
 					}
+					this.initPager();
 					this.initMessage();
 				}
 			},
 			/** 查看消息详情 */
 			toMessageDetail(item) {
 				if (item.userMessageIsRead === 0) {
-					readMessage(this, item.messageId)
+					readMessage(this, item.userMessageId)
 				}
 				uni.navigateTo({
 					url: '/pages-message-notify/message-detail/message-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
