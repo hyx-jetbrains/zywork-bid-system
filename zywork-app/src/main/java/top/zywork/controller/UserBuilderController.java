@@ -81,7 +81,7 @@ public class UserBuilderController extends BaseController {
      * Description: 我发布的建造师应聘信息
      */
     @PostMapping("user/list-builder-page")
-    public ResponseStatusVO listPageByUserId(UserBuilderQuery userBuilderQuery) {
+    public ResponseStatusVO listPageByUserId(@RequestBody UserBuilderQuery userBuilderQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();

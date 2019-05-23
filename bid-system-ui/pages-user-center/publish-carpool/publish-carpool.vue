@@ -83,6 +83,8 @@
 				<zyworkNoData v-else text="暂无找车信息"></zyworkNoData>
 			</view>
 		</view>
+
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -112,6 +114,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				options: [{
 					text: '删除',
 					style: {
@@ -122,23 +126,44 @@
 					current: 0,
 					items: openMarkArray
 				},
+				pager: {
+					pageNo: 1,
+					pageSize: 10
+				},
 				carpoolList: [],
 				seekcarList: [],
 			}
 		},
 		onLoad() {
-			this.initData()
+			this.checkRefresh('init')
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			this.checkRefresh('reachBottom')
 		},
 		methods: {
+			/** 初始化查询数据 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
+			},
 			/** 分段器选择类别 */
 			onClickItem(index) {
 				if (this.type.current !== index) {
 					this.type.current = index
-					if(index == 0) {
-						getMarkCarpoolByUserId(this)
-					} else {
-						getMarkSeekcarByUserId(this)
-					}
+					this.initPager();
+					this.checkRefresh('init');
+				}
+			},
+			/** 检查刷新 */
+			checkRefresh(type) {
+				if (this.type.current == 0) {
+					// 刷新开标拼车
+					getMarkCarpoolByUserId(this, type);
+				} else {
+					// 刷新开标找车
+					getMarkSeekcarByUserId(this, type);
 				}
 			},
 			/** 前往详情页面 */
@@ -164,9 +189,6 @@
 					deleteMarkSeekcarById(this, id)
 				}
 			},
-			initData() {
-				getMarkCarpoolByUserId(this)
-			}
 		}
 	}
 </script>

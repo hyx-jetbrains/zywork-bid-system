@@ -44,6 +44,9 @@ button[type=primary][plain] {
 	background-color:transparent;
 }
 
+.uni-list-cell:last-child {
+	margin-bottom: 150upx;
+}
 .uni-list-cell-db {
 	height: 100upx;
 	display: flex;

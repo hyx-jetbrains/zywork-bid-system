@@ -515,7 +515,7 @@
 			},
 			/** 查询项目 */
 			searchProject() {
-				getProjectList(this, this.projectPager);
+				getProjectList(this, 'init', this.projectPager);
 			}
 			
 		}

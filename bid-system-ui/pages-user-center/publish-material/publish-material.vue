@@ -42,6 +42,8 @@
 			</view>
 			<zyworkNoData v-else text="暂无求带资料信息"></zyworkNoData>
 		</view>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -64,17 +66,28 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				options: [{
 					text: '删除',
 					style: {
 						backgroundColor: 'rgb(255,58,49)'
 					}
 				}],
+				pager: {
+					pageNo: 1,
+					pageSize: 10
+				},
 				seekDataList: []
 			}
 		},
 		onLoad() {
-			this.initData()
+			getSeeDataByUserId(this, 'init')
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			getSeeDataByUserId(this, 'reachBottom')
 		},
 		methods: {
 			/** 前往详情页面 */
@@ -92,9 +105,6 @@
 			confirmOptions(id) {
 				deleteSeekDataById(this,id)
 			},
-			initData() {
-				getSeeDataByUserId(this)
-			}
 		}
 	}
 </script>

@@ -137,7 +137,9 @@
 					</view>
 				</view>
 				<view class="zy-bottom-button">
-					<button type="primary" formType="submit">保存简历</button>
+					<cover-view>
+						<button type="primary" formType="submit">保存简历</button>
+					</cover-view>
 				</view>
 			</form>
 		</view>

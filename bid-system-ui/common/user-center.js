@@ -19,7 +19,7 @@ import * as ResponseStatus from './response-status.js'
 /**
  * 用户账户佣金明细
  */
-export const getFundsTransferByUserId = (self,params) => {
+export const getFundsTransferByUserId = (self, params) => {
 	uni.showLoading({
 		title: '加载中'
 	})
@@ -49,7 +49,7 @@ export const getFundsTransferByUserId = (self,params) => {
 /**
  * 用户账户积分明细
  */
-export const getAccountDetailByUserId = (self,params) => {
+export const getAccountDetailByUserId = (self, params) => {
 	uni.showLoading({
 		title: '加载中'
 	})
@@ -143,7 +143,7 @@ export const saveExpert = (self, params) => {
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/user-expert/user/saveExpert/'+ params.expertQuestionTypeId,
+		url: BASE_URL + '/user-expert/user/saveExpert/' + params.expertQuestionTypeId,
 		method: 'POST',
 		data: params,
 		header: {
@@ -152,13 +152,13 @@ export const saveExpert = (self, params) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				showSuccessToast(res.data.message)
-				
+
 				setTimeout(function() {
 					uni.switchTab({
 						url: '/pages/user-center/user-center',
 						success() {
 							let page = getCurrentPages().pop();
-							if(page==undefined || page==null){
+							if (page == undefined || page == null) {
 								return;
 							}
 							page.onLoad();
@@ -247,20 +247,37 @@ export const saveSubscribe = (self, params) => {
 /**
  * 我发布的建造师应聘信息
  */
-export const getBuilderByUserId = (self) => {
+export const getBuilderByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserBuilder/user/list-builder-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.builderList = res.data.data.rows
+				if (type === 'init') {
+					self.builderList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.builderList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.builderList = self.builderList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -277,12 +294,12 @@ export const getBuilderByUserId = (self) => {
 /**
  * 删除我发布的建造师应聘信息
  */
-export const deleteBuilderById = (self,id) => {
+export const deleteBuilderById = (self, id) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/builder/user/delete/'+id,
+		url: BASE_URL + '/builder/user/delete/' + id,
 		method: 'GET',
 		data: {},
 		header: {
@@ -308,20 +325,37 @@ export const deleteBuilderById = (self,id) => {
 /**
  * 我发布的建造师招聘信息
  */
-export const getBuilderReqByUserId = (self) => {
+export const getBuilderReqByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserBuilderReq/user/list-builderReq-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.builderReqList = res.data.data.rows
+				if (type === 'init') {
+					self.builderReqList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.builderReqList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.builderReqList = self.builderReqList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -338,12 +372,12 @@ export const getBuilderReqByUserId = (self) => {
 /**
  * 删除我发布的建造师招聘信息
  */
-export const deleteBuilderReqById = (self,id) => {
+export const deleteBuilderReqById = (self, id) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/builder-req/user/delete/'+id,
+		url: BASE_URL + '/builder-req/user/delete/' + id,
 		method: 'GET',
 		data: {},
 		header: {
@@ -369,7 +403,7 @@ export const deleteBuilderReqById = (self,id) => {
 /**
  * 我发布的资质转让
  */
-export const getAptitudeTransfeByUserId = (self,type) => {
+export const getAptitudeTransfeByUserId = (self, type, tempType) => {
 	uni.showLoading({
 		title: '加载中'
 	})
@@ -377,17 +411,41 @@ export const getAptitudeTransfeByUserId = (self,type) => {
 		url: BASE_URL + '/UserAptitudeTransfer/user/list-aptitudeTransfer-page',
 		method: 'POST',
 		data: {
-			'aptitudeTransferType': type
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize,
+			'aptitudeTransferType': tempType
 		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				if(type == 0) {
-					self.aptitudeBuyList = res.data.data.rows
-				} else {
-					self.aptitudeSellList = res.data.data.rows
+				if (type === 'init') {
+					if (tempType == 0) {
+						self.aptitudeBuyList = res.data.data.rows
+					} else {
+						self.aptitudeSellList = res.data.data.rows
+					}
+				} else if (type === 'pullDown') {
+					if (tempType == 0) {
+						self.aptitudeBuyList = res.data.data.rows
+					} else {
+						self.aptitudeSellList = res.data.data.rows
+					}
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						if (tempType == 0) {
+							self.aptitudeBuyList = self.aptitudeBuyList.concat(res.data.data.rows)
+						} else {
+							self.aptitudeSellList = self.aptitudeSellList.concat(res.data.data.rows)
+						}
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
 				}
 			} else {
 				showInfoToast(res.data.message)
@@ -405,12 +463,12 @@ export const getAptitudeTransfeByUserId = (self,type) => {
 /**
  * 删除我发布的资质转让
  */
-export const deleteAptitudeTransferById = (self,id,type) => {
+export const deleteAptitudeTransferById = (self, id, type) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/aptitude-transfer/user/delete/'+id,
+		url: BASE_URL + '/aptitude-transfer/user/delete/' + id,
 		method: 'GET',
 		data: {},
 		header: {
@@ -436,20 +494,37 @@ export const deleteAptitudeTransferById = (self,id,type) => {
 /**
  * 我的开标拼车--车主找人
  */
-export const getMarkCarpoolByUserId = (self) => {
+export const getMarkCarpoolByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserMarkCarpool/user/list-markCarpool-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.carpoolList = res.data.data.rows
+				if (type === 'init') {
+					self.carpoolList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.carpoolList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.carpoolList = self.carpoolList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -466,12 +541,12 @@ export const getMarkCarpoolByUserId = (self) => {
 /**
  * 删除我的开标拼车--车主找人
  */
-export const deleteMarkCarpoolById = (self,id) => {
+export const deleteMarkCarpoolById = (self, id) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/mark-carpool/user/delete/'+id,
+		url: BASE_URL + '/mark-carpool/user/delete/' + id,
 		method: 'GET',
 		data: {},
 		header: {
@@ -497,20 +572,37 @@ export const deleteMarkCarpoolById = (self,id) => {
 /**
  * 我的开标拼车--人找车
  */
-export const getMarkSeekcarByUserId = (self) => {
+export const getMarkSeekcarByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserMarkSeekcar/user/list-markSeekcar-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.seekcarList = res.data.data.rows
+				if (type === 'init') {
+					self.seekcarList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.seekcarList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.seekcarList = self.seekcarList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -527,14 +619,17 @@ export const getMarkSeekcarByUserId = (self) => {
 /**
  * 删除我的开标拼车--人找车
  */
-export const deleteMarkSeekcarById = (self,id) => {
+export const deleteMarkSeekcarById = (self, id) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/mark-seekcar/user/delete/'+id,
+		url: BASE_URL + '/mark-seekcar/user/delete/' + id,
 		method: 'GET',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
@@ -558,20 +653,37 @@ export const deleteMarkSeekcarById = (self,id) => {
 /**
  * 我发布岗位招聘
  */
-export const getRecruitByUserId = (self) => {
+export const getRecruitByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserRecruit/user/list-recruit-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.recruitList = res.data.data.rows
+				if (type === 'init') {
+					self.recruitList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.recruitList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.recruitList = self.recruitList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -588,12 +700,12 @@ export const getRecruitByUserId = (self) => {
 /**
  * 删除我发布岗位招聘
  */
-export const deleteRecruitById = (self,id) => {
+export const deleteRecruitById = (self, id) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/recruit/user/delete/'+id,
+		url: BASE_URL + '/recruit/user/delete/' + id,
 		method: 'GET',
 		data: {},
 		header: {
@@ -619,20 +731,37 @@ export const deleteRecruitById = (self,id) => {
 /**
  * 我的求带资料
  */
-export const getSeeDataByUserId = (self) => {
+export const getSeeDataByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserSeekData/user/list-seekData-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.seekDataList = res.data.data.rows
+				if (type === 'init') {
+					self.seekDataList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.seekDataList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.seekDataList = self.seekDataList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -649,12 +778,12 @@ export const getSeeDataByUserId = (self) => {
 /**
  * 删除我的求带资料
  */
-export const deleteSeekDataById = (self,id) => {
+export const deleteSeekDataById = (self, id) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/seek-data/user/delete/'+id,
+		url: BASE_URL + '/seek-data/user/delete/' + id,
 		method: 'GET',
 		data: {},
 		header: {
@@ -680,20 +809,37 @@ export const deleteSeekDataById = (self,id) => {
 /**
  * 我的申请保函
  */
-export const getGuaranteeByUserId = (self) => {
+export const getGuaranteeByUserId = (self, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/UserGuarantee/user/list-page',
 		method: 'POST',
-		data: {},
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.guaranteeList = res.data.data.rows
+				if (type === 'init') {
+					self.guaranteeList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.guaranteeList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.guaranteeList = self.guaranteeList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -710,12 +856,12 @@ export const getGuaranteeByUserId = (self) => {
 /**
  * 删除我的申请保函
  */
-export const deleteGuaranteeById = (self,id) => {
+export const deleteGuaranteeById = (self, id) => {
 	uni.showLoading({
 		title: '删除中'
 	})
 	uni.request({
-		url: BASE_URL + '/guarantee/user/delete/'+id,
+		url: BASE_URL + '/guarantee/user/delete/' + id,
 		method: 'GET',
 		data: {},
 		header: {
@@ -865,10 +1011,10 @@ export const createConsult = (self, params) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				showSuccessToast(res.data.message)
-				
+
 				setTimeout(function() {
 					uni.redirectTo({
-						url:'/pages-user-center/consult/consult'
+						url: '/pages-user-center/consult/consult'
 					})
 				}, 1500)
 			} else {
@@ -952,12 +1098,12 @@ export const saveResume = (self, params) => {
 /**
  * 我的抵扣券
  */
-export const getCouponByUserId = (self,params) => {
+export const getCouponByUserId = (self, params) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/UserUserCoupon/user/list-page/'+params.status,
+		url: BASE_URL + '/UserUserCoupon/user/list-page/' + params.status,
 		method: 'POST',
 		data: params,
 		header: {
@@ -1041,12 +1187,12 @@ export const getOftenQuerstion = (self, questionTypeId) => {
 /**
  * 常见问题详情
  */
-export const getOftenQuerstionDetail = (self,id) => {
+export const getOftenQuerstionDetail = (self, id) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/often-question/user/getById?id='+id,
+		url: BASE_URL + '/often-question/user/getById?id=' + id,
 		method: 'GET',
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {

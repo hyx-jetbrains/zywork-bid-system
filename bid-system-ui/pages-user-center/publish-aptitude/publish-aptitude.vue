@@ -60,6 +60,8 @@
 				<zyworkNoData v-else text="暂无转让信息"></zyworkNoData>
 			</view>
 		</view>
+		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -87,6 +89,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				options: [{
 					text: '删除',
 					style: {
@@ -97,19 +101,38 @@
 					current: 0,
 					items: aptitudeTypeArray
 				},
+				pager: {
+					pageNo: 1,
+					pageSize: 10
+				},
 				aptitudeBuyList: [],
 				aptitudeSellList: [],
 			}
 		},
 		onLoad() {
-			this.initData()
+			this.initData('init')
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			getAptitudeTransfeByUserId(this, 'reachBottom', this.type.current)
 		},
 		methods: {
+			/** 初始化数据 */
+			initData(type) {
+				getAptitudeTransfeByUserId(this, type, this.type.current)
+			},
+			/** 初始化查询数据 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
+			},
 			// 分段器选择类别
 			onClickItem(index) {
 				if (this.type.current !== index) {
 					this.type.current = index
-					getAptitudeTransfeByUserId(this,this.type.current)
+					this.initPager();
+					getAptitudeTransfeByUserId(this, 'init', this.type.current)
 				}
 			},
 			/** 前往详情页面 */
@@ -126,9 +149,7 @@
 			confirmOptions(id) {
 				deleteAptitudeTransferById(this, id, this.type.current)
 			},
-			initData() {
-				getAptitudeTransfeByUserId(this,this.type.current)
-			}
+			
 		}
 	}
 </script>

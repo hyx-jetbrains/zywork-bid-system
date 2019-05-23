@@ -63,6 +63,8 @@
 				<zyworkNoData v-else text="暂无应聘信息"></zyworkNoData>
 			</view>
 		</view>
+
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -92,6 +94,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				options: [{
 					text: '删除',
 					style: {
@@ -102,29 +106,51 @@
 					current: 0,
 					items: builderTypeArray
 				},
+				pager: {
+					pageNo: 1,
+					pageSize: 10
+				},
 				builderReqList: [],
 				builderList: [],
 			}
 		},
 		onLoad() {
-			this.initData()
+			this.checkRefresh('init')
+		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			this.checkRefresh('reachBottom')
 		},
 		methods: {
+			/** 初始化查询数据 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
+			},
 			// 分段器选择类别
 			onClickItem(index) {
 				if (this.type.current !== index) {
 					this.type.current = index
-					if(index == 0) {
-						getBuilderReqByUserId(this)
-					} else {
-						getBuilderByUserId(this)
-					}
+					this.initPager()
+					this.checkRefresh('init');
+				}
+			},
+			/** 检查刷新 */
+			checkRefresh(type) {
+				if (this.type.current == 0) {
+					// 刷新招聘
+					getBuilderReqByUserId(this, type)
+				} else {
+					// 刷新应聘
+					getBuilderByUserId(this, type)
 				}
 			},
 			/** 前往详情页面 */
 			toDetailPage(name, item) {
 				uni.navigateTo({
-					url: '/pages-user-center/publish-'+name+'-detail/publish-'+name+'-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-user-center/publish-' + name + '-detail/publish-' + name + '-detail?itemData=' + encodeURIComponent(
+						JSON.stringify(item))
 				});
 			},
 			/** 前往建造师需求详情页面 */
@@ -138,14 +164,12 @@
 			/** 确认操作 */
 			confirmOptions(id) {
 				if (this.type.current === 0) {
-					deleteBuilderReqById(this,id)
+					deleteBuilderReqById(this, id)
 				} else {
-					deleteBuilderById(this,id)
+					deleteBuilderById(this, id)
 				}
 			},
-			initData() {
-				getBuilderReqByUserId(this)
-			}
+
 		}
 	}
 </script>
