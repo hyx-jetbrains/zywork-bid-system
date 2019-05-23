@@ -30,7 +30,8 @@
 	} from '@/common/picker.data.js'
 	import {
 		loadMessage,
-		readMessage
+		readMessage,
+		countNotReadMsg
 	} from '@/common/message.js'
 	
 	const MESSAGE_ALL = 0
@@ -54,9 +55,14 @@
 				pager: {
 					pageNo: 1,
 					pageSize: 10,
-					userMessageIsRead: ''
+					userMessageIsRead: '',
+					sortColumn: 't_user_message.is_read',
+					sortOrder: 'asc',
 				}
 			}
+		},
+		onShow() {
+			countNotReadMsg();
 		},
 		onLoad() {
 			this.initMessage();
@@ -86,7 +92,11 @@
 					this.messageStatus.current = index
 					if (MESSAGE_ALL === index) {
 						this.pager.userMessageIsRead = '';
+						this.pager.sortColumn = 't_user_message.is_read';
+						this.pager.sortOrder = 'asc';
 					} else {
+						this.pager.sortColumn = 't_user_message.create_time';
+						this.pager.sortOrder = 'desc';
 						this.pager.userMessageIsRead = --index;
 					}
 					this.initPager();
@@ -96,7 +106,7 @@
 			/** 查看消息详情 */
 			toMessageDetail(item) {
 				if (item.userMessageIsRead === 0) {
-					readMessage(this, item.userMessageId)
+					readMessage(this, item.userMessageId);
 				}
 				uni.navigateTo({
 					url: '/pages-message-notify/message-detail/message-detail?itemData=' + encodeURIComponent(JSON.stringify(item))

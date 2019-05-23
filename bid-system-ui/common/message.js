@@ -66,3 +66,36 @@ export const readMessage = (self, id) => {
 		}
 	})
 }
+
+/**
+ * 统计未读消息
+ */
+export const countNotReadMsg = () => {
+	uni.request({
+		url: BASE_URL + '/user-usermessage/user/pager-cond',
+		data: {
+			userMessageIsRead: 0
+		},
+		method: 'POST',
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				if (res.data.data.total > 0) {
+					uni.setTabBarBadge({
+						index: 2,
+						text: res.data.data.total + ''
+					})
+				}
+			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
+				invalidToken()
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		}
+	})
+}
