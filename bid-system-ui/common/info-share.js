@@ -30,9 +30,6 @@ export const getListInfoToPost = (self, url, params) => {
  * 我要拼车-保存拼车记录
  */
 export const saveMarkCarpoolRecord = (self, carpoolId) => {
-	uni.showLoading({
-		title: '正在发布'
-	})
 	uni.request({
 		url: BASE_URL + '/mark-carpool-record/any/save-carpool-record/' + carpoolId,
 		method: 'GET',
@@ -52,7 +49,6 @@ export const saveMarkCarpoolRecord = (self, carpoolId) => {
 			networkError()
 		},
 		complete: () => {
-			uni.hideLoading()
 		}
 	})
 }
@@ -89,9 +85,6 @@ export const getMarkCarpoolRecord = (self, params) => {
  * 我要找车-保存找车记录
  */
 export const saveMarkSeekcarRecord = (self, seekcarId) => {
-	uni.showLoading({
-		title: '正在发布'
-	})
 	uni.request({
 		url: BASE_URL + '/mark-seekcar-record/any/save-seekcar-record/' + seekcarId,
 		method: 'GET',
@@ -111,7 +104,6 @@ export const saveMarkSeekcarRecord = (self, seekcarId) => {
 			networkError()
 		},
 		complete: () => {
-			uni.hideLoading()
 		}
 	})
 }

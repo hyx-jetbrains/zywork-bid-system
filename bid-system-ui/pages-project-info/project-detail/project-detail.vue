@@ -412,21 +412,25 @@
 			tapTab(type) {
 				if (type == 1) {
 					// 公告详情
-					this.toWebViewPage(this.project.inwordHtmlUrl)
+					this.toWebViewPage("公告详情", this.project.inwardHtmlUrl)
 				} else {
 					this.currTabIndex = type;
 				}
 			},
 			/** 前往webview页面 */
-			toWebViewPage(url) {
+			toWebViewPage(title, url) {
+				var item = {
+					'title': title,
+					'url': url
+				}
 				uni.navigateTo({
-					url: '/pages-static/web-view/web-view?url=' + encodeURIComponent(url)
+					url: '/pages-static/web-view/web-view?itemData=' + encodeURIComponent(JSON.stringify(item))
 				});
 			},
 			/** 公示详情 */
 			toAnnounceDetail() {
 				if (this.projectAnnounce.id !== null) {
-					this.toWebViewPage(this.projectAnnounce.inwordHtmlUrl);
+					this.toWebViewPage("公示详情", this.projectAnnounce.inwordHtmlUrl);
 				} else {
 					uni.showModal({
 						title: '提示',

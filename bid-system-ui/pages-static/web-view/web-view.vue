@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<web-view :src="url"></web-view>
+		<web-view :src="item.url"></web-view>
 	</view>
 </template>
 
@@ -8,18 +8,25 @@
 	export default {
 		data() {
 			return {
-				url: ''
+				item: {
+					title: '详情页面',
+					url: ''
+				}
 			}
 		},
 		onLoad(event) {
 			// TODO 后面把参数名替换成 payload
-			const payload = event.url || event.payload;
+			const payload = event.itemData || event.payload;
 			// 目前在某些平台参数会被主动 decode，暂时这样处理。
 			try {
-				this.url = decodeURIComponent(payload);
+				this.item = JSON.parse(decodeURIComponent(payload));
 			} catch (error) {
-				this.url = payload;
+				this.item = JSON.parse(payload);
 			}
+			console.log(this.item);
+			uni.setNavigationBarTitle({
+				title: this.item.title
+			});
 		},
 		methods: {}
 	}

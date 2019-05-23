@@ -123,6 +123,7 @@
 		<!-- 没有数据 -->
 		<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
 		
+		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -184,6 +185,8 @@
 		},
 		data() {
 			return {
+				loadMoreText: "加载中...",
+				showLoadMore: false,
 				projectType: {
 					scrollLeft: 0,
 					tabIndex: 0,
@@ -237,7 +240,25 @@
 		onLoad() {
 			this.initData()
 		},
+		onReachBottom() {
+			this.showLoadMore = true
+			this.pager.pageNo += 1
+			this.updateProjectList('reachBottom');
+		},
 		methods: {
+			/** 初始化数据 */
+			initData() {
+				this.updateProjectList('init');
+			},
+			/** 初始化查询数据 */
+			initPager() {
+				this.pager.pageNo = 1;
+				this.showLoadMore = false;
+			},
+			/** 更新项目列表 */
+			updateProjectList(type) {
+				getProjectCollectionByUserId(this, type, this.pager);
+			},
 			getElSize(id) {
 				return new Promise((res, rej) => {
 					uni.createSelectorQuery().select("#" + id).fields({
@@ -259,7 +280,8 @@
 					this.projectType.scrollLeft = tabBarScrollLeft
 					this.projectType.tabIndex = tabIndex
 					this.pager.projectType = this.projectType.tabbars[tabIndex].name
-					this.updateProjectList();
+					this.initPager();
+					this.updateProjectList('init');
 					this.imgIcon = PROJECT_TYPE_ICONS[tabIndex]
 				}
 			},
@@ -272,7 +294,8 @@
 					} else {
 						this.pager.markStatus = this.projectStatus.items[index]
 					}
-					this.updateProjectList();
+					this.initPager();
+					this.updateProjectList('init');
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {
@@ -323,22 +346,12 @@
 						itemList: this.actionSheetArray,
 						success: (e) => {
 							this.seeFile(e.tapIndex, projectId);
-							// uni.showToast({
-							// 	title:"点击了第" + e.tapIndex + "个选项",
-							// 	icon:"none"
-							// })
 						}
 					})
 				}
 				this.updateProjectList();
 			},
-			initData() {
-				this.updateProjectList();
-			},
-			/** 更新项目列表 */
-			updateProjectList() {
-				getProjectCollectionByUserId(this, this.pager)
-			},
+			
 		}
 	}
 </script>
