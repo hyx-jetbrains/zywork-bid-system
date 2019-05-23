@@ -73,7 +73,7 @@ public class UserUserMessageController extends BaseController {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-        userUserMessageQuery.setUserId(jwtUser.getUserId());
+        userUserMessageQuery.setUserMessageUserId(jwtUser.getUserId());
         return listPageByCondition(userUserMessageQuery);
     }
 

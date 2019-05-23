@@ -3,6 +3,7 @@ package top.zywork.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.zywork.dao.UserUserMessageDAO;
+import top.zywork.dos.UserUserMessageDO;
 import top.zywork.dto.UserUserMessageDTO;
 import top.zywork.service.AbstractBaseService;
 import top.zywork.service.UserUserMessageService;
