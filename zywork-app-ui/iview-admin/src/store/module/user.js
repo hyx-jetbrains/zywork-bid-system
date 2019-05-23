@@ -1,6 +1,7 @@
 import {
   login,
   logout,
+  getUserRoles,
   getUserInfo,
   getMessage,
   getContentByMsgId,
@@ -11,6 +12,7 @@ import {
 } from '@/api/user'
 import { setToken, getToken, removeToken, setUsername } from '@/libs/util'
 import * as ResponseStatus from '@/api/response-status'
+import headImg from '@/assets/images/head.png'
 
 export default {
   state: {
@@ -94,7 +96,7 @@ export default {
           } else {
             loginView.$Message.error(res.data.message)
           }
-					resolve()
+					resolve(res)
         }).catch(err => {
           reject(err)
         })
@@ -117,23 +119,39 @@ export default {
         // resolve()
       })
     },
+    getUserRoles ({ commit }) {
+      return new Promise((resolve, reject) => {
+        getUserRoles().then(res => {
+          let roles = []
+          if (res.data.code === ResponseStatus.OK) {
+            if (res.data.data.total > 0) {
+              res.data.data.rows.forEach((row, index) => {
+                roles.push(row.roleTitle)
+              })
+              commit('setAccess', roles)
+            }
+          }
+          resolve(roles)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    clearTokenAndAccess ({ commit }) {
+      commit('removeToken')
+      commit('setAccess', [])
+    },
     // 获取用户相关信息
     getUserInfo ({ state, commit }) {
       return new Promise((resolve, reject) => {
         getUserInfo().then(res => {
           const data = res.data
           if (data.code === ResponseStatus.OK) {
-            if (data.data.total !== 0) {
-              // 有获取到用户信息
-              commit('setUserName', data.data.rows[0].userDetailNickname)
-            } else {
-              commit('setUserName', '')
-            }
-            commit('setAvator', 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png')
+            commit('setUserName', data.data.rows[0].userDetailNickname ? data.data.rows[0].userDetailNickname : '暂无昵称')
+            commit('setAvator', data.data.rows[0].userDetailHeadicon ? data.data.rows[0].userDetailHeadicon : headImg)
             commit('setUserId', '1')
-            commit('setAccess', ['admin'])
             commit('setHasGetInfo', true)
-            resolve(data)
+            resolve(res)
           }
         }).catch(err => {
           reject(err)

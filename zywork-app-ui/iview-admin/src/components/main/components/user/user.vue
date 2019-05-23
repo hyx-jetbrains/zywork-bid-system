@@ -5,9 +5,9 @@
       <span class="main-user-name">{{username === 'null' ? '' : username}}</span>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
-        <!-- <DropdownItem name="message">
+        <DropdownItem name="message">
           消息中心<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
-        </DropdownItem> -->
+        </DropdownItem>
         <DropdownItem name="info">个人信息</DropdownItem>
         <DropdownItem name="logout">退出登录</DropdownItem>
       </DropdownMenu>
@@ -22,14 +22,13 @@
 import './user.less'
 import { mapActions } from 'vuex'
 import Cookie from 'js-cookie'
-import headImg from '@/assets/images/head.png'
 export default {
   name: 'User',
   props: {
-    // userAvator: {
-    //   type: String,
-    //   default: ''
-    // },
+    userAvator: {
+      type: String,
+      default: ''
+    },
     messageUnreadCount: {
       type: Number,
       default: 0
@@ -38,7 +37,6 @@ export default {
   data () {
     return {
       username: '',
-      userAvator: headImg
     }
   },
   methods: {
@@ -56,9 +54,9 @@ export default {
       })
     },
     message () {
-      this.$router.push({
-        name: 'message_page'
-      })
+      // this.$router.push({
+      //   name: 'message_page'
+      // })
     },
     info () {
       this.$router.push({

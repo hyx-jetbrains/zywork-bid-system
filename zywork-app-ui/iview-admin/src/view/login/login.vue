@@ -19,7 +19,10 @@
 <script>
 import LoginForm from '_c/login-form'
 import OtherLogin from '_c/other-login'
-import { mapActions } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
+import config from '@/config'
+import * as ResponseStatus from '@/api/response-status'
+import {hasOneOf} from '@/libs/tools'
 export default {
   components: {
     LoginForm,
@@ -38,7 +41,9 @@ export default {
   methods: {
     ...mapActions([
       'handleLogin',
-      'getUserInfo'
+      'getUserRoles',
+      'getUserInfo',
+      'clearTokenAndAccess'
     ]),
     handleSubmit ({ username, password, verifyCode }) {
       this.loginForm.username = username
@@ -47,24 +52,37 @@ export default {
       this.loginBtn = true
       this.handleLogin(this).then(res => {
         this.loginBtn = false
-        // 登入成功获取用户信息
-        this.getUserInfo().then(res => {
-          // 成功获取用户信息，清除tab菜单并进入首页
-          if (window.localStorage) {
-            window.localStorage.removeItem('tagNaveList')
-          }
-          this.$router.push({
-            name: this.$config.homeName
+        if (res.data.code === ResponseStatus.OK) {
+          // 登入成功获取用户角色
+          this.getUserRoles().then(res => {
+            if (res.length > 0) {
+              if (hasOneOf(config.hasAccessPermissionRoles, res)) {
+                this.getUserInfo().then(res => {
+                  // 成功获取用户信息，清除tab菜单并进入首页
+                  if (window.localStorage) {
+                    window.localStorage.removeItem('tagNaveList')
+                  }
+                  this.$router.push({
+                    name: this.$config.homeName
+                  })
+                })
+              } else {
+                this.$Message.error('您不是合法用户，不能访问此系统')
+                this.clearTokenAndAccess()
+              }
+            }
           })
-        })
+        }
       })
     },
     notice() {
-      this.$Notice.info({
-        title: '体验账号密码',
-        desc: '账号：demo@zywork.top 密码：Demo123456',
-        duration: 5
-      });
+      if (config.showDemoAccount) {
+        this.$Notice.info({
+          title: '体验账号密码',
+          desc: '账号：demo@zywork.top 密码：Demo123456',
+          duration: 10
+        })
+      }
     }
   },
   mounted() {
