@@ -61,6 +61,11 @@ public class ProjectResourceResourceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/all-cond")
+    public ResponseStatusVO userListAllByCondition(@RequestBody ProjectResourceResourceQuery projectResourceResourceQuery) {
+        return listAllByCondition(projectResourceResourceQuery);
+    }
+
     @Autowired
     public void setProjectResourceResourceService(ProjectResourceResourceService projectResourceResourceService) {
         this.projectResourceResourceService = projectResourceResourceService;
