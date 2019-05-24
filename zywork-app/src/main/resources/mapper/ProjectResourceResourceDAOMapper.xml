@@ -1,0 +1,190 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.ProjectResourceResourceDAO">
+
+    <sql id="select_columns">
+        t_project_resource.id as projectResourceId, t_project_resource.project_id as projectResourceProjectId, t_project_resource.resource_id as projectResourceResourceId, t_project_resource.res_type as projectResourceResType, t_project_resource.version as projectResourceVersion, t_project_resource.create_time as projectResourceCreateTime, t_project_resource.update_time as projectResourceUpdateTime, t_project_resource.is_active as projectResourceIsActive, t_resource.user_id as resourceUserId, t_resource.mime_type as resourceMimeType, t_resource.url as resourceUrl, t_resource.extension as resourceExtension
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.projectResourceId != null">
+			and t_project_resource.id = #{query.projectResourceId}
+		</if>
+		<if test="query != null and query.projectResourceIdMin != null and query.projectResourceIdMax == null">
+			and t_project_resource.id <![CDATA[ >= ]]> #{query.projectResourceIdMin}
+		</if>
+		<if test="query != null and query.projectResourceIdMin == null and query.projectResourceIdMax != null">
+			and t_project_resource.id <![CDATA[ <= ]]> #{query.projectResourceIdMax}
+		</if>
+		<if test="query != null and query.projectResourceIdMin != null and query.projectResourceIdMax != null">
+			and t_project_resource.id <![CDATA[ >= ]]> #{query.projectResourceIdMin} and t_project_resource.id <![CDATA[ <= ]]> #{query.projectResourceIdMax}
+		</if>
+		<if test="query != null and query.projectResourceProjectId != null">
+			and t_project_resource.project_id = #{query.projectResourceProjectId}
+		</if>
+		<if test="query != null and query.projectResourceProjectIdMin != null and query.projectResourceProjectIdMax == null">
+			and t_project_resource.project_id <![CDATA[ >= ]]> #{query.projectResourceProjectIdMin}
+		</if>
+		<if test="query != null and query.projectResourceProjectIdMin == null and query.projectResourceProjectIdMax != null">
+			and t_project_resource.project_id <![CDATA[ <= ]]> #{query.projectResourceProjectIdMax}
+		</if>
+		<if test="query != null and query.projectResourceProjectIdMin != null and query.projectResourceProjectIdMax != null">
+			and t_project_resource.project_id <![CDATA[ >= ]]> #{query.projectResourceProjectIdMin} and t_project_resource.project_id <![CDATA[ <= ]]> #{query.projectResourceProjectIdMax}
+		</if>
+		<if test="query != null and query.projectResourceResourceId != null">
+			and t_project_resource.resource_id = #{query.projectResourceResourceId}
+		</if>
+		<if test="query != null and query.projectResourceResourceIdMin != null and query.projectResourceResourceIdMax == null">
+			and t_project_resource.resource_id <![CDATA[ >= ]]> #{query.projectResourceResourceIdMin}
+		</if>
+		<if test="query != null and query.projectResourceResourceIdMin == null and query.projectResourceResourceIdMax != null">
+			and t_project_resource.resource_id <![CDATA[ <= ]]> #{query.projectResourceResourceIdMax}
+		</if>
+		<if test="query != null and query.projectResourceResourceIdMin != null and query.projectResourceResourceIdMax != null">
+			and t_project_resource.resource_id <![CDATA[ >= ]]> #{query.projectResourceResourceIdMin} and t_project_resource.resource_id <![CDATA[ <= ]]> #{query.projectResourceResourceIdMax}
+		</if>
+		<if test="query != null and query.projectResourceResType != null">
+			and t_project_resource.res_type = #{query.projectResourceResType}
+		</if>
+		<if test="query != null and query.projectResourceResTypeMin != null and query.projectResourceResTypeMax == null">
+			and t_project_resource.res_type <![CDATA[ >= ]]> #{query.projectResourceResTypeMin}
+		</if>
+		<if test="query != null and query.projectResourceResTypeMin == null and query.projectResourceResTypeMax != null">
+			and t_project_resource.res_type <![CDATA[ <= ]]> #{query.projectResourceResTypeMax}
+		</if>
+		<if test="query != null and query.projectResourceResTypeMin != null and query.projectResourceResTypeMax != null">
+			and t_project_resource.res_type <![CDATA[ >= ]]> #{query.projectResourceResTypeMin} and t_project_resource.res_type <![CDATA[ <= ]]> #{query.projectResourceResTypeMax}
+		</if>
+		<if test="query != null and query.projectResourceVersion != null">
+			and t_project_resource.version = #{query.projectResourceVersion}
+		</if>
+		<if test="query != null and query.projectResourceVersionMin != null and query.projectResourceVersionMax == null">
+			and t_project_resource.version <![CDATA[ >= ]]> #{query.projectResourceVersionMin}
+		</if>
+		<if test="query != null and query.projectResourceVersionMin == null and query.projectResourceVersionMax != null">
+			and t_project_resource.version <![CDATA[ <= ]]> #{query.projectResourceVersionMax}
+		</if>
+		<if test="query != null and query.projectResourceVersionMin != null and query.projectResourceVersionMax != null">
+			and t_project_resource.version <![CDATA[ >= ]]> #{query.projectResourceVersionMin} and t_project_resource.version <![CDATA[ <= ]]> #{query.projectResourceVersionMax}
+		</if>
+		<if test="query != null and query.projectResourceCreateTime != null">
+			and t_project_resource.create_time = #{query.projectResourceCreateTime}
+		</if>
+		<if test="query != null and query.projectResourceCreateTimeMin != null and query.projectResourceCreateTimeMax == null">
+			and t_project_resource.create_time <![CDATA[ >= ]]> #{query.projectResourceCreateTimeMin}
+		</if>
+		<if test="query != null and query.projectResourceCreateTimeMin == null and query.projectResourceCreateTimeMax != null">
+			and t_project_resource.create_time <![CDATA[ <= ]]> #{query.projectResourceCreateTimeMax}
+		</if>
+		<if test="query != null and query.projectResourceCreateTimeMin != null and query.projectResourceCreateTimeMax != null">
+			and t_project_resource.create_time <![CDATA[ >= ]]> #{query.projectResourceCreateTimeMin} and t_project_resource.create_time <![CDATA[ <= ]]> #{query.projectResourceCreateTimeMax}
+		</if>
+		<if test="query != null and query.projectResourceUpdateTime != null">
+			and t_project_resource.update_time = #{query.projectResourceUpdateTime}
+		</if>
+		<if test="query != null and query.projectResourceUpdateTimeMin != null and query.projectResourceUpdateTimeMax == null">
+			and t_project_resource.update_time <![CDATA[ >= ]]> #{query.projectResourceUpdateTimeMin}
+		</if>
+		<if test="query != null and query.projectResourceUpdateTimeMin == null and query.projectResourceUpdateTimeMax != null">
+			and t_project_resource.update_time <![CDATA[ <= ]]> #{query.projectResourceUpdateTimeMax}
+		</if>
+		<if test="query != null and query.projectResourceUpdateTimeMin != null and query.projectResourceUpdateTimeMax != null">
+			and t_project_resource.update_time <![CDATA[ >= ]]> #{query.projectResourceUpdateTimeMin} and t_project_resource.update_time <![CDATA[ <= ]]> #{query.projectResourceUpdateTimeMax}
+		</if>
+		<if test="query != null and query.projectResourceIsActive != null">
+			and t_project_resource.is_active = #{query.projectResourceIsActive}
+		</if>
+		<if test="query != null and query.projectResourceIsActiveMin != null and query.projectResourceIsActiveMax == null">
+			and t_project_resource.is_active <![CDATA[ >= ]]> #{query.projectResourceIsActiveMin}
+		</if>
+		<if test="query != null and query.projectResourceIsActiveMin == null and query.projectResourceIsActiveMax != null">
+			and t_project_resource.is_active <![CDATA[ <= ]]> #{query.projectResourceIsActiveMax}
+		</if>
+		<if test="query != null and query.projectResourceIsActiveMin != null and query.projectResourceIsActiveMax != null">
+			and t_project_resource.is_active <![CDATA[ >= ]]> #{query.projectResourceIsActiveMin} and t_project_resource.is_active <![CDATA[ <= ]]> #{query.projectResourceIsActiveMax}
+		</if>
+		<if test="query != null and query.resourceUserId != null">
+			and t_resource.user_id = #{query.resourceUserId}
+		</if>
+		<if test="query != null and query.resourceUserIdMin != null and query.resourceUserIdMax == null">
+			and t_resource.user_id <![CDATA[ >= ]]> #{query.resourceUserIdMin}
+		</if>
+		<if test="query != null and query.resourceUserIdMin == null and query.resourceUserIdMax != null">
+			and t_resource.user_id <![CDATA[ <= ]]> #{query.resourceUserIdMax}
+		</if>
+		<if test="query != null and query.resourceUserIdMin != null and query.resourceUserIdMax != null">
+			and t_resource.user_id <![CDATA[ >= ]]> #{query.resourceUserIdMin} and t_resource.user_id <![CDATA[ <= ]]> #{query.resourceUserIdMax}
+		</if>
+		<if test="query != null and query.resourceMimeType != null and query.resourceMimeType != ''">
+			and t_resource.mime_type like concat('%', #{query.resourceMimeType}, '%')
+		</if>
+		<if test="query != null and query.resourceUrl != null and query.resourceUrl != ''">
+			and t_resource.url like concat('%', #{query.resourceUrl}, '%')
+		</if>
+		<if test="query != null and query.resourceExtension != null and query.resourceExtension != ''">
+			and t_resource.extension like concat('%', #{query.resourceExtension}, '%')
+		</if>
+		
+        and
+        t_project_resource.resource_id = t_resource.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="projectResourceResourceDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_resource, t_resource where t_project_resource.id = #{id} and
+        t_project_resource.resource_id = t_resource.id
+    </select>
+
+    <select id="listAll" resultType="projectResourceResourceDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_resource, t_resource
+        where
+        t_project_resource.resource_id = t_resource.id
+        order by t_project_resource.update_time desc, t_project_resource.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="projectResourceResourceDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_resource, t_resource
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_project_resource.update_time desc, t_project_resource.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="projectResourceResourceDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_resource, t_resource
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_project_resource.update_time desc, t_project_resource.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_project_resource, t_resource
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>
