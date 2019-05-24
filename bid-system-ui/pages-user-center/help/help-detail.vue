@@ -5,7 +5,6 @@
 				{{item.title}}
 			</view>
 			<view class="zy-disable-flex">
-				<view class="zy-detail-card-type">{{item.questionTypeId}}</view>
 				<view class="zy-text-info zy-disable-flex-right" v-text="item.createTime"></view>
 			</view>
 			<view v-html="item.content"></view>

@@ -1217,21 +1217,64 @@ export const getCouponRecordByUserId = (self, type) => {
 }
 
 /**
- * 常见问题
+ * 常见问题-问题分类
  */
-export const getOftenQuerstion = (self, questionTypeId) => {
+export const getQuesTionType = (self) => {
+	uni.request({
+		url: BASE_URL + '/experquestion-type/user/list-all',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.expertTypeList = res.data.data.rows
+				let len = res.data.data.total
+				self.questionTypeArray.push('全部')
+				for (var i = 0; i < len; i++) {
+					self.questionTypeArray.push(res.data.data.rows[i].name)
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+		}
+	})
+}
+
+/**
+ * 根据问题类别id查询常见问题
+ */
+export const getOftenQuerstion = (self, params, type) => {
 	uni.showLoading({
 		title: '加载中'
 	})
 	uni.request({
 		url: BASE_URL + '/often-question/user/list-page',
 		method: 'POST',
-		data: {
-			'questionTypeId': questionTypeId
-		},
+		data: params,
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.oftenQuestionList = res.data.data.rows
+				if (type === 'init') {
+					self.oftenQuestionList = res.data.data.rows
+				} else if (type === 'pullDown') {
+					self.oftenQuestionList = res.data.data.rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (res.data.data.rows.length > 0) {
+						self.oftenQuestionList = self.oftenQuestionList.concat(res.data.data.rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
 			} else {
 				showInfoToast(res.data.message)
 			}
