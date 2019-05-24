@@ -19,7 +19,7 @@
 						<picker @change="chooseLevel" :value="levelIndex" :range="levelArray">
 							<view class="zy-disable-flex">
 								<text>{{levelArray[levelIndex]}}</text>
-								<zywork-icon type="iconiconfonti"/>
+								<zywork-icon type="iconiconfonti" />
 							</view>
 						</picker>
 					</view>
@@ -30,7 +30,7 @@
 						<picker @change="choosePayType" :value="payTypeIndex" :range="payTypeArray">
 							<view class="zy-disable-flex">
 								<text>{{payTypeArray[payTypeIndex]}}</text>
-								<zywork-icon type="iconiconfonti"/>
+								<zywork-icon type="iconiconfonti" />
 							</view>
 						</picker>
 					</view>
@@ -55,8 +55,8 @@
 						<uni-drawer :visible="couponDrawer" mode="right" @close="couponDrawer = false">
 							<uni-list>
 								<view v-if="couponList.length > 0">
-									<zywork-list-item v-for="(couponItem, index) in couponList" :key="index" :title="'¥' + couponItem.couponMoney / 100" note="点击使用"
-										@click="useCoupon(couponItem.userCouponId, couponItem.couponMoney)"></zywork-list-item>
+									<zywork-list-item v-for="(couponItem, index) in couponList" :key="index" :title="'¥' + couponItem.couponMoney / 100"
+									 note="点击使用" @click="useCoupon(couponItem.userCouponId, couponItem.couponMoney)"></zywork-list-item>
 								</view>
 								<zywork-no-data v-else text="暂无可用的抵用券"></zywork-no-data>
 							</uni-list>
@@ -72,7 +72,9 @@
 		<view class="zy-record-card-left"></view>
 		<view class="zy-record-card-right"></view>
 		<view class="zy-bottom-button" v-if="showBtn">
-			<button type="primary" @click="payRecord">立即支付</button>
+			<!-- #ifdef MP-WEIXIN -->
+			<button type="primary" @click="payRecord" :loading="loading">微信支付</button>
+			<!-- #endif -->
 		</view>
 	</view>
 </template>
@@ -90,15 +92,15 @@
 	import {
 		getCouponByUserId
 	} from '@/common/user-center.js'
-	
+
 	const VIP_LEVEL_MONEY_ONE = 19900
 	const VIP_LEVEL_MONEY_TWO = 29900
 	const VIP_LEVEL_MONEY_THREE = 39900
-	
+
 	const VIP_LEVEL_ONE = 0
 	const VIP_LEVEL_TWO = 1
 	const VIP_LEVEL_THREE = 2
-	
+
 	export default {
 		components: {
 			zyworkIcon,
@@ -115,7 +117,7 @@
 				payTypeIndex: 0,
 				couponDrawer: false,
 				showBtn: true,
-				couponPager: {
+				pager: {
 					pageNo: 1,
 					pageSize: 10,
 					sortColumn: 'couponValidTime',
@@ -127,7 +129,8 @@
 					oldMoney: 0,
 					couponMoney: 0,
 					money: 0
-				}
+				},
+				loading: false,
 			}
 		},
 		computed: {
@@ -181,7 +184,7 @@
 			showCouponDrawer() {
 				this.couponDrawer = true;
 				this.showBtn = false;
-				getCouponByUserId(this, this.couponPager);
+				getCouponByUserId(this, 'init');
 			},
 			// 使用抵用券
 			useCoupon(id, money) {
@@ -196,8 +199,75 @@
 			},
 			// 支付订单
 			payRecord() {
-				console.log('pay')
+				console.log("发起支付");
+				this.loading = true;
+				// uni.login({
+				// 	success: (e) => {
+				// 		console.log("login success", e);
+				// 		uni.request({
+				// 			url: `https://unidemo.dcloud.net.cn/payment/wx/mp?code=${e.code}&amount=${this.recordInfo.money}`,
+				// 			success: (res) => {
+				// 				console.log("pay request success", res);
+				// 				if (res.statusCode !== 200) {
+				// 					uni.showModal({
+				// 						content: "支付失败，请重试！",
+				// 						showCancel: false
+				// 					});
+				// 					return;
+				// 				}
+				// 				if (res.data.ret === 0) {
+				// 					console.log("得到接口prepay_id", res.data.payment);
+				// 					let paymentData = res.data.payment;
+				// 					uni.requestPayment({
+				// 						timeStamp: paymentData.timeStamp,
+				// 						nonceStr: paymentData.nonceStr,
+				// 						package: paymentData.package,
+				// 						signType: 'MD5',
+				// 						paySign: paymentData.paySign,
+				// 						success: (res) => {
+				// 							uni.showToast({
+				// 								title: "感谢您的赞助!"
+				// 							})
+				// 						},
+				// 						fail: (res) => {
+				// 							uni.showModal({
+				// 								content: "支付失败,原因为: " + res
+				// 									.errMsg,
+				// 								showCancel: false
+				// 							})
+				// 						},
+				// 						complete: () => {
+				// 							this.loading = false;
+				// 						}
+				// 					})
+				// 				} else {
+				// 					uni.showModal({
+				// 						content: res.data.desc,
+				// 						showCancel: false
+				// 					})
+				// 				}
+				// 			},
+				// 			fail: (e) => {
+				// 				console.log("fail", e);
+				// 				this.loading = false;
+				// 				uni.showModal({
+				// 					content: "支付失败,原因为: " + e.errMsg,
+				// 					showCancel: false
+				// 				})
+				// 			}
+				// 		})
+				// 	},
+				// 	fail: (e) => {
+				// 		console.log("fail", e);
+				// 		this.loading = false;
+				// 		uni.showModal({
+				// 			content: "支付失败,原因为: " + e.errMsg,
+				// 			showCancel: false
+				// 		})
+				// 	}
+				// })
 			}
+
 		},
 		onNavigationBarButtonTap(e) {
 			this.couponDrawer = !this.couponDrawer
@@ -213,12 +283,13 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-	
+
 	.zy-bottom-background {
 		background-color: $primary-color;
 		height: 560upx;
 		position: relative;
 	}
+
 	.zy-record-card {
 		width: 690upx;
 		height: 800upx;
@@ -229,6 +300,7 @@
 		border-radius: 20upx;
 		padding-top: 20upx;
 	}
+
 	.zy-record-card-left {
 		position: absolute;
 		top: 100;
@@ -238,6 +310,7 @@
 		background-color: $primary-page-backcolor;
 		border-radius: 50upx 0 0 50upx;
 	}
+
 	.zy-record-card-right {
 		position: absolute;
 		top: 100;
@@ -247,24 +320,30 @@
 		background-color: $primary-page-backcolor;
 		border-radius: 0 50upx 50upx 0;
 	}
+
 	.zy-record-tip-com {
 		color: #FFFFFF;
 		padding: 0 30upx;
 	}
+
 	.zy-record-tip {
 		font-size: 44upx;
 		padding-top: 20upx;
 	}
+
 	.zy-record-tip-desc {
 		font-size: 28upx;
 	}
+
 	.zy-record-card-item {
 		margin: 30upx 50upx 0 50upx;
 	}
+
 	.zy-record-card-title {
 		width: 400upx;
 		font-size: 36upx;
 	}
+
 	.zy-record-card-item-border {
 		border-bottom: 2upx solid $border-color;
 		margin: 80upx 30upx;
