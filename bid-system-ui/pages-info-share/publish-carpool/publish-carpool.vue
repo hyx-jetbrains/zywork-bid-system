@@ -404,7 +404,7 @@
 					title: ''
 				},
 				projects: [],
-				cityPickerValueDefault: [0, 0, 1],
+				cityPickerValueDefault: [0, 0, 0],
 				themeColor: '#007AFF',
 				startDate: getDate('start'),
 				endDate: getDate('end'),

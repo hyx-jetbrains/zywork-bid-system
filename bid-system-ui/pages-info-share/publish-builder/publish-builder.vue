@@ -357,7 +357,7 @@
 				},
 				startBirthdayDate: getDate('start'),
 				endBirthdayDate: getDate('end'),
-				cityPickerValueDefault: [0, 0, 1],
+				cityPickerValueDefault: [0, 0, 0],
 				themeColor: '#007AFF',
 				certificateTypeArray: certificateTypeArray,
 				tempCertificateMajorTypeObj: certificateMajorTypeObj,

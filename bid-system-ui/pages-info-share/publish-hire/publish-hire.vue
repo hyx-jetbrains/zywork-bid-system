@@ -135,7 +135,7 @@
 				educationIndex: 0,
 				salaryArray: salaryArray,
 				salaryIndex: 0,
-				cityPickerValueDefault: [0, 0, 1],
+				cityPickerValueDefault: [0, 0, 0],
 				themeColor: '#007AFF',
 				showBtn: true
 			}
