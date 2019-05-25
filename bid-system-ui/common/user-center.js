@@ -11,7 +11,8 @@ import {
 	invalidToken,
 	showInfoToast,
 	showSuccessToast,
-	IMAGE_BASE_URL
+	IMAGE_BASE_URL,
+	nullToStr
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -32,7 +33,7 @@ export const getFundsTransferByUserId = (self, params) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.commissionList = res.data.data.rows
+				self.commissionList = nullToStr(res.data.data.rows)
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -62,7 +63,7 @@ export const getAccountDetailByUserId = (self, params) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.integralList = res.data.data.rows
+				self.integralList = nullToStr(res.data.data.rows)
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -90,7 +91,7 @@ export const getCompanyList = (self, params) => {
 		header: '',
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.companyList = res.data.data.rows;
+				self.companyList = nullToStr(res.data.data.rows);
 				self.initCheckBoxSelected();
 			} else {
 				showInfoToast(res.data.message)
@@ -121,7 +122,7 @@ export const getExpertQuesTionTypeByUserId = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.expertTypeList = res.data.data.rows
+				self.expertTypeList = nullToStr(res.data.data.rows)
 				self.questionTypeId = res.data.data.rows[0].id
 			} else {
 				showInfoToast(res.data.message)
@@ -197,7 +198,7 @@ export const getSubscribeByUserId = (self) => {
 			if (res.data.code === ResponseStatus.OK) {
 				if (res.data.data.id !== null) {
 					// 有查询到之前保存的订阅信息
-					self.subscrible = res.data.data
+					self.subscrible = nullToStr(res.data.data.rows)
 					self.subscrible.minMoney /= 100;
 					self.subscrible.maxMoney /= 100;
 					self.setValue();
@@ -264,16 +265,17 @@ export const getBuilderByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.builderList = res.data.data.rows
+					self.builderList = rows
 				} else if (type === 'pullDown') {
-					self.builderList = res.data.data.rows
+					self.builderList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.builderList = self.builderList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.builderList = self.builderList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -342,16 +344,17 @@ export const getBuilderReqByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.builderReqList = res.data.data.rows
+					self.builderReqList = rows
 				} else if (type === 'pullDown') {
-					self.builderReqList = res.data.data.rows
+					self.builderReqList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.builderReqList = self.builderReqList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.builderReqList = self.builderReqList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -421,27 +424,28 @@ export const getAptitudeTransfeByUserId = (self, type, tempType) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
 					if (tempType == 0) {
-						self.aptitudeBuyList = res.data.data.rows
+						self.aptitudeBuyList = rows
 					} else {
-						self.aptitudeSellList = res.data.data.rows
+						self.aptitudeSellList = rows
 					}
 				} else if (type === 'pullDown') {
 					if (tempType == 0) {
-						self.aptitudeBuyList = res.data.data.rows
+						self.aptitudeBuyList = rows
 					} else {
-						self.aptitudeSellList = res.data.data.rows
+						self.aptitudeSellList = rows
 					}
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
+					if (rows.length > 0) {
 						if (tempType == 0) {
-							self.aptitudeBuyList = self.aptitudeBuyList.concat(res.data.data.rows)
+							self.aptitudeBuyList = self.aptitudeBuyList.concat(rows)
 						} else {
-							self.aptitudeSellList = self.aptitudeSellList.concat(res.data.data.rows)
+							self.aptitudeSellList = self.aptitudeSellList.concat(rows)
 						}
 						self.loadMoreText = '加载更多'
 					} else {
@@ -511,16 +515,17 @@ export const getMarkCarpoolByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.carpoolList = res.data.data.rows
+					self.carpoolList = rows
 				} else if (type === 'pullDown') {
-					self.carpoolList = res.data.data.rows
+					self.carpoolList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.carpoolList = self.carpoolList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.carpoolList = self.carpoolList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -589,16 +594,17 @@ export const getMarkSeekcarByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.seekcarList = res.data.data.rows
+					self.seekcarList = rows
 				} else if (type === 'pullDown') {
-					self.seekcarList = res.data.data.rows
+					self.seekcarList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.seekcarList = self.seekcarList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.seekcarList = self.seekcarList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -670,16 +676,17 @@ export const getRecruitByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.recruitList = res.data.data.rows
+					self.recruitList = rows
 				} else if (type === 'pullDown') {
-					self.recruitList = res.data.data.rows
+					self.recruitList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.recruitList = self.recruitList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.recruitList = self.recruitList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -748,16 +755,17 @@ export const getSeeDataByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.seekDataList = res.data.data.rows
+					self.seekDataList = rows
 				} else if (type === 'pullDown') {
-					self.seekDataList = res.data.data.rows
+					self.seekDataList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.seekDataList = self.seekDataList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.seekDataList = self.seekDataList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -826,16 +834,17 @@ export const getGuaranteeByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.guaranteeList = res.data.data.rows
+					self.guaranteeList = rows
 				} else if (type === 'pullDown') {
-					self.guaranteeList = res.data.data.rows
+					self.guaranteeList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.guaranteeList = self.guaranteeList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.guaranteeList = self.guaranteeList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -901,16 +910,17 @@ export const getProjectCollectionByUserId = (self, type, params) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.projects = res.data.data.rows;
+					self.projects = rows;
 				} else if (type === 'pullDown') {
-					self.projects = res.data.data.rows;
+					self.projects = rows;
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.projects = self.projects.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.projects = self.projects.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -950,16 +960,17 @@ export const getExpertSubscribeByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.expertSubscribeList = res.data.data.rows
+					self.expertSubscribeList = rows
 				} else if (type === 'pullDown') {
-					self.expertSubscribeList = res.data.data.rows
+					self.expertSubscribeList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.expertSubscribeList = self.expertSubscribeList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.expertSubscribeList = self.expertSubscribeList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -997,16 +1008,17 @@ export const getConsultByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.consultList = res.data.data.rows
+					self.consultList = rows
 				} else if (type === 'pullDown') {
-					self.consultList = res.data.data.rows
+					self.consultList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.consultList = self.consultList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.consultList = self.consultList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -1188,16 +1200,17 @@ export const getCouponRecordByUserId = (self, type) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.couponRecordlList = res.data.data.rows
+					self.couponRecordlList = rows
 				} else if (type === 'pullDown') {
-					self.couponRecordlList = res.data.data.rows
+					self.couponRecordlList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.couponRecordlList = self.couponRecordlList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.couponRecordlList = self.couponRecordlList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -1229,7 +1242,7 @@ export const getQuesTionType = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.expertTypeList = res.data.data.rows
+				self.expertTypeList = nullToStr(res.data.data.rows)
 				let len = res.data.data.total
 				self.questionTypeArray.push('全部')
 				for (var i = 0; i < len; i++) {
@@ -1260,16 +1273,17 @@ export const getOftenQuerstion = (self, params, type) => {
 		data: params,
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.oftenQuestionList = res.data.data.rows
+					self.oftenQuestionList = rows
 				} else if (type === 'pullDown') {
-					self.oftenQuestionList = res.data.data.rows
+					self.oftenQuestionList = rows
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.oftenQuestionList = self.oftenQuestionList.concat(res.data.data.rows)
+					if (rows.length > 0) {
+						self.oftenQuestionList = self.oftenQuestionList.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
@@ -1300,7 +1314,7 @@ export const getOftenQuerstionDetail = (self, id) => {
 		method: 'GET',
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.oftenQuestionList = res.data.data.rows
+				self.oftenQuestionList = nullToStr(res.data.data.rows)
 			} else {
 				showInfoToast(res.data.message)
 			}

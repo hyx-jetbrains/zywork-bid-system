@@ -1,5 +1,6 @@
 export const BASE_URL = 'http://192.168.203.208:8088'
-export const IMAGE_BASE_URL = 'http://localhost'
+export const IMAGE_BASE_URL = 'https://www.shudagroup.com'
+export const DOCUMENT_BASE_URL = 'https://www.shudagroup.com'
 export const USER_TOKEN_KEY = 'userToken'
 export const USER_OPENID = 'openid'
 
@@ -152,4 +153,25 @@ export const getDate = (type) => {
 	day = day > 9 ? day : '0' + day;
 
 	return `${year}-${month}-${day}`;
+}
+
+/**
+ * null转成空字符串
+ */
+export const nullToStr = (data) => {
+  for (let x in data) {
+    if (data[x] === null) { // 如果是null 把直接内容转为 ''
+      data[x] = '';
+    } else {
+      if (Array.isArray(data[x])) { // 是数组遍历数组 递归继续处理
+        data[x] = data[x].map(z => {
+          return nullToStr(z);
+        });
+      }
+      if(typeof(data[x]) === 'object'){ // 是json 递归继续处理
+        data[x] = nullToStr(data[x])
+      }
+    }
+  }
+  return data;
 }

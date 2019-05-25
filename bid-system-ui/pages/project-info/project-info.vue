@@ -54,9 +54,8 @@
 							</view>
 							<view class="zy-text-mini zy-text-info">
 								公告时间：
-								<text v-if="project.noticeTime !== null && project.noticeTime !== undefined"
-									class="zy-text-mini zy-text-info">
-								{{project.noticeTime}}
+								<text v-if="project.noticeTime !== null && project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
+									{{project.noticeTime}}
 								</text>
 								<text v-else class="zy-text-mini zy-text-info">
 									暂无
@@ -76,7 +75,7 @@
 							<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view> -->
 						</view>
 					</view>
-					
+
 					<!-- 全部内容部分 -->
 					<view v-if="projectStatus.current === 0">
 						<!-- 公告中内容部分 -->
@@ -159,7 +158,18 @@
 				</view>
 			</view>
 		</view>
-		
+
+		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
+			<scroll-view :scroll-y="true" class="uni-center center-box">
+				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
+					<view style="color: #108EE9;">
+						{{index+1}}.{{ item.fileName }}
+					</view>
+				</view>
+			</scroll-view>
+		</uni-popup>
+
+
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
@@ -171,13 +181,15 @@
 	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import {
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
 		isUserTokenExist,
 		toLoginPage,
 		getCalendarDate,
-		formatCalendarDate
+		formatCalendarDate,
+		DOCUMENT_BASE_URL
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -223,7 +235,8 @@
 			uniSegmentedControl,
 			zyworkCalendar,
 			uniTag,
-			zyworkNoData
+			zyworkNoData,
+			uniPopup
 		},
 		data() {
 			return {
@@ -304,7 +317,9 @@
 				imgBaseUrl: IMAGE_BASE_URL,
 				headicon: DEFAULT_HEADICON,
 				isCollection: false,
-				actionSheetArray: ['澄清文件', '招标文件', '清单文件', '资质文件']
+				actionSheetArray: ['澄清文件', '招标文件', '清单文件', '资质文件'],
+				isShowFileList: false,
+				fileList: []
 			}
 		},
 		onLoad() {
@@ -351,7 +366,8 @@
 			/** 查看广告详情 */
 			showSwiperDetail(item) {
 				uni.navigateTo({
-					url: '/pages-project-info/advertisement-detail/advertisement-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-project-info/advertisement-detail/advertisement-detail?itemData=' + encodeURIComponent(JSON.stringify(
+						item))
 				})
 			},
 			getElSize(id) {
@@ -441,23 +457,45 @@
 			},
 			// 查看文件
 			seeFile(type, projectId) {
-				console.log(type)
-				if (SEE_FILE_TYPE_CHENGQING === type) {
-					console.log("查看澄清文件")
-				} else if (SEE_FILE_TYPE_ZHAOBIAO === type) {
-					console.log("查看招标文件")
-				} else if (SEE_FILE_TYPE_QINGDAN === type) {
-					console.log("查看清单文件");
-				} else if (SEE_FILE_TYPE_ZIZHI === type) {
-					console.log("查看资质文件");
-				} else if (SEE_FILE_TYPE_SC_QXSC === type) {
+				// if (SEE_FILE_TYPE_CHENGQING === type) {
+				// 	console.log("查看澄清文件")
+				// 	projectInfo.getResourceByProjectIdAndType(this, projectId, type);
+				// } else if (SEE_FILE_TYPE_ZHAOBIAO === type) {
+				// 	console.log("查看招标文件")
+				// } else if (SEE_FILE_TYPE_QINGDAN === type) {
+				// 	console.log("查看清单文件");
+				// } else if (SEE_FILE_TYPE_ZIZHI === type) {
+				// 	console.log("查看资质文件");
+				// }
+
+				if (SEE_FILE_TYPE_SC_QXSC === type) {
 					const tempType = this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC];
 					if (tempType == '取消收藏') {
 						projectInfo.cancelProjectCollection(this, projectId);
 					} else if (tempType == '收藏项目') {
 						projectInfo.saveProjectCollection(this, projectId);
 					}
+				} else {
+					// 其他几个选项，查看文件
+					projectInfo.getResourceByProjectIdAndType(this, projectId, type);
 				}
+			},
+			/** 打开文档 */
+			openDocument(url) {
+				if (this.isShowFileList) {
+					this.isShowFileList = false;
+				}
+				uni.downloadFile({
+					url: DOCUMENT_BASE_URL + "/" + url,
+					success: (res) => {
+						uni.openDocument({
+							filePath: res.tempFilePath,
+							success: () => {
+								console.log('打开文档成功');
+							}
+						});
+					}
+				});
 			},
 			/** 获取到是否收藏后的操作 */
 			collectionOperation(projectId) {
@@ -479,9 +517,9 @@
 						}
 					})
 				}
-				
+
 			}
-			
+
 		}
 	}
 </script>

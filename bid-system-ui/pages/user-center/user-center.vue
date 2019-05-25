@@ -102,7 +102,10 @@
 					nickname: '',
 					phone: ''
 				},
-				userWallet: {},
+				userWallet: {
+					rmbBalance: 0,
+					integral: 0
+				},
 				headicon: DEFAULT_HEADICON,
 				subscrible: {
 					id: null,
@@ -132,8 +135,6 @@
 		methods: {
 			initData(type) {
 				judgeLogin(this, type)
-				geUserWalletByUserId(this)
-				getUserExpertByUserId(this)
 			},
 			bindGetUserInfo(e) {
 				saveUserDetail(this, {

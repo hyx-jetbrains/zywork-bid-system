@@ -366,7 +366,8 @@
 	} from '@/common/picker.data.js'
 	import {
 		DEFAULT_HEADICON,
-		showInfoToast
+		showInfoToast,
+		nullToStr
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as infoShare from '@/common/info-share.js'
@@ -616,6 +617,7 @@
 			 * @param {Object} type 是赋值还是追加数据：use、add
 			 */
 			setListValue(tabIndex, rows, type) {
+				rows = nullToStr(rows)
 				if (INFO_BUILDER === tabIndex) {
 					// 建造师
 					if (this.builderOpts.current === 0) {

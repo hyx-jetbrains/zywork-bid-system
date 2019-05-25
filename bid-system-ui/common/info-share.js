@@ -11,7 +11,8 @@ import {
 	invalidToken,
 	showInfoToast,
 	showSuccessToast,
-	IMAGE_BASE_URL
+	IMAGE_BASE_URL,
+	nullToStr
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -67,7 +68,7 @@ export const getMarkCarpoolRecord = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.carpoolRecordList = res.data.data.rows;
+				self.carpoolRecordList = nullToStr(res.data.data.rows);
 			} else {
 				showInfoToast(res.data.message);
 			}
@@ -122,7 +123,7 @@ export const getMarkSeekcarRecord = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.seekcarRecordList = res.data.data.rows;
+				self.seekcarRecordList = nullToStr(res.data.data.rows);
 			} else {
 				showInfoToast(res.data.message);
 			}

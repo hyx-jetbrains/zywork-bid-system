@@ -417,7 +417,8 @@
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import {
-		showInfoToast
+		showInfoToast,
+		nullToStr
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
@@ -698,6 +699,7 @@
 			 * @param {Object} type 是赋值还是追加数据：use、add
 			 */
 			setListValue(tabIndex, rows, type) {
+				rows = nullToStr(rows);
 				if (INFO_COMPANY === tabIndex) {
 					// 企业信息
 					if (type === 'add') {
@@ -712,7 +714,6 @@
 					} else {
 						this.achievementList = rows;
 					}
-
 				} else if (INFO_BUILDER === tabIndex) {
 					// 企业建造师信息
 					if (type === 'add') {

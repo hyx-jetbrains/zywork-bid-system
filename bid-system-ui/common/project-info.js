@@ -11,7 +11,9 @@ import {
 	invalidToken,
 	showInfoToast,
 	showSuccessToast,
-	IMAGE_BASE_URL
+	IMAGE_BASE_URL,
+	DOCUMENT_BASE_URL,
+	nullToStr
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -26,7 +28,7 @@ export const getAdvertisementInfo = (self) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.swiperItems = res.data.data.rows;
+				self.swiperItems = nullToStr(res.data.data.rows);
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -34,8 +36,7 @@ export const getAdvertisementInfo = (self) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -50,7 +51,7 @@ export const getFirstHeadlinesInfo = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.latestNotice = res.data.data.rows[0];
+				self.latestNotice = nullToStr(res.data.data.rows[0]);
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -58,8 +59,7 @@ export const getFirstHeadlinesInfo = (self, params) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 /**
@@ -91,6 +91,7 @@ export const getHeadlinesList = (self, type, params) => {
 						self.loadMoreText = '已加载全部'
 					}
 				}
+				self.notices = nullToStr(self.notices);
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -133,6 +134,7 @@ export const getProjectList = (self, type, params) => {
 						self.loadMoreText = '已加载全部'
 					}
 				}
+				self.projects = nullToStr(self.projects)
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -172,8 +174,7 @@ export const getProjectCollectionInfo = (self, projectId) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -185,7 +186,7 @@ export const saveProjectCollection = (self, projectId) => {
 		url: BASE_URL + '/projeccollection/user/save',
 		method: 'POST',
 		data: {
-			'projectId' : projectId
+			'projectId': projectId
 		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
@@ -203,8 +204,7 @@ export const saveProjectCollection = (self, projectId) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -232,8 +232,7 @@ export const cancelProjectCollection = (self, projectId) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -273,7 +272,7 @@ export const getCarpoolList = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.carpoolList = res.data.data.rows;
+				self.carpoolList = nullToStr(res.data.data.rows);
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -297,7 +296,7 @@ export const getSeekcarList = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.seekcarList = res.data.data.rows;
+				self.seekcarList = nullToStr(res.data.data.rows);
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -308,5 +307,52 @@ export const getSeekcarList = (self, params) => {
 		complete: () => {
 			uni.hideLoading()
 		}
+	})
+}
+
+/**
+ * 根据项目id和资源类别获取项目资源
+ * @param {Object} self
+ * @param {Object} projectId
+ * @param {Object} type
+ */
+export const getResourceByProjectIdAndType = (self, projectId, type) => {
+	uni.request({
+		url: BASE_URL + '/ProjectResourceResource/any/all-cond',
+		method: 'POST',
+		data: {
+			'projectResourceProjectId': projectId,
+			'projectResourceResType': type
+		},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.fileList = []
+				if (res.data.data.total === 0) {
+					// 没有文件
+					showInfoToast("没有文件")
+				} else if (res.data.data.total === 1) {
+					// 只有一个资源文件
+					self.openDocument(res.data.data.rows[0].resourceUrl)
+				} else {
+					// 有多个资源文件
+					self.isShowFileList = true;
+					let len = res.data.data.rows.length;
+					for (var i = 0; i < len; i++) {
+						var item = res.data.data.rows[i];
+						var resourceUrlArr = item.resourceUrl.split('/');
+						var fileName = resourceUrlArr[resourceUrlArr.length - 1];
+						item.fileName = fileName;
+						self.fileList.push(item);
+					}
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {}
 	})
 }

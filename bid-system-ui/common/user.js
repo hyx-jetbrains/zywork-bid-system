@@ -21,6 +21,8 @@ export const judgeLogin = (self, type) => {
 	if (isUserTokenExist()) {
 		self.isUserLogin = true
 		getUserDetail(self)
+		geUserWalletByUserId(self)
+		getUserExpertByUserId(self)
 	} else {
 		// #ifdef MP-WEIXIN
 		xcxLogin(self)
