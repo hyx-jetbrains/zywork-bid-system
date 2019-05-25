@@ -21,4 +21,21 @@ public final class ProjectConstants {
      * 中标公示状态-已开标
      */
     public static final String MARK_PUBLICIT_IN_MARK = "已开标";
+
+    /**
+     * 项目资源类型-澄清文件-0
+     */
+    public static final int PROJECT_SOURCE_TYPE_CHENGQING = 0;
+    /**
+     * 项目资源类型-招标文件-1
+     */
+    public static final int PROJECT_SOURCE_TYPE_ZHAOBIAO = 1;
+    /**
+     * 项目资源类型-清单文件-2
+     */
+    public static final int PROJECT_SOURCE_TYPE_QINGDAN = 2;
+    /**
+     * 项目资源类型-资质文件-3
+     */
+    public static final int PROJECT_SOURCE_TYPE_ZIZHI = 3;
 }
