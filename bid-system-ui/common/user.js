@@ -63,6 +63,8 @@ export const xcxLogin = (self) => {
 						} else {
 							// 第二次开始不需要点击登录按钮，而是直接从后台获取用户信息
 							getUserDetail(self)
+							geUserWalletByUserId(self)
+							getUserExpertByUserId(self)
 						}
 					} else {
 						showInfoToast(res.data.message)
