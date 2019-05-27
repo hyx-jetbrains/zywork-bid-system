@@ -14,7 +14,7 @@
       </p>
       <p>
         性别:
-        <span v-text="form.gender === '1' ? '男' : form.gender === '2' ? '女' : '未知'"></span>
+        <span v-text="form.gender == '1' ? '男' : form.gender == '2' ? '女' : '未知'"></span>
       </p>
       <p>
         出生年份:

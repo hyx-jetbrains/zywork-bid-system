@@ -71,7 +71,7 @@
           <InputNumber v-model="form.age" placeholder="请输入年龄" style="width: 100%;"/>
         </FormItem>
         <FormItem label="是否全职" prop="isFulltime">
-          <Select v-model="form.isFulltime" placeholder="请选是否全职" clearable filterable>
+          <Select v-model="form.isFulltime" placeholder="请选是否全职" filterable>
             <i-option v-for="item in jobTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
           </Select>
         </FormItem>
@@ -120,7 +120,7 @@
           <InputNumber v-model="form.age" placeholder="请输入年龄" style="width: 100%;"/>
         </FormItem>
         <FormItem label="是否全职" prop="isFulltime">
-          <Select v-model="form.isFulltime" placeholder="请选是否全职" clearable filterable>
+          <Select v-model="form.isFulltime" placeholder="请选是否全职" filterable>
             <i-option v-for="item in jobTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
           </Select>
         </FormItem>
@@ -973,7 +973,9 @@ export default {
   },
   methods: {
     initSelect() {
-      this.form.gender = this.genderList[0].value
+      this.form.gender = this.genderList[0].value;
+			this.form.isFulltime = this.jobTypeList[0].value;
+			this.form.examineStatus = this.examineList[0].value;
     },
     showModal(modal) {
       if (modal === 'add') {

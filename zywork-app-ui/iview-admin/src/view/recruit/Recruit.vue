@@ -63,7 +63,7 @@
           <Input v-model="form.jobTitle" placeholder="请输入招聘岗位"/>
         </FormItem>
         <FormItem label="是否全职" prop="isFulltime">
-          <Select v-model="form.isFulltime" placeholder="请选择求职类型" clearable filterable>
+          <Select v-model="form.isFulltime" placeholder="请选择求职类型" filterable>
             <i-option v-for="item in jobTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
           </Select>
         </FormItem>
@@ -136,7 +136,7 @@
           <Input v-model="form.jobTitle" placeholder="请输入招聘岗位"/>
         </FormItem>
         <FormItem label="是否全职" prop="isFulltime">
-          <Select v-model="form.isFulltime" placeholder="请选择求职类型" clearable filterable>
+          <Select v-model="form.isFulltime" placeholder="请选择求职类型" filterable>
             <i-option v-for="item in jobTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
           </Select>
         </FormItem>
@@ -573,14 +573,6 @@ export default {
             trigger: 'blur'
           }
         ],
-        isFulltime: [
-          {
-            type: 'integer',
-            required: true,
-            message: '此项为必须项',
-            trigger: 'blur, change'
-          }
-        ],
         workYear: [
           {
             type: 'string',
@@ -612,8 +604,8 @@ export default {
           {
             type: 'string',
             min: 1,
-            max: 10,
-            message: '必须1-10个字符',
+            max: 20,
+            message: '必须1-20个字符',
             trigger: 'blur'
           }
         ],
@@ -1010,6 +1002,7 @@ export default {
     showModal(modal) {
       if (modal === 'add') {
         this.form.recruitStatus = this.recruitStatusSelect[0].value
+				this.form.isFulltime = this.jobTypeList[0].value
       }
       utils.showModal(this, modal)
     },

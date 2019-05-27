@@ -3,7 +3,7 @@
     <Row>
       <i-col span="24">
         <Card>
-          <Button @click="confirmSelection" type="primary">确认选择</Button>&nbsp;
+          <!-- <Button @click="confirmSelection" type="primary">确认选择</Button>&nbsp; -->
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>

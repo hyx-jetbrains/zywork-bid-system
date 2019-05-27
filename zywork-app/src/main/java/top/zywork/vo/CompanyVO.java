@@ -26,7 +26,7 @@ public class CompanyVO extends BaseVO {
 	// 辖区类别
 	private Byte jurisdictionType;
 	// 市区
-	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String city;
 	// 企业类型
 	@Size(min = 0, max = 20, message = "必须小于20个字符")

@@ -748,7 +748,21 @@ export default {
             title: '其他要求',
             key: 'otherDemand',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+						  return h(
+						    'a',
+						    {
+						      on: {
+						        click: () => {
+						          utils.showModal(this, 'detail')
+						          this.form = JSON.parse(JSON.stringify(params.row))
+						        }
+						      }
+						    },
+						    '点击查看'
+						  )
+						}
           },
           {
             title: '开标信息',

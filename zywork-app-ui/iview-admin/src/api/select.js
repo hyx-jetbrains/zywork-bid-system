@@ -266,7 +266,7 @@ export const projectResourceType = [
   },
   {
     value: 3,
-    label: '资格审查文件'
+    label: '资质文件'
   }
 ]
 

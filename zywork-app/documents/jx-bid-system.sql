@@ -1,49 +1,21 @@
 /*
- Navicat Premium Data Transfer
+ Navicat MySQL Data Transfer
 
- Source Server         : MySQL
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80015
+ Source Server Version : 80013
  Source Host           : localhost:3306
- Source Schema         : jx-bid-system
+ Source Schema         : bid-system
 
  Target Server Type    : MySQL
- Target Server Version : 80015
+ Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 19/04/2019 15:19:19
+ Date: 24/05/2019 16:38:29
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for t_guarantee
--- ----------------------------
-DROP TABLE IF EXISTS `t_guarantee`;
-CREATE TABLE `t_guarantee` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '保函编号',
-  `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `project_name` varchar(100) DEFAULT '' COMMENT '项目名称',
-  `open_mark_time` datetime DEFAULT NULL COMMENT '开标时间',
-  `mark_unit_name` varchar(32) DEFAULT '' COMMENT '招标单位名称',
-  `construction_period` int(10) DEFAULT '0' COMMENT '工期(天)',
-  `assure_price` bigint(20) DEFAULT '0' COMMENT '担保金额(万元)',
-  `guarantee_comp` varchar(32) DEFAULT '' COMMENT '担保公司',
-  `guarantee_price` bigint(20) DEFAULT '0' COMMENT '保函费(元)',
-  `applicant` varchar(20) DEFAULT '' COMMENT '申请人',
-  `name` varchar(20) DEFAULT '' COMMENT '联系人',
-  `phone` varchar(15) DEFAULT '' COMMENT '手机号',
-  `address` varchar(100) DEFAULT '' COMMENT '地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '申请保函表' ROW_FORMAT = Dynamic;
-
-SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for t_account_detail
@@ -78,7 +50,7 @@ CREATE TABLE `t_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '我的业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '我的业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_advertisement
@@ -95,7 +67,7 @@ CREATE TABLE `t_advertisement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '轮播广告表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '轮播广告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_aptitude_resource
@@ -110,7 +82,7 @@ CREATE TABLE `t_aptitude_resource`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资质资源表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资质资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_aptitude_transfer
@@ -130,7 +102,7 @@ CREATE TABLE `t_aptitude_transfer`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资质转让表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资质转让表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_article
@@ -164,7 +136,7 @@ CREATE TABLE `t_article_category`  (
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NULL DEFAULT 1 COMMENT '是否激活',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章类别表' ROW_FORMAT = Dynamic;
 
@@ -181,7 +153,7 @@ CREATE TABLE `t_article_comment`  (
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NULL DEFAULT 1 COMMENT '是否激活',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章评论表' ROW_FORMAT = Dynamic;
 
@@ -208,7 +180,7 @@ CREATE TABLE `t_builder`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_builder_req
@@ -230,7 +202,7 @@ CREATE TABLE `t_builder_req`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师需求表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师需求表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_builder_resource
@@ -245,7 +217,7 @@ CREATE TABLE `t_builder_resource`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师资源表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_aptitude
@@ -261,7 +233,7 @@ CREATE TABLE `t_comp_aptitude`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业资质表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业资质表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_builder
@@ -271,7 +243,7 @@ CREATE TABLE `t_comp_builder`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业建造师编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
   `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
-  `gender` tinyint(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 0 COMMENT '性别',
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '性别',
   `reg_num` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册证件号码',
   `major_level` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '专业等级',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
@@ -279,7 +251,7 @@ CREATE TABLE `t_comp_builder`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业建造师表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业建造师表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_house_achievement
@@ -328,7 +300,7 @@ CREATE TABLE `t_comp_house_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业房建业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业房建业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_key_project_achievement
@@ -347,7 +319,7 @@ CREATE TABLE `t_comp_key_project_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业重点工程业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业重点工程业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_personnel
@@ -364,7 +336,7 @@ CREATE TABLE `t_comp_personnel`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业人员表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业人员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_traffic_achievement
@@ -386,7 +358,7 @@ CREATE TABLE `t_comp_traffic_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业交通业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业交通业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_water_achievement
@@ -405,7 +377,7 @@ CREATE TABLE `t_comp_water_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_water_devise_achievement
@@ -425,7 +397,7 @@ CREATE TABLE `t_comp_water_devise_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利勘查设计业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利勘查设计业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_water_monitor_achievement
@@ -445,7 +417,7 @@ CREATE TABLE `t_comp_water_monitor_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利监理业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利监理业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_company
@@ -465,7 +437,7 @@ CREATE TABLE `t_company`  (
   `responsible_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '负责人电话',
   `comp_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '单位电话',
   `comp_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系地址',
-  `reg_capital` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册资本',
+  `reg_capital` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册资本',
   `business_scope` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '经营范围',
   `affordable_business` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '可承担业务',
   `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
@@ -474,7 +446,7 @@ CREATE TABLE `t_company`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_consult
@@ -493,7 +465,7 @@ CREATE TABLE `t_consult`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '咨询表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '咨询表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_coupon
@@ -510,7 +482,7 @@ CREATE TABLE `t_coupon`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_coupon_record
@@ -528,7 +500,22 @@ CREATE TABLE `t_coupon_record`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券使用记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券使用记录表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_expert_question_type
+-- ----------------------------
+DROP TABLE IF EXISTS `t_expert_question_type`;
+CREATE TABLE `t_expert_question_type`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家问题分类编号',
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '类别名称',
+  `memo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '专家问题分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_expert_subscribe
@@ -553,36 +540,7 @@ CREATE TABLE `t_expert_subscribe`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家预约表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for t_expert_question_type
--- ----------------------------
-DROP TABLE IF EXISTS `t_expert_question_type`;
-CREATE TABLE `t_expert_question_type` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家问题分类编号',
-  `name` varchar(30) DEFAULT '' COMMENT '类别名称',
-  `memo` varchar(200) DEFAULT '' COMMENT '备注',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='专家问题分类表';
-
--- ----------------------------
--- Records of t_expert_question_type
--- ----------------------------
-BEGIN;
-INSERT INTO `t_expert_question_type` VALUES (1, '系统注册登录', '系统注册登录', 1, '2019-05-08 17:30:24', NULL, 0);
-INSERT INTO `t_expert_question_type` VALUES (2, 'CA锁办理及绑定激活', 'CA锁办理及绑定激活', 1, '2019-05-08 17:30:53', NULL, 0);
-INSERT INTO `t_expert_question_type` VALUES (3, '招标文件制作', '招标文件制作', 1, '2019-05-08 17:30:57', NULL, 0);
-INSERT INTO `t_expert_question_type` VALUES (4, '投标文件制作', '投标文件制作', 1, '2019-05-08 17:31:05', NULL, 0);
-INSERT INTO `t_expert_question_type` VALUES (5, '工程量清单编制', '工程量清单编制', 1, '2019-05-08 17:31:14', NULL, 0);
-INSERT INTO `t_expert_question_type` VALUES (6, '工程造价', '工程造价', 1, '2019-05-08 17:31:22', NULL, 0);
-INSERT INTO `t_expert_question_type` VALUES (7, '电子虚拟保证金缴纳', '电子虚拟保证金缴纳', 1, '2019-05-08 17:31:30', NULL, 0);
-INSERT INTO `t_expert_question_type` VALUES (8, '其他', '其他', 1, '2019-05-08 17:31:36', NULL, 0);
-COMMIT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家预约表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_funds_frezee
@@ -1038,6 +996,32 @@ CREATE TABLE `t_goods_user_coupon`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品优惠券用户领券信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for t_guarantee
+-- ----------------------------
+DROP TABLE IF EXISTS `t_guarantee`;
+CREATE TABLE `t_guarantee`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '保函编号',
+  `project_id` bigint(20) NULL DEFAULT 0 COMMENT '项目编号',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `project_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目名称',
+  `open_mark_time` datetime(0) NULL DEFAULT NULL COMMENT '开标时间',
+  `mark_unit_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标单位名称',
+  `construction_period` int(10) NULL DEFAULT 0 COMMENT '工期(天)',
+  `assure_price` bigint(20) NULL DEFAULT 0 COMMENT '担保金额(万元)',
+  `guarantee_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '担保公司',
+  `guarantee_price` bigint(20) NULL DEFAULT 0 COMMENT '保函费(元)',
+  `applicant` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '申请人',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人',
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '手机号',
+  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '申请保函表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for t_headlines
 -- ----------------------------
 DROP TABLE IF EXISTS `t_headlines`;
@@ -1050,87 +1034,87 @@ CREATE TABLE `t_headlines`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '头条表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '头条表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_mark_carpool
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_carpool`;
-CREATE TABLE `t_mark_carpool` (
+CREATE TABLE `t_mark_carpool`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '开标拼车编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `project_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `start_city` varchar(20) DEFAULT '' COMMENT '出发城市',
-  `start_addr` varchar(20) DEFAULT '' COMMENT '出发地点',
-  `end_city` varchar(20) DEFAULT NULL COMMENT '目的地城市',
-  `end_addr` varchar(10) DEFAULT '' COMMENT '目的地',
-  `start_time` datetime DEFAULT NULL COMMENT '出发时间',
-  `car_type` varchar(10) DEFAULT '' COMMENT '汽车类型',
-  `people_count` int(2) DEFAULT '0' COMMENT '搭载人数',
-  `record_count` int(2) DEFAULT '0' COMMENT '申请人数',
-  `price` bigint(20) DEFAULT '0' COMMENT '价格',
-  `name` varchar(10) DEFAULT '' COMMENT '联系人姓名',
-  `phone` varchar(11) DEFAULT '' COMMENT '联系人电话',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
+  `start_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发城市',
+  `start_addr` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发地点',
+  `end_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '目的地城市',
+  `end_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '目的地',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT '出发时间',
+  `car_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '汽车类型',
+  `people_count` int(2) NULL DEFAULT 0 COMMENT '搭载人数',
+  `record_count` int(2) NULL DEFAULT 0 COMMENT '申请人数',
+  `price` bigint(20) NULL DEFAULT 0 COMMENT '价格',
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人姓名',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人电话',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_mark_carpool_record
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_carpool_record`;
-CREATE TABLE `t_mark_carpool_record` (
+CREATE TABLE `t_mark_carpool_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '拼车记录编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `mark_carpool_id` bigint(20) DEFAULT NULL COMMENT '拼车编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车申请记录表' ROW_FORMAT = Dynamic;
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `mark_carpool_id` bigint(20) NULL DEFAULT NULL COMMENT '拼车编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车申请记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_mark_seekcar
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_seekcar`;
-CREATE TABLE `t_mark_seekcar` (
+CREATE TABLE `t_mark_seekcar`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '开标找车编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `project_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `start_city` varchar(20) DEFAULT '' COMMENT '出发城市',
-  `start_addr` varchar(20) DEFAULT '' COMMENT '出发地点',
-  `end_city` varchar(20) DEFAULT NULL COMMENT '目的地城市',
-  `end_addr` varchar(10) DEFAULT '' COMMENT '目的地',
-  `start_time` datetime DEFAULT NULL COMMENT '出发时间',
-  `name` varchar(10) DEFAULT '' COMMENT '联系人姓名',
-  `phone` varchar(11) DEFAULT '' COMMENT '联系人电话',
-  `memo` varchar(255) DEFAULT '' COMMENT '备注',
-  `record_count` int(2) DEFAULT '0' COMMENT '申请人数',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
+  `start_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发城市',
+  `start_addr` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发地点',
+  `end_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '目的地城市',
+  `end_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '目的地',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT '出发时间',
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人姓名',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人电话',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `record_count` int(2) NULL DEFAULT 0 COMMENT '申请人数',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_mark_seekcar_record
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_seekcar_record`;
-CREATE TABLE `t_mark_seekcar_record` (
+CREATE TABLE `t_mark_seekcar_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '拼车记录编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `mark_seekcar_id` bigint(20) DEFAULT NULL COMMENT '找车编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车申请记录表' ROW_FORMAT = Dynamic;
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `mark_seekcar_id` bigint(20) NULL DEFAULT NULL COMMENT '找车编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车申请记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_message
@@ -1188,7 +1172,7 @@ CREATE TABLE `t_notice`  (
 DROP TABLE IF EXISTS `t_often_question`;
 CREATE TABLE `t_often_question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '常见问题编号',
-  `question_type_id` bigint(20) DEFAULT NULL COMMENT '问题类别编号',
+  `question_type_id` bigint(20) NULL DEFAULT NULL COMMENT '问题类别编号',
   `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '问题标题',
   `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '问题解答',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
@@ -1196,7 +1180,7 @@ CREATE TABLE `t_often_question`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '常见问题表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '常见问题表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_organization
@@ -1254,63 +1238,63 @@ CREATE TABLE `t_process`  (
 -- Table structure for t_project
 -- ----------------------------
 DROP TABLE IF EXISTS `t_project`;
-CREATE TABLE `t_project` (
+CREATE TABLE `t_project`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '招投标项目编号',
-  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '项目名称',
-  `project_type` varchar(10) DEFAULT '' COMMENT '项目类型',
-  `city` varchar(10) DEFAULT '' COMMENT '城市',
-  `project_detail` text COMMENT '项目详情',
-  `release_status` varchar(10) DEFAULT '待审核' COMMENT '发布状态',
-  `mark_unit_name` varchar(32) DEFAULT '' COMMENT '招标单位名称',
-  `project_invest` varchar(20) DEFAULT '' COMMENT '项目投资',
-  `check_pattern` varchar(20) DEFAULT '' COMMENT '审查方式',
-  `comp_aptitude_type` varchar(200) DEFAULT '' COMMENT '企业资质类型',
-  `builder_level` varchar(200) DEFAULT '' COMMENT '建造师等级',
-  `money_to_implement` float(5,2) DEFAULT NULL COMMENT '资金落实(%)',
-  `tendering_agent` varchar(20) DEFAULT '' COMMENT '招标代理',
-  `phone` varchar(15) DEFAULT '' COMMENT '联系电话',
-  `offer_price` bigint(20) DEFAULT '0' COMMENT '要约价(元)',
-  `assure_price` bigint(20) DEFAULT '0' COMMENT '保证金(万元)',
-  `construction_period` int(10) DEFAULT '0' COMMENT '工期(天)',
-  `download_end_time` datetime DEFAULT NULL COMMENT '下载截止时间',
-  `other_demand` varchar(500) DEFAULT '' COMMENT '其他要求',
-  `open_mark_info` varchar(10) DEFAULT '' COMMENT '开标信息',
-  `open_mark_time` datetime DEFAULT NULL COMMENT '开标时间',
-  `open_mark_addr` varchar(32) DEFAULT '' COMMENT '开标地点',
-  `mark_status` varchar(10) DEFAULT '' COMMENT '开标状态',
-  `in_mark_comp` varchar(32) DEFAULT '' COMMENT '中标单位',
-  `notice_time` datetime DEFAULT NULL COMMENT '公告时间',
-  `click_count` bigint(20) DEFAULT '0' COMMENT '点击次数',
-  `is_electronic` tinyint(4) DEFAULT '0' COMMENT '是否电子标',
-  `source_url` varchar(300) DEFAULT '' COMMENT '源地址',
-  `inward_html_url` varchar(300) DEFAULT '' COMMENT '内部地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '项目名称',
+  `project_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
+  `city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '城市',
+  `project_detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '项目详情',
+  `release_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '待审核' COMMENT '发布状态',
+  `mark_unit_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标单位名称',
+  `project_invest` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目投资',
+  `check_pattern` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '审查方式',
+  `comp_aptitude_type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业资质类型',
+  `builder_level` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建造师等级',
+  `money_to_implement` float(5, 2) NULL DEFAULT NULL COMMENT '资金落实(%)',
+  `tendering_agent` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标代理',
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系电话',
+  `offer_price` bigint(20) NULL DEFAULT 0 COMMENT '要约价(元)',
+  `assure_price` bigint(20) NULL DEFAULT 0 COMMENT '保证金(万元)',
+  `construction_period` int(10) NULL DEFAULT 0 COMMENT '工期(天)',
+  `download_end_time` datetime(0) NULL DEFAULT NULL COMMENT '下载截止时间',
+  `other_demand` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '其他要求',
+  `open_mark_info` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标信息',
+  `open_mark_time` datetime(0) NULL DEFAULT NULL COMMENT '开标时间',
+  `open_mark_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标地点',
+  `mark_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标状态',
+  `in_mark_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标单位',
+  `notice_time` datetime(0) NULL DEFAULT NULL COMMENT '公告时间',
+  `click_count` bigint(20) NULL DEFAULT 0 COMMENT '点击次数',
+  `is_electronic` tinyint(4) NULL DEFAULT 0 COMMENT '是否电子标',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
+  `inward_html_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内部地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `index_title` (`title`) USING BTREE COMMENT '招标信息名称唯一索引'
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招投标项目表' ROW_FORMAT = Dynamic;
+  UNIQUE INDEX `index_title`(`title`) USING BTREE COMMENT '招标信息名称唯一索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招投标项目表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_project_announce
 -- ----------------------------
 DROP TABLE IF EXISTS `t_project_announce`;
-CREATE TABLE `t_project_announce` (
+CREATE TABLE `t_project_announce`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '公示编号',
-  `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
-  `announce_desc` text COMMENT '公示详情',
-  `first_candidate` varchar(20) DEFAULT '' COMMENT '第一候选人',
-  `second_candidate` varchar(20) DEFAULT '' COMMENT '第二候选人',
-  `third_candidate` varchar(20) DEFAULT '' COMMENT '第三候选人',
-  `source_url` varchar(300) DEFAULT '' COMMENT '源地址',
-  `inword_html_url` varchar(300) DEFAULT '' COMMENT '内部地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NULL DEFAULT 0 COMMENT '项目编号',
+  `announce_desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '公示详情',
+  `first_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第一候选人',
+  `second_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第二候选人',
+  `third_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第三候选人',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
+  `inword_html_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内部地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招标公示详情表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招标公示详情表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_project_collection
@@ -1325,8 +1309,8 @@ CREATE TABLE `t_project_collection`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uni_user_id_project_id` (`user_id`,`project_id`) COMMENT '用户ID和项目ID唯一索引'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目收藏表' ROW_FORMAT = Dynamic;
+  UNIQUE INDEX `uni_user_id_project_id`(`user_id`, `project_id`) USING BTREE COMMENT '用户ID和项目ID唯一索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目收藏表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_project_resource
@@ -1342,7 +1326,7 @@ CREATE TABLE `t_project_resource`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目资源表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_recruit
@@ -1364,7 +1348,7 @@ CREATE TABLE `t_recruit`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招聘表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招聘表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -1381,7 +1365,7 @@ CREATE TABLE `t_resource`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_resume
@@ -1391,7 +1375,7 @@ CREATE TABLE `t_resume`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '简历编号',
   `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
-  `gender` tinyint(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 0 COMMENT '性别',
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '性别',
   `age` int(10) NULL DEFAULT 0 COMMENT '年龄',
   `is_fulltime` tinyint(4) NULL DEFAULT 0 COMMENT '求职类型',
   `job_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '求职岗位',
@@ -1399,7 +1383,7 @@ CREATE TABLE `t_resume`  (
   `education` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '学历',
   `salary` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '要求薪资/月',
   `is_recommend` int(4) NULL DEFAULT 0 COMMENT '是否允许平台推荐',
-  `aptitude` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '我的资质',
+  `aptitude` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '我的资质',
   `intorduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '个人简介',
   `is_show` int(4) NULL DEFAULT 0 COMMENT '是否开放简历',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
@@ -1407,7 +1391,7 @@ CREATE TABLE `t_resume`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '简历表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '简历表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_role
@@ -1484,7 +1468,7 @@ CREATE TABLE `t_seek_data`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '求带资料表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '求带资料表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_shipping_address
@@ -1557,7 +1541,7 @@ CREATE TABLE `t_subscribe`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订阅表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订阅表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_sys_config
@@ -1620,7 +1604,7 @@ CREATE TABLE `t_user`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户基本信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户基本信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_bankcard
@@ -1674,7 +1658,7 @@ CREATE TABLE `t_user_coupon`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户抵扣券表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户抵扣券表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_detail
@@ -1705,37 +1689,37 @@ CREATE TABLE `t_user_detail`  (
 -- Table structure for t_user_expert
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_expert`;
-CREATE TABLE `t_user_expert` (
+CREATE TABLE `t_user_expert`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家信息编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `name` varchar(20) DEFAULT '' COMMENT '专家姓名',
-  `gender` tinyint(4) DEFAULT '0' COMMENT '性别',
-  `age` int(11) DEFAULT NULL COMMENT '年龄',
-  `is_fulltime` tinyint(4) DEFAULT '0' COMMENT '是否全职',
-  `phone` varchar(15) DEFAULT '' COMMENT '联系电话',
-  `memo` varchar(300) DEFAULT '' COMMENT '个人情况介绍',
-  `examine_status` tinyint(4) DEFAULT '0' COMMENT '审核状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家信息表' ROW_FORMAT = Dynamic;
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '专家姓名',
+  `gender` tinyint(4) NULL DEFAULT 0 COMMENT '性别',
+  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
+  `is_fulltime` tinyint(4) NULL DEFAULT 0 COMMENT '是否全职',
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系电话',
+  `memo` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '个人情况介绍',
+  `examine_status` tinyint(4) NULL DEFAULT 0 COMMENT '审核状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_expert_question_type
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_expert_question_type`;
-CREATE TABLE `t_user_expert_question_type` (
+CREATE TABLE `t_user_expert_question_type`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家类别编号',
-  `user_expert_id` bigint(20) DEFAULT '0' COMMENT '专家信息编号',
-  `question_type_id` bigint(20) DEFAULT NULL COMMENT '问题类别编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家类别表' ROW_FORMAT = Dynamic;
+  `user_expert_id` bigint(20) NULL DEFAULT 0 COMMENT '专家信息编号',
+  `question_type_id` bigint(20) NULL DEFAULT NULL COMMENT '问题类别编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家类别表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_hierarchy
@@ -1812,7 +1796,7 @@ CREATE TABLE `t_user_role`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_social
@@ -1832,7 +1816,7 @@ CREATE TABLE `t_user_social`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户第三方登录信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户第三方登录信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_wallet
@@ -1870,85 +1854,6 @@ CREATE TABLE `t_user_work`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作信息表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Procedure structure for initStatisticsDay
--- ----------------------------
-DROP PROCEDURE IF EXISTS `initStatisticsDay`;
-delimiter ;;
-CREATE PROCEDURE `initStatisticsDay`(in beginDate datetime, in totalDays int)
-BEGIN
-	declare days int default 0;
-	declare theDate datetime;
-	declare hasError integer default 0;
-	declare continue handler for sqlexception set hasError = 1;
-	start transaction;
-		truncate table t_statistics_day;
-		while days < totalDays
-			do
-				set theDate = date_add(beginDate, interval days day);
-				insert into t_statistics_day(the_date, am_pm) values(theDate, 'am');
-				insert into t_statistics_day(the_date, am_pm) values(theDate, 'pm');
-				set days = days + 1;
-		end while;
-	if hasError = 1 then
-		rollback;
-	else
-		commit;
-  end if;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for invite_user
--- ----------------------------
-DROP PROCEDURE IF EXISTS `invite_user`;
-delimiter ;;
-CREATE PROCEDURE `invite_user`(in pid bigint, in uid bigint)
-BEGIN
-    -- 如果uid等于pid，表示某个用户自己成为顶级经销商
-	declare ancestorId bigint;
-	declare num int default 0;
-	declare userLevel int default 2;
-	declare currentTime datetime default CURRENT_TIMESTAMP;
-	declare userPath text;
-	declare hasError integer default 0;
-	-- 根据直接父id获取其所有祖先id，祖先id按倒序排列，方便得出用户id与祖先id间是多少级关系
-	declare ancestorList cursor for
-	select t_user_hierarchy.ancestor_id from t_user_hierarchy where t_user_hierarchy.user_id = pid
-	order by t_user_hierarchy.user_level asc;
-	declare continue handler for sqlexception set hasError = 1;
-	declare continue handler for not found set num = 1;
-	start transaction;
-		if uid != pid then
-			open ancestorList;
-				fetch ancestorList into ancestorId;
-				while num != 1 do
-					insert into t_user_hierarchy (ancestor_id, user_id, user_level, create_time) values(ancestorId, uid, userLevel, currentTime);
-					-- 祖先id每循环一次，等级加1
-					set userLevel = userLevel + 1;
-					fetch ancestorList into ancestorId;
-				end while;
-			close ancestorList;
-		end if;
-		-- 自己与自己的关系，user_level为1
-		insert into t_user_hierarchy (ancestor_id, user_id, user_level) values(uid, uid, 1);
-		-- 保存用户层级路径
-		if uid != pid then
-			select t_user_path.user_path into userPath from t_user_path where t_user_path.user_path like concat('%', pid);
-			insert into t_user_path (user_path, create_time) values(concat(userPath, '/', uid), currentTime);
-		else
-			insert into t_user_path (user_path, create_time) values(uid, currentTime);
-		end if;
-	if hasError = 1 then
-		rollback;
-	else
-		commit;
-  end if;
-END
-;;
-delimiter ;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作信息表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

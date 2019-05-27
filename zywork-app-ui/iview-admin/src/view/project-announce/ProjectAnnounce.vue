@@ -450,15 +450,6 @@ export default {
         isActive: null
       },
       validateRules: {
-        announceDesc: [
-          {
-            type: 'string',
-            min: 1,
-            max: 2000,
-            message: '必须1-2000个字符',
-            trigger: 'blur'
-          }
-        ],
         firstCandidate: [
           {
             type: 'string',
@@ -643,7 +634,7 @@ export default {
           {
             title: '源地址',
             key: 'sourceUrl',
-            minWidth: 120,
+            minWidth: 200,
             sortable: true,
             render: (h, params) => {
               const row = params.row
@@ -662,7 +653,7 @@ export default {
           {
             title: '内部地址',
             key: 'inwordHtmlUrl',
-            minWidth: 120,
+            minWidth: 200,
             sortable: true
           },
           {
@@ -785,7 +776,7 @@ export default {
                         },
                         '详情'
                       ),
-                      h(
+                      /* h(
                         'DropdownItem',
                         {
                           props: {
@@ -803,7 +794,7 @@ export default {
                             '删除'
                           )
                         ]
-                      )
+                      ) */
                     ]
                   )
                 ]

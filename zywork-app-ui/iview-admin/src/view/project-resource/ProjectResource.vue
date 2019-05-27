@@ -655,7 +655,7 @@ export default {
                   : row.resType === 2
                   ? '清单文件'
                   : row.resType === 3
-                  ? '资格审查文件'
+                  ? '资质文件'
                   : '未知'
               return h(
                 'Button',

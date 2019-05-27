@@ -137,7 +137,7 @@
 					<Button @click="showModal('userChoice')" type="text">选择用户</Button>&nbsp;
 				</FormItem>
         <FormItem label="转让类别" prop="type">
-          <Select v-model="form.type" placeholder="请选择转让类别" clearable filterable>
+          <Select v-model="form.type" placeholder="请选择转让类别" clearable filterable @on-change="switchType">
             <i-option
               v-for="item in aptitudeTransferType"
               :value="item.value"
@@ -149,7 +149,7 @@
           <Input v-model="form.title" placeholder="请输入标题"/>
         </FormItem>
         <FormItem label="企业资质等级" prop="compAptitudeLevel">
-          <Select v-model="form.compAptitudeLevel" placeholder="请选择企业资质等级" clearable filterable>
+          <Select v-model="form.compAptitudeLevel" placeholder="请选择企业资质等级" clearable filterable @on-change="switchType">
             <i-option
               v-for="item in companyAptitudeLevel"
               :value="item.value"
@@ -158,7 +158,7 @@
           </Select>
         </FormItem>
         <FormItem label="企业资质类型" prop="compAptitudeType">
-          <Select v-model="form.compAptitudeType" placeholder="请选择企业资质类型" clearable filterable>
+          <Select v-model="form.compAptitudeType" placeholder="请选择企业资质类型" clearable filterable @on-change="switchType">
             <i-option
               v-for="item in companyAptitudeType"
               :value="item.value"
@@ -547,14 +547,7 @@ export default {
         resourceId: []
       },
       validateRules: {
-        type: [
-          {
-            type: 'integer',
-            required: true,
-            message: '此项为必须项',
-            trigger: 'blur, change'
-          }
-        ],
+       
         title: [
           {
             type: 'string',

@@ -552,15 +552,15 @@
 					startAddr: [{
 						type: 'string',
 						min: 1,
-						max: 10,
-						message: '必须1-10个字符',
+						max: 20,
+						message: '必须1-2o个字符',
 						trigger: 'blur'
 					}],
 					endAddr: [{
 						type: 'string',
 						min: 1,
-						max: 10,
-						message: '必须1-10个字符',
+						max: 20,
+						message: '必须1-20个字符',
 						trigger: 'blur'
 					}],
 					carType: [{

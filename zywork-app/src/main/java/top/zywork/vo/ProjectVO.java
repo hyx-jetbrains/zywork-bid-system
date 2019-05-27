@@ -72,7 +72,7 @@ public class ProjectVO extends BaseVO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date downloadEndTime;
 	// 其他要求
-	@Size(min = 0, max = 500, message = "必须小于500个字符")
+	@Size(min = 0, max = 2000, message = "必须小于2000个字符")
 	private String otherDemand;
 	// 开标信息
 	@Size(min = 0, max = 10, message = "必须小于10个字符")

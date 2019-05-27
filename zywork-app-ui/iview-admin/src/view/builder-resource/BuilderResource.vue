@@ -571,14 +571,14 @@
 												slot: 'list'
 											},
 											[
-												h(
+												/* h(
 													'DropdownItem', {
 														props: {
 															name: 'showEdit'
 														}
 													},
 													'编辑'
-												),
+												), */
 												h(
 													'DropdownItem', {
 														props: {

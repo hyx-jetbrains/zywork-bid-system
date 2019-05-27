@@ -528,11 +528,11 @@
 									h('DropdownMenu', {
 										slot: "list"
 									}, [
-										h('DropdownItem', {
+										/* h('DropdownItem', {
 											props: {
 												name: 'showEdit'
 											}
-										}, '编辑'),
+										}, '编辑'), */
 										h('DropdownItem', {
 											props: {
 												name: 'showDetail'

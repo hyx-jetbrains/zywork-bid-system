@@ -105,8 +105,8 @@
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="项目投资" prop="projectInvestDisplay">
-              <Input v-model="form.projectInvestDisplay" placeholder="请输入项目投资"/>
+            <FormItem label="项目投资" prop="projectInvest">
+              <Input v-model="form.projectInvest" placeholder="请输入项目投资"/>
             </FormItem>
           </i-col>
         </Row>
@@ -317,8 +317,8 @@
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="项目投资" prop="projectInvestDisplay">
-              <Input v-model="form.projectInvestDisplay" placeholder="请输入项目投资"/>
+            <FormItem label="项目投资" prop="projectInvest">
+              <Input v-model="form.projectInvest" placeholder="请输入项目投资"/>
             </FormItem>
           </i-col>
         </Row>
@@ -758,7 +758,7 @@
       </p>
       <p>
         项目投资:
-        <span v-text="form.projectInvest/100"></span>
+        <span v-text="form.projectInvest"></span>
       </p>
       <p>
         审查方式:
@@ -1121,8 +1121,8 @@ export default {
           {
             type: 'string',
             min: 1,
-            max: 500,
-            message: '必须1-500个字符',
+            max: 2000,
+            message: '必须1-2000个字符',
             trigger: 'blur'
           }
         ],
@@ -1260,7 +1260,7 @@ export default {
           {
             title: '项目名称',
             key: 'title',
-            minWidth: 120,
+            minWidth: 180,
             sortable: true
           },
           {
@@ -1358,11 +1358,7 @@ export default {
             title: '项目投资',
             key: 'projectInvest',
             minWidth: 120,
-            sortable: true,
-						render: (h, params) => {
-							let text = params.row.projectInvest/100;
-						  return h('span', '￥' + text)
-						}
+            sortable: true
           },
           {
             title: '审查方式',
@@ -1373,13 +1369,13 @@ export default {
           {
             title: '企业资质类型',
             key: 'compAptitudeType',
-            minWidth: 130,
+            minWidth: 150,
             sortable: true
           },
           {
             title: '建造师等级',
             key: 'builderLevel',
-            minWidth: 120,
+            minWidth: 150,
             sortable: true
           },
           {
@@ -1448,7 +1444,7 @@ export default {
           {
             title: '源地址',
             key: 'sourceUrl',
-            minWidth: 120,
+            minWidth: 180,
             sortable: true,
             render: (h, params) => {
               const row = params.row
@@ -1474,7 +1470,21 @@ export default {
             title: '其他要求',
             key: 'otherDemand',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+						render: (h, params) => {
+						  return h(
+						    'a',
+						    {
+						      on: {
+						        click: () => {
+						          utils.showModal(this, 'detail')
+						          this.form = JSON.parse(JSON.stringify(params.row))
+						        }
+						      }
+						    },
+						    '点击查看'
+						  )
+						}
           },
           {
             title: '开标时间',
@@ -1841,10 +1851,6 @@ export default {
         if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
           this.form.assurePriceDisplay = this.form.assurePrice / 100
         }
-				
-				if(this.form.projectInvest !== null && this.form.projectInvest !== 0) {
-					this.form.projectInvestDisplay = this.form.projectInvest / 100
-				}
       } else if (type === 1) {
         if (this.form.offerPriceDisplay !== null && this.form.offerPriceDisplay !== 0) {
           this.form.offerPrice = this.form.offerPriceDisplay * 100
@@ -1853,10 +1859,6 @@ export default {
         if (this.form.assurePriceDisplay !== null && this.form.assurePriceDisplay !== 0) {
           this.form.assurePrice = this.form.assurePriceDisplay * 100
         }
-				
-				if(this.form.projectInvestDisplay !== null && this.form.projectInvestDisplay !== 0) {
-					this.form.projectInvest = this.form.projectInvestDisplay * 100
-				}
       }
     },
     add() {
