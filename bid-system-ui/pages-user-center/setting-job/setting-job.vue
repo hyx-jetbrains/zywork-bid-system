@@ -20,6 +20,7 @@
 			}
 		},
 		onLoad(option) {
+			uni.hideShareMenu();
 			this.job = option.job
 		},
 		methods: {

@@ -77,6 +77,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			getGuaranteeByUserId(this, 'init');
 		},
 		onReachBottom() {

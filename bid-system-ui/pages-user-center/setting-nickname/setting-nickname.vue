@@ -22,6 +22,7 @@
 			}
 		},
 		onLoad(option) {
+			uni.hideShareMenu();
 			this.user.nickname = option.nickname
 		},
 		methods: {

@@ -81,7 +81,9 @@
 
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {
 			// 开通VIP
 			openVIP(type) {

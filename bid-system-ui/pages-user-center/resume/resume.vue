@@ -256,6 +256,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			this.initData()
 		},
 		methods: {

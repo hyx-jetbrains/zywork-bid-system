@@ -12,7 +12,8 @@ import {
 	showInfoToast,
 	showSuccessToast,
 	IMAGE_BASE_URL,
-	SHARE_CODE
+	SHARE_CODE,
+	setShareCode
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -153,6 +154,7 @@ export const getUserDetail = (self) => {
 					self.user.headicon = IMAGE_BASE_URL + '/' + self.uesr.headicon
 				}
 				self.user.phone = res.data.data.rows[0].userPhone
+				setShareCode(res.data.data.rows[0].userDetailShareCode)
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
 				xcxLogin(self)

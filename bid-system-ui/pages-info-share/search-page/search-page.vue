@@ -472,6 +472,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			this.initData();
 		},
 		onPullDownRefresh() {

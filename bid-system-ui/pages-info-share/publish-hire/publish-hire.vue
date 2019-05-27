@@ -140,7 +140,9 @@
 				showBtn: true
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {
 			/** 初始下拉框 */
 			initPicker() {

@@ -135,6 +135,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			this.checkRefresh('init')
 		},
 		onReachBottom() {

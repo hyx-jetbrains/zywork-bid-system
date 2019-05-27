@@ -526,6 +526,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			this.initData();
 		},
 		onReachBottom() {

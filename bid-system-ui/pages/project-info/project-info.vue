@@ -189,7 +189,9 @@
 		toLoginPage,
 		getCalendarDate,
 		formatCalendarDate,
-		DOCUMENT_BASE_URL
+		DOCUMENT_BASE_URL,
+		SHARE_CODE_PAGE_IMG,
+		getShareCode
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -341,15 +343,6 @@
 				})
 			}
 		},
-		onShow(options) {
-			console.log(options);
-			
-			if (options != undefined) {
-				uni.showModal({
-					title: 'test:' + options.shareCode
-				})
-			}
-		},
 		onPullDownRefresh() {
 			this.projectPager.pageNo = 1
 			this.updateProjectList('pullDown');
@@ -358,6 +351,14 @@
 			this.showLoadMore = true
 			this.projectPager.pageNo += 1
 			this.updateProjectList('reachBottom');
+		},
+		onShareAppMessage(res) {
+			var shareCode = getShareCode();
+			return  {
+				title: '江西招投标平台信息共享',
+				path: '/pages/project-info/project-info?shareCode=' + shareCode,
+				imageUrl: SHARE_CODE_PAGE_IMG
+			}
 		},
 		methods: {
 			/** 初始化数据 */

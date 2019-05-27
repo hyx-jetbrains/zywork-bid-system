@@ -55,6 +55,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			getConsultByUserId(this, 'init')
 		},
 		onReachBottom() {

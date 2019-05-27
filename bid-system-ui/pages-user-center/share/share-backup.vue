@@ -57,7 +57,9 @@
 				shareCode: ''
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {
 			// 复制邀请码
 			copyShareCode() {

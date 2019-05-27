@@ -24,7 +24,9 @@
 
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {
 			/** 前往我发布的页面 */
 			toMePublish() {

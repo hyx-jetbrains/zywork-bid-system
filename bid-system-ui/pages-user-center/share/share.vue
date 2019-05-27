@@ -48,10 +48,10 @@
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	
 	import {
-		DEFAULT_HEADICON
+		DEFAULT_HEADICON,
+		SHARE_CODE_PAGE_IMG,
+		getShareCode
 	} from '../../common/util.js'
-	
-	const SHARE_IMG = '../../static/share.jpg'
 	
 	export default {
 		components: {
@@ -75,12 +75,15 @@
 				]
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		onShareAppMessage(res) {
+			var shareCode = getShareCode();
 			return  {
 				title: '江西招投标平台信息共享',
-				path: '/pages/project-info/project-info?shareCode=1234',
-				imageUrl: SHARE_IMG
+				path: '/pages/project-info/project-info?shareCode=' + shareCode,
+				imageUrl: SHARE_CODE_PAGE_IMG
 			}
 		},
 		methods: {

@@ -34,6 +34,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			getExpertQuesTionTypeByUserId(this);
 		},
 		methods: {

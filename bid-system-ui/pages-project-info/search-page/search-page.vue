@@ -300,6 +300,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			this.projectPager.pageNo = 1
 			this.initData()
 		},

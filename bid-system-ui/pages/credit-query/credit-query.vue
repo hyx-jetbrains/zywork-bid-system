@@ -418,7 +418,9 @@
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import {
 		showInfoToast,
-		nullToStr
+		nullToStr,
+		SHARE_CODE_PAGE_IMG,
+		getShareCode
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
@@ -512,6 +514,14 @@
 			this.showLoadMore = true
 			this.pager.pageNo += 1
 			this.checkRefresh(this.infoType.tabIndex, 'reachBottom');
+		},
+		onShareAppMessage(res) {
+			var shareCode = getShareCode();
+			return  {
+				title: '江西招投标平台信息共享',
+				path: '/pages/project-info/project-info?shareCode=' + shareCode,
+				imageUrl: SHARE_CODE_PAGE_IMG
+			}
 		},
 		methods: {
 			/** 初始化数据 */

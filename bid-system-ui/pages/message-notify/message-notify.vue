@@ -33,6 +33,10 @@
 		readMessage,
 		countNotReadMsg
 	} from '@/common/message.js'
+	import {
+		SHARE_CODE_PAGE_IMG,
+		getShareCode
+	} from '@/common/util.js'
 	
 	const MESSAGE_ALL = 0
 	const MESSAGE_UNREAD = 1
@@ -75,6 +79,14 @@
 			this.showLoadMore = true
 			this.pager.pageNo += 1
 			loadMessage(this, this.pager, 'reachBottom');
+		},
+		onShareAppMessage(res) {
+			var shareCode = getShareCode();
+			return  {
+				title: '江西招投标平台信息共享',
+				path: '/pages/project-info/project-info?shareCode=' + shareCode,
+				imageUrl: SHARE_CODE_PAGE_IMG
+			}
 		},
 		methods: {
 			/** 初始化消息 */

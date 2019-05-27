@@ -30,7 +30,9 @@
 			
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {
 			toPublishBuilder() {
 				uni.navigateTo({

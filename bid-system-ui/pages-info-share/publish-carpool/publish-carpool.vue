@@ -430,6 +430,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			this.initPicker()
 		},
 		methods: {

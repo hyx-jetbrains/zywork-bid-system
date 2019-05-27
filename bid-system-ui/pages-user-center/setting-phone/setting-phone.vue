@@ -24,6 +24,7 @@
 			}
 		},
 		onLoad(option) {
+			uni.hideShareMenu();
 			this.phone = option.phone
 		},
 		methods: {

@@ -110,6 +110,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			this.initData('init')
 		},
 		onReachBottom() {

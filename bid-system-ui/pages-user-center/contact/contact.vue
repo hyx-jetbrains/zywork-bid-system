@@ -41,7 +41,9 @@
 				}
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {
 			// 打电话
 			callPhone() {

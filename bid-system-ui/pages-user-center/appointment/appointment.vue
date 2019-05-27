@@ -105,6 +105,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			getExpertSubscribeByUserId(this, 'init')
 		},
 		onReachBottom() {

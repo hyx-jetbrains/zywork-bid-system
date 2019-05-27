@@ -72,14 +72,16 @@
 <script>
 	import {
 		DEFAULT_HEADICON,
-		getOpenid
+		getOpenid,
+		SHARE_CODE_PAGE_IMG,
+		getShareCode
 	} from '@/common/util.js'
 	import {
 		judgeLogin,
 		saveUserDetail,
 		saveUserPhone,
 		geUserWalletByUserId,
-		getUserExpertByUserId
+		getUserExpertByUserId,
 	} from '@/common/user.js'
 
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
@@ -131,6 +133,14 @@
 		},
 		onPullDownRefresh() {
 			this.initData('pullDown')
+		},
+		onShareAppMessage(res) {
+			var shareCode = getShareCode();
+			return  {
+				title: '江西招投标平台信息共享',
+				path: '/pages/project-info/project-info?shareCode=' + shareCode,
+				imageUrl: SHARE_CODE_PAGE_IMG
+			}
 		},
 		methods: {
 			initData(type) {

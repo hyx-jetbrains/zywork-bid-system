@@ -4,6 +4,7 @@ export const DOCUMENT_BASE_URL = 'https://www.shudagroup.com'
 export const USER_TOKEN_KEY = 'userToken'
 export const USER_OPENID = 'openid'
 export const SHARE_CODE = 'shareCode'
+export const SHARE_CODE_PAGE_IMG = '/static/share.jpg'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 
@@ -49,13 +50,6 @@ export const removeOpenid = () => {
 	uni.removeStorageSync(USER_OPENID)
 }
 
-export const toLoginPage = () => {
-	uni.navigateTo({
-		url: '/pages/login/login'
-	})
-	showInfoToast('请先登录')
-}
-
 export const clearForm = (form) => {
 	for (let key in form) {
 		form[key] = null
@@ -63,9 +57,6 @@ export const clearForm = (form) => {
 }
 
 export const invalidToken = () => {
-	uni.navigateTo({
-		url: '/pages/login/login'
-	})
 	removeUserToken()
 	showInfoToast('登录已失效，请重新登录')
 }
@@ -160,19 +151,40 @@ export const getDate = (type) => {
  * null转成空字符串
  */
 export const nullToStr = (data) => {
-  for (let x in data) {
-    if (data[x] === null) { // 如果是null 把直接内容转为 ''
-      data[x] = '';
-    } else {
-      if (Array.isArray(data[x])) { // 是数组遍历数组 递归继续处理
-        data[x] = data[x].map(z => {
-          return nullToStr(z);
-        });
-      }
-      if(typeof(data[x]) === 'object'){ // 是json 递归继续处理
-        data[x] = nullToStr(data[x])
-      }
-    }
-  }
-  return data;
+	for (let x in data) {
+		if (data[x] === null) { // 如果是null 把直接内容转为 ''
+			data[x] = '';
+		} else {
+			if (Array.isArray(data[x])) { // 是数组遍历数组 递归继续处理
+				data[x] = data[x].map(z => {
+					return nullToStr(z);
+				});
+			}
+			if (typeof(data[x]) === 'object') { // 是json 递归继续处理
+				data[x] = nullToStr(data[x])
+			}
+		}
+	}
+	return data;
+}
+
+/**
+ * 保存分享码
+ * @param shareCode 分享码  
+ */
+export const setShareCode = (shareCode) => {
+	uni.setStorage({
+		key: SHARE_CODE,
+		data: shareCode
+	});
+}
+/**
+ * 取分享码
+ */
+export const getShareCode = () => {
+	const shareCode = uni.getStorageSync(SHARE_CODE)
+	if (!isEmpty(shareCode)) {
+		return shareCode
+	}
+	return null
 }

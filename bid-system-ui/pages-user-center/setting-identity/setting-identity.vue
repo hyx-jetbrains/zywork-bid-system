@@ -20,6 +20,7 @@
 			}
 		},
 		onLoad(option) {
+			uni.hideShareMenu();
 			this.identity = option.identity
 		},
 		methods: {

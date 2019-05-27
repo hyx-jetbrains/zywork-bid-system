@@ -20,6 +20,7 @@
 			}
 		},
 		onLoad(option) {
+			uni.hideShareMenu();
 			this.companyAddr= option.companyAddr
 		},
 		methods: {

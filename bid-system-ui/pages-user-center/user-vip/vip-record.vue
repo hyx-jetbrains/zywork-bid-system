@@ -150,6 +150,7 @@
 			}
 		},
 		onLoad(event) {
+			uni.hideShareMenu();
 			// TODO 后面把参数名替换成 payload
 			const payload = event.level || event.payload;
 			// 目前在某些平台参数会被主动 decode，暂时这样处理。

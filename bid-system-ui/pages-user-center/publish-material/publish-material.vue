@@ -82,6 +82,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			getSeeDataByUserId(this, 'init')
 		},
 		onReachBottom() {

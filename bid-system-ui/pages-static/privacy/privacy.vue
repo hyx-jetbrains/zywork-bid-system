@@ -11,7 +11,9 @@
 
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {}
 	}
 </script>

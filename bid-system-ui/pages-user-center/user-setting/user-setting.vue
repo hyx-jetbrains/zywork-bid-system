@@ -63,7 +63,9 @@
 				genderArray: genderArray
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			uni.hideShareMenu();
+		},
 		methods: {
 			chooseImage() {
 				uploadHeadicon(this)

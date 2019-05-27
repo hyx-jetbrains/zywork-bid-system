@@ -90,6 +90,7 @@
 			}
 		},
 		onLoad() {
+			uni.hideShareMenu();
 			getRecruitByUserId(this, 'init')
 		},
 		onReachBottom() {
