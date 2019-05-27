@@ -254,11 +254,11 @@ export const resourceType = [
 export const projectResourceType = [
   {
     value: 0,
-    label: '招标文件'
+    label: '资审文件'
   },
   {
     value: 1,
-    label: '澄清文件'
+    label: '招标文件'
   },
   {
     value: 2,
@@ -266,7 +266,11 @@ export const projectResourceType = [
   },
   {
     value: 3,
-    label: '资质文件'
+    label: '控股价文件'
+  },
+  {
+    value: 4,
+    label: '澄清答疑文件'
   }
 ]
 

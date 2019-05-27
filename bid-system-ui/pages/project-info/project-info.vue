@@ -193,7 +193,8 @@
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
-		jxCityArray
+		jxCityArray,
+		fileTypeArray
 	} from '@/common/picker.data.js'
 	import * as projectInfo from '@/common/project-info.js'
 
@@ -217,16 +218,18 @@
 		'../../static/icon/other.png'
 	]
 
-	/** 澄清文件标识-0 */
-	const SEE_FILE_TYPE_CHENGQING = 0
+	/** 资审文件标识-0 */
+	const SEE_FILE_TYPE_ZIZHI = 0
 	/** 招标文件标识-1 */
 	const SEE_FILE_TYPE_ZHAOBIAO = 1
 	/** 清单文件标识-2 */
 	const SEE_FILE_TYPE_QINGDAN = 2
-	/** 资质文件标识-3 */
-	const SEE_FILE_TYPE_ZIZHI = 3
-	/** 收藏或取消收藏-4 */
-	const SEE_FILE_TYPE_SC_QXSC = 4
+	/** 控股价文件标识-3 */
+	const SEE_FILE_TYPE_KONGGUJIA = 3
+	/** 澄清答疑文件标识-4 */
+	const SEE_FILE_TYPE_CHENGQING = 4
+	/** 收藏或取消收藏-5 */
+	const SEE_FILE_TYPE_SC_QXSC = 5
 
 	export default {
 		components: {
@@ -317,14 +320,35 @@
 				imgBaseUrl: IMAGE_BASE_URL,
 				headicon: DEFAULT_HEADICON,
 				isCollection: false,
-				actionSheetArray: ['澄清文件', '招标文件', '清单文件', '资质文件'],
+				actionSheetArray: fileTypeArray,
 				isShowFileList: false,
 				fileList: []
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			// uni.showToast({
+			// 	title: options
+			// })
 			this.projectPager.pageNo = 1
 			this.initData()
+			console.log(options);
+			uni.showModal({
+				title: 'test:' + options.shareCode
+			})
+			if (!options && !options.shareCode) {
+				uni.showModal({
+					title: options.shareCode
+				})
+			}
+		},
+		onShow(options) {
+			console.log(options);
+			
+			if (options != undefined) {
+				uni.showModal({
+					title: 'test:' + options.shareCode
+				})
+			}
 		},
 		onPullDownRefresh() {
 			this.projectPager.pageNo = 1
@@ -457,17 +481,6 @@
 			},
 			// 查看文件
 			seeFile(type, projectId) {
-				// if (SEE_FILE_TYPE_CHENGQING === type) {
-				// 	console.log("查看澄清文件")
-				// 	projectInfo.getResourceByProjectIdAndType(this, projectId, type);
-				// } else if (SEE_FILE_TYPE_ZHAOBIAO === type) {
-				// 	console.log("查看招标文件")
-				// } else if (SEE_FILE_TYPE_QINGDAN === type) {
-				// 	console.log("查看清单文件");
-				// } else if (SEE_FILE_TYPE_ZIZHI === type) {
-				// 	console.log("查看资质文件");
-				// }
-
 				if (SEE_FILE_TYPE_SC_QXSC === type) {
 					const tempType = this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC];
 					if (tempType == '取消收藏') {

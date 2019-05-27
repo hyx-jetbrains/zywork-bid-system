@@ -638,7 +638,7 @@ export default {
             render: (h, params) => {
               const row = params.row
               const color =
-                row.resType === 0
+               row.resType === 0
                   ? 'primary'
                   : row.resType === 1
                   ? 'info'
@@ -646,16 +646,20 @@ export default {
                   ? 'success'
                   : row.resType === 3
                   ? 'warning'
+                  : row.resType === 4
+                  ? 'primary'
                   : 'error'
               const text =
                 row.resType === 0
-                  ? '招标文件'
+                  ? '资审文件'
                   : row.resType === 1
-                  ? '澄清文件'
+                  ? '招标文件'
                   : row.resType === 2
                   ? '清单文件'
                   : row.resType === 3
-                  ? '资质文件'
+                  ? '控股价文件'
+                  : rows.resType === 4
+                  ? '澄清答疑文件'
                   : '未知'
               return h(
                 'Button',

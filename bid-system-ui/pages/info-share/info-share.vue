@@ -347,6 +347,28 @@
 					<zyworkNoData v-else text="暂无求带资料信息"></zyworkNoData>
 				</view>
 			</view>
+			
+			<!-- 更新公告 -->
+			<view v-if="infoType.tabIndex === 5">
+				<view class="zy-page-list-item" style="padding-top: 10upx;">
+					<!-- 更新公告信息 -->
+					<view class="zy-page-list" v-if="updateNoticeList.length > 0">
+						<view class="zy-page-list-item" v-for="(item, index) in updateNoticeList" :key="index">
+							<view @click="toUpdateNoticeDetailPage(item)">
+								<view class="zy-disable-flex">
+									<image class="zy-page-mini-headicon" :src="defaultIcon" />
+									<view style="text-align: center;">
+										<view class="zy-text-bold" v-text="item.title"></view>
+										<view class="zy-text-mini zy-text-info" style="color: #108EE9">公告时间：{{item.createTime}}</view>
+									</view>
+								</view>
+								<view v-text="item.synopsis"></view>
+							</view>
+						</view>
+					</view>
+					<zyworkNoData v-else text="暂无更新公告信息"></zyworkNoData>
+				</view>
+			</view>
 		</view>
 
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
@@ -377,6 +399,7 @@
 	const INFO_CARPOOL = 2
 	const INFO_HIRE = 3
 	const INFO_MATERIAL = 4
+	const INFO_NOTICE = 5
 
 	export default {
 		components: {
@@ -396,7 +419,8 @@
 					carpoolUrl: '/UserMarkCarpool/any/list-page',
 					seekcarUrl: '/UserMarkSeekcar/any/list-page',
 					recruitUrl: '/UserRecruit/any/list-page',
-					seekDataUrl: '/UserSeekData/any/list-page'
+					seekDataUrl: '/UserSeekData/any/list-page',
+					updateNoticeUrl: '/update-notice/any/list-page'
 				},
 				pager: {
 					pageNo: 1,
@@ -426,6 +450,10 @@
 						{
 							id: 'material',
 							name: '求带资料'
+						},
+						{
+							id: 'notice',
+							name: '更新公告'
 						}
 					]
 				},
@@ -448,7 +476,8 @@
 				carpoolList: [],
 				seekcarList: [],
 				recruitList: [],
-				seekDataList: []
+				seekDataList: [],
+				updateNoticeList: []
 			}
 		},
 		onLoad() {
@@ -473,12 +502,12 @@
 				this.pager.pageNo = 1;
 				this.showLoadMore = false;
 			},
-			/** 刷新建造师需求列表 */
-			refreshBuilderReqList(type) {
+			/** 公告的请求部分 */
+			commonRequest(url, type) {
 				uni.showLoading({
 					title: '加载中'
 				})
-				infoShare.getListInfoToPost(this, this.urls.builderReqUrl, this.pager)
+				infoShare.getListInfoToPost(this, url, this.pager)
 					.then(data => {
 						uni.hideLoading()
 						var [error, res] = data;
@@ -488,104 +517,39 @@
 							showInfoToast(res.data.message)
 						}
 					})
-
+			},
+			/** 刷新建造师需求列表 */
+			refreshBuilderReqList(type) {
+				this.commonRequest(this.urls.builderReqUrl, type);
 			},
 			/** 刷新建造师列表 */
 			refreshBuilderList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.builderUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.builderUrl, type);
 			},
 			/** 刷新资质转让列表 */
 			refreshAptitudeList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
 				this.pager.aptitudeTransferType = this.aptitudeOpts.current;
-				infoShare.getListInfoToPost(this, this.urls.aptitudeUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.aptitudeUrl, type);
 			},
 			/** 刷新开标拼车列表 */
 			refreshCarpoolList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.carpoolUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.carpoolUrl, type);
 			},
 			/** 刷新开标找车列表 */
 			refreshSeekcarList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.seekcarUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.seekcarUrl, type);
 			},
 			/** 刷新其他招聘列表 */
 			refreshRecruitList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.recruitUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.seekcarUrl, type);
 			},
 			/** 刷新求带资料列表 */
 			refreshSeekDataList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.seekDataUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.seekDataUrl, type);
+			},
+			/** 刷新更新公告列表 */
+			refreshUpdateNoticeList(type) {
+				this.commonRequest(this.urls.updateNoticeUrl, type);
 			},
 			/** 
 			 * 请求成功之后的操作 
@@ -677,6 +641,13 @@
 					} else {
 						this.seekDataList = rows;
 					}
+				} else if (INFO_NOTICE === tabIndex) {
+					// 更新公告
+					if (type === 'add') {
+						this.updateNoticeList = this.updateNoticeList.concat(rows);
+					} else {
+						this.updateNoticeList = rows;
+					}
 				}
 			},
 			getElSize(id) {
@@ -727,6 +698,9 @@
 				} else if (INFO_MATERIAL === tabIndex) {
 					// 求带资料
 					this.refreshSeekDataList(type);
+				} else if (INFO_NOTICE === tabIndex) {
+					// 更新公告
+					this.refreshUpdateNoticeList(type);
 				}
 			},
 			toSearchPage() {
@@ -773,6 +747,10 @@
 			/** 前往求带资料详情页面 */
 			toSeekDataDetailPage(item) {
 				this.toDetailPage('seek-data', item);
+			},
+			/** 前往公告更新详情页面 */
+			toUpdateNoticeDetailPage(item) {
+				this.toDetailPage('update-notice', item);
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {

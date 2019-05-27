@@ -51,6 +51,8 @@
 		DEFAULT_HEADICON
 	} from '../../common/util.js'
 	
+	const SHARE_IMG = '../../static/share.jpg'
+	
 	export default {
 		components: {
 			zyworkIcon,
@@ -74,6 +76,13 @@
 			}
 		},
 		onLoad() {},
+		onShareAppMessage(res) {
+			return  {
+				title: '江西招投标平台信息共享',
+				path: '/pages/project-info/project-info?shareCode=1234',
+				imageUrl: SHARE_IMG
+			}
+		},
 		methods: {
 			
 		}

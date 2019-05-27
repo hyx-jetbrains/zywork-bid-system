@@ -3,6 +3,7 @@ export const IMAGE_BASE_URL = 'https://www.shudagroup.com'
 export const DOCUMENT_BASE_URL = 'https://www.shudagroup.com'
 export const USER_TOKEN_KEY = 'userToken'
 export const USER_OPENID = 'openid'
+export const SHARE_CODE = 'shareCode'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 

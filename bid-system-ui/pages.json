@@ -191,6 +191,13 @@
 					}
 				},
 				{
+					"path": "publish-update-notice-detail/publish-update-notice-detail",
+					"style": {
+						"navigationBarTitleText": "更新公告详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "publish-result/publish-result",
 					"style": {
 						"navigationBarTitleText": "发布结果",
