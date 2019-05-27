@@ -191,7 +191,8 @@
 		formatCalendarDate,
 		DOCUMENT_BASE_URL,
 		SHARE_CODE_PAGE_IMG,
-		getShareCode
+		getShareCode,
+		SHARE_CODE
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -328,18 +329,15 @@
 			}
 		},
 		onLoad(options) {
-			// uni.showToast({
-			// 	title: options
-			// })
 			this.projectPager.pageNo = 1
 			this.initData()
-			console.log(options);
-			uni.showModal({
-				title: 'test:' + options.shareCode
-			})
-			if (!options && !options.shareCode) {
+			if (options.shareCode != undefined) {
+				uni.setStorage({
+					key: SHARE_CODE,
+					data: options.shareCode
+				});
 				uni.showModal({
-					title: options.shareCode
+					title: 'test:' + options.shareCode
 				})
 			}
 		},

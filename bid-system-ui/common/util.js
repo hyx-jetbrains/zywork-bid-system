@@ -4,6 +4,7 @@ export const DOCUMENT_BASE_URL = 'https://www.shudagroup.com'
 export const USER_TOKEN_KEY = 'userToken'
 export const USER_OPENID = 'openid'
 export const SHARE_CODE = 'shareCode'
+export const MY_SHARE_CODE = 'myShareCode'
 export const SHARE_CODE_PAGE_IMG = '/static/share.jpg'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
@@ -174,7 +175,7 @@ export const nullToStr = (data) => {
  */
 export const setShareCode = (shareCode) => {
 	uni.setStorage({
-		key: SHARE_CODE,
+		key: MY_SHARE_CODE,
 		data: shareCode
 	});
 }
@@ -182,7 +183,7 @@ export const setShareCode = (shareCode) => {
  * 取分享码
  */
 export const getShareCode = () => {
-	const shareCode = uni.getStorageSync(SHARE_CODE)
+	const shareCode = uni.getStorageSync(MY_SHARE_CODE)
 	if (!isEmpty(shareCode)) {
 		return shareCode
 	}
