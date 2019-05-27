@@ -1857,3 +1857,22 @@ CREATE TABLE `t_user_work`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作信息表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+-- Table structure for t_update_notice
+-- ----------------------------
+DROP TABLE IF EXISTS `t_update_notice`;
+CREATE TABLE `t_update_notice`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '更新公告编号',
+  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '公告标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '公告内容',
+  `synopsis` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公告简介',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '更新公告表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
