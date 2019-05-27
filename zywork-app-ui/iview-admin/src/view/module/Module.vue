@@ -230,7 +230,7 @@
         >搜索</Button>
       </div>
     </Modal>
-    <module-detail :form="form" :detail="modal.detail" v-on:setDetail="setDetailModal"/>
+    <!-- <module-detail :form="form" :detail="modal.detail" v-on:setDetail="setDetailModal"/> -->
   </div>
 </template>
 
