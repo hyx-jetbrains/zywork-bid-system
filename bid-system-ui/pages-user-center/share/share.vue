@@ -9,19 +9,19 @@
 		<view class="zy-type-title zy-text-bold">邀请说明</view>
 		<label class="uni-list-cell uni-list-cell-pd">
 			<text>
-				1、点击立即分享，即可分享给好友或微信群。
+				1、点击立即分享（或右上角的转发），即可分享给好友或微信群。
 			</text>	
 		</label>
 		<label class="uni-list-cell uni-list-cell-pd">
 			<text>
-				2、好友点击链接，并注册成功，则视为分享成功。
+				2、好友点击链接，授权登入成功，则视为分享成功。
 			</text>	
 		</label>
 		
 		<view class="zy-type-title zy-text-bold">奖励说明</view>
 		<label class="uni-list-cell uni-list-cell-pd">
 			<text>
-				1、每成功邀请5位用户，即可随机获得抵扣券。
+				1、每成功邀请5位用户，即可随机获得VIP充值抵扣券。
 			</text>	
 		</label>
 		
@@ -32,7 +32,7 @@
 					<view class="zy-disable-flex">
 						<image class="zy-headicon" :src="shareRecordItem.headicon === '' ? headicon : shareRecordItem.headicon"></image>
 						<view>
-							<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{shareRecordItem.name}}</view>
+							<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{shareRecordItem.nickname}}</view>
 							<view class="zy-text-info">{{shareRecordItem.createTime}}</view>
 						</view>
 					</view>
@@ -51,7 +51,11 @@
 		DEFAULT_HEADICON,
 		SHARE_CODE_PAGE_IMG,
 		getShareCode
-	} from '../../common/util.js'
+	} from '@/common/util.js'
+	
+	import {
+		getUserShareRecord
+	} from '@/common/user.js'
 	
 	export default {
 		components: {
@@ -61,22 +65,12 @@
 		data() {
 			return {
 				headicon: DEFAULT_HEADICON,
-				shareRecordList: [
-					{
-						name: '张三',
-						headicon: '',
-						createTime: '2019-04-28 10:00:00'
-					},
-					{
-						name: '李四',
-						headicon: '',
-						createTime: '2019-04-28 10:00:00'
-					}
-				]
+				shareRecordList: []
 			}
 		},
 		onLoad() {
 			uni.hideShareMenu();
+			getUserShareRecord(this);
 		},
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();

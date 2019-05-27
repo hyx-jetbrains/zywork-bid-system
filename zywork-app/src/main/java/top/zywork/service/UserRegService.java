@@ -52,7 +52,7 @@ public interface UserRegService {
      * @param inviteUserId
      */
     void saveWeixinUser(String openid, String unionId, String accessToken, String sessionKey, String socialType, String password,
-                        String nickname, String headicon, Byte gender, Long roleId, Long inviteUserId);
+                        String nickname, String headicon, Byte gender, Long roleId, Long inviteUserId, Boolean autoDistribution);
 
     /**
      * 保存小程序用户信息

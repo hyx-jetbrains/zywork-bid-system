@@ -155,6 +155,10 @@ export const getUserDetail = (self) => {
 				}
 				self.user.phone = res.data.data.rows[0].userPhone
 				setShareCode(res.data.data.rows[0].userDetailShareCode)
+				uni.setStorage({
+					key: 'userId',
+					data: res.data.data.rows[0].userId
+				})
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
 				xcxLogin(self)
@@ -279,6 +283,38 @@ export const getUserExpertByUserId = (self) => {
 				} else {
 					self.expertIconColor = '#ccc'
 				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
+/**
+ * 查询我的分享记录
+ */
+export const getUserShareRecord = (self) => {
+	uni.request({
+		url: BASE_URL + '/distribution/user/direct-below',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				var tempUserId = uni.getStorageSync('userId');
+				res.data.data.rows.forEach(item => {
+					if (item.userId != tempUserId) {
+						self.shareRecordList.push(item)
+					}
+				})
 			} else {
 				showInfoToast(res.data.message)
 			}
