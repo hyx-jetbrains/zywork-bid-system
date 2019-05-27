@@ -11,7 +11,8 @@ import {
 	invalidToken,
 	showInfoToast,
 	showSuccessToast,
-	IMAGE_BASE_URL
+	IMAGE_BASE_URL,
+	SHARE_CODE
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -37,11 +38,16 @@ export const xcxLogin = (self) => {
 	uni.login({
 		provider: 'weixin',
 		success: function(wxRes) {
+			let theShareCode = uni.getStorageSync(SHARE_CODE)
+			if (!theShareCode) {
+				theShareCode = null
+			}
 			uni.request({
 				url: BASE_URL + '/wx-auth/xcx',
 				method: 'GET',
 				data: {
-					code: wxRes.code
+					code: wxRes.code,
+					shareCode: theShareCode
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -52,7 +58,8 @@ export const xcxLogin = (self) => {
 						saveOpenid(res.data.data[1])
 						saveUserToken(res.data.data[2])
 						if (res.data.data[0] === 'firstLogin') {
-							// 第一次小程序登录，需要点击登录按钮，再保存用户信息
+							// 第一次小程序登录，需要点击登录按钮，才能获取用户信息再保存用户信息
+							uni.removeStorageSync(SHARE_CODE)
 						} else {
 							// 第二次开始不需要点击登录按钮，而是直接从后台获取用户信息
 							getUserDetail(self)
