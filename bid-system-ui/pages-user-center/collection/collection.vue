@@ -141,7 +141,8 @@
 		formatCalendarDate
 	} from '@/common/util.js'
 	import {
-		projectStatusArray
+		projectStatusArray,
+		fileTypeArray
 	} from '@/common/picker.data.js'
 	import {
 		getProjectCollectionByUserId
@@ -166,16 +167,18 @@
 								'../../static/icon/purchase.png',
 								'../../static/icon/important.png',
 								'../../static/icon/other.png']
-	/** 澄清文件标识-0 */
-	const SEE_FILE_TYPE_CHENGQING = 0
+	/** 资审文件标识-0 */
+	const SEE_FILE_TYPE_ZIZHI = 0
 	/** 招标文件标识-1 */
 	const SEE_FILE_TYPE_ZHAOBIAO = 1
 	/** 清单文件标识-2 */
 	const SEE_FILE_TYPE_QINGDAN = 2
-	/** 资质文件标识-3 */
-	const SEE_FILE_TYPE_ZIZHI = 3
-	/** 收藏或取消收藏-4 */
-	const SEE_FILE_TYPE_SC_QXSC = 4
+	/** 控股价文件标识-3 */
+	const SEE_FILE_TYPE_KONGGUJIA = 3
+	/** 澄清答疑文件标识-4 */
+	const SEE_FILE_TYPE_CHENGQING = 4
+	/** 收藏或取消收藏-5 */
+	const SEE_FILE_TYPE_SC_QXSC = 5
 	export default {
 		components: {
 			zyworkIcon,
@@ -234,7 +237,7 @@
 					city: ''
 				},
 				isCollection: false,
-				actionSheetArray: ['澄清文件', '招标文件', '清单文件', '资质文件']
+				actionSheetArray: fileTypeArray
 			}
 		},
 		onLoad() {

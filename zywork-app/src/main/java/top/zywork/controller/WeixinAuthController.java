@@ -38,7 +38,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/wx-auth")
-public class WeixinAuthController {
+public class WeixinAuthController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeixinAuthController.class);
 
@@ -188,9 +188,10 @@ public class WeixinAuthController {
      * 通过微信小程序端wx.login函数获取的code授权登录，可获取到openid, session_key和unionid
      *
      * @param code 此code由小程序端调用api获得
+     * @param shareCode 分享码
      */
     @GetMapping("xcx")
-    public ResponseStatusVO xcxAuth(String code) {
+    public ResponseStatusVO xcxAuth(String code, String shareCode) {
         if (StringUtils.isEmpty(code)) {
             return ResponseStatusVO.dataError("微信授权登录缺少code", null);
         }
@@ -202,10 +203,14 @@ public class WeixinAuthController {
         // 判断用户是否已经保存，如未保存，则保存微信用户信息到数据库
         JwtUser jwtUser = (JwtUser) jwtUserDetailsService.loadUserByUsername(xcxAuth.getOpenid());
         if (StringUtils.isEmpty(jwtUser.getUsername())) {
+            Long inviteUserId = null;
+            if (StringUtils.isNotEmpty(shareCode)) {
+                inviteUserId = userRegService.getUserIdByShareCode(shareCode);
+            }
             // 还未保存用户信息，不包括用户详情
             userRegService.saveWeixinUser(xcxAuth.getOpenid(), xcxAuth.getUnionid(), null, xcxAuth.getSessionKey(),
                     SocialTypeEnum.WEIXIN_XCX.getValue(), null, null, null, null,
-                    defaultRoleQueryService.getDefaultRole(), null);
+                    defaultRoleQueryService.getDefaultRole(), inviteUserId);
             return outInfoToXcx(xcxAuth.getOpenid(), true);
         } else {
             // 已保存用户信息，更新session key

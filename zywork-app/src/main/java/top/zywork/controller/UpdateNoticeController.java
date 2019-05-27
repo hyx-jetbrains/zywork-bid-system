@@ -134,6 +134,11 @@ public class UpdateNoticeController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/list-page")
+    public ResponseStatusVO userListPage(@RequestBody UpdateNoticeQuery updateNoticeQuery) {
+        return listPageByCondition(updateNoticeQuery);
+    }
+
     @Autowired
     public void setUpdateNoticeService(UpdateNoticeService updateNoticeService) {
         this.updateNoticeService = updateNoticeService;
