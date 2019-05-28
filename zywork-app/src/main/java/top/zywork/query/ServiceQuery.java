@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class ServiceQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036722532093L;
+    private static final long serialVersionUID = -9223372035254166986L;
 
     // 服务编号
 	private Long id;
@@ -35,6 +35,12 @@ public class ServiceQuery extends PageQuery {
 	private Long priceMin;
 	// 服务价格（最大值）
 	private Long priceMax;
+	// 折扣
+	private Integer discount;
+	// 折扣（最小值）
+	private Integer discountMin;
+	// 折扣（最大值）
+	private Integer discountMax;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -68,7 +74,7 @@ public class ServiceQuery extends PageQuery {
 	
     public ServiceQuery () {}
 
-    public ServiceQuery (Long id, Long idMin, Long idMax, String title, String memo, String urls, Long price, Long priceMin, Long priceMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ServiceQuery (Long id, Long idMin, Long idMax, String title, String memo, String urls, Long price, Long priceMin, Long priceMax, Integer discount, Integer discountMin, Integer discountMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -78,6 +84,9 @@ public class ServiceQuery extends PageQuery {
 		this.price = price;
 		this.priceMin = priceMin;
 		this.priceMax = priceMax;
+		this.discount = discount;
+		this.discountMin = discountMin;
+		this.discountMax = discountMax;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -163,6 +172,30 @@ public class ServiceQuery extends PageQuery {
 
 	public void setPriceMax(Long priceMax) {
 		this.priceMax = priceMax;
+	}
+
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
+	public Integer getDiscountMin() {
+		return discountMin;
+	}
+
+	public void setDiscountMin(Integer discountMin) {
+		this.discountMin = discountMin;
+	}
+
+	public Integer getDiscountMax() {
+		return discountMax;
+	}
+
+	public void setDiscountMax(Integer discountMax) {
+		this.discountMax = discountMax;
 	}
 
 	public Integer getVersion() {
@@ -274,6 +307,9 @@ public class ServiceQuery extends PageQuery {
 				", price = " + price + 
 				", priceMin = " + priceMin + 
 				", priceMax = " + priceMax + 
+				", discount = " + discount + 
+				", discountMin = " + discountMin + 
+				", discountMax = " + discountMax + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

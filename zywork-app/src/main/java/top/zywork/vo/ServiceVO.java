@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class ServiceVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035329184876L;
+    private static final long serialVersionUID = -9223372035793128386L;
 
     // 服务编号
 	private Long id;
@@ -34,6 +34,8 @@ public class ServiceVO extends BaseVO {
 	private String urls;
 	// 服务价格
 	private Long price;
+	// 折扣
+	private Integer discount;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -47,12 +49,13 @@ public class ServiceVO extends BaseVO {
 	
     public ServiceVO () {}
 
-    public ServiceVO (Long id, String title, String memo, String urls, Long price, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ServiceVO (Long id, String title, String memo, String urls, Long price, Integer discount, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.memo = memo;
 		this.urls = urls;
 		this.price = price;
+		this.discount = discount;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -100,6 +103,14 @@ public class ServiceVO extends BaseVO {
 		this.price = price;
 	}
 
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -141,6 +152,7 @@ public class ServiceVO extends BaseVO {
 				", memo = " + memo + 
 				", urls = " + urls + 
 				", price = " + price + 
+				", discount = " + discount + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

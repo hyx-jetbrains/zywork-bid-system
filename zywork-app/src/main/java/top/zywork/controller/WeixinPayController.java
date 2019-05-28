@@ -2,15 +2,20 @@ package top.zywork.controller;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.zywork.common.RandomUtils;
 import top.zywork.enums.DatePatternEnum;
 import top.zywork.enums.SysConfigEnum;
+import top.zywork.query.ExpertSubscribeQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
+import top.zywork.service.ExpertSubscribeService;
 import top.zywork.service.SysConfigService;
+import top.zywork.vo.ExpertSubscribeVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.weixin.*;
 
@@ -30,13 +35,14 @@ public class WeixinPayController extends BaseController {
 
     private SysConfigService sysConfigService;
 
-    /*public ResponseStatusVO vipPay() {
+    private ExpertSubscribeService expertSubscribeService;
+
+    /*@PostMapping("user/servicePay")
+    public ResponseStatusVO ServicePay() {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-
-        sysConfigService.getByName();
 
         String order = DateFormatUtils.format(System.currentTimeMillis(), DatePatternEnum.DATETIME_SIMPLE.getValue()) + RandomUtils.randomNum(10000, 99999);
 
@@ -44,14 +50,17 @@ public class WeixinPayController extends BaseController {
     }
 
 
-    @PostMapping("user/createExpertSubscribeOrder")
-    public ResponseStatusVO ExpertSubscribePay() {
+    @PostMapping("user/expertSubscribePay")
+    public ResponseStatusVO ExpertSubscribePay(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
 
         String order = DateFormatUtils.format(System.currentTimeMillis(), DatePatternEnum.DATETIME_SIMPLE.getValue()) + RandomUtils.randomNum(10000, 99999);
+
+        Object obj = expertSubscribeService.getById(expertSubscribeVO.getId());
+
 
         return WechatPay(jwtUser.getUsername(), order, );
     }*/
@@ -70,7 +79,7 @@ public class WeixinPayController extends BaseController {
         return ResponseStatusVO.ok("下单成功", data);
     }
 
-    @PostMapping("payNotifyUrl")
+    @PostMapping("/payNotifyUrl")
     public void payNotifyUrl(HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> payResultMap = WeixinUtils.payResultMap(request);
         if(WeixinUtils.isReturnSuccess(payResultMap)) {
@@ -82,5 +91,10 @@ public class WeixinPayController extends BaseController {
     @Autowired
     public void setSysConfigService(SysConfigService sysConfigService) {
         this.sysConfigService = sysConfigService;
+    }
+
+    @Autowired
+    public void setExpertSubscribeService(ExpertSubscribeService expertSubscribeService) {
+        this.expertSubscribeService = expertSubscribeService;
     }
 }

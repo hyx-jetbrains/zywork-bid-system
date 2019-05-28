@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class ServiceDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372035494500480L;
+    private static final long serialVersionUID = -9223372035598433511L;
 
     // 服务编号
 	private Long id;
@@ -25,6 +25,8 @@ public class ServiceDO extends BaseDO {
 	private String urls;
 	// 服务价格
 	private Long price;
+	// 折扣
+	private Integer discount;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -36,12 +38,13 @@ public class ServiceDO extends BaseDO {
 	
     public ServiceDO () {}
 
-    public ServiceDO (Long id, String title, String memo, String urls, Long price, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ServiceDO (Long id, String title, String memo, String urls, Long price, Integer discount, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.memo = memo;
 		this.urls = urls;
 		this.price = price;
+		this.discount = discount;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -89,6 +92,14 @@ public class ServiceDO extends BaseDO {
 		this.price = price;
 	}
 
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -130,6 +141,7 @@ public class ServiceDO extends BaseDO {
 				", memo = " + memo + 
 				", urls = " + urls + 
 				", price = " + price + 
+				", discount = " + discount + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

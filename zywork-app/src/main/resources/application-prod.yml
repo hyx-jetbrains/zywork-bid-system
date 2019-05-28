@@ -130,7 +130,7 @@ storage:
   provider: local
   #配置本地上传保存目录及url
   local:
-    compressSizes: "800*600,600*400"
+    compressSizes: "800x600,600x400"
     compressScales: "0.8,0.5"
     user:
       imgParentDir: "."
