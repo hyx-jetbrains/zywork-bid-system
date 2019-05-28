@@ -5195,6 +5195,7 @@ CREATE TABLE `t_service` (
   `memo` varchar(500) DEFAULT NULL COMMENT '详细说明',
   `urls` varchar(2000) DEFAULT NULL COMMENT '所有收费的url',
   `price` bigint(10) DEFAULT '0' COMMENT '服务价格',
+  `discount` int(10) DEFAULT '100' COMMENT '折扣',
   `version` int(11) DEFAULT '1' COMMENT '版本号',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
@@ -5207,7 +5208,7 @@ CREATE TABLE `t_service` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_service`;
 CREATE TABLE `t_user_service` (
-  `id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户服务编号',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户服务编号',
   `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
   `service_id` bigint(20) DEFAULT NULL COMMENT '服务编号',
   `end_date` date DEFAULT NULL COMMENT '服务结束日期',

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.query.UserServiceServiceQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.UserServiceServiceService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -59,6 +61,21 @@ public class UserServiceServiceController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), UserServiceServiceVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * 用户查询权限
+     * @param userServiceServiceQuery
+     * @return
+     */
+    @PostMapping("user/all-cond")
+    public ResponseStatusVO userListAllByCondition(@RequestBody UserServiceServiceQuery userServiceServiceQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.authorizationError();
+        }
+        userServiceServiceQuery.setUserServiceUserId(jwtUser.getUserId());
+        return listAllByCondition(userServiceServiceQuery);
     }
 
     @Autowired

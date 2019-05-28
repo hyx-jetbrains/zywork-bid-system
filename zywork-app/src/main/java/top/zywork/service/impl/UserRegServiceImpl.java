@@ -68,7 +68,7 @@ public class UserRegServiceImpl implements UserRegService {
 
     @Override
     public void saveWeixinUser(String openid, String unionId, String accessToken, String sessionKey, String socialType, String password,
-                               String nickname, String headicon, Byte gender, Long roleId, Long inviteUserId, Boolean autoDistribution) {
+                               String nickname, String headicon, Byte gender, Long roleId, Long inviteUserId) {
         UserRegDO userRegDO = new UserRegDO();
         // userRegDO.setPassword(new BCryptPasswordEncoder().encode(password));
         userRegDAO.saveWeixinUser(userRegDO);
@@ -78,8 +78,7 @@ public class UserRegServiceImpl implements UserRegService {
         if (roleId != null) {
             userRoleRegDAO.saveUserRole(userRegDO.getId(), roleId);
         }
-        if (autoDistribution && inviteUserId != null) {
-            userInviteDAO.saveUserHierarchy(inviteUserId, inviteUserId);
+        if (inviteUserId != null) {
             userInviteDAO.saveUserHierarchy(inviteUserId, userRegDO.getId());
         }
     }

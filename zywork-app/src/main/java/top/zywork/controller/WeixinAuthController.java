@@ -126,7 +126,7 @@ public class WeixinAuthController extends BaseController {
                 }
                 userRegService.saveWeixinUser(weixinUser.getOpenid(), weixinUser.getUnionid(), gzhAuth.getAccessToken(), null,
                         SocialTypeEnum.WEIXIN_GZH.getValue(), null, weixinUser.getNickname(), weixinUser.getHeadimgurl(),
-                        Byte.valueOf(weixinUser.getSex()), defaultRoleQueryService.getDefaultRole(), inviteUserId, true);
+                        Byte.valueOf(weixinUser.getSex()), defaultRoleQueryService.getDefaultRole(), inviteUserId);
                 WebUtils.setCookie(response, gzhCookieName, gzhAuth.getOpenid(), cookieExpiration);
                 return new ModelAndView("redirect:" + fromUrl);
             } else {
@@ -210,7 +210,7 @@ public class WeixinAuthController extends BaseController {
             // 还未保存用户信息，不包括用户详情
             userRegService.saveWeixinUser(xcxAuth.getOpenid(), xcxAuth.getUnionid(), null, xcxAuth.getSessionKey(),
                     SocialTypeEnum.WEIXIN_XCX.getValue(), null, null, null, null,
-                    defaultRoleQueryService.getDefaultRole(), inviteUserId, true);
+                    defaultRoleQueryService.getDefaultRole(), inviteUserId);
             return outInfoToXcx(xcxAuth.getOpenid(), true);
         } else {
             // 已保存用户信息，更新session key

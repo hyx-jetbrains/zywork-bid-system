@@ -134,6 +134,16 @@ public class ServiceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /**
+     * 小程序端查询所有的服务
+     * @param serviceQuery
+     * @return
+     */
+    @PostMapping("any/all-cond")
+    public ResponseStatusVO userListAllByCondition(@RequestBody ServiceQuery serviceQuery) {
+        return listAllByCondition(serviceQuery);
+    }
+
     @Autowired
     public void setServiceService(ServiceService serviceService) {
         this.serviceService = serviceService;
