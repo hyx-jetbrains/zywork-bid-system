@@ -306,14 +306,14 @@
 				{
 					"path": "user-vip/user-vip",
 					"style": {
-						"navigationBarTitleText": "VIP等级",
+						"navigationBarTitleText": "服务订购",
 						"backgroundTextStyle": "light"
 					}
 				},
 				{
 					"path": "user-vip/vip-record",
 					"style": {
-						"navigationBarTitleText": "VIP订单详情",
+						"navigationBarTitleText": "确认服务订单",
 						"backgroundTextStyle": "light"
 					}
 				},

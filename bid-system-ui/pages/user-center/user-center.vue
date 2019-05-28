@@ -12,11 +12,13 @@
 						</button>
 					</view>
 					<view style="margin-left: 100upx;">
-						<zywork-icon type="iconVIP" color="#CCCCCC" size="24" style="display: inline-block; margin-right: 20upx;" @click.native="toUserVip"/>
-						<zywork-icon type="iconzhuanjiarenzheng" :color="expertIconColor" size="24" style="display: inline-block;" @click.native="toUserExpert"/>
+						<zywork-icon type="iconhuiyuanquanyi" :color="vipIconColor" size="24" style="display: inline-block; margin-right: 20upx;"
+						 @click.native="toUserVip" />
+						<zywork-icon type="iconzhuanjiarenzheng" :color="expertIconColor" size="24" style="display: inline-block;"
+						 @click.native="toUserExpert" />
 					</view>
 				</view>
-				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF" @click.native="toUserSetting"/>
+				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF" @click.native="toUserSetting" />
 			</view>
 			<view class="zy-user-info" v-else>
 				<view class="zy-user-left">
@@ -57,7 +59,7 @@
 			 @click="toCoupon"></zywork-list-item>
 			<zywork-list-item title="我的分享邀请" show-extra-icon="true" :extra-icon="{color: '#567890',size: '18',type: 'iconicon-test1'}"
 			 @click="toShare"></zywork-list-item>
-			 <!--
+			<!--
 			<zywork-list-item title="业绩二维码" show-extra-icon="true" :extra-icon="{color: '#E51C23',size: '18',type: 'iconico'}"
 			 @click="toPerformanceQrcode"></zywork-list-item>
 			 -->
@@ -74,7 +76,15 @@
 		DEFAULT_HEADICON,
 		getOpenid,
 		SHARE_CODE_PAGE_IMG,
-		getShareCode
+		getShareCode,
+		USER_ROLES,
+		USER_ROLES_VIP1,
+		USER_ROLES_VIP2,
+		USER_ROLES_VIP3,
+		IS_EXPERT_COLOR_TRUE,
+		IS_EXPERT_COLOR_FALSE,
+		IS_VIP_COLOR_TRUE,
+		IS_VIP_COLOR_FALSE
 	} from '@/common/util.js'
 	import {
 		judgeLogin,
@@ -83,6 +93,9 @@
 		geUserWalletByUserId,
 		getUserExpertByUserId,
 	} from '@/common/user.js'
+	import {
+		getMyServiceUserCenter
+	} from '@/common/user-center.js'
 
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
@@ -98,7 +111,8 @@
 				isUserLogin: false,
 				getUserInfo: false,
 				userExpert: null,
-				expertIconColor: '#ccc',
+				expertIconColor: IS_EXPERT_COLOR_FALSE,
+				vipIconColor: IS_VIP_COLOR_FALSE,
 				user: {
 					headicon: '',
 					nickname: '',
@@ -129,14 +143,15 @@
 			}
 		},
 		onLoad() {
-			this.initData('init')
+			this.initData('init');
+			this.initUserIcon();
 		},
 		onPullDownRefresh() {
 			this.initData('pullDown')
 		},
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();
-			return  {
+			return {
 				title: '江西招投标平台信息共享',
 				path: '/pages/project-info/project-info?shareCode=' + shareCode,
 				imageUrl: SHARE_CODE_PAGE_IMG
@@ -145,6 +160,10 @@
 		methods: {
 			initData(type) {
 				judgeLogin(this, type)
+			},
+			/** 初始用户权益标识 */
+			initUserIcon() {
+				getMyServiceUserCenter(this);
 			},
 			bindGetUserInfo(e) {
 				saveUserDetail(this, {
@@ -180,7 +199,7 @@
 			},
 			toComission() {
 				uni.navigateTo({
-					url: '/pages-user-center/commission/commission?itemData='  + encodeURIComponent(JSON.stringify(this.userWallet))
+					url: '/pages-user-center/commission/commission?itemData=' + encodeURIComponent(JSON.stringify(this.userWallet))
 				})
 			},
 			toIntegral() {
@@ -243,7 +262,7 @@
 					url: '/pages-user-center/contact/contact'
 				})
 			},
-			
+
 		}
 	}
 </script>
@@ -255,7 +274,7 @@
 		background-color: $primary-color;
 		padding: 30upx;
 	}
-	
+
 	.zy-user-info {
 		width: 100%;
 		display: flex;
@@ -263,7 +282,7 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-	
+
 	.zy-user-left {
 		display: flex;
 		flex-direction: row;
@@ -280,7 +299,7 @@
 	.zy-user-left view {
 		color: #FFFFFF;
 	}
-	
+
 	.zy-wx-btn {
 		text-align: left;
 		line-height: 1;
@@ -288,7 +307,7 @@
 		padding: 0;
 		background-color: transparent;
 	}
-	
+
 	.zy-user-balance {
 		display: flex;
 		flex-direction: row;
@@ -298,7 +317,7 @@
 		padding: 10upx;
 		margin-bottom: 10upx;
 	}
-	
+
 	.zy-user-balance-item {
 		flex-grow: 1;
 		display: flex;
@@ -306,7 +325,7 @@
 		align-items: center;
 		text-align: center;
 	}
-	
+
 	.zy-user-balance-item:first-child {
 		border-right: 1px solid $seperator-color;
 	}

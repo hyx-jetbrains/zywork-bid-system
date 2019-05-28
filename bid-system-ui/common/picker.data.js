@@ -74,7 +74,10 @@ export const dataTypeArray= ['资料', '文件夹', '物品', '重要证件']
  * 企业业绩数组
  */
 export const achievementTypeArray = ['房建业绩', '水利业绩', '交通业绩', '重点工程业绩', '水利监理业绩', '水利勘查设计业绩']
-
+/**
+ * 购买服务年限的年数
+ */
+export const buyServiceValidYearArray = [1, 2, 3, 4, 5]
 /**
  * 证书类别数组
  */

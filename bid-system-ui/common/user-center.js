@@ -12,7 +12,9 @@ import {
 	showInfoToast,
 	showSuccessToast,
 	IMAGE_BASE_URL,
-	nullToStr
+	nullToStr,
+	IS_VIP_COLOR_TRUE,
+	IS_VIP_COLOR_FALSE
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -1324,6 +1326,132 @@ export const getOftenQuerstionDetail = (self, id) => {
 		},
 		complete: () => {
 			uni.hideLoading()
+		}
+	})
+}
+
+/**
+ * 个人中心-获取我的服务-点亮身份标识
+ */
+export const getMyServiceUserCenter = (self) => {
+	uni.request({
+		url: BASE_URL + '/UserServiceService/user/all-cond',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				if (res.data.data.total > 0) {
+					// 有购买过服务，点亮图片
+					self.vipIconColor = IS_VIP_COLOR_TRUE
+				} else {
+					self.vipIconColor = IS_VIP_COLOR_FALSE
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+		}
+	})
+}
+
+/**
+ * 获取我的服务
+ */
+export const getMyService = (self) => {
+	uni.request({
+		url: BASE_URL + '/UserServiceService/user/all-cond',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.myServiceList = res.data.data.rows;
+				listAllService(self);
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+		}
+	})
+}
+
+/**
+ * 获取全部服务
+ */
+export const listAllService = (self) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/service/any/all-cond',
+		method: 'POST',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				if (self.myServiceList.length > 0) {
+					res.data.data.rows.forEach(item => {
+						var pushFlag = true;
+						var serviceId = item.id;
+						self.myServiceList.forEach(tempItem => {
+							if (tempItem.userServiceServiceId === serviceId) {
+								pushFlag = false;
+								return false;
+							}
+						})
+						if (pushFlag) {
+							self.serviceList.push(item);
+						}
+					})
+				} else {
+					self.serviceList = res.data.data.rows;
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+		}
+	})
+}
+
+/**
+ * 根据id获取服务
+ */
+export const getOneServiceById = (self, id) => {
+	uni.request({
+		url: BASE_URL + '/service/any/one/' + id,
+		method: 'POST',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.toBuyServicePage(res.data.data, 1)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
 		}
 	})
 }

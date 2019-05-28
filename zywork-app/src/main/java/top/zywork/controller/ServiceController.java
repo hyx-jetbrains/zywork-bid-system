@@ -136,6 +136,16 @@ public class ServiceController extends BaseController {
 
     /**
      * 小程序端查询所有的服务
+     * @param id
+     * @return
+     */
+    @PostMapping("any/one/{id}")
+    public ResponseStatusVO userGetById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
+    /**
+     * 小程序端查询单个的服务
      * @param serviceQuery
      * @return
      */

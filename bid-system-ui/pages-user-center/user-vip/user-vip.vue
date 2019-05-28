@@ -1,95 +1,87 @@
 <template>
 	<view>
-		<view class="zy-type-title zy-text-bold">我的等级</view>
-		<uni-card title="V0">
-			<view>
-				<text class="zy-text-bold">图标：</text>
-				<zywork-icon type="iconVIP" color="#CCCCCC" size="24" style="display: inline-block;" />
-			</view>
-			<view>
-				<text class="zy-text-bold">拥有权限：</text>
-				没有权限
-			</view>
-		</uni-card>
-		<view class="zy-type-title zy-text-bold">等级介绍</view>
-		<uni-card title="V1">
-			<view>
-				<text class="zy-text-bold">图标：</text>
-				<zywork-icon type="iconvip1" color="#33FF66" size="24" style="display: inline-block;" />
-			</view>
-			<view>
-				<text class="zy-text-bold">权限：</text>
-				某某某权限查看特权
-			</view>
-			<view>
-				<text class="zy-text-bold">价格：</text>
-				<text class="zy-text-warning zy-text-big">¥199</text>
-			</view>
-			<view class="zy-vip-button">
-				<button type="primary" @click="openVIP(0)">立即开通</button>
-			</view>
-		</uni-card>
-		
-		<uni-card title="V2">
-			<view>
-				<text class="zy-text-bold">图标：</text>
-				<zywork-icon type="iconvip2" color="#33CCFF" size="24" style="display: inline-block;" />
-			</view>
-			<view>
-				<text class="zy-text-bold">权限：</text>
-				某某某权限查看特权
-			</view>
-			<view>
-				<text class="zy-text-bold">价格：</text>
-				<text class="zy-text-warning zy-text-big">¥299</text>
-			</view>
-			<view class="zy-vip-button">
-				<button type="primary" @click="openVIP(1)">立即开通</button>
-			</view>
-		</uni-card>
-		
-		<uni-card title="V3">
-			<view>
-				<text class="zy-text-bold">图标：</text>
-				<zywork-icon type="iconvip3" color="#CC00FF" size="24" style="display: inline-block;" />
-			</view>
-			<view>
-				<text class="zy-text-bold">权限：</text>
-				某某某权限查看特权
-			</view>
-			<view>
-				<text class="zy-text-bold">价格：</text>
-				<text class="zy-text-warning zy-text-big">¥399</text>
-			</view>
-			<view class="zy-vip-button">
-				<button type="primary" @click="openVIP(2)">立即开通</button>
-			</view>
-		</uni-card>
+		<view class="zy-type-title zy-text-bold">已订购的服务</view>
+		<view v-if="myServiceList.length > 0" class="zy-position-relative">
+			<uni-card v-for="(item,index) in myServiceList" :key="index"
+				:title="item.serviceTitle" :extra="item.userServiceValidYear + '年'">
+				<view>
+					<text class="zy-text-bold">结束日期：</text>
+					<text>{{item.userServiceEndDate}}</text>
+				</view>
+				<view>
+					<text class="zy-text-bold">服务说明：</text>
+					{{item.serviceMemo}}
+				</view>
+				<view v-if="item.userServiceEndDate < currDate">
+					<zywork-icon class="zy-icon-yiguoqi" type="iconyiguoqi" color="#afacac" size="80" style="display: inline-block;" />
+				</view>
+				<view v-if="item.userServiceEndDate < currDate">
+					<button type="primary" @click="continuousBuy(item)">立即续订</button>
+				</view>
+			</uni-card>
+		</view>
+		<zyworkNoData v-else text="暂无订购服务"></zyworkNoData>
+		<view class="zy-type-title zy-text-bold">未订购的服务</view>
+		<view v-if="serviceList.length > 0">
+			<uni-card v-for="(item, index) in serviceList" :key="index" :title="item.title" extra="立即订购" @click="toBuyServicePage(item, 0)">
+				<view>
+					<text class="zy-text-bold">价格：</text>
+					<text class="zy-price">¥{{item.price / 100}}</text>
+				</view>
+				<view>
+					<text class="zy-text-bold">服务说明：</text>
+					{{item.memo}}
+				</view>
+				<view>
+					<button type="primary">立即订购</button>
+				</view>
+			</uni-card>
+		</view>
+		<zyworkNoData v-else text="暂无未订购的服务"></zyworkNoData>
 	</view>
 </template>
 
 <script>
-	import uniCard from "@/components/uni-card/uni-card.vue"
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
+	import uniCard from "@/components/uni-card/uni-card.vue"
+	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import {
+		getCalendarDate,
+		getDate
+	} from '@/common/util.js'
+	import {
+		getMyService,
+		getOneServiceById
+	} from '@/common/user-center.js'
+
 	export default {
 		components: {
+			zyworkIcon,
 			uniCard,
-			zyworkIcon
+			zyworkNoData
 		},
 		data() {
 			return {
-
+				serviceList: [],
+				myServiceList: [],
+				currDate: getCalendarDate(new Date()),
 			}
 		},
 		onLoad() {
-			uni.hideShareMenu();
+			getMyService(this)
 		},
 		methods: {
-			// 开通VIP
-			openVIP(type) {
+			/** 前往购买服务页面 */
+			toBuyServicePage(item, type) {
+				item.type = type;
 				uni.navigateTo({
-					url: '/pages-user-center/user-vip/vip-record?level=' + encodeURIComponent(type)
+					url: '/pages-user-center/user-vip/vip-record?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
+			},
+			/** 续订 */
+			continuousBuy(item) {
+				var id = item.userServiceServiceId;
+				getOneServiceById(this, id);
 			}
 		}
 	}
@@ -97,9 +89,10 @@
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
-
-	.zy-vip-button {
-		margin-top: 20upx;
-	}
 	
+	.zy-icon-yiguoqi {
+		position: absolute;
+		top: -60upx;
+		right: 60upx;
+	}
 </style>

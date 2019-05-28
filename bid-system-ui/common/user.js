@@ -13,7 +13,11 @@ import {
 	showSuccessToast,
 	IMAGE_BASE_URL,
 	SHARE_CODE,
-	setShareCode
+	setShareCode,
+	USER_ID,
+	USER_ROLES,
+	IS_EXPERT_COLOR_TRUE,
+	IS_EXPERT_COLOR_FALSE
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -156,9 +160,10 @@ export const getUserDetail = (self) => {
 				self.user.phone = res.data.data.rows[0].userPhone
 				setShareCode(res.data.data.rows[0].userDetailShareCode)
 				uni.setStorage({
-					key: 'userId',
+					key: USER_ID,
 					data: res.data.data.rows[0].userId
 				})
+				getUserRoles(self)
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
 				xcxLogin(self)
@@ -265,7 +270,7 @@ export const geUserWalletByUserId = (self) => {
 }
 
 /**
- * 查询专家申请记录
+ * 查询专家申请记录，判断当前用户是否是专家
  */
 export const getUserExpertByUserId = (self) => {
 	uni.request({
@@ -279,9 +284,9 @@ export const getUserExpertByUserId = (self) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.userExpert = res.data.data
 				if(self.userExpert.examineStatus == 1) {
-					self.expertIconColor = '#FFF'
+					self.expertIconColor = IS_EXPERT_COLOR_TRUE
 				} else {
-					self.expertIconColor = '#ccc'
+					self.expertIconColor = IS_EXPERT_COLOR_FALSE
 				}
 			} else {
 				showInfoToast(res.data.message)
@@ -309,7 +314,7 @@ export const getUserShareRecord = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				var tempUserId = uni.getStorageSync('userId');
+				var tempUserId = uni.getStorageSync(USER_ID);
 				res.data.data.rows.forEach(item => {
 					if (item.userId != tempUserId) {
 						self.shareRecordList.push(item)
@@ -327,3 +332,38 @@ export const getUserShareRecord = (self) => {
 		}
 	})
 }
+
+/**
+ * 获取用户角色
+ */
+export const getUserRoles = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-role/user/list',
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				var rolesArrey = []
+				res.data.data.rows.forEach(item => {
+					rolesArrey.push(item.roleTitle)
+				})
+				uni.setStorage({
+					key: USER_ROLES,
+					data: rolesArrey
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
