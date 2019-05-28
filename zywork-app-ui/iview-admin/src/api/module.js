@@ -113,3 +113,14 @@ export const getuserExpertById = (id) => {
 		data: ''
 	})
 }
+
+/**
+ * 根据服务配置ID查询
+ */
+export const getServiceById = (id) => {
+	return axios.request({
+		url: '/service/admin/one/' + id,
+		method: 'GET',
+		data: ''
+	})
+}

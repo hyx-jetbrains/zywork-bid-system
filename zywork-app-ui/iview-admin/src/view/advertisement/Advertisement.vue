@@ -295,9 +295,6 @@ import * as utils from '@/api/utils'
 import * as ResponseStatus from '@/api/response-status'
 import { isActiveSelect } from '@/api/select'
 import Editor from '_c/editor'
-import config from '@/config'
-const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
-const cdnUrl = config.baseUrl.cdnUrl
 
 export default {
   name: 'Advertisement',
@@ -329,7 +326,7 @@ export default {
         detailUrl: '/advertisement/admin/one/',
         activeUrl: '/advertisement/admin/active',
         batchActiveUrl: '/advertisement/admin/batch-active',
-        uploadUrl: baseUrl + '/advertisement/admin/upload-img'
+        uploadUrl: '/advertisement/admin/upload-img'
       },
       page: {
         total: 0

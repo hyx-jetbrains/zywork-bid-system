@@ -506,6 +506,15 @@ export default [
         },
         component: () => import('@/view/coupon-record/CouponRecord.vue')
       },
+			{
+			  path: 'UserService',
+			  name: 'user_service',
+			  meta: {
+			    title: '用户服务',
+			    icon: 'ios-paper-outline'
+			  },
+			  component: () => import('@/view/user-service/UserService.vue')
+			},
     ]
   },
   {
@@ -675,7 +684,16 @@ export default [
           icon: 'ios-link'
         },
         component: () => import('@/view/resource/ResourceList.vue')
-      }
+      },
+			{
+			  path: 'Service',
+			  name: 'service',
+			  meta: {
+			    title: '服务配置',
+			    icon: 'ios-link'
+			  },
+			  component: () => import('@/view/service/Service.vue')
+			}
     ]
   },
   {

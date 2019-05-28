@@ -142,6 +142,7 @@ export default {
   project_manage: 'Bidding Project Management',
   project_announce_manage: 'Management of Publicity Details',
   project_resource_manage: 'Project Annex Management',
+  service: 'Service Config',
   bid_info: 'Bidding information',
   builder_manage: 'Publish Builder Management',
   builder_req_manage: 'Publish Builder Recruit Management',
@@ -177,6 +178,7 @@ export default {
   user_coupon_manage: 'User Coupon Management',
   coupon_manage: 'Coupon Management',
   coupon_record: 'Coupon Record',
+  user_service: 'User Service',
   often_question_manage: 'Often Question Management',
   resource_manage: 'Accessory Resource Management',
   achievement_manage: 'User Achievement Management'

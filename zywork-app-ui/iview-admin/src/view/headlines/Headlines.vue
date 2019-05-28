@@ -253,10 +253,6 @@
 import * as utils from '@/api/utils'
 import Editor from '_c/editor'
 import { isActiveSelect } from '@/api/select'
-import config from '@/config'
-const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
-const cdnUrl = config.baseUrl.cdnUrl
-
 export default {
   name: 'Headlines',
   components: {
@@ -287,7 +283,7 @@ export default {
         detailUrl: '/headlines/admin/one/',
         activeUrl: '/headlines/admin/active',
         batchActiveUrl: '/headlines/admin/batch-active',
-        uploadUrl: baseUrl + '/headlines/admin/upload-img'
+        uploadUrl: '/headlines/admin/upload-img'
       },
       page: {
         total: 0

@@ -142,6 +142,7 @@ export default {
   project_manage: '招投標專案管理',
   project_announce_manage: '公示詳情管理',
   project_resource_manage: '項目附件管理',
+  service: '服務配置',
   bid_info: '招標資訊',
   builder_manage: '發佈建造師管理',
   builder_req_manage: '發佈建造師招聘管理',
@@ -177,6 +178,7 @@ export default {
   user_coupon_manage: '用戶抵扣券管理',
   coupon_manage: '抵扣券管理',
   coupon_record: '抵扣券使用記錄',
+  user_service: '用戶服務',
   often_question_manage: '常見問題管理',
   resource_manage: '附件資源管理',
   achievement_manage: '用戶業績管理'

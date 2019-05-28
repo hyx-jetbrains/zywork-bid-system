@@ -899,12 +899,6 @@ import {
   checkPatternSelect
 } from '@/api/select'
 import Editor from '_c/editor'
-import config from '@/config'
-const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? config.baseUrl.dev
-    : config.baseUrl.pro
-const cdnUrl = config.baseUrl.cdnUrl
 
 export default {
   name: 'Project',
@@ -939,7 +933,7 @@ export default {
         detailUrl: '/project/admin/one/',
         activeUrl: '/project/admin/active',
         batchActiveUrl: '/project/admin/batch-active',
-        uploadUrl: baseUrl + '/project/admin/upload-img',
+        uploadUrl: '/project/admin/upload-img',
         releaseStatusUrl: '/project/admin/releaseProject',
         batchReleaseUrl: '/project/admin/batch-release'
       },
