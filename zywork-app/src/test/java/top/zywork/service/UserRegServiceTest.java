@@ -30,7 +30,7 @@ public class UserRegServiceTest {
     @Test
     public void testSaveGzhUser() {
         userRegService.saveWeixinUser("openid_wechat", "123456", "access_token", "session_key",
-                SocialTypeEnum.WEIXIN_XCX.getValue(), "", "nickname", "headicon", (byte) 0, defaultRoleQueryService.getDefaultRole(), null, true);
+                SocialTypeEnum.WEIXIN_XCX.getValue(), "", "nickname", "headicon", (byte) 0, defaultRoleQueryService.getDefaultRole(), null);
     }
 
 }
