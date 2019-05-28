@@ -2,31 +2,34 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="top.zywork.dao.UpdateNoticeDAO">
+<mapper namespace="top.zywork.dao.ServiceDAO">
 
-    <insert id="save" parameterType="updateNoticeDO">
+    <insert id="save" parameterType="serviceDO">
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
     		SELECT LAST_INSERT_ID()
     	</selectKey>
-        insert into t_update_notice
+        insert into t_service
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null">
 				title,
 			</if>
-			<if test="content != null">
-				content,
+			<if test="memo != null">
+				memo,
 			</if>
-			<if test="synopsis != null">
-				synopsis,
+			<if test="urls != null">
+				urls,
+			</if>
+			<if test="price != null">
+				price,
 			</if>
 			<if test="version != null">
 				version,
 			</if>
-			<if test="updateTime != null">
-				update_time,
-			</if>
 			<if test="createTime != null">
 				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
 			</if>
 			<if test="isActive != null">
 				is_active,
@@ -37,20 +40,23 @@
             <if test="title != null">
 				#{title},
 			</if>
-			<if test="content != null">
-				#{content},
+			<if test="memo != null">
+				#{memo},
 			</if>
-			<if test="synopsis != null">
-				#{synopsis},
+			<if test="urls != null">
+				#{urls},
+			</if>
+			<if test="price != null">
+				#{price},
 			</if>
 			<if test="version != null">
 				#{version},
 			</if>
-			<if test="updateTime != null">
-				#{updateTime},
-			</if>
 			<if test="createTime != null">
 				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
 			</if>
 			<if test="isActive != null">
 				#{isActive},
@@ -64,25 +70,28 @@
     		SELECT LAST_INSERT_ID()
     	</selectKey>
     	<foreach collection="list" item="item" separator=";">
-            insert into t_update_notice
+            insert into t_service
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="item.title != null">
 				title,
 			</if>
-			<if test="item.content != null">
-				content,
+			<if test="item.memo != null">
+				memo,
 			</if>
-			<if test="item.synopsis != null">
-				synopsis,
+			<if test="item.urls != null">
+				urls,
+			</if>
+			<if test="item.price != null">
+				price,
 			</if>
 			<if test="item.version != null">
 				version,
 			</if>
-			<if test="item.updateTime != null">
-				update_time,
-			</if>
 			<if test="item.createTime != null">
 				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
 			</if>
 			<if test="item.isActive != null">
 				is_active,
@@ -93,20 +102,23 @@
                 <if test="item.title != null">
 				#{item.title},
 			</if>
-			<if test="item.content != null">
-				#{item.content},
+			<if test="item.memo != null">
+				#{item.memo},
 			</if>
-			<if test="item.synopsis != null">
-				#{item.synopsis},
+			<if test="item.urls != null">
+				#{item.urls},
+			</if>
+			<if test="item.price != null">
+				#{item.price},
 			</if>
 			<if test="item.version != null">
 				#{item.version},
 			</if>
-			<if test="item.updateTime != null">
-				#{item.updateTime},
-			</if>
 			<if test="item.createTime != null">
 				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
 			</if>
 			<if test="item.isActive != null">
 				#{item.isActive},
@@ -117,36 +129,39 @@
     </insert>
 
     <delete id="removeById" parameterType="long">
-        delete from t_update_notice where id = #{id}
+        delete from t_service where id = #{id}
     </delete>
 
     <delete id="removeByIds">
-        delete from t_update_notice where id in
+        delete from t_service where id in
         <foreach item="id" collection="array" separator="," open="(" close=")">
             #{id}
         </foreach>
     </delete>
 
-    <update id="update" parameterType="updateNoticeDO">
-        update t_update_notice
+    <update id="update" parameterType="serviceDO">
+        update t_service
         <set>
             <if test="title != null">
 				title = #{title},
 			</if>
-			<if test="content != null">
-				content = #{content},
+			<if test="memo != null">
+				memo = #{memo},
 			</if>
-			<if test="synopsis != null">
-				synopsis = #{synopsis},
+			<if test="urls != null">
+				urls = #{urls},
+			</if>
+			<if test="price != null">
+				price = #{price},
 			</if>
 			<if test="version != null">
 				version = #{version},
 			</if>
-			<if test="updateTime != null">
-				update_time = #{updateTime},
-			</if>
 			<if test="createTime != null">
 				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
 			</if>
 			<if test="isActive != null">
 				is_active = #{isActive},
@@ -158,25 +173,28 @@
 
     <update id="updateBatch" parameterType="java.util.List">
     	<foreach collection="list" item="item" separator=";">
-            update t_update_notice
+            update t_service
             <set>
                 <if test="item.title != null">
 				title = #{item.title},
 			</if>
-			<if test="item.content != null">
-				content = #{item.content},
+			<if test="item.memo != null">
+				memo = #{item.memo},
 			</if>
-			<if test="item.synopsis != null">
-				synopsis = #{item.synopsis},
+			<if test="item.urls != null">
+				urls = #{item.urls},
+			</if>
+			<if test="item.price != null">
+				price = #{item.price},
 			</if>
 			<if test="item.version != null">
 				version = #{item.version},
 			</if>
-			<if test="item.updateTime != null">
-				update_time = #{item.updateTime},
-			</if>
 			<if test="item.createTime != null">
 				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
 			</if>
 			<if test="item.isActive != null">
 				is_active = #{item.isActive},
@@ -191,7 +209,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, title as title, content as content, synopsis as synopsis, version as version, update_time as updateTime, create_time as createTime, is_active as isActive
+        id as id, title as title, memo as memo, urls as urls, price as price, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -210,11 +228,23 @@
 		<if test="query != null and query.title != null and query.title != ''">
 			and title like concat('%', #{query.title}, '%')
 		</if>
-		<if test="query != null and query.content != null and query.content != ''">
-			and content like concat('%', #{query.content}, '%')
+		<if test="query != null and query.memo != null and query.memo != ''">
+			and memo like concat('%', #{query.memo}, '%')
 		</if>
-		<if test="query != null and query.synopsis != null and query.synopsis != ''">
-			and synopsis like concat('%', #{query.synopsis}, '%')
+		<if test="query != null and query.urls != null and query.urls != ''">
+			and urls like concat('%', #{query.urls}, '%')
+		</if>
+		<if test="query != null and query.price != null">
+			and price = #{query.price}
+		</if>
+		<if test="query != null and query.priceMin != null and query.priceMax == null">
+			and price <![CDATA[ >= ]]> #{query.priceMin}
+		</if>
+		<if test="query != null and query.priceMin == null and query.priceMax != null">
+			and price <![CDATA[ <= ]]> #{query.priceMax}
+		</if>
+		<if test="query != null and query.priceMin != null and query.priceMax != null">
+			and price <![CDATA[ >= ]]> #{query.priceMin} and price <![CDATA[ <= ]]> #{query.priceMax}
 		</if>
 		<if test="query != null and query.version != null">
 			and version = #{query.version}
@@ -228,18 +258,6 @@
 		<if test="query != null and query.versionMin != null and query.versionMax != null">
 			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
 		</if>
-		<if test="query != null and query.updateTime != null">
-			and update_time = #{query.updateTime}
-		</if>
-		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
-			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
-		</if>
-		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
-			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
-		</if>
-		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
-			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
-		</if>
 		<if test="query != null and query.createTime != null">
 			and create_time = #{query.createTime}
 		</if>
@@ -251,6 +269,18 @@
 		</if>
 		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
 			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
 		</if>
 		<if test="query != null and query.isActive != null">
 			and is_active = #{query.isActive}
@@ -267,27 +297,27 @@
 		
     </sql>
 
-    <select id="getById" parameterType="long" resultType="updateNoticeDO">
+    <select id="getById" parameterType="long" resultType="serviceDO">
         select
         <include refid="select_columns"/>
-        from t_update_notice where id = #{id}
+        from t_service where id = #{id}
     </select>
 
     <select id="getVersionById" parameterType="long" resultType="integer">
-        select version from t_update_notice where id = #{id}
+        select version from t_service where id = #{id}
     </select>
 
-    <select id="listAll" resultType="updateNoticeDO">
+    <select id="listAll" resultType="serviceDO">
         select
         <include refid="select_columns"/>
-        from t_update_notice
+        from t_service
         order by update_time desc, create_time desc
     </select>
 
-    <select id="listAllByCondition" resultType="updateNoticeDO">
+    <select id="listAllByCondition" resultType="serviceDO">
         select
         <include refid="select_columns"/>
-        from t_update_notice
+        from t_service
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -300,10 +330,10 @@
         </if>
     </select>
 
-    <select id="listPageByCondition" resultType="updateNoticeDO">
+    <select id="listPageByCondition" resultType="serviceDO">
         select
         <include refid="select_columns"/>
-        from t_update_notice
+        from t_service
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -318,7 +348,7 @@
     </select>
 
     <select id="countByCondition" resultType="long">
-        select count(*) from t_update_notice
+        select count(*) from t_service
         <where>
             <include refid="query_where_clause"/>
         </where>

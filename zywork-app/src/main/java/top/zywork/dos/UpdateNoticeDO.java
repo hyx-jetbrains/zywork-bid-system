@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class UpdateNoticeDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372035393398164L;
+    private static final long serialVersionUID = -9223372036694798022L;
 
     // 更新公告编号
 	private Long id;
@@ -21,6 +21,8 @@ public class UpdateNoticeDO extends BaseDO {
 	private String title;
 	// 公告内容
 	private String content;
+	// 公告简介
+	private String synopsis;
 	// 版本号
 	private Integer version;
 	// 更新时间
@@ -32,10 +34,11 @@ public class UpdateNoticeDO extends BaseDO {
 	
     public UpdateNoticeDO () {}
 
-    public UpdateNoticeDO (Long id, String title, String content, Integer version, Date updateTime, Date createTime, Byte isActive) {
+    public UpdateNoticeDO (Long id, String title, String content, String synopsis, Integer version, Date updateTime, Date createTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.content = content;
+		this.synopsis = synopsis;
 		this.version = version;
 		this.updateTime = updateTime;
 		this.createTime = createTime;
@@ -65,6 +68,14 @@ public class UpdateNoticeDO extends BaseDO {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSynopsis() {
+		return synopsis;
+	}
+
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
 	}
 
 	public Integer getVersion() {
@@ -106,6 +117,7 @@ public class UpdateNoticeDO extends BaseDO {
                 "id = " + id + 
 				", title = " + title + 
 				", content = " + content + 
+				", synopsis = " + synopsis + 
 				", version = " + version + 
 				", updateTime = " + updateTime + 
 				", createTime = " + createTime + 

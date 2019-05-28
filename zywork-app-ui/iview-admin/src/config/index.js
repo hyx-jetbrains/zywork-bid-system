@@ -18,9 +18,9 @@ export default {
    */
   baseUrl: {
     dev: 'http://localhost:8088',
-    pro: 'http://39.108.116.103:8088',
+    pro: 'https://www.shudagroup.com/api',
     devServer: 'http://localhost',
-    proServer: 'http://39.108.116.103',
+    proServer: 'https://www.shudagroup.com',
     cdnUrl: '' // 如果是本地存储，不需要填写，为空；如果使用云存储，则配置cdn url，如http://cdn.zywork.top
   },
   /**
@@ -40,6 +40,6 @@ export default {
       developmentOff: true // 设为true后在开发环境不会收集错误信息，方便开发中排查错误
     }
   },
-  showDemoAccount: true, // 是否在登录页面显示体验账号
+  showDemoAccount: false, // 是否在登录页面显示体验账号
   hasAccessPermissionRoles: ['super_sys_admin', 'sys_admin', 'sys_dev', 'sys_user_demo'] // 可访问后台系统的角色
 }

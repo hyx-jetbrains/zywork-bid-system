@@ -267,6 +267,15 @@ export default [
         },
         component: () => import('@/view/expert-question-type/ExpertQuestionType.vue')
       },
+			{
+			  path: 'UpdateNotice',
+			  name: 'update_notice',
+			  meta: {
+			    title: '更新公告',
+			    icon: 'ios-person'
+			  },
+			  component: () => import('@/view/update-notice/UpdateNotice.vue')
+			},
     ]
   },
   {

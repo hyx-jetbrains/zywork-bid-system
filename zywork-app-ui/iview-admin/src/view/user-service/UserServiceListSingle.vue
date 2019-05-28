@@ -8,7 +8,7 @@
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
           </Tooltip>
-          <Table ref="dataTable" stripe :loading="table.loading" :columns="table.tableColumns" :data="table.tableDetails" style="margin-top:20px;" @on-selection-change="changeSelection" @on-sort-change="changeSort"></Table>
+          <Table highlight-row ref="dataTable" stripe :loading="table.loading" :columns="table.tableColumns" :data="table.tableDetails" style="margin-top:20px;" @on-current-change="changeCurrent" @on-sort-change="changeSort"></Table>
           <div style="margin: 20px;overflow: hidden">
             <div style="float: right;">
               <Page :total="page.total" :current="searchForm.pageNo" @on-change="changePageNo" @on-page-size-change="changePageSize" showSizer showTotal></Page>
@@ -19,28 +19,75 @@
     </Row>
     <Modal v-model="modal.search" title="高级搜索">
       <Form ref="searchForm" :model="searchForm" :label-width="80">
-        <FormItem label="更新公告编号"><Row>
+        <FormItem label="用户服务编号"><Row>
 	<i-col span="11">
 	<FormItem prop="idMin">
-	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始更新公告编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始用户服务编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 	<i-col span="2" style="text-align: center">-</i-col>
 	<i-col span="11">
 	<FormItem prop="idMax">
-	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束更新公告编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束用户服务编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="公告标题" prop="title">
-	<Input v-model="searchForm.title" placeholder="请输入公告标题"/>
+<FormItem label="用户编号"><Row>
+	<i-col span="11">
+	<FormItem prop="userIdMin">
+	<InputNumber v-model="searchForm.userIdMin" placeholder="请输入开始用户编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="公告内容" prop="content">
-	<Input v-model="searchForm.content" placeholder="请输入公告内容"/>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="userIdMax">
+	<InputNumber v-model="searchForm.userIdMax" placeholder="请输入结束用户编号" style="width: 100%;"/>
 </FormItem>
-<FormItem label="公告简介" prop="synopsis">
-	<Input v-model="searchForm.synopsis" placeholder="请输入公告简介"/>
+</i-col>
+</Row>
+</FormItem>
+<FormItem label="服务编号"><Row>
+	<i-col span="11">
+	<FormItem prop="serviceIdMin">
+	<InputNumber v-model="searchForm.serviceIdMin" placeholder="请输入开始服务编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="serviceIdMax">
+	<InputNumber v-model="searchForm.serviceIdMax" placeholder="请输入结束服务编号" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
+</FormItem>
+<FormItem label="服务结束日期"><Row>
+	<i-col span="11">
+	<FormItem prop="endDateMin">
+	<DatePicker @on-change="searchForm.endDateMin=$event" :value="searchForm.endDateMin" placeholder="请输入开始服务结束日期" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="endDateMax">
+	<DatePicker @on-change="searchForm.endDateMax=$event" :value="searchForm.endDateMax" placeholder="请输入结束服务结束日期" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
+</FormItem>
+</i-col>
+</Row>
+</FormItem>
+<FormItem label="有效年"><Row>
+	<i-col span="11">
+	<FormItem prop="validYearMin">
+	<InputNumber v-model="searchForm.validYearMin" placeholder="请输入开始有效年" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="validYearMax">
+	<InputNumber v-model="searchForm.validYearMax" placeholder="请输入结束有效年" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
 </FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
@@ -56,20 +103,6 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="更新时间"><Row>
-	<i-col span="11">
-	<FormItem prop="updateTimeMin">
-	<DatePicker @on-change="searchForm.updateTimeMin=$event" :value="searchForm.updateTimeMin" placeholder="请输入开始更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="updateTimeMax">
-	<DatePicker @on-change="searchForm.updateTimeMax=$event" :value="searchForm.updateTimeMax" placeholder="请输入结束更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
 <FormItem label="创建时间"><Row>
 	<i-col span="11">
 	<FormItem prop="createTimeMin">
@@ -80,6 +113,20 @@
 	<i-col span="11">
 	<FormItem prop="createTimeMax">
 	<DatePicker @on-change="searchForm.createTimeMax=$event" :value="searchForm.createTimeMax" placeholder="请输入结束创建时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
+</FormItem>
+</i-col>
+</Row>
+</FormItem>
+<FormItem label="更新时间"><Row>
+	<i-col span="11">
+	<FormItem prop="updateTimeMin">
+	<DatePicker @on-change="searchForm.updateTimeMin=$event" :value="searchForm.updateTimeMin" placeholder="请输入开始更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="updateTimeMax">
+	<DatePicker @on-change="searchForm.updateTimeMax=$event" :value="searchForm.updateTimeMax" placeholder="请输入结束更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
 </FormItem>
 </i-col>
 </Row>
@@ -107,13 +154,14 @@
       </div>
     </Modal>
     <Modal v-model="modal.detail" title="详情">
-      <p>更新公告编号: <span v-text="form.id"></span></p>
-<p>公告标题: <span v-text="form.title"></span></p>
-<p>公告内容: <span v-text="form.content"></span></p>
-<p>公告简介: <span v-text="form.synopsis"></span></p>
+      <p>用户服务编号: <span v-text="form.id"></span></p>
+<p>用户编号: <span v-text="form.userId"></span></p>
+<p>服务编号: <span v-text="form.serviceId"></span></p>
+<p>服务结束日期: <span v-text="form.endDate"></span></p>
+<p>有效年: <span v-text="form.validYear"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
-<p>更新时间: <span v-text="form.updateTime"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
+<p>更新时间: <span v-text="form.updateTime"></span></p>
 <p>是否激活: <span v-text="form.isActive"></span></p>
 
     </Modal>
@@ -124,7 +172,7 @@
   import * as utils from '@/api/utils'
 
   export default {
-    name: 'UpdateNoticeList',
+    name: 'UserServiceListSingle',
     data() {
       return {
         modal: {
@@ -137,21 +185,22 @@
           search: false
         },
         urls: {
-          searchUrl: '/update-notice/admin/pager-cond',
-          allUrl: '/update-notice/admin/all',
-          detailUrl: '/update-notice/admin/one/'
+          searchUrl: '/user-service/admin/pager-cond',
+          allUrl: '/user-service/admin/all',
+          detailUrl: '/user-service/admin/one/'
         },
         page: {
           total: 0
         },
         form: {
           id: null,
-title: null,
-content: null,
-synopsis: null,
+userId: null,
+serviceId: null,
+endDate: null,
+validYear: null,
 version: null,
-updateTime: null,
 createTime: null,
+updateTime: null,
 isActive: null,
 
         },
@@ -163,18 +212,27 @@ isActive: null,
           id: null,
 idMin: null, 
 idMax: null, 
-title: null,
-content: null,
-synopsis: null,
+userId: null,
+userIdMin: null, 
+userIdMax: null, 
+serviceId: null,
+serviceIdMin: null, 
+serviceIdMax: null, 
+endDate: null,
+endDateMin: null, 
+endDateMax: null, 
+validYear: null,
+validYearMin: null, 
+validYearMax: null, 
 version: null,
 versionMin: null, 
 versionMax: null, 
-updateTime: null,
-updateTimeMin: null, 
-updateTimeMax: null, 
 createTime: null,
 createTimeMin: null, 
 createTimeMax: null, 
+updateTime: null,
+updateTimeMin: null, 
+updateTimeMax: null, 
 isActive: null,
 isActiveMin: null, 
 isActiveMax: null, 
@@ -184,13 +242,6 @@ isActiveMax: null,
           loading: false,
           tableColumns: [
             {
-              type: 'selection',
-              width: 45,
-              key: "id",
-              align: 'center',
-              fixed: 'left'
-            },
-            {
               width: 60,
               align: 'center',
               fixed: "left",
@@ -199,26 +250,32 @@ isActiveMax: null,
               }
             },
             {
-title: '更新公告编号',
+title: '用户服务编号',
 key: 'id',
 minWidth: 120,
 sortable: true
 },
 {
-title: '公告标题',
-key: 'title',
+title: '用户编号',
+key: 'userId',
 minWidth: 120,
 sortable: true
 },
 {
-title: '公告内容',
-key: 'content',
+title: '服务编号',
+key: 'serviceId',
 minWidth: 120,
 sortable: true
 },
 {
-title: '公告简介',
-key: 'synopsis',
+title: '服务结束日期',
+key: 'endDate',
+minWidth: 120,
+sortable: true
+},
+{
+title: '有效年',
+key: 'validYear',
 minWidth: 120,
 sortable: true
 },
@@ -229,14 +286,14 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '更新时间',
-key: 'updateTime',
+title: '创建时间',
+key: 'createTime',
 minWidth: 120,
 sortable: true
 },
 {
-title: '创建时间',
-key: 'createTime',
+title: '更新时间',
+key: 'updateTime',
 minWidth: 120,
 sortable: true
 },
@@ -274,7 +331,7 @@ sortable: true
             }
           ],
           tableDetails: [],
-          selections: []
+          currentRow: {}
         }
       }
     },
@@ -313,8 +370,8 @@ sortable: true
       search() {
         utils.search(this)
       },
-      changeSelection(selections) {
-        utils.changeSelections(this, selections)
+      changeCurrent(currentRow, oldCurrentRow) {
+        utils.changeCurrent(this, currentRow, oldCurrentRow)
       },
       changeSort(sortColumn) {
         utils.changeSort(this, sortColumn)

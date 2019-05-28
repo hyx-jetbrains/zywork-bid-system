@@ -30,14 +30,17 @@
     </Row>
     <Modal v-model="modal.add" title="添加" @on-visible-change="changeModalVisibleResetForm('addForm', $event)">
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="公告标题" prop="title">
-	<Input v-model="form.title" placeholder="请输入公告标题"/>
+        <FormItem label="服务标题" prop="title">
+	<Input v-model="form.title" placeholder="请输入服务标题"/>
 </FormItem>
-<FormItem label="公告内容" prop="content">
-	<Input v-model="form.content" placeholder="请输入公告内容"/>
+<FormItem label="详细说明" prop="memo">
+	<Input v-model="form.memo" placeholder="请输入详细说明"/>
 </FormItem>
-<FormItem label="公告简介" prop="synopsis">
-	<Input v-model="form.synopsis" placeholder="请输入公告简介"/>
+<FormItem label="所有收费的url" prop="urls">
+	<Input v-model="form.urls" placeholder="请输入所有收费的url"/>
+</FormItem>
+<FormItem label="服务价格" prop="price">
+	<InputNumber v-model="form.price" placeholder="请输入服务价格" style="width: 100%;"/>
 </FormItem>
 
       </Form>
@@ -48,14 +51,17 @@
     </Modal>
     <Modal v-model="modal.edit" title="修改" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
-        <FormItem label="公告标题" prop="title">
-	<Input v-model="form.title" placeholder="请输入公告标题"/>
+        <FormItem label="服务标题" prop="title">
+	<Input v-model="form.title" placeholder="请输入服务标题"/>
 </FormItem>
-<FormItem label="公告内容" prop="content">
-	<Input v-model="form.content" placeholder="请输入公告内容"/>
+<FormItem label="详细说明" prop="memo">
+	<Input v-model="form.memo" placeholder="请输入详细说明"/>
 </FormItem>
-<FormItem label="公告简介" prop="synopsis">
-	<Input v-model="form.synopsis" placeholder="请输入公告简介"/>
+<FormItem label="所有收费的url" prop="urls">
+	<Input v-model="form.urls" placeholder="请输入所有收费的url"/>
+</FormItem>
+<FormItem label="服务价格" prop="price">
+	<InputNumber v-model="form.price" placeholder="请输入服务价格" style="width: 100%;"/>
 </FormItem>
 
       </Form>
@@ -66,28 +72,42 @@
     </Modal>
     <Modal v-model="modal.search" title="高级搜索">
       <Form ref="searchForm" :model="searchForm" :label-width="80">
-        <FormItem label="更新公告编号"><Row>
+        <FormItem label="服务编号"><Row>
 	<i-col span="11">
 	<FormItem prop="idMin">
-	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始更新公告编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMin" placeholder="请输入开始服务编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 	<i-col span="2" style="text-align: center">-</i-col>
 	<i-col span="11">
 	<FormItem prop="idMax">
-	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束更新公告编号" style="width: 100%;"/>
+	<InputNumber v-model="searchForm.idMax" placeholder="请输入结束服务编号" style="width: 100%;"/>
 </FormItem>
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="公告标题" prop="title">
-	<Input v-model="searchForm.title" placeholder="请输入公告标题"/>
+<FormItem label="服务标题" prop="title">
+	<Input v-model="searchForm.title" placeholder="请输入服务标题"/>
 </FormItem>
-<FormItem label="公告内容" prop="content">
-	<Input v-model="searchForm.content" placeholder="请输入公告内容"/>
+<FormItem label="详细说明" prop="memo">
+	<Input v-model="searchForm.memo" placeholder="请输入详细说明"/>
 </FormItem>
-<FormItem label="公告简介" prop="synopsis">
-	<Input v-model="searchForm.synopsis" placeholder="请输入公告简介"/>
+<FormItem label="所有收费的url" prop="urls">
+	<Input v-model="searchForm.urls" placeholder="请输入所有收费的url"/>
+</FormItem>
+<FormItem label="服务价格"><Row>
+	<i-col span="11">
+	<FormItem prop="priceMin">
+	<InputNumber v-model="searchForm.priceMin" placeholder="请输入开始服务价格" style="width: 100%;"/>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="priceMax">
+	<InputNumber v-model="searchForm.priceMax" placeholder="请输入结束服务价格" style="width: 100%;"/>
+</FormItem>
+</i-col>
+</Row>
 </FormItem>
 <FormItem label="版本号"><Row>
 	<i-col span="11">
@@ -103,20 +123,6 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="更新时间"><Row>
-	<i-col span="11">
-	<FormItem prop="updateTimeMin">
-	<DatePicker @on-change="searchForm.updateTimeMin=$event" :value="searchForm.updateTimeMin" placeholder="请输入开始更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="updateTimeMax">
-	<DatePicker @on-change="searchForm.updateTimeMax=$event" :value="searchForm.updateTimeMax" placeholder="请输入结束更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
 <FormItem label="创建时间"><Row>
 	<i-col span="11">
 	<FormItem prop="createTimeMin">
@@ -127,6 +133,20 @@
 	<i-col span="11">
 	<FormItem prop="createTimeMax">
 	<DatePicker @on-change="searchForm.createTimeMax=$event" :value="searchForm.createTimeMax" placeholder="请输入结束创建时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
+</FormItem>
+</i-col>
+</Row>
+</FormItem>
+<FormItem label="更新时间"><Row>
+	<i-col span="11">
+	<FormItem prop="updateTimeMin">
+	<DatePicker @on-change="searchForm.updateTimeMin=$event" :value="searchForm.updateTimeMin" placeholder="请输入开始更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
+</FormItem>
+</i-col>
+	<i-col span="2" style="text-align: center">-</i-col>
+	<i-col span="11">
+	<FormItem prop="updateTimeMax">
+	<DatePicker @on-change="searchForm.updateTimeMax=$event" :value="searchForm.updateTimeMax" placeholder="请输入结束更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
 </FormItem>
 </i-col>
 </Row>
@@ -154,13 +174,14 @@
       </div>
     </Modal>
     <Modal v-model="modal.detail" title="详情" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
-      <p>更新公告编号: <span v-text="form.id"></span></p>
-<p>公告标题: <span v-text="form.title"></span></p>
-<p>公告内容: <span v-text="form.content"></span></p>
-<p>公告简介: <span v-text="form.synopsis"></span></p>
+      <p>服务编号: <span v-text="form.id"></span></p>
+<p>服务标题: <span v-text="form.title"></span></p>
+<p>详细说明: <span v-text="form.memo"></span></p>
+<p>所有收费的url: <span v-text="form.urls"></span></p>
+<p>服务价格: <span v-text="form.price"></span></p>
 <p>版本号: <span v-text="form.version"></span></p>
-<p>更新时间: <span v-text="form.updateTime"></span></p>
 <p>创建时间: <span v-text="form.createTime"></span></p>
+<p>更新时间: <span v-text="form.updateTime"></span></p>
 <p>是否激活: <span v-text="form.isActive"></span></p>
 
     </Modal>
@@ -171,7 +192,7 @@
   import * as utils from '@/api/utils'
 
   export default {
-    name: 'UpdateNotice',
+    name: 'Service',
     data() {
       return {
         modal: {
@@ -186,17 +207,17 @@
           search: false
         },
         urls: {
-          addUrl: '/update-notice/admin/save',
-          batchAddUrl: '/update-notice/admin/batch-save',
-          editUrl: '/update-notice/admin/update',
-          batchEditUrl: '/update-notice/admin/batch-update',
-          searchUrl: '/update-notice/admin/pager-cond',
-          allUrl: '/update-notice/admin/all',
-          removeUrl: '/update-notice/admin/remove/',
-          batchRemoveUrl: '/update-notice/admin/batch-remove',
-          detailUrl: '/update-notice/admin/one/',
-          activeUrl: '/update-notice/admin/active',
-          batchActiveUrl: '/update-notice/admin/batch-active'
+          addUrl: '/service/admin/save',
+          batchAddUrl: '/service/admin/batch-save',
+          editUrl: '/service/admin/update',
+          batchEditUrl: '/service/admin/batch-update',
+          searchUrl: '/service/admin/pager-cond',
+          allUrl: '/service/admin/all',
+          removeUrl: '/service/admin/remove/',
+          batchRemoveUrl: '/service/admin/batch-remove',
+          detailUrl: '/service/admin/one/',
+          activeUrl: '/service/admin/active',
+          batchActiveUrl: '/service/admin/batch-active'
         },
         page: {
           total: 0
@@ -204,23 +225,24 @@
         form: {
           id: null,
 title: null,
-content: null,
-synopsis: null,
+memo: null,
+urls: null,
+price: null,
 version: null,
-updateTime: null,
 createTime: null,
+updateTime: null,
 isActive: null,
 
         },
         validateRules: {
           title: [
-{type: 'string', min: 1, max: 32, message: '必须1-32个字符', trigger: 'blur'}
-],
-content: [
-{type: 'string', min: 1, max: 65535, message: '必须1-65535个字符', trigger: 'blur'}
-],
-synopsis: [
 {type: 'string', min: 1, max: 200, message: '必须1-200个字符', trigger: 'blur'}
+],
+memo: [
+{type: 'string', min: 1, max: 500, message: '必须1-500个字符', trigger: 'blur'}
+],
+urls: [
+{type: 'string', min: 1, max: 2000, message: '必须1-2000个字符', trigger: 'blur'}
 ],
 
         },
@@ -233,17 +255,20 @@ synopsis: [
 idMin: null, 
 idMax: null, 
 title: null,
-content: null,
-synopsis: null,
+memo: null,
+urls: null,
+price: null,
+priceMin: null, 
+priceMax: null, 
 version: null,
 versionMin: null, 
 versionMax: null, 
-updateTime: null,
-updateTimeMin: null, 
-updateTimeMax: null, 
 createTime: null,
 createTimeMin: null, 
 createTimeMax: null, 
+updateTime: null,
+updateTimeMin: null, 
+updateTimeMax: null, 
 isActive: null,
 isActiveMin: null, 
 isActiveMax: null, 
@@ -268,26 +293,32 @@ isActiveMax: null,
               }
             },
             {
-title: '更新公告编号',
+title: '服务编号',
 key: 'id',
 minWidth: 120,
 sortable: true
 },
 {
-title: '公告标题',
+title: '服务标题',
 key: 'title',
 minWidth: 120,
 sortable: true
 },
 {
-title: '公告内容',
-key: 'content',
+title: '详细说明',
+key: 'memo',
 minWidth: 120,
 sortable: true
 },
 {
-title: '公告简介',
-key: 'synopsis',
+title: '所有收费的url',
+key: 'urls',
+minWidth: 120,
+sortable: true
+},
+{
+title: '服务价格',
+key: 'price',
 minWidth: 120,
 sortable: true
 },
@@ -298,14 +329,14 @@ minWidth: 120,
 sortable: true
 },
 {
-title: '更新时间',
-key: 'updateTime',
+title: '创建时间',
+key: 'createTime',
 minWidth: 120,
 sortable: true
 },
 {
-title: '创建时间',
-key: 'createTime',
+title: '更新时间',
+key: 'updateTime',
 minWidth: 120,
 sortable: true
 },

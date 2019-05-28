@@ -1,0 +1,202 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserServiceServiceDAO">
+
+    <sql id="select_columns">
+        t_user_service.id as userServiceId, t_user_service.user_id as userServiceUserId, t_user_service.service_id as userServiceServiceId, t_user_service.end_date as userServiceEndDate, t_user_service.valid_year as userServiceValidYear, t_user_service.version as userServiceVersion, t_user_service.create_time as userServiceCreateTime, t_user_service.update_time as userServiceUpdateTime, t_user_service.is_active as userServiceIsActive, t_service.title as serviceTitle, t_service.memo as serviceMemo, t_service.urls as serviceUrls, t_service.price as servicePrice
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.userServiceId != null">
+			and t_user_service.id = #{query.userServiceId}
+		</if>
+		<if test="query != null and query.userServiceIdMin != null and query.userServiceIdMax == null">
+			and t_user_service.id <![CDATA[ >= ]]> #{query.userServiceIdMin}
+		</if>
+		<if test="query != null and query.userServiceIdMin == null and query.userServiceIdMax != null">
+			and t_user_service.id <![CDATA[ <= ]]> #{query.userServiceIdMax}
+		</if>
+		<if test="query != null and query.userServiceIdMin != null and query.userServiceIdMax != null">
+			and t_user_service.id <![CDATA[ >= ]]> #{query.userServiceIdMin} and t_user_service.id <![CDATA[ <= ]]> #{query.userServiceIdMax}
+		</if>
+		<if test="query != null and query.userServiceUserId != null">
+			and t_user_service.user_id = #{query.userServiceUserId}
+		</if>
+		<if test="query != null and query.userServiceUserIdMin != null and query.userServiceUserIdMax == null">
+			and t_user_service.user_id <![CDATA[ >= ]]> #{query.userServiceUserIdMin}
+		</if>
+		<if test="query != null and query.userServiceUserIdMin == null and query.userServiceUserIdMax != null">
+			and t_user_service.user_id <![CDATA[ <= ]]> #{query.userServiceUserIdMax}
+		</if>
+		<if test="query != null and query.userServiceUserIdMin != null and query.userServiceUserIdMax != null">
+			and t_user_service.user_id <![CDATA[ >= ]]> #{query.userServiceUserIdMin} and t_user_service.user_id <![CDATA[ <= ]]> #{query.userServiceUserIdMax}
+		</if>
+		<if test="query != null and query.userServiceServiceId != null">
+			and t_user_service.service_id = #{query.userServiceServiceId}
+		</if>
+		<if test="query != null and query.userServiceServiceIdMin != null and query.userServiceServiceIdMax == null">
+			and t_user_service.service_id <![CDATA[ >= ]]> #{query.userServiceServiceIdMin}
+		</if>
+		<if test="query != null and query.userServiceServiceIdMin == null and query.userServiceServiceIdMax != null">
+			and t_user_service.service_id <![CDATA[ <= ]]> #{query.userServiceServiceIdMax}
+		</if>
+		<if test="query != null and query.userServiceServiceIdMin != null and query.userServiceServiceIdMax != null">
+			and t_user_service.service_id <![CDATA[ >= ]]> #{query.userServiceServiceIdMin} and t_user_service.service_id <![CDATA[ <= ]]> #{query.userServiceServiceIdMax}
+		</if>
+		<if test="query != null and query.userServiceEndDate != null">
+			and t_user_service.end_date = #{query.userServiceEndDate}
+		</if>
+		<if test="query != null and query.userServiceEndDateMin != null and query.userServiceEndDateMax == null">
+			and t_user_service.end_date <![CDATA[ >= ]]> #{query.userServiceEndDateMin}
+		</if>
+		<if test="query != null and query.userServiceEndDateMin == null and query.userServiceEndDateMax != null">
+			and t_user_service.end_date <![CDATA[ <= ]]> #{query.userServiceEndDateMax}
+		</if>
+		<if test="query != null and query.userServiceEndDateMin != null and query.userServiceEndDateMax != null">
+			and t_user_service.end_date <![CDATA[ >= ]]> #{query.userServiceEndDateMin} and t_user_service.end_date <![CDATA[ <= ]]> #{query.userServiceEndDateMax}
+		</if>
+		<if test="query != null and query.userServiceValidYear != null">
+			and t_user_service.valid_year = #{query.userServiceValidYear}
+		</if>
+		<if test="query != null and query.userServiceValidYearMin != null and query.userServiceValidYearMax == null">
+			and t_user_service.valid_year <![CDATA[ >= ]]> #{query.userServiceValidYearMin}
+		</if>
+		<if test="query != null and query.userServiceValidYearMin == null and query.userServiceValidYearMax != null">
+			and t_user_service.valid_year <![CDATA[ <= ]]> #{query.userServiceValidYearMax}
+		</if>
+		<if test="query != null and query.userServiceValidYearMin != null and query.userServiceValidYearMax != null">
+			and t_user_service.valid_year <![CDATA[ >= ]]> #{query.userServiceValidYearMin} and t_user_service.valid_year <![CDATA[ <= ]]> #{query.userServiceValidYearMax}
+		</if>
+		<if test="query != null and query.userServiceVersion != null">
+			and t_user_service.version = #{query.userServiceVersion}
+		</if>
+		<if test="query != null and query.userServiceVersionMin != null and query.userServiceVersionMax == null">
+			and t_user_service.version <![CDATA[ >= ]]> #{query.userServiceVersionMin}
+		</if>
+		<if test="query != null and query.userServiceVersionMin == null and query.userServiceVersionMax != null">
+			and t_user_service.version <![CDATA[ <= ]]> #{query.userServiceVersionMax}
+		</if>
+		<if test="query != null and query.userServiceVersionMin != null and query.userServiceVersionMax != null">
+			and t_user_service.version <![CDATA[ >= ]]> #{query.userServiceVersionMin} and t_user_service.version <![CDATA[ <= ]]> #{query.userServiceVersionMax}
+		</if>
+		<if test="query != null and query.userServiceCreateTime != null">
+			and t_user_service.create_time = #{query.userServiceCreateTime}
+		</if>
+		<if test="query != null and query.userServiceCreateTimeMin != null and query.userServiceCreateTimeMax == null">
+			and t_user_service.create_time <![CDATA[ >= ]]> #{query.userServiceCreateTimeMin}
+		</if>
+		<if test="query != null and query.userServiceCreateTimeMin == null and query.userServiceCreateTimeMax != null">
+			and t_user_service.create_time <![CDATA[ <= ]]> #{query.userServiceCreateTimeMax}
+		</if>
+		<if test="query != null and query.userServiceCreateTimeMin != null and query.userServiceCreateTimeMax != null">
+			and t_user_service.create_time <![CDATA[ >= ]]> #{query.userServiceCreateTimeMin} and t_user_service.create_time <![CDATA[ <= ]]> #{query.userServiceCreateTimeMax}
+		</if>
+		<if test="query != null and query.userServiceUpdateTime != null">
+			and t_user_service.update_time = #{query.userServiceUpdateTime}
+		</if>
+		<if test="query != null and query.userServiceUpdateTimeMin != null and query.userServiceUpdateTimeMax == null">
+			and t_user_service.update_time <![CDATA[ >= ]]> #{query.userServiceUpdateTimeMin}
+		</if>
+		<if test="query != null and query.userServiceUpdateTimeMin == null and query.userServiceUpdateTimeMax != null">
+			and t_user_service.update_time <![CDATA[ <= ]]> #{query.userServiceUpdateTimeMax}
+		</if>
+		<if test="query != null and query.userServiceUpdateTimeMin != null and query.userServiceUpdateTimeMax != null">
+			and t_user_service.update_time <![CDATA[ >= ]]> #{query.userServiceUpdateTimeMin} and t_user_service.update_time <![CDATA[ <= ]]> #{query.userServiceUpdateTimeMax}
+		</if>
+		<if test="query != null and query.userServiceIsActive != null">
+			and t_user_service.is_active = #{query.userServiceIsActive}
+		</if>
+		<if test="query != null and query.userServiceIsActiveMin != null and query.userServiceIsActiveMax == null">
+			and t_user_service.is_active <![CDATA[ >= ]]> #{query.userServiceIsActiveMin}
+		</if>
+		<if test="query != null and query.userServiceIsActiveMin == null and query.userServiceIsActiveMax != null">
+			and t_user_service.is_active <![CDATA[ <= ]]> #{query.userServiceIsActiveMax}
+		</if>
+		<if test="query != null and query.userServiceIsActiveMin != null and query.userServiceIsActiveMax != null">
+			and t_user_service.is_active <![CDATA[ >= ]]> #{query.userServiceIsActiveMin} and t_user_service.is_active <![CDATA[ <= ]]> #{query.userServiceIsActiveMax}
+		</if>
+		<if test="query != null and query.serviceTitle != null and query.serviceTitle != ''">
+			and t_service.title like concat('%', #{query.serviceTitle}, '%')
+		</if>
+		<if test="query != null and query.serviceMemo != null and query.serviceMemo != ''">
+			and t_service.memo like concat('%', #{query.serviceMemo}, '%')
+		</if>
+		<if test="query != null and query.serviceUrls != null and query.serviceUrls != ''">
+			and t_service.urls like concat('%', #{query.serviceUrls}, '%')
+		</if>
+		<if test="query != null and query.servicePrice != null">
+			and t_service.price = #{query.servicePrice}
+		</if>
+		<if test="query != null and query.servicePriceMin != null and query.servicePriceMax == null">
+			and t_service.price <![CDATA[ >= ]]> #{query.servicePriceMin}
+		</if>
+		<if test="query != null and query.servicePriceMin == null and query.servicePriceMax != null">
+			and t_service.price <![CDATA[ <= ]]> #{query.servicePriceMax}
+		</if>
+		<if test="query != null and query.servicePriceMin != null and query.servicePriceMax != null">
+			and t_service.price <![CDATA[ >= ]]> #{query.servicePriceMin} and t_service.price <![CDATA[ <= ]]> #{query.servicePriceMax}
+		</if>
+		
+        and
+        t_user_service.service_id = t_service.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userServiceServiceDO">
+        select
+        <include refid="select_columns"/>
+        from t_user_service, t_service where t_user_service.id = #{id} and
+        t_user_service.service_id = t_service.id
+    </select>
+
+    <select id="listAll" resultType="userServiceServiceDO">
+        select
+        <include refid="select_columns"/>
+        from t_user_service, t_service
+        where
+        t_user_service.service_id = t_service.id
+        order by t_user_service.update_time desc, t_user_service.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userServiceServiceDO">
+        select
+        <include refid="select_columns"/>
+        from t_user_service, t_service
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_user_service.update_time desc, t_user_service.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userServiceServiceDO">
+        select
+        <include refid="select_columns"/>
+        from t_user_service, t_service
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_user_service.update_time desc, t_user_service.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_user_service, t_service
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

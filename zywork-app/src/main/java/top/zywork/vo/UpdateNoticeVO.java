@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class UpdateNoticeVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034904723611L;
+    private static final long serialVersionUID = -9223372036408980219L;
 
     // 更新公告编号
 	private Long id;
@@ -29,6 +29,9 @@ public class UpdateNoticeVO extends BaseVO {
 	// 公告内容
 	@Size(min = 0, max = 65535, message = "必须小于65535个字符")
 	private String content;
+	// 公告简介
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
+	private String synopsis;
 	// 版本号
 	private Integer version;
 	// 更新时间
@@ -42,10 +45,11 @@ public class UpdateNoticeVO extends BaseVO {
 	
     public UpdateNoticeVO () {}
 
-    public UpdateNoticeVO (Long id, String title, String content, Integer version, Date updateTime, Date createTime, Byte isActive) {
+    public UpdateNoticeVO (Long id, String title, String content, String synopsis, Integer version, Date updateTime, Date createTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.content = content;
+		this.synopsis = synopsis;
 		this.version = version;
 		this.updateTime = updateTime;
 		this.createTime = createTime;
@@ -75,6 +79,14 @@ public class UpdateNoticeVO extends BaseVO {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSynopsis() {
+		return synopsis;
+	}
+
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
 	}
 
 	public Integer getVersion() {
@@ -116,6 +128,7 @@ public class UpdateNoticeVO extends BaseVO {
                 "id = " + id + 
 				", title = " + title + 
 				", content = " + content + 
+				", synopsis = " + synopsis + 
 				", version = " + version + 
 				", updateTime = " + updateTime + 
 				", createTime = " + createTime + 

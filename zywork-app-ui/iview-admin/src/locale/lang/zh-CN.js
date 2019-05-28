@@ -159,6 +159,7 @@ export default {
   user_expert: '专家信息',
   user_expert_question_type_manage: '专家类型管理',
   expert_question_type_manage: '专家问题类型管理',
+  update_notice: '更新公告',
   credit_enquiry: '征信查询',
   company_info_manage: '企业信息管理',
   company_personnel_manage: '企业人员管理',
