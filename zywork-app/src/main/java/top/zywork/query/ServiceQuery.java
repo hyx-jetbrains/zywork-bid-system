@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class ServiceQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035254166986L;
+    private static final long serialVersionUID = -9223372035690716215L;
 
     // 服务编号
 	private Long id;

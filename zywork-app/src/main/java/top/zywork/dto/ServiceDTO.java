@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class ServiceDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372036071876608L;
+    private static final long serialVersionUID = -9223372035761586705L;
 
     // 服务编号
 	private Long id;

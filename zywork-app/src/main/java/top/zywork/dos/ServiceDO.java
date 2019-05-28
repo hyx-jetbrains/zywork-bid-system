@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class ServiceDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372035598433511L;
+    private static final long serialVersionUID = -9223372035248061684L;
 
     // 服务编号
 	private Long id;

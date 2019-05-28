@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class ServiceVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035793128386L;
+    private static final long serialVersionUID = -9223372034905196196L;
 
     // 服务编号
 	private Long id;
