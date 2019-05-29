@@ -1,7 +1,9 @@
 package top.zywork.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.zywork.common.BeanUtils;
 import top.zywork.dao.ServiceDAO;
 import top.zywork.dos.ServiceDO;
 import top.zywork.dto.ServiceDTO;
@@ -9,6 +11,7 @@ import top.zywork.service.AbstractBaseService;
 import top.zywork.service.ServiceService;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * ServiceServiceImpl服务接口实现类<br/>
@@ -32,5 +35,19 @@ public class ServiceServiceImpl extends AbstractBaseService implements ServiceSe
     @PostConstruct
     public void init() {
         super.init(ServiceDO.class, ServiceDTO.class);
+    }
+
+    @Override
+    public String[] getAllVipServiceUrl() {
+        List<Object> objectList = serviceDAO.listAll();
+        List<ServiceDTO> serviceDTOList = BeanUtils.copy(objectList, ServiceDTO.class);
+        StringBuilder urls = new StringBuilder();
+        for (ServiceDTO serviceDTO : serviceDTOList) {
+            String tempUrls = serviceDTO.getUrls();
+            if (!StringUtils.isEmpty(tempUrls)) {
+               urls.append(tempUrls).append(",");
+            }
+        }
+        return urls.toString().split(",");
     }
 }

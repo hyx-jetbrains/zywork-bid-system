@@ -139,7 +139,7 @@ public class ServiceController extends BaseController {
      * @param id
      * @return
      */
-    @PostMapping("any/one/{id}")
+    @PostMapping("user/one/{id}")
     public ResponseStatusVO userGetById(@PathVariable("id") Long id) {
         return getById(id);
     }
@@ -149,7 +149,7 @@ public class ServiceController extends BaseController {
      * @param serviceQuery
      * @return
      */
-    @PostMapping("any/all-cond")
+    @PostMapping("user/all-cond")
     public ResponseStatusVO userListAllByCondition(@RequestBody ServiceQuery serviceQuery) {
         return listAllByCondition(serviceQuery);
     }

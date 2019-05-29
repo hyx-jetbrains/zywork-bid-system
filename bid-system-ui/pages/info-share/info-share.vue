@@ -415,14 +415,14 @@
 				loadMoreText: "加载中...",
 				showLoadMore: false,
 				urls: {
-					builderUrl: '/UserBuilder/any/list-page',
-					builderReqUrl: '/UserBuilderReq/any/list-page',
-					aptitudeUrl: '/UserAptitudeTransfer/any/list-page',
-					carpoolUrl: '/UserMarkCarpool/any/list-page',
-					seekcarUrl: '/UserMarkSeekcar/any/list-page',
-					recruitUrl: '/UserRecruit/any/list-page',
-					seekDataUrl: '/UserSeekData/any/list-page',
-					updateNoticeUrl: '/update-notice/any/list-page'
+					builderUrl: '/UserBuilder/user/list-page',
+					builderReqUrl: '/UserBuilderReq/user/list-page',
+					aptitudeUrl: '/UserAptitudeTransfer/user/list-page',
+					carpoolUrl: '/UserMarkCarpool/user/list-page',
+					seekcarUrl: '/UserMarkSeekcar/user/list-page',
+					recruitUrl: '/UserRecruit/user/list-page',
+					seekDataUrl: '/UserSeekData/user/list-page',
+					updateNoticeUrl: '/update-notice/user/list-page'
 				},
 				pager: {
 					pageNo: 1,
@@ -551,7 +551,7 @@
 			},
 			/** 刷新其他招聘列表 */
 			refreshRecruitList(type) {
-				this.commonRequest(this.urls.seekcarUrl, type);
+				this.commonRequest(this.urls.recruitUrl, type);
 			},
 			/** 刷新求带资料列表 */
 			refreshSeekDataList(type) {

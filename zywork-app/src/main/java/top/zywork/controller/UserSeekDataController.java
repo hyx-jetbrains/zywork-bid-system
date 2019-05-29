@@ -69,7 +69,7 @@ public class UserSeekDataController extends BaseController {
      * Time: 11:48
      * Description: 信息共享 -- 求带资料
      */
-    @PostMapping("any/list-page")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPage(@RequestBody UserSeekDataQuery userSeekDataQuery) {
         userSeekDataQuery.setSeekDataIsActive((byte)0);
         return listPageByCondition(userSeekDataQuery);

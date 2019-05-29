@@ -272,6 +272,13 @@
 				}
 
 				this.cityIndex = jxCityArray.findIndex(item => item === this.subscrible.city)
+				
+				if (this.subscrible.minMoney !== '' && this.subscrible.minMoney !== 0) {
+					this.subscrible.minMoney = this.subscrible.minMoney / 100;
+				}
+				if (this.subscrible.maxMoney !== '' && this.subscrible.maxMoney !== 0) {
+					this.subscrible.maxMoney = this.subscrible.maxMoney / 100;
+				}
 			},
 			/** 设置订阅的项目类型 */
 			setProjectType() {

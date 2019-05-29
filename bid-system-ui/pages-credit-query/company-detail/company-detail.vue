@@ -52,7 +52,7 @@
 				</view>
 				<view class="zy-disable-flex zy-detail-desc-item">
 					<view class="zy-text-bold">法人电话</view>
-					<view class="zy-disable-flex-right">{{item.legalPersonPhone}}</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone(item.legalPersonPhone)">{{item.legalPersonPhone}}</view>
 				</view>
 				<view class="zy-disable-flex zy-detail-desc-item">
 					<view class="zy-text-bold">注册地区</view>
@@ -64,11 +64,11 @@
 				</view>
 				<view class="zy-disable-flex zy-detail-desc-item">
 					<view class="zy-text-bold">负责人电话</view>
-					<view class="zy-disable-flex-right">{{item.responsiblePhone}}</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone(item.responsiblePhone)">{{item.responsiblePhone}}</view>
 				</view>
 				<view class="zy-disable-flex zy-detail-desc-item">
 					<view class="zy-text-bold">单位电话</view>
-					<view class="zy-disable-flex-right">{{item.compPhone}}</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone(item.compPhone)">{{item.compPhone}}</view>
 				</view>
 				<view class="zy-disable-flex zy-detail-desc-item">
 					<view class="zy-text-bold">联系地址</view>
@@ -166,8 +166,7 @@
 							<view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">证件号码:</view>
-									<view v-if="item.certificateNum != null && item.certificateNum != '' && item.certificateNum != undefined"
-									 class="zy-text-info">
+									<view v-if="item.certificateNum != ''" @click="validText(item.certificateNum)" class="zy-text-info" :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
 										{{item.certificateNum}}
 									</view>
 									<view v-else class="zy-text-info">
@@ -176,8 +175,8 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">资质详情:</view>
-									<view v-if="item.certificateDetail != null && item.certificateDetail != '' && item.certificateDetail != undefined"
-									 class="zy-text-info">
+									<view v-if="item.certificateDetail != ''" @click="validText(item.certificateDetail)" class="zy-text-info"
+									 :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
 										{{item.certificateDetail}}
 									</view>
 									<view v-else class="zy-text-info">
@@ -422,6 +421,10 @@
 	import {
 		achievementTypeArray
 	} from '@/common/picker.data.js'
+	import {
+		callPhone,
+		validText
+	} from '@/common/util.js'
 
 	/** 企业建造师信息 */
 	const INFO_BUILDER = 1
@@ -502,7 +505,8 @@
 			toAchievementDetail(item) {
 				item.achievementType = this.achievementOpts.current;
 				uni.navigateTo({
-					url: '/pages-credit-query/company-achievement-detail/company-achievement-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-credit-query/company-achievement-detail/company-achievement-detail?itemData=' + encodeURIComponent(
+						JSON.stringify(item))
 				})
 			},
 			/** 刷新企业建造师信息列表 */
@@ -600,6 +604,14 @@
 					this.refreshAchievementList(index);
 				}
 			},
+			/** 拨打电话 */
+			callPhone(phone) {
+				callPhone(phone);
+			},
+			/** 验证文字 */
+			validText(text) {
+				validText(text);
+			}
 		}
 	}
 </script>

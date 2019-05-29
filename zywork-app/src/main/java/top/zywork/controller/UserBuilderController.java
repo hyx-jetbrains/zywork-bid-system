@@ -5,7 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import top.zywork.annotation.HasHideProperty;
+import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.ReflectUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.query.UserBuilderQuery;
 import top.zywork.security.JwtUser;
@@ -14,6 +18,8 @@ import top.zywork.service.UserBuilderService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.UserBuilderVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * UserBuilderController控制器类<br/>
@@ -25,6 +31,7 @@ import top.zywork.vo.UserBuilderVO;
  */
 @RestController
 @RequestMapping("/UserBuilder")
+@HasHideProperty
 public class UserBuilderController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserBuilderController.class);
@@ -69,9 +76,16 @@ public class UserBuilderController extends BaseController {
      * Time: 10:00
      * Description: 信息共享 -- 建造师 -- 应聘信息
      */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody UserBuilderQuery userBuilderQuery) {
-        return listPageByCondition(userBuilderQuery);
+    @PostMapping("user/list-page")
+    @HideProperty(url = "/UserBuilder/user/list-page", properties = {"builderPhone"})
+    public ResponseStatusVO listPage(HttpServletRequest request, @RequestBody UserBuilderQuery userBuilderQuery) {
+        ResponseStatusVO responseStatusVO = listPageByCondition(userBuilderQuery);
+        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+        if (vipFlag != null && ((Boolean) vipFlag)) {
+            return responseStatusVO;
+        }
+        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "listPage",
+                responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
     /**

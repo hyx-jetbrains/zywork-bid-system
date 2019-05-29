@@ -69,7 +69,7 @@ public class UserRecruitController extends BaseController {
      * Time: 11:46
      * Description: 信息共享 -- 岗位招聘
      */
-    @PostMapping("any/list-page")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPage(@RequestBody UserRecruitQuery userRecruitQuery) {
         userRecruitQuery.setRecruitIsActive((byte)0);
         return listPageByCondition(userRecruitQuery);

@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.zywork.annotation.HasHideProperty;
+import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
+import top.zywork.common.ReflectUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.CompWaterDeviseAchievementDTO;
 import top.zywork.query.CompWaterDeviseAchievementQuery;
@@ -18,6 +22,7 @@ import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.CompWaterDeviseAchievementVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,6 +35,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/comp-water-devise-achievement")
+@HasHideProperty
 public class CompWaterDeviseAchievementController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CompWaterDeviseAchievementController.class);
@@ -134,9 +140,16 @@ public class CompWaterDeviseAchievementController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
-    @PostMapping("any/pager-cond")
-    public ResponseStatusVO userListPageByCondition(@RequestBody CompWaterDeviseAchievementQuery compWaterDeviseAchievementQuery) {
-        return listPageByCondition(compWaterDeviseAchievementQuery);
+    @PostMapping("user/pager-cond")
+    @HideProperty(url = "/comp-water-devise-achievement/user/pager-cond", properties = {"buildComp","contractAmount"})
+    public ResponseStatusVO userListPageByCondition(HttpServletRequest request, @RequestBody CompWaterDeviseAchievementQuery compWaterDeviseAchievementQuery) {
+        ResponseStatusVO responseStatusVO = listPageByCondition(compWaterDeviseAchievementQuery);
+        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+        if (vipFlag != null && ((Boolean) vipFlag)) {
+            return responseStatusVO;
+        }
+        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "userListPageByCondition",
+                responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
     @Autowired

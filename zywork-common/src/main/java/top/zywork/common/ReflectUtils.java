@@ -1,11 +1,15 @@
 package top.zywork.common;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 import top.zywork.annotation.ExposeClass;
+import top.zywork.annotation.HideProperty;
+import top.zywork.constant.FileConstants;
+import top.zywork.vo.PagerVO;
+import top.zywork.vo.ResponseStatusVO;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +35,7 @@ import java.util.jar.JarFile;
  */
 public class ReflectUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(ReflectUtils.class);
 
     public static final String CLASS_PATH_PREFIX = File.separator + "classes" + File.separator;
 
@@ -50,7 +54,7 @@ public class ReflectUtils {
             Method method = clazz.getMethod(PropertyUtils.getter(property));
             return method.invoke(obj);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            logger.error("reflect invoke get method error: {}", e.getMessage());
+            log.error("reflect invoke get method error: {}", e.getMessage());
         }
         return null;
     }
@@ -69,7 +73,7 @@ public class ReflectUtils {
                 Method method = clazz.getMethod(PropertyUtils.setter(property), param.getClass());
                 method.invoke(obj, param);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                logger.error("reflect invoke set method error: {}", e.getMessage());
+                log.error("reflect invoke set method error: {}", e.getMessage());
             }
         }
     }
@@ -87,7 +91,7 @@ public class ReflectUtils {
             field.setAccessible(true);
             return field.get(obj);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            logger.error("reflect get property value error: {}", e.getMessage());
+            log.error("reflect get property value error: {}", e.getMessage());
             return null;
         }
     }
@@ -105,7 +109,7 @@ public class ReflectUtils {
             field.setAccessible(true);
             field.set(obj, param);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            logger.error("reflect set property value error: {}", e.getMessage());
+            log.error("reflect set property value error: {}", e.getMessage());
         }
     }
 
@@ -119,18 +123,9 @@ public class ReflectUtils {
     public static String[] getArgsNames(Class<?> clazz, String methodName, Class<?>... parameterTypes) {
         try {
             Method method = clazz.getDeclaredMethod(methodName, parameterTypes);
-            Parameter[] parameters = method.getParameters();
-            int parameterCount = parameters.length;
-            if (parameterCount == 0) {
-                return null;
-            }
-            String[] argsNames = new String[parameterCount];
-            for (int i = 0; i < parameterCount; i++) {
-                argsNames[i] = parameters[i].getName();
-            }
-            return argsNames;
+            return getArgsNames(method);
         } catch (NoSuchMethodException e) {
-            logger.error("getArgsNames error: {}", e.getMessage());
+            log.error("getArgsNames error: {}", e.getMessage());
             return null;
         }
     }
@@ -145,19 +140,28 @@ public class ReflectUtils {
         Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
-                Parameter[] parameters = method.getParameters();
-                int parameterCount = parameters.length;
-                if (parameterCount == 0) {
-                    return null;
-                }
-                String[] argsNames = new String[parameterCount];
-                for (int i = 0; i < parameterCount; i++) {
-                    argsNames[i] = parameters[i].getName();
-                }
-                return argsNames;
+               return getArgsNames(method);
             }
         }
         return null;
+    }
+
+    /**
+     * 通过方法名获取参数名列表
+     * @param method
+     * @return
+     */
+    private static String[] getArgsNames(Method method) {
+        Parameter[] parameters = method.getParameters();
+        int parameterCount = parameters.length;
+        if (parameterCount == 0) {
+            return null;
+        }
+        String[] argsNames = new String[parameterCount];
+        for (int i = 0; i < parameterCount; i++) {
+            argsNames[i] = parameters[i].getName();
+        }
+        return argsNames;
     }
 
     /**
@@ -186,7 +190,7 @@ public class ReflectUtils {
      */
     public static List<String> getClassNames(String packageName, Boolean recursive, Class<? extends Annotation> annotation) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        packageName = packageName.replaceAll("\\.", File.separator);
+        packageName = packageName.replace(".", FileConstants.SEPARATOR);
         List<String> classNames = new ArrayList<>();
         try {
             Enumeration<URL> urlEnumeration = classLoader.getResources(packageName);
@@ -201,13 +205,42 @@ public class ReflectUtils {
             }
             return classNames;
         } catch (IOException e) {
-            logger.error("getClassNames error: {}", e.getMessage());
+            log.error("getClassNames error: {}", e.getMessage());
             return null;
         }
     }
 
     /**
-     * 以文件的方式获取类信息
+     * 获取指定包中的所有带有指定注解的类对象，如top.zywork.common.Test
+     * @param packageName 指定包名
+     * @param recursive 是否迭代查询包
+     * @param annotation 如果指定了Annotation，则只会去获取带有此Annotation的类信息，如果未指定，为null，则获取所有的类信息
+     * @return
+     */
+    public static List<Class<?>> getClasses(String packageName, Boolean recursive, Class<? extends Annotation> annotation) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        packageName = packageName.replace(".", FileConstants.SEPARATOR);
+        List<Class<?>> classes = new ArrayList<>();
+        try {
+            Enumeration<URL> urlEnumeration = classLoader.getResources(packageName);
+            while (urlEnumeration.hasMoreElements()) {
+                URL url = urlEnumeration.nextElement();
+                String protocol = url.getProtocol();
+                if ("file".equals(protocol)) {
+                    classes.addAll(getClassesFromFile(new File(url.getPath()), recursive, annotation));
+                } else if ("jar".equals(protocol)) {
+                    classes.addAll(getClassesFromJar(((JarURLConnection) url.openConnection()).getJarFile(), annotation));
+                }
+            }
+            return classes;
+        } catch (IOException e) {
+            log.error("getClasses error: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 以文件的方式获取类名称
      * @param file
      * @param recursive
      * @param annotation
@@ -224,7 +257,7 @@ public class ReflectUtils {
                     if (classPath.endsWith(CLASS_SUFFIX) && !isInnerClass(classPath)) {
                         String className = classPath.substring(classPath.indexOf(CLASS_PATH_PREFIX) + CLASS_PATH_PREFIX.length())
                                 .replace(CLASS_SUFFIX, "")
-                                .replaceAll("/", ".");
+                                .replace(File.separator, ".");
                         if (isClassWithAnnotation(className, annotation)) {
                             classNames.add(className);
                         }
@@ -240,7 +273,38 @@ public class ReflectUtils {
     }
 
     /**
-     * 通过JarFile获取类信息
+     * 以文件的方式获取类对象
+     * @param file
+     * @param recursive
+     * @param annotation
+     * @return
+     */
+    private static List<Class<?>> getClassesFromFile(File file, Boolean recursive, Class<? extends Annotation> annotation) {
+        List<Class<?>> classes = new ArrayList<>();
+        File[] files = file.listFiles();
+        if (files != null && files.length > 0) {
+            for (File f : files) {
+                if (!f.isDirectory()) {
+                    String classPath = f.getPath();
+                    // 过滤掉所有内部类
+                    if (classPath.endsWith(CLASS_SUFFIX) && !isInnerClass(classPath)) {
+                        String className = classPath.substring(classPath.indexOf(CLASS_PATH_PREFIX) + CLASS_PATH_PREFIX.length())
+                                .replace(CLASS_SUFFIX, "")
+                                .replace(File.separator, ".");
+                        addToClassesList(classes, className, annotation);
+                    }
+                } else {
+                    if (recursive) {
+                        classes.addAll(getClassesFromFile(f, recursive, annotation));
+                    }
+                }
+            }
+        }
+        return classes;
+    }
+
+    /**
+     * 通过JarFile获取类名称
      * @param jarFile
      * @param annotation
      * @return
@@ -254,13 +318,49 @@ public class ReflectUtils {
             // 过滤掉所有内部类
             if (name.endsWith(CLASS_SUFFIX) && !isInnerClass(name)) {
                 String className = name.replace(CLASS_SUFFIX, "")
-                        .replaceAll("/", ".");
+                        .replace(FileConstants.SEPARATOR, ".");
                 if (isClassWithAnnotation(className, annotation)) {
                     classNames.add(className);
                 }
             }
         }
         return classNames;
+    }
+
+    /**
+     * 通过JarFile获取类对象
+     * @param jarFile
+     * @param annotation
+     * @return
+     */
+    private static List<Class<?>> getClassesFromJar(JarFile jarFile, Class<? extends Annotation> annotation) {
+        List<Class<?>> classes = new ArrayList<>();
+        Enumeration<JarEntry> entries = jarFile.entries();
+        while(entries.hasMoreElements()) {
+            JarEntry jarEntry = entries.nextElement();
+            String name = jarEntry.getName();
+            // 过滤掉所有内部类
+            if (name.endsWith(CLASS_SUFFIX) && !isInnerClass(name)) {
+                String className = name.replace(CLASS_SUFFIX, "")
+                        .replace(FileConstants.SEPARATOR, ".");
+                addToClassesList(classes, className, annotation);
+            }
+        }
+        return classes;
+    }
+
+    /**
+     * 把符合条件的类添加到 List 集合中
+     */
+    private static void addToClassesList(List<Class<?>> classes, String className, Class<? extends Annotation> annotation) {
+        try {
+            Class<?> clazz = Class.forName(className);
+            if (isClassWithAnnotation(clazz, annotation)) {
+                classes.add(clazz);
+            }
+        } catch (ClassNotFoundException e) {
+            log.error("load class from classname: {} error", className);
+        }
     }
 
     /**
@@ -294,7 +394,7 @@ public class ReflectUtils {
         try {
             return isClassWithAnnotation(Class.forName(className), annotation);
         } catch (ClassNotFoundException | NoClassDefFoundError | ExceptionInInitializerError e) {
-            logger.error("isClassWithAnnotation error: {}, class name: {}", e.getMessage(), className);
+            log.error("isClassWithAnnotation error: {}, class name: {}", e.getMessage(), className);
             return false;
         }
     }
@@ -317,106 +417,66 @@ public class ReflectUtils {
      * @return
      */
     public static List<String> getExposeClassNames(String packageName, Boolean recursive, String type) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        packageName = packageName.replaceAll("\\.", File.separator);
+        List<Class<?>> classes = getClasses(packageName, recursive, ExposeClass.class);
         List<String> classNames = new ArrayList<>();
-        try {
-            Enumeration<URL> urlEnumeration = classLoader.getResources(packageName);
-            while (urlEnumeration.hasMoreElements()) {
-                URL url = urlEnumeration.nextElement();
-                String protocol = url.getProtocol();
-                if ("file".equals(protocol)) {
-                    classNames.addAll(getExposeClassNamesFromFile(new File(url.getPath()), recursive, type));
-                } else if ("jar".equals(protocol)) {
-                    classNames.addAll(getExposeClassNamesFromJar(((JarURLConnection) url.openConnection()).getJarFile(), type));
+        if (classes != null && classes.size() > 0) {
+            if (StringUtils.isEmpty(type)) {
+                for (Class<?> clazz : classes) {
+                    classNames.add(clazz.getName());
+                }
+            } else {
+                for (Class<?> clazz : classes) {
+                    ExposeClass exposeClass = clazz.getDeclaredAnnotation(ExposeClass.class);
+                    if (type.equals(exposeClass.type())) {
+                        classNames.add(clazz.getName());
+                    }
                 }
             }
-            return classNames;
-        } catch (IOException e) {
-            logger.error("getExposeClassNames error: {}", e.getMessage());
-            return null;
         }
+        return classNames;
     }
 
-    /**
-     * 从文件中获取带有ExposeClass注解的类，并可指定ExposeClass的type
-     * @param file
-     * @param recursive
-     * @param type
+    /***
+     * 隐藏并替换属性
+     * @param methods 类里所有的方法
+     * @param methodName 需要替换的方法名
+     * @param responseStatusVO 返回的对象
+     * @param text 需要替换的文本，如：开通VIP服务查看
      * @return
      */
-    private static List<String> getExposeClassNamesFromFile(File file, Boolean recursive, String type) {
-        List<String> classNames = new ArrayList<>();
-        File[] files = file.listFiles();
-        if (files != null && files.length > 0) {
-            for (File f : files) {
-                if (!f.isDirectory()) {
-                    String classPath = f.getPath();
-                    // 过滤掉所有内部类
-                    if (classPath.endsWith(CLASS_SUFFIX) && !isInnerClass(classPath)) {
-                        String className = classPath.substring(classPath.indexOf(CLASS_PATH_PREFIX) + CLASS_PATH_PREFIX.length())
-                                .replace(CLASS_SUFFIX, "")
-                                .replaceAll("/", ".");
-                        if (isExposeClass(className, type)) {
-                            classNames.add(className);
+    @SuppressWarnings({"unchecked"})
+    public static ResponseStatusVO hideProperty(Method[] methods, String methodName, ResponseStatusVO responseStatusVO, String text) {
+        for (Method method : methods) {
+            if (method.getName().equals(methodName)) {
+                // 方法是指定的方法名
+                HideProperty hideProperty = method.getDeclaredAnnotation(HideProperty.class);
+                String[] properties = hideProperty.properties();
+                Object tempData = responseStatusVO.getData();
+                if (tempData == null) {
+                    return responseStatusVO;
+                }
+                if (tempData instanceof PagerVO) {
+                    PagerVO pagerVO = (PagerVO) tempData;
+                    Object data = pagerVO.getRows();
+                    if (data == null) {
+                        return responseStatusVO;
+                    }
+                    List<Object> dataList = (List<Object>) data;
+                    for (Object obj : dataList) {
+                        for (String property : properties) {
+                            ReflectUtils.setPropertyValue(obj, property, text);
                         }
                     }
+                    pagerVO.setRows(dataList);
+                    responseStatusVO.setData(pagerVO);
                 } else {
-                    if (recursive) {
-                        classNames.addAll(getExposeClassNamesFromFile(f, recursive, type));
+                    for (String property : properties) {
+                        ReflectUtils.setPropertyValue(tempData, property, text);
+                        responseStatusVO.setData(tempData);
                     }
                 }
             }
         }
-        return classNames;
+        return responseStatusVO;
     }
-
-    /**
-     * 从jar文件中获取带有ExposeClass注解的类，并可指定ExposeClass的type
-     * @param jarFile
-     * @param type
-     * @return
-     */
-    private static List<String> getExposeClassNamesFromJar(JarFile jarFile, String type) {
-        List<String> classNames = new ArrayList<>();
-        Enumeration<JarEntry> entries = jarFile.entries();
-        while(entries.hasMoreElements()) {
-            JarEntry jarEntry = entries.nextElement();
-            String name = jarEntry.getName();
-            // 过滤掉所有内部类
-            if (name.endsWith(CLASS_SUFFIX) && !isInnerClass(name)) {
-                String className = name.replace(CLASS_SUFFIX, "")
-                        .replaceAll("/", ".");
-                if (isExposeClass(className, type)) {
-                    classNames.add(className);
-                }
-            }
-        }
-        return classNames;
-    }
-
-    /**
-     * 判断是否为带有ExposeClass注解的类，并且可指定ExposeClass的type
-     * @param className 需要判断的类
-     * @param type ExposeClass的type
-     * @return
-     */
-    public static boolean isExposeClass(String className, String type) {
-        try {
-            Class clazz = Class.forName(className);
-            boolean isExpose = isClassWithAnnotation(clazz, ExposeClass.class);
-            if (StringUtils.isEmpty(type)) {
-                return isExpose;
-            }
-            if (isExpose) {
-                ExposeClass exposeClass = (ExposeClass) clazz.getDeclaredAnnotation(ExposeClass.class);
-                isExpose = type.equals(exposeClass.type());
-            }
-            return isExpose;
-        } catch (ClassNotFoundException | NoClassDefFoundError | ExceptionInInitializerError e) {
-            logger.error("isExposeClass error: {}, class name: {}, type: {}", e.getMessage(), className, type);
-            return false;
-        }
-    }
-
 }

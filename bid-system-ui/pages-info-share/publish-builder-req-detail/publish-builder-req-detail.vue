@@ -6,7 +6,7 @@
 			<view class="zy-page-list-item">
 				<view class="zy-disable-flex">
 					<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
-						:src="item.userDetailHeadicon" />
+					 :src="item.userDetailHeadicon" />
 					<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 					<view>
 						<view>
@@ -52,7 +52,8 @@
 
 <script>
 	import {
-		DEFAULT_HEADICON
+		DEFAULT_HEADICON,
+		callPhone
 	} from '@/common/util.js'
 	export default {
 		data() {
@@ -76,15 +77,9 @@
 			});
 		},
 		methods: {
-			// 打电话
 			callPhone() {
-				uni.makePhoneCall({
-					phoneNumber: this.item.builderReqPhone,
-					success: () => {
-						console.log("成功拨打电话")
-					}
-				})
-			},
+				callPhone(this.item.builderReqPhone);
+			}
 		}
 	}
 </script>

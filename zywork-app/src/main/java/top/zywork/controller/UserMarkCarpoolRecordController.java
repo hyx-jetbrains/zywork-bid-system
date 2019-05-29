@@ -69,7 +69,7 @@ public class UserMarkCarpoolRecordController extends BaseController {
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-05-17 11:55
      */
-    @PostMapping("any/list-page")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPage(@RequestBody UserMarkCarpoolRecordQuery userMarkCarpoolRecordQuery) {
         return listPageByCondition(userMarkCarpoolRecordQuery);
     }

@@ -44,15 +44,20 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标金额</view>
-						<view class="zy-disable-flex-right">{{item.markMoney / 100}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+							{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
+						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">建设规模</view>
-						<view class="zy-disable-flex-right">{{item.buildScale}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.buildScale}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目所属地区归类</view>
-						<view class="zy-disable-flex-right">{{item.regionType}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.regionType}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">建设单位</view>
@@ -60,7 +65,8 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程地址</view>
-						<view class="zy-disable-flex-right">{{item.projectAddr}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.projectAddr}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同签订日期</view>
@@ -76,103 +82,128 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人证书号</view>
-						<view class="zy-disable-flex-right">{{item.certificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.certificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">施工员</view>
-						<view class="zy-disable-flex-right">{{item.constructors}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.constructors}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">施工员证书号</view>
-						<view class="zy-disable-flex-right">{{item.constructorsCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.constructorsCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">施工员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.constructorsIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.constructorsIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">质量员</view>
-						<view class="zy-disable-flex-right">{{item.qualityWorker}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.qualityWorker}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">质量员证书号</view>
-						<view class="zy-disable-flex-right">{{item.qualityWorkerCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.qualityWorkerCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">质量员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.qualityWorkerIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.qualityWorkerIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">安全员</view>
-						<view class="zy-disable-flex-right">{{item.securityOfficer}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.securityOfficer}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">安全员证书号</view>
-						<view class="zy-disable-flex-right">{{item.securityOfficerCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.securityOfficerCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">安全员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.securityOfficerIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.securityOfficerIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">标准员</view>
-						<view class="zy-disable-flex-right">{{item.standardWorker}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.standardWorker}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">标准员证书号</view>
-						<view class="zy-disable-flex-right">{{item.standardWorkerCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.standardWorkerCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">标准员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.standardWorkerIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.standardWorkerIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">材料员</view>
-						<view class="zy-disable-flex-right">{{item.materialMan}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.materialMan}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">材料员证书号</view>
-						<view class="zy-disable-flex-right">{{item.materialManCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.materialManCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">材料员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.materialManIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.materialManIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">机械员</view>
-						<view class="zy-disable-flex-right">{{item.mechanic}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.mechanic}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">机械员证书号</view>
-						<view class="zy-disable-flex-right">{{item.mechanicCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.mechanicCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">机械员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.mechanicIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.mechanicIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">劳务员</view>
-						<view class="zy-disable-flex-right">{{item.labors}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.labors}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">劳务员证书号</view>
-						<view class="zy-disable-flex-right">{{item.laborsCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.laborsCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">劳务员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.laborsIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.laborsIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">资料员</view>
-						<view class="zy-disable-flex-right">{{item.dataClerk}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.dataClerk}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">资料员证书号</view>
-						<view class="zy-disable-flex-right">{{item.dataClerkCertificateNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.dataClerkCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">资料员身份证号</view>
-						<view class="zy-disable-flex-right">{{item.dataClerkIdNum}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.dataClerkIdNum}}</view>
 					</view>
 				</view>
 				<view v-if="item.achievementType == 1">
@@ -187,7 +218,10 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right">{{item.contractAmount / 100}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">开工时间</view>
@@ -210,15 +244,20 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">技术负责人</view>
-						<view class="zy-disable-flex-right">{{item.technologyName}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.technologyName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right">{{item.contractAmount}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程地点</view>
-						<view class="zy-disable-flex-right">{{item.workAddr}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.workAddr}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">开工时间</view>
@@ -230,7 +269,8 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">验证状态</view>
-						<view class="zy-disable-flex-right">{{item.validStatus}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.validStatus}}</view>
 					</view>
 				</view>
 				<view v-if="item.achievementType == 3">
@@ -245,7 +285,10 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标金额</view>
-						<view class="zy-disable-flex-right">{{item.markMoney / 100}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
+							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+							{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
+						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">开工时间</view>
@@ -264,7 +307,8 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目类型</view>
-						<view class="zy-disable-flex-right">{{item.projectType}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.projectType}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">建设单位</view>
@@ -272,7 +316,10 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right">{{item.contractAmount / 100}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同签订日期</view>
@@ -291,7 +338,8 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目类型</view>
-						<view class="zy-disable-flex-right">{{item.tenderingComp}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.tenderingComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">招标(单位)人</view>
@@ -303,7 +351,10 @@
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right">{{item.contractAmount / 100}}</view>
+						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
+							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人</view>
@@ -324,6 +375,9 @@
 	import {
 		getCompanyInfoById
 	} from '@/common/credit-query.js'
+	import {
+		validText
+	} from '@/common/util.js'
 
 	export default {
 		components: {
@@ -361,6 +415,10 @@
 				uni.navigateTo({
 					url: '/pages-credit-query/company-detail/company-detail?itemData=' + encodeURIComponent(JSON.stringify(this.company))
 				})
+			},
+			/** 验证文字 */
+			validText(text) {
+				validText(text);
 			}
 		}
 	}

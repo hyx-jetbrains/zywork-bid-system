@@ -38,4 +38,14 @@ public final class ProjectConstants {
      * 项目资源类型-资质文件-3
      */
     public static final int PROJECT_SOURCE_TYPE_ZIZHI = 3;
+
+
+    /**
+     * VIP标识
+     */
+    public static final String VIP_FLAG = "vipFlag";
+    /**
+     * vip开通服务提示-请购买VIP服务
+     */
+    public static final String VIP_TEXT_TIP = "请购买VIP服务";
 }

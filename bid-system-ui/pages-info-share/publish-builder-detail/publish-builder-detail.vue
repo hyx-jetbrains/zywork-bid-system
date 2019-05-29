@@ -56,7 +56,8 @@
 
 <script>
 	import {
-		DEFAULT_HEADICON
+		DEFAULT_HEADICON,
+		callPhone
 	} from '@/common/util.js'
 	export default {
 		data() {
@@ -82,12 +83,7 @@
 		methods: {
 			// 打电话
 			callPhone() {
-				uni.makePhoneCall({
-					phoneNumber: this.item.builderPhone,
-					success: () => {
-						console.log("成功拨打电话")
-					}
-				})
+				callPhone(this.item.aptitudeTransferPhone);
 			},
 		}
 	}

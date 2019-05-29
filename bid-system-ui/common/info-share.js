@@ -23,7 +23,10 @@ export const getListInfoToPost = (self, url, params) => {
 	return uni.request({
 		url: BASE_URL + url,
 		method: 'POST',
-		data: params
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
 	})
 }
 

@@ -69,7 +69,7 @@ public class UserMarkCarpoolController extends BaseController {
      * Time: 10:59
      * Description: 信息共享 -- 开标拼车 -- 我是车主
      */
-    @PostMapping("any/list-page")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPage(@RequestBody UserMarkCarpoolQuery userMarkCarpoolQuery) {
         userMarkCarpoolQuery.setMarkCarpoolIsActive((byte)0);
         return listPageByCondition(userMarkCarpoolQuery);

@@ -79,7 +79,7 @@
 										<text class="zy-text-info zy-text-bold">
 											单位电话：
 										</text>
-										<text v-if="item.compPhone != null && item.compPhone != '' && item.compPhone != undefined" class="zy-text-info">
+										<text v-if="item.compPhone != ''" class="zy-text-info zy-detail-phone" @click="callPhone(item.compPhone)">
 											{{item.compPhone}}
 										</text>
 										<text v-else class="zy-text-info">
@@ -347,20 +347,18 @@
 							<!-- 内容部分 -->
 							<view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">证件号码:</view>
-									<view v-if="item.certificateNum != null && item.certificateNum != '' && item.certificateNum != undefined"
-									 class="zy-text-info">
-										{{item.certificateNum}}
+									<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
+									<view v-if="item.regNum != null && item.regNum != '' && item.regNum != undefined" class="zy-text-info">
+										{{item.regNum}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">资质详情:</view>
-									<view v-if="item.certificateDetail != null && item.certificateDetail != '' && item.certificateDetail != undefined"
-									 class="zy-text-info">
-										{{item.certificateDetail}}
+									<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
+									<view v-if="item.majorLevel != null && item.majorLevel != '' && item.majorLevel != undefined" class="zy-text-info">
+										{{item.majorLevel}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -429,7 +427,7 @@
 				<zywork-no-data v-else text="暂无中标记录"></zywork-no-data>
 			</view>
 		</view>
-		
+
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
@@ -439,7 +437,9 @@
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import {
-		showInfoToast
+		showInfoToast,
+		callPhone,
+		validText
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
@@ -498,7 +498,7 @@
 					]
 				},
 				urls: {
-					companyUrl: '/company/any/pager-cond',
+					companyUrl: '/company/user/pager-cond',
 					houseAchievementUrl: '/comp-house-achievement/any/pager-cond',
 					waterAchievementUrl: '/comp-water-achievement/any/pager-cond',
 					trafficAchievementUrl: '/comp-traffic-achievement/any/pager-cond',
@@ -506,7 +506,7 @@
 					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/any/pager-cond',
 					waterDeviseAchievementUrl: '/comp-water-devise-achievement/any/pager-cond',
 					builderUrl: '/comp-builder/any/pager-cond',
-					aptitudeUrl: '/comp-aptitude/any/pager-cond',
+					aptitudeUrl: '/comp-aptitude/user/pager-cond',
 					projectAnnounceUrl: '/projecannounce/any/pager-cond',
 				},
 				pager: {
@@ -862,6 +862,14 @@
 					this.checkRefresh(this.infoType.tabIndex, 'init');
 				}
 			},
+			/** 拨打电话 */
+			callPhone(phone) {
+				callPhone(phone);
+			},
+			/** 验证文字 */
+			validText(text) {
+				validText(text);
+			}
 		}
 	}
 </script>
@@ -872,7 +880,7 @@
 	page {
 		background-color: $primary-backcolor;
 	}
-	
+
 	.zy-page-card {
 		margin-top: 10upx;
 	}

@@ -198,3 +198,33 @@ export const getShareCode = () => {
 	}
 	return null
 }
+
+/**
+ * 拨打电话
+ */
+export const callPhone = (phone) => {
+	if (phone === '请购买VIP服务') {
+		uni.navigateTo({
+			url: '/pages-user-center/user-vip/user-vip'
+		})
+	} else {
+		uni.makePhoneCall({
+			phoneNumber: phone + '',
+			success: () => {
+				console.log("成功拨打电话")
+			}
+		})
+	}
+
+}
+
+/**
+ * 验证文字
+ */
+export const validText = (text) => {
+	if (text === '请购买VIP服务') {
+		uni.navigateTo({
+			url: '/pages-user-center/user-vip/user-vip'
+		})
+	}
+}

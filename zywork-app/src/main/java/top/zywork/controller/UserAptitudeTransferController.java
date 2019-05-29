@@ -5,7 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import top.zywork.annotation.HasHideProperty;
+import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.ReflectUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.query.UserAptitudeTransferQuery;
 import top.zywork.security.JwtUser;
@@ -14,6 +18,8 @@ import top.zywork.service.UserAptitudeTransferService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.UserAptitudeTransferVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * UserAptitudeTransferController控制器类<br/>
@@ -25,6 +31,7 @@ import top.zywork.vo.UserAptitudeTransferVO;
  */
 @RestController
 @RequestMapping("/UserAptitudeTransfer")
+@HasHideProperty
 public class UserAptitudeTransferController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserAptitudeTransferController.class);
@@ -69,10 +76,16 @@ public class UserAptitudeTransferController extends BaseController {
      * Time: 10:50
      * Description: 信息共享 -- 资质转让 -- 转让/求购
      */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody UserAptitudeTransferQuery userAptitudeTransferQuery) {
-        userAptitudeTransferQuery.setAptitudeTransferIsActive((byte)0);
-        return listPageByCondition(userAptitudeTransferQuery);
+    @PostMapping("user/list-page")
+    @HideProperty(url = "/UserAptitudeTransfer/user/list-page", properties = {"aptitudeTransferPhone"})
+    public ResponseStatusVO listPage(HttpServletRequest request, @RequestBody UserAptitudeTransferQuery userAptitudeTransferQuery) {
+        ResponseStatusVO responseStatusVO = listPageByCondition(userAptitudeTransferQuery);
+        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+        if (vipFlag != null && ((Boolean) vipFlag)) {
+            return responseStatusVO;
+        }
+        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "listPage",
+                responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
     /**

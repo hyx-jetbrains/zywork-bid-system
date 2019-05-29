@@ -9,4 +9,10 @@ package top.zywork.service;
  * @version 1.0
  */
 public interface ServiceService extends BaseService {
+
+    /**
+     * 获取所有vip服务的url
+     * @return
+     */
+    String[] getAllVipServiceUrl();
 }

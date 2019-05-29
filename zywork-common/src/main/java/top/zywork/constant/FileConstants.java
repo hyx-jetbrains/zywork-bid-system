@@ -18,4 +18,9 @@ public final class FileConstants {
      * 配置文件在SRC根目录下的前缀
      */
     public static final String CLASSPATH = "classpath:/";
+
+    /**
+     * 文件分隔符
+     */
+    public static final String SEPARATOR = "/";
 }

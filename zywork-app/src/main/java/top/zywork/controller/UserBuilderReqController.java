@@ -5,8 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import top.zywork.annotation.HasHideProperty;
+import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.PropertyUtils;
+import top.zywork.common.ReflectUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
+import top.zywork.dto.UserBuilderReqDTO;
+import top.zywork.enums.ResponseStatusEnum;
 import top.zywork.query.UserBuilderReqQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
@@ -14,6 +21,12 @@ import top.zywork.service.UserBuilderReqService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.UserBuilderReqVO;
+
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * UserBuilderReqController控制器类<br/>
@@ -25,6 +38,7 @@ import top.zywork.vo.UserBuilderReqVO;
  */
 @RestController
 @RequestMapping("/UserBuilderReq")
+@HasHideProperty
 public class UserBuilderReqController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserBuilderReqController.class);
@@ -69,9 +83,16 @@ public class UserBuilderReqController extends BaseController {
      * Time: 10:28
      * Description: 信息共享 -- 建造师 -- 招聘信息
      */
-    @PostMapping("any/list-page")
-    public ResponseStatusVO listPage(@RequestBody UserBuilderReqQuery userBuilderReqQuery) {
-        return listPageByCondition(userBuilderReqQuery);
+    @PostMapping("user/list-page")
+    @HideProperty(url = "/UserBuilderReq/user/list-page", properties = {"builderReqPhone"})
+    public ResponseStatusVO listPage(HttpServletRequest request, @RequestBody UserBuilderReqQuery userBuilderReqQuery) {
+        ResponseStatusVO responseStatusVO = listPageByCondition(userBuilderReqQuery);
+        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+        if (vipFlag != null && ((Boolean) vipFlag)) {
+            return responseStatusVO;
+        }
+        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "listPage",
+                    responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
     /**

@@ -14,7 +14,8 @@ import {
 	IMAGE_BASE_URL,
 	nullToStr,
 	IS_VIP_COLOR_TRUE,
-	IS_VIP_COLOR_FALSE
+	IS_VIP_COLOR_FALSE,
+	getCalendarDate
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -200,9 +201,7 @@ export const getSubscribeByUserId = (self) => {
 			if (res.data.code === ResponseStatus.OK) {
 				if (res.data.data.id !== null) {
 					// 有查询到之前保存的订阅信息
-					self.subscrible = nullToStr(res.data.data.rows)
-					self.subscrible.minMoney /= 100;
-					self.subscrible.maxMoney /= 100;
+					self.subscrible = nullToStr(res.data.data)
 					self.setValue();
 				}
 			} else {
@@ -1343,11 +1342,17 @@ export const getMyServiceUserCenter = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				self.vipIconColor = IS_VIP_COLOR_FALSE
 				if (res.data.data.total > 0) {
-					// 有购买过服务，点亮图片
-					self.vipIconColor = IS_VIP_COLOR_TRUE
-				} else {
-					self.vipIconColor = IS_VIP_COLOR_FALSE
+					var currDate = getCalendarDate(new Date());
+					res.data.data.rows.forEach(item => {
+						if (item.userServiceEndDate >= currDate) {
+							// 有购买过服务，并至少有个服务没到期，点亮图片
+							self.vipIconColor = IS_VIP_COLOR_TRUE
+							return true;
+						}
+					})
+					
 				}
 			} else {
 				showInfoToast(res.data.message)
@@ -1396,7 +1401,7 @@ export const listAllService = (self) => {
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/service/any/all-cond',
+		url: BASE_URL + '/service/user/all-cond',
 		method: 'POST',
 		data: {},
 		header: {},
@@ -1437,7 +1442,7 @@ export const listAllService = (self) => {
  */
 export const getOneServiceById = (self, id) => {
 	uni.request({
-		url: BASE_URL + '/service/any/one/' + id,
+		url: BASE_URL + '/service/user/one/' + id,
 		method: 'POST',
 		data: {},
 		header: {},
