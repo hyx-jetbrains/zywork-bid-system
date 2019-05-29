@@ -12,7 +12,7 @@
 </template>
 
 <script>
-	import {updateNickname} from '../../common/user.js'
+	import {updateIdentity} from '../../common/user.js'
 	export default {
 		data() {
 			return {
@@ -25,6 +25,7 @@
 		},
 		methods: {
 			changeIdentity() {
+				updateIdentity(this)
 			}
 		}
 	}

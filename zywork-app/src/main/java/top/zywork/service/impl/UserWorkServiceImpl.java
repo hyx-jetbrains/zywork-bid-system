@@ -2,11 +2,14 @@ package top.zywork.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.zywork.common.BeanUtils;
+import top.zywork.dao.UserDetailDAO;
 import top.zywork.dao.UserWorkDAO;
 import top.zywork.dos.UserWorkDO;
 import top.zywork.dto.UserWorkDTO;
 import top.zywork.service.AbstractBaseService;
 import top.zywork.service.UserWorkService;
+import top.zywork.vo.UserWorkVO;
 
 import javax.annotation.PostConstruct;
 
@@ -32,5 +35,10 @@ public class UserWorkServiceImpl extends AbstractBaseService implements UserWork
     @PostConstruct
     public void init() {
         super.init(UserWorkDO.class, UserWorkDTO.class);
+    }
+
+    @Override
+    public Object getByUserId(Long userId) {
+        return userWorkDAO.getByUserId(userId);
     }
 }

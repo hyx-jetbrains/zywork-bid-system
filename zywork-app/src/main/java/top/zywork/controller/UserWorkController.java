@@ -13,6 +13,8 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.UserWorkDTO;
 import top.zywork.query.UserWorkQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.UserWorkService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +134,40 @@ public class UserWorkController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), UserWorkVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    @PostMapping("user/getByUserId")
+    public ResponseStatusVO getByUserId() {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        UserWorkVO userWorkVO = new UserWorkVO();
+        Object obj = userWorkService.getByUserId(jwtUser.getUserId());
+        if(obj != null) {
+            userWorkVO = BeanUtils.copy(obj, UserWorkVO.class);
+        }
+
+        return ResponseStatusVO.ok("查询成功", userWorkVO);
+    }
+
+    @PostMapping("user/update")
+    public ResponseStatusVO userWorkUpdate(@RequestBody @Validated UserWorkVO userWorkVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        Object obj = userWorkService.getByUserId(jwtUser.getUserId());
+        if(obj != null) {
+            UserWorkVO uworkVO = BeanUtils.copy(obj, UserWorkVO.class);
+            userWorkVO.setId(uworkVO.getId());
+            return update(userWorkVO, bindingResult);
+        } else {
+            userWorkVO.setUserId(jwtUser.getUserId());
+            return save(userWorkVO, bindingResult);
+        }
     }
 
     @Autowired

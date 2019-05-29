@@ -116,6 +116,7 @@
 				user: {
 					headicon: '',
 					nickname: '',
+					gender: '',
 					phone: ''
 				},
 				userWallet: {
@@ -184,7 +185,7 @@
 			},
 			toUserSetting() {
 				uni.navigateTo({
-					url: '/pages-user-center/user-setting/user-setting'
+					url: '/pages-user-center/user-setting/user-setting?itemData=' + encodeURIComponent(JSON.stringify(this.user))
 				})
 			},
 			toUserVip() {

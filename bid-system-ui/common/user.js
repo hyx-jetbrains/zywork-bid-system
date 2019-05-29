@@ -157,6 +157,7 @@ export const getUserDetail = (self) => {
 				if (self.user.headicon !== undefined && self.user.headicon.indexOf('http') < 0) {
 					self.user.headicon = IMAGE_BASE_URL + '/' + self.uesr.headicon
 				}
+				self.user.gender = res.data.data.rows[0].userDetailGender
 				self.user.phone = res.data.data.rows[0].userPhone
 				setShareCode(res.data.data.rows[0].userDetailShareCode)
 				uni.setStorage({
@@ -367,3 +368,165 @@ export const getUserRoles = (self) => {
 	})
 }
 
+/**
+ * 获取用户详情
+ */
+export const getUserWork = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-work/user/getByUserId',
+		method: 'POST',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.userWork = res.data.data
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
+/**
+ * 修改用户身份证号码
+ */
+export const updateIdentity = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-work/user/update',
+		method: 'POST',
+		data: {
+			'idNum': self.identity
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.$event.$emit('changeIdentity', {
+					'identity': self.identity
+				})
+				uni.navigateBack({
+				
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
+/**
+ * 修改用户工作单位
+ */
+export const updateCompany = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-work/user/update',
+		method: 'POST',
+		data: {
+			'workUnit': self.company
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.$event.$emit('changeCompany', {
+					'company': self.company
+				})
+				uni.navigateBack({
+				
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
+/**
+ * 修改用户职务
+ */
+export const updateJobTitle = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-work/user/update',
+		method: 'POST',
+		data: {
+			'jobTitle': self.job
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.$event.$emit('changeJob', {
+					'job': self.job
+				})
+				uni.navigateBack({
+				
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
+/**
+ * 修改用户办公地点
+ */
+export const updateCompanyAddr = (self) => {
+	uni.request({
+		url: BASE_URL + '/user-work/user/update',
+		method: 'POST',
+		data: {
+			'workAddr': self.companyAddr
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.$event.$emit('changeCompanyAddr', {
+					'companyAddr': self.companyAddr
+				})
+				uni.navigateBack({
+				
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}

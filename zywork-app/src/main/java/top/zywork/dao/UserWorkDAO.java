@@ -25,4 +25,6 @@ public interface UserWorkDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByUserId(@Param("userId") Long userId);
 }

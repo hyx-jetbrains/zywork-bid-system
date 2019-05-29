@@ -1,5 +1,7 @@
 package top.zywork.service;
 
+import org.apache.ibatis.annotations.Param;
+
 /**
  * UserWorkService服务接口<br/>
  *
@@ -9,4 +11,7 @@ package top.zywork.service;
  * @version 1.0
  */
 public interface UserWorkService extends BaseService {
+
+    Object getByUserId(@Param("userId") Long userId);
+
 }

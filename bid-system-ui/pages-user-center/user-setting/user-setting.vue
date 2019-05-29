@@ -1,18 +1,18 @@
 <template>
 	<view>
 		<uni-list>
-			<zywork-list-item title="头像" imageUrl="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg" @click="chooseImage"></zywork-list-item>
+			<zywork-list-item title="头像" :imageUrl="user.headicon === '' ? headicon : user.headicon" @click="chooseImage"></zywork-list-item>
 			<zywork-list-item title="昵称" :note="user.nickname" @click="toSettingNickname"></zywork-list-item>
-			<zywork-list-item title="姓名" :note="user.realname" @click="toSettingRealname"></zywork-list-item>
+			<!-- <zywork-list-item title="姓名" :note="user.realname" @click="toSettingRealname"></zywork-list-item> -->
 			<picker @change="chooseGender" :value="genderIndex" :range="genderArray">
 				<zywork-list-item title="性别" :note="user.gender === 1 ? '男' : user.gender === 2 ? '女' : ''"></zywork-list-item>
 			</picker>		
 			</zywork-list-item>
-			<zywork-list-item title="身份证号" :note="user.identity" @click="toSettingIdentity"></zywork-list-item>
-			<zywork-list-item title="手机号" :note="user.phone" @click="toSettingPhone"></zywork-list-item>
-			<zywork-list-item title="工作单位" :note="user.company" @click="toSettingCompany"></zywork-list-item>
-			<zywork-list-item title="职务" :note="user.job" @click="toSettingJob"></zywork-list-item>
-			<zywork-list-item title="办公地点" :note="user.companyAddress" @click="toSettingCompanyAddr"></zywork-list-item>
+			<zywork-list-item title="身份证号" :note="userWork.idNum" @click="toSettingIdentity"></zywork-list-item>
+			<zywork-list-item title="手机号" :note="user.phone"></zywork-list-item>
+			<zywork-list-item title="工作单位" :note="userWork.workUnit" @click="toSettingCompany"></zywork-list-item>
+			<zywork-list-item title="职务" :note="userWork.jobTitle" @click="toSettingJob"></zywork-list-item>
+			<zywork-list-item title="办公地点" :note="userWork.workAddr" @click="toSettingCompanyAddr"></zywork-list-item>
 			<!--
 			<zywork-list-item-input title="测试" flexDirection="row">
 				<view slot="content" class="zy-list-item-input">
@@ -31,7 +31,8 @@
 
 <script>
 	import {
-		uploadHeadicon
+		uploadHeadicon,
+		getUserWork
 	} from '../../common/user.js'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
@@ -52,19 +53,30 @@
 					nickname: '',
 					realname: '',
 					gender: 0,
-					identity: '',
 					phone: '',
-					company: '',
-					job: '',
-					companyAddress: ''
+				},
+				userWork: {
+					idNum: '',
+					workUnit: '',
+					jobTitle: '',
+					workAddr: ''
 				},
 				visible: false,
 				genderIndex: 0,
 				genderArray: genderArray
 			}
 		},
-		onLoad() {
+		onLoad(event) {
 			uni.hideShareMenu();
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			try {
+				this.user = JSON.parse(decodeURIComponent(payload));
+			} catch (error) {
+				this.user = JSON.parse(payload);
+			}
+			this.initData()
 		},
 		methods: {
 			chooseImage() {
@@ -100,24 +112,47 @@
 				})
 			},
 			toSettingIdentity() {
+				const self = this
+				this.$event.$on('changeIdentity', function(data) {
+					self.userWork.idNum = data.identity
+					self.$event.$off('changeIdentity')
+				});
 				uni.navigateTo({
-					url: '/pages-user-center/setting-identity/setting-identity'
+					url: '/pages-user-center/setting-identity/setting-identity?identity=' + this.userWork.idNum
 				})
 			},
 			toSettingCompany() {
+				const self = this
+				this.$event.$on('changeCompany', function(data) {
+					self.userWork.workUnit = data.company
+					self.$event.$off('changeCompany')
+				});
 				uni.navigateTo({
-					url: '/pages-user-center/setting-company/setting-company'
+					url: '/pages-user-center/setting-company/setting-company?company=' + this.userWork.workUnit
 				})
 			},
 			toSettingJob() {
+				const self = this
+				this.$event.$on('changeJob', function(data) {
+					self.userWork.jobTitle = data.job
+					self.$event.$off('changeJob')
+				});
 				uni.navigateTo({
-					url: '/pages-user-center/setting-job/setting-job'
+					url: '/pages-user-center/setting-job/setting-job?job=' + this.userWork.jobTitle
 				})
 			},
 			toSettingCompanyAddr() {
+				const self = this
+				this.$event.$on('changeCompanyAddr', function(data) {
+					self.userWork.workAddr = data.companyAddr
+					self.$event.$off('changeCompanyAddr')
+				});
 				uni.navigateTo({
-					url: '/pages-user-center/setting-company-address/setting-company-address'
+					url: '/pages-user-center/setting-company-address/setting-company-address?companyAddr='+ this.userWork.workAddr
 				})
+			},
+			initData() {
+				getUserWork(this)
 			}
 		}
 	}
