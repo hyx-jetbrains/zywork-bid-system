@@ -25,4 +25,6 @@ public interface UserServiceDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByUsetIdEndService(@Param("userId") Long userId, @Param("serviceId") Long serviceId);
 }
