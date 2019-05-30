@@ -193,7 +193,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
 								<view @click="toCarpoolDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
 											:src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
@@ -239,7 +239,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
 								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
 											:src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>

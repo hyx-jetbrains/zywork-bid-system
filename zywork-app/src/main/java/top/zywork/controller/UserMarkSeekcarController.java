@@ -70,7 +70,7 @@ public class UserMarkSeekcarController extends BaseController {
      * Time: 11:07
      * Description: 信息共享 -- 开标拼车 -- 我要找车
      */
-    @PostMapping("any/list-page")
+    @PostMapping("user/list-page")
     public ResponseStatusVO listPage(@RequestBody UserMarkSeekcarQuery userMarkSeekcarQuery) {
         userMarkSeekcarQuery.setMarkSeekcarIsActive((byte)0);
         return listPageByCondition(userMarkSeekcarQuery);

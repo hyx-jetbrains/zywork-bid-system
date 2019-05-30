@@ -44,7 +44,7 @@
 									</view>
 									<view class="zy-text-mini zy-text-info">
 										法人：
-										<text v-if="item.legalPerson !== null && item.legalPerson !== undefined" class="zy-text-mini zy-text-info">
+										<text v-if="item.legalPerson !== ''" class="zy-text-mini zy-text-info">
 											{{item.legalPerson}}
 										</text>
 										<text v-else class="zy-text-mini zy-text-info">
@@ -144,7 +144,7 @@
 								<!-- 房建业绩 -->
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">注册建造师:</view>
-									<view v-if="item.builderName != null && item.builderName != '' && item.builderName != undefined" class="zy-text-info">
+									<view v-if="item.builderName != ''" class="zy-text-info">
 										{{item.builderName}}
 									</view>
 									<view v-else class="zy-text-info">
@@ -152,9 +152,9 @@
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
-									<view v-if="item.markMoney != null && item.markMoney != '' && item.markMoney != undefined" class="zy-text-info">
-										{{item.markMoney / 100}}
+									<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
+									<view v-if="item.name != ''" class="zy-text-info">
+										{{item.name}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -162,7 +162,7 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">建设单位:</view>
-									<view v-if="item.buildComp != null && item.buildComp != '' && item.buildComp != undefined" class="zy-text-info">
+									<view v-if="item.buildComp != ''" class="zy-text-info">
 										{{item.buildComp}}
 									</view>
 									<view v-else class="zy-text-info">
@@ -347,18 +347,19 @@
 							<!-- 内容部分 -->
 							<view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
-									<view v-if="item.regNum != null && item.regNum != '' && item.regNum != undefined" class="zy-text-info">
-										{{item.regNum}}
+									<view class="zy-text-info zy-text-bold zy-content-label">证件号码:</view>
+									<view v-if="item.certificateNum != ''" @click="validText(item.certificateNum)" class="zy-text-info" :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.certificateNum}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
-									<view v-if="item.majorLevel != null && item.majorLevel != '' && item.majorLevel != undefined" class="zy-text-info">
-										{{item.majorLevel}}
+									<view class="zy-text-info zy-text-bold zy-content-label">资质详情:</view>
+									<view v-if="item.certificateDetail != ''" @click="validText(item.certificateDetail)" class="zy-text-info"
+									 :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.certificateDetail}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -499,12 +500,12 @@
 				},
 				urls: {
 					companyUrl: '/company/user/pager-cond',
-					houseAchievementUrl: '/comp-house-achievement/any/pager-cond',
-					waterAchievementUrl: '/comp-water-achievement/any/pager-cond',
-					trafficAchievementUrl: '/comp-traffic-achievement/any/pager-cond',
-					keyProjectAchievementUrl: '/comp-key-projecachievement/any/pager-cond',
-					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/any/pager-cond',
-					waterDeviseAchievementUrl: '/comp-water-devise-achievement/any/pager-cond',
+					houseAchievementUrl: '/comp-house-achievement/user/pager-cond',
+					waterAchievementUrl: '/comp-water-achievement/user/pager-cond',
+					trafficAchievementUrl: '/comp-traffic-achievement/user/pager-cond',
+					keyProjectAchievementUrl: '/comp-key-projecachievement/user/pager-cond',
+					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/user/pager-cond',
+					waterDeviseAchievementUrl: '/comp-water-devise-achievement/user/pager-cond',
 					builderUrl: '/comp-builder/any/pager-cond',
 					aptitudeUrl: '/comp-aptitude/user/pager-cond',
 					projectAnnounceUrl: '/projecannounce/any/pager-cond',

@@ -266,7 +266,7 @@ export const getProjectAnnounce = (self, projectId) => {
  */
 export const getCarpoolList = (self, params) => {
 	uni.request({
-		url: BASE_URL + '/UserMarkCarpool/any/list-page',
+		url: BASE_URL + '/UserMarkCarpool/user/list-page',
 		method: 'POST',
 		data: params,
 		header: {},
@@ -290,7 +290,7 @@ export const getCarpoolList = (self, params) => {
  */
 export const getSeekcarList = (self, params) => {
 	uni.request({
-		url: BASE_URL + '/UserMarkSeekcar/any/list-page',
+		url: BASE_URL + '/UserMarkSeekcar/user/list-page',
 		method: 'POST',
 		data: params,
 		header: {},

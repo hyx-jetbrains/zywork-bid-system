@@ -5,7 +5,7 @@
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">
 				<view class="zy-disable-flex">
-					<image v-if="item.userDetailHeadicon !== null && item.userDetailHeadicon !== undefined" class="zy-page-mini-headicon"
+					<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
 						:src="item.userDetailHeadicon" />
 					<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 					<view>

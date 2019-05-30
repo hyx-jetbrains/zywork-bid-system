@@ -97,7 +97,8 @@
 		buyServiceValidYearArray
 	} from '@/common/picker.data.js'
 	import {
-		getCouponByUserId
+		getCouponByUserId,
+		payServiceRecord
 	} from '@/common/user-center.js'
 
 	export default {
@@ -227,6 +228,7 @@
 				console.log("发起支付");
 				this.loading = true;
 				console.log(this.formData);
+				payServiceRecord(this, this.formData);
 			}
 
 		},

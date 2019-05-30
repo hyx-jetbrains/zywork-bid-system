@@ -55,11 +55,15 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
 
         int totalFee = 0;
 
-        if(validYear > 1) {// 购买服务大于1年可以获取折扣。
+        if(validYear > 1) {
+            // 购买服务大于1年可以获取折扣。
             totalFee = serviceVO.getPrice().intValue() * (serviceVO.getDiscount()/100);
+        } else if(validYear == 1) {
+            totalFee = serviceVO.getPrice().intValue();
         }
 
-        if(userCouponId != null) {// 使用抵扣券进行抵扣。
+        if(userCouponId != null && userCouponId != 0) {
+            // 使用抵扣券进行抵扣。
             Object uconObj = userCouponDAO.getById(userCouponId);
             if(uconObj == null) {
                 return ResponseStatusVO.dataError("抵扣券不存在", null);
@@ -77,11 +81,12 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             }
 
             CouponVO couponVO = BeanUtils.copy(couObj, CouponVO.class);
-            if((couponVO.getValidTime().getTime() - new Date().getTime()) < 0) {
+            if((couponVO.getValidTime().getTime() - System.currentTimeMillis()) < 0) {
                 return ResponseStatusVO.dataError("抵扣券已过期", null);
             }
 
-            if(totalFee == 0) {// 购买服务没有折扣（购买服务没有大于1年），但是使用了抵扣券。
+            if(totalFee == 0) {
+                // 购买服务没有折扣（购买服务没有大于1年），但是使用了抵扣券。
                 totalFee = serviceVO.getPrice().intValue() -  couponVO.getMoney().intValue();
             } else {// 购买服务有折扣，并使用了抵扣券。
                 totalFee = totalFee - couponVO.getMoney().intValue();
@@ -143,7 +148,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     public void payNotif(String attach) {
         JSONObject json = JSONObject.parseObject(attach);
         int payType = json.getIntValue("payType");
-        if(payType == 1) {// 服务购买
+        if(payType == 1) {
+            // 服务购买
             Long userCouponId = json.getLong("userCouponId");
             Long userId = json.getLong("userId");
             Long serviceId = json.getLong("serviceId");
@@ -181,7 +187,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
                 userServiceVO.setEndDate(cal.getTime());
                 userServiceDAO.update(userServiceVO);
             }
-        } else if(payType == 2) {// 预约专家
+        } else if(payType == 2) {
+            // 预约专家
             Long expertSubscribeId = json.getLong("expertSubscribeId");
             String transactionNo = json.getString("transactionNo");
 

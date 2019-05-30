@@ -141,7 +141,7 @@ public class CompTrafficAchievementController extends BaseController {
     }
 
     @PostMapping("user/pager-cond")
-    @HideProperty(url = "/comp-key-projecachievement/user/pager-cond", properties = {"contractAmount","workAddr","validStatus"})
+    @HideProperty(url = "/comp-traffic-achievement/user/pager-cond", properties = {"contractAmount","workAddr","validStatus"})
     public ResponseStatusVO userListPageByCondition(HttpServletRequest request, @RequestBody CompTrafficAchievementQuery compTrafficAchievementQuery) {
         ResponseStatusVO responseStatusVO = listPageByCondition(compTrafficAchievementQuery);
         Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);

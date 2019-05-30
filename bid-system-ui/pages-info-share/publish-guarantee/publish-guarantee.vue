@@ -13,7 +13,7 @@
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="true" placeholder="请选择开标项目" v-model="guarantee.projectName"
 							 @click="showProjectDrawer" />
-							<uni-drawer :visible="projectDrawer" mode="right" @close="projectDrawer = false">
+							<uni-drawer :visible="projectDrawer" mode="right" @close="closeProjectDrawer">
 								<uni-list>
 									<view class="zy-search-bar zy-project-search">
 										<zywork-icon type="iconchaxun" />
@@ -141,7 +141,7 @@
 						</view>
 					</view>
 					<view class="zy-bottom-button">
-						<cover-view>
+						<cover-view v-if="showBtn">
 							<button type="primary" @click="addGuarantee" :disabled="disabled.guaranteeBtn">确认申请</button>
 						</cover-view>
 					</view>
@@ -204,7 +204,8 @@
 					isActive: null
 				},
 				guaranteeCompanyArray: guaranteeCompanyArray,
-				guaranteeCompanyIndex: 0
+				guaranteeCompanyIndex: 0,
+				showBtn: true,
 			}
 		},
 		onLoad() {
@@ -236,11 +237,17 @@
 			/** 显示项目选择抽屉 */
 			showProjectDrawer() {
 				this.projectDrawer = true;
+				this.showBtn = false;
 				this.searchProject();
+			},
+			/** 关闭项目选择抽屉 */
+			closeProjectDrawer() {
+				this.projectDrawer = false;
+				this.showBtn = true;
 			},
 			/** 查询项目 */
 			searchProject() {
-				getProjectList(this, this.projectPager);
+				getProjectList(this, 'init', this.projectPager);
 			},
 			/** 确认申请保函 */
 			addGuarantee() {

@@ -1460,3 +1460,37 @@ export const getOneServiceById = (self, id) => {
 		}
 	})
 }
+/**
+ * 支付购买服务的订单
+ */
+export const payServiceRecord = (self, params) => {
+	uni.request({
+		url: BASE_URL + '/wx-pay/user/servicePay',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken(),
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.requestPayment({
+					provider: 'wxpay',
+					orderInfo: '1234',
+					timeStamp: res.data.data.timeStamp,
+					nonceStr: res.data.data.nonceStr,
+					package: res.data.data.package,
+					signType: res.data.data.signType,
+					paySign: res.data.data.paySign
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+		}
+	})
+}

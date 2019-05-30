@@ -18,7 +18,7 @@
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" placeholder="请选择开标项目" v-model="carpool.projectName"
 								 @click="showProjectDrawer" />
-								<uni-drawer :visible="projectDrawer" mode="right" @close="projectDrawer = false">
+								<uni-drawer :visible="projectDrawer" mode="right" @close="closeProjectDrawer">
 									<uni-list>
 										<view class="zy-search-bar zy-project-search">
 											<zywork-icon type="iconchaxun" />
@@ -189,7 +189,7 @@
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true" placeholder="请选择开标项目" v-model="seekcar.projectName"
 								 @click="showProjectDrawer" />
-								<uni-drawer :visible="projectDrawer" mode="right" @close="projectDrawer = false">
+								<uni-drawer :visible="projectDrawer" mode="right" @close="closeProjectDrawer">
 									<uni-list>
 										<view class="zy-search-bar zy-project-search">
 											<zywork-icon type="iconchaxun" />
@@ -512,7 +512,13 @@
 			/** 显示项目选择抽屉 */
 			showProjectDrawer() {
 				this.projectDrawer = true;
+				this.showBtn = false;
 				this.searchProject();
+			},
+			/** 关闭项目选择抽屉 */
+			closeProjectDrawer() {
+				this.projectDrawer = false;
+				this.showBtn = true;
 			},
 			/** 查询项目 */
 			searchProject() {

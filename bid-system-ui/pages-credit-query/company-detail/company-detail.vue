@@ -237,8 +237,9 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
-									<view v-if="item.markMoney != null && item.markMoney != '' && item.markMoney != undefined" class="zy-text-info">
-										{{item.markMoney / 100}}
+									<view v-if="item.markMoney != ''" class="zy-text-info"
+										:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -267,9 +268,9 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-									<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined"
-									 class="zy-text-info">
-										{{item.contractAmount / 100}}
+									<view v-if="item.contractAmount != ''" class="zy-text-info"
+										:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -298,9 +299,9 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-									<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined"
-									 class="zy-text-info">
-										{{item.contractAmount / 100}}
+									<view v-if="item.contractAmount != ''"
+										class="zy-text-info" :class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -320,8 +321,9 @@
 								<!-- 水利业绩和交通业绩和重点工程 -->
 								<view v-if="achievementOpts.current == 3" class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
-									<view v-if="item.markMoney != null && item.markMoney != '' && item.markMoney != undefined" class="zy-text-info">
-										{{item.markMoney / 100}}
+									<view v-if="item.markMoney != ''" class="zy-text-info"
+										:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -329,9 +331,9 @@
 								</view>
 								<view v-else class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-									<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined"
-									 class="zy-text-info">
-										{{item.contractAmount / 100}}
+									<view v-if="item.contractAmount != ''"
+									 class="zy-text-info" :class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -445,14 +447,14 @@
 				item: {},
 				currTabIndex: 0,
 				urls: {
-					houseAchievementUrl: '/comp-house-achievement/any/pager-cond',
-					waterAchievementUrl: '/comp-water-achievement/any/pager-cond',
-					trafficAchievementUrl: '/comp-traffic-achievement/any/pager-cond',
-					keyProjectAchievementUrl: '/comp-key-projecachievement/any/pager-cond',
-					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/any/pager-cond',
-					waterDeviseAchievementUrl: '/comp-water-devise-achievement/any/pager-cond',
+					houseAchievementUrl: '/comp-house-achievement/user/pager-cond',
+					waterAchievementUrl: '/comp-water-achievement/user/pager-cond',
+					trafficAchievementUrl: '/comp-traffic-achievement/user/pager-cond',
+					keyProjectAchievementUrl: '/comp-key-projecachievement/user/pager-cond',
+					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/user/pager-cond',
+					waterDeviseAchievementUrl: '/comp-water-devise-achievement/user/pager-cond',
 					builderUrl: '/comp-builder/any/pager-cond',
-					aptitudeUrl: '/comp-aptitude/any/pager-cond',
+					aptitudeUrl: '/comp-aptitude/user/pager-cond',
 					personnelUrl: '/comp-personnel/any/pager-cond'
 				},
 				pager: {
