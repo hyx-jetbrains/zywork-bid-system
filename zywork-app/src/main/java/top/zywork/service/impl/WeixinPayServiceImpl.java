@@ -9,6 +9,7 @@ import top.zywork.common.BeanUtils;
 import top.zywork.common.RandomUtils;
 import top.zywork.dao.*;
 import top.zywork.enums.DatePatternEnum;
+import top.zywork.enums.FundsChangeTypeEnum;
 import top.zywork.enums.GoodsOrderStatusEnum;
 import top.zywork.enums.PaymentTypeEnum;
 import top.zywork.service.AbstractBaseService;
@@ -41,6 +42,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     private CouponDAO couponDAO;
 
     private ExpertSubscribeDAO expertSubscribeDAO;
+
+    private AccountDetailDAO accountDetailDAO;
 
     @Override
     public ResponseStatusVO ServicePay(Long UserId, String openid, Long serviceId, int validYear, Long userCouponId, int type, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig) {
@@ -145,13 +148,14 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     }
 
     @Override
-    public void payNotif(String attach) {
+    public void payNotif(String outTradeNo, int totalFee, String attach) {
         JSONObject json = JSONObject.parseObject(attach);
         int payType = json.getIntValue("payType");
-        if(payType == 1) {
-            // 服务购买
+        Long userId = json.getLong("userId");
+        String accountDetailType = null;
+        if(payType == 1) {// 服务购买
+            accountDetailType = FundsChangeTypeEnum.PURCHASE_SERVICE.getValue();
             Long userCouponId = json.getLong("userCouponId");
-            Long userId = json.getLong("userId");
             Long serviceId = json.getLong("serviceId");
             int validYear = json.getInteger("validYear");
             int type = json.getIntValue("type");
@@ -187,8 +191,9 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
                 userServiceVO.setEndDate(cal.getTime());
                 userServiceDAO.update(userServiceVO);
             }
-        } else if(payType == 2) {
-            // 预约专家
+        } else if(payType == 2) {// 预约专家
+            accountDetailType = FundsChangeTypeEnum.APPOINTMENT_EXPERT.getValue();
+
             Long expertSubscribeId = json.getLong("expertSubscribeId");
             String transactionNo = json.getString("transactionNo");
 
@@ -199,6 +204,15 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             expertSubscribeVO.setTransactionNo(transactionNo);
             expertSubscribeDAO.update(expertSubscribeVO);
         }
+
+        AccountDetailVO accountDetailVO = new AccountDetailVO();
+        accountDetailVO.setUserId(userId);
+        accountDetailVO.setTransactionNo(outTradeNo);
+        accountDetailVO.setAmount((long)totalFee);
+        accountDetailVO.setType((byte)1);
+        accountDetailVO.setPayType(PaymentTypeEnum.WEIXIN_PAY.getValue().byteValue());
+        accountDetailVO.setSubType(accountDetailType);
+        accountDetailDAO.save(accountDetailVO);
     }
 
     @Autowired
@@ -224,5 +238,10 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     @Autowired
     public void setExpertSubscribeDAO(ExpertSubscribeDAO expertSubscribeDAO) {
         this.expertSubscribeDAO = expertSubscribeDAO;
+    }
+
+    @Autowired
+    public void setAccountDetailDAO(AccountDetailDAO accountDetailDAO) {
+        this.accountDetailDAO = accountDetailDAO;
     }
 }

@@ -23,7 +23,9 @@ public enum FundsChangeTypeEnum {
     CONSUME("消费"),
     REFUND("还款"),
     OTHER_IN("其他收入"),
-    OTHER_OUT("其他支出");
+    OTHER_OUT("其他支出"),
+    PURCHASE_SERVICE("购买服务"),
+    APPOINTMENT_EXPERT("预约专家");
 
     private String value;
 

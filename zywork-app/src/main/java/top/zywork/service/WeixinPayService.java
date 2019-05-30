@@ -16,5 +16,5 @@ public interface WeixinPayService extends BaseService {
 
     ResponseStatusVO ExpertSubscribePay(Long UserId, String openid, Long id, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig);
 
-    void payNotif(String attach);
+    void payNotif(String outTradeNo, int totalFee, String attach);
 }
