@@ -83,7 +83,7 @@
 		methods: {
 			// 打电话
 			callPhone() {
-				callPhone(this.item.aptitudeTransferPhone);
+				callPhone(this.item.builderPhone);
 			},
 		}
 	}

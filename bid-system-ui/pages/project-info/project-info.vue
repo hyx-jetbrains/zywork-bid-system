@@ -470,6 +470,8 @@
 				})
 			},
 			toProjectDetail(item) {
+				item.clickCount += 1;
+				projectInfo.projectClickCount(this, item);
 				uni.navigateTo({
 					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})

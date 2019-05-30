@@ -149,6 +149,33 @@ export const getProjectList = (self, type, params) => {
 }
 
 /**
+ * 更新点击次数
+ */
+export const projectClickCount = (self, projectItem) => {
+	uni.request({
+		url: BASE_URL + '/project/user/update',
+		method: 'POST',
+		data: projectItem,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				console.log("更新点击次数成功"); 
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
  * 获取项目收藏信息
  */
 export const getProjectCollectionInfo = (self, projectId) => {

@@ -381,10 +381,10 @@
 							<view class="zy-disable-flex">
 								<zywork-icon type="iconzhongbiao" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 								<view>
-									<text class="zy-text-bold">中标记录</text>
+									<text class="zy-text-bold">{{item.projectTitle}}</text>
 									<view class="zy-text-mini zy-text-info">
 										<text class="zy-text-mini zy-text-info">
-											{{item.createTime}}
+											{{item.projectAnnounceCreateTime}}
 										</text>
 									</view>
 								</view>
@@ -393,9 +393,9 @@
 							<view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">第一中标人:</view>
-									<view v-if="item.firstCandidate != null && item.firstCandidate != '' && item.firstCandidate != undefined"
-									 class="zy-text-info">
-										{{item.firstCandidate}}
+									<view v-if="item.projectAnnounceFirstCandidate !== ''" class="zy-text-info" @click="validText(item.projectAnnounceFirstCandidate)"
+									 :class="item.projectAnnounceFirstCandidate === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.projectAnnounceFirstCandidate}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -403,9 +403,9 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">第二中标人:</view>
-									<view v-if="item.secondCandidate != null && item.secondCandidate != '' && item.secondCandidate != undefined"
-									 class="zy-text-info">
-										{{item.secondCandidate}}
+									<view v-if="item.projectAnnounceSecondCandidate !== ''" class="zy-text-info" @click="validText(item.projectAnnounceSecondCandidate)"
+									 :class="item.projectAnnounceSecondCandidate === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.projectAnnounceSecondCandidate}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -413,9 +413,9 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">第三中标人:</view>
-									<view v-if="item.thirdCandidate != null && item.thirdCandidate != '' && item.thirdCandidate != undefined"
-									 class="zy-text-info">
-										{{item.thirdCandidate}}
+									<view v-if="item.projectAnnounceThirdCandidate !== ''" class="zy-text-info" @click="validText(item.projectAnnounceThirdCandidate)"
+									 :class="item.projectAnnounceThirdCandidate === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.projectAnnounceThirdCandidate}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无

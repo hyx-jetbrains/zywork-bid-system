@@ -187,6 +187,17 @@ public class ProjectController extends BaseController {
     }
 
     /**
+     * 用户端更新，主要用于更新点击次数
+     * @param projectVO
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("user/update")
+    public ResponseStatusVO userUpdate(@RequestBody @Validated ProjectVO projectVO, BindingResult bindingResult) {
+        return update(projectVO, bindingResult);
+    }
+
+    /**
      * User: DengMin
      * Date: 2019/05/15
      * Time: 11:01

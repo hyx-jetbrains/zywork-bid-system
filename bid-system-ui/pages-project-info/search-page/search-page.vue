@@ -156,6 +156,16 @@
 				</view>
 			</view>
 		</view>
+		
+		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
+			<scroll-view :scroll-y="true" class="uni-center center-box">
+				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
+					<view style="color: #108EE9;">
+						{{index+1}}.{{ item.fileName }}
+					</view>
+				</view>
+			</scroll-view>
+		</uni-popup>
 
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
@@ -167,6 +177,7 @@
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 
 	import {
 		IMAGE_BASE_URL,
@@ -174,18 +185,15 @@
 		isUserTokenExist,
 		toLoginPage,
 		getCalendarDate,
-		formatCalendarDate
+		formatCalendarDate,
+		DOCUMENT_BASE_URL
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
 		jxCityArray,
 		fileTypeArray
 	} from '@/common/picker.data.js'
-	import {
-		getProjectList,
-		getProjectCollectionInfo,
-		saveProjectCollection
-	} from '@/common/project-info.js'
+	import * as projectInfo from '@/common/project-info.js'
 
 	const PROJECT_STATUS_ALL = 0
 	const PROJECT_STATUS_SHOWING = 1
@@ -225,7 +233,8 @@
 			zyworkNoData,
 			uniSegmentedControl,
 			zyworkCalendar,
-			uniTag
+			uniTag,
+			uniPopup
 		},
 		data() {
 			return {
@@ -316,7 +325,7 @@
 		methods: {
 			/** 更新项目列表 */
 			updateProjectList(type) {
-				getProjectList(this, type, this.projectPager);
+				projectInfo.getProjectList(this, type, this.projectPager);
 			},
 			/** 初始化数据 */
 			initData() {
@@ -480,33 +489,46 @@
 			},
 			/** 前往项目详情 */
 			toProjectDetail(item) {
+				item.clickCount += 1;
+				projectInfo.projectClickCount(this, item);
 				uni.navigateTo({
 					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			},
 			// 触发操作选项
 			actionSheetTap(projectId) {
-				getProjectCollectionInfo(this, projectId);
+				projectInfo.getProjectCollectionInfo(this, projectId);
 			},
 			// 查看文件
 			seeFile(type, projectId) {
-				console.log(type)
-				if (SEE_FILE_TYPE_CHENGQING === type) {
-					console.log("查看澄清文件")
-				} else if (SEE_FILE_TYPE_ZHAOBIAO === type) {
-					console.log("查看招标文件")
-				} else if (SEE_FILE_TYPE_QINGDAN === type) {
-					console.log("查看清单文件");
-				} else if (SEE_FILE_TYPE_ZIZHI === type) {
-					console.log("查看资质文件");
-				} else if (SEE_FILE_TYPE_SC_QXSC === type) {
+				if (SEE_FILE_TYPE_SC_QXSC === type) {
 					const tempType = this.actionSheetArray[SEE_FILE_TYPE_SC_QXSC];
 					if (tempType == '取消收藏') {
-						cancelProjectCollection(this, projectId);
+						projectInfo.cancelProjectCollection(this, projectId);
 					} else if (tempType == '收藏项目') {
-						saveProjectCollection(this, projectId);
+						projectInfo.saveProjectCollection(this, projectId);
 					}
+				} else {
+					// 其他几个选项，查看文件
+					projectInfo.getResourceByProjectIdAndType(this, projectId, type);
 				}
+			},
+			/** 打开文档 */
+			openDocument(url) {
+				if (this.isShowFileList) {
+					this.isShowFileList = false;
+				}
+				uni.downloadFile({
+					url: DOCUMENT_BASE_URL + "/" + url,
+					success: (res) => {
+						uni.openDocument({
+							filePath: res.tempFilePath,
+							success: () => {
+								console.log('打开文档成功');
+							}
+						});
+					}
+				});
 			},
 			/** 获取到是否收藏后的操作 */
 			collectionOperation(projectId) {
@@ -528,7 +550,7 @@
 						}
 					})
 				}
-				
+
 			}
 		}
 	}

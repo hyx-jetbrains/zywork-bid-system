@@ -25,7 +25,6 @@ public class ProjectVO extends BaseVO {
 	private Long id;
 	// 项目名称
 	@NotBlank(message = "此项是必须项")
-	@Size(min = 1, max = 32, message = "必须是1-32个字符")
 	private String title;
 	// 项目类型
 	@Size(min = 0, max = 10, message = "必须小于10个字符")

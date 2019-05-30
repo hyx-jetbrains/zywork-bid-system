@@ -40,8 +40,12 @@
 			</view>
 			<!-- 项目介绍 -->
 			<view v-if="currTabIndex === 0">
-				<view class="zy-project-desc-title zy-text-bold">
+				<view class="zy-project-desc-title zy-text-bold zy-disable-flex">
 					招标公告
+					<view class="zy-disable-flex-right" style="margin-right: 0upx;">
+						<text class="zy-text-bold">浏览次数：</text>
+						<text>{{project.clickCount}}次</text>
+					</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">招标单位名称</view>
@@ -75,7 +79,7 @@
 					<view class="zy-text-bold">联系电话</view>
 					<view class="zy-disable-flex-right zy-primary">{{project.phone}}</view>
 				</view>
-				<view class="zy-project-desc-title zy-text-bold zy-disable-flex" style="position: relative;">
+				<view class="zy-project-desc-title zy-text-bold zy-disable-flex zy-position-relative">
 					<view>文件</view>
 					<view class="zy-disable-flex-right" style="margin-right: 0upx;">
 						<view class="zy-disable-flex" @tap="actionSheetTap">
@@ -279,6 +283,16 @@
 				</view>
 			</view>
 		</view>
+		
+		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
+			<scroll-view :scroll-y="true" class="uni-center center-box">
+				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
+					<view style="color: #108EE9;">
+						{{index+1}}.{{ item.fileName }}
+					</view>
+				</view>
+			</scroll-view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -287,13 +301,16 @@
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 
 	import {
-		openMarkArray
+		openMarkArray,
+		fileTypeArray
 	} from '@/common/picker.data.js'
 	import {
 		DEFAULT_HEADICON,
-		showInfoToast
+		showInfoToast,
+		DOCUMENT_BASE_URL
 	} from '@/common/util.js'
 	import {
 		getProjectCollectionInfo,
@@ -301,7 +318,8 @@
 		cancelProjectCollection,
 		getProjectAnnounce,
 		getCarpoolList,
-		getSeekcarList
+		getSeekcarList,
+		getResourceByProjectIdAndType
 	} from '@/common/project-info.js'
 	import * as infoShare from '@/common/info-share.js'
 
@@ -326,21 +344,13 @@
 		'../../static/icon/other.png'
 	]
 
-	/** 澄清文件标识-0 */
-	const SEE_FILE_TYPE_CHENGQING = 0
-	/** 招标文件标识-1 */
-	const SEE_FILE_TYPE_ZHAOBIAO = 1
-	/** 清单文件标识-2 */
-	const SEE_FILE_TYPE_QINGDAN = 2
-	/** 资质文件标识-3 */
-	const SEE_FILE_TYPE_ZIZHI = 3
-
 	export default {
 		components: {
 			zyworkIcon,
 			zyworkNoData,
 			uniTag,
-			uniSegmentedControl
+			uniSegmentedControl,
+			uniPopup
 		},
 		data() {
 			return {
@@ -362,7 +372,10 @@
 					pageSize: 10,
 					projectId: '',
 					isActive: 0
-				}
+				},
+				actionSheetArray: fileTypeArray,
+				isShowFileList: false,
+				fileList: []
 			}
 		},
 		onLoad(event) {
@@ -444,7 +457,7 @@
 			actionSheetTap() {
 				uni.showActionSheet({
 					title: '标题',
-					itemList: ['澄清文件', '招标文件', '清单文件', '资质文件'],
+					itemList: this.actionSheetArray,
 					success: (e) => {
 						this.seeFile(e.tapIndex)
 						// uni.showToast({
@@ -455,17 +468,25 @@
 				})
 			},
 			// 查看文件
-			seeFile(type) {
-				console.log(type)
-				if (SEE_FILE_TYPE_CHENGQING === type) {
-					console.log("查看澄清文件")
-				} else if (SEE_FILE_TYPE_ZHAOBIAO === type) {
-					console.log("查看招标文件")
-				} else if (SEE_FILE_TYPE_QINGDAN === type) {
-					console.log("查看清单文件");
-				} else if (SEE_FILE_TYPE_ZIZHI === type) {
-					console.log("查看资质文件");
+			seeFile(type, projectId) {
+				getResourceByProjectIdAndType(this, projectId, type);
+			},
+			/** 打开文档 */
+			openDocument(url) {
+				if (this.isShowFileList) {
+					this.isShowFileList = false;
 				}
+				uni.downloadFile({
+					url: DOCUMENT_BASE_URL + "/" + url,
+					success: (res) => {
+						uni.openDocument({
+							filePath: res.tempFilePath,
+							success: () => {
+								console.log('打开文档成功');
+							}
+						});
+					}
+				});
 			},
 			/** 开标拼车和找车分段器 */
 			onClickCarPoolItem(index) {
