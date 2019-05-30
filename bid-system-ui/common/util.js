@@ -1,6 +1,5 @@
-export const BASE_URL = 'http://192.168.203.208:8088'
-export const IMAGE_BASE_URL = 'https://www.shudagroup.com'
-export const DOCUMENT_BASE_URL = 'https://www.shudagroup.com'
+export const BASE_URL = 'http://192.168.203.106:8088'
+export const IMAGE_BASE_URL = 'http://localhost'
 export const USER_TOKEN_KEY = 'userToken'
 export const USER_OPENID = 'openid'
 export const SHARE_CODE = 'shareCode'

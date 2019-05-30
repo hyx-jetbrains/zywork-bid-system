@@ -40,7 +40,7 @@ public class WeixinPayController extends BaseController {
             return ResponseStatusVO.authenticationError();
         }
 
-        WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_GZH_CONFIG.getValue(), WeixinXcxConfig.class);
+        WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_XCX_CONFIG.getValue(), WeixinXcxConfig.class);
         WXPayConfig wXPayConfig = sysConfigService.getByName(SysConfigEnum.WX_PAY_CONFIG.getValue(), WXPayConfig.class);
 
         return weixinPayService.ServicePay(jwtUser.getUserId(), jwtUser.getUsername(), serviceId, validYear, userCouponId, type, weixinXcxConfig, wXPayConfig);
@@ -59,7 +59,7 @@ public class WeixinPayController extends BaseController {
             return ResponseStatusVO.authenticationError();
         }
 
-        WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_GZH_CONFIG.getValue(), WeixinXcxConfig.class);
+        WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_XCX_CONFIG.getValue(), WeixinXcxConfig.class);
         WXPayConfig wXPayConfig = sysConfigService.getByName(SysConfigEnum.WX_PAY_CONFIG.getValue(), WXPayConfig.class);
         return weixinPayService.ExpertSubscribePay(jwtUser.getUserId(), jwtUser.getUsername(), expertSubscribeVO.getId(), weixinXcxConfig, wXPayConfig);
     }
