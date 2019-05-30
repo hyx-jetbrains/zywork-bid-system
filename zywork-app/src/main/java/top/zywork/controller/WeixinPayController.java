@@ -67,8 +67,9 @@ public class WeixinPayController extends BaseController {
     @PostMapping("/payNotifyUrl")
     public void payNotifyUrl(HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> payResultMap = WeixinUtils.payResultMap(request);
+        PayResult payResult = WeixinUtils.payResult(payResultMap);
         if(WeixinUtils.isReturnSuccess(payResultMap)) {
-            weixinPayService.payNotif(payResultMap.get("attach"));
+            weixinPayService.payNotif(payResult.getOutTradeNo(), payResult.getTotalFee(), payResultMap.get("attach"));
         }
         WeixinUtils.responsePayNotify(response);
     }
