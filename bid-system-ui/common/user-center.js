@@ -1477,6 +1477,7 @@ export const payServiceRecord = (self, params) => {
 				uni.requestPayment({
 					provider: 'wxpay',
 					orderInfo: '1234',
+					appId: res.data.data.appId,
 					timeStamp: res.data.data.timeStamp,
 					nonceStr: res.data.data.nonceStr,
 					package: res.data.data.package,
