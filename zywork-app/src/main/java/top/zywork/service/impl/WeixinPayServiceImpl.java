@@ -193,7 +193,6 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             }
         } else if(payType == 2) {// 预约专家
             accountDetailType = FundsChangeTypeEnum.APPOINTMENT_EXPERT.getValue();
-
             Long expertSubscribeId = json.getLong("expertSubscribeId");
             String transactionNo = json.getString("transactionNo");
 
