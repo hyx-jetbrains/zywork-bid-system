@@ -1,0 +1,166 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.ProjectAnnounceProjectDAO">
+
+    <sql id="select_columns">
+        t_project_announce.id as projectAnnounceId, t_project_announce.project_id as projectAnnounceProjectId, t_project_announce.announce_desc as projectAnnounceAnnounceDesc, t_project_announce.first_candidate as projectAnnounceFirstCandidate, t_project_announce.second_candidate as projectAnnounceSecondCandidate, t_project_announce.third_candidate as projectAnnounceThirdCandidate, t_project_announce.source_url as projectAnnounceSourceUrl, t_project_announce.inword_html_url as projectAnnounceInwordHtmlUrl, t_project_announce.version as projectAnnounceVersion, t_project_announce.create_time as projectAnnounceCreateTime, t_project_announce.update_time as projectAnnounceUpdateTime, t_project_announce.is_active as projectAnnounceIsActive, t_project.title as projectTitle
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.projectAnnounceId != null">
+			and t_project_announce.id = #{query.projectAnnounceId}
+		</if>
+		<if test="query != null and query.projectAnnounceIdMin != null and query.projectAnnounceIdMax == null">
+			and t_project_announce.id <![CDATA[ >= ]]> #{query.projectAnnounceIdMin}
+		</if>
+		<if test="query != null and query.projectAnnounceIdMin == null and query.projectAnnounceIdMax != null">
+			and t_project_announce.id <![CDATA[ <= ]]> #{query.projectAnnounceIdMax}
+		</if>
+		<if test="query != null and query.projectAnnounceIdMin != null and query.projectAnnounceIdMax != null">
+			and t_project_announce.id <![CDATA[ >= ]]> #{query.projectAnnounceIdMin} and t_project_announce.id <![CDATA[ <= ]]> #{query.projectAnnounceIdMax}
+		</if>
+		<if test="query != null and query.projectAnnounceProjectId != null">
+			and t_project_announce.project_id = #{query.projectAnnounceProjectId}
+		</if>
+		<if test="query != null and query.projectAnnounceProjectIdMin != null and query.projectAnnounceProjectIdMax == null">
+			and t_project_announce.project_id <![CDATA[ >= ]]> #{query.projectAnnounceProjectIdMin}
+		</if>
+		<if test="query != null and query.projectAnnounceProjectIdMin == null and query.projectAnnounceProjectIdMax != null">
+			and t_project_announce.project_id <![CDATA[ <= ]]> #{query.projectAnnounceProjectIdMax}
+		</if>
+		<if test="query != null and query.projectAnnounceProjectIdMin != null and query.projectAnnounceProjectIdMax != null">
+			and t_project_announce.project_id <![CDATA[ >= ]]> #{query.projectAnnounceProjectIdMin} and t_project_announce.project_id <![CDATA[ <= ]]> #{query.projectAnnounceProjectIdMax}
+		</if>
+		<if test="query != null and query.projectAnnounceAnnounceDesc != null and query.projectAnnounceAnnounceDesc != ''">
+			and t_project_announce.announce_desc like concat('%', #{query.projectAnnounceAnnounceDesc}, '%')
+		</if>
+		<if test="query != null and query.projectAnnounceFirstCandidate != null and query.projectAnnounceFirstCandidate != ''">
+			and t_project_announce.first_candidate like concat('%', #{query.projectAnnounceFirstCandidate}, '%')
+		</if>
+		<if test="query != null and query.projectAnnounceSecondCandidate != null and query.projectAnnounceSecondCandidate != ''">
+			and t_project_announce.second_candidate like concat('%', #{query.projectAnnounceSecondCandidate}, '%')
+		</if>
+		<if test="query != null and query.projectAnnounceThirdCandidate != null and query.projectAnnounceThirdCandidate != ''">
+			and t_project_announce.third_candidate like concat('%', #{query.projectAnnounceThirdCandidate}, '%')
+		</if>
+		<if test="query != null and query.projectAnnounceSourceUrl != null and query.projectAnnounceSourceUrl != ''">
+			and t_project_announce.source_url like concat('%', #{query.projectAnnounceSourceUrl}, '%')
+		</if>
+		<if test="query != null and query.projectAnnounceInwordHtmlUrl != null and query.projectAnnounceInwordHtmlUrl != ''">
+			and t_project_announce.inword_html_url like concat('%', #{query.projectAnnounceInwordHtmlUrl}, '%')
+		</if>
+		<if test="query != null and query.projectAnnounceVersion != null">
+			and t_project_announce.version = #{query.projectAnnounceVersion}
+		</if>
+		<if test="query != null and query.projectAnnounceVersionMin != null and query.projectAnnounceVersionMax == null">
+			and t_project_announce.version <![CDATA[ >= ]]> #{query.projectAnnounceVersionMin}
+		</if>
+		<if test="query != null and query.projectAnnounceVersionMin == null and query.projectAnnounceVersionMax != null">
+			and t_project_announce.version <![CDATA[ <= ]]> #{query.projectAnnounceVersionMax}
+		</if>
+		<if test="query != null and query.projectAnnounceVersionMin != null and query.projectAnnounceVersionMax != null">
+			and t_project_announce.version <![CDATA[ >= ]]> #{query.projectAnnounceVersionMin} and t_project_announce.version <![CDATA[ <= ]]> #{query.projectAnnounceVersionMax}
+		</if>
+		<if test="query != null and query.projectAnnounceCreateTime != null">
+			and t_project_announce.create_time = #{query.projectAnnounceCreateTime}
+		</if>
+		<if test="query != null and query.projectAnnounceCreateTimeMin != null and query.projectAnnounceCreateTimeMax == null">
+			and t_project_announce.create_time <![CDATA[ >= ]]> #{query.projectAnnounceCreateTimeMin}
+		</if>
+		<if test="query != null and query.projectAnnounceCreateTimeMin == null and query.projectAnnounceCreateTimeMax != null">
+			and t_project_announce.create_time <![CDATA[ <= ]]> #{query.projectAnnounceCreateTimeMax}
+		</if>
+		<if test="query != null and query.projectAnnounceCreateTimeMin != null and query.projectAnnounceCreateTimeMax != null">
+			and t_project_announce.create_time <![CDATA[ >= ]]> #{query.projectAnnounceCreateTimeMin} and t_project_announce.create_time <![CDATA[ <= ]]> #{query.projectAnnounceCreateTimeMax}
+		</if>
+		<if test="query != null and query.projectAnnounceUpdateTime != null">
+			and t_project_announce.update_time = #{query.projectAnnounceUpdateTime}
+		</if>
+		<if test="query != null and query.projectAnnounceUpdateTimeMin != null and query.projectAnnounceUpdateTimeMax == null">
+			and t_project_announce.update_time <![CDATA[ >= ]]> #{query.projectAnnounceUpdateTimeMin}
+		</if>
+		<if test="query != null and query.projectAnnounceUpdateTimeMin == null and query.projectAnnounceUpdateTimeMax != null">
+			and t_project_announce.update_time <![CDATA[ <= ]]> #{query.projectAnnounceUpdateTimeMax}
+		</if>
+		<if test="query != null and query.projectAnnounceUpdateTimeMin != null and query.projectAnnounceUpdateTimeMax != null">
+			and t_project_announce.update_time <![CDATA[ >= ]]> #{query.projectAnnounceUpdateTimeMin} and t_project_announce.update_time <![CDATA[ <= ]]> #{query.projectAnnounceUpdateTimeMax}
+		</if>
+		<if test="query != null and query.projectAnnounceIsActive != null">
+			and t_project_announce.is_active = #{query.projectAnnounceIsActive}
+		</if>
+		<if test="query != null and query.projectAnnounceIsActiveMin != null and query.projectAnnounceIsActiveMax == null">
+			and t_project_announce.is_active <![CDATA[ >= ]]> #{query.projectAnnounceIsActiveMin}
+		</if>
+		<if test="query != null and query.projectAnnounceIsActiveMin == null and query.projectAnnounceIsActiveMax != null">
+			and t_project_announce.is_active <![CDATA[ <= ]]> #{query.projectAnnounceIsActiveMax}
+		</if>
+		<if test="query != null and query.projectAnnounceIsActiveMin != null and query.projectAnnounceIsActiveMax != null">
+			and t_project_announce.is_active <![CDATA[ >= ]]> #{query.projectAnnounceIsActiveMin} and t_project_announce.is_active <![CDATA[ <= ]]> #{query.projectAnnounceIsActiveMax}
+		</if>
+		<if test="query != null and query.projectTitle != null and query.projectTitle != ''">
+			and t_project.title like concat('%', #{query.projectTitle}, '%')
+		</if>
+		
+        and
+        t_project_announce.project_id = t_project.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="projectAnnounceProjectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_announce, t_project where t_project_announce.id = #{id} and
+        t_project_announce.project_id = t_project.id
+    </select>
+
+    <select id="listAll" resultType="projectAnnounceProjectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_announce, t_project
+        where
+        t_project_announce.project_id = t_project.id
+        order by t_project_announce.update_time desc, t_project_announce.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="projectAnnounceProjectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_announce, t_project
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_project_announce.update_time desc, t_project_announce.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="projectAnnounceProjectDO">
+        select
+        <include refid="select_columns"/>
+        from t_project_announce, t_project
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_project_announce.update_time desc, t_project_announce.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_project_announce, t_project
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>
