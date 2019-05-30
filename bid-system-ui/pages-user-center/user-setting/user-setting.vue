@@ -5,7 +5,7 @@
 			<zywork-list-item title="昵称" :note="user.nickname" @click="toSettingNickname"></zywork-list-item>
 			<!-- <zywork-list-item title="姓名" :note="user.realname" @click="toSettingRealname"></zywork-list-item> -->
 			<picker @change="chooseGender" :value="genderIndex" :range="genderArray">
-				<zywork-list-item title="性别" :note="user.gender === 1 ? '男' : user.gender === 2 ? '女' : ''"></zywork-list-item>
+				<zywork-list-item title="性别" :note="user.gender == 1 ? '男' : user.gender == 2 ? '女' : ''"></zywork-list-item>
 			</picker>		
 			</zywork-list-item>
 			<zywork-list-item title="身份证号" :note="userWork.idNum" @click="toSettingIdentity"></zywork-list-item>
@@ -32,7 +32,8 @@
 <script>
 	import {
 		uploadHeadicon,
-		getUserWork
+		getUserWork,
+		updateGrade
 	} from '../../common/user.js'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
@@ -104,7 +105,8 @@
 			},
 			chooseGender(e) {
 				this.genderIndex = e.target.value
-				this.user.gender = parseInt(this.genderIndex) + 1
+				this.user.gender = parseInt(this.genderIndex)
+				updateGrade(this,this.genderIndex)
 			},
 			toSettingPhone() {
 				uni.navigateTo({

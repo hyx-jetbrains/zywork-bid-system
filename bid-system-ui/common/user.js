@@ -396,6 +396,37 @@ export const getUserWork = (self) => {
 }
 
 /**
+ * 修改用户办公地点
+ */
+export const updateGrade = (self,gender) => {
+	uni.request({
+		url: BASE_URL + '/user-detail/user/update',
+		method: 'POST',
+		data: {
+			'gender': gender
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.$event.$emit('chooseGender', {
+					'gender': gender
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
+/**
  * 修改用户身份证号码
  */
 export const updateIdentity = (self) => {

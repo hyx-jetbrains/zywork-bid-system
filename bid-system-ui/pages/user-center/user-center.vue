@@ -184,6 +184,11 @@
 				}
 			},
 			toUserSetting() {
+				const self = this
+				this.$event.$on('chooseGender', function(data) {
+					self.user.gender = data.gender
+					self.$event.$off('chooseGender')
+				});
 				uni.navigateTo({
 					url: '/pages-user-center/user-setting/user-setting?itemData=' + encodeURIComponent(JSON.stringify(this.user))
 				})
