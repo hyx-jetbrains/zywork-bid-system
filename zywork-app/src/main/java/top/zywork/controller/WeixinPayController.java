@@ -52,8 +52,8 @@ public class WeixinPayController extends BaseController {
      * Time: 9:53
      * Description: 预约专家
      */
-    @PostMapping("user/expertSubscribePay")
-    public ResponseStatusVO ExpertSubscribePay(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO) {
+    @PostMapping("user/expertSubscribePay/{id}")
+    public ResponseStatusVO ExpertSubscribePay(@PathVariable("id") Long id) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
@@ -61,7 +61,7 @@ public class WeixinPayController extends BaseController {
 
         WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_XCX_CONFIG.getValue(), WeixinXcxConfig.class);
         WXPayConfig wXPayConfig = sysConfigService.getByName(SysConfigEnum.WX_PAY_CONFIG.getValue(), WXPayConfig.class);
-        return weixinPayService.ExpertSubscribePay(jwtUser.getUserId(), jwtUser.getUsername(), expertSubscribeVO.getId(), weixinXcxConfig, wXPayConfig);
+        return weixinPayService.ExpertSubscribePay(jwtUser.getUserId(), jwtUser.getUsername(), id, weixinXcxConfig, wXPayConfig);
     }
 
     @PostMapping("/payNotifyUrl")
