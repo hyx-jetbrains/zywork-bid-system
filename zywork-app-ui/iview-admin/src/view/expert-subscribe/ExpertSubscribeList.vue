@@ -909,7 +909,15 @@ export default {
             title: '预约价格',
             key: 'price',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const text = params.row.price / 100
+              return h(
+                'span',
+                {},
+                text
+              )
+            }
           },
           {
             title: '支付状态',
@@ -1100,7 +1108,8 @@ export default {
         this.getQuestionTypeName(row.questionTypeId)
       } else if(itemName == 'settingReplyPrice') {
 				utils.showModal(this, 'replayPrice')
-				this.form = JSON.parse(JSON.stringify(row))
+        this.form = JSON.parse(JSON.stringify(row))
+        this.form.price = this.form.price / 100
 			} else if (itemName === 'showExpertUserIdSearch') {
 					utils.showModal(this, 'userDetalSearch')
 					this.modal.type = 'expertUserId'
@@ -1205,6 +1214,7 @@ export default {
 			es.replay(this)
 		},
 		replayPrice() {
+      this.form.price *= 100
 			es.replayPrice(this)
 		}
   }
