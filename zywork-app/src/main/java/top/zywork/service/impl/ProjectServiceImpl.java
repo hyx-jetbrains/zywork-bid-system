@@ -88,11 +88,23 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 
     @Override
     public PagerDTO listPageByUserId(Object queryObj, Long userId) {
+        List<Object> arrList = new ArrayList<Object>();
         PagerDTO pagerDTO = new PagerDTO();
         Long count = projectDAO.countByUserId(queryObj, userId);
         if(count > 0) {
             List<Object> list = projectDAO.listPageByUserId(queryObj, userId);
-            pagerDTO.setRows(list);
+
+            for (int i = 0; i < list.size(); i++) {
+                ProjectVO projectVO = BeanUtils.copy(list.get(i), ProjectVO.class);
+
+                List<Object> obj = projectResourceDAO.countProjectResource(projectVO.getId());
+
+                ProjectResourceCountVO resourceCountVO = new ProjectResourceCountVO();
+                resourceCountVO.setProject(projectVO);
+                resourceCountVO.setObj(obj);
+                arrList.add(resourceCountVO);
+            }
+            pagerDTO.setRows(arrList);
             pagerDTO.setTotal(count);
         }
         return pagerDTO;

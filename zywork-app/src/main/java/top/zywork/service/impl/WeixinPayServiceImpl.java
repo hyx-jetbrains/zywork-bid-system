@@ -45,6 +45,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
 
     private AccountDetailDAO accountDetailDAO;
 
+
+
     @Override
     public ResponseStatusVO ServicePay(Long UserId, String openid, Long serviceId, int validYear, Long userCouponId, int type, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig) {
         Object obj = serviceDAO.getById(serviceId);

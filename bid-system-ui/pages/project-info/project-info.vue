@@ -43,7 +43,7 @@
 
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
 			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
-				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.project.id)" />
+				<!-- <zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.project.id)" /> -->
 				<view @click="toProjectDetail(project.project)">
 					<view class="zy-disable-flex">
 						<image class="zy-project-icon" :src="imgIcon" />
@@ -63,7 +63,8 @@
 							</view>
 						</view>
 						<view class="zy-project-head-right">
-							<view style="padding-right: 50upx;">
+							<!-- <view style="padding-right: 50upx;"> -->
+							<view>
 								<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
 								<uni-tag :text="project.project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
 							</view>
@@ -145,12 +146,12 @@
 				<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
 					<view></view>
 					<view class="zy-disable-flex-right zy-disable-flex">
-						<view  v-for="(item, index) in project.obj" :key="index">
-							<uni-tag v-if="item.type == 0" text="资" @click="getResourceFile(project.project.id, item.type)" type="error" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-else-if="item.type == 1" text="招" @click="getResourceFile(project.project.id, item.type)" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-else-if="item.type == 2" text="清" @click="getResourceFile(project.project.id, item.type)" type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-else-if="item.type == 3" text="控" @click="getResourceFile(project.project.id, item.type)" type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-else-if="item.type == 4" text="澄" @click="getResourceFile(project.project.id, item.type)" type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+						<view  v-for="(item, index_1) in project.obj" :key="index_1">
+							<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
 						</view>
 					</view>
 				</view>
@@ -534,7 +535,6 @@
 				})
 			},
 			getResourceFile(projectId, type) {
-				console.log(type)
 				projectInfo.getResourceByProjectIdAndType(this, projectId, type);
 			},
 			// 触发操作选项

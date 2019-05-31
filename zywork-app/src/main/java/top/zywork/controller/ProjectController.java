@@ -226,7 +226,7 @@ public class ProjectController extends BaseController {
         PagerDTO pagerDTO = projectService.listPageByUserId(projectQuery, jwtUser.getUserId());
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         if (null != pagerDTO && null != pagerDTO.getRows()) {
-            pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectVO.class));
+            pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectResourceCountVO.class));
         }
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
