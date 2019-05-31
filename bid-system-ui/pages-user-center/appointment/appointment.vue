@@ -42,15 +42,15 @@
 				<view v-if="expertSubscribe.price != 0">
 					<view class="zy-bottom-border" />
 					<view>
-						<text class="zy-text-bold">处理状态：</text>
-						{{expertSubscribe.subscribeStatus}}
-					</view>
-					<view>
 						<text class="zy-text-bold">价格：</text>
 
 						<text class="zy-text-warning zy-text-big">
 							¥{{expertSubscribe.price / 100}}
 						</text>
+					</view>
+					<view>
+						<text class="zy-text-bold">处理状态：</text>
+						{{expertSubscribe.subscribeStatus}}
 					</view>
 					<view>
 						<text class="zy-text-bold">支付状态：</text>

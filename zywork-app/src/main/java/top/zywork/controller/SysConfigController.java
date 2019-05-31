@@ -11,11 +11,13 @@ import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.SysConfigDTO;
+import top.zywork.enums.SysConfigEnum;
 import top.zywork.query.SysConfigQuery;
 import top.zywork.service.SysConfigService;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.SysConfigVO;
+import top.zywork.weixin.CustomerConfig;
 
 import java.util.List;
 
@@ -131,6 +133,12 @@ public class SysConfigController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), SysConfigVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    @GetMapping("any/customer-config")
+    public ResponseStatusVO getCustomerConfig() {
+        CustomerConfig customerConfig = sysConfigService.getByName(SysConfigEnum.CUSTOMER_CONFIG.getValue(), CustomerConfig.class);
+        return ResponseStatusVO.ok("查询成功", customerConfig);
     }
 
     @Autowired

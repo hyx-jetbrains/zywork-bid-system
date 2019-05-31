@@ -16,6 +16,7 @@ export const IS_VIP_COLOR_TRUE = '#FFF'
 export const IS_VIP_COLOR_FALSE = '#CCC'
 export const USER_FLAG = 'userFlag'
 export const USER_FLAG_VIP = 'vip'
+export const CUSTOMER_CONFIG = 'customerConfig'
 export const USER_FLAG_ORDINARY = 'ordinary'
 export const SHARE_CODE_PAGE_IMG = '/static/share.jpg'
 

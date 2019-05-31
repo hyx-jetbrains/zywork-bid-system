@@ -180,6 +180,23 @@
 			</scroll-view>
 		</uni-popup>
 
+		<zywork-fab v-if="customerShow" :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction" :showContent="customerPopup"
+		 @trigger="trigger"></zywork-fab>
+		<uni-popup :show="customerPopup" position="bottom" @hidePopup="trigger(false)">
+			<view class="zy-popup-bottom-title">选择联系类型</view>
+			<view class="zy-popup-bottom-content">
+				<button @click="callPhone" style="background-color: #FFF;">
+					<zywork-icon type="icondianhua" size="26" color="#77e663"></zywork-icon>
+					<view class="zy-popup-bottom-content-text">电话咨询</view>
+				</button>
+				<button open-type="contact" style="background-color: #FFF;">
+					<zywork-icon type="iconweixin" size="26" color="#5bb674"></zywork-icon>
+					<view class="zy-popup-bottom-content-text">微信咨询</view>
+				</button>
+			</view>
+			<view class="zy-popup-bottom-btn" @click="trigger(false)">取消选择</view>
+		</uni-popup>
+		<button open-type="contact" class="zy-hide-button" ref="contactBtn"></button>
 
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
@@ -193,6 +210,7 @@
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import zyworkFab from '@/components/zywork-fab/zywork-fab.vue'
 	import {
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
@@ -204,7 +222,9 @@
 		SHARE_CODE_PAGE_IMG,
 		getShareCode,
 		SHARE_CODE,
-		getResourceByProjectId
+		getResourceByProjectId,
+		callPhone,
+		CUSTOMER_CONFIG
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -254,7 +274,8 @@
 			zyworkCalendar,
 			uniTag,
 			zyworkNoData,
-			uniPopup
+			uniPopup,
+			zyworkFab
 		},
 		data() {
 			return {
@@ -337,7 +358,20 @@
 				isCollection: false,
 				actionSheetArray: fileTypeArray,
 				isShowFileList: false,
-				fileList: []
+				fileList: [],
+				directionStr: '垂直',
+				horizontal: 'left',
+				vertical: 'bottom',
+				direction: 'horizontal',
+				pattern: {
+					color: '#7A7E83',
+					backgroundColor: '#fff',
+					selectedColor: '#007AFF',
+					buttonColor: '#007AFF'
+				},
+				customerPopup: false,
+				customerShow: false,
+				customer: ''
 			}
 		},
 		onLoad(options) {
@@ -376,6 +410,17 @@
 				projectInfo.getAdvertisementInfo(this);
 				projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
 				this.updateProjectList('init');
+				this.initCustomerFab();
+			},
+			/** 初始化客服悬浮 */
+			initCustomerFab() {
+				var customer = uni.getStorageSync(CUSTOMER_CONFIG);
+				this.customer = customer;
+				if (customer.isShow === 'true') {
+					this.customerShow = true;
+				} else {
+					this.customerShow = false;
+				}
 			},
 			/** 初始化查询数据 */
 			initPager() {
@@ -547,7 +592,14 @@
 						}
 					})
 				}
-
+			},
+			/** 悬浮按钮事件监听 */
+			trigger(e) {
+				this.customerPopup = e;
+			},
+			/** 拨打电话 */
+			callPhone() {
+				callPhone(this.customer.phone)
 			}
 
 		}
@@ -660,5 +712,9 @@
 		position: absolute;
 		top: -2upx;
 		right: -10upx;
+	}
+	
+	button::after{
+		border:0;
 	}
 </style>

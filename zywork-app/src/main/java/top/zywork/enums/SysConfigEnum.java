@@ -17,7 +17,8 @@ public enum SysConfigEnum {
     WX_PAY_CONFIG("wx_pay_config"),
     DEFAULT_DISTRIBUTION_CONFIG("default_distribution_config"),
     ALIYUN_OSS_CONFIG("aliyun_oss_config"),
-    QINIU_OSS_CONFIG("qiniu_oss_config");
+    QINIU_OSS_CONFIG("qiniu_oss_config"),
+    CUSTOMER_CONFIG("customer_config");
 
     private String value;
 

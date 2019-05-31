@@ -17,7 +17,8 @@ import {
 	USER_ID,
 	USER_ROLES,
 	IS_EXPERT_COLOR_TRUE,
-	IS_EXPERT_COLOR_FALSE
+	IS_EXPERT_COLOR_FALSE,
+	CUSTOMER_CONFIG
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -548,6 +549,35 @@ export const updateCompanyAddr = (self) => {
 				})
 				uni.navigateBack({
 				
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}
+
+/**
+ * 获取客服配置
+ */
+export const getCustomerConfig = () => {
+	uni.request({
+		url: BASE_URL + '/sys-config/any/customer-config',
+		method: 'GET',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				console.log(res.data.data);
+				uni.setStorage({
+					key: CUSTOMER_CONFIG,
+					data: res.data.data
 				})
 			} else {
 				showInfoToast(res.data.message)

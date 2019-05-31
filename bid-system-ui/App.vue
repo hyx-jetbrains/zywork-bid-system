@@ -2,6 +2,9 @@
 	import {
 		countNotReadMsg
 	} from '@/common/message.js'
+	import {
+		getCustomerConfig
+	} from '@/common/user.js'
 	export default {
 		onLaunch: function() {
             const updateManager = uni.getUpdateManager();
@@ -24,6 +27,7 @@
             updateManager.onUpdateFailed(function(res) {
                 // 新的版本下载失败
             });
+			getCustomerConfig()
         },
 		onShow: function() {
 			console.log('App Show')
