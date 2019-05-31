@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ExpertSubscribeVO值对象类<br/>
  *
- * 创建于2019-05-09<br/>
+ * 创建于2019-05-31<br/>
  *
- * @author http://zywork.top 危锦辉
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ExpertSubscribeVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372036723982407L;
+    private static final long serialVersionUID = -9223372035192790614L;
 
     // 专家预约编号
 	private Long id;
@@ -28,8 +28,7 @@ public class ExpertSubscribeVO extends BaseVO {
 	private Long userId;
 	// 预约专家编号
 	private Long expertUserId;
-	// 问题类型编号
-	@NotNull(message = "此项是必须项")
+	// 问题类别编号
 	private Long questionTypeId;
 	// 问题说明
 	@NotBlank(message = "此项是必须项")
@@ -57,6 +56,8 @@ public class ExpertSubscribeVO extends BaseVO {
 	// 交易编号
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String transactionNo;
+	// 预约标识
+	private Byte vipFlag;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -70,7 +71,7 @@ public class ExpertSubscribeVO extends BaseVO {
 	
     public ExpertSubscribeVO () {}
 
-    public ExpertSubscribeVO (Long id, Long userId, Long expertUserId, Long questionTypeId, String questionDesc, Long replyUserId, String replyContent, Date replyTime, String subscribeStatus, Long price, String payStatus, String payType, String transactionNo, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ExpertSubscribeVO (Long id, Long userId, Long expertUserId, Long questionTypeId, String questionDesc, Long replyUserId, String replyContent, Date replyTime, String subscribeStatus, Long price, String payStatus, String payType, String transactionNo, Byte vipFlag, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.userId = userId;
 		this.expertUserId = expertUserId;
@@ -84,6 +85,7 @@ public class ExpertSubscribeVO extends BaseVO {
 		this.payStatus = payStatus;
 		this.payType = payType;
 		this.transactionNo = transactionNo;
+		this.vipFlag = vipFlag;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -195,6 +197,14 @@ public class ExpertSubscribeVO extends BaseVO {
 		this.transactionNo = transactionNo;
 	}
 
+	public Byte getVipFlag() {
+		return vipFlag;
+	}
+
+	public void setVipFlag(Byte vipFlag) {
+		this.vipFlag = vipFlag;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -244,6 +254,7 @@ public class ExpertSubscribeVO extends BaseVO {
 				", payStatus = " + payStatus + 
 				", payType = " + payType + 
 				", transactionNo = " + transactionNo + 
+				", vipFlag = " + vipFlag + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

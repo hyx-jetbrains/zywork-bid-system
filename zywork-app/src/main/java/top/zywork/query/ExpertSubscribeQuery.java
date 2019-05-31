@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ExpertSubscribeQuery查询对象类<br/>
  *
- * 创建于2019-05-09<br/>
+ * 创建于2019-05-31<br/>
  *
- * @author http://zywork.top 危锦辉
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ExpertSubscribeQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035366446647L;
+    private static final long serialVersionUID = -9223372035746512224L;
 
     // 专家预约编号
 	private Long id;
@@ -35,11 +35,11 @@ public class ExpertSubscribeQuery extends PageQuery {
 	private Long expertUserIdMin;
 	// 预约专家编号（最大值）
 	private Long expertUserIdMax;
-	// 问题类型编号
+	// 问题类别编号
 	private Long questionTypeId;
-	// 问题类型编号（最小值）
+	// 问题类别编号（最小值）
 	private Long questionTypeIdMin;
-	// 问题类型编号（最大值）
+	// 问题类别编号（最大值）
 	private Long questionTypeIdMax;
 	// 问题说明
 	private String questionDesc;
@@ -74,6 +74,12 @@ public class ExpertSubscribeQuery extends PageQuery {
 	private String payType;
 	// 交易编号
 	private String transactionNo;
+	// 预约标识
+	private Byte vipFlag;
+	// 预约标识（最小值）
+	private Byte vipFlagMin;
+	// 预约标识（最大值）
+	private Byte vipFlagMax;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -107,7 +113,7 @@ public class ExpertSubscribeQuery extends PageQuery {
 	
     public ExpertSubscribeQuery () {}
 
-    public ExpertSubscribeQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long expertUserId, Long expertUserIdMin, Long expertUserIdMax, Long questionTypeId, Long questionTypeIdMin, Long questionTypeIdMax, String questionDesc, Long replyUserId, Long replyUserIdMin, Long replyUserIdMax, String replyContent, Date replyTime, Date replyTimeMin, Date replyTimeMax, String subscribeStatus, Long price, Long priceMin, Long priceMax, String payStatus, String payType, String transactionNo, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ExpertSubscribeQuery (Long id, Long idMin, Long idMax, Long userId, Long userIdMin, Long userIdMax, Long expertUserId, Long expertUserIdMin, Long expertUserIdMax, Long questionTypeId, Long questionTypeIdMin, Long questionTypeIdMax, String questionDesc, Long replyUserId, Long replyUserIdMin, Long replyUserIdMax, String replyContent, Date replyTime, Date replyTimeMin, Date replyTimeMax, String subscribeStatus, Long price, Long priceMin, Long priceMax, String payStatus, String payType, String transactionNo, Byte vipFlag, Byte vipFlagMin, Byte vipFlagMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -135,6 +141,9 @@ public class ExpertSubscribeQuery extends PageQuery {
 		this.payStatus = payStatus;
 		this.payType = payType;
 		this.transactionNo = transactionNo;
+		this.vipFlag = vipFlag;
+		this.vipFlagMin = vipFlagMin;
+		this.vipFlagMax = vipFlagMax;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -366,6 +375,30 @@ public class ExpertSubscribeQuery extends PageQuery {
 		this.transactionNo = transactionNo;
 	}
 
+	public Byte getVipFlag() {
+		return vipFlag;
+	}
+
+	public void setVipFlag(Byte vipFlag) {
+		this.vipFlag = vipFlag;
+	}
+
+	public Byte getVipFlagMin() {
+		return vipFlagMin;
+	}
+
+	public void setVipFlagMin(Byte vipFlagMin) {
+		this.vipFlagMin = vipFlagMin;
+	}
+
+	public Byte getVipFlagMax() {
+		return vipFlagMax;
+	}
+
+	public void setVipFlagMax(Byte vipFlagMax) {
+		this.vipFlagMax = vipFlagMax;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -493,6 +526,9 @@ public class ExpertSubscribeQuery extends PageQuery {
 				", payStatus = " + payStatus + 
 				", payType = " + payType + 
 				", transactionNo = " + transactionNo + 
+				", vipFlag = " + vipFlag + 
+				", vipFlagMin = " + vipFlagMin + 
+				", vipFlagMax = " + vipFlagMax + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

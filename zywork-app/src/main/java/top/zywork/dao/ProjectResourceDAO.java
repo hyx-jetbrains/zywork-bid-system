@@ -25,4 +25,6 @@ public interface ProjectResourceDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    List<Object> countProjectResource(@Param("projectId") Long projectId);
 }

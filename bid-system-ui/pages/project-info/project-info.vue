@@ -43,19 +43,19 @@
 
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
 			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
-				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.id)" />
-				<view @click="toProjectDetail(project)">
+				<zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.project.id)" />
+				<view @click="toProjectDetail(project.project)">
 					<view class="zy-disable-flex">
 						<image class="zy-project-icon" :src="imgIcon" />
 						<view>
 							<view>
-								<text>{{project.projectType}}</text>
-								<text style="margin-left: 30upx;">[{{project.city}}]</text>
+								<text>{{project.project.projectType}}</text>
+								<text style="margin-left: 30upx;">[{{project.project.city}}]</text>
 							</view>
 							<view class="zy-text-mini zy-text-info">
 								公告时间：
-								<text v-if="project.noticeTime !== null && project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
-									{{project.noticeTime}}
+								<text v-if="project.project.noticeTime !== null && project.project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
+									{{project.project.noticeTime}}
 								</text>
 								<text v-else class="zy-text-mini zy-text-info">
 									暂无
@@ -65,82 +65,93 @@
 						<view class="zy-project-head-right">
 							<view style="padding-right: 50upx;">
 								<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
-								<uni-tag :text="project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
+								<uni-tag :text="project.project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
 							</view>
-							<view v-html="space"></view>
-							<!-- <view class="zy-text-mini zy-text-warning" 
-								v-if="project.openMarkTime !== null && project.openMarkTime !== undefined">
-								开标日期：{{project.openMarkTime}}
+							<view class="zy-text-mini zy-text-warning" 
+								v-if="project.project.openMarkTime !== ''">
+								开标日期：{{project.project.openMarkTime}}
 							</view>
-							<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view> -->
+							<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view>
 						</view>
 					</view>
 
 					<!-- 全部内容部分 -->
 					<view v-if="projectStatus.current === 0">
 						<!-- 公告中内容部分 -->
-						<view v-if="project.markStatus === '公告中'">
-							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
+						<view v-if="project.project.markStatus === '公告中'">
+							<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.project.markUnitName}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.project.builderLevel}}</view>
 							<view class="zy-project-item-row">
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkPattern}}</view>
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.projectInvest}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.project.checkPattern}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.project.projectInvest}}</view>
 							</view>
 						</view>
 						<!-- 待开标内容部分 -->
-						<view v-else-if="project.markStatus === '待开标'">
-							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
+						<view v-else-if="project.project.markStatus === '待开标'">
+							<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
 							<view class="zy-project-item-row">
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.assurePrice / 100}}</view>
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.offerPrice / 100}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.project.assurePrice / 100}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.project.offerPrice / 100}}</view>
 							</view>
 							<view class="zy-project-item-row">
 								<view class="zy-text-info">
 									<text class="zy-text-info zy-text-bold">工期(天)：</text>
-									{{project.constructionPeriod}}
+									{{project.project.constructionPeriod}}
 								</view>
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.openMarkAddr}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 							</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.otherDemand}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
 						</view>
 						<!-- 已开标内容部分 -->
-						<view v-else-if="project.markStatus === '已开标'">
-							<view class="zy-text-big zy-text-bold">{{project.title}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.inMarkComp}}</view>
+						<view v-else-if="project.project.markStatus === '已开标'">
+							<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.project.inMarkComp}}</view>
 						</view>
 					</view>
 					<!-- 公告中内容部分 -->
 					<view v-else-if="projectStatus.current === 1">
-						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.title}}</view>
+						<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.project.markUnitName}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.project.builderLevel}}</view>
 						<view class="zy-project-item-row">
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.checkPattern}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.projectInvest}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.project.checkPattern}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.project.projectInvest}}</view>
 						</view>
 					</view>
 					<!-- 待开标内容部分 -->
 					<view v-else-if="projectStatus.current === 2">
-						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.title}}</view>
+						<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
 						<view class="zy-project-item-row">
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.assurePrice / 100}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.offerPrice / 100}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.project.assurePrice / 100}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.project.offerPrice / 100}}</view>
 						</view>
 						<view class="zy-project-item-row">
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.constructionPeriod}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.openMarkAddr}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.project.constructionPeriod}}</view>
+							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 						</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.otherDemand}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
 					</view>
 					<!-- 已开标内容部分 -->
 					<view v-else-if="projectStatus.current === 3">
-						<view class="zy-text-big zy-text-bold">{{project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.inMarkComp}}</view>
+						<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.project.inMarkComp}}</view>
+					</view>
+				</view>
+				<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
+					<view></view>
+					<view class="zy-disable-flex-right zy-disable-flex">
+						<view  v-for="(item, index) in project.obj" :key="index">
+							<uni-tag v-if="item.type == 0" text="资" @click="getResourceFile(project.project.id, item.type)" type="error" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-else-if="item.type == 1" text="招" @click="getResourceFile(project.project.id, item.type)" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-else-if="item.type == 2" text="清" @click="getResourceFile(project.project.id, item.type)" type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-else-if="item.type == 3" text="控" @click="getResourceFile(project.project.id, item.type)" type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-else-if="item.type == 4" text="澄" @click="getResourceFile(project.project.id, item.type)" type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -192,7 +203,8 @@
 		DOCUMENT_BASE_URL,
 		SHARE_CODE_PAGE_IMG,
 		getShareCode,
-		SHARE_CODE
+		SHARE_CODE,
+		getResourceByProjectId
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -475,6 +487,10 @@
 				uni.navigateTo({
 					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
+			},
+			getResourceFile(projectId, type) {
+				console.log(type)
+				projectInfo.getResourceByProjectIdAndType(this, projectId, type);
 			},
 			// 触发操作选项
 			actionSheetTap(projectId) {

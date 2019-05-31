@@ -122,13 +122,13 @@ export const getProjectList = (self, type, params) => {
 				if (type === 'init') {
 					self.projects = res.data.data.rows;
 				} else if (type === 'pullDown') {
+					self.projects = self.projects.concat(res.data.data.rows)
 					self.projects = res.data.data.rows;
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
 					if (res.data.data.rows.length > 0) {
-						self.projects = self.projects.concat(res.data.data.rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'

@@ -10,22 +10,18 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.*;
-import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
-import top.zywork.service.ProjectCollectionService;
 import top.zywork.service.ProjectService;
 import top.zywork.service.UploadService;
+import top.zywork.vo.ProjectResourceCountVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectVO;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -206,7 +202,12 @@ public class ProjectController extends BaseController {
     @PostMapping("any/list-pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody ProjectQuery projectQuery) {
         projectQuery.setIsActive((byte) 0);
-        return listPageByCondition(projectQuery);
+        PagerDTO pagerDTO = projectService.listProjectByPage(projectQuery);
+        PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
+        if(pagerDTO.getRows() != null) {
+            pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectResourceCountVO.class));
+        }
+        return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
     /**
