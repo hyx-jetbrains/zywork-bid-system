@@ -850,6 +850,27 @@ export default {
 						}
           },
           {
+							title: '预约类别',
+							key: 'vipFlag',
+							minWidth: 180,
+              sortable: true,
+              render: (h, params) => {
+                const row = params.row
+                console.log(row.vipFlag)
+                const color = row.vipFlag === 0 ? 'primary' : 'error'
+                const text = row.vipFlag === 0 ? '普通预约' : 'VIP预约'
+                return h('Button',
+                  {
+                    props: {
+                      type: color,
+                      size: 'small'
+                    }
+                  },
+                  text
+                )
+              }
+						},
+          {
             title: '问题说明',
             key: 'questionDesc',
             minWidth: 180,

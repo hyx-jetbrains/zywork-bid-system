@@ -24,7 +24,6 @@ public class ExpertSubscribeVO extends BaseVO {
     // 专家预约编号
 	private Long id;
 	// 用户编号
-	@NotNull(message = "此项是必须项")
 	private Long userId;
 	// 预约专家编号
 	private Long expertUserId;

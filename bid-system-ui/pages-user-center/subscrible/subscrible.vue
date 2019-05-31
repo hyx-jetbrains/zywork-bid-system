@@ -13,7 +13,7 @@
 						</picker>
 					</view>
 				</view>
-				<view class="uni-form-item uni-column zy-disable-flex zy-label-bottom-border">
+				<!-- <view class="uni-form-item uni-column zy-disable-flex zy-label-bottom-border">
 					<view class="zy-text-bold">企业资质</view>
 					<picker name="aptitude" mode="multiSelector" @columnchange="qualificationsChange" :value="conditionIndex" :range="conditionArray">
 						<view class="zy-qualifications">
@@ -21,7 +21,7 @@
 							<zywork-icon type="iconxiangxia" />
 						</view>
 					</picker>
-				</view>
+				</view> -->
 				<view class="uni-form-item uni-column">
 					<view class="zy-text-bold">选择项目类型</view>
 					<checkbox-group name="projectType" @change="checkProjectTypeChange">
@@ -72,6 +72,7 @@
 				<view v-if="showKeyword" class="uni-form-item uni-column">
 					<view class="zy-text-bold">关键字(备选)</view>
 					<input class="uni-input" name="keyword" v-model="subscrible.keyword" placeholder="请输入订阅关键字" />
+					<text class="zy-text-warning">只有订阅政府采购才需要输入关键字</text>
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="zy-text-bold">招标人(备选)</view>

@@ -80,7 +80,7 @@
 		<view class="zy-record-card-right"></view>
 		<view class="zy-bottom-button" v-if="showBtn">
 			<!-- #ifdef MP-WEIXIN -->
-			<button type="primary" @click="payRecord" :loading="loading">立即支付</button>
+			<button type="primary" @click="payRecord" :disabled="payBtnDisabled">立即支付</button>
 			<!-- #endif -->
 		</view>
 	</view>
@@ -136,6 +136,7 @@
 				},
 				showDiscount: false,
 				loading: false,
+				payBtnDisabled: false,
 				formData: {
 					serviceId: 0,
 					validYear: 1,
@@ -226,8 +227,7 @@
 			// 支付订单
 			payRecord() {
 				console.log("发起支付");
-				this.loading = true;
-				console.log(this.formData);
+				this.payBtnDisabled = true;
 				payServiceRecord(this, this.formData);
 			}
 

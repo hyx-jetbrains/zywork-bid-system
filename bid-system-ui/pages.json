@@ -476,7 +476,14 @@
 				{
 					"path": "appointment/appointment",
 					"style": {
-						"navigationBarTitleText": "我的预约",
+						"navigationBarTitleText": "我的专家预约",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "appointment/add-appointment",
+					"style": {
+						"navigationBarTitleText": "预约专家",
 						"backgroundTextStyle": "light"
 					}
 				},

@@ -49,7 +49,7 @@
 			 @click="toPublish"></zywork-list-item>
 			<zywork-list-item title="我的收藏" show-extra-icon="true" :extra-icon="{color: '#892398',size: '18',type: 'iconshoucang'}"
 			 @click="toCollection"></zywork-list-item>
-			<zywork-list-item title="我的预约" show-extra-icon="true" :extra-icon="{color: '#ABC033',size: '18',type: 'iconyuyue'}"
+			<zywork-list-item title="我的专家预约" show-extra-icon="true" :extra-icon="{color: '#ABC033',size: '18',type: 'iconyuyue'}"
 			 @click="toAppointment"></zywork-list-item>
 			<zywork-list-item title="我的咨询反馈" show-extra-icon="true" :extra-icon="{color: '#F98E69',size: '18',type: 'iconshouye'}"
 			 @click="toConsult"></zywork-list-item>

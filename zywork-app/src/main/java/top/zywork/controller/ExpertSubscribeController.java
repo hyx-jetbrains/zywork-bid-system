@@ -173,6 +173,17 @@ public class ExpertSubscribeController extends BaseController {
         return update(expertSubscribeVO, bindingResult);
     }
 
+    @PostMapping("user/save")
+    public ResponseStatusVO createConsult(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO, BindingResult bindingResult) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (null == jwtUser) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        expertSubscribeVO.setUserId(jwtUser.getUserId());
+        return save(expertSubscribeVO, bindingResult);
+    }
+
     @Autowired
     public void setExpertSubscribeService(ExpertSubscribeService expertSubscribeService) {
         this.expertSubscribeService = expertSubscribeService;

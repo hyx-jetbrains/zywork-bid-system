@@ -524,6 +524,7 @@ DROP TABLE IF EXISTS `t_expert_subscribe`;
 CREATE TABLE `t_expert_subscribe`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家预约编号',
   `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
+  `vip_flag` tinyint(4) NULL DEFAULT 0 COMMENT '预约标识',
   `expert_user_id` bigint(20) NULL DEFAULT 0 COMMENT '预约专家编号',
   `question_type_id` bigint(20) NULL DEFAULT 0 COMMENT '问题类别编号',
   `question_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '问题说明',

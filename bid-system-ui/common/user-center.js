@@ -15,7 +15,10 @@ import {
 	nullToStr,
 	IS_VIP_COLOR_TRUE,
 	IS_VIP_COLOR_FALSE,
-	getCalendarDate
+	getCalendarDate,
+	USER_FLAG,
+	USER_FLAG_VIP,
+	USER_FLAG_ORDINARY
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -1256,8 +1259,7 @@ export const getQuesTionType = (self) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -1343,16 +1345,24 @@ export const getMyServiceUserCenter = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.vipIconColor = IS_VIP_COLOR_FALSE
+				uni.setStorage({
+					key: USER_FLAG,
+					data: USER_FLAG_ORDINARY
+				})
 				if (res.data.data.total > 0) {
 					var currDate = getCalendarDate(new Date());
 					res.data.data.rows.forEach(item => {
 						if (item.userServiceEndDate >= currDate) {
 							// 有购买过服务，并至少有个服务没到期，点亮图片
 							self.vipIconColor = IS_VIP_COLOR_TRUE
+							uni.setStorage({
+								key: USER_FLAG,
+								data: USER_FLAG_VIP
+							})
 							return true;
 						}
 					})
-					
+
 				}
 			} else {
 				showInfoToast(res.data.message)
@@ -1361,8 +1371,7 @@ export const getMyServiceUserCenter = (self) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -1388,8 +1397,7 @@ export const getMyService = (self) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -1456,8 +1464,7 @@ export const getOneServiceById = (self, id) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 /**
@@ -1482,7 +1489,15 @@ export const payServiceRecord = (self, params) => {
 					nonceStr: res.data.data.nonceStr,
 					package: res.data.data.package,
 					signType: res.data.data.signType,
-					paySign: res.data.data.paySign
+					paySign: res.data.data.paySign,
+					success: () => {
+						uni.redirectTo({
+							url: '/pages-user-center/user-vip/user-vip'
+						})
+					},
+					complete: () => {
+						self.payBtnDisabled = false
+					}
 				})
 			} else {
 				showInfoToast(res.data.message)
@@ -1491,7 +1506,88 @@ export const payServiceRecord = (self, params) => {
 		fail: () => {
 			networkError()
 		},
+		complete: () => {}
+	})
+}
+
+/**
+ * 支付预约专家的问题
+ */
+export const payExpertRecord = (self, params) => {
+	uni.request({
+		url: BASE_URL + '/wx-pay/user/expertSubscribePay',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken(),
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.requestPayment({
+					provider: 'wxpay',
+					orderInfo: '1234',
+					appId: res.data.data.appId,
+					timeStamp: res.data.data.timeStamp,
+					nonceStr: res.data.data.nonceStr,
+					package: res.data.data.package,
+					signType: res.data.data.signType,
+					paySign: res.data.data.paySign,
+					success: () => {
+						uni.redirectTo({
+							url: '/pages-user-center/appointment/appointment'
+						})
+					},
+					complete: () => {
+						self.payBtnDisabled = false
+					}
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {}
+	})
+}
+
+/**
+ * 我的专家预约-添加预约
+ */
+export const createAppointment = (self) => {
+	uni.showLoading({
+		title: '咨询中'
+	})
+	uni.request({
+		url: BASE_URL + '/expersubscribe/user/save',
+		method: 'POST',
+		data: {
+			'questionTypeId': self.questionTypeId,
+			'questionDesc': self.consultDesc,
+			'vipFlag': self.vipFlag
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast(res.data.message)
+				setTimeout(function() {
+					uni.redirectTo({
+						url: '/pages-user-center/appointment/appointment'
+					})
+				}, 1500)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
 		complete: () => {
+			uni.hideLoading()
 		}
 	})
 }
