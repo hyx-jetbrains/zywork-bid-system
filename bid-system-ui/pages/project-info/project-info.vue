@@ -361,7 +361,7 @@
 				isShowFileList: false,
 				fileList: [],
 				directionStr: '垂直',
-				horizontal: 'left',
+				horizontal: 'right',
 				vertical: 'bottom',
 				direction: 'horizontal',
 				pattern: {

@@ -9,9 +9,8 @@
 					<text>{{consult.consultDesc}}</text>
 					<view class="zy-time zy-text-info zy-text-small">{{consult.createTime}}</view>
 				</view>
-				
-				<view v-if="consult.replyContent != '' && consult.replyContent != null">
-					<view class="zy-bottom-border" />
+				<view class="zy-bottom-border" />
+				<view v-if="consult.replyContent != ''">
 					<view class="zy-text-bold">
 						咨询回复：
 					</view>
@@ -22,6 +21,7 @@
 						{{consult.replyTime}}
 					</view>
 				</view>
+				<zywork-no-data v-else text="暂无回复内容"></zywork-no-data>
 			</uni-card>
 		</view>
 		<zywork-no-data v-else text="暂无咨询记录"></zywork-no-data>

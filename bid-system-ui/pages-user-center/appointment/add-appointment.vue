@@ -13,10 +13,13 @@
 		<view class="zy-type-title zy-text-bold">温馨提示</view>
 		<view class="zy-bottom-tip">
 			<view>
-				1、提交问题后，您需要支付一定的费用，支付成之后会匹配相关的专家与您联系，帮助您解决问题。
+				1、提交您问题后，工作人员会审核您提交的问题，设定好处理的价格之后，您需要进行支付。
+			</view>
+			<view>
+				2、您支付成功之后，工作人员会安排专家对您进行一对一的服务，直到帮助您解决问题。
 			</view>
 			<view v-if="type === 'kszx'">
-				2、您提交的问题有快速回复的特权，我们会优先回复您提交的问题。
+				3、您提交的问题有快速回复的特权，我们会优先回复您提交的问题。
 			</view>
 		</view>
 		<view class="zy-bottom-button">

@@ -1513,14 +1513,13 @@ export const payServiceRecord = (self, params) => {
 /**
  * 支付预约专家的问题
  */
-export const payExpertRecord = (self, params) => {
+export const payExpertRecord = (self, id) => {
 	uni.request({
-		url: BASE_URL + '/wx-pay/user/expertSubscribePay',
+		url: BASE_URL + '/wx-pay/user/expertSubscribePay/' + id,
 		method: 'POST',
-		data: params,
+		data: {},
 		header: {
-			'Authorization': 'Bearer ' + getUserToken(),
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+			'Authorization': 'Bearer ' + getUserToken()
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {

@@ -17,51 +17,53 @@
 			</view>
 		</view>
 		<view v-if="expertSubscribeList.length > 0">
-			<uni-card v-for="(expertSubscribe, index) in expertSubscribeList" :key="index" :title="expertSubscribe.questionType"
-			 :extra="expertSubscribe.subscribeStatus">
-				<view>
-					<text>{{expertSubscribe.questionDesc}}</text>
-					<view class="zy-time zy-text-info zy-text-small">{{expertSubscribe.createTime}}</view>
-				</view>
-
-				<!-- 支付成功之后才能查看专家回复的内容 -->
-				<view v-if="expertSubscribe.payStatus == '已支付'">
-					<view class="zy-bottom-border" />
-					<view class="zy-text-bold">
-						专家回复：
-					</view>
-					<text>
-						{{expertSubscribe.replyContent}}
-					</text>
-					<view class="zy-time zy-text-info zy-text-small">
-						{{expertSubscribe.replyTime}}
-					</view>
-				</view>
-
-				<!-- 后台设置好金额之后，显示订单信息让用户进行支付 -->
-				<view v-if="expertSubscribe.price != 0">
-					<view class="zy-bottom-border" />
+			<view v-for="(expertSubscribe, index) in expertSubscribeList" :key="index">
+				<uni-card :title="expertSubscribe.questionType" :extra="expertSubscribe.subscribeStatus">
 					<view>
-						<text class="zy-text-bold">价格：</text>
+						<text>{{expertSubscribe.questionDesc}}</text>
+						<view class="zy-time zy-text-info zy-text-small">{{expertSubscribe.createTime}}</view>
+					</view>
 
-						<text class="zy-text-warning zy-text-big">
-							¥{{expertSubscribe.price / 100}}
+					<!-- 支付成功之后才能查看专家回复的内容 -->
+					<view v-if="expertSubscribe.price != 0">
+						<view class="zy-bottom-border" />
+						<view class="zy-text-bold">
+							专家回复：
+						</view>
+						<text>
+							{{expertSubscribe.replyContent}}
 						</text>
+						<view class="zy-time zy-text-info zy-text-small">
+							{{expertSubscribe.replyTime}}
+						</view>
 					</view>
-					<view>
-						<text class="zy-text-bold">处理状态：</text>
-						{{expertSubscribe.subscribeStatus}}
+
+					<!-- 后台设置好金额之后，显示订单信息让用户进行支付 -->
+					<view v-if="expertSubscribe.price != 0">
+						<view class="zy-bottom-border zy-position-relative" />
+						<zywork-icon v-if="expertSubscribe.vipFlag === 1" type="iconhuiyuantequan" size="24" color="#dd524d" class="zy-vip-flag"></zywork-icon>
+						<view>
+							<text class="zy-text-bold">价格：</text>
+
+							<text class="zy-text-warning zy-text-big">
+								¥{{expertSubscribe.price / 100}}
+							</text>
+						</view>
+						<view>
+							<text class="zy-text-bold">处理状态：</text>
+							{{expertSubscribe.subscribeStatus}}
+						</view>
+						<view>
+							<text class="zy-text-bold">支付状态：</text>
+							{{expertSubscribe.payStatus}}
+							<text v-if="expertSubscribe.payStatus === '待支付'" class="zy-text-warning">(支付成功之后即可查看专家回复内容)</text>
+						</view>
+						<view class="zy-button" v-if="expertSubscribe.payStatus == '待支付'">
+							<button type="primary" @click="pay(expertSubscribe)" :disabled="payBtnDisabled">立即支付</button>
+						</view>
 					</view>
-					<view>
-						<text class="zy-text-bold">支付状态：</text>
-						{{expertSubscribe.payStatus}}
-						<text class="zy-text-warning">(支付成功之后即可查看专家回复内容)</text>
-					</view>
-					<view class="zy-button" v-if="expertSubscribe.payStatus == '待支付'">
-						<button type="primary" @click="pay(expertSubscribe)" :disabled="payBtnDisabled">立即支付</button>
-					</view>
-				</view>
-			</uni-card>
+				</uni-card>
+			</view>
 		</view>
 		<zywork-no-data v-else text="暂无预约记录"></zywork-no-data>
 
@@ -142,12 +144,11 @@
 				},
 				appointmentPopup: false,
 				appointmentTypeData: [{
-						text: '咨询专家',
-						icon: 'iconzhuanjiarenzheng',
-						iconColor: '#CCC',
-						name: 'zxzj'
-					}
-				],
+					text: '咨询专家',
+					icon: 'iconzhuanjiarenzheng',
+					iconColor: '#CCC',
+					name: 'zxzj'
+				}],
 			}
 		},
 		onLoad() {
@@ -171,14 +172,12 @@
 						name: 'kszx'
 					})
 				} else {
-					this.appointmentTypeData = [
-						{
-							text: '咨询专家',
-							icon: 'iconzhuanjiarenzheng',
-							iconColor: '#CCC',
-							name: 'zxzj'
-						}
-					]
+					this.appointmentTypeData = [{
+						text: '咨询专家',
+						icon: 'iconzhuanjiarenzheng',
+						iconColor: '#CCC',
+						name: 'zxzj'
+					}]
 				}
 			},
 			// 分段器选择是否处理
@@ -199,7 +198,7 @@
 			// 立即支付
 			pay(item) {
 				this.payBtnDisabled = true;
-				payExpertRecord(this, item);
+				payExpertRecord(this, item.id);
 			},
 			// 选择支付方式
 			choosePayStatus: function(e) {
@@ -242,5 +241,11 @@
 
 	.zy-time {
 		text-align: right;
+	}
+
+	.zy-vip-flag {
+		position: absolute;
+		top: 145upx;
+		right: 30upx;
 	}
 </style>

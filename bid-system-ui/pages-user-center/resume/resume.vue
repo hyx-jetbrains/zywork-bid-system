@@ -133,10 +133,10 @@
 						</view>
 					</view>
 					<view class="uni-list-cell">
-						<textarea class="zy-list-form-memo" placeholder="请简单介绍下个人情况" v-model="formInfo.intorduce"/>
+						<textarea style="margin-bottom: 0upx;" class="zy-list-form-memo" placeholder="请简单介绍下个人情况" v-model="formInfo.intorduce"/>
 					</view>
 				</view>
-				<view class="zy-bottom-button">
+				<view class="">
 					<cover-view>
 						<button type="primary" formType="submit">保存简历</button>
 					</cover-view>

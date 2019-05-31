@@ -227,13 +227,6 @@ button[type=primary][plain] {
 	color: red;
 }
 
-.zy-bottom-button {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	z-index: 9999999;
-}
-
 .zy-position-relative {
 	position: relative;
 }
@@ -265,8 +258,14 @@ button[type=primary][plain] {
 }
 .zy-list-form-memo {
 	margin-left: 40upx;
-	margin-bottom: 150upx;
+	// margin-bottom: 150upx;
 	padding-top: 20upx;
+}
+
+.zy-bottom-button {
+	// position: fixed;
+	// bottom: 0;
+	// width: 100%;
 }
 
 .zy-required::before {
@@ -348,5 +347,5 @@ button[type=primary][plain] {
 }
 
 .zy-hide-button {
-	display: none;
+	display: none
 }
