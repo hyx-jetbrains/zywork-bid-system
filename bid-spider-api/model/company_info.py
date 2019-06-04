@@ -4,6 +4,7 @@ import time
 
 from model.company import Company
 from model.comp_personnel import CompPersonnel
+from model.comp_aptitude import CompAptitude
 
 # 获取cookie
 def getCookies(compType, alink, url):
@@ -185,6 +186,10 @@ def set_company_type(type, compType, company, requestsCookies, scrfcokie, person
             company.industryType = compTypeWaterAgentName
     elif type == typeBidder:
         company.compType = typeBidderName
+        # 只有投标人才有企业资质
+        aptitudeControls = get_company_aptitude_info(requestsCookies, scrfcokie, compType, alink)
+        compAptitudes = set_comp_aptitude_info(aptitudeControls)
+        company.compAptitudeList = compAptitudes
         if compType == compTypeHouseBidder:
             company.industryType = compTypeHouseBidderName
         elif compType == compTypeTrafficBidder:
@@ -192,7 +197,7 @@ def set_company_type(type, compType, company, requestsCookies, scrfcokie, person
             # 只有交通施工单位才有企业人员信息
             personnelControls = get_company_people_info(requestsCookies, scrfcokie, personnelUrl, compType, alink)
             compPersonnels = set_comp_personnel_info(personnelControls)
-            company.compPersonnel = compPersonnels
+            company.compPersonnelList = compPersonnels
         elif compType == compTypeWaterBidder:
             company.industryType = compTypeWaterBidderName
         elif compType == compTypeKeyProjectBidder:
@@ -269,3 +274,72 @@ def set_comp_personnel_info(controls):
             compPersonnel.jobTitle =zhicheng
             compPersonnels.append(compPersonnel.__dict__)
     return compPersonnels
+
+# 获取企业资质信息
+def get_company_aptitude_info(requestsCookies, scrfcokie, compType, alink):
+    # 房建及市政施工单位
+    compTypeHouseBidder = '131'
+    # 交通施工单位
+    compTypeTrafficBidder = '132'
+    # 水利施工单位
+    compTypeWaterBidder = '133'
+    # 重点工程投标单位
+    compTypeKeyProjectBidder = '135'
+    # 水利监理单位
+    compTypeWaterMonitorBidder = '143'
+    # 水利勘查设计单位
+    compTypeWaterDeviseBidder = '163'
+    aptitudeType = ''
+    aptitudeTypeUrl = ''
+    if compType == compTypeHouseBidder:
+        aptitudeType = 'FjSgZiZhi_List'
+        aptitudeTypeUrl = 'jxpFjShiGongZiZhiListForWebAction.action'
+    elif compType == compTypeTrafficBidder:
+        aptitudeType = 'JtgcSgZiZhi_List'
+        aptitudeTypeUrl = 'jxpJtgcSgZiZhiListForWebAction.action'
+    elif compType == compTypeWaterBidder:
+        aptitudeType = 'SlSgZiZhi_List'
+        aptitudeTypeUrl = 'jxpSlShiGongZiZhiListForWebAction.action'
+    elif compType == compTypeKeyProjectBidder:
+        aptitudeType = 'ZDSgZiZhi_List'
+        aptitudeTypeUrl = 'jxpZDShiGongZiZhiListForWebAction.action'
+    elif compType == compTypeWaterMonitorBidder:
+        aptitudeType = 'SlJlZiZhi_List'
+        aptitudeTypeUrl = 'jxpSlJlShiGongZiZhiListForWebAction.action'
+    elif compType == compTypeWaterDeviseBidder:
+        aptitudeType = 'SlKcZiZhi_List'
+        aptitudeTypeUrl = 'jxpSlKcShiGongZiZhiListForWebAction.action'
+
+    aptitudeUrl = 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/shigongzizhi/'+aptitudeTypeUrl+'?cmd=page_Load&DanWeiType='+compType+'&DanWeiGuid='+alink+'&isCommondto=true'
+    params = {
+        'commonDto': '[{"id":"datagrid","type":"datagrid","action":"defaultModel","idField":"rowguid","pageIndex":0,"pageSize":100,"sortField":"","sortOrder":"","columns":[],"data":[]}]'
+    }
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest',
+        # 'Cookie': cookies,
+        'CSRFCOOKIE': scrfcokie,
+        'Host': 'ggzyjy.jxsggzy.cn',
+        'Origin': 'http://ggzyjy.jxsggzy.cn',
+        'Referer': 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/shigongzizhi/'+aptitudeType+'?DanWeiType='+compType+'&DanWeiGuid=' + alink,
+        'Cache-Control': 'no-cache'
+    }
+
+    detailResponse = requests.post(url=aptitudeUrl, data=params, headers=headers, cookies=requestsCookies)
+    detailTextJson = json.loads(detailResponse.text)
+    controls = detailTextJson['controls']
+    return controls
+
+# 设置企业资质信息
+def set_comp_aptitude_info(controls):
+    compAptitudes = []
+    controls = controls[0]
+    total = controls['total']
+    if total > 0:
+        dataList = controls['data']
+        for data in dataList:
+            compAptitude = CompAptitude()
+            compAptitude.certificateNum = data['zhengshuno']
+            compAptitude.certificateDetail = data['showzy']
+            compAptitudes.append(compAptitude.__dict__)
+    return compAptitudes

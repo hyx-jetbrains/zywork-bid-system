@@ -30,4 +30,6 @@ class Company:
     # 源地址
     sourceUrl = ''
     # 企业人员
-    compPersonnel = []
+    compPersonnelList = []
+    # 企业资质
+    compAptitudeList = []
