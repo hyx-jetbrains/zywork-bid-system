@@ -5,9 +5,10 @@ import time
 from model.company import Company
 from model.comp_personnel import CompPersonnel
 from model.comp_aptitude import CompAptitude
+from model.comp_builder import CompBuilder
 
 # 获取cookie
-def getCookies(compType, alink, url):
+def getCookies(url):
     # 第一次请求，后台会返回三个cookie值，需要保存起来
     response = requests.get(url=url)
     cookie_value = {}
@@ -57,7 +58,7 @@ def get_company_info(type, compType, pageNo, pageSize):
 
         company.sourceUrl = pageUrl
 
-        requestsCookies = getCookies(compType, alink, pageUrl)
+        requestsCookies = getCookies(pageUrl)
         scrfcokie = requestsCookies['_CSRFCOOKIE']
         controls = get_detail_info(requestsCookies, scrfcokie, detailUrl, compType, alink)
         company = set_company_type(type, compType, company, requestsCookies, scrfcokie, personnelUrl, alink)
@@ -192,6 +193,10 @@ def set_company_type(type, compType, company, requestsCookies, scrfcokie, person
         company.compAptitudeList = compAptitudes
         if compType == compTypeHouseBidder:
             company.industryType = compTypeHouseBidderName
+            # 房建及市政施工单位、水利施工单位、重点工程投标单位有建造师
+            builderControls = get_company_builder_info(requestsCookies, scrfcokie, compType, alink)
+            compBuilders = set_comp_builder_info(builderControls)
+            company.compBuilderList = compBuilders
         elif compType == compTypeTrafficBidder:
             company.industryType = compTypeTrafficBidderName
             # 只有交通施工单位才有企业人员信息
@@ -200,8 +205,16 @@ def set_company_type(type, compType, company, requestsCookies, scrfcokie, person
             company.compPersonnelList = compPersonnels
         elif compType == compTypeWaterBidder:
             company.industryType = compTypeWaterBidderName
+            # 房建及市政施工单位、水利施工单位、重点工程投标单位有建造师
+            builderControls = get_company_builder_info(requestsCookies, scrfcokie, compType, alink)
+            compBuilders = set_comp_builder_info(builderControls)
+            company.compBuilderList = compBuilders
         elif compType == compTypeKeyProjectBidder:
             company.industryType = compTypeKeyProjectBidderName
+            # 房建及市政施工单位、水利施工单位、重点工程投标单位有建造师
+            builderControls = get_company_builder_info(requestsCookies, scrfcokie, compType, alink)
+            compBuilders = set_comp_builder_info(builderControls)
+            company.compBuilderList = compBuilders
         elif compType == compTypeWaterMonitorBidder:
             company.industryType = compTypeWaterMonitorBidderName
         elif compType == compTypeWaterDeviseBidder:
@@ -343,3 +356,59 @@ def set_comp_aptitude_info(controls):
             compAptitude.certificateDetail = data['showzy']
             compAptitudes.append(compAptitude.__dict__)
     return compAptitudes
+
+# 获取企业建造师信息
+def get_company_builder_info(requestsCookies, scrfcokie, compType, alink):
+    # 房建及市政施工单位
+    compTypeHouseBidder = '131'
+    # 水利施工单位
+    compTypeWaterBidder = '133'
+    # 重点工程投标单位
+    compTypeKeyProjectBidder = '135'
+    builderType = ''
+    builderTypeUrl = ''
+    if compType == compTypeHouseBidder:
+        builderType = 'PM_List'
+        builderTypeUrl = 'jxpJsgcPmListForWebAction.action'
+    elif compType == compTypeWaterBidder:
+        builderType = 'SlSgPM_List'
+        builderTypeUrl = 'jxpSlSgPmTempListForWebAction.action'
+    elif compType == compTypeKeyProjectBidder:
+        builderType = 'ZDPM_List'
+        builderTypeUrl = 'jxpZDPmTempListForWebAction.action'
+
+    aptitudeUrl = 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/pminfo/'+builderTypeUrl+'?cmd=page_Load&DanWeiType='+compType+'&DanWeiGuid='+alink+'&isCommondto=true'
+    params = {
+        'commonDto': '[{"id":"datagrid","type":"datagrid","action":"defaultModel","idField":"rowguid","pageIndex":0,"pageSize":100,"sortField":"","sortOrder":"","columns":[],"data":[]}]'
+    }
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest',
+        # 'Cookie': cookies,
+        'CSRFCOOKIE': scrfcokie,
+        'Host': 'ggzyjy.jxsggzy.cn',
+        'Origin': 'http://ggzyjy.jxsggzy.cn',
+        'Referer': 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/pminfo/'+builderType+'?DanWeiType='+compType+'&DanWeiGuid=' + alink,
+        'Cache-Control': 'no-cache'
+    }
+
+    detailResponse = requests.post(url=aptitudeUrl, data=params, headers=headers, cookies=requestsCookies)
+    detailTextJson = json.loads(detailResponse.text)
+    controls = detailTextJson['controls']
+    return controls
+
+# 设置企业建造师信息
+def set_comp_builder_info(controls):
+    compBuilders = []
+    controls = controls[0]
+    total = controls['total']
+    if total > 0:
+        dataList = controls['data']
+        for data in dataList:
+            compBuilder = CompBuilder()
+            compBuilder.name = data['pmname']
+            compBuilder.gender = data['pmsex']
+            compBuilder.regNum = data['registno']
+            compBuilder.majorLevel = data['zigexulie']
+            compBuilders.append(compBuilder.__dict__)
+    return compBuilders

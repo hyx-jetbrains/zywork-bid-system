@@ -33,3 +33,5 @@ class Company:
     compPersonnelList = []
     # 企业资质
     compAptitudeList = []
+    # 企业建造师
+    compBuilderList = []
