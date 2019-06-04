@@ -29,3 +29,5 @@ class Company:
     affordableBusiness = ''
     # 源地址
     sourceUrl = ''
+    # 企业人员
+    compPersonnel = []

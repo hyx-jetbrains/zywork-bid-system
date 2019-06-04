@@ -3,6 +3,7 @@ import json
 import time
 
 from model.company import Company
+from model.comp_personnel import CompPersonnel
 
 # 获取cookie
 def getCookies(compType, alink, url):
@@ -34,8 +35,12 @@ def get_company_info(type, compType, pageNo, pageSize):
         city = table['szdq']
         company.city = city.replace('·', '/')
         company.compName = table['qymc']
+        # 详细信息的url
         detailUrl = 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/dailiinfo/jxpDaiLiInfoDetailForWebAction.action?cmd=page_Load&DanWeiType='+compType+'&isCommondto=true&DanWeiGuid=' + alink
+        # 详细页面的url
         pageUrl = "http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/FrameAll?DanWeiType=" + compType + "&DanWeiGuid=" + alink
+        # 人员信息的url
+        personnelUrl = 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/pminfo/jxpJtgcSgPmTempForWebListAction.action?cmd=page_Load&DanWeiType='+compType+'&DanWeiGuid='+alink+'&isCommondto=true'
         # 如果已爬取的最新链接不等于现在抓取的链接，则表示网站有更新新数据
         # if current_comp_info_href != detailUrl:
         #     if not latest_flag:
@@ -54,7 +59,7 @@ def get_company_info(type, compType, pageNo, pageSize):
         requestsCookies = getCookies(compType, alink, pageUrl)
         scrfcokie = requestsCookies['_CSRFCOOKIE']
         controls = get_detail_info(requestsCookies, scrfcokie, detailUrl, compType, alink)
-        company = set_company_type(type, compType, company)
+        company = set_company_type(type, compType, company, requestsCookies, scrfcokie, personnelUrl, alink)
         company = set_company_info(controls, company)
         # current_comp_info_file.close()
         companys.append(company.__dict__)
@@ -136,7 +141,7 @@ def set_company_info(controls, company):
     return company
 
 # 设置公司类型
-def set_company_type(type, compType, company):
+def set_company_type(type, compType, company, requestsCookies, scrfcokie, personnelUrl, alink):
     # 代理机构
     typeAgent = '1'
     typeAgentName = '代理机构'
@@ -184,6 +189,10 @@ def set_company_type(type, compType, company):
             company.industryType = compTypeHouseBidderName
         elif compType == compTypeTrafficBidder:
             company.industryType = compTypeTrafficBidderName
+            # 只有交通施工单位才有企业人员信息
+            personnelControls = get_company_people_info(requestsCookies, scrfcokie, personnelUrl, compType, alink)
+            compPersonnels = set_comp_personnel_info(personnelControls)
+            company.compPersonnel = compPersonnels
         elif compType == compTypeWaterBidder:
             company.industryType = compTypeWaterBidderName
         elif compType == compTypeKeyProjectBidder:
@@ -215,3 +224,48 @@ def get_detail_info(requestsCookies, scrfcokie, detailUrl, compType, alink):
     detailTextJson = json.loads(detailResponse.text)
     controls = detailTextJson['controls']
     return controls
+
+# 获取企业人员信息
+def get_company_people_info(requestsCookies, scrfcokie, personnelUrl, compType, alink):
+    params = {
+        'commonDto': '[{"id":"datagrid","type":"datagrid","action":"defaultModel","idField":"rowguid","pageIndex":0,"pageSize":100,"sortField":"","sortOrder":"","columns":[],"url":"jxpFJDaiLiPeopleListForWebAction.action?cmd=defaultModel","data":[]}]'
+    }
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest',
+        # 'Cookie': cookies,
+        'CSRFCOOKIE': scrfcokie,
+        'Host': 'ggzyjy.jxsggzy.cn',
+        'Origin': 'http://ggzyjy.jxsggzy.cn',
+        'Referer': 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/pminfo/JtgcSgPM_List?DanWeiType='+compType+'&DanWeiGuid=' + alink,
+        'Cache-Control': 'no-cache'
+    }
+
+    detailResponse = requests.post(url=personnelUrl, data=params, headers=headers, cookies=requestsCookies)
+    detailTextJson = json.loads(detailResponse.text)
+    controls = detailTextJson['controls']
+    return controls
+
+# 设置企业人员信息
+def set_comp_personnel_info(controls):
+    compPersonnels = []
+    controls = controls[0]
+    total = controls['total']
+    if total > 0:
+        dataList = controls['data']
+        for data in dataList:
+            compPersonnel = CompPersonnel()
+            compPersonnel.name = data['pmname']
+            compPersonnel.jobDetail = data['ZiGeZhengShu']
+            zhicheng = data['zhicheng']
+            if zhicheng == '3':
+                zhicheng = '副高级'
+            elif zhicheng == '2':
+                zhicheng = '中级'
+            elif zhicheng == '4':
+                zhicheng = '正高级'
+            elif zhicheng == '1':
+                zhicheng = '初级'
+            compPersonnel.jobTitle =zhicheng
+            compPersonnels.append(compPersonnel.__dict__)
+    return compPersonnels
