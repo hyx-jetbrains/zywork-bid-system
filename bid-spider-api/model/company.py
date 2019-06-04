@@ -35,3 +35,5 @@ class Company:
     compAptitudeList = []
     # 企业建造师
     compBuilderList = []
+    # 企业业绩
+    compAchievementList = []

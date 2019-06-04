@@ -6,6 +6,7 @@ from model.company import Company
 from model.comp_personnel import CompPersonnel
 from model.comp_aptitude import CompAptitude
 from model.comp_builder import CompBuilder
+from model.comp_achievement import CompAchievement
 
 # 获取cookie
 def getCookies(url):
@@ -106,15 +107,11 @@ def set_company_info(controls, company):
             print(value)
         if id == 'yingyeqixianfrom':
             # 营业期限开始 1027612800000
-            value = value / 1000
-            timeArray = time.localtime(value)
-            value = time.strftime("%Y-%m-%d", timeArray)
+            value = format_date_time(value)
             print(value)
         if id == 'yingyeqixianto':
             # 营业期限结束 2605449600000
-            value = value / 1000
-            timeArray = time.localtime(value)
-            value = time.strftime("%Y-%m-%d", timeArray)
+            value = format_date_time(value)
             print(value)
         if id == 'jinyingfanwei':
             # 经营范围
@@ -203,22 +200,42 @@ def set_company_type(type, compType, company, requestsCookies, scrfcokie, person
             personnelControls = get_company_people_info(requestsCookies, scrfcokie, personnelUrl, compType, alink)
             compPersonnels = set_comp_personnel_info(personnelControls)
             company.compPersonnelList = compPersonnels
+            # 查询交通施工单位的业绩信息
+            achievementControls = get_company_achievement_info(requestsCookies, scrfcokie, compType, alink)
+            compAchievements = set_comp_achievement_info(achievementControls, compType)
+            company.compAchievementList = compAchievements
         elif compType == compTypeWaterBidder:
             company.industryType = compTypeWaterBidderName
             # 房建及市政施工单位、水利施工单位、重点工程投标单位有建造师
             builderControls = get_company_builder_info(requestsCookies, scrfcokie, compType, alink)
             compBuilders = set_comp_builder_info(builderControls)
             company.compBuilderList = compBuilders
+            # 查询水利施工单位的业绩信息
+            achievementControls = get_company_achievement_info(requestsCookies, scrfcokie, compType, alink)
+            compAchievements = set_comp_achievement_info(achievementControls, compType)
+            company.compAchievementList = compAchievements
         elif compType == compTypeKeyProjectBidder:
             company.industryType = compTypeKeyProjectBidderName
             # 房建及市政施工单位、水利施工单位、重点工程投标单位有建造师
             builderControls = get_company_builder_info(requestsCookies, scrfcokie, compType, alink)
             compBuilders = set_comp_builder_info(builderControls)
             company.compBuilderList = compBuilders
+            # 查询重点工程投标单位的业绩信息
+            achievementControls = get_company_achievement_info(requestsCookies, scrfcokie, compType, alink)
+            compAchievements = set_comp_achievement_info(achievementControls, compType)
+            company.compAchievementList = compAchievements
         elif compType == compTypeWaterMonitorBidder:
             company.industryType = compTypeWaterMonitorBidderName
+            # 查询水利监理单位的业绩信息
+            achievementControls = get_company_achievement_info(requestsCookies, scrfcokie, compType, alink)
+            compAchievements = set_comp_achievement_info(achievementControls, compType)
+            company.compAchievementList = compAchievements
         elif compType == compTypeWaterDeviseBidder:
             company.industryType = compTypeWaterDeviseBidderName
+            # 查询水利勘查设计单位的业绩信息
+            achievementControls = get_company_achievement_info(requestsCookies, scrfcokie, compType, alink)
+            compAchievements = set_comp_achievement_info(achievementControls, compType)
+            company.compAchievementList = compAchievements
     return company
 
 
@@ -322,6 +339,8 @@ def get_company_aptitude_info(requestsCookies, scrfcokie, compType, alink):
     elif compType == compTypeWaterDeviseBidder:
         aptitudeType = 'SlKcZiZhi_List'
         aptitudeTypeUrl = 'jxpSlKcShiGongZiZhiListForWebAction.action'
+    else:
+        return
 
     aptitudeUrl = 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/shigongzizhi/'+aptitudeTypeUrl+'?cmd=page_Load&DanWeiType='+compType+'&DanWeiGuid='+alink+'&isCommondto=true'
     params = {
@@ -412,3 +431,126 @@ def set_comp_builder_info(controls):
             compBuilder.majorLevel = data['zigexulie']
             compBuilders.append(compBuilder.__dict__)
     return compBuilders
+
+# 获取企业业绩信息
+def get_company_achievement_info(requestsCookies, scrfcokie, compType, alink):
+    # 交通施工单位
+    compTypeTrafficBidder = '132'
+    # 水利施工单位
+    compTypeWaterBidder = '133'
+    # 重点工程投标单位
+    compTypeKeyProjectBidder = '135'
+    # 水利监理单位
+    compTypeWaterMonitorBidder = '143'
+    # 水利勘查设计单位
+    compTypeWaterDeviseBidder = '163'
+
+    action = 'defaultModel'
+    achievementType = ''
+    achievementTypeUrl = ''
+    if compType == compTypeTrafficBidder:
+        achievementType = 'JtGcShiGongYeJi_List'
+        achievementTypeUrl = 'jxpJtgcShiGongYeJiListForWebAction.action'
+        action = 'defaultModel2'
+    elif compType == compTypeWaterBidder:
+        achievementType = 'SlShiGongYeJi_List'
+        achievementTypeUrl = 'jxpSlShiGongYeJiListForWebAction.action'
+    elif compType == compTypeKeyProjectBidder:
+        achievementType = 'ZDShiGongYeJi_List'
+        achievementTypeUrl = 'jxpZDShiGongYeJiListForWebAction.action'
+    elif compType == compTypeWaterMonitorBidder:
+        achievementType = 'SlJlShiGongYeJi_List'
+        achievementTypeUrl = 'jxpSlJlShiGongYeJiListForWebAction.action'
+    elif compType == compTypeWaterDeviseBidder:
+        achievementType = 'SlKcShiGongYeJi_List'
+        achievementTypeUrl = 'jxpSlKcShiGongYeJiListForWebAction.action'
+        action = 'defaultModel2'
+    achievementUrl = 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/shigongyeji/'+achievementTypeUrl+'?cmd=page_Load&DanWeiType='+compType+'&DanWeiGuid='+alink+'&isCommondto=true'
+    params = {
+        'commonDto': '[{"id":"datagrid","type":"datagrid","action":"'+action+'","idField":"rowguid","pageIndex":0,"pageSize":100,"sortField":"","sortOrder":"","columns":[],"data":[]}]'
+    }
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest',
+        # 'Cookie': cookies,
+        'CSRFCOOKIE': scrfcokie,
+        'Host': 'ggzyjy.jxsggzy.cn',
+        'Origin': 'http://ggzyjy.jxsggzy.cn',
+        'Referer': 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/shigongyeji/'+achievementType+'?DanWeiType='+compType+'&DanWeiGuid=' + alink,
+        'Cache-Control': 'no-cache'
+    }
+
+    detailResponse = requests.post(url=achievementUrl, data=params, headers=headers, cookies=requestsCookies)
+    detailTextJson = json.loads(detailResponse.text)
+    controls = detailTextJson['controls']
+    return controls
+
+# 设置企业业绩信息
+def set_comp_achievement_info(controls, compType):
+    # 交通施工单位
+    compTypeTrafficBidder = '132'
+    # 水利施工单位
+    compTypeWaterBidder = '133'
+    # 重点工程投标单位
+    compTypeKeyProjectBidder = '135'
+    # 水利监理单位
+    compTypeWaterMonitorBidder = '143'
+    # 水利勘查设计单位
+    compTypeWaterDeviseBidder = '163'
+    compAchievements = []
+    print(controls)
+    controls = controls[0]
+    total = controls['total']
+    if total > 0:
+        dataList = controls['data']
+        for data in dataList:
+            compAchievement = CompAchievement()
+            compAchievement.projectName = data['biaoduanname']
+            if compType == compTypeTrafficBidder:
+                compAchievement.name = data['pname']
+                compAchievement.technologyName = data['jspname']
+                compAchievement.contractAmount = data['hetongjine']
+                compAchievement.workAddr = data['biaoduanaddress']
+                startDate = format_date_time(data['kaigongdate'])
+                compAchievement.startDate = startDate
+                endDate = format_date_time(data['xiangmuendtime'])
+                compAchievement.endDate = endDate
+            elif compType == compTypeWaterBidder:
+                compAchievement.contractAmount = data['hetongjine']
+                startDate = format_date_time(data['kaigongdate'])
+                compAchievement.startDate = startDate
+                endDate = format_date_time(data['jungongdate'])
+                compAchievement.name = data['pname']
+                compAchievement.endDate = endDate
+            elif compType == compTypeKeyProjectBidder:
+                compAchievement.buildComp = data['jianshedanweiname']
+                compAchievement.markMoney = data['zhongbiaojine']
+                startDate = format_date_time(data['kaigongdate'])
+                compAchievement.startDate = startDate
+                endDate = format_date_time(data['xiangmuendtime'])
+                compAchievement.endDate = endDate
+            elif compType == compTypeWaterMonitorBidder:
+                compAchievement.projectType = data['xiangmutype']
+                compAchievement.buildComp = data['jianshedanweiname']
+                compAchievement.contractAmount = data['hetongjine']
+                contractDate = format_date_time(data['hetongdate'])
+                compAchievement.contractDate = contractDate
+                startDate = format_date_time(data['kaigongdate'])
+                compAchievement.startDate = startDate
+            elif compType == compTypeWaterDeviseBidder:
+                compAchievement.projectType = data['xiangmutype']
+                compAchievement.buildComp = data['jianshedanweiname']
+                compAchievement.contractAmount = data['hetongjine']
+                compAchievement.name = data['pname']
+                markDate = format_date_time(data['zhongbiaodate'])
+                compAchievement.markDate = markDate
+            compAchievements.append(compAchievement.__dict__)
+    return compAchievements
+
+# 格式化时间，把时间戳格式化成时间格式
+def format_date_time(tempTime):
+    if tempTime != '':
+        tempTime = tempTime / 1000
+        timeArray = time.localtime(tempTime)
+        tempTime = time.strftime("%Y-%m-%d", timeArray)
+    return tempTime
