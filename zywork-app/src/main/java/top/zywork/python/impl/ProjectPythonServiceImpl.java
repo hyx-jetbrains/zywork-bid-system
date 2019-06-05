@@ -1,7 +1,7 @@
 package top.zywork.python.impl;
 
 import org.springframework.stereotype.Service;
-import top.zywork.python.ProjectService;
+import top.zywork.python.ProjectPythonService;
 
 /**
  * 获取招标信息的接口实现类<br/>
@@ -11,7 +11,7 @@ import top.zywork.python.ProjectService;
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
-@Service(value = "projectService")
-public class ProjectServiceImpl implements ProjectService {
+@Service(value = "projectPythonService")
+public class ProjectPythonServiceImpl implements ProjectPythonService {
 
 }

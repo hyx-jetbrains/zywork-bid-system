@@ -10,5 +10,5 @@ import top.zywork.service.BaseService;
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
-public interface ProjectService {
+public interface ProjectPythonService {
 }
