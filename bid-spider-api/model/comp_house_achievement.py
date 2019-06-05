@@ -9,6 +9,8 @@ class CompHouseAchievement:
     buildScale = ''
     # 项目所属地区归类
     regionType = ''
+    # 中标单位
+    markComp = ''
     # 建设单位
     buildComp = ''
     # 工程地址

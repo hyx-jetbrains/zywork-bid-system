@@ -25,4 +25,8 @@ public interface CompHouseAchievementDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    List<Object> getByCompIdAndMarkComp(@Param("compId") Long compId, @Param("compName") String compName);
+
+    Object getByProjectName(@Param("projectName") String projectName);
 }

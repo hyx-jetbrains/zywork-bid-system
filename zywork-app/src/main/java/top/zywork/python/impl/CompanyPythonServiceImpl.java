@@ -3,7 +3,6 @@ package top.zywork.python.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,9 @@ import top.zywork.constant.PythonConstants;
 import top.zywork.dao.*;
 import top.zywork.dto.*;
 import top.zywork.enums.DatePatternEnum;
-import top.zywork.job.GetCompanyInfoJob;
 import top.zywork.python.CompanyPythonService;
-import top.zywork.service.CompanyService;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * 获取企业信息的接口实现类<br/>
@@ -52,12 +49,14 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
 
     private CompWaterDeviseAchievementDAO compWaterDeviseAchievementDAO;
 
+    private CompHouseAchievementDAO compHouseAchievementDAO;
+
     @Override
     public void getCompanyInfo(String type, String compType, String pageNo, String pageSize) {
         try {
             StringBuilder url = new StringBuilder();
             url.append(PythonConstants.BASE_URL)
-                    .append(PythonConstants.COMPANY_INFO)
+                    .append(PythonConstants.COMPANY_INFO_URL)
                     .append("?")
                     .append("type=")
                     .append(type)
@@ -155,6 +154,11 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 JSONArray achievementArray = jsonObject.getJSONArray("compAchievementList");
                 if (null != achievementArray && !achievementArray.isEmpty()) {
                     saveCompAchievementInfo(compId, achievementArray, companyDTO.getIndustryType());
+                }
+                // 需要判断需不需要匹配房建业绩
+                if (PythonConstants.COMPANY_TYPE_HOUSE.equals(companyDTO.getIndustryType())) {
+                    // 需要判断当前企业是否有房屋市建业绩
+                    updateCompHouseAchievement(compId, compName);
                 }
 
             }
@@ -427,6 +431,179 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
         }
     }
 
+    /***
+     * @description:  根据企业名称更新房建业绩信息，把房建业绩和企业做匹配
+     * @param compId 企业id
+     * @param compName 企业名称
+     * @return: void
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-06-05 17:53
+     */
+    private void updateCompHouseAchievement(Long compId, String compName) {
+        try {
+            List<Object> objectList = compHouseAchievementDAO.getByCompIdAndMarkComp(0L, compName);
+            if (objectList.size() <= 0) {
+                // 表示没有匹配的
+                return;
+            }
+            List<CompHouseAchievementDTO> compHouseAchievementDTOList = BeanUtils.copy(objectList, CompHouseAchievementDTO.class);
+            for (CompHouseAchievementDTO compHouseAchievementDTO : compHouseAchievementDTOList) {
+                compHouseAchievementDTO.setCompId(compId);
+                compHouseAchievementDAO.update(compHouseAchievementDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void getCompHouseAchievement() {
+        try {
+            StringBuilder url = new StringBuilder();
+            url.append(PythonConstants.BASE_URL)
+                    .append(PythonConstants.COMP_HOUSE_ACHIEVEMENt_INFO_URL);
+            HttpUtils.timeout(PythonConstants.TIME_OUT);
+            String content = HttpUtils.get(url.toString());
+            JSONArray jsonArray = JSON.parseArray(content);
+            if (null == jsonArray) {
+                logger.error("未获取到业绩信息");
+                return;
+            }
+            int len = jsonArray.size();
+            for (int i = 0; i < len; i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                CompHouseAchievementDTO compHouseAchievementDTO = new CompHouseAchievementDTO();
+                // 工程名称
+                String projectName = jsonObject.getString("projectName");
+                Object obj = compHouseAchievementDAO.getByProjectName(projectName);
+                if (null != obj) {
+                    // 说明该业绩已存在
+                    logger.error("业绩已存在：" + projectName);
+                    continue;
+                }
+                // 中标单位
+                String markComp = jsonObject.getString("markComp");
+                if (!"".equals(markComp)) {
+                    // 中标单位不为空，根据公司名称查询系统中是和否有对应的企业信息
+                    Object companyObj = companyDAO.getByName(markComp);
+                    if (null != companyObj) {
+                        // 说明有获取到公司信息
+                        CompanyDTO companyDTO = BeanUtils.copy(companyObj, CompanyDTO.class);
+                        compHouseAchievementDTO.setCompId(companyDTO.getId());
+                    }
+                }
+                compHouseAchievementDTO.setProjectName(projectName);
+                // 注册建造师
+                String builderName = jsonObject.getString("builderName");
+                compHouseAchievementDTO.setBuilderName(builderName);
+                // 中标金额
+                String markMoney = jsonObject.getString("markMoney");
+                compHouseAchievementDTO.setMarkMoney(markMoney);
+                // 建设规模
+                String buildScale = jsonObject.getString("buildScale");
+                compHouseAchievementDTO.setBuildScale(buildScale);
+                // 项目所属地区归类
+                String regionType = jsonObject.getString("regionType");
+                compHouseAchievementDTO.setRegionType(regionType);
+                // 建设单位
+                String buildComp = jsonObject.getString("buildComp");
+                compHouseAchievementDTO.setBuildComp(buildComp);
+                // 工程地址
+                String projectAddr = jsonObject.getString("projectAddr");
+                compHouseAchievementDTO.setProjectAddr(projectAddr);
+                // 合同签订日期
+                String contractDate = jsonObject.getString("contractDate");
+                compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                // 中标日期
+                String markDate = jsonObject.getString("markDate");
+                compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                // 项目负责人
+                String name = jsonObject.getString("name");
+                compHouseAchievementDTO.setName(name);
+                // 项目负责人证书号
+                String certificateNum = jsonObject.getString("certificateNum");
+                compHouseAchievementDTO.setCertificateNum(certificateNum);
+                // 施工员
+                String constructors = jsonObject.getString("constructors");
+                compHouseAchievementDTO.setConstructors(constructors);
+                // 施工员证书号
+                String constructorsCertificateNum = jsonObject.getString("constructorsCertificateNum");
+                compHouseAchievementDTO.setConstructorsCertificateNum(constructorsCertificateNum);
+                // 施工员身份证号
+                String constructorsIdNum = jsonObject.getString("constructorsIdNum");
+                compHouseAchievementDTO.setConstructorsIdNum(constructorsIdNum);
+                // 质量员
+                String qualityWorker = jsonObject.getString("qualityWorker");
+                compHouseAchievementDTO.setQualityWorker(qualityWorker);
+                // 质量员证书号
+                String qualityWorkerCertificateNum = jsonObject.getString("qualityWorkerCertificateNum");
+                compHouseAchievementDTO.setQualityWorkerCertificateNum(qualityWorkerCertificateNum);
+                // 质量员身份证号
+                String qualityWorkerIdNum = jsonObject.getString("qualityWorkerIdNum");
+                compHouseAchievementDTO.setQualityWorkerIdNum(qualityWorkerIdNum);
+                // 安全员
+                String securityOfficer = jsonObject.getString("securityOfficer");
+                compHouseAchievementDTO.setSecurityOfficer(securityOfficer);
+                // 安全员证书号
+                String securityOfficerCertificateNum = jsonObject.getString("securityOfficerCertificateNum");
+                compHouseAchievementDTO.setSecurityOfficerCertificateNum(securityOfficerCertificateNum);
+                // 安全员身份证号
+                String securityOfficerIdNum = jsonObject.getString("securityOfficerIdNum");
+                compHouseAchievementDTO.setSecurityOfficerIdNum(securityOfficerIdNum);
+                // 标准员
+                String standardWorker = jsonObject.getString("standardWorker");
+                compHouseAchievementDTO.setStandardWorker(standardWorker);
+                // 标准员证书号
+                String standardWorkerCertificateNum = jsonObject.getString("standardWorkerCertificateNum");
+                compHouseAchievementDTO.setStandardWorkerCertificateNum(standardWorkerCertificateNum);
+                // 标准员身份证号
+                String standardWorkerIdNum = jsonObject.getString("standardWorkerIdNum");
+                compHouseAchievementDTO.setStandardWorkerIdNum(standardWorkerIdNum);
+                // 材料员
+                String materialMan = jsonObject.getString("materialMan");
+                compHouseAchievementDTO.setMaterialMan(materialMan);
+                // 材料员证书号
+                String materialManCertificateNum = jsonObject.getString("materialManCertificateNum");
+                compHouseAchievementDTO.setMaterialManCertificateNum(materialManCertificateNum);
+                // 材料员身份证号
+                String materialManIdNum = jsonObject.getString("materialManIdNum");
+                compHouseAchievementDTO.setMaterialManIdNum(materialManIdNum);
+                // 机械员
+                String mechanic = jsonObject.getString("mechanic");
+                compHouseAchievementDTO.setMechanic(mechanic);
+                // 机械员证书号
+                String mechanicCertificateNum = jsonObject.getString("mechanicCertificateNum");
+                compHouseAchievementDTO.setMechanicCertificateNum(mechanicCertificateNum);
+                // 机械员身份证号
+                String mechanicIdNum = jsonObject.getString("mechanicIdNum");
+                compHouseAchievementDTO.setMechanicIdNum(mechanicIdNum);
+                // 劳务员
+                String labors = jsonObject.getString("labors");
+                compHouseAchievementDTO.setLabors(labors);
+                // 劳务员证书号
+                String laborsCertificateNum = jsonObject.getString("laborsCertificateNum");
+                compHouseAchievementDTO.setLaborsCertificateNum(laborsCertificateNum);
+                // 劳务员身份证号
+                String laborsIdNum = jsonObject.getString("laborsIdNum");
+                compHouseAchievementDTO.setLaborsIdNum(laborsIdNum);
+                // 资料员
+                String dataClerk = jsonObject.getString("dataClerk");
+                compHouseAchievementDTO.setDataClerk(dataClerk);
+                // 资料员证书号
+                String dataClerkCertificateNum = jsonObject.getString("dataClerkCertificateNum");
+                compHouseAchievementDTO.setDataClerkCertificateNum(dataClerkCertificateNum);
+                // 资料员身份证号
+                String dataClerkIdNum = jsonObject.getString("dataClerkIdNum");
+                compHouseAchievementDTO.setDataClerkIdNum(dataClerkIdNum);
+                // 保存房建业绩信息
+                compHouseAchievementDAO.save(compHouseAchievementDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Autowired
     public void setCompanyService(CompanyDAO companyDAO) {
         this.companyDAO = companyDAO;
@@ -470,5 +647,10 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
     @Autowired
     public void setCompWaterDeviseAchievementDAO(CompWaterDeviseAchievementDAO compWaterDeviseAchievementDAO) {
         this.compWaterDeviseAchievementDAO = compWaterDeviseAchievementDAO;
+    }
+
+    @Autowired
+    public void setCompHouseAchievementDAO(CompHouseAchievementDAO compHouseAchievementDAO) {
+        this.compHouseAchievementDAO = compHouseAchievementDAO;
     }
 }

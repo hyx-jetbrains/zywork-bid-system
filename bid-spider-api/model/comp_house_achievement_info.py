@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import time
 
-from model.project import Project
 from model.comp_house_achievement import CompHouseAchievement
 
 
@@ -51,6 +49,7 @@ def get_house_achievement():
         compHouseAchievement = get_from_table(compHouseAchievement, table)
         compHouseAchievements.append(compHouseAchievement.__dict__)
     current_house_file.close()
+    print(compHouseAchievements)
     return compHouseAchievements
 
 # 从表格中获取房建业绩信息
@@ -61,6 +60,7 @@ def get_from_table(compHouseAchievement, table):
     compHouseAchievement.markMoney = get_from_td(table, 'ctl00_ContentPlaceHolder1_ZhongBiaoJinE_1110')
     compHouseAchievement.buildScale = get_from_td(table, 'ctl00_ContentPlaceHolder1_PrjSize_1110')
     compHouseAchievement.regionType = get_from_td(table, 'ctl00_ContentPlaceHolder1_XiaQuName_1110')
+    compHouseAchievement.markComp = get_from_td(table, 'ctl00_ContentPlaceHolder1_ZhongBiaoDanWeiName_1110')
     compHouseAchievement.buildComp = get_from_td(table, 'ctl00_ContentPlaceHolder1_JSDanWeiName_1110')
     compHouseAchievement.projectAddr = get_from_td(table, 'ctl00_ContentPlaceHolder1_Pro_Address_1110')
     compHouseAchievement.contractDate = get_from_td(table, 'ctl00_ContentPlaceHolder1_ContractDate_1110')

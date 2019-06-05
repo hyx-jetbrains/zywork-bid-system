@@ -313,12 +313,13 @@ CREATE TABLE `t_comp_house_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业房建业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
-  `builder_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册建造师',
+  `builder_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册建造师',
   `mark_money` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标金额',
-  `build_scale` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设规模',
-  `region_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目所属地区归类',
-  `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
-  `project_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程地址',
+  `build_scale` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设规模',
+  `region_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目所属地区归类',
+  `mark_comp` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标单位',
+  `build_comp` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
+  `project_addr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程地址',
   `contract_date` date NULL DEFAULT NULL COMMENT '合同签订日期',
   `mark_date` date NULL DEFAULT NULL COMMENT '中标日期',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
@@ -352,7 +353,7 @@ CREATE TABLE `t_comp_house_achievement`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业房建业绩表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业房建业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_key_project_achievement

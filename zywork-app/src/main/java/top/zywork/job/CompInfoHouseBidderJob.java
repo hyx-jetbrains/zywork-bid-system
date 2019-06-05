@@ -11,7 +11,7 @@ import top.zywork.constant.PythonConstants;
 import top.zywork.python.CompanyPythonService;
 
 /**
- * 访问python接口获取房建代理公司信息的作业,
+ * 访问python接口获取房建投标人公司信息的作业,
  * 每半个小时执行一次<br/>
  *
  * 创建于2019-06-05<br/>
@@ -20,9 +20,9 @@ import top.zywork.python.CompanyPythonService;
  * @version 1.0
  */
 @ExposeClass(type = "job")
-public class CompInfoHouseAgentJob implements Job {
+public class CompInfoHouseBidderJob implements Job {
 
-    private static final Logger logger = LoggerFactory.getLogger(CompInfoHouseAgentJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(CompInfoHouseBidderJob.class);
 
     private CompanyPythonService companyPythonService;
 
@@ -30,10 +30,10 @@ public class CompInfoHouseAgentJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        logger.info("begin to execute CompInfoHouseAgentJob......");
-        companyPythonService.getCompanyInfo(PythonConstants.TYPE_AGENT, PythonConstants.COMP_TYPE_HOUSE_AGENT, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
+        logger.info("begin to execute CompInfoHouseBidderJob......");
+        companyPythonService.getCompanyInfo(PythonConstants.TYPE_AGENT, PythonConstants.COMP_TYPE_HOUSE_BIDDER, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
         pageNo++;
-        logger.info("executed CompInfoHouseAgentJob......");
+        logger.info("executed CompInfoHouseBidderJob......");
     }
 
     @Autowired
