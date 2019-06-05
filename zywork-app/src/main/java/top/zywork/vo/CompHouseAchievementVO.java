@@ -12,22 +12,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * CompHouseAchievementVO值对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-06-05<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class CompHouseAchievementVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035878398595L;
+    private static final long serialVersionUID = -9223372035732046540L;
 
     // 企业房建业绩编号
 	private Long id;
 	// 企业编号
-	@NotNull(message = "此项是必须项")
 	private Long compId;
 	// 工程名称
-	@Size(min = 0, max = 32, message = "必须小于32个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String projectName;
 	// 注册建造师
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
@@ -41,8 +40,11 @@ public class CompHouseAchievementVO extends BaseVO {
 	// 项目所属地区归类
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String regionType;
+	// 中标单位
+	@Size(min = 0, max = 100, message = "必须小于100个字符")
+	private String markComp;
 	// 建设单位
-	@Size(min = 0, max = 32, message = "必须小于32个字符")
+	@Size(min = 0, max = 100, message = "必须小于100个字符")
 	private String buildComp;
 	// 工程地址
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
@@ -140,11 +142,12 @@ public class CompHouseAchievementVO extends BaseVO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
 	// 是否激活
+	@NotNull(message = "此项是必须项")
 	private Byte isActive;
 	
     public CompHouseAchievementVO () {}
 
-    public CompHouseAchievementVO (Long id, Long compId, String projectName, String builderName, String markMoney, String buildScale, String regionType, String buildComp, String projectAddr, Date contractDate, Date markDate, String name, String certificateNum, String constructors, String constructorsCertificateNum, String constructorsIdNum, String qualityWorker, String qualityWorkerCertificateNum, String qualityWorkerIdNum, String securityOfficer, String securityOfficerCertificateNum, String securityOfficerIdNum, String standardWorker, String standardWorkerCertificateNum, String standardWorkerIdNum, String materialMan, String materialManCertificateNum, String materialManIdNum, String mechanic, String mechanicCertificateNum, String mechanicIdNum, String labors, String laborsCertificateNum, String laborsIdNum, String dataClerk, String dataClerkCertificateNum, String dataClerkIdNum, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public CompHouseAchievementVO (Long id, Long compId, String projectName, String builderName, String markMoney, String buildScale, String regionType, String markComp, String buildComp, String projectAddr, Date contractDate, Date markDate, String name, String certificateNum, String constructors, String constructorsCertificateNum, String constructorsIdNum, String qualityWorker, String qualityWorkerCertificateNum, String qualityWorkerIdNum, String securityOfficer, String securityOfficerCertificateNum, String securityOfficerIdNum, String standardWorker, String standardWorkerCertificateNum, String standardWorkerIdNum, String materialMan, String materialManCertificateNum, String materialManIdNum, String mechanic, String mechanicCertificateNum, String mechanicIdNum, String labors, String laborsCertificateNum, String laborsIdNum, String dataClerk, String dataClerkCertificateNum, String dataClerkIdNum, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.compId = compId;
 		this.projectName = projectName;
@@ -152,6 +155,7 @@ public class CompHouseAchievementVO extends BaseVO {
 		this.markMoney = markMoney;
 		this.buildScale = buildScale;
 		this.regionType = regionType;
+		this.markComp = markComp;
 		this.buildComp = buildComp;
 		this.projectAddr = projectAddr;
 		this.contractDate = contractDate;
@@ -243,6 +247,14 @@ public class CompHouseAchievementVO extends BaseVO {
 
 	public void setRegionType(String regionType) {
 		this.regionType = regionType;
+	}
+
+	public String getMarkComp() {
+		return markComp;
+	}
+
+	public void setMarkComp(String markComp) {
+		this.markComp = markComp;
 	}
 
 	public String getBuildComp() {
@@ -528,6 +540,7 @@ public class CompHouseAchievementVO extends BaseVO {
 				", markMoney = " + markMoney + 
 				", buildScale = " + buildScale + 
 				", regionType = " + regionType + 
+				", markComp = " + markComp + 
 				", buildComp = " + buildComp + 
 				", projectAddr = " + projectAddr + 
 				", contractDate = " + contractDate + 

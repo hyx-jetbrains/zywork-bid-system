@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * CompHouseAchievementQuery查询对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-06-05<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class CompHouseAchievementQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372034721913509L;
+    private static final long serialVersionUID = -9223372036754155336L;
 
     // 企业房建业绩编号
 	private Long id;
@@ -39,6 +39,8 @@ public class CompHouseAchievementQuery extends PageQuery {
 	private String buildScale;
 	// 项目所属地区归类
 	private String regionType;
+	// 中标单位
+	private String markComp;
 	// 建设单位
 	private String buildComp;
 	// 工程地址
@@ -146,7 +148,7 @@ public class CompHouseAchievementQuery extends PageQuery {
 	
     public CompHouseAchievementQuery () {}
 
-    public CompHouseAchievementQuery (Long id, Long idMin, Long idMax, Long compId, Long compIdMin, Long compIdMax, String projectName, String builderName, String markMoney, String buildScale, String regionType, String buildComp, String projectAddr, Date contractDate, Date contractDateMin, Date contractDateMax, Date markDate, Date markDateMin, Date markDateMax, String name, String certificateNum, String constructors, String constructorsCertificateNum, String constructorsIdNum, String qualityWorker, String qualityWorkerCertificateNum, String qualityWorkerIdNum, String securityOfficer, String securityOfficerCertificateNum, String securityOfficerIdNum, String standardWorker, String standardWorkerCertificateNum, String standardWorkerIdNum, String materialMan, String materialManCertificateNum, String materialManIdNum, String mechanic, String mechanicCertificateNum, String mechanicIdNum, String labors, String laborsCertificateNum, String laborsIdNum, String dataClerk, String dataClerkCertificateNum, String dataClerkIdNum, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public CompHouseAchievementQuery (Long id, Long idMin, Long idMax, Long compId, Long compIdMin, Long compIdMax, String projectName, String builderName, String markMoney, String buildScale, String regionType, String markComp, String buildComp, String projectAddr, Date contractDate, Date contractDateMin, Date contractDateMax, Date markDate, Date markDateMin, Date markDateMax, String name, String certificateNum, String constructors, String constructorsCertificateNum, String constructorsIdNum, String qualityWorker, String qualityWorkerCertificateNum, String qualityWorkerIdNum, String securityOfficer, String securityOfficerCertificateNum, String securityOfficerIdNum, String standardWorker, String standardWorkerCertificateNum, String standardWorkerIdNum, String materialMan, String materialManCertificateNum, String materialManIdNum, String mechanic, String mechanicCertificateNum, String mechanicIdNum, String labors, String laborsCertificateNum, String laborsIdNum, String dataClerk, String dataClerkCertificateNum, String dataClerkIdNum, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -158,6 +160,7 @@ public class CompHouseAchievementQuery extends PageQuery {
 		this.markMoney = markMoney;
 		this.buildScale = buildScale;
 		this.regionType = regionType;
+		this.markComp = markComp;
 		this.buildComp = buildComp;
 		this.projectAddr = projectAddr;
 		this.contractDate = contractDate;
@@ -293,6 +296,14 @@ public class CompHouseAchievementQuery extends PageQuery {
 
 	public void setRegionType(String regionType) {
 		this.regionType = regionType;
+	}
+
+	public String getMarkComp() {
+		return markComp;
+	}
+
+	public void setMarkComp(String markComp) {
+		this.markComp = markComp;
 	}
 
 	public String getBuildComp() {
@@ -678,6 +689,7 @@ public class CompHouseAchievementQuery extends PageQuery {
 				", markMoney = " + markMoney + 
 				", buildScale = " + buildScale + 
 				", regionType = " + regionType + 
+				", markComp = " + markComp + 
 				", buildComp = " + buildComp + 
 				", projectAddr = " + projectAddr + 
 				", contractDate = " + contractDate + 

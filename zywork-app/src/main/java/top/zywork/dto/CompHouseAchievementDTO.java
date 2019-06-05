@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * CompHouseAchievementDTO数据传输对象类<br/>
  *
- * 创建于2019-04-20<br/>
+ * 创建于2019-06-05<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class CompHouseAchievementDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035802287496L;
+    private static final long serialVersionUID = -9223372036247757363L;
 
     // 企业房建业绩编号
 	private Long id;
@@ -29,6 +29,8 @@ public class CompHouseAchievementDTO extends BaseDTO {
 	private String buildScale;
 	// 项目所属地区归类
 	private String regionType;
+	// 中标单位
+	private String markComp;
 	// 建设单位
 	private String buildComp;
 	// 工程地址
@@ -100,7 +102,7 @@ public class CompHouseAchievementDTO extends BaseDTO {
 	
     public CompHouseAchievementDTO () {}
 
-    public CompHouseAchievementDTO (Long id, Long compId, String projectName, String builderName, String markMoney, String buildScale, String regionType, String buildComp, String projectAddr, Date contractDate, Date markDate, String name, String certificateNum, String constructors, String constructorsCertificateNum, String constructorsIdNum, String qualityWorker, String qualityWorkerCertificateNum, String qualityWorkerIdNum, String securityOfficer, String securityOfficerCertificateNum, String securityOfficerIdNum, String standardWorker, String standardWorkerCertificateNum, String standardWorkerIdNum, String materialMan, String materialManCertificateNum, String materialManIdNum, String mechanic, String mechanicCertificateNum, String mechanicIdNum, String labors, String laborsCertificateNum, String laborsIdNum, String dataClerk, String dataClerkCertificateNum, String dataClerkIdNum, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public CompHouseAchievementDTO (Long id, Long compId, String projectName, String builderName, String markMoney, String buildScale, String regionType, String markComp, String buildComp, String projectAddr, Date contractDate, Date markDate, String name, String certificateNum, String constructors, String constructorsCertificateNum, String constructorsIdNum, String qualityWorker, String qualityWorkerCertificateNum, String qualityWorkerIdNum, String securityOfficer, String securityOfficerCertificateNum, String securityOfficerIdNum, String standardWorker, String standardWorkerCertificateNum, String standardWorkerIdNum, String materialMan, String materialManCertificateNum, String materialManIdNum, String mechanic, String mechanicCertificateNum, String mechanicIdNum, String labors, String laborsCertificateNum, String laborsIdNum, String dataClerk, String dataClerkCertificateNum, String dataClerkIdNum, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.compId = compId;
 		this.projectName = projectName;
@@ -108,6 +110,7 @@ public class CompHouseAchievementDTO extends BaseDTO {
 		this.markMoney = markMoney;
 		this.buildScale = buildScale;
 		this.regionType = regionType;
+		this.markComp = markComp;
 		this.buildComp = buildComp;
 		this.projectAddr = projectAddr;
 		this.contractDate = contractDate;
@@ -199,6 +202,14 @@ public class CompHouseAchievementDTO extends BaseDTO {
 
 	public void setRegionType(String regionType) {
 		this.regionType = regionType;
+	}
+
+	public String getMarkComp() {
+		return markComp;
+	}
+
+	public void setMarkComp(String markComp) {
+		this.markComp = markComp;
 	}
 
 	public String getBuildComp() {
@@ -484,6 +495,7 @@ public class CompHouseAchievementDTO extends BaseDTO {
 				", markMoney = " + markMoney + 
 				", buildScale = " + buildScale + 
 				", regionType = " + regionType + 
+				", markComp = " + markComp + 
 				", buildComp = " + buildComp + 
 				", projectAddr = " + projectAddr + 
 				", contractDate = " + contractDate + 

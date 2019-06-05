@@ -28,6 +28,9 @@
 			<if test="regionType != null">
 				region_type,
 			</if>
+			<if test="markComp != null">
+				mark_comp,
+			</if>
 			<if test="buildComp != null">
 				build_comp,
 			</if>
@@ -150,6 +153,9 @@
 			</if>
 			<if test="regionType != null">
 				#{regionType},
+			</if>
+			<if test="markComp != null">
+				#{markComp},
 			</if>
 			<if test="buildComp != null">
 				#{buildComp},
@@ -282,6 +288,9 @@
 			<if test="item.regionType != null">
 				region_type,
 			</if>
+			<if test="item.markComp != null">
+				mark_comp,
+			</if>
 			<if test="item.buildComp != null">
 				build_comp,
 			</if>
@@ -404,6 +413,9 @@
 			</if>
 			<if test="item.regionType != null">
 				#{item.regionType},
+			</if>
+			<if test="item.markComp != null">
+				#{item.markComp},
 			</if>
 			<if test="item.buildComp != null">
 				#{item.buildComp},
@@ -544,6 +556,9 @@
 			<if test="regionType != null">
 				region_type = #{regionType},
 			</if>
+			<if test="markComp != null">
+				mark_comp = #{markComp},
+			</if>
 			<if test="buildComp != null">
 				build_comp = #{buildComp},
 			</if>
@@ -673,6 +688,9 @@
 			<if test="item.regionType != null">
 				region_type = #{item.regionType},
 			</if>
+			<if test="item.markComp != null">
+				mark_comp = #{item.markComp},
+			</if>
 			<if test="item.buildComp != null">
 				build_comp = #{item.buildComp},
 			</if>
@@ -785,7 +803,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, comp_id as compId, project_name as projectName, builder_name as builderName, mark_money as markMoney, build_scale as buildScale, region_type as regionType, build_comp as buildComp, project_addr as projectAddr, contract_date as contractDate, mark_date as markDate, name as name, certificate_num as certificateNum, constructors as constructors, constructors_certificate_num as constructorsCertificateNum, constructors_id_num as constructorsIdNum, quality_worker as qualityWorker, quality_worker_certificate_num as qualityWorkerCertificateNum, quality_worker_id_num as qualityWorkerIdNum, security_officer as securityOfficer, security_officer_certificate_num as securityOfficerCertificateNum, security_officer_id_num as securityOfficerIdNum, standard_worker as standardWorker, standard_worker_certificate_num as standardWorkerCertificateNum, standard_worker_id_num as standardWorkerIdNum, material_man as materialMan, material_man_certificate_num as materialManCertificateNum, material_man_id_num as materialManIdNum, mechanic as mechanic, mechanic_certificate_num as mechanicCertificateNum, mechanic_id_num as mechanicIdNum, labors as labors, labors_certificate_num as laborsCertificateNum, labors_id_num as laborsIdNum, data_clerk as dataClerk, data_clerk_certificate_num as dataClerkCertificateNum, data_clerk_id_num as dataClerkIdNum, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, comp_id as compId, project_name as projectName, builder_name as builderName, mark_money as markMoney, build_scale as buildScale, region_type as regionType, mark_comp as markComp, build_comp as buildComp, project_addr as projectAddr, contract_date as contractDate, mark_date as markDate, name as name, certificate_num as certificateNum, constructors as constructors, constructors_certificate_num as constructorsCertificateNum, constructors_id_num as constructorsIdNum, quality_worker as qualityWorker, quality_worker_certificate_num as qualityWorkerCertificateNum, quality_worker_id_num as qualityWorkerIdNum, security_officer as securityOfficer, security_officer_certificate_num as securityOfficerCertificateNum, security_officer_id_num as securityOfficerIdNum, standard_worker as standardWorker, standard_worker_certificate_num as standardWorkerCertificateNum, standard_worker_id_num as standardWorkerIdNum, material_man as materialMan, material_man_certificate_num as materialManCertificateNum, material_man_id_num as materialManIdNum, mechanic as mechanic, mechanic_certificate_num as mechanicCertificateNum, mechanic_id_num as mechanicIdNum, labors as labors, labors_certificate_num as laborsCertificateNum, labors_id_num as laborsIdNum, data_clerk as dataClerk, data_clerk_certificate_num as dataClerkCertificateNum, data_clerk_id_num as dataClerkIdNum, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -827,6 +845,9 @@
 		</if>
 		<if test="query != null and query.regionType != null and query.regionType != ''">
 			and region_type like concat('%', #{query.regionType}, '%')
+		</if>
+		<if test="query != null and query.markComp != null and query.markComp != ''">
+			and mark_comp like concat('%', #{query.markComp}, '%')
 		</if>
 		<if test="query != null and query.buildComp != null and query.buildComp != ''">
 			and build_comp like concat('%', #{query.buildComp}, '%')
