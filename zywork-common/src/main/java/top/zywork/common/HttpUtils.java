@@ -59,6 +59,18 @@ public class HttpUtils {
             .build();
 
     /**
+     * 重设timeout
+     * @param millis 毫秒数
+     */
+    public static void timeout(int millis) {
+        requestConfig = RequestConfig.custom()
+                .setSocketTimeout(millis)
+                .setConnectTimeout(millis)
+                .setConnectionRequestTimeout(millis)
+                .build();
+    }
+
+    /**
      * HTTP GET请求访问指定的url
      *
      * @param url url,包括查询字符串
