@@ -1024,15 +1024,6 @@ export default {
             trigger: 'blur'
           }
         ],
-        projectDetail: [
-          {
-            type: 'string',
-            min: 1,
-            max: 2000,
-            message: '必须1-2000个字符',
-            trigger: 'blur'
-          }
-        ],
         releaseStatus: [
           {
             type: 'string',

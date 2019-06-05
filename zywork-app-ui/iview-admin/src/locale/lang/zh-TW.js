@@ -29,6 +29,7 @@ export default {
   role_permission_query: '角色權限查詢',
   system_config_manage: '系統配置管理',
   system_config: '系統配寘管理',
+  system_info: '系統資訊配置管理',
   system_monitoring: '系統監控管理',
   spring_boot_admin: 'SpringBoot Admin',
   redis_cache: 'Redis緩存管理',

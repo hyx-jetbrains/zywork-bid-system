@@ -29,6 +29,7 @@ export default {
   role_permission_query: '角色权限查询',
   system_config_manage: '系统配置管理',
   system_config: '系统配置管理',
+  system_info: '系统信息配置管理',
   system_monitoring: '系统监控管理',
   redis_cache: 'Redis缓存管理',
   system_log: '系统日志管理',

@@ -650,6 +650,15 @@ export default [
         component: () => import('@/view/sys-config/SysConfig.vue')
       },
       {
+        path: 'SysInfo',
+        name: 'system_info',
+        meta: {
+          title: '系统信息管理',
+          icon: 'ios-cog'
+        },
+        component: () => import('@/view/sys-info/SysInfo.vue')
+      },
+      {
         path: 'Message',
         name: 'system_message',
         meta: {

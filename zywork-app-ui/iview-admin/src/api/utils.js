@@ -1,6 +1,8 @@
 import axios from '@/libs/api.request'
 import fileDownload from 'js-file-download'
 import * as ResponseStatus from '@/api/response-status'
+export const SYS_INFO_KEY = 'sysInfo'
+export const localStorage = window.localStorage
 /**
  * 根据指定的modal名打开模态框
  * @param self this
@@ -561,5 +563,31 @@ export const getOneById = (url, id) => {
     url: url + id,
     method: 'GET',
     data: ''
+  })
+}
+
+/**
+ * 获取信息信息，并存储到strong中
+ */
+export const getSysInfo = (self) => {
+  axios.request({
+    url: '/sys-info/any/sys-info',
+    method: 'GET',
+    data: ''
+  }).then(res => {
+    if (res.data.code !== ResponseStatus.OK) {
+      self.$Message.error(response.data.message)
+    } else {
+      if (res.data.data.total > 0) {
+        if (localStorage) {
+          localStorage.setItem(SYS_INFO_KEY, JSON.stringify(res.data.data.rows[0]))
+          localStorage.setItem('favicon', res.data.data.rows[0].headIcon)
+          self.loginStyle = { 'background-image': 'url(' + res.data.data.rows[0].backgroundIcon + ')' }
+        }
+      }
+    }
+  }).catch(error => {
+    console.log(error)
+    self.$Message.error('获取系统信息失败')
   })
 }

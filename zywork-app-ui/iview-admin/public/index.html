@@ -13,5 +13,17 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      (function () {
+          var faviconHref = localStorage.getItem('favicon');
+          if (faviconHref != null) {
+            var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = faviconHref;
+            document.getElementsByTagName('head')[0].appendChild(link);
+          }
+        })();
+    </script>
   </body>
 </html>

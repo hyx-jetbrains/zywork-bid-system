@@ -48,7 +48,9 @@ import { getNewTagList, getNextRoute, routeEqual } from '@/libs/util'
 import routers from '@/router/routers'
 import minLogo from '@/assets/images/logo-min.png'
 import maxLogo from '@/assets/images/logo.png'
+import userAvator from '@/assets/images/head.png'
 import './main.less'
+import { SYS_INFO_KEY, localStorage } from '@/api/utils.js'
 export default {
   name: 'Main',
   components: {
@@ -66,6 +68,7 @@ export default {
       collapsed: false,
       minLogo,
       maxLogo,
+      userAvator,
       isFullscreen: false
     }
   },
@@ -79,9 +82,10 @@ export default {
     tagRouter () {
       return this.$store.state.app.tagRouter
     },
-    userAvator () {
-      return this.$store.state.user.avatorImgPath
-    },
+    // userAvator () {
+      // return this.$store.state.user.avatorImgPath
+      // return this.userAvator
+    // },
     cacheList () {
       return ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
     },
@@ -178,6 +182,22 @@ export default {
     }
     // 获取未读消息条数
     this.getUnreadMessageCount()
+    // 设置logo
+    if (localStorage) {
+      var sysInfo = localStorage.getItem(SYS_INFO_KEY)
+      if (sysInfo !== undefined && sysInfo != null) {
+        sysInfo = JSON.parse(sysInfo)
+        if (sysInfo.menuIconMin !== null && sysInfo.menuIconMin !== '' && sysInfo.menuIconMin !== undefined) {
+          this.minLogo = sysInfo.menuIconMin
+        }
+        if (sysInfo.menuIconMax !== null && sysInfo.menuIconMax !== '' && sysInfo.menuIconMax !== undefined) {
+          this.maxLogo = sysInfo.menuIconMax
+        }
+        if (sysInfo.defaultHead !== null && sysInfo.defaultHead !== '' && sysInfo.defaultHead !== undefined) {
+          this.userAvator = sysInfo.defaultHead
+        }
+      }
+    }
   }
 }
 </script>

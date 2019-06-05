@@ -1,15 +1,15 @@
 <style lang="less">
-  @import './login.less';
+@import './login.less';
 </style>
 
 <template>
-  <div class="login">
+  <div class="login" :style="loginStyle">
     <div class="login-con">
       <Card icon="log-in" title="欢迎登录" :bordered="false">
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit" :loginBtn="loginBtn"></login-form>
           <!-- <p class="login-tip">输入任意用户名和密码即可</p> -->
-          <other-login></other-login>
+          <!-- <other-login></other-login> -->
         </div>
       </Card>
     </div>
@@ -22,20 +22,23 @@ import OtherLogin from '_c/other-login'
 import { mapActions, mapState, mapGetters } from 'vuex'
 import config from '@/config'
 import * as ResponseStatus from '@/api/response-status'
-import {hasOneOf} from '@/libs/tools'
+import { hasOneOf } from '@/libs/tools'
+import { getSysInfo, SYS_INFO_KEY, localStorage } from '@/api/utils.js'
+import backgroundImg from '@/assets/images/login-bg.jpg'
 export default {
   components: {
     LoginForm,
     OtherLogin
   },
-  data () {
+  data() {
     return {
       loginForm: {
-        'username': '',
-        'password': '',
-        'verifyCode': ''
+        username: '',
+        password: '',
+        verifyCode: ''
       },
-      loginBtn: false
+      loginBtn: false,
+      loginStyle: {}
     }
   },
   methods: {
@@ -45,7 +48,7 @@ export default {
       'getUserInfo',
       'clearTokenAndAccess'
     ]),
-    handleSubmit ({ username, password, verifyCode }) {
+    handleSubmit({ username, password, verifyCode }) {
       this.loginForm.username = username
       this.loginForm.password = password
       this.loginForm.verifyCode = verifyCode
@@ -87,10 +90,28 @@ export default {
   },
   mounted() {
     this.notice()
+    if (localStorage) {
+      const backgroundIcon = backgroundImg
+      var sysInfo = localStorage.getItem(SYS_INFO_KEY)
+      if (sysInfo !== undefined && sysInfo != null) {
+        sysInfo = JSON.parse(sysInfo)
+        if (
+          sysInfo.backgroundIcon !== null &&
+          sysInfo.backgroundIcon !== '' &&
+          sysInfo.backgroundIcon !== undefined
+        ) {
+          backgroundIcon = sysInfo.backgroundIcon
+        }
+      } else {
+        getSysInfo(this)
+      }
+      this.loginStyle = {
+        'background-image': 'url(' + backgroundIcon + ')'
+      }
+    }
   }
 }
 </script>
 
 <style>
-
 </style>
