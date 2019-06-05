@@ -13,15 +13,14 @@ import top.zywork.common.StringUtils;
 import top.zywork.dto.MarkCarpoolDTO;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.MarkCarpoolRecordDTO;
+import top.zywork.enums.NoticeEnum;
 import top.zywork.query.MarkCarpoolRecordQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.MarkCarpoolRecordService;
 import top.zywork.service.MarkCarpoolService;
-import top.zywork.vo.MarkCarpoolVO;
-import top.zywork.vo.ResponseStatusVO;
-import top.zywork.vo.PagerVO;
-import top.zywork.vo.MarkCarpoolRecordVO;
+import top.zywork.service.UserNoticeService;
+import top.zywork.vo.*;
 
 import java.util.List;
 
@@ -42,6 +41,8 @@ public class MarkCarpoolRecordController extends BaseController {
     private MarkCarpoolRecordService markCarpoolRecordService;
 
     private MarkCarpoolService markCarpoolService;
+
+    private UserNoticeService userNoticeService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated MarkCarpoolRecordVO markCarpoolRecordVO, BindingResult bindingResult) {
@@ -177,6 +178,16 @@ public class MarkCarpoolRecordController extends BaseController {
         markCarpoolRecordVO.setUserId(userId);
         markCarpoolRecordVO.setMarkCarpoolId(carpoolId);
         markCarpoolRecordService.save(BeanUtils.copy(markCarpoolRecordVO, MarkCarpoolRecordDTO.class));
+
+        UserNoticeVO userNoticeVO= new UserNoticeVO();
+        userNoticeVO.setUserId(markCarpoolVO.getUserId());
+        userNoticeVO.setItemId(markCarpoolVO.getId());
+        userNoticeVO.setPageUrl("publish-carpool-detail/publish-carpool-detail");
+        userNoticeVO.setTitle("开标拼车'"+markCarpoolVO.getStartCity()+ "' - '"+ markCarpoolVO.getEndCity()+"'申请记录");
+        userNoticeVO.setMainContent("您发起的开标拼车由'"+markCarpoolVO.getStartCity()+ "' - '"+ markCarpoolVO.getEndCity()+"'有一条新的申请记录");
+        userNoticeVO.setDetailContent("您发起的开标拼车由'"+markCarpoolVO.getStartCity()+"/"+markCarpoolVO.getStartAddr()+ "' - '"+ markCarpoolVO.getEndCity()+"/"+markCarpoolVO.getEndAddr()+"'有一条新的申请记录，具体内容可前往"+ userNoticeVO.getPageUrl()+"查看");
+        userNoticeVO.setNoticeType(NoticeEnum.MARKCARPOOL_MESSAGE.getValue());
+        userNoticeService.save(userNoticeVO);
         return ResponseStatusVO.ok("拼车成功", null);
     }
 
@@ -188,5 +199,10 @@ public class MarkCarpoolRecordController extends BaseController {
     @Autowired
     public void setMarkCarpoolService(MarkCarpoolService markCarpoolService) {
         this.markCarpoolService = markCarpoolService;
+    }
+
+    @Autowired
+    public void setUserNoticeService(UserNoticeService userNoticeService) {
+        this.userNoticeService = userNoticeService;
     }
 }

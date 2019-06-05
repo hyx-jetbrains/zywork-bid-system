@@ -11,4 +11,6 @@ import top.zywork.service.BaseService;
  * @version 1.0
  */
 public interface ProjectPythonService {
+
+    void saveProject(String data);
 }

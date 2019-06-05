@@ -2,19 +2,18 @@ import requests
 from bs4 import BeautifulSoup
 import time
 
-from model.project import Project
+from model.project.project import Project
 
 
-def get_house_projects():
-    current_house_file = open('current_house_file.txt', 'r+')
+def get_traffic_project():
+    current_traffic_file = open('current_traffic_file.txt', 'r+')
     # 获取已爬取的最新的链接
-    current_house_href = current_house_file.readline()
-    response = requests.get(url="http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001001/1.html")
+    current_traffic_href = current_traffic_file.readline()
+    response = requests.get(url="http://ggzy.jiangxi.gov.cn/web/jyxx/002002/002002002/jyxx.html")
     # 获取文本原来编码，使两者编码一致才能正确显示
     response.encoding = response.apparent_encoding
     # 使用的是html解析，一般使用lxml解析更好
     soup = BeautifulSoup(response.text, 'html5lib')
-    # find根据属性去获取对象，id,attr,tag...自定义属性
     target = soup.find('div', {'class': 'ewb-infolist'})
     li_list = target.ul.find_all('li')
     latest_flag = False
@@ -22,19 +21,19 @@ def get_house_projects():
     for li in li_list:
         href = 'http://ggzy.jiangxi.gov.cn' + li.a.get('href')
         # 如果已爬取的最新链接不等于现在抓取的链接，则表示网站有更新新数据
-        if current_house_href != href:
+        if current_traffic_href != href:
             if not latest_flag:
                 # 清除文件原内容
-                current_house_file.seek(0)
-                current_house_file.truncate()
+                current_traffic_file.seek(0)
+                current_traffic_file.truncate()
                 # 记录新链接到文件中
-                current_house_file.write(href)
+                current_traffic_file.write(href)
                 latest_flag = True
         else:
             # 网站没有更新新数据，则停止爬取
             break
         project = Project()
-        project.projectType = '房建市政'
+        project.projectType = '交通工程'
         project.title = li.a.text
         project.sourceUrl = href
         # 打开招标详情页面
@@ -49,7 +48,7 @@ def get_house_projects():
         project.projectDetail = str(article_info)
         project.noticeTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         projects.append(project.__dict__)
-    current_house_file.close()
+    current_traffic_file.close()
     print(projects)
     return projects
 
@@ -78,3 +77,4 @@ def get_from_td(article_info, zh_text):
             text = td.next_sibling.next_sibling.span.text
             return text
     return None
+
