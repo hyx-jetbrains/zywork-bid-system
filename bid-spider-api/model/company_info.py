@@ -513,21 +513,25 @@ def set_comp_achievement_info(controls, compType):
                 compAchievement.workAddr = data['biaoduanaddress']
                 startDate = format_date_time(data['kaigongdate'])
                 compAchievement.startDate = startDate
-                endDate = format_date_time(data['xiangmuendtime'])
+                endDate = format_date_time(data['jungongdate'])
                 compAchievement.endDate = endDate
+                validStatus = data['auditstatus']
+                if validStatus == '3':
+                    validStatus = '审核通过'
+                compAchievement.validStatus = validStatus
             elif compType == compTypeWaterBidder:
                 compAchievement.contractAmount = data['hetongjine']
                 startDate = format_date_time(data['kaigongdate'])
                 compAchievement.startDate = startDate
                 endDate = format_date_time(data['jungongdate'])
-                compAchievement.name = data['pname']
                 compAchievement.endDate = endDate
+                compAchievement.name = data['pname']
             elif compType == compTypeKeyProjectBidder:
                 compAchievement.buildComp = data['jianshedanweiname']
                 compAchievement.markMoney = data['zhongbiaojine']
                 startDate = format_date_time(data['kaigongdate'])
                 compAchievement.startDate = startDate
-                endDate = format_date_time(data['xiangmuendtime'])
+                endDate = format_date_time(data['jungongdate'])
                 compAchievement.endDate = endDate
             elif compType == compTypeWaterMonitorBidder:
                 compAchievement.projectType = data['xiangmutype']
@@ -538,7 +542,7 @@ def set_comp_achievement_info(controls, compType):
                 startDate = format_date_time(data['kaigongdate'])
                 compAchievement.startDate = startDate
             elif compType == compTypeWaterDeviseBidder:
-                compAchievement.projectType = data['xiangmutype']
+                compAchievement.tenderingComp = data['xiangmutype']
                 compAchievement.buildComp = data['jianshedanweiname']
                 compAchievement.contractAmount = data['hetongjine']
                 compAchievement.name = data['pname']

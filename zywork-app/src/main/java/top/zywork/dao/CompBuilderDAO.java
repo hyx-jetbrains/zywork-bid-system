@@ -1,6 +1,7 @@
 package top.zywork.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import top.zywork.query.PageQuery;
 
@@ -25,4 +26,6 @@ public interface CompBuilderDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByCompIdAndName(@Param("compId") Long compId, @Param("name") String name);
 }

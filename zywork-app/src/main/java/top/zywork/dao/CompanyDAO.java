@@ -25,4 +25,6 @@ public interface CompanyDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByName(@Param("compName") String compName);
 }

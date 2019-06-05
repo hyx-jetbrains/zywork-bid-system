@@ -25,4 +25,6 @@ public interface CompPersonnelDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByCompIdAndName(@Param("compId") Long compId, @Param("name") String name);
 }

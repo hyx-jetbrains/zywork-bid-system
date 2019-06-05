@@ -260,7 +260,7 @@ DROP TABLE IF EXISTS `t_comp_house_achievement`;
 CREATE TABLE `t_comp_house_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业房建业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
-  `project_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `builder_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册建造师',
   `mark_money` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标金额',
   `build_scale` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设规模',
@@ -309,7 +309,7 @@ DROP TABLE IF EXISTS `t_comp_key_project_achievement`;
 CREATE TABLE `t_comp_key_project_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业重点工程业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
-  `project_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
   `mark_money` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标金额',
   `start_date` date NULL DEFAULT NULL COMMENT '开工时间',
@@ -345,7 +345,7 @@ DROP TABLE IF EXISTS `t_comp_traffic_achievement`;
 CREATE TABLE `t_comp_traffic_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业交通业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
-  `project_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
   `technology_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '技术负责人',
   `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
@@ -367,7 +367,7 @@ DROP TABLE IF EXISTS `t_comp_water_achievement`;
 CREATE TABLE `t_comp_water_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
-  `project_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
   `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
   `start_date` date NULL DEFAULT NULL COMMENT '开工时间',
@@ -386,7 +386,7 @@ DROP TABLE IF EXISTS `t_comp_water_devise_achievement`;
 CREATE TABLE `t_comp_water_devise_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利勘查设计业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
-  `project_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '标段(包)名称',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '标段(包)名称',
   `tendering_comp` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
   `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标(单位)人',
   `mark_date` date NULL DEFAULT NULL COMMENT '中标时间',
@@ -406,7 +406,7 @@ DROP TABLE IF EXISTS `t_comp_water_monitor_achievement`;
 CREATE TABLE `t_comp_water_monitor_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利监理业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
-  `project_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `project_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
   `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
   `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
@@ -426,7 +426,7 @@ DROP TABLE IF EXISTS `t_company`;
 CREATE TABLE `t_company`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业编号',
   `jurisdiction_type` tinyint(4) NULL DEFAULT 0 COMMENT '辖区类别',
-  `city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '市区',
+  `city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '市区',
   `comp_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业类型',
   `industry_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '行业分类',
   `comp_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '企业名称',

@@ -25,4 +25,6 @@ public interface CompKeyProjectAchievementDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    Object getByCompIdAndProjectName(@Param("compId") Long compId, @Param("projectName") String projectName);
 }
