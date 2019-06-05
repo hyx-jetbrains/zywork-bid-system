@@ -3,7 +3,10 @@ package top.zywork.python.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import top.zywork.common.IOUtils;
+import top.zywork.common.UUIDUtils;
 import top.zywork.dao.ProjectDAO;
 import top.zywork.python.ProjectPythonService;
 import top.zywork.vo.ProjectVO;
@@ -21,6 +24,9 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
 
     private ProjectDAO projectDAO;
 
+    @Value("${projectDetail.uri}")
+    private String uri;
+
     @Override
     public void saveProject(String data) {
         if(data != null) {
@@ -28,6 +34,10 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
             if(jsonArray != null && jsonArray.size()> 0) {
                 for (int i = 0; i < jsonArray.size() ; i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
+
+                    uri = uri + UUIDUtils.uuid() +".html";
+                    IOUtils.writeText(obj.getString("projectDetail"),uri);
+
                     ProjectVO projectVO = new ProjectVO();
                     projectVO.setTitle(obj.getString("title"));
                     projectVO.setProjectType(obj.getString("projectType"));
@@ -56,6 +66,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setInMarkComp(obj.getString("inMarkComp"));
                     projectVO.setNoticeTime(obj.getDate("noticeTime"));
                     projectVO.setSourceUrl(obj.getString("sourceUrl"));
+                    projectVO.setInwardHtmlUrl(uri);
                     projectDAO.save(projectVO);
                 }
             }
