@@ -38,4 +38,10 @@ public class PythonConstants {
      * 企业类型-水利勘查设计单位
      */
     public static final String COMPANY_TYPE_WATER_DEVISE = "水利勘查设计单位";
+
+
+    /**
+     * 超时时间
+     */
+    public static final int TIME_OUT = 60000;
 }

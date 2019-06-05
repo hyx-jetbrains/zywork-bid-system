@@ -67,8 +67,8 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     .append(pageNo)
                     .append("&pageSize=")
                     .append(pageSize);
+            HttpUtils.timeout(PythonConstants.TIME_OUT);
             String content = HttpUtils.get(url.toString());
-            System.err.println(content);
             JSONArray jsonArray = JSON.parseArray(content);
             if (null == jsonArray) {
                 logger.error("未获取到企业信息");
