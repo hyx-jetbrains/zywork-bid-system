@@ -1364,6 +1364,7 @@ export const getMyServiceUserCenter = (self) => {
 					})
 
 				}
+			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 			} else {
 				showInfoToast(res.data.message)
 			}
