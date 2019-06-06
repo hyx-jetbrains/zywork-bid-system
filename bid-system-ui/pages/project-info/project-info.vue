@@ -383,9 +383,6 @@
 					key: SHARE_CODE,
 					data: options.shareCode
 				});
-				uni.showModal({
-					title: 'test:' + options.shareCode
-				})
 			}
 		},
 		onPullDownRefresh() {
