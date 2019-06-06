@@ -1093,7 +1093,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        phone: [
+        /* phone: [
           {
             type: 'string',
             min: 1,
@@ -1101,7 +1101,7 @@ export default {
             message: '必须1-11个字符',
             trigger: 'blur'
           }
-        ],
+        ], */
         otherDemand: [
           {
             type: 'string',
