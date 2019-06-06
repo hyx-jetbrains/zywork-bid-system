@@ -169,6 +169,7 @@ export const getUserDetail = (self) => {
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
 				removeUserToken()
+				removeOpenid()
 				xcxLogin(self)
 			} else {
 				showInfoToast(res.data.message)
