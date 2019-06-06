@@ -416,6 +416,9 @@
 			/** 初始化客服悬浮 */
 			initCustomerFab() {
 				var customer = uni.getStorageSync(CUSTOMER_CONFIG);
+				if (null == customer) {
+					return;
+				}
 				this.customer = customer;
 				if (customer.isShow === 'true') {
 					this.customerShow = true;
