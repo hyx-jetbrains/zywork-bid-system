@@ -16,7 +16,7 @@
 						</DropdownMenu>
 					</Dropdown>&nbsp;
 					<Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
-          <Button @click="crawlData" type="primary">爬取数据</Button>&nbsp;
+          <Button @click="crawlData" :loading="loading.python" type="primary">爬取数据</Button>&nbsp;
 					<Tooltip content="刷新" placement="right">
 						<Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
 					</Tooltip>
@@ -837,7 +837,8 @@
 				loading: {
 					add: false,
 					edit: false,
-					search: false
+          search: false,
+          python: false
 				},
 				urls: {
 					addUrl: '/comp-house-achievement/admin/save',
@@ -1793,6 +1794,7 @@
       },
       // 爬取数据
       crawlData() {
+        this.loading.python = true
         axios.request({
           url: this.urls.pythonUpdateDataUrl,
           method: 'GET',
@@ -1803,6 +1805,7 @@
           } else {
             this.$Message.success(res.data.message)
           }
+          this.loading.python = false
         }).catch(err => {
           console.log(err)
           this.$Message.error("爬取数据失败")

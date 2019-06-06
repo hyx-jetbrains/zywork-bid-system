@@ -330,7 +330,13 @@
 		</Modal>
     <Modal v-model="modal.python" title="爬取数据" @on-visible-change="changeModalVisibleResetForm('pythonForm', $event)">
       <Form ref="pythonForm" :model="python" :label-width="80" :rules="validateRules">
-				<FormItem label="企业类型" prop="type">
+				<FormItem label="数据来源" prop="sourse">
+					<a href="http://jxsggzy.cn/web/tradeSubject_list.html" target="_blank">http://jxsggzy.cn/web/tradeSubject_list.html</a>
+				</FormItem>
+        <FormItem label="爬取说明" prop="desc">
+					爬取到相关的企业信息的同时，会爬取该企业相关的数据，如：企业人员、企业业绩、企业资质、企业建造师
+				</FormItem>
+        <FormItem label="企业类型" prop="type">
 					<Select v-model="python.compType" placeholder="请选择企业类型" @on-change="initIndustryTypeList">
 						<i-option v-for="item in compTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
 					</Select>
