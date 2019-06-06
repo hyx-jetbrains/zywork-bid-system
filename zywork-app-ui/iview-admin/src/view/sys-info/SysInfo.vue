@@ -654,7 +654,6 @@ const baseUrl =
     : config.baseUrl.pro
 const cdnUrl = config.baseUrl.cdnUrl
 import { getLocalStorageToken, localStorage } from '@/libs/util'
-export const SYS_INFO_KEY = 'sysInfo'
 
 export default {
   name: 'SysInfo',
@@ -1295,9 +1294,8 @@ export default {
               } else {
                 this.$Message.success(response.data.message)
                 // 说明更新成功了
-                console.log(this.form)
                 if (localStorage) {
-                  localStorage.setItem(SYS_INFO_KEY, JSON.stringify(this.form))
+                  localStorage.setItem(utils.SYS_INFO_KEY, JSON.stringify(this.form))
                   localStorage.setItem('favicon', this.form.headIcon)
                 }
                 this.resetForm('editForm')
@@ -1312,18 +1310,6 @@ export default {
             })
         }
       })
-      // var tempForm = this.form
-      // console.log(tempForm)
-      // utils.edit(this).then(res => {
-      //   if (res.data.code === ResponseStatus.OK) {
-      //     // 说明更新成功了
-      //     console.log(tempForm)
-      //     if (localStorage) {
-      //       localStorage.setItem(SYS_INFO_KEY, JSON.stringify(tempForm))
-      //       localStorage.setItem('favicon', tempForm.headIcon)
-      //     }
-      //   }
-      // })
     },
     active(row) {
       utils.active(this, row)
