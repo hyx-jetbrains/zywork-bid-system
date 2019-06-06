@@ -137,45 +137,61 @@ export const region = [
  * @description 企业类型
  */
 export const compType = [
-	{
-		value: '代理机构',
-		label: '代理机构'
-	},
-	{
-		value: '投标人',
-		label: '投标人'
-	}
+  {
+    value: '1',
+    label: '代理机构'
+  },
+  {
+    value: '3',
+    label: '投标人'
+  }
 ]
 
 /**
  * @description行业类型
  */
-export const industryType = [
-	{
-		value: '施工单位',
-		label: '施工单位'
-	},
-	{
-		value: '供应商',
-		label: '供应商'
-	},
-	{
-		value: '招标代理',
-		label: '招标代理'
-	},
-	{
-		value: '监理',
-		label: '监理'
-	},
-	{
-		value: '设计',
-		label: '设计'
-	},
-	{
-		value: '业主',
-		label: '业主'
-	}
-]
+export const industryType = {
+  '1' : [
+    {
+      value: '181',
+      label: '房建招标代理'
+    },
+    {
+      value: '182',
+      label: '交通招标代理'
+    },
+    {
+      value: '183',
+      label: '水利招标代理'
+    }
+  ],
+  '3': [
+    {
+      value: '131',
+      label: '房建及市政施工单位'
+    },
+    {
+      value: '132',
+      label: '交通施工单位'
+    },
+    {
+      value: '133',
+      label: '水利施工单位'
+    },
+    {
+      value: '135',
+      label: '重点工程投标单位'
+    },
+    {
+      value: '143',
+      label: '水利监理单位'
+    },
+    {
+      value: '163',
+      label: '水利勘查设计单位'
+    }
+  ]
+}
 
 /**
  * @description 招投标项目城市下拉框，江西省的所有市
@@ -1348,5 +1364,19 @@ export const recruitStatusSelect = [
   {
     value: '已停止',
     label: '已停止'
+  }
+]
+
+/**
+ * 企业分类
+ */
+export const pythonTypeSelect = [
+  {
+    value: '1',
+    label: '代理机构'
+  },
+  {
+    value: '3',
+    label: '投标人'
   }
 ]

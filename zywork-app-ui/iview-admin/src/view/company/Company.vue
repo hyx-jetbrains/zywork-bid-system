@@ -16,6 +16,7 @@
 						</DropdownMenu>
 					</Dropdown>&nbsp;
 					<Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
+          <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
 					<Tooltip content="刷新" placement="right">
 						<Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
 					</Tooltip>
@@ -41,13 +42,13 @@
 					<Cascader :data="cityData" v-model="tempAddress" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="企业类型" prop="compType">
-					<Select v-model="form.compType" placeholder="请输入企业类型" clearable filterable @on-change="initcompType">
-						<i-option v-for="item in compTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					<Select v-model="form.compType" placeholder="请输入企业类型" @on-change="initIndustryType">
+						<i-option v-for="item in compTypeList" :value="item.label" :key="item.value">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
 				<FormItem label="行业分类" prop="industryType">
-					<Select v-model="form.industryType" placeholder="请输入行业分类" clearable filterable @on-change="initIndustryType">
-						<i-option v-for="item in industryTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					<Select v-model="form.industryType" placeholder="请输入行业分类">
+						<i-option v-for="item in industryTypeList" :value="item.label" :key="item.value">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
 				<FormItem label="企业名称" prop="compName">
@@ -103,12 +104,14 @@
 					<Cascader :data="cityData" v-model="tempAddress" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="企业类型" prop="compType">
-					<Select v-model="form.compType" placeholder="请输入企业类型" clearable filterable @on-change="initcompType">
-						<i-option v-for="item in compTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					<Select v-model="form.compType" placeholder="请输入企业类型" @on-change="initIndustryType">
+						<i-option v-for="item in compTypeList" :value="item.label" :key="item.value">{{item.label}}</i-option>
 					</Select>
 				</FormItem>
 				<FormItem label="行业分类" prop="industryType">
-					<Input v-model="form.industryType" placeholder="请输入行业分类" />
+					<Select v-model="form.industryType" placeholder="请输入行业分类">
+						<i-option v-for="item in industryTypeList" :value="item.label" :key="item.value">{{item.label}}</i-option>
+					</Select>
 				</FormItem>
 				<FormItem label="企业名称" prop="compName">
 					<Input v-model="form.compName" placeholder="请输入企业名称" />
@@ -325,6 +328,30 @@
 			<p>是否激活: <span v-text="form.isActive"></span></p>
 
 		</Modal>
+    <Modal v-model="modal.python" title="爬取数据" @on-visible-change="changeModalVisibleResetForm('pythonForm', $event)">
+      <Form ref="pythonForm" :model="python" :label-width="80" :rules="validateRules">
+				<FormItem label="企业类型" prop="type">
+					<Select v-model="python.compType" placeholder="请选择企业类型" @on-change="initIndustryTypeList">
+						<i-option v-for="item in compTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
+				</FormItem>
+        <FormItem label="行业分类" prop="compType">
+					<Select v-model="python.industryType" placeholder="请选择行业类型">
+						<i-option v-for="item in industryTypeList" :value="item.value" :key="item.key">{{item.label}}</i-option>
+					</Select>
+				</FormItem>
+				<FormItem label="页码" prop="pageNo">
+					<Input v-model="python.pageNo" placeholder="请输入更新页码" />
+				</FormItem>
+				<FormItem label="个数" prop="pageSize">
+					<Input v-model="python.pageSize" placeholder="请输入爬取个数" />
+				</FormItem>
+			</Form>
+			<div slot="footer">
+				<Button type="text" size="large" @click="cancelModal('python')">取消</Button>
+				<Button type="primary" size="large" @click="crawlData" :loading="loading.python">爬取</Button>
+			</div>
+		</Modal>
 	</div>
 </template>
 
@@ -335,8 +362,10 @@
 		projectCity,
 		region,
 		compType,
-		industryType
-	} from '@/api/select'
+    industryType,
+  } from '@/api/select'
+  import axios from '@/libs/api.request'
+  import * as ResponseStatus from '@/api/response-status'
 
 	export default {
 		name: 'Company',
@@ -344,7 +373,8 @@
 			return {
 				regionList: region,
 				compTypeList: compType,
-				industryTypeList: industryType,
+        industryTypeList: [],
+        tempIndustryTypeList: industryType,
 				cityData: city,
 				tempAddress: [],
 				regAddress: [],
@@ -353,12 +383,14 @@
 					add: false,
 					edit: false,
 					search: false,
-					detail: false
+          detail: false,
+          python: false
 				},
 				loading: {
 					add: false,
 					edit: false,
-					search: false
+          search: false,
+          pythone: false
 				},
 				urls: {
 					addUrl: '/company/admin/save',
@@ -371,11 +403,18 @@
 					batchRemoveUrl: '/company/admin/batch-remove',
 					detailUrl: '/company/admin/one/',
 					activeUrl: '/company/admin/active',
-					batchActiveUrl: '/company/admin/batch-active'
+          batchActiveUrl: '/company/admin/batch-active',
+          pythonUpdateDataUrl: '/company/admin/python'
 				},
 				page: {
 					total: 0
-				},
+        },
+        python: {
+          industryType: null,
+          compType: null,
+          pageNo: '1',
+          pageSize: '10'
+        },
 				form: {
 					id: null,
 					jurisdictionType: null,
@@ -814,7 +853,7 @@
 				descriptionAutoSize: {
 					minRows: 3,
 					maxRows: 5
-				},
+        },
 			}
 		},
 		computed: {},
@@ -826,8 +865,14 @@
 				if (modal === 'add') {
 					this.tempAddress = []
 					this.regAddress = []
-					this.compAddr = []
-				}
+          this.compAddr = []
+          this.form.compType = this.compTypeList[0].label
+          this.initIndustryTypeList(this.compTypeList[0].value)
+        }
+        if (modal === 'python') {
+          this.python.compType = this.compTypeList[0].value
+          this.initIndustryTypeList(this.python.compType)
+        }
 				utils.showModal(this, modal)
 			},
 			changeModalVisibleResetForm(formRef, visible) {
@@ -877,7 +922,9 @@
 					var compAddr = this.form.compAddr.split("/")
 					for (var i = 0; compAddr.length > i; i++) {
 						this.compAddr.push(compAddr[i])
-					}
+          }
+          
+          this.editInitIndustryType(this.form.compType)
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
 					this.form = JSON.parse(JSON.stringify(row))
@@ -937,13 +984,51 @@
 			},
 			initJurisdictionType(val) {
 				this.form.jurisdictionType = val
-			},
-			initcompType(val) {
-				this.form.compType = val
-			},
-			initIndustryType(val) {
-				this.form.industryType = val
-			}
+      },
+      editInitIndustryType(val) {
+        this.industryTypeList = []
+        if (val === '代理机构') {
+          this.industryTypeList = this.tempIndustryTypeList['1']
+        } else if (val === '投标人') {
+          this.industryTypeList = this.tempIndustryTypeList['3']
+        }
+      },
+      initIndustryType(val) {
+        if (val === '代理机构') {
+          this.initIndustryTypeList('1')
+        } else if (val === '投标人') {
+          this.initIndustryTypeList('3')
+        }
+      },
+			initIndustryTypeList(val) {
+        this.industryTypeList = []
+        this.industryTypeList = this.tempIndustryTypeList[val]
+        if (this.industryTypeList !== undefined && this.industryTypeList.length > 0) {
+          this.python.industryType = this.industryTypeList[0].value
+          this.form.industryType = this.industryTypeList[0].label
+        }
+      },
+      // 爬取数据
+      crawlData() {
+        this.loading.python = true
+        axios.request({
+          url: this.urls.pythonUpdateDataUrl,
+          method: 'POST',
+          data: this.python,
+        }).then(res => {
+          console.log(res)
+          this.loading.python = false
+          if (res.data.code !== ResponseStatus.OK) {
+            this.$Message.error(res.data.message)
+          } else {
+            this.$Message.success(res.data.message)
+          }
+          this.cancelModal('python')
+        }).catch(err => {
+          console.log(err)
+          this.$Message.error("爬取数据失败")
+        })
+      }
 		}
 	}
 </script>

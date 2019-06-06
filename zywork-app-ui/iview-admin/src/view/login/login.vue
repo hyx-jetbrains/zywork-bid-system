@@ -91,7 +91,7 @@ export default {
   mounted() {
     this.notice()
     if (localStorage) {
-      const backgroundIcon = backgroundImg
+      var backgroundIcon = backgroundImg
       var sysInfo = localStorage.getItem(SYS_INFO_KEY)
       if (sysInfo !== undefined && sysInfo != null) {
         sysInfo = JSON.parse(sysInfo)

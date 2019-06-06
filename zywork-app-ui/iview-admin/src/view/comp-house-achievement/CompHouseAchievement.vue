@@ -16,6 +16,7 @@
 						</DropdownMenu>
 					</Dropdown>&nbsp;
 					<Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
+          <Button @click="crawlData" type="primary">爬取数据</Button>&nbsp;
 					<Tooltip content="刷新" placement="right">
 						<Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
 					</Tooltip>
@@ -30,7 +31,7 @@
 				</Card>
 			</i-col>
 		</Row>
-		<Modal v-model="modal.add" title="添加" width="800" @on-visible-change="changeModalVisibleResetForm('addForm', $event)">
+		<Modal v-model="modal.add" title="添加" width="900" @on-visible-change="changeModalVisibleResetForm('addForm', $event)">
 			<Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
 				<Row>
 					<i-col span="12">
@@ -266,7 +267,7 @@
 			</div>
 		</Modal>
 		
-		<Modal v-model="modal.edit" title="修改" width="800" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
+		<Modal v-model="modal.edit" title="修改" width="900" @on-visible-change="changeModalVisibleResetForm('editForm', $event)">
 			<Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
 				<Row>
 					<i-col span="12">
@@ -551,6 +552,9 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="searchForm.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
+        <FormItem label="中标单位" prop="markComp">
+					<Input v-model="searchForm.markomp" placeholder="请输入中标单位" />
+				</FormItem>
 				<FormItem label="工程地址" prop="projectAddr">
 					<Input v-model="searchForm.projectAddr" placeholder="请输入工程地址" />
 				</FormItem>
@@ -747,6 +751,7 @@
 			<p>建设规模: <span v-text="form.buildScale"></span></p>
 			<p>项目所属地区归类: <span v-text="form.regionType"></span></p>
 			<p>建设单位: <span v-text="form.buildComp"></span></p>
+      <p>中标单位: <span v-text="form.markComp"></span></p>
 			<p>工程地址: <span v-text="form.projectAddr"></span></p>
 			<p>合同签订日期: <span v-text="form.contractDate"></span></p>
 			<p>中标日期: <span v-text="form.markDate"></span></p>
@@ -806,7 +811,9 @@
 	import city from '@/api/city.json'
 	import {getCompanyById} from '@/api/module'
 	import CompanyDetail from '@/view/company/CompanyDetail.vue'
-	import CompanyListSingle from '@/view/company/CompanyListSingle.vue'
+  import CompanyListSingle from '@/view/company/CompanyListSingle.vue'
+  import axios from '@/libs/api.request'
+  import * as ResponseStatus from '@/api/response-status'
 
 	export default {
 		name: 'CompHouseAchievement',
@@ -843,7 +850,8 @@
 					batchRemoveUrl: '/comp-house-achievement/admin/batch-remove',
 					detailUrl: '/comp-house-achievement/admin/one/',
 					activeUrl: '/comp-house-achievement/admin/active',
-					batchActiveUrl: '/comp-house-achievement/admin/batch-active'
+          batchActiveUrl: '/comp-house-achievement/admin/batch-active',
+          pythonUpdateDataUrl: '/comp-house-achievement/admin/python'
 				},
 				page: {
 					total: 0
@@ -857,7 +865,8 @@
 					markMoneyDisplay: null,
 					buildScale: null,
 					regionType: null,
-					buildComp: null,
+          buildComp: null,
+          markComp: null,
 					projectAddr: null,
 					contractDate: null,
 					markDate: null,
@@ -1171,7 +1180,8 @@
 					markMoney: null,
 					buildScale: null,
 					regionType: null,
-					buildComp: null,
+          buildComp: null,
+          markComp: null,
 					projectAddr: null,
 					contractDate: null,
 					contractDateMin: null,
@@ -1340,6 +1350,12 @@
 						{
 							title: '建设单位',
 							key: 'buildComp',
+							minWidth: 200,
+							sortable: true
+            },
+            {
+							title: '中标单位',
+							key: 'markComp',
 							minWidth: 200,
 							sortable: true
 						},
@@ -1774,7 +1790,24 @@
 			},
 			changePageSize(pageSize) {
 				utils.changePageSize(this, pageSize)
-			}
+      },
+      // 爬取数据
+      crawlData() {
+        axios.request({
+          url: this.urls.pythonUpdateDataUrl,
+          method: 'GET',
+          data: '',
+        }).then(res => {
+          if (res.data.code !== ResponseStatus.OK) {
+            this.$Message.error(res.data.message)
+          } else {
+            this.$Message.success(res.data.message)
+          }
+        }).catch(err => {
+          console.log(err)
+          this.$Message.error("爬取数据失败")
+        })
+      }
 		}
 	}
 </script>
