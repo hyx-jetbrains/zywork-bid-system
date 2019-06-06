@@ -31,7 +31,7 @@ public class CompInfoTrafficBidderJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompInfoTrafficBidderJob......");
-        companyPythonService.getCompanyInfo(PythonConstants.TYPE_AGENT, PythonConstants.COMP_TYPE_TRAFFIC_BIDDER, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
+        companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_TRAFFIC_BIDDER, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
         pageNo++;
         logger.info("executed CompInfoTrafficBidderJob......");
     }
