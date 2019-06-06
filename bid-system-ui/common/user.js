@@ -386,7 +386,7 @@ export const getUserWork = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.userWork = res.data.data
+				self.userWork = nullToStr(res.data.data)
 			} else {
 				showInfoToast(res.data.message)
 			}

@@ -41,6 +41,9 @@
 	import {
 		genderArray
 	} from '@/common/picker.data.js'
+	import {
+		nullToStr
+	} from '@/common/util.js'
 	export default {
 		components: {
 			uniList,
@@ -77,6 +80,8 @@
 			} catch (error) {
 				this.user = JSON.parse(payload);
 			}
+			this.user = nullToStr(this.user);
+			console.log(this.user);
 			this.initData()
 		},
 		methods: {
