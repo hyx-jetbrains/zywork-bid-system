@@ -880,6 +880,9 @@ export default {
             sortable: true,
             render: (h, params) => {
               const imgSrc = params.row.headIcon
+              if (imgSrc == null || imgSrc == '' || imgSrc == undefined) {
+                return h('span',{},'暂无图片')
+              }
               return h(
                 'img',
                 {
@@ -908,6 +911,9 @@ export default {
             sortable: true,
             render: (h, params) => {
               const imgSrc = params.row.menuIconMin
+              if (imgSrc == null || imgSrc == '' || imgSrc == undefined) {
+                return h('span',{},'暂无图片')
+              }
               return h(
                 'img',
                 {
@@ -936,6 +942,9 @@ export default {
             sortable: true,
             render: (h, params) => {
               const imgSrc = params.row.menuIconMax
+              if (imgSrc == null || imgSrc == '' || imgSrc == undefined) {
+                return h('span',{},'暂无图片')
+              }
               return h(
                 'img',
                 {
@@ -964,6 +973,9 @@ export default {
             sortable: true,
             render: (h, params) => {
               const imgSrc = params.row.defaultHead
+              if (imgSrc == null || imgSrc == '' || imgSrc == undefined) {
+                return h('span',{},'暂无图片')
+              }
               return h(
                 'img',
                 {
@@ -992,6 +1004,9 @@ export default {
             sortable: true,
             render: (h, params) => {
               const imgSrc = params.row.backgroundIcon
+              if (imgSrc == null || imgSrc == '' || imgSrc == undefined) {
+                return h('span',{},'暂无图片')
+              }
               return h(
                 'img',
                 {
