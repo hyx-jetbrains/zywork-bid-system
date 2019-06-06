@@ -82,10 +82,10 @@
           <!-- <Input v-model="form.headIcon" placeholder="请输入头部图标"/> -->
           <div class="demo-upload-list" v-if="form.headIcon !== '' && form.headIcon !== null">
             <img :src="form.headIcon">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.headIcon)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('headIcon')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.headIcon)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('headIcon')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadHeadIcon"
@@ -110,10 +110,10 @@
           <!-- <Input v-model="form.menuIconMin" placeholder="请输入菜单小图标"/> -->
           <div class="demo-upload-list" v-if="form.menuIconMin !== '' && form.menuIconMin !== null">
             <img :src="form.menuIconMin">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMin)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMin')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMin)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMin')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadMenuIconMin"
@@ -138,10 +138,10 @@
           <!-- <Input v-model="form.menuIconMax" placeholder="请输入菜单大图标"/> -->
           <div class="demo-upload-list" v-if="form.menuIconMax !== '' && form.menuIconMax !== null">
             <img :src="form.menuIconMax">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMax)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMax')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMax)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMax')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadMenuIconMax"
@@ -166,10 +166,10 @@
           <!-- <Input v-model="form.defaultHead" placeholder="请输入默认头像"/> -->
           <div class="demo-upload-list" v-if="form.defaultHead !== '' && form.defaultHead !== null">
             <img :src="form.defaultHead">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.defaultHead)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('defaultHead')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.defaultHead)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('defaultHead')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadDefaultHead"
@@ -192,12 +192,15 @@
         </FormItem>
         <FormItem label="背景图片" prop="backgroundIcon">
           <!-- <Input v-model="form.backgroundIcon" placeholder="请输入背景图片"/> -->
-          <div class="demo-upload-list" v-if="form.backgroundIcon !== '' && form.backgroundIcon !== null">
+          <div
+            class="demo-upload-list"
+            v-if="form.backgroundIcon !== '' && form.backgroundIcon !== null"
+          >
             <img :src="form.backgroundIcon">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.backgroundIcon)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('backgroundIcon')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.backgroundIcon)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('backgroundIcon')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadBackgroundIcon"
@@ -258,10 +261,10 @@
           <!-- <Input v-model="form.headIcon" placeholder="请输入头部图标"/> -->
           <div class="demo-upload-list" v-if="form.headIcon !== '' && form.headIcon !== null">
             <img :src="form.headIcon">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.headIcon)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('headIcon')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.headIcon)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('headIcon')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadHeadIcon"
@@ -286,10 +289,10 @@
           <!-- <Input v-model="form.menuIconMin" placeholder="请输入菜单小图标"/> -->
           <div class="demo-upload-list" v-if="form.menuIconMin !== '' && form.menuIconMin !== null">
             <img :src="form.menuIconMin">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMin)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMin')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMin)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMin')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadMenuIconMin"
@@ -314,10 +317,10 @@
           <!-- <Input v-model="form.menuIconMax" placeholder="请输入菜单大图标"/> -->
           <div class="demo-upload-list" v-if="form.menuIconMax !== '' && form.menuIconMax !== null">
             <img :src="form.menuIconMax">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMax)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMax')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.menuIconMax)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('menuIconMax')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadMenuIconMax"
@@ -342,10 +345,10 @@
           <!-- <Input v-model="form.defaultHead" placeholder="请输入默认头像"/> -->
           <div class="demo-upload-list" v-if="form.defaultHead !== '' && form.defaultHead !== null">
             <img :src="form.defaultHead">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.defaultHead)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('defaultHead')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.defaultHead)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('defaultHead')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadDefaultHead"
@@ -368,12 +371,15 @@
         </FormItem>
         <FormItem label="背景图片" prop="backgroundIcon">
           <!-- <Input v-model="form.backgroundIcon" placeholder="请输入背景图片"/> -->
-          <div class="demo-upload-list" v-if="form.backgroundIcon !== '' && form.backgroundIcon !== null">
+          <div
+            class="demo-upload-list"
+            v-if="form.backgroundIcon !== '' && form.backgroundIcon !== null"
+          >
             <img :src="form.backgroundIcon">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(form.backgroundIcon)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove('backgroundIcon')"></Icon>
-              </div>
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.backgroundIcon)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('backgroundIcon')"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploadBackgroundIcon"
@@ -638,6 +644,7 @@
 
 <script>
 import * as utils from '@/api/utils'
+import axios from '@/libs/api.request'
 import * as ResponseStatus from '@/api/response-status'
 import { isActiveSelect } from '@/api/select'
 import config from '@/config'
@@ -646,7 +653,8 @@ const baseUrl =
     ? config.baseUrl.dev
     : config.baseUrl.pro
 const cdnUrl = config.baseUrl.cdnUrl
-import { getLocalStorageToken } from '@/libs/util'
+import { getLocalStorageToken, localStorage } from '@/libs/util'
+export const SYS_INFO_KEY = 'sysInfo'
 
 export default {
   name: 'SysInfo',
@@ -877,7 +885,7 @@ export default {
                 'img',
                 {
                   attrs: {
-                    src: imgSrc,
+                    src: imgSrc
                   },
                   style: {
                     width: '100px',
@@ -885,7 +893,7 @@ export default {
                     cursor: 'pointer'
                   },
                   on: {
-                    'click': () => {
+                    click: () => {
                       this.handleView(imgSrc)
                     }
                   }
@@ -905,7 +913,7 @@ export default {
                 'img',
                 {
                   attrs: {
-                    src: imgSrc,
+                    src: imgSrc
                   },
                   style: {
                     width: '100px',
@@ -913,7 +921,7 @@ export default {
                     cursor: 'pointer'
                   },
                   on: {
-                    'click': () => {
+                    click: () => {
                       this.handleView(imgSrc)
                     }
                   }
@@ -933,7 +941,7 @@ export default {
                 'img',
                 {
                   attrs: {
-                    src: imgSrc,
+                    src: imgSrc
                   },
                   style: {
                     width: '100px',
@@ -941,7 +949,7 @@ export default {
                     cursor: 'pointer'
                   },
                   on: {
-                    'click': () => {
+                    click: () => {
                       this.handleView(imgSrc)
                     }
                   }
@@ -961,7 +969,7 @@ export default {
                 'img',
                 {
                   attrs: {
-                    src: imgSrc,
+                    src: imgSrc
                   },
                   style: {
                     width: '100px',
@@ -969,7 +977,7 @@ export default {
                     cursor: 'pointer'
                   },
                   on: {
-                    'click': () => {
+                    click: () => {
                       this.handleView(imgSrc)
                     }
                   }
@@ -989,7 +997,7 @@ export default {
                 'img',
                 {
                   attrs: {
-                    src: imgSrc,
+                    src: imgSrc
                   },
                   style: {
                     width: '100px',
@@ -997,7 +1005,7 @@ export default {
                     cursor: 'pointer'
                   },
                   on: {
-                    'click': () => {
+                    click: () => {
                       this.handleView(imgSrc)
                     }
                   }
@@ -1271,7 +1279,51 @@ export default {
       utils.add(this)
     },
     edit() {
-      utils.edit(this)
+      this.$refs['editForm'].validate(valid => {
+        if (valid) {
+          this.loading['edit'] = true
+          axios
+            .request({
+              url: this.urls.editUrl,
+              method: 'POST',
+              data: this.form
+            })
+            .then(response => {
+              this.loading['edit'] = false
+              if (response.data.code !== ResponseStatus.OK) {
+                this.$Message.error(response.data.message)
+              } else {
+                this.$Message.success(response.data.message)
+                // 说明更新成功了
+                console.log(this.form)
+                if (localStorage) {
+                  localStorage.setItem(SYS_INFO_KEY, JSON.stringify(this.form))
+                  localStorage.setItem('favicon', this.form.headIcon)
+                }
+                this.resetForm('editForm')
+                this.cancelModal('edit')
+                this.search()
+              }
+            })
+            .catch(error => {
+              this.loading['edit'] = false
+              console.log(error)
+              this.$Message.error('修改数据失败，稍候再试')
+            })
+        }
+      })
+      // var tempForm = this.form
+      // console.log(tempForm)
+      // utils.edit(this).then(res => {
+      //   if (res.data.code === ResponseStatus.OK) {
+      //     // 说明更新成功了
+      //     console.log(tempForm)
+      //     if (localStorage) {
+      //       localStorage.setItem(SYS_INFO_KEY, JSON.stringify(tempForm))
+      //       localStorage.setItem('favicon', tempForm.headIcon)
+      //     }
+      //   }
+      // })
     },
     active(row) {
       utils.active(this, row)
@@ -1318,7 +1370,6 @@ export default {
         } else if (type == 4) {
           this.form.backgroundIcon = url
         }
-        
       } else {
         this.$Notice.error({
           title: '上传失败',
