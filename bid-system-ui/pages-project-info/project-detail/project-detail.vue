@@ -426,7 +426,7 @@
 			tapTab(type) {
 				if (type == 1) {
 					// 公告详情
-					this.toWebViewPage("公告详情", this.project.inwardHtmlUrl)
+					this.toWebViewPage("公告详情", DOCUMENT_BASE_URL +"/"+ this.project.inwardHtmlUrl)
 				} else {
 					this.currTabIndex = type;
 				}
