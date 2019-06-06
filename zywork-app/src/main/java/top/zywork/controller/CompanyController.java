@@ -16,6 +16,7 @@ import top.zywork.common.StringUtils;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.CompanyDTO;
+import top.zywork.python.CompanyPythonService;
 import top.zywork.query.CompanyQuery;
 import top.zywork.service.CompanyService;
 import top.zywork.vo.ResponseStatusVO;
@@ -41,6 +42,8 @@ public class CompanyController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     private CompanyService companyService;
+
+    private CompanyPythonService companyPythonService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated CompanyVO companyVO, BindingResult bindingResult) {
@@ -152,6 +155,16 @@ public class CompanyController extends BaseController {
                 responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
+    @PostMapping("admin/python")
+    public ResponseStatusVO pythonCompanyInfo(@RequestBody CompanyQuery companyQuery) {
+        String type = companyQuery.getCompType();
+        String compType = companyQuery.getIndustryType();
+        String pageNo = String.valueOf(companyQuery.getPageNo());
+        String pageSize = String.valueOf(companyQuery.getPageSize());
+        companyPythonService.getCompanyInfo(type, compType, pageNo, pageSize);
+        return ResponseStatusVO.ok("后台更新中", null);
+    }
+
     @GetMapping("any/one/{id}")
     public ResponseStatusVO userGetById(@PathVariable("id") Long id) {
         return getById(id);
@@ -160,5 +173,10 @@ public class CompanyController extends BaseController {
     @Autowired
     public void setCompanyService(CompanyService companyService) {
         this.companyService = companyService;
+    }
+
+    @Autowired
+    public void setCompanyPythonService(CompanyPythonService companyPythonService) {
+        this.companyPythonService = companyPythonService;
     }
 }

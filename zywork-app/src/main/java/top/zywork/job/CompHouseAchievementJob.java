@@ -12,7 +12,7 @@ import top.zywork.python.CompanyPythonService;
 
 /**
  * 访问python接口获取房建业绩信息的作业,
- * 每半个小时执行一次<br/>
+ * 一天执行一次<br/>
  *
  * 创建于2019-06-05<br/>
  *

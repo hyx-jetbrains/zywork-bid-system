@@ -16,6 +16,7 @@ import top.zywork.common.StringUtils;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.CompHouseAchievementDTO;
+import top.zywork.python.CompanyPythonService;
 import top.zywork.query.CompHouseAchievementQuery;
 import top.zywork.service.CompHouseAchievementService;
 import top.zywork.vo.ResponseStatusVO;
@@ -41,6 +42,8 @@ public class CompHouseAchievementController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(CompHouseAchievementController.class);
 
     private CompHouseAchievementService compHouseAchievementService;
+
+    private CompanyPythonService companyPythonService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated CompHouseAchievementVO compHouseAchievementVO, BindingResult bindingResult) {
@@ -152,8 +155,19 @@ public class CompHouseAchievementController extends BaseController {
                 responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
+    @GetMapping("admin/python")
+    public ResponseStatusVO pythonCompHouseAchievementInfo() {
+        companyPythonService.getCompHouseAchievement();
+        return ResponseStatusVO.ok("后台更新中", null);
+    }
+
     @Autowired
     public void setCompHouseAchievementService(CompHouseAchievementService compHouseAchievementService) {
         this.compHouseAchievementService = compHouseAchievementService;
+    }
+
+    @Autowired
+    public void setCompanyPythonService(CompanyPythonService companyPythonService) {
+        this.companyPythonService = companyPythonService;
     }
 }
