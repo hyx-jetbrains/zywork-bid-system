@@ -494,6 +494,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     }
                 }
                 compHouseAchievementDTO.setProjectName(projectName);
+                compHouseAchievementDTO.setMarkComp(markComp);
                 // 注册建造师
                 String builderName = jsonObject.getString("builderName");
                 compHouseAchievementDTO.setBuilderName(builderName);
