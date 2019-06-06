@@ -168,6 +168,7 @@ export const getUserDetail = (self) => {
 				getUserRoles(self)
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
+				removeUserToken()
 				xcxLogin(self)
 			} else {
 				showInfoToast(res.data.message)
@@ -261,6 +262,7 @@ export const geUserWalletByUserId = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.userWallet = res.data.data
+			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -287,6 +289,7 @@ export const getUserExpertByUserId = (self) => {
 				self.userExpert = res.data.data
 				if(self.userExpert.examineStatus == 1) {
 					self.expertIconColor = IS_EXPERT_COLOR_TRUE
+				} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				} else {
 					self.expertIconColor = IS_EXPERT_COLOR_FALSE
 				}
