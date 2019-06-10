@@ -27,6 +27,9 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
     @Value("${projectDetail.uri}")
     private String uri;
 
+    @Value("${projectDetail.location}")
+    private String location;
+
     @Override
     public void saveProject(String data) {
         if(data != null) {
@@ -35,8 +38,11 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                 for (int i = 0; i < jsonArray.size() ; i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
 
-                    uri = uri + UUIDUtils.uuid() +".html";
-                    IOUtils.writeText(obj.getString("projectDetail"),uri);
+                    String fileName = UUIDUtils.uuid() +".html";
+                    String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
+                    String foot = "</body></html>";
+
+                    IOUtils.writeText(head +obj.getString("projectDetail")+ foot, location + "/" + fileName);
 
                     ProjectVO projectVO = new ProjectVO();
                     projectVO.setTitle(obj.getString("title"));
@@ -66,7 +72,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setInMarkComp(obj.getString("inMarkComp"));
                     projectVO.setNoticeTime(obj.getDate("noticeTime"));
                     projectVO.setSourceUrl(obj.getString("sourceUrl"));
-                    projectVO.setInwardHtmlUrl(uri);
+                    projectVO.setInwardHtmlUrl(uri + "/" + fileName);
                     projectDAO.save(projectVO);
                 }
             }

@@ -325,19 +325,19 @@
 						{
 							title: '服务标题',
 							key: 'title',
-							minWidth: 120,
+							minWidth: 150,
 							sortable: true
 						},
 						{
 							title: '详细说明',
 							key: 'memo',
-							minWidth: 120,
+							minWidth: 200,
 							sortable: true
 						},
 						{
 							title: '所有收费的url',
 							key: 'urls',
-							minWidth: 150,
+							minWidth: 300,
 							sortable: true
 						},
 						{

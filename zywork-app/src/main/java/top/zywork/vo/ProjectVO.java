@@ -59,7 +59,7 @@ public class ProjectVO extends BaseVO {
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String tenderingAgent;
 	// 联系电话
-	@Size(min = 0, max = 11, message = "必须小于11个字符")
+	@Size(min = 0, max = 15, message = "必须小于15个字符")
 	private String phone;
 	// 要约价(元)
 	private Long offerPrice;

@@ -1106,8 +1106,8 @@ export default {
           {
             type: 'string',
             min: 1,
-            max: 2000,
-            message: '必须1-2000个字符',
+            max: 65535,
+            message: '必须1-65535个字符',
             trigger: 'blur'
           }
         ],
@@ -1370,15 +1370,19 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
+							let moneyToImplement = 0
+							if(row.moneyToImplement != null) {
+								moneyToImplement = row.moneyToImplement;
+							}
               return h(
                 'Progress',
                 {
                   props: {
-                    percent: row.moneyToImplement,
+                    percent: moneyToImplement,
                     status: 'active'
                   }
                 },
-                row.moneyToImplement + '%'
+                moneyToImplement + '%'
               )
             }
           },
@@ -1447,7 +1451,7 @@ export default {
           },
           {
             title: '内部地址',
-            key: 'inwordHtmlUrl',
+            key: 'inwardHtmlUrl',
             minWidth: 120,
             sortable: true
           },
