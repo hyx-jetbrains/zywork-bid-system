@@ -356,6 +356,7 @@
 					edit: false,
 					search: false,
 					detail: false,
+					companyDetail: false,
 					companyChoice: false,
 					operate: ''
 				},

@@ -91,7 +91,7 @@
 									<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
 									<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
 									<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-								</view>
+								</view> 
 							</view>
 						</view>
 						<!-- <view class="zy-disable-flex" @tap="actionSheetTap">
@@ -314,6 +314,7 @@
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import * as projectInfo from '@/common/project-info.js'
 
 	import {
 		openMarkArray,
@@ -464,6 +465,9 @@
 						showCancel: false
 					})
 				}
+			},
+			getResourceFile(projectId, type) {
+				projectInfo.getResourceByProjectIdAndType(this, projectId, type);
 			},
 			// 触发操作选项
 			actionSheetTap() {

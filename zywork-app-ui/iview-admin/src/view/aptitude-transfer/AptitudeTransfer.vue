@@ -957,7 +957,7 @@ export default {
         this.form.type = this.aptitudeTransferType[0].value
         this.form.compAptitudeLevel = this.companyAptitudeLevel[0].value
         this.form.compAptitudeType = this.companyAptitudeType[0].value
-        this.switchType()
+        //this.switchType()
       }
       utils.showModal(this, modal)
     },

@@ -14,11 +14,13 @@ import top.zywork.dto.MarkSeekcarDTO;
 import top.zywork.dto.MarkSeekcarRecordDTO;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.MarkSeekcarRecordDTO;
+import top.zywork.enums.NoticeEnum;
 import top.zywork.query.MarkSeekcarRecordQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.MarkSeekcarRecordService;
 import top.zywork.service.MarkSeekcarService;
+import top.zywork.service.UserNoticeService;
 import top.zywork.vo.*;
 
 import java.util.List;
@@ -40,6 +42,8 @@ public class MarkSeekcarRecordController extends BaseController {
     private MarkSeekcarRecordService markSeekcarRecordService;
 
     private MarkSeekcarService markSeekcarService;
+
+    private UserNoticeService userNoticeService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated MarkSeekcarRecordVO markSeekcarRecordVO, BindingResult bindingResult) {
@@ -175,6 +179,15 @@ public class MarkSeekcarRecordController extends BaseController {
         markSeekcarRecordVO.setUserId(userId);
         markSeekcarRecordVO.setMarkSeekcarId(seekcarId);
         markSeekcarRecordService.save(BeanUtils.copy(markSeekcarRecordVO, MarkSeekcarRecordDTO.class));
+
+        UserNoticeVO userNoticeVO= new UserNoticeVO();
+        userNoticeVO.setItemId(markSeekcarVO.getId());
+        userNoticeVO.setPageUrl("publish-seekcar-detail/publish-seekcar-detail");
+        userNoticeVO.setTitle("开标找车'"+markSeekcarVO.getStartCity()+ "' - '"+ markSeekcarVO.getEndCity()+"'申请记录");
+        userNoticeVO.setMainContent("您发起的开标找车由'"+markSeekcarVO.getStartCity()+ "' - '"+ markSeekcarVO.getEndCity()+"'有一条新的申请记录");
+        userNoticeVO.setDetailContent("您发起的开标找车由'"+markSeekcarVO.getStartCity()+"/"+markSeekcarVO.getStartAddr()+ "' - '"+ markSeekcarVO.getEndCity()+"/"+markSeekcarVO.getEndAddr()+"'有一条新的申请记录，具体内容可前往"+ userNoticeVO.getPageUrl()+"查看");
+        userNoticeVO.setNoticeType(NoticeEnum.MARKSEEKCAR_MESSAGE.getValue());
+        userNoticeService.save(userNoticeVO);
         return ResponseStatusVO.ok("申请成功", null);
     }
 
@@ -186,5 +199,10 @@ public class MarkSeekcarRecordController extends BaseController {
     @Autowired
     public void setMarkSeekcarService(MarkSeekcarService markSeekcarService) {
         this.markSeekcarService = markSeekcarService;
+    }
+
+    @Autowired
+    public void setUserNoticeService(UserNoticeService userNoticeService) {
+        this.userNoticeService = userNoticeService;
     }
 }

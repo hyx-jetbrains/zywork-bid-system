@@ -230,6 +230,7 @@
 					search: false,
 					detail: false,
 					companyChoice: false,
+					companyDetail: false,
 					operate: ''
 				},
 				loading: {
