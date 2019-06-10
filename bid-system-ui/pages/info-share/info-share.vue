@@ -349,7 +349,9 @@
 						<view class="zy-page-list-item" v-for="(item, index) in updateNoticeList" :key="index">
 							<view @click="toUpdateNoticeDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image class="zy-page-mini-headicon" :src="defaultIcon" />
+									<view style="width: 100upx;">
+										<image class="zy-page-mini-headicon" :src="defaultIcon" />
+									</view>
 									<view style="text-align: center;">
 										<view class="zy-text-bold" v-text="item.title"></view>
 										<view class="zy-text-mini zy-text-info" style="color: #108EE9">公告时间：{{item.createTime}}</view>

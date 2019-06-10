@@ -29,6 +29,7 @@
 					 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
 				</scroll-view>
 			</view>
+			<view style="height: 10upx; background-color: #F8F8F8;"></view>
 
 			<!-- 企业信息 -->
 			<view v-if="infoType.tabIndex === 0">

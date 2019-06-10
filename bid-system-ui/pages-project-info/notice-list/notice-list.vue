@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view v-if="notices.length > 0" class="zy-page-list" style="padding-top: 10upx;">
-			<view v-for="(notice, index) in notices" :key="index" class="zy-page-list-item zy-disable-flex" @click="toNoticeDetail(notice)">
-				<view>
+			<view v-for="(notice, index) in notices" :key="index" class="zy-page-list-item zy-disable-flex">
+				<view @click="toNoticeDetail(notice)">
 					<view class="zy-text-big zy-text-bold zy-notice-title zy-overflow-hidden">{{notice.title}}</view>
 					<view class="zy-text-small zy-text-info">{{notice.createTime}}</view>
 				</view>
