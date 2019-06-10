@@ -174,15 +174,19 @@
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">第一中标单位</view>
-						<view class="zy-disable-flex-right">{{projectAnnounce.firstCandidate !== null ? projectAnnounce.firstCandidate : ''}}</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.firstCandidate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
-						<view class="zy-text-bold">第二中标单位</view>
-						<view class="zy-disable-flex-right">{{projectAnnounce.secondCandidate !== null ? projectAnnounce.secondCandidate : ''}}</view>
+						<view class="zy-text-bold">建造师</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.firstBuilderName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
-						<view class="zy-text-bold">第三中标单位</view>
-						<view class="zy-disable-flex-right">{{projectAnnounce.thirdCandidate !== null ? projectAnnounce.thirdCandidate : ''}}</view>
+						<view class="zy-text-bold">中标金额</view>
+						<view class="zy-disable-flex-right">{{projectAnnounce.firstMarkMoney}}</view>
+					</view>
+					<view class="zy-disable-flex zy-project-desc-item">
+						<view class="zy-text-bold">开标时间</view>
+						<view class="zy-disable-flex-right">{{project.project.openMarkTime}}</view>
 					</view>
 					<view class="zy-project-desc-title zy-text-bold">
 						中标公示
@@ -383,7 +387,8 @@
 				pager: {
 					pageNo: 1,
 					pageSize: 10,
-					projectId: '',
+					markCarpoolProjectId: '',
+					markSeekcarProjectId: '',
 					isActive: 0
 				},
 				actionSheetArray: fileTypeArray,
@@ -408,7 +413,7 @@
 			initData() {
 				this.initCollectionIcon();
 				getProjectAnnounce(this, this.project.project.id);
-				this.pager.projectId = this.project.project.id;
+				this.pager.markCarpoolProjectId = this.pager.markSeekcarProjectId = this.project.project.id;
 				getCarpoolList(this, this.pager);
 				getSeekcarList(this, this.pager);
 			},
@@ -508,6 +513,11 @@
 			onClickCarPoolItem(index) {
 				if (this.carPoolOpts.current !== index) {
 					this.carPoolOpts.current = index
+					if (index === 0) {
+						getCarpoolList(this, this.pager);
+					} else if (index === 1) {
+						getSeekcarList(this, this.pager);
+					}
 				}
 			},
 			/** 点击我要拼车，增加拼车记录 */

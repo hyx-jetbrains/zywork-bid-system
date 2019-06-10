@@ -608,7 +608,7 @@ export const getSysInfo = (self) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.sysInfo = res.data.data.rows[0]
+				self.sysInfo = nullToStr(res.data.data.rows[0])
 			} else {
 				showInfoToast(res.data.message)
 			}
