@@ -135,6 +135,16 @@
 		<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
 		
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
+		
+		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
+			<scroll-view :scroll-y="true" class="uni-center center-box">
+				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
+					<view style="color: #108EE9;">
+						{{index+1}}.{{ item.fileName }}
+					</view>
+				</view>
+			</scroll-view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -146,6 +156,7 @@
 	import {
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
+		DOCUMENT_BASE_URL,
 		isUserTokenExist,
 		toLoginPage,
 		getCalendarDate,
@@ -317,6 +328,23 @@
 						this.showChooseDate = false
 					}
 				}
+			},
+			/** 打开文档 */
+			openDocument(url) {
+				if (this.isShowFileList) {
+					this.isShowFileList = false;
+				}
+				uni.downloadFile({
+					url: DOCUMENT_BASE_URL + "/" + url,
+					success: (res) => {
+						uni.openDocument({
+							filePath: res.tempFilePath,
+							success: () => {
+								console.log('打开文档成功');
+							}
+						});
+					}
+				});
 			},
 			// 前往项目详情
 			toProjectDetail(item) {

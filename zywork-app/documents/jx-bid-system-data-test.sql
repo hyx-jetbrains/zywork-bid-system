@@ -5225,6 +5225,29 @@ CREATE TABLE `t_user_service` (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户服务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for t_user_notice
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_notice`;
+CREATE TABLE `t_user_notice`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息通知编号',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `item_id` bigint(20) NULL DEFAULT NULL COMMENT '链接编号',
+  `page_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '页面路径',
+  `title` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '项目名称',
+  `main_content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '主要内容',
+  `detail_content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '详细内容',
+  `notice_type` tinyint(4) NULL DEFAULT NULL COMMENT '通知类型',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '消息通知表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ----------------------------
 -- Procedure structure for initStatisticsDay
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `initStatisticsDay`;
