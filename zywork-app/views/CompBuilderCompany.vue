@@ -114,117 +114,6 @@
 </i-col>
 </Row>
 </FormItem>
-<FormItem label="公示编号"><Row>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceIdMin">
-	<InputNumber v-model="searchForm.projectAnnounceIdMin" placeholder="请输入开始公示编号" style="width: 100%;"/>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceIdMax">
-	<InputNumber v-model="searchForm.projectAnnounceIdMax" placeholder="请输入结束公示编号" style="width: 100%;"/>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="项目编号"><Row>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceProjectIdMin">
-	<InputNumber v-model="searchForm.projectAnnounceProjectIdMin" placeholder="请输入开始项目编号" style="width: 100%;"/>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceProjectIdMax">
-	<InputNumber v-model="searchForm.projectAnnounceProjectIdMax" placeholder="请输入结束项目编号" style="width: 100%;"/>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="公示详情" prop="projectAnnounceAnnounceDesc">
-	<Input v-model="searchForm.projectAnnounceAnnounceDesc" placeholder="请输入公示详情"/>
-</FormItem>
-<FormItem label="第一候选人" prop="projectAnnounceFirstCandidate">
-	<Input v-model="searchForm.projectAnnounceFirstCandidate" placeholder="请输入第一候选人"/>
-</FormItem>
-<FormItem label="建造师姓名" prop="projectAnnounceFirstBuilderName">
-	<Input v-model="searchForm.projectAnnounceFirstBuilderName" placeholder="请输入建造师姓名"/>
-</FormItem>
-<FormItem label="中标金额" prop="projectAnnounceFirstMarkMoney">
-	<Input v-model="searchForm.projectAnnounceFirstMarkMoney" placeholder="请输入中标金额"/>
-</FormItem>
-<FormItem label="第二候选人" prop="projectAnnounceSecondCandidate">
-	<Input v-model="searchForm.projectAnnounceSecondCandidate" placeholder="请输入第二候选人"/>
-</FormItem>
-<FormItem label="第三候选人" prop="projectAnnounceThirdCandidate">
-	<Input v-model="searchForm.projectAnnounceThirdCandidate" placeholder="请输入第三候选人"/>
-</FormItem>
-<FormItem label="源地址" prop="projectAnnounceSourceUrl">
-	<Input v-model="searchForm.projectAnnounceSourceUrl" placeholder="请输入源地址"/>
-</FormItem>
-<FormItem label="内部地址" prop="projectAnnounceInwordHtmlUrl">
-	<Input v-model="searchForm.projectAnnounceInwordHtmlUrl" placeholder="请输入内部地址"/>
-</FormItem>
-<FormItem label="版本号"><Row>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceVersionMin">
-	<InputNumber v-model="searchForm.projectAnnounceVersionMin" placeholder="请输入开始版本号" style="width: 100%;"/>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceVersionMax">
-	<InputNumber v-model="searchForm.projectAnnounceVersionMax" placeholder="请输入结束版本号" style="width: 100%;"/>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="创建时间"><Row>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceCreateTimeMin">
-	<DatePicker @on-change="searchForm.projectAnnounceCreateTimeMin=$event" :value="searchForm.projectAnnounceCreateTimeMin" placeholder="请输入开始创建时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceCreateTimeMax">
-	<DatePicker @on-change="searchForm.projectAnnounceCreateTimeMax=$event" :value="searchForm.projectAnnounceCreateTimeMax" placeholder="请输入结束创建时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="更新时间"><Row>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceUpdateTimeMin">
-	<DatePicker @on-change="searchForm.projectAnnounceUpdateTimeMin=$event" :value="searchForm.projectAnnounceUpdateTimeMin" placeholder="请输入开始更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceUpdateTimeMax">
-	<DatePicker @on-change="searchForm.projectAnnounceUpdateTimeMax=$event" :value="searchForm.projectAnnounceUpdateTimeMax" placeholder="请输入结束更新时间" type="datetime" format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></DatePicker>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="是否激活"><Row>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceIsActiveMin">
-	<InputNumber v-model="searchForm.projectAnnounceIsActiveMin" placeholder="请输入开始是否激活" style="width: 100%;"/>
-</FormItem>
-</i-col>
-	<i-col span="2" style="text-align: center">-</i-col>
-	<i-col span="11">
-	<FormItem prop="projectAnnounceIsActiveMax">
-	<InputNumber v-model="searchForm.projectAnnounceIsActiveMax" placeholder="请输入结束是否激活" style="width: 100%;"/>
-</FormItem>
-</i-col>
-</Row>
-</FormItem>
-<FormItem label="项目名称" prop="projectTitle">
-	<Input v-model="searchForm.projectTitle" placeholder="请输入项目名称"/>
-</FormItem>
 <FormItem label="企业类型" prop="companyCompType">
 	<Input v-model="searchForm.companyCompType" placeholder="请输入企业类型"/>
 </FormItem>
@@ -253,21 +142,6 @@
 <p>创建时间: <span v-text="form.compBuilderCreateTime"></span></p>
 <p>更新时间: <span v-text="form.compBuilderUpdateTime"></span></p>
 <p>是否激活: <span v-text="form.compBuilderIsActive"></span></p>
-<p>公示编号: <span v-text="form.projectAnnounceId"></span></p>
-<p>项目编号: <span v-text="form.projectAnnounceProjectId"></span></p>
-<p>公示详情: <span v-text="form.projectAnnounceAnnounceDesc"></span></p>
-<p>第一候选人: <span v-text="form.projectAnnounceFirstCandidate"></span></p>
-<p>建造师姓名: <span v-text="form.projectAnnounceFirstBuilderName"></span></p>
-<p>中标金额: <span v-text="form.projectAnnounceFirstMarkMoney"></span></p>
-<p>第二候选人: <span v-text="form.projectAnnounceSecondCandidate"></span></p>
-<p>第三候选人: <span v-text="form.projectAnnounceThirdCandidate"></span></p>
-<p>源地址: <span v-text="form.projectAnnounceSourceUrl"></span></p>
-<p>内部地址: <span v-text="form.projectAnnounceInwordHtmlUrl"></span></p>
-<p>版本号: <span v-text="form.projectAnnounceVersion"></span></p>
-<p>创建时间: <span v-text="form.projectAnnounceCreateTime"></span></p>
-<p>更新时间: <span v-text="form.projectAnnounceUpdateTime"></span></p>
-<p>是否激活: <span v-text="form.projectAnnounceIsActive"></span></p>
-<p>项目名称: <span v-text="form.projectTitle"></span></p>
 <p>企业类型: <span v-text="form.companyCompType"></span></p>
 <p>行业分类: <span v-text="form.companyIndustryType"></span></p>
 <p>企业名称: <span v-text="form.companyCompName"></span></p>
@@ -312,21 +186,6 @@ compBuilderVersion: null,
 compBuilderCreateTime: null,
 compBuilderUpdateTime: null,
 compBuilderIsActive: null,
-projectAnnounceId: null,
-projectAnnounceProjectId: null,
-projectAnnounceAnnounceDesc: null,
-projectAnnounceFirstCandidate: null,
-projectAnnounceFirstBuilderName: null,
-projectAnnounceFirstMarkMoney: null,
-projectAnnounceSecondCandidate: null,
-projectAnnounceThirdCandidate: null,
-projectAnnounceSourceUrl: null,
-projectAnnounceInwordHtmlUrl: null,
-projectAnnounceVersion: null,
-projectAnnounceCreateTime: null,
-projectAnnounceUpdateTime: null,
-projectAnnounceIsActive: null,
-projectTitle: null,
 companyCompType: null,
 companyIndustryType: null,
 companyCompName: null,
@@ -359,33 +218,6 @@ compBuilderUpdateTimeMax: null,
 compBuilderIsActive: null,
 compBuilderIsActiveMin: null, 
 compBuilderIsActiveMax: null, 
-projectAnnounceId: null,
-projectAnnounceIdMin: null, 
-projectAnnounceIdMax: null, 
-projectAnnounceProjectId: null,
-projectAnnounceProjectIdMin: null, 
-projectAnnounceProjectIdMax: null, 
-projectAnnounceAnnounceDesc: null,
-projectAnnounceFirstCandidate: null,
-projectAnnounceFirstBuilderName: null,
-projectAnnounceFirstMarkMoney: null,
-projectAnnounceSecondCandidate: null,
-projectAnnounceThirdCandidate: null,
-projectAnnounceSourceUrl: null,
-projectAnnounceInwordHtmlUrl: null,
-projectAnnounceVersion: null,
-projectAnnounceVersionMin: null, 
-projectAnnounceVersionMax: null, 
-projectAnnounceCreateTime: null,
-projectAnnounceCreateTimeMin: null, 
-projectAnnounceCreateTimeMax: null, 
-projectAnnounceUpdateTime: null,
-projectAnnounceUpdateTimeMin: null, 
-projectAnnounceUpdateTimeMax: null, 
-projectAnnounceIsActive: null,
-projectAnnounceIsActiveMin: null, 
-projectAnnounceIsActiveMax: null, 
-projectTitle: null,
 companyCompType: null,
 companyIndustryType: null,
 companyCompName: null,
@@ -466,96 +298,6 @@ sortable: true
 {
 title: '是否激活',
 key: 'compBuilderIsActive',
-minWidth: 120,
-sortable: true
-},
-{
-title: '公示编号',
-key: 'projectAnnounceId',
-minWidth: 120,
-sortable: true
-},
-{
-title: '项目编号',
-key: 'projectAnnounceProjectId',
-minWidth: 120,
-sortable: true
-},
-{
-title: '公示详情',
-key: 'projectAnnounceAnnounceDesc',
-minWidth: 120,
-sortable: true
-},
-{
-title: '第一候选人',
-key: 'projectAnnounceFirstCandidate',
-minWidth: 120,
-sortable: true
-},
-{
-title: '建造师姓名',
-key: 'projectAnnounceFirstBuilderName',
-minWidth: 120,
-sortable: true
-},
-{
-title: '中标金额',
-key: 'projectAnnounceFirstMarkMoney',
-minWidth: 120,
-sortable: true
-},
-{
-title: '第二候选人',
-key: 'projectAnnounceSecondCandidate',
-minWidth: 120,
-sortable: true
-},
-{
-title: '第三候选人',
-key: 'projectAnnounceThirdCandidate',
-minWidth: 120,
-sortable: true
-},
-{
-title: '源地址',
-key: 'projectAnnounceSourceUrl',
-minWidth: 120,
-sortable: true
-},
-{
-title: '内部地址',
-key: 'projectAnnounceInwordHtmlUrl',
-minWidth: 120,
-sortable: true
-},
-{
-title: '版本号',
-key: 'projectAnnounceVersion',
-minWidth: 120,
-sortable: true
-},
-{
-title: '创建时间',
-key: 'projectAnnounceCreateTime',
-minWidth: 120,
-sortable: true
-},
-{
-title: '更新时间',
-key: 'projectAnnounceUpdateTime',
-minWidth: 120,
-sortable: true
-},
-{
-title: '是否激活',
-key: 'projectAnnounceIsActive',
-minWidth: 120,
-sortable: true
-},
-{
-title: '项目名称',
-key: 'projectTitle',
 minWidth: 120,
 sortable: true
 },

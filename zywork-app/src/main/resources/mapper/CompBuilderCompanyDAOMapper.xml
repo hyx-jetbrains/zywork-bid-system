@@ -5,98 +5,11 @@
 <mapper namespace="top.zywork.dao.CompBuilderCompanyDAO">
 
     <sql id="select_columns">
-        t_comp_aptitude.id as compAptitudeId, t_comp_aptitude.comp_id as compAptitudeCompId, t_comp_aptitude.certificate_num as compAptitudeCertificateNum, t_comp_aptitude.certificate_detail as compAptitudeCertificateDetail, t_comp_aptitude.version as compAptitudeVersion, t_comp_aptitude.create_time as compAptitudeCreateTime, t_comp_aptitude.update_time as compAptitudeUpdateTime, t_comp_aptitude.is_active as compAptitudeIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName, t_comp_builder.id as compBuilderId, t_comp_builder.comp_id as compBuilderCompId, t_comp_builder.name as compBuilderName, t_comp_builder.gender as compBuilderGender, t_comp_builder.reg_num as compBuilderRegNum, t_comp_builder.major_level as compBuilderMajorLevel, t_comp_builder.version as compBuilderVersion, t_comp_builder.create_time as compBuilderCreateTime, t_comp_builder.update_time as compBuilderUpdateTime, t_comp_builder.is_active as compBuilderIsActive
+        t_comp_builder.id as compBuilderId, t_comp_builder.comp_id as compBuilderCompId, t_comp_builder.name as compBuilderName, t_comp_builder.gender as compBuilderGender, t_comp_builder.reg_num as compBuilderRegNum, t_comp_builder.major_level as compBuilderMajorLevel, t_comp_builder.version as compBuilderVersion, t_comp_builder.create_time as compBuilderCreateTime, t_comp_builder.update_time as compBuilderUpdateTime, t_comp_builder.is_active as compBuilderIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
     </sql>
 
     <sql id="query_where_clause">
-        <if test="query != null and query.compAptitudeId != null">
-			and t_comp_aptitude.id = #{query.compAptitudeId}
-		</if>
-		<if test="query != null and query.compAptitudeIdMin != null and query.compAptitudeIdMax == null">
-			and t_comp_aptitude.id <![CDATA[ >= ]]> #{query.compAptitudeIdMin}
-		</if>
-		<if test="query != null and query.compAptitudeIdMin == null and query.compAptitudeIdMax != null">
-			and t_comp_aptitude.id <![CDATA[ <= ]]> #{query.compAptitudeIdMax}
-		</if>
-		<if test="query != null and query.compAptitudeIdMin != null and query.compAptitudeIdMax != null">
-			and t_comp_aptitude.id <![CDATA[ >= ]]> #{query.compAptitudeIdMin} and t_comp_aptitude.id <![CDATA[ <= ]]> #{query.compAptitudeIdMax}
-		</if>
-		<if test="query != null and query.compAptitudeCompId != null">
-			and t_comp_aptitude.comp_id = #{query.compAptitudeCompId}
-		</if>
-		<if test="query != null and query.compAptitudeCompIdMin != null and query.compAptitudeCompIdMax == null">
-			and t_comp_aptitude.comp_id <![CDATA[ >= ]]> #{query.compAptitudeCompIdMin}
-		</if>
-		<if test="query != null and query.compAptitudeCompIdMin == null and query.compAptitudeCompIdMax != null">
-			and t_comp_aptitude.comp_id <![CDATA[ <= ]]> #{query.compAptitudeCompIdMax}
-		</if>
-		<if test="query != null and query.compAptitudeCompIdMin != null and query.compAptitudeCompIdMax != null">
-			and t_comp_aptitude.comp_id <![CDATA[ >= ]]> #{query.compAptitudeCompIdMin} and t_comp_aptitude.comp_id <![CDATA[ <= ]]> #{query.compAptitudeCompIdMax}
-		</if>
-		<if test="query != null and query.compAptitudeCertificateNum != null and query.compAptitudeCertificateNum != ''">
-			and t_comp_aptitude.certificate_num like concat('%', #{query.compAptitudeCertificateNum}, '%')
-		</if>
-		<if test="query != null and query.compAptitudeCertificateDetail != null and query.compAptitudeCertificateDetail != ''">
-			and t_comp_aptitude.certificate_detail like concat('%', #{query.compAptitudeCertificateDetail}, '%')
-		</if>
-		<if test="query != null and query.compAptitudeVersion != null">
-			and t_comp_aptitude.version = #{query.compAptitudeVersion}
-		</if>
-		<if test="query != null and query.compAptitudeVersionMin != null and query.compAptitudeVersionMax == null">
-			and t_comp_aptitude.version <![CDATA[ >= ]]> #{query.compAptitudeVersionMin}
-		</if>
-		<if test="query != null and query.compAptitudeVersionMin == null and query.compAptitudeVersionMax != null">
-			and t_comp_aptitude.version <![CDATA[ <= ]]> #{query.compAptitudeVersionMax}
-		</if>
-		<if test="query != null and query.compAptitudeVersionMin != null and query.compAptitudeVersionMax != null">
-			and t_comp_aptitude.version <![CDATA[ >= ]]> #{query.compAptitudeVersionMin} and t_comp_aptitude.version <![CDATA[ <= ]]> #{query.compAptitudeVersionMax}
-		</if>
-		<if test="query != null and query.compAptitudeCreateTime != null">
-			and t_comp_aptitude.create_time = #{query.compAptitudeCreateTime}
-		</if>
-		<if test="query != null and query.compAptitudeCreateTimeMin != null and query.compAptitudeCreateTimeMax == null">
-			and t_comp_aptitude.create_time <![CDATA[ >= ]]> #{query.compAptitudeCreateTimeMin}
-		</if>
-		<if test="query != null and query.compAptitudeCreateTimeMin == null and query.compAptitudeCreateTimeMax != null">
-			and t_comp_aptitude.create_time <![CDATA[ <= ]]> #{query.compAptitudeCreateTimeMax}
-		</if>
-		<if test="query != null and query.compAptitudeCreateTimeMin != null and query.compAptitudeCreateTimeMax != null">
-			and t_comp_aptitude.create_time <![CDATA[ >= ]]> #{query.compAptitudeCreateTimeMin} and t_comp_aptitude.create_time <![CDATA[ <= ]]> #{query.compAptitudeCreateTimeMax}
-		</if>
-		<if test="query != null and query.compAptitudeUpdateTime != null">
-			and t_comp_aptitude.update_time = #{query.compAptitudeUpdateTime}
-		</if>
-		<if test="query != null and query.compAptitudeUpdateTimeMin != null and query.compAptitudeUpdateTimeMax == null">
-			and t_comp_aptitude.update_time <![CDATA[ >= ]]> #{query.compAptitudeUpdateTimeMin}
-		</if>
-		<if test="query != null and query.compAptitudeUpdateTimeMin == null and query.compAptitudeUpdateTimeMax != null">
-			and t_comp_aptitude.update_time <![CDATA[ <= ]]> #{query.compAptitudeUpdateTimeMax}
-		</if>
-		<if test="query != null and query.compAptitudeUpdateTimeMin != null and query.compAptitudeUpdateTimeMax != null">
-			and t_comp_aptitude.update_time <![CDATA[ >= ]]> #{query.compAptitudeUpdateTimeMin} and t_comp_aptitude.update_time <![CDATA[ <= ]]> #{query.compAptitudeUpdateTimeMax}
-		</if>
-		<if test="query != null and query.compAptitudeIsActive != null">
-			and t_comp_aptitude.is_active = #{query.compAptitudeIsActive}
-		</if>
-		<if test="query != null and query.compAptitudeIsActiveMin != null and query.compAptitudeIsActiveMax == null">
-			and t_comp_aptitude.is_active <![CDATA[ >= ]]> #{query.compAptitudeIsActiveMin}
-		</if>
-		<if test="query != null and query.compAptitudeIsActiveMin == null and query.compAptitudeIsActiveMax != null">
-			and t_comp_aptitude.is_active <![CDATA[ <= ]]> #{query.compAptitudeIsActiveMax}
-		</if>
-		<if test="query != null and query.compAptitudeIsActiveMin != null and query.compAptitudeIsActiveMax != null">
-			and t_comp_aptitude.is_active <![CDATA[ >= ]]> #{query.compAptitudeIsActiveMin} and t_comp_aptitude.is_active <![CDATA[ <= ]]> #{query.compAptitudeIsActiveMax}
-		</if>
-		<if test="query != null and query.companyCompType != null and query.companyCompType != ''">
-			and t_company.comp_type like concat('%', #{query.companyCompType}, '%')
-		</if>
-		<if test="query != null and query.companyIndustryType != null and query.companyIndustryType != ''">
-			and t_company.industry_type like concat('%', #{query.companyIndustryType}, '%')
-		</if>
-		<if test="query != null and query.companyCompName != null and query.companyCompName != ''">
-			and t_company.comp_name like concat('%', #{query.companyCompName}, '%')
-		</if>
-		<if test="query != null and query.compBuilderId != null">
+        <if test="query != null and query.compBuilderId != null">
 			and t_comp_builder.id = #{query.compBuilderId}
 		</if>
 		<if test="query != null and query.compBuilderIdMin != null and query.compBuilderIdMax == null">
@@ -180,31 +93,40 @@
 		<if test="query != null and query.compBuilderIsActiveMin != null and query.compBuilderIsActiveMax != null">
 			and t_comp_builder.is_active <![CDATA[ >= ]]> #{query.compBuilderIsActiveMin} and t_comp_builder.is_active <![CDATA[ <= ]]> #{query.compBuilderIsActiveMax}
 		</if>
+		<if test="query != null and query.companyCompType != null and query.companyCompType != ''">
+			and t_company.comp_type like concat('%', #{query.companyCompType}, '%')
+		</if>
+		<if test="query != null and query.companyIndustryType != null and query.companyIndustryType != ''">
+			and t_company.industry_type like concat('%', #{query.companyIndustryType}, '%')
+		</if>
+		<if test="query != null and query.companyCompName != null and query.companyCompName != ''">
+			and t_company.comp_name like concat('%', #{query.companyCompName}, '%')
+		</if>
 		
         and
-        t_comp_builder.comp_id = t_company.id
+         t_comp_builder.comp_id = t_company.id
     </sql>
 
     <select id="listById" parameterType="long" resultType="compBuilderCompanyDO">
         select
         <include refid="select_columns"/>
-        from t_company, t_comp_builder where t_comp_builder.id = #{id} and
-        t_comp_builder.comp_id = t_company.id
+        from t_comp_builder, t_company where t_comp_builder.id = #{id} and
+         t_comp_builder.comp_id = t_company.id
     </select>
 
     <select id="listAll" resultType="compBuilderCompanyDO">
         select
         <include refid="select_columns"/>
-        from t_company, t_comp_builder
+        from t_comp_builder, t_company
         where
-        t_comp_builder.comp_id = t_company.id
+         t_comp_builder.comp_id = t_company.id
         order by t_comp_builder.update_time desc, t_comp_builder.create_time desc
     </select>
 
     <select id="listAllByCondition" resultType="compBuilderCompanyDO">
         select
         <include refid="select_columns"/>
-        from t_company, t_comp_builder
+        from t_comp_builder, t_company
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -220,7 +142,7 @@
     <select id="listPageByCondition" resultType="compBuilderCompanyDO">
         select
         <include refid="select_columns"/>
-        from t_company, t_comp_builder
+        from t_comp_builder, t_company
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -235,7 +157,7 @@
     </select>
 
     <select id="countByCondition" resultType="long">
-        select count(*) from t_company, t_comp_builder
+        select count(*) from t_comp_builder, t_company
         <where>
             <include refid="query_where_clause"/>
         </where>

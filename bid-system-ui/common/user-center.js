@@ -26,7 +26,7 @@ import * as ResponseStatus from './response-status.js'
 /**
  * 用户账户佣金明细
  */
-export const getFundsTransferByUserId = (self, params) => {
+export const getAccountDetailByUserId = (self, params) => {
 	uni.showLoading({
 		title: '加载中'
 	})
@@ -56,7 +56,7 @@ export const getFundsTransferByUserId = (self, params) => {
 /**
  * 用户账户积分明细
  */
-export const getAccountDetailByUserId = (self, params) => {
+export const getFundsTransferByUserId = (self, params) => {
 	uni.showLoading({
 		title: '加载中'
 	})

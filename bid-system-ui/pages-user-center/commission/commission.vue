@@ -70,6 +70,7 @@
 			// 目前在某些平台参数会被主动 decode，暂时这样处理。
 			try {
 				this.userWallet = JSON.parse(decodeURIComponent(payload));
+				console.log(this.userWallet)
 			} catch (error) {
 				this.userWallet = JSON.parse(payload);
 			}
