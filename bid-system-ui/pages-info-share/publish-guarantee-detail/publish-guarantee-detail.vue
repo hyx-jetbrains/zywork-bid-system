@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- 我的申请保函详情 -->
+		<!-- 申请保函详情 -->
 		<view class="zy-text-big zy-text-bold zy-detail-title">{{item.guaranteeProjectName}}</view>
 		<view class="zy-page-list">
 			<view class="zy-page-list-item">

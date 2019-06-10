@@ -2,18 +2,19 @@
 	<view>
 		<!-- 我发布的申请保函 -->
 		<view class="zy-page-list-item" style="padding-top: 10upx;">
-			<!-- 其他岗位招聘信息 -->
+			<!-- 我发布的申请保函信息 -->
 			<view class="zy-page-list" v-if="guaranteeList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in guaranteeList" :key="index">
 					<uni-swipe-action :options="options" @click="confirmOptions(item.guaranteeId)">
 						<view @click="toGuaranteeDetailPage(item)">
 							<view class="zy-disable-flex">
-								<image class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+								<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+								<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 								<view>
 									<view>
 										<text class="zy-text-bold">{{item.userDetailNickname}}</text>
 									</view>
-									<view class="zy-text-mini zy-text-info"  style="color: #108EE9">
+									<view class="zy-text-mini zy-text-info" style="color: #108EE9">
 										{{item.guaranteeCreateTime}}
 									</view>
 								</view>
@@ -39,7 +40,7 @@
 			</view>
 			<zyworkNoData v-else text="暂无保函信息"></zyworkNoData>
 		</view>
-		
+
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
@@ -89,7 +90,8 @@
 			/** 前往详情页面 */
 			toDetailPage(name, item) {
 				uni.navigateTo({
-					url: '/pages-user-center/publish-'+name+'-detail/publish-'+name+'-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-user-center/publish-' + name + '-detail/publish-' + name + '-detail?itemData=' + encodeURIComponent(
+						JSON.stringify(item))
 				});
 			},
 			/** 前往其他岗位招聘详情页面 */
@@ -98,7 +100,7 @@
 			},
 			/** 确认操作 */
 			confirmOptions(id) {
-				deleteGuaranteeById(this,id)
+				deleteGuaranteeById(this, id)
 			},
 		}
 	}

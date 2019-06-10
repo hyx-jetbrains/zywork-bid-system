@@ -19,26 +19,26 @@
 										<zywork-icon type="iconchaxun" />
 										<input type="text" v-model="projectPager.title" placeholder="输入项目名称搜索" @confirm="searchProject" />
 									</view>
-									<view class="zy-project-item" v-for="(projectItem, index) in projects" :key="index" @click="chooseProject(projectItem)">
+									<view class="zy-project-item" v-for="(projectItem, index) in projects" :key="index" @click="chooseProject(projectItem.project)">
 										<view class="zy-disable-flex">
 											<view>
-												<text>{{projectItem.projectType}}</text>
-												<text style="margin-left: 30upx;">[{{projectItem.city}}]</text>
+												<text>{{projectItem.project.projectType}}</text>
+												<text style="margin-left: 30upx;">[{{projectItem.project.city}}]</text>
 											</view>
-											<view class="zy-disable-flex-right" style="color: #108EE9">{{projectItem.markStatus}}</view>
+											<view class="zy-disable-flex-right" style="color: #108EE9">{{projectItem.project.markStatus}}</view>
 										</view>
 										<view class="zy-text-mini" style="color: #dd524d; text-align: right;">
 											开标时间：
-											<text v-if="projectItem.openMarkTime !== null && projectItem.openMarkTime !== undefined" class="zy-text-mini"
+											<text v-if="projectItem.project.openMarkTime !== ''" class="zy-text-mini"
 											 style="color: #dd524d;">
-												{{projectItem.openMarkTime}}
+												{{projectItem.project.openMarkTime}}
 											</text>
 											<text v-else class="zy-text-mini" style="color: #dd524d;">
 												暂无
 											</text>
 										</view>
 										<view class="zy-text-bold">
-											{{projectItem.title}}
+											{{projectItem.project.title}}
 										</view>
 									</view>
 									<!-- <zywork-list-item v-for="(projectItem, index) in projects" :key="index" :title="projectItem.title" note="点击选择"
@@ -228,6 +228,7 @@
 				this.guarantee.constructionPeriod = project.constructionPeriod
 				this.guarantee.assurePrice = project.assurePrice / 100
 				this.projectDrawer = false
+				this.showBtn = true;
 			},
 			/** 监听担保公司选择框 */
 			chooseGuaranteeCompany: function(e) {

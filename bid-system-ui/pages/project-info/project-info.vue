@@ -181,7 +181,8 @@
 			</scroll-view>
 		</uni-popup>
 
-		<zywork-fab v-if="customerShow" :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction" :showContent="customerPopup"
+		<zywork-fab v-if="customerShow" :pattern="pattern" :horizontal="horizontal" :vertical="vertical" 
+			:direction="direction" :showContent="customerPopup" :iconType="iconType"
 		 @trigger="trigger"></zywork-fab>
 		<uni-popup :show="customerPopup" position="bottom" @hidePopup="trigger(false)">
 			<view class="zy-popup-bottom-title">选择联系类型</view>
@@ -364,6 +365,7 @@
 				horizontal: 'right',
 				vertical: 'bottom',
 				direction: 'horizontal',
+				iconType: 'uni-icon-weixin',
 				pattern: {
 					color: '#7A7E83',
 					backgroundColor: '#fff',

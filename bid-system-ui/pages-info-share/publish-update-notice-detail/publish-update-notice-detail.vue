@@ -7,7 +7,8 @@
 			<view v-html="item.content"></view>
 			<view class="zy-text-info zy-detail-card-time" v-text="item.createTime"></view>
 		</view>
-		<zywork-fab :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction" :showContent="appointmentPopup"
+		<zywork-fab :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction" 
+			:showContent="appointmentPopup" :iconType="iconType"
 		 @trigger="trigger"></zywork-fab>
 		<uni-popup :show="appointmentPopup" position="bottom" @hidePopup="trigger(false)">
 			<view class="zy-popup-bottom-title">选择咨询类型</view>
@@ -45,6 +46,7 @@
 				horizontal: 'right',
 				vertical: 'bottom',
 				direction: 'horizontal',
+				iconType: 'uni-icon-chatbubble-filled',
 				pattern: {
 					color: '#7A7E83',
 					backgroundColor: '#fff',

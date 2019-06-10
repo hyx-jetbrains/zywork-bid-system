@@ -4,16 +4,16 @@
 			<view class="zy-contact-icon">
 				<zywork-icon type="icongongsi" color="#66affc" size="100" style="display: inline-block;" />
 			</view>
-			<view class="zy-text-bold zy-text-big zy-company-name">{{company.name}}</view>
+			<view class="zy-text-bold zy-text-big zy-company-name">{{sysInfo.compName}}</view>
 			<uni-list>
-				<zywork-list-item title="客服电话" :note="company.phone" @click="callPhone"></zywork-list-item>
-				<zywork-list-item title="公司邮箱" :note="company.email" @click="copyData(company.email)"></zywork-list-item>
-				<zywork-list-item title="公司地址" :note="company.address" @click="copyData(company.address)"></zywork-list-item>
+				<zywork-list-item title="客服电话" :note="sysInfo.compPhone" @click="callPhone"></zywork-list-item>
+				<zywork-list-item title="公司邮箱" :note="sysInfo.compEmail" @click="copyData(sysInfo.compEmail)"></zywork-list-item>
+				<zywork-list-item title="公司地址" :note="sysInfo.compAddr" @click="copyData(sysInfo.compAddr)"></zywork-list-item>
 			</uni-list>
 			<view class="zy-company-memo">
 				<view class="zy-company-memo-title">公司简介</view>
 				<view class="zy-company-memo-content">
-					{{company.memo}}
+					{{sysInfo.compMemo}}
 				</view>
 			</view>
 		</view>
@@ -24,6 +24,7 @@
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import zyworkListItem from '@/components/zywork-list-item/zywork-list-item.vue'
+	import {getSysInfo} from '@/common/user.js'
 	export default {
 		components: {
 			zyworkIcon,
@@ -32,23 +33,22 @@
 		},
 		data() {
 			return {
-				company: {
-					name: '江西数达信息科技有限公司',
-					phone: '18279700225',
-					email: 'test@qq.com',
-					address: '江西省南昌市某某区',
-					memo: '公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介'
-				}
+				sysInfo: {}
 			}
 		},
 		onLoad() {
 			uni.hideShareMenu();
+			this.initData();
 		},
 		methods: {
+			/** 初始化数据 */
+			initData() {
+				getSysInfo(this)
+			},
 			// 打电话
 			callPhone() {
 				uni.makePhoneCall({
-					phoneNumber: this.company.phone,
+					phoneNumber: this.sysInfo.compPhone,
 					success: () => {
 						console.log("成功拨打电话")
 					}

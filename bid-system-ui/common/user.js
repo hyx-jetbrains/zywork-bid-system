@@ -596,3 +596,28 @@ export const getCustomerConfig = () => {
 		}
 	})
 }
+
+/**
+ * 获取系统信息
+ */
+export const getSysInfo = (self) => {
+	uni.request({
+		url: BASE_URL + '/sys-info/any/sys-info',
+		method: 'GET',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.sysInfo = res.data.data.rows[0]
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}

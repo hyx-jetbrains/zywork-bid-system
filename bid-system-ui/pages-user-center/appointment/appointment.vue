@@ -67,8 +67,9 @@
 		</view>
 		<zywork-no-data v-else text="暂无预约记录"></zywork-no-data>
 
-		<zywork-fab :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction" :showContent="appointmentPopup"
-		 @trigger="trigger"></zywork-fab>
+		<zywork-fab :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction" 
+			:showContent="appointmentPopup" :iconType="iconType"
+			@trigger="trigger"></zywork-fab>
 		<uni-popup :show="appointmentPopup" position="bottom" @hidePopup="trigger(false)">
 			<view class="zy-popup-bottom-title">选择预约类型</view>
 			<view class="zy-popup-bottom-content">
@@ -136,6 +137,7 @@
 				horizontal: 'right',
 				vertical: 'bottom',
 				direction: 'horizontal',
+				iconType: 'uni-icon-chatbubble-filled',
 				pattern: {
 					color: '#7A7E83',
 					backgroundColor: '#fff',

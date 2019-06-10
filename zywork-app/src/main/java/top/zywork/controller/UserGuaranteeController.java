@@ -63,6 +63,17 @@ public class UserGuaranteeController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/13
+     * Time: 10:59
+     * Description: 信息共享 -- 申请保函
+     */
+    @PostMapping("any/list-page")
+    public ResponseStatusVO listPage(@RequestBody UserGuaranteeQuery userGuaranteeQuery) {
+        return listPageByCondition(userGuaranteeQuery);
+    }
+
     @PostMapping("user/list-page")
     public ResponseStatusVO listPageByUserId(@RequestBody UserGuaranteeQuery userGuaranteeQuery) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();

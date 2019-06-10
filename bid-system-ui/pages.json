@@ -142,6 +142,13 @@
 					}
 				},
 				{
+					"path": "publish-guarantee-detail/publish-guarantee-detail",
+					"style": {
+						"navigationBarTitleText": "申请保函详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "publish-builder-detail/publish-builder-detail",
 					"style": {
 						"navigationBarTitleText": "建造师应聘详情",

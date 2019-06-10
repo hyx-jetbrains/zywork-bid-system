@@ -81,7 +81,6 @@
 				this.user = JSON.parse(payload);
 			}
 			this.user = nullToStr(this.user);
-			console.log(this.user);
 			this.initData()
 		},
 		methods: {

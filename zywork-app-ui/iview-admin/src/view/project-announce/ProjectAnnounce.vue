@@ -62,12 +62,18 @@
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
-        <FormItem label="第二候选人" prop="secondCandidate">
+        <FormItem label="建造师姓名" prop="firstBuilderName">
+          <Input v-model="form.firstBuilderName" placeholder="请输入建造师姓名"/>
+        </FormItem>
+        <FormItem label="中标金额" prop="firstMarkMoney">
+          <Input v-model="form.firstMarkMoney" placeholder="请输入中标金额"/>
+        </FormItem>
+        <!-- <FormItem label="第二候选人" prop="secondCandidate">
           <Input v-model="form.secondCandidate" placeholder="请输入第二候选人"/>
         </FormItem>
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
-        </FormItem>
+        </FormItem> -->
         <FormItem label="源地址" prop="sourceUrl">
           <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
         </FormItem>
@@ -94,12 +100,18 @@
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
-        <FormItem label="第二候选人" prop="secondCandidate">
+        <FormItem label="建造师姓名" prop="firstBuilderName">
+          <Input v-model="form.firstBuilderName" placeholder="请输入建造师姓名"/>
+        </FormItem>
+        <FormItem label="中标金额" prop="firstMarkMoney">
+          <Input v-model="form.firstMarkMoney" placeholder="请输入中标金额"/>
+        </FormItem>
+        <!-- <FormItem label="第二候选人" prop="secondCandidate">
           <Input v-model="form.secondCandidate" placeholder="请输入第二候选人"/>
         </FormItem>
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
-        </FormItem>
+        </FormItem> -->
         <FormItem label="源地址" prop="sourceUrl">
           <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
         </FormItem>
@@ -163,12 +175,18 @@
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="searchForm.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
-        <FormItem label="第二候选人" prop="secondCandidate">
+        <FormItem label="建造师" prop="firstBuilderName">
+          <Input v-model="searchForm.firstBuilderName" placeholder="请输入建造师"/>
+        </FormItem>
+        <FormItem label="中标金额" prop="firstMarkName">
+          <Input v-model="searchForm.firstMarkName" placeholder="请输入中标金额"/>
+        </FormItem>
+        <!-- <FormItem label="第二候选人" prop="secondCandidate">
           <Input v-model="searchForm.secondCandidate" placeholder="请输入第二候选人"/>
         </FormItem>
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="searchForm.thirdCandidate" placeholder="请输入第三候选人"/>
-        </FormItem>
+        </FormItem> -->
         <FormItem label="是否激活" prop="isActive">
           <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
             <i-option
@@ -288,13 +306,21 @@
         <span v-text="form.firstCandidate"></span>
       </p>
       <p>
+        建造师:
+        <span v-text="form.firstBuilderName"></span>
+      </p>
+      <p>
+        中标金额:
+        <span v-text="form.firstMarkMoney"></span>
+      </p>
+      <!-- <p>
         第二候选人:
         <span v-text="form.secondCandidate"></span>
       </p>
       <p>
         第三候选人:
         <span v-text="form.thirdCandidate"></span>
-      </p>
+      </p> -->
       <p>
         源地址：
         <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
@@ -434,6 +460,8 @@ export default {
         projectId: null,
         announceDesc: null,
         firstCandidate: null,
+        firstBuilderName: null,
+        firstMarkMoney: null,
         secondCandidate: null,
         thirdCandidate: null,
         sourceUrl: null,
@@ -484,6 +512,8 @@ export default {
         projectIdMin: null,
         projectIdMax: null,
         announceDesc: null,
+        firstBuilderName: null,
+        firstMarkMoney: null,
         firstCandidate: null,
         secondCandidate: null,
         thirdCandidate: null,
@@ -614,17 +644,29 @@ export default {
             sortable: true
           },
           {
-            title: '第二候选人',
-            key: 'secondCandidate',
+            title: '建造师',
+            key: 'firstBuilderName',
             minWidth: 120,
             sortable: true
           },
           {
-            title: '第三候选人',
-            key: 'thirdCandidate',
+            title: '中标金额',
+            key: 'firstMarkName',
             minWidth: 120,
             sortable: true
           },
+          // {
+          //   title: '第二候选人',
+          //   key: 'secondCandidate',
+          //   minWidth: 120,
+          //   sortable: true
+          // },
+          // {
+          //   title: '第三候选人',
+          //   key: 'thirdCandidate',
+          //   minWidth: 120,
+          //   sortable: true
+          // },
           {
             title: '源地址',
             key: 'sourceUrl',

@@ -6,7 +6,7 @@
 				<input type="text" placeholder="我要搜索" disabled />
 			</view>
 			<view style="margin-left: 10upx;">
-				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toPublishChoose" />
+				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toPublishChoose(0)" />
 			</view>
 		</view>
 		<view class="uni-tab-bar zy-tab-bar">
@@ -59,8 +59,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in builderList" :key="index">
 								<view @click="toBuilderDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
@@ -96,8 +95,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in aptitudeBuyList" :key="index">
 								<view @click="toAptitudeDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
@@ -123,8 +121,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in aptitudeSellList" :key="index">
 								<view @click="toAptitudeDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
@@ -160,8 +157,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
 								<view @click="toCarpoolDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
@@ -208,8 +204,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
 								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
@@ -258,8 +253,7 @@
 						<view class="zy-page-list-item" v-for="(item, index) in recruitList" :key="index">
 							<view @click="toRecruitDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-									 :src="item.userDetailHeadicon" />
+									<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 									<view>
 										<view class="zy-disable-flex">
@@ -311,8 +305,7 @@
 						<view class="zy-page-list-item" v-for="(item, index) in seekDataList" :key="index">
 							<view @click="toSeekDataDetailPage(item)">
 								<view class="zy-disable-flex">
-									<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-									 :src="item.userDetailHeadicon" />
+									<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 									<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 									<view>
 										<view class="zy-disable-flex">
@@ -347,7 +340,7 @@
 					<zyworkNoData v-else text="暂无求带资料信息"></zyworkNoData>
 				</view>
 			</view>
-			
+
 			<!-- 更新公告 -->
 			<view v-if="infoType.tabIndex === 5">
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
@@ -369,7 +362,52 @@
 					<zyworkNoData v-else text="暂无更新公告信息"></zyworkNoData>
 				</view>
 			</view>
+
+			<!-- 申请保函 -->
+			<view v-if="infoType.tabIndex === 6">
+				<view class="zy-page-list-item" style="padding-top: 10upx;">
+					<!-- 申请保函信息 -->
+					<view class="zy-page-list" v-if="guaranteeList.length > 0">
+						<view class="zy-page-list-item" v-for="(item, index) in guaranteeList" :key="index">
+							<view @click="toGuaranteeDetailPage(item)">
+								<view class="zy-disable-flex">
+									<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+									<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
+									<view>
+										<view>
+											<text class="zy-text-bold">{{item.userDetailNickname}}</text>
+										</view>
+										<view class="zy-text-mini zy-text-info" style="color: #108EE9">
+											{{item.guaranteeCreateTime}}
+										</view>
+									</view>
+								</view>
+								<view>
+									<view class="zy-text-bold">
+										{{item.guaranteeProjectName}}
+									</view>
+									<view class="zy-text-info zy-disable-flex">
+										<view class="zy-text-bold">
+											招标单位名称：
+											<text class="zy-text-info">{{item.guaranteeMarkUnitName}}</text>
+										</view>
+										<view class="zy-text-bold zy-disable-flex-right">
+											工期(天)：
+											<text class="zy-text-info">{{item.guaranteeConstructionPeriod}}</text>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<zyworkNoData v-else text="暂无保函信息"></zyworkNoData>
+				</view>
+			</view>
 		</view>
+
+		<zywork-fab v-if="addPublish" :pattern="pattern" :horizontal="horizontal" 
+			:vertical="vertical" :direction="direction" :showContent="false" :iconType="iconType"
+		 @trigger="toPublishChoose(1)"></zywork-fab>
 
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
@@ -379,6 +417,7 @@
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import zyworkFab from '@/components/zywork-fab/zywork-fab.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import {
 		builderTypeArray,
@@ -402,13 +441,15 @@
 	const INFO_HIRE = 3
 	const INFO_MATERIAL = 4
 	const INFO_NOTICE = 5
+	const INFO_GUARANTEE = 6
 
 	export default {
 		components: {
 			zyworkIcon,
 			uniSegmentedControl,
 			zyworkNoData,
-			uniTag
+			uniTag,
+			zyworkFab
 		},
 		data() {
 			return {
@@ -422,7 +463,8 @@
 					seekcarUrl: '/UserMarkSeekcar/user/list-page',
 					recruitUrl: '/UserRecruit/user/list-page',
 					seekDataUrl: '/UserSeekData/user/list-page',
-					updateNoticeUrl: '/update-notice/user/list-page'
+					updateNoticeUrl: '/update-notice/user/list-page',
+					guaranteeUrl: '/UserGuarantee/any/list-page'
 				},
 				pager: {
 					pageNo: 1,
@@ -456,6 +498,10 @@
 						{
 							id: 'notice',
 							name: '更新公告'
+						},
+						{
+							id: 'guarantee',
+							name: '申请保函'
 						}
 					]
 				},
@@ -479,7 +525,20 @@
 				seekcarList: [],
 				recruitList: [],
 				seekDataList: [],
-				updateNoticeList: []
+				updateNoticeList: [],
+				guaranteeList: [],
+				addPublish: true,
+				directionStr: '垂直',
+				horizontal: 'right',
+				vertical: 'bottom',
+				direction: 'horizontal',
+				iconType: 'uni-icon-plusempty',
+				pattern: {
+					color: '#7A7E83',
+					backgroundColor: '#fff',
+					selectedColor: '#007AFF',
+					buttonColor: '#007AFF'
+				},
 			}
 		},
 		onLoad() {
@@ -496,7 +555,7 @@
 		},
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();
-			return  {
+			return {
 				title: '江西招投标平台信息共享',
 				path: '/pages/project-info/project-info?shareCode=' + shareCode,
 				imageUrl: SHARE_CODE_PAGE_IMG
@@ -560,6 +619,10 @@
 			/** 刷新更新公告列表 */
 			refreshUpdateNoticeList(type) {
 				this.commonRequest(this.urls.updateNoticeUrl, type);
+			},
+			/** 刷新申请保函列表 */
+			refreshGuaranteeList(type) {
+				this.commonRequest(this.urls.guaranteeUrl, type);
 			},
 			/** 
 			 * 请求成功之后的操作 
@@ -658,6 +721,13 @@
 					} else {
 						this.updateNoticeList = rows;
 					}
+				} else if (INFO_GUARANTEE === tabIndex) {
+					// 申请保函
+					if (type === 'add') {
+						this.guaranteeList = this.guaranteeList.concat(rows);
+					} else {
+						this.guaranteeList = rows;
+					}
 				}
 			},
 			getElSize(id) {
@@ -681,6 +751,11 @@
 					this.infoType.scrollLeft = tabBarScrollLeft
 					this.infoType.tabIndex = tabIndex
 					this.checkRefresh(tabIndex, 'init')
+					this.addPublish = true
+					if (INFO_NOTICE === tabIndex) {
+						// 更新公告
+						this.addPublish = false
+					}
 				}
 			},
 			/** 检查刷新 */
@@ -711,6 +786,9 @@
 				} else if (INFO_NOTICE === tabIndex) {
 					// 更新公告
 					this.refreshUpdateNoticeList(type);
+				} else if (INFO_GUARANTEE === tabIndex) {
+					// 申请保函
+					this.refreshGuaranteeList(type);
 				}
 			},
 			toSearchPage() {
@@ -718,9 +796,33 @@
 					url: '/pages-info-share/search-page/search-page'
 				})
 			},
-			toPublishChoose() {
+			toPublishChoose(type) {
+				var url = '/pages-info-share/publish-choose/publish-choose';
+				if (type === 1) {
+					var tabIndex = this.infoType.tabIndex
+					// 大按钮
+					if (INFO_BUILDER === tabIndex) {
+						// 建造师
+						url = '/pages-info-share/publish-builder/publish-builder'
+					} else if (INFO_APTITUDE === tabIndex) {
+						// 资质转让
+						url = '/pages-info-share/publish-aptitude/publish-aptitude'
+					} else if (INFO_CARPOOL === tabIndex) {
+						// 开标拼车
+						url = '/pages-info-share/publish-carpool/publish-carpool'
+					} else if (INFO_HIRE === tabIndex) {
+						// 其他岗位招聘
+						url = '/pages-info-share/publish-hire/publish-hire'
+					} else if (INFO_MATERIAL === tabIndex) {
+						// 求带资料
+						url = '/pages-info-share/publish-material/publish-material'
+					} else if (INFO_GUARANTEE === tabIndex) {
+						// 申请保函
+						url = '/pages-info-share/publish-guarantee/publish-guarantee'
+					}
+				}
 				uni.navigateTo({
-					url: '/pages-info-share/publish-choose/publish-choose'
+					url: url
 				});
 			},
 			/** 前往详情页面 */
@@ -761,6 +863,10 @@
 			/** 前往公告更新详情页面 */
 			toUpdateNoticeDetailPage(item) {
 				this.toDetailPage('update-notice', item);
+			},
+			/** 前往申请保函详情页面 */
+			toGuaranteeDetailPage(item) {
+				this.toDetailPage('guarantee', item);
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {

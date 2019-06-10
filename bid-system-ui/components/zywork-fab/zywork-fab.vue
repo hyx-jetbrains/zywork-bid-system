@@ -20,7 +20,8 @@
 				:style="{ 'background-color': styles.buttonColor }"
 				@click="open"
 			>
-				<text class="uni-icon uni-icon-plusempty" :class="{ active: showContent }"></text>
+				<!-- <text class="uni-icon uni-icon-plusempty" style="color: #FFFFFF;" :class="{ active: showContent }"></text> -->
+				<text class="uni-icon" style="color: #FFFFFF;" :class="iconType"></text>
 			</view>
 			<!-- <view
 				class="fab-content"
@@ -81,6 +82,10 @@ export default {
 		showContent: {
 			type: Boolean,
 			default: false
+		},
+		iconType: {
+			type: String,
+			default: 'uni-icon-plusempty'
 		}
 		// content: {
 		// 	type: Array,
