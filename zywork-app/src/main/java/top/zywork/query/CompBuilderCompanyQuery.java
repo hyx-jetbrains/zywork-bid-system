@@ -15,70 +15,62 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class CompBuilderCompanyQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036449229057L;
+    private static final long serialVersionUID = -9223372036596167435L;
 
-    //t_project_announce表的字段对应的属性
-	// 公示编号
-	private Long projectAnnounceId;
-	// 公示编号（最小值）
-	private Long projectAnnounceIdMin;
-	// 公示编号（最大值）
-	private Long projectAnnounceIdMax;
-	// 项目编号
-	private Long projectAnnounceProjectId;
-	// 项目编号（最小值）
-	private Long projectAnnounceProjectIdMin;
-	// 项目编号（最大值）
-	private Long projectAnnounceProjectIdMax;
-	// 公示详情
-	private String projectAnnounceAnnounceDesc;
-	// 第一候选人
-	private String projectAnnounceFirstCandidate;
-	// 建造师姓名
-	private String projectAnnounceFirstBuilderName;
-	// 中标金额
-	private String projectAnnounceFirstMarkMoney;
-	// 第二候选人
-	private String projectAnnounceSecondCandidate;
-	// 第三候选人
-	private String projectAnnounceThirdCandidate;
-	// 源地址
-	private String projectAnnounceSourceUrl;
-	// 内部地址
-	private String projectAnnounceInwordHtmlUrl;
+    //t_comp_aptitude表的字段对应的属性
+	// 企业资质编号
+	private Long compAptitudeId;
+	// 企业资质编号（最小值）
+	private Long compAptitudeIdMin;
+	// 企业资质编号（最大值）
+	private Long compAptitudeIdMax;
+	// 企业编号
+	private Long compAptitudeCompId;
+	// 企业编号（最小值）
+	private Long compAptitudeCompIdMin;
+	// 企业编号（最大值）
+	private Long compAptitudeCompIdMax;
+	// 证件号码
+	private String compAptitudeCertificateNum;
+	// 资质详情
+	private String compAptitudeCertificateDetail;
 	// 版本号
-	private Integer projectAnnounceVersion;
+	private Integer compAptitudeVersion;
 	// 版本号（最小值）
-	private Integer projectAnnounceVersionMin;
+	private Integer compAptitudeVersionMin;
 	// 版本号（最大值）
-	private Integer projectAnnounceVersionMax;
+	private Integer compAptitudeVersionMax;
 	// 创建时间
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date projectAnnounceCreateTime;
+	private Date compAptitudeCreateTime;
 	// 创建时间（最小值）
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date projectAnnounceCreateTimeMin;
+	private Date compAptitudeCreateTimeMin;
 	// 创建时间（最大值）
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date projectAnnounceCreateTimeMax;
+	private Date compAptitudeCreateTimeMax;
 	// 更新时间
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date projectAnnounceUpdateTime;
+	private Date compAptitudeUpdateTime;
 	// 更新时间（最小值）
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date projectAnnounceUpdateTimeMin;
+	private Date compAptitudeUpdateTimeMin;
 	// 更新时间（最大值）
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date projectAnnounceUpdateTimeMax;
+	private Date compAptitudeUpdateTimeMax;
 	// 是否激活
-	private Byte projectAnnounceIsActive;
+	private Byte compAptitudeIsActive;
 	// 是否激活（最小值）
-	private Byte projectAnnounceIsActiveMin;
+	private Byte compAptitudeIsActiveMin;
 	// 是否激活（最大值）
-	private Byte projectAnnounceIsActiveMax;
-	//t_project表的字段对应的属性
-	// 项目名称
-	private String projectTitle;
+	private Byte compAptitudeIsActiveMax;
+	//t_company表的字段对应的属性
+	// 企业类型
+	private String companyCompType;
+	// 行业分类
+	private String companyIndustryType;
+	// 企业名称
+	private String companyCompName;
 	//t_comp_builder表的字段对应的属性
 	// 企业建造师编号
 	private Long compBuilderId;
@@ -130,44 +122,33 @@ public class CompBuilderCompanyQuery extends PageQuery {
 	private Byte compBuilderIsActiveMin;
 	// 是否激活（最大值）
 	private Byte compBuilderIsActiveMax;
-	//t_company表的字段对应的属性
-	// 企业类型
-	private String companyCompType;
-	// 行业分类
-	private String companyIndustryType;
-	// 企业名称
-	private String companyCompName;
 	
     public CompBuilderCompanyQuery () {}
 
-    public CompBuilderCompanyQuery (Long projectAnnounceId, Long projectAnnounceIdMin, Long projectAnnounceIdMax, Long projectAnnounceProjectId, Long projectAnnounceProjectIdMin, Long projectAnnounceProjectIdMax, String projectAnnounceAnnounceDesc, String projectAnnounceFirstCandidate, String projectAnnounceFirstBuilderName, String projectAnnounceFirstMarkMoney, String projectAnnounceSecondCandidate, String projectAnnounceThirdCandidate, String projectAnnounceSourceUrl, String projectAnnounceInwordHtmlUrl, Integer projectAnnounceVersion, Integer projectAnnounceVersionMin, Integer projectAnnounceVersionMax, Date projectAnnounceCreateTime, Date projectAnnounceCreateTimeMin, Date projectAnnounceCreateTimeMax, Date projectAnnounceUpdateTime, Date projectAnnounceUpdateTimeMin, Date projectAnnounceUpdateTimeMax, Byte projectAnnounceIsActive, Byte projectAnnounceIsActiveMin, Byte projectAnnounceIsActiveMax, String projectTitle, Long compBuilderId, Long compBuilderIdMin, Long compBuilderIdMax, Long compBuilderCompId, Long compBuilderCompIdMin, Long compBuilderCompIdMax, String compBuilderName, String compBuilderGender, String compBuilderRegNum, String compBuilderMajorLevel, Integer compBuilderVersion, Integer compBuilderVersionMin, Integer compBuilderVersionMax, Date compBuilderCreateTime, Date compBuilderCreateTimeMin, Date compBuilderCreateTimeMax, Date compBuilderUpdateTime, Date compBuilderUpdateTimeMin, Date compBuilderUpdateTimeMax, Byte compBuilderIsActive, Byte compBuilderIsActiveMin, Byte compBuilderIsActiveMax, String companyCompType, String companyIndustryType, String companyCompName) {
-        this.projectAnnounceId = projectAnnounceId;
-		this.projectAnnounceIdMin = projectAnnounceIdMin;
-		this.projectAnnounceIdMax = projectAnnounceIdMax;
-		this.projectAnnounceProjectId = projectAnnounceProjectId;
-		this.projectAnnounceProjectIdMin = projectAnnounceProjectIdMin;
-		this.projectAnnounceProjectIdMax = projectAnnounceProjectIdMax;
-		this.projectAnnounceAnnounceDesc = projectAnnounceAnnounceDesc;
-		this.projectAnnounceFirstCandidate = projectAnnounceFirstCandidate;
-		this.projectAnnounceFirstBuilderName = projectAnnounceFirstBuilderName;
-		this.projectAnnounceFirstMarkMoney = projectAnnounceFirstMarkMoney;
-		this.projectAnnounceSecondCandidate = projectAnnounceSecondCandidate;
-		this.projectAnnounceThirdCandidate = projectAnnounceThirdCandidate;
-		this.projectAnnounceSourceUrl = projectAnnounceSourceUrl;
-		this.projectAnnounceInwordHtmlUrl = projectAnnounceInwordHtmlUrl;
-		this.projectAnnounceVersion = projectAnnounceVersion;
-		this.projectAnnounceVersionMin = projectAnnounceVersionMin;
-		this.projectAnnounceVersionMax = projectAnnounceVersionMax;
-		this.projectAnnounceCreateTime = projectAnnounceCreateTime;
-		this.projectAnnounceCreateTimeMin = projectAnnounceCreateTimeMin;
-		this.projectAnnounceCreateTimeMax = projectAnnounceCreateTimeMax;
-		this.projectAnnounceUpdateTime = projectAnnounceUpdateTime;
-		this.projectAnnounceUpdateTimeMin = projectAnnounceUpdateTimeMin;
-		this.projectAnnounceUpdateTimeMax = projectAnnounceUpdateTimeMax;
-		this.projectAnnounceIsActive = projectAnnounceIsActive;
-		this.projectAnnounceIsActiveMin = projectAnnounceIsActiveMin;
-		this.projectAnnounceIsActiveMax = projectAnnounceIsActiveMax;
-		this.projectTitle = projectTitle;
+    public CompBuilderCompanyQuery (Long compAptitudeId, Long compAptitudeIdMin, Long compAptitudeIdMax, Long compAptitudeCompId, Long compAptitudeCompIdMin, Long compAptitudeCompIdMax, String compAptitudeCertificateNum, String compAptitudeCertificateDetail, Integer compAptitudeVersion, Integer compAptitudeVersionMin, Integer compAptitudeVersionMax, Date compAptitudeCreateTime, Date compAptitudeCreateTimeMin, Date compAptitudeCreateTimeMax, Date compAptitudeUpdateTime, Date compAptitudeUpdateTimeMin, Date compAptitudeUpdateTimeMax, Byte compAptitudeIsActive, Byte compAptitudeIsActiveMin, Byte compAptitudeIsActiveMax, String companyCompType, String companyIndustryType, String companyCompName, Long compBuilderId, Long compBuilderIdMin, Long compBuilderIdMax, Long compBuilderCompId, Long compBuilderCompIdMin, Long compBuilderCompIdMax, String compBuilderName, String compBuilderGender, String compBuilderRegNum, String compBuilderMajorLevel, Integer compBuilderVersion, Integer compBuilderVersionMin, Integer compBuilderVersionMax, Date compBuilderCreateTime, Date compBuilderCreateTimeMin, Date compBuilderCreateTimeMax, Date compBuilderUpdateTime, Date compBuilderUpdateTimeMin, Date compBuilderUpdateTimeMax, Byte compBuilderIsActive, Byte compBuilderIsActiveMin, Byte compBuilderIsActiveMax) {
+        this.compAptitudeId = compAptitudeId;
+		this.compAptitudeIdMin = compAptitudeIdMin;
+		this.compAptitudeIdMax = compAptitudeIdMax;
+		this.compAptitudeCompId = compAptitudeCompId;
+		this.compAptitudeCompIdMin = compAptitudeCompIdMin;
+		this.compAptitudeCompIdMax = compAptitudeCompIdMax;
+		this.compAptitudeCertificateNum = compAptitudeCertificateNum;
+		this.compAptitudeCertificateDetail = compAptitudeCertificateDetail;
+		this.compAptitudeVersion = compAptitudeVersion;
+		this.compAptitudeVersionMin = compAptitudeVersionMin;
+		this.compAptitudeVersionMax = compAptitudeVersionMax;
+		this.compAptitudeCreateTime = compAptitudeCreateTime;
+		this.compAptitudeCreateTimeMin = compAptitudeCreateTimeMin;
+		this.compAptitudeCreateTimeMax = compAptitudeCreateTimeMax;
+		this.compAptitudeUpdateTime = compAptitudeUpdateTime;
+		this.compAptitudeUpdateTimeMin = compAptitudeUpdateTimeMin;
+		this.compAptitudeUpdateTimeMax = compAptitudeUpdateTimeMax;
+		this.compAptitudeIsActive = compAptitudeIsActive;
+		this.compAptitudeIsActiveMin = compAptitudeIsActiveMin;
+		this.compAptitudeIsActiveMax = compAptitudeIsActiveMax;
+		this.companyCompType = companyCompType;
+		this.companyIndustryType = companyIndustryType;
+		this.companyCompName = companyCompName;
 		this.compBuilderId = compBuilderId;
 		this.compBuilderIdMin = compBuilderIdMin;
 		this.compBuilderIdMax = compBuilderIdMax;
@@ -190,226 +171,191 @@ public class CompBuilderCompanyQuery extends PageQuery {
 		this.compBuilderIsActive = compBuilderIsActive;
 		this.compBuilderIsActiveMin = compBuilderIsActiveMin;
 		this.compBuilderIsActiveMax = compBuilderIsActiveMax;
-		this.companyCompType = companyCompType;
-		this.companyIndustryType = companyIndustryType;
-		this.companyCompName = companyCompName;
 		
     }
 
-    public Long getProjectAnnounceId() {
-		return projectAnnounceId;
+    public Long getCompAptitudeId() {
+		return compAptitudeId;
 	}
 
-	public void setProjectAnnounceId(Long projectAnnounceId) {
-		this.projectAnnounceId = projectAnnounceId;
+	public void setCompAptitudeId(Long compAptitudeId) {
+		this.compAptitudeId = compAptitudeId;
 	}
 
-	public Long getProjectAnnounceIdMin() {
-		return projectAnnounceIdMin;
+	public Long getCompAptitudeIdMin() {
+		return compAptitudeIdMin;
 	}
 
-	public void setProjectAnnounceIdMin(Long projectAnnounceIdMin) {
-		this.projectAnnounceIdMin = projectAnnounceIdMin;
+	public void setCompAptitudeIdMin(Long compAptitudeIdMin) {
+		this.compAptitudeIdMin = compAptitudeIdMin;
 	}
 
-	public Long getProjectAnnounceIdMax() {
-		return projectAnnounceIdMax;
+	public Long getCompAptitudeIdMax() {
+		return compAptitudeIdMax;
 	}
 
-	public void setProjectAnnounceIdMax(Long projectAnnounceIdMax) {
-		this.projectAnnounceIdMax = projectAnnounceIdMax;
+	public void setCompAptitudeIdMax(Long compAptitudeIdMax) {
+		this.compAptitudeIdMax = compAptitudeIdMax;
 	}
 
-	public Long getProjectAnnounceProjectId() {
-		return projectAnnounceProjectId;
+	public Long getCompAptitudeCompId() {
+		return compAptitudeCompId;
 	}
 
-	public void setProjectAnnounceProjectId(Long projectAnnounceProjectId) {
-		this.projectAnnounceProjectId = projectAnnounceProjectId;
+	public void setCompAptitudeCompId(Long compAptitudeCompId) {
+		this.compAptitudeCompId = compAptitudeCompId;
 	}
 
-	public Long getProjectAnnounceProjectIdMin() {
-		return projectAnnounceProjectIdMin;
+	public Long getCompAptitudeCompIdMin() {
+		return compAptitudeCompIdMin;
 	}
 
-	public void setProjectAnnounceProjectIdMin(Long projectAnnounceProjectIdMin) {
-		this.projectAnnounceProjectIdMin = projectAnnounceProjectIdMin;
+	public void setCompAptitudeCompIdMin(Long compAptitudeCompIdMin) {
+		this.compAptitudeCompIdMin = compAptitudeCompIdMin;
 	}
 
-	public Long getProjectAnnounceProjectIdMax() {
-		return projectAnnounceProjectIdMax;
+	public Long getCompAptitudeCompIdMax() {
+		return compAptitudeCompIdMax;
 	}
 
-	public void setProjectAnnounceProjectIdMax(Long projectAnnounceProjectIdMax) {
-		this.projectAnnounceProjectIdMax = projectAnnounceProjectIdMax;
+	public void setCompAptitudeCompIdMax(Long compAptitudeCompIdMax) {
+		this.compAptitudeCompIdMax = compAptitudeCompIdMax;
 	}
 
-	public String getProjectAnnounceAnnounceDesc() {
-		return projectAnnounceAnnounceDesc;
+	public String getCompAptitudeCertificateNum() {
+		return compAptitudeCertificateNum;
 	}
 
-	public void setProjectAnnounceAnnounceDesc(String projectAnnounceAnnounceDesc) {
-		this.projectAnnounceAnnounceDesc = projectAnnounceAnnounceDesc;
+	public void setCompAptitudeCertificateNum(String compAptitudeCertificateNum) {
+		this.compAptitudeCertificateNum = compAptitudeCertificateNum;
 	}
 
-	public String getProjectAnnounceFirstCandidate() {
-		return projectAnnounceFirstCandidate;
+	public String getCompAptitudeCertificateDetail() {
+		return compAptitudeCertificateDetail;
 	}
 
-	public void setProjectAnnounceFirstCandidate(String projectAnnounceFirstCandidate) {
-		this.projectAnnounceFirstCandidate = projectAnnounceFirstCandidate;
+	public void setCompAptitudeCertificateDetail(String compAptitudeCertificateDetail) {
+		this.compAptitudeCertificateDetail = compAptitudeCertificateDetail;
 	}
 
-	public String getProjectAnnounceFirstBuilderName() {
-		return projectAnnounceFirstBuilderName;
+	public Integer getCompAptitudeVersion() {
+		return compAptitudeVersion;
 	}
 
-	public void setProjectAnnounceFirstBuilderName(String projectAnnounceFirstBuilderName) {
-		this.projectAnnounceFirstBuilderName = projectAnnounceFirstBuilderName;
+	public void setCompAptitudeVersion(Integer compAptitudeVersion) {
+		this.compAptitudeVersion = compAptitudeVersion;
 	}
 
-	public String getProjectAnnounceFirstMarkMoney() {
-		return projectAnnounceFirstMarkMoney;
+	public Integer getCompAptitudeVersionMin() {
+		return compAptitudeVersionMin;
 	}
 
-	public void setProjectAnnounceFirstMarkMoney(String projectAnnounceFirstMarkMoney) {
-		this.projectAnnounceFirstMarkMoney = projectAnnounceFirstMarkMoney;
+	public void setCompAptitudeVersionMin(Integer compAptitudeVersionMin) {
+		this.compAptitudeVersionMin = compAptitudeVersionMin;
 	}
 
-	public String getProjectAnnounceSecondCandidate() {
-		return projectAnnounceSecondCandidate;
+	public Integer getCompAptitudeVersionMax() {
+		return compAptitudeVersionMax;
 	}
 
-	public void setProjectAnnounceSecondCandidate(String projectAnnounceSecondCandidate) {
-		this.projectAnnounceSecondCandidate = projectAnnounceSecondCandidate;
+	public void setCompAptitudeVersionMax(Integer compAptitudeVersionMax) {
+		this.compAptitudeVersionMax = compAptitudeVersionMax;
 	}
 
-	public String getProjectAnnounceThirdCandidate() {
-		return projectAnnounceThirdCandidate;
+	public Date getCompAptitudeCreateTime() {
+		return compAptitudeCreateTime;
 	}
 
-	public void setProjectAnnounceThirdCandidate(String projectAnnounceThirdCandidate) {
-		this.projectAnnounceThirdCandidate = projectAnnounceThirdCandidate;
+	public void setCompAptitudeCreateTime(Date compAptitudeCreateTime) {
+		this.compAptitudeCreateTime = compAptitudeCreateTime;
 	}
 
-	public String getProjectAnnounceSourceUrl() {
-		return projectAnnounceSourceUrl;
+	public Date getCompAptitudeCreateTimeMin() {
+		return compAptitudeCreateTimeMin;
 	}
 
-	public void setProjectAnnounceSourceUrl(String projectAnnounceSourceUrl) {
-		this.projectAnnounceSourceUrl = projectAnnounceSourceUrl;
+	public void setCompAptitudeCreateTimeMin(Date compAptitudeCreateTimeMin) {
+		this.compAptitudeCreateTimeMin = compAptitudeCreateTimeMin;
 	}
 
-	public String getProjectAnnounceInwordHtmlUrl() {
-		return projectAnnounceInwordHtmlUrl;
+	public Date getCompAptitudeCreateTimeMax() {
+		return compAptitudeCreateTimeMax;
 	}
 
-	public void setProjectAnnounceInwordHtmlUrl(String projectAnnounceInwordHtmlUrl) {
-		this.projectAnnounceInwordHtmlUrl = projectAnnounceInwordHtmlUrl;
+	public void setCompAptitudeCreateTimeMax(Date compAptitudeCreateTimeMax) {
+		this.compAptitudeCreateTimeMax = compAptitudeCreateTimeMax;
 	}
 
-	public Integer getProjectAnnounceVersion() {
-		return projectAnnounceVersion;
+	public Date getCompAptitudeUpdateTime() {
+		return compAptitudeUpdateTime;
 	}
 
-	public void setProjectAnnounceVersion(Integer projectAnnounceVersion) {
-		this.projectAnnounceVersion = projectAnnounceVersion;
+	public void setCompAptitudeUpdateTime(Date compAptitudeUpdateTime) {
+		this.compAptitudeUpdateTime = compAptitudeUpdateTime;
 	}
 
-	public Integer getProjectAnnounceVersionMin() {
-		return projectAnnounceVersionMin;
+	public Date getCompAptitudeUpdateTimeMin() {
+		return compAptitudeUpdateTimeMin;
 	}
 
-	public void setProjectAnnounceVersionMin(Integer projectAnnounceVersionMin) {
-		this.projectAnnounceVersionMin = projectAnnounceVersionMin;
+	public void setCompAptitudeUpdateTimeMin(Date compAptitudeUpdateTimeMin) {
+		this.compAptitudeUpdateTimeMin = compAptitudeUpdateTimeMin;
 	}
 
-	public Integer getProjectAnnounceVersionMax() {
-		return projectAnnounceVersionMax;
+	public Date getCompAptitudeUpdateTimeMax() {
+		return compAptitudeUpdateTimeMax;
 	}
 
-	public void setProjectAnnounceVersionMax(Integer projectAnnounceVersionMax) {
-		this.projectAnnounceVersionMax = projectAnnounceVersionMax;
+	public void setCompAptitudeUpdateTimeMax(Date compAptitudeUpdateTimeMax) {
+		this.compAptitudeUpdateTimeMax = compAptitudeUpdateTimeMax;
 	}
 
-	public Date getProjectAnnounceCreateTime() {
-		return projectAnnounceCreateTime;
+	public Byte getCompAptitudeIsActive() {
+		return compAptitudeIsActive;
 	}
 
-	public void setProjectAnnounceCreateTime(Date projectAnnounceCreateTime) {
-		this.projectAnnounceCreateTime = projectAnnounceCreateTime;
+	public void setCompAptitudeIsActive(Byte compAptitudeIsActive) {
+		this.compAptitudeIsActive = compAptitudeIsActive;
 	}
 
-	public Date getProjectAnnounceCreateTimeMin() {
-		return projectAnnounceCreateTimeMin;
+	public Byte getCompAptitudeIsActiveMin() {
+		return compAptitudeIsActiveMin;
 	}
 
-	public void setProjectAnnounceCreateTimeMin(Date projectAnnounceCreateTimeMin) {
-		this.projectAnnounceCreateTimeMin = projectAnnounceCreateTimeMin;
+	public void setCompAptitudeIsActiveMin(Byte compAptitudeIsActiveMin) {
+		this.compAptitudeIsActiveMin = compAptitudeIsActiveMin;
 	}
 
-	public Date getProjectAnnounceCreateTimeMax() {
-		return projectAnnounceCreateTimeMax;
+	public Byte getCompAptitudeIsActiveMax() {
+		return compAptitudeIsActiveMax;
 	}
 
-	public void setProjectAnnounceCreateTimeMax(Date projectAnnounceCreateTimeMax) {
-		this.projectAnnounceCreateTimeMax = projectAnnounceCreateTimeMax;
+	public void setCompAptitudeIsActiveMax(Byte compAptitudeIsActiveMax) {
+		this.compAptitudeIsActiveMax = compAptitudeIsActiveMax;
 	}
 
-	public Date getProjectAnnounceUpdateTime() {
-		return projectAnnounceUpdateTime;
+	public String getCompanyCompType() {
+		return companyCompType;
 	}
 
-	public void setProjectAnnounceUpdateTime(Date projectAnnounceUpdateTime) {
-		this.projectAnnounceUpdateTime = projectAnnounceUpdateTime;
+	public void setCompanyCompType(String companyCompType) {
+		this.companyCompType = companyCompType;
 	}
 
-	public Date getProjectAnnounceUpdateTimeMin() {
-		return projectAnnounceUpdateTimeMin;
+	public String getCompanyIndustryType() {
+		return companyIndustryType;
 	}
 
-	public void setProjectAnnounceUpdateTimeMin(Date projectAnnounceUpdateTimeMin) {
-		this.projectAnnounceUpdateTimeMin = projectAnnounceUpdateTimeMin;
+	public void setCompanyIndustryType(String companyIndustryType) {
+		this.companyIndustryType = companyIndustryType;
 	}
 
-	public Date getProjectAnnounceUpdateTimeMax() {
-		return projectAnnounceUpdateTimeMax;
+	public String getCompanyCompName() {
+		return companyCompName;
 	}
 
-	public void setProjectAnnounceUpdateTimeMax(Date projectAnnounceUpdateTimeMax) {
-		this.projectAnnounceUpdateTimeMax = projectAnnounceUpdateTimeMax;
-	}
-
-	public Byte getProjectAnnounceIsActive() {
-		return projectAnnounceIsActive;
-	}
-
-	public void setProjectAnnounceIsActive(Byte projectAnnounceIsActive) {
-		this.projectAnnounceIsActive = projectAnnounceIsActive;
-	}
-
-	public Byte getProjectAnnounceIsActiveMin() {
-		return projectAnnounceIsActiveMin;
-	}
-
-	public void setProjectAnnounceIsActiveMin(Byte projectAnnounceIsActiveMin) {
-		this.projectAnnounceIsActiveMin = projectAnnounceIsActiveMin;
-	}
-
-	public Byte getProjectAnnounceIsActiveMax() {
-		return projectAnnounceIsActiveMax;
-	}
-
-	public void setProjectAnnounceIsActiveMax(Byte projectAnnounceIsActiveMax) {
-		this.projectAnnounceIsActiveMax = projectAnnounceIsActiveMax;
-	}
-
-	public String getProjectTitle() {
-		return projectTitle;
-	}
-
-	public void setProjectTitle(String projectTitle) {
-		this.projectTitle = projectTitle;
+	public void setCompanyCompName(String companyCompName) {
+		this.companyCompName = companyCompName;
 	}
 
 	public Long getCompBuilderId() {
@@ -588,61 +534,33 @@ public class CompBuilderCompanyQuery extends PageQuery {
 		this.compBuilderIsActiveMax = compBuilderIsActiveMax;
 	}
 
-	public String getCompanyCompType() {
-		return companyCompType;
-	}
-
-	public void setCompanyCompType(String companyCompType) {
-		this.companyCompType = companyCompType;
-	}
-
-	public String getCompanyIndustryType() {
-		return companyIndustryType;
-	}
-
-	public void setCompanyIndustryType(String companyIndustryType) {
-		this.companyIndustryType = companyIndustryType;
-	}
-
-	public String getCompanyCompName() {
-		return companyCompName;
-	}
-
-	public void setCompanyCompName(String companyCompName) {
-		this.companyCompName = companyCompName;
-	}
-
 	
     @Override
     public String toString() {
         return "CompBuilderCompanyQuery {" +
-                "projectAnnounceId = " + projectAnnounceId + 
-				", projectAnnounceIdMin = " + projectAnnounceIdMin + 
-				", projectAnnounceIdMax = " + projectAnnounceIdMax + 
-				", projectAnnounceProjectId = " + projectAnnounceProjectId + 
-				", projectAnnounceProjectIdMin = " + projectAnnounceProjectIdMin + 
-				", projectAnnounceProjectIdMax = " + projectAnnounceProjectIdMax + 
-				", projectAnnounceAnnounceDesc = " + projectAnnounceAnnounceDesc + 
-				", projectAnnounceFirstCandidate = " + projectAnnounceFirstCandidate + 
-				", projectAnnounceFirstBuilderName = " + projectAnnounceFirstBuilderName + 
-				", projectAnnounceFirstMarkMoney = " + projectAnnounceFirstMarkMoney + 
-				", projectAnnounceSecondCandidate = " + projectAnnounceSecondCandidate + 
-				", projectAnnounceThirdCandidate = " + projectAnnounceThirdCandidate + 
-				", projectAnnounceSourceUrl = " + projectAnnounceSourceUrl + 
-				", projectAnnounceInwordHtmlUrl = " + projectAnnounceInwordHtmlUrl + 
-				", projectAnnounceVersion = " + projectAnnounceVersion + 
-				", projectAnnounceVersionMin = " + projectAnnounceVersionMin + 
-				", projectAnnounceVersionMax = " + projectAnnounceVersionMax + 
-				", projectAnnounceCreateTime = " + projectAnnounceCreateTime + 
-				", projectAnnounceCreateTimeMin = " + projectAnnounceCreateTimeMin + 
-				", projectAnnounceCreateTimeMax = " + projectAnnounceCreateTimeMax + 
-				", projectAnnounceUpdateTime = " + projectAnnounceUpdateTime + 
-				", projectAnnounceUpdateTimeMin = " + projectAnnounceUpdateTimeMin + 
-				", projectAnnounceUpdateTimeMax = " + projectAnnounceUpdateTimeMax + 
-				", projectAnnounceIsActive = " + projectAnnounceIsActive + 
-				", projectAnnounceIsActiveMin = " + projectAnnounceIsActiveMin + 
-				", projectAnnounceIsActiveMax = " + projectAnnounceIsActiveMax + 
-				", projectTitle = " + projectTitle + 
+                "compAptitudeId = " + compAptitudeId + 
+				", compAptitudeIdMin = " + compAptitudeIdMin + 
+				", compAptitudeIdMax = " + compAptitudeIdMax + 
+				", compAptitudeCompId = " + compAptitudeCompId + 
+				", compAptitudeCompIdMin = " + compAptitudeCompIdMin + 
+				", compAptitudeCompIdMax = " + compAptitudeCompIdMax + 
+				", compAptitudeCertificateNum = " + compAptitudeCertificateNum + 
+				", compAptitudeCertificateDetail = " + compAptitudeCertificateDetail + 
+				", compAptitudeVersion = " + compAptitudeVersion + 
+				", compAptitudeVersionMin = " + compAptitudeVersionMin + 
+				", compAptitudeVersionMax = " + compAptitudeVersionMax + 
+				", compAptitudeCreateTime = " + compAptitudeCreateTime + 
+				", compAptitudeCreateTimeMin = " + compAptitudeCreateTimeMin + 
+				", compAptitudeCreateTimeMax = " + compAptitudeCreateTimeMax + 
+				", compAptitudeUpdateTime = " + compAptitudeUpdateTime + 
+				", compAptitudeUpdateTimeMin = " + compAptitudeUpdateTimeMin + 
+				", compAptitudeUpdateTimeMax = " + compAptitudeUpdateTimeMax + 
+				", compAptitudeIsActive = " + compAptitudeIsActive + 
+				", compAptitudeIsActiveMin = " + compAptitudeIsActiveMin + 
+				", compAptitudeIsActiveMax = " + compAptitudeIsActiveMax + 
+				", companyCompType = " + companyCompType + 
+				", companyIndustryType = " + companyIndustryType + 
+				", companyCompName = " + companyCompName + 
 				", compBuilderId = " + compBuilderId + 
 				", compBuilderIdMin = " + compBuilderIdMin + 
 				", compBuilderIdMax = " + compBuilderIdMax + 
@@ -665,9 +583,6 @@ public class CompBuilderCompanyQuery extends PageQuery {
 				", compBuilderIsActive = " + compBuilderIsActive + 
 				", compBuilderIsActiveMin = " + compBuilderIsActiveMin + 
 				", compBuilderIsActiveMax = " + compBuilderIsActiveMax + 
-				", companyCompType = " + companyCompType + 
-				", companyIndustryType = " + companyIndustryType + 
-				", companyCompName = " + companyCompName + 
 				" }";
     }
 

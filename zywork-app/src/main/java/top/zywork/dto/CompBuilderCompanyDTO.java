@@ -13,40 +13,32 @@ import java.util.Date;
  */
 public class CompBuilderCompanyDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035061518255L;
+    private static final long serialVersionUID = -9223372035949255596L;
 
-    //t_project_announce表的字段对应的属性
-	// 公示编号
-	private Long projectAnnounceId;
-	// 项目编号
-	private Long projectAnnounceProjectId;
-	// 公示详情
-	private String projectAnnounceAnnounceDesc;
-	// 第一候选人
-	private String projectAnnounceFirstCandidate;
-	// 建造师姓名
-	private String projectAnnounceFirstBuilderName;
-	// 中标金额
-	private String projectAnnounceFirstMarkMoney;
-	// 第二候选人
-	private String projectAnnounceSecondCandidate;
-	// 第三候选人
-	private String projectAnnounceThirdCandidate;
-	// 源地址
-	private String projectAnnounceSourceUrl;
-	// 内部地址
-	private String projectAnnounceInwordHtmlUrl;
+    //t_comp_aptitude表的字段对应的属性
+	// 企业资质编号
+	private Long compAptitudeId;
+	// 企业编号
+	private Long compAptitudeCompId;
+	// 证件号码
+	private String compAptitudeCertificateNum;
+	// 资质详情
+	private String compAptitudeCertificateDetail;
 	// 版本号
-	private Integer projectAnnounceVersion;
+	private Integer compAptitudeVersion;
 	// 创建时间
-	private Date projectAnnounceCreateTime;
+	private Date compAptitudeCreateTime;
 	// 更新时间
-	private Date projectAnnounceUpdateTime;
+	private Date compAptitudeUpdateTime;
 	// 是否激活
-	private Byte projectAnnounceIsActive;
-	//t_project表的字段对应的属性
-	// 项目名称
-	private String projectTitle;
+	private Byte compAptitudeIsActive;
+	//t_company表的字段对应的属性
+	// 企业类型
+	private String companyCompType;
+	// 行业分类
+	private String companyIndustryType;
+	// 企业名称
+	private String companyCompName;
 	//t_comp_builder表的字段对应的属性
 	// 企业建造师编号
 	private Long compBuilderId;
@@ -68,32 +60,21 @@ public class CompBuilderCompanyDTO extends BaseDTO {
 	private Date compBuilderUpdateTime;
 	// 是否激活
 	private Byte compBuilderIsActive;
-	//t_company表的字段对应的属性
-	// 企业类型
-	private String companyCompType;
-	// 行业分类
-	private String companyIndustryType;
-	// 企业名称
-	private String companyCompName;
 	
     public CompBuilderCompanyDTO () {}
 
-    public CompBuilderCompanyDTO (Long projectAnnounceId, Long projectAnnounceProjectId, String projectAnnounceAnnounceDesc, String projectAnnounceFirstCandidate, String projectAnnounceFirstBuilderName, String projectAnnounceFirstMarkMoney, String projectAnnounceSecondCandidate, String projectAnnounceThirdCandidate, String projectAnnounceSourceUrl, String projectAnnounceInwordHtmlUrl, Integer projectAnnounceVersion, Date projectAnnounceCreateTime, Date projectAnnounceUpdateTime, Byte projectAnnounceIsActive, String projectTitle, Long compBuilderId, Long compBuilderCompId, String compBuilderName, String compBuilderGender, String compBuilderRegNum, String compBuilderMajorLevel, Integer compBuilderVersion, Date compBuilderCreateTime, Date compBuilderUpdateTime, Byte compBuilderIsActive, String companyCompType, String companyIndustryType, String companyCompName) {
-        this.projectAnnounceId = projectAnnounceId;
-		this.projectAnnounceProjectId = projectAnnounceProjectId;
-		this.projectAnnounceAnnounceDesc = projectAnnounceAnnounceDesc;
-		this.projectAnnounceFirstCandidate = projectAnnounceFirstCandidate;
-		this.projectAnnounceFirstBuilderName = projectAnnounceFirstBuilderName;
-		this.projectAnnounceFirstMarkMoney = projectAnnounceFirstMarkMoney;
-		this.projectAnnounceSecondCandidate = projectAnnounceSecondCandidate;
-		this.projectAnnounceThirdCandidate = projectAnnounceThirdCandidate;
-		this.projectAnnounceSourceUrl = projectAnnounceSourceUrl;
-		this.projectAnnounceInwordHtmlUrl = projectAnnounceInwordHtmlUrl;
-		this.projectAnnounceVersion = projectAnnounceVersion;
-		this.projectAnnounceCreateTime = projectAnnounceCreateTime;
-		this.projectAnnounceUpdateTime = projectAnnounceUpdateTime;
-		this.projectAnnounceIsActive = projectAnnounceIsActive;
-		this.projectTitle = projectTitle;
+    public CompBuilderCompanyDTO (Long compAptitudeId, Long compAptitudeCompId, String compAptitudeCertificateNum, String compAptitudeCertificateDetail, Integer compAptitudeVersion, Date compAptitudeCreateTime, Date compAptitudeUpdateTime, Byte compAptitudeIsActive, String companyCompType, String companyIndustryType, String companyCompName, Long compBuilderId, Long compBuilderCompId, String compBuilderName, String compBuilderGender, String compBuilderRegNum, String compBuilderMajorLevel, Integer compBuilderVersion, Date compBuilderCreateTime, Date compBuilderUpdateTime, Byte compBuilderIsActive) {
+        this.compAptitudeId = compAptitudeId;
+		this.compAptitudeCompId = compAptitudeCompId;
+		this.compAptitudeCertificateNum = compAptitudeCertificateNum;
+		this.compAptitudeCertificateDetail = compAptitudeCertificateDetail;
+		this.compAptitudeVersion = compAptitudeVersion;
+		this.compAptitudeCreateTime = compAptitudeCreateTime;
+		this.compAptitudeUpdateTime = compAptitudeUpdateTime;
+		this.compAptitudeIsActive = compAptitudeIsActive;
+		this.companyCompType = companyCompType;
+		this.companyIndustryType = companyIndustryType;
+		this.companyCompName = companyCompName;
 		this.compBuilderId = compBuilderId;
 		this.compBuilderCompId = compBuilderCompId;
 		this.compBuilderName = compBuilderName;
@@ -104,130 +85,95 @@ public class CompBuilderCompanyDTO extends BaseDTO {
 		this.compBuilderCreateTime = compBuilderCreateTime;
 		this.compBuilderUpdateTime = compBuilderUpdateTime;
 		this.compBuilderIsActive = compBuilderIsActive;
-		this.companyCompType = companyCompType;
-		this.companyIndustryType = companyIndustryType;
-		this.companyCompName = companyCompName;
 		
     }
 
-    public Long getProjectAnnounceId() {
-		return projectAnnounceId;
+    public Long getCompAptitudeId() {
+		return compAptitudeId;
 	}
 
-	public void setProjectAnnounceId(Long projectAnnounceId) {
-		this.projectAnnounceId = projectAnnounceId;
+	public void setCompAptitudeId(Long compAptitudeId) {
+		this.compAptitudeId = compAptitudeId;
 	}
 
-	public Long getProjectAnnounceProjectId() {
-		return projectAnnounceProjectId;
+	public Long getCompAptitudeCompId() {
+		return compAptitudeCompId;
 	}
 
-	public void setProjectAnnounceProjectId(Long projectAnnounceProjectId) {
-		this.projectAnnounceProjectId = projectAnnounceProjectId;
+	public void setCompAptitudeCompId(Long compAptitudeCompId) {
+		this.compAptitudeCompId = compAptitudeCompId;
 	}
 
-	public String getProjectAnnounceAnnounceDesc() {
-		return projectAnnounceAnnounceDesc;
+	public String getCompAptitudeCertificateNum() {
+		return compAptitudeCertificateNum;
 	}
 
-	public void setProjectAnnounceAnnounceDesc(String projectAnnounceAnnounceDesc) {
-		this.projectAnnounceAnnounceDesc = projectAnnounceAnnounceDesc;
+	public void setCompAptitudeCertificateNum(String compAptitudeCertificateNum) {
+		this.compAptitudeCertificateNum = compAptitudeCertificateNum;
 	}
 
-	public String getProjectAnnounceFirstCandidate() {
-		return projectAnnounceFirstCandidate;
+	public String getCompAptitudeCertificateDetail() {
+		return compAptitudeCertificateDetail;
 	}
 
-	public void setProjectAnnounceFirstCandidate(String projectAnnounceFirstCandidate) {
-		this.projectAnnounceFirstCandidate = projectAnnounceFirstCandidate;
+	public void setCompAptitudeCertificateDetail(String compAptitudeCertificateDetail) {
+		this.compAptitudeCertificateDetail = compAptitudeCertificateDetail;
 	}
 
-	public String getProjectAnnounceFirstBuilderName() {
-		return projectAnnounceFirstBuilderName;
+	public Integer getCompAptitudeVersion() {
+		return compAptitudeVersion;
 	}
 
-	public void setProjectAnnounceFirstBuilderName(String projectAnnounceFirstBuilderName) {
-		this.projectAnnounceFirstBuilderName = projectAnnounceFirstBuilderName;
+	public void setCompAptitudeVersion(Integer compAptitudeVersion) {
+		this.compAptitudeVersion = compAptitudeVersion;
 	}
 
-	public String getProjectAnnounceFirstMarkMoney() {
-		return projectAnnounceFirstMarkMoney;
+	public Date getCompAptitudeCreateTime() {
+		return compAptitudeCreateTime;
 	}
 
-	public void setProjectAnnounceFirstMarkMoney(String projectAnnounceFirstMarkMoney) {
-		this.projectAnnounceFirstMarkMoney = projectAnnounceFirstMarkMoney;
+	public void setCompAptitudeCreateTime(Date compAptitudeCreateTime) {
+		this.compAptitudeCreateTime = compAptitudeCreateTime;
 	}
 
-	public String getProjectAnnounceSecondCandidate() {
-		return projectAnnounceSecondCandidate;
+	public Date getCompAptitudeUpdateTime() {
+		return compAptitudeUpdateTime;
 	}
 
-	public void setProjectAnnounceSecondCandidate(String projectAnnounceSecondCandidate) {
-		this.projectAnnounceSecondCandidate = projectAnnounceSecondCandidate;
+	public void setCompAptitudeUpdateTime(Date compAptitudeUpdateTime) {
+		this.compAptitudeUpdateTime = compAptitudeUpdateTime;
 	}
 
-	public String getProjectAnnounceThirdCandidate() {
-		return projectAnnounceThirdCandidate;
+	public Byte getCompAptitudeIsActive() {
+		return compAptitudeIsActive;
 	}
 
-	public void setProjectAnnounceThirdCandidate(String projectAnnounceThirdCandidate) {
-		this.projectAnnounceThirdCandidate = projectAnnounceThirdCandidate;
+	public void setCompAptitudeIsActive(Byte compAptitudeIsActive) {
+		this.compAptitudeIsActive = compAptitudeIsActive;
 	}
 
-	public String getProjectAnnounceSourceUrl() {
-		return projectAnnounceSourceUrl;
+	public String getCompanyCompType() {
+		return companyCompType;
 	}
 
-	public void setProjectAnnounceSourceUrl(String projectAnnounceSourceUrl) {
-		this.projectAnnounceSourceUrl = projectAnnounceSourceUrl;
+	public void setCompanyCompType(String companyCompType) {
+		this.companyCompType = companyCompType;
 	}
 
-	public String getProjectAnnounceInwordHtmlUrl() {
-		return projectAnnounceInwordHtmlUrl;
+	public String getCompanyIndustryType() {
+		return companyIndustryType;
 	}
 
-	public void setProjectAnnounceInwordHtmlUrl(String projectAnnounceInwordHtmlUrl) {
-		this.projectAnnounceInwordHtmlUrl = projectAnnounceInwordHtmlUrl;
+	public void setCompanyIndustryType(String companyIndustryType) {
+		this.companyIndustryType = companyIndustryType;
 	}
 
-	public Integer getProjectAnnounceVersion() {
-		return projectAnnounceVersion;
+	public String getCompanyCompName() {
+		return companyCompName;
 	}
 
-	public void setProjectAnnounceVersion(Integer projectAnnounceVersion) {
-		this.projectAnnounceVersion = projectAnnounceVersion;
-	}
-
-	public Date getProjectAnnounceCreateTime() {
-		return projectAnnounceCreateTime;
-	}
-
-	public void setProjectAnnounceCreateTime(Date projectAnnounceCreateTime) {
-		this.projectAnnounceCreateTime = projectAnnounceCreateTime;
-	}
-
-	public Date getProjectAnnounceUpdateTime() {
-		return projectAnnounceUpdateTime;
-	}
-
-	public void setProjectAnnounceUpdateTime(Date projectAnnounceUpdateTime) {
-		this.projectAnnounceUpdateTime = projectAnnounceUpdateTime;
-	}
-
-	public Byte getProjectAnnounceIsActive() {
-		return projectAnnounceIsActive;
-	}
-
-	public void setProjectAnnounceIsActive(Byte projectAnnounceIsActive) {
-		this.projectAnnounceIsActive = projectAnnounceIsActive;
-	}
-
-	public String getProjectTitle() {
-		return projectTitle;
-	}
-
-	public void setProjectTitle(String projectTitle) {
-		this.projectTitle = projectTitle;
+	public void setCompanyCompName(String companyCompName) {
+		this.companyCompName = companyCompName;
 	}
 
 	public Long getCompBuilderId() {
@@ -310,49 +256,21 @@ public class CompBuilderCompanyDTO extends BaseDTO {
 		this.compBuilderIsActive = compBuilderIsActive;
 	}
 
-	public String getCompanyCompType() {
-		return companyCompType;
-	}
-
-	public void setCompanyCompType(String companyCompType) {
-		this.companyCompType = companyCompType;
-	}
-
-	public String getCompanyIndustryType() {
-		return companyIndustryType;
-	}
-
-	public void setCompanyIndustryType(String companyIndustryType) {
-		this.companyIndustryType = companyIndustryType;
-	}
-
-	public String getCompanyCompName() {
-		return companyCompName;
-	}
-
-	public void setCompanyCompName(String companyCompName) {
-		this.companyCompName = companyCompName;
-	}
-
 	
     @Override
     public String toString() {
         return "CompBuilderCompanyDTO {" +
-                "projectAnnounceId = " + projectAnnounceId + 
-				", projectAnnounceProjectId = " + projectAnnounceProjectId + 
-				", projectAnnounceAnnounceDesc = " + projectAnnounceAnnounceDesc + 
-				", projectAnnounceFirstCandidate = " + projectAnnounceFirstCandidate + 
-				", projectAnnounceFirstBuilderName = " + projectAnnounceFirstBuilderName + 
-				", projectAnnounceFirstMarkMoney = " + projectAnnounceFirstMarkMoney + 
-				", projectAnnounceSecondCandidate = " + projectAnnounceSecondCandidate + 
-				", projectAnnounceThirdCandidate = " + projectAnnounceThirdCandidate + 
-				", projectAnnounceSourceUrl = " + projectAnnounceSourceUrl + 
-				", projectAnnounceInwordHtmlUrl = " + projectAnnounceInwordHtmlUrl + 
-				", projectAnnounceVersion = " + projectAnnounceVersion + 
-				", projectAnnounceCreateTime = " + projectAnnounceCreateTime + 
-				", projectAnnounceUpdateTime = " + projectAnnounceUpdateTime + 
-				", projectAnnounceIsActive = " + projectAnnounceIsActive + 
-				", projectTitle = " + projectTitle + 
+                "compAptitudeId = " + compAptitudeId + 
+				", compAptitudeCompId = " + compAptitudeCompId + 
+				", compAptitudeCertificateNum = " + compAptitudeCertificateNum + 
+				", compAptitudeCertificateDetail = " + compAptitudeCertificateDetail + 
+				", compAptitudeVersion = " + compAptitudeVersion + 
+				", compAptitudeCreateTime = " + compAptitudeCreateTime + 
+				", compAptitudeUpdateTime = " + compAptitudeUpdateTime + 
+				", compAptitudeIsActive = " + compAptitudeIsActive + 
+				", companyCompType = " + companyCompType + 
+				", companyIndustryType = " + companyIndustryType + 
+				", companyCompName = " + companyCompName + 
 				", compBuilderId = " + compBuilderId + 
 				", compBuilderCompId = " + compBuilderCompId + 
 				", compBuilderName = " + compBuilderName + 
@@ -363,9 +281,6 @@ public class CompBuilderCompanyDTO extends BaseDTO {
 				", compBuilderCreateTime = " + compBuilderCreateTime + 
 				", compBuilderUpdateTime = " + compBuilderUpdateTime + 
 				", compBuilderIsActive = " + compBuilderIsActive + 
-				", companyCompType = " + companyCompType + 
-				", companyIndustryType = " + companyIndustryType + 
-				", companyCompName = " + companyCompName + 
 				" }";
     }
 
