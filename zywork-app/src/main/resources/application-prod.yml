@@ -16,7 +16,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/zywork_app?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowMultiQueries=true&useAffectedRows=true&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/bid-system?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowMultiQueries=true&useAffectedRows=true&allowPublicKeyRetrieval=true
       username: root
       password: root123456
       validation-query: select 1
@@ -121,7 +121,7 @@ user:
 exception:
   printStackTrace: false
 activiti:
-  processDir: "/data/zywork-app-data/process"
+  processDir: "/data/bid-system/process"
   allowedExts: ".zip"
   #流程文件最大大小，单位MB
   maxSize: 20
@@ -138,37 +138,38 @@ storage:
       imgUrl: "upload/image/user"
     goods:
       #后台保存商品图片的路径
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "image/goods"
       #前端显示商品图片的url路径
       imgUrl: "upload/image/goods"
     article:
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "image/article"
       imgUrl: "upload/image/article"
     notice:
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "image/notice"
       imgUrl: "upload/image/notice"
     advertisement:
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "image/advertisement"
       imgUrl: "upload/image/advertisement"
     headlines:
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "image/headlines"
       imgUrl: "upload/image/headlines"
     project:
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "image/project"
       imgUrl: "upload/image/project"
     resource:
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "resource"
       imgUrl: "upload/resource"
     question:
-      imgParentDir: "/data/zywork-app-data/upload"
+      imgParentDir: "/data/bid-system/upload"
       imgDir: "image/question"
       imgUrl: "upload/image/question"
 projectDetail:
-  uri: "/data/zywork-app-data/upload/file/"
+  location: "/data/bid-system/upload/file/"
+  uri: "upload/file"
