@@ -65,7 +65,7 @@ export const getMarkCarpoolRecord = (self, params) => {
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/UserMarkCarpoolRecord/any/list-page',
+		url: BASE_URL + '/UserMarkCarpoolRecord/user/list-page',
 		method: 'POST',
 		data: params,
 		header: {},
