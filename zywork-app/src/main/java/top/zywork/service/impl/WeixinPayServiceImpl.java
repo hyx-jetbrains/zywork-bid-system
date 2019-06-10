@@ -45,7 +45,7 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
 
     private AccountDetailDAO accountDetailDAO;
 
-
+    private UserWalletDAO userWalletDAO;
 
     @Override
     public ResponseStatusVO ServicePay(Long UserId, String openid, Long serviceId, int validYear, Long userCouponId, int type, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig) {
@@ -206,10 +206,22 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             expertSubscribeDAO.update(expertSubscribeVO);
         }
 
+
+        Object walletObj = userWalletDAO.getById(userId);
+        if(walletObj != null) {
+            UserWalletVO userWalletVO = BeanUtils.copy(walletObj, UserWalletVO.class);
+            UserWalletVO uw = new UserWalletVO();
+            uw.setId(userId);
+            uw.setIntegral(userWalletVO.getIntegral()+totalFee);
+            uw.setVersion(userWalletVO.getVersion()+1);
+            userWalletDAO.update(uw);
+        }
+
         AccountDetailVO accountDetailVO = new AccountDetailVO();
         accountDetailVO.setUserId(userId);
         accountDetailVO.setTransactionNo(outTradeNo);
-        accountDetailVO.setAmount((long)totalFee);
+        accountDetailVO.setAmount((long)totalFee * -1);
+        accountDetailVO.setIntegral((long)totalFee);
         accountDetailVO.setType((byte)1);
         accountDetailVO.setPayType(PaymentTypeEnum.WEIXIN_PAY.getValue().byteValue());
         accountDetailVO.setSubType(accountDetailType);
@@ -244,5 +256,10 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     @Autowired
     public void setAccountDetailDAO(AccountDetailDAO accountDetailDAO) {
         this.accountDetailDAO = accountDetailDAO;
+    }
+
+    @Autowired
+    public void setUserWalletDAO(UserWalletDAO userWalletDAO) {
+        this.userWalletDAO = userWalletDAO;
     }
 }

@@ -31,36 +31,6 @@ export const getAccountDetailByUserId = (self, params) => {
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/funds-transfer/user/list-page',
-		method: 'POST',
-		data: params,
-		header: {
-			'Authorization': 'Bearer ' + getUserToken()
-		},
-		success: (res) => {
-			if (res.data.code === ResponseStatus.OK) {
-				self.commissionList = nullToStr(res.data.data.rows)
-			} else {
-				showInfoToast(res.data.message)
-			}
-		},
-		fail: () => {
-			networkError()
-		},
-		complete: () => {
-			uni.hideLoading()
-		}
-	})
-}
-
-/**
- * 用户账户积分明细
- */
-export const getFundsTransferByUserId = (self, params) => {
-	uni.showLoading({
-		title: '加载中'
-	})
-	uni.request({
 		url: BASE_URL + '/accoundetail/user/pager-cond',
 		method: 'POST',
 		data: params,
@@ -69,7 +39,7 @@ export const getFundsTransferByUserId = (self, params) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.integralList = nullToStr(res.data.data.rows)
+				self.commissionList = nullToStr(res.data.data.rows)
 			} else {
 				showInfoToast(res.data.message)
 			}

@@ -6,15 +6,15 @@
 		</view>
 		<view class="zy-type-title zy-text-bold">积分记录</view>
 		<view class="zy-integral-record">
-			<view v-if="integralList.length > 0" class="zy-page-list" style="padding: 0upx 30upx;">
-				<view v-for="(integralItem, index) in integralList" :key="index" class="zy-page-list-item">
+			<view v-if="commissionList.length > 0" class="zy-page-list" style="padding: 0upx 30upx;">
+				<view v-for="(commissionItem, index) in commissionList" :key="index" class="zy-page-list-item">
 					<view class="zy-disable-flex">
-						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{integralItem.subType}}</view>
+						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{commissionItem.subType}}</view>
 						<view class="zy-text-info zy-text-small zy-disable-flex-right" style="color: #F0AD4E">
-							{{integralItem.amount > 0 ? '+' : ''}}{{integralItem.amount}}
+							{{commissionItem.integral > 0 ? '+' : ''}}{{commissionItem.integral/100}}
 						</view>
 					</view>
-					<view>{{integralItem.createTime}}</view>
+					<view>{{commissionItem.createTime}}</view>
 				</view>
 			</view>
 			<zywork-no-data v-else text="暂无积分记录"></zywork-no-data>
@@ -35,7 +35,7 @@
 		data() {
 			return {
 				userWallet: {},
-				integralList: [],
+				commissionList: [],
 				params: {
 					pageNo: 1,
 					pageSize: 10

@@ -19,11 +19,11 @@
 		</view>
 		<view class="zy-commission-record">
 			<view v-if="commissionList.length > 0" class="zy-page-list" style="padding: 0upx 30upx;">
-				<view v-for="(commissionItem, index) in commissionList" :key="index" class="zy-page-list-item">
+				<view v-for="(commissionItem, index) in commissionList" :key="index" v-if="commissionItem.amount > 0" class="zy-page-list-item">
 					<view class="zy-disable-flex">
-						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{commissionItem.transferDescription}}</view>
+						<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{commissionItem.subType}}</view>
 						<view class="zy-text-info zy-text-small zy-disable-flex-right" style="color: #F0AD4E">
-							{{commissionItem.amount > 0 ? '+' : ''}}{{commissionItem.amount}}
+							{{commissionItem.amount > 0 ? '+' : ''}}{{commissionItem.amount/100}}
 						</view>
 					</view>
 					<view>{{commissionItem.createTime}}</view>
@@ -42,7 +42,7 @@
 		revenueExpenditureStatusArray
 	} from '@/common/picker.data.js'
 	import {
-		getFundsTransferByUserId
+		getAccountDetailByUserId
 	} from '@/common/user-center.js'
 	
 	export default {
@@ -70,7 +70,6 @@
 			// 目前在某些平台参数会被主动 decode，暂时这样处理。
 			try {
 				this.userWallet = JSON.parse(decodeURIComponent(payload));
-				console.log(this.userWallet)
 			} catch (error) {
 				this.userWallet = JSON.parse(payload);
 			}
@@ -86,10 +85,10 @@
 				} else {
 					this.params.transferType = this.typeArray[this.typeIndex]
 				}
-				getFundsTransferByUserId(this, this.params)
+				getAccountDetailByUserId(this, this.params)
 			},
 			initData() {
-				getFundsTransferByUserId(this, this.params)
+				getAccountDetailByUserId(this, this.params)
 			}
 		}
 	}
