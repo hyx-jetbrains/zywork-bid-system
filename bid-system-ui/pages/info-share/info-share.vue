@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		<view class="uni-tab-bar zy-tab-bar">
-			<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="infoType.scrollLeft">
+			<scroll-view id="tab-bar" class="uni-swiper-tab zy-swiper-tab-list" scroll-x :scroll-left="infoType.scrollLeft">
 				<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
 				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
 			</scroll-view>

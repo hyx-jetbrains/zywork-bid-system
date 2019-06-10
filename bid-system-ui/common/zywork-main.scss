@@ -53,10 +53,17 @@ button[type=primary][plain] {
 	flex-direction: row;
 	align-items: center;
 }
-.swiper-tab-list:first-child {
+// .swiper-tab-list:first-child {
+	// margin-left: 20upx;
+// }
+// .swiper-tab-list {
+	// width: auto;
+	// margin-right: 20upx;
+// }
+.zy-swiper-tab-list:first-child {
 	margin-left: 20upx;
 }
-.swiper-tab-list {
+.zy-swiper-tab-list {
 	width: auto;
 	margin-right: 20upx;
 }

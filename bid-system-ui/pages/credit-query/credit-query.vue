@@ -37,9 +37,9 @@
 									</text>
 								</view>
 							</view>
-							<view class="zy-disable-flex-right">
+							<view class="zy-disable-flex-right" style="width: 38%; margin-right: 0upx;">
 								<view>
-									<uni-tag :text="item.compType" type="primary" size="small" :inverted="true" :circle="true" style="margin-right: 20upx;"></uni-tag>
+									<uni-tag :text="item.compType" type="primary" size="small" :inverted="true" :circle="true" style="margin-right: 10upx;"></uni-tag>
 									<uni-tag v-if="item.jurisdictionType === 0" text="省内" type="primary" size="small" :inverted="true" :circle="true"></uni-tag>
 									<uni-tag v-else text="省外" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
 								</view>

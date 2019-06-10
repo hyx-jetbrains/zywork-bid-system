@@ -25,7 +25,7 @@
 					</view>
 
 					<!-- 支付成功之后才能查看专家回复的内容 -->
-					<view v-if="expertSubscribe.price != 0">
+					<view v-if="expertSubscribe.payStatus === '已支付'">
 						<view class="zy-bottom-border" />
 						<view class="zy-text-bold">
 							专家回复：

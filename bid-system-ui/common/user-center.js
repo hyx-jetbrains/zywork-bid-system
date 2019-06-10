@@ -224,9 +224,6 @@ export const getSubscribeByUserId = (self) => {
  * 保存我的订阅
  */
 export const saveSubscribe = (self, params) => {
-	uni.showLoading({
-		title: '正在保存'
-	})
 	uni.request({
 		url: BASE_URL + '/subscribe/user/save',
 		method: 'POST',
@@ -245,7 +242,6 @@ export const saveSubscribe = (self, params) => {
 			networkError()
 		},
 		complete: () => {
-			uni.hideLoading()
 		}
 	})
 }
