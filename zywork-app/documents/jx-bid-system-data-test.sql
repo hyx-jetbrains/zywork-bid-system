@@ -1821,21 +1821,23 @@ CREATE TABLE `t_project`  (
 -- Table structure for t_project_announce
 -- ----------------------------
 DROP TABLE IF EXISTS `t_project_announce`;
-CREATE TABLE `t_project_announce` (
+CREATE TABLE `t_project_announce`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '公示编号',
-  `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
-  `announce_desc` text COMMENT '公示详情',
-  `first_candidate` varchar(20) DEFAULT '' COMMENT '第一候选人',
-  `second_candidate` varchar(20) DEFAULT '' COMMENT '第二候选人',
-  `third_candidate` varchar(20) DEFAULT '' COMMENT '第三候选人',
-  `source_url` varchar(300) DEFAULT '' COMMENT '源地址',
-  `inword_html_url` varchar(300) DEFAULT '' COMMENT '内部地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NULL DEFAULT 0 COMMENT '项目编号',
+  `announce_desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '公示详情',
+  `first_candidate` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第一候选人',
+  `first_builder_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建造师姓名',
+  `first_mark_money` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '中标金额',
+  `second_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第二候选人',
+  `third_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第三候选人',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
+  `inword_html_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内部地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招标公示详情表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招标公示详情表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_project_collection
