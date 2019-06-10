@@ -483,7 +483,7 @@ export default {
         ],
         resType: [
           {
-            type: 'integer',
+            type: 'String',
             required: true,
             message: '此项为必须项',
             trigger: 'blur, change'
@@ -658,7 +658,7 @@ export default {
                   ? '清单文件'
                   : row.resType === 3
                   ? '控股价文件'
-                  : rows.resType === 4
+                  : row.resType === 4
                   ? '澄清答疑文件'
                   : '未知'
               return h(

@@ -216,6 +216,7 @@
       v-model="modal.detail"
       title="详情"
       @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
+			:fullscreen="true"
     >
       <p>
         头条编号:

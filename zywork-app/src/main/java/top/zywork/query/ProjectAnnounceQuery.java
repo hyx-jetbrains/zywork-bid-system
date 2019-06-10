@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectAnnounceQuery查询对象类<br/>
  *
- * 创建于2019-05-14<br/>
+ * 创建于2019-06-10<br/>
  *
- * @author http://zywork.top 危锦辉
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ProjectAnnounceQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372036457956976L;
+    private static final long serialVersionUID = -9223372034740204591L;
 
     // 公示编号
 	private Long id;
@@ -33,6 +33,10 @@ public class ProjectAnnounceQuery extends PageQuery {
 	private String announceDesc;
 	// 第一候选人
 	private String firstCandidate;
+	// 建造师姓名
+	private String firstBuilderName;
+	// 中标金额
+	private String firstMarkMoney;
 	// 第二候选人
 	private String secondCandidate;
 	// 第三候选人
@@ -74,7 +78,7 @@ public class ProjectAnnounceQuery extends PageQuery {
 	
     public ProjectAnnounceQuery () {}
 
-    public ProjectAnnounceQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String announceDesc, String firstCandidate, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ProjectAnnounceQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -83,6 +87,8 @@ public class ProjectAnnounceQuery extends PageQuery {
 		this.projectIdMax = projectIdMax;
 		this.announceDesc = announceDesc;
 		this.firstCandidate = firstCandidate;
+		this.firstBuilderName = firstBuilderName;
+		this.firstMarkMoney = firstMarkMoney;
 		this.secondCandidate = secondCandidate;
 		this.thirdCandidate = thirdCandidate;
 		this.sourceUrl = sourceUrl;
@@ -164,6 +170,22 @@ public class ProjectAnnounceQuery extends PageQuery {
 
 	public void setFirstCandidate(String firstCandidate) {
 		this.firstCandidate = firstCandidate;
+	}
+
+	public String getFirstBuilderName() {
+		return firstBuilderName;
+	}
+
+	public void setFirstBuilderName(String firstBuilderName) {
+		this.firstBuilderName = firstBuilderName;
+	}
+
+	public String getFirstMarkMoney() {
+		return firstMarkMoney;
+	}
+
+	public void setFirstMarkMoney(String firstMarkMoney) {
+		this.firstMarkMoney = firstMarkMoney;
 	}
 
 	public String getSecondCandidate() {
@@ -306,6 +328,8 @@ public class ProjectAnnounceQuery extends PageQuery {
 				", projectIdMax = " + projectIdMax + 
 				", announceDesc = " + announceDesc + 
 				", firstCandidate = " + firstCandidate + 
+				", firstBuilderName = " + firstBuilderName + 
+				", firstMarkMoney = " + firstMarkMoney + 
 				", secondCandidate = " + secondCandidate + 
 				", thirdCandidate = " + thirdCandidate + 
 				", sourceUrl = " + sourceUrl + 

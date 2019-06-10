@@ -19,6 +19,12 @@
 			<if test="firstCandidate != null">
 				first_candidate,
 			</if>
+			<if test="firstBuilderName != null">
+				first_builder_name,
+			</if>
+			<if test="firstMarkMoney != null">
+				first_mark_money,
+			</if>
 			<if test="secondCandidate != null">
 				second_candidate,
 			</if>
@@ -54,6 +60,12 @@
 			</if>
 			<if test="firstCandidate != null">
 				#{firstCandidate},
+			</if>
+			<if test="firstBuilderName != null">
+				#{firstBuilderName},
+			</if>
+			<if test="firstMarkMoney != null">
+				#{firstMarkMoney},
 			</if>
 			<if test="secondCandidate != null">
 				#{secondCandidate},
@@ -99,6 +111,12 @@
 			<if test="item.firstCandidate != null">
 				first_candidate,
 			</if>
+			<if test="item.firstBuilderName != null">
+				first_builder_name,
+			</if>
+			<if test="item.firstMarkMoney != null">
+				first_mark_money,
+			</if>
 			<if test="item.secondCandidate != null">
 				second_candidate,
 			</if>
@@ -134,6 +152,12 @@
 			</if>
 			<if test="item.firstCandidate != null">
 				#{item.firstCandidate},
+			</if>
+			<if test="item.firstBuilderName != null">
+				#{item.firstBuilderName},
+			</if>
+			<if test="item.firstMarkMoney != null">
+				#{item.firstMarkMoney},
 			</if>
 			<if test="item.secondCandidate != null">
 				#{item.secondCandidate},
@@ -187,6 +211,12 @@
 			<if test="firstCandidate != null">
 				first_candidate = #{firstCandidate},
 			</if>
+			<if test="firstBuilderName != null">
+				first_builder_name = #{firstBuilderName},
+			</if>
+			<if test="firstMarkMoney != null">
+				first_mark_money = #{firstMarkMoney},
+			</if>
 			<if test="secondCandidate != null">
 				second_candidate = #{secondCandidate},
 			</if>
@@ -229,6 +259,12 @@
 			<if test="item.firstCandidate != null">
 				first_candidate = #{item.firstCandidate},
 			</if>
+			<if test="item.firstBuilderName != null">
+				first_builder_name = #{item.firstBuilderName},
+			</if>
+			<if test="item.firstMarkMoney != null">
+				first_mark_money = #{item.firstMarkMoney},
+			</if>
 			<if test="item.secondCandidate != null">
 				second_candidate = #{item.secondCandidate},
 			</if>
@@ -263,7 +299,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, project_id as projectId, announce_desc as announceDesc, first_candidate as firstCandidate, second_candidate as secondCandidate, third_candidate as thirdCandidate, source_url as sourceUrl, inword_html_url as inwordHtmlUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, project_id as projectId, announce_desc as announceDesc, first_candidate as firstCandidate, first_builder_name as firstBuilderName, first_mark_money as firstMarkMoney, second_candidate as secondCandidate, third_candidate as thirdCandidate, source_url as sourceUrl, inword_html_url as inwordHtmlUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -296,6 +332,12 @@
 		</if>
 		<if test="query != null and query.firstCandidate != null and query.firstCandidate != ''">
 			and first_candidate like concat('%', #{query.firstCandidate}, '%')
+		</if>
+		<if test="query != null and query.firstBuilderName != null and query.firstBuilderName != ''">
+			and first_builder_name like concat('%', #{query.firstBuilderName}, '%')
+		</if>
+		<if test="query != null and query.firstMarkMoney != null and query.firstMarkMoney != ''">
+			and first_mark_money like concat('%', #{query.firstMarkMoney}, '%')
 		</if>
 		<if test="query != null and query.secondCandidate != null and query.secondCandidate != ''">
 			and second_candidate like concat('%', #{query.secondCandidate}, '%')

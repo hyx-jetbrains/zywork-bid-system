@@ -1,19 +1,19 @@
 <template>
 	<view>
 		<view class="zy-project">
-			<view class="zy-text-big zy-text-bold zy-project-title">{{project.title}}</view>
+			<view class="zy-text-big zy-text-bold zy-project-title">{{project.project.title}}</view>
 			<!-- 头部部分 -->
 			<view class="zy-disable-flex zy-project-head">
 				<image class="zy-head-icon" :src="imgIcon" />
 				<view>
 					<view>
-						<text>{{project.projectType}}</text>
-						<text style="margin-left: 30upx;">[{{project.city}}]</text>
+						<text>{{project.project.projectType}}</text>
+						<text style="margin-left: 30upx;">[{{project.project.city}}]</text>
 					</view>
 					<view class="zy-text-mini zy-text-info">
 						公告时间：
-						<text v-if="project.noticeTime !== null && project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
-							{{project.noticeTime}}
+						<text v-if="project.project.noticeTime !== null && project.project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
+							{{project.project.noticeTime}}
 						</text>
 						<text v-else class="zy-text-mini zy-text-info">
 							暂无
@@ -44,112 +44,124 @@
 					招标公告
 					<view class="zy-disable-flex-right" style="margin-right: 0upx;">
 						<text class="zy-text-bold">浏览次数：</text>
-						<text>{{project.clickCount}}次</text>
+						<text>{{project.project.clickCount}}次</text>
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">招标单位名称</view>
-					<view class="zy-disable-flex-right">{{project.markUnitName}}</view>
+					<view class="zy-disable-flex-right">{{project.project.markUnitName}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">本项目投资</view>
-					<view class="zy-disable-flex-right zy-warning">{{project.projectInvest}}</view>
+					<view class="zy-disable-flex-right zy-warning">{{project.project.projectInvest}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">审查方式</view>
-					<view class="zy-disable-flex-right">{{project.checkPattern}}</view>
+					<view class="zy-disable-flex-right">{{project.project.checkPattern}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">企业资质类型</view>
-					<view class="zy-disable-flex-right">{{project.compAptitudeType}}</view>
+					<view class="zy-disable-flex-right">{{project.project.compAptitudeType}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">建造师等级</view>
-					<view class="zy-disable-flex-right">{{project.builderLevel}}</view>
+					<view class="zy-disable-flex-right">{{project.project.builderLevel}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">资金落实</view>
-					<view class="zy-disable-flex-right">{{project.moneyToImplement}}%</view>
+					<view class="zy-disable-flex-right">{{project.project.moneyToImplement}}%</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">招标代理</view>
-					<view class="zy-disable-flex-right">{{project.tenderingAgent}}</view>
+					<view class="zy-disable-flex-right">{{project.project.tenderingAgent}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">联系电话</view>
-					<view class="zy-disable-flex-right zy-primary">{{project.phone}}</view>
+					<view class="zy-disable-flex-right zy-primary">{{project.project.phone}}</view>
 				</view>
 				<view class="zy-project-desc-title zy-text-bold zy-disable-flex zy-position-relative">
 					<view>文件</view>
 					<view class="zy-disable-flex-right" style="margin-right: 0upx;">
-						<view class="zy-disable-flex" @tap="actionSheetTap">
+						<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
+							<view></view>
+							<view class="zy-disable-flex-right zy-disable-flex">
+								<view  v-for="(item, index_1) in project.obj" :key="index_1">
+									<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								</view>
+							</view>
+						</view>
+						<!-- <view class="zy-disable-flex" @tap="actionSheetTap">
 							查看文件
 							<zywork-icon type="iconxiangxia" />
-						</view>
+						</view> -->
 					</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">要约价(元)</view>
-					<view class="zy-disable-flex-right zy-warning">{{project.offerPrice / 100}}</view>
+					<view class="zy-disable-flex-right zy-warning">{{project.project.offerPrice / 100}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">保证金(万元)</view>
-					<view class="zy-disable-flex-right zy-primary">{{project.assurePrice / 100}}</view>
+					<view class="zy-disable-flex-right zy-primary">{{project.project.assurePrice / 100}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">工期(天)</view>
-					<view class="zy-disable-flex-right">{{project.constructionPeriod}}</view>
+					<view class="zy-disable-flex-right">{{project.project.constructionPeriod}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">下载时间</view>
-					<view class="zy-disable-flex-right">{{project.downloadEndTime !== null ? project.downloadEndTime : ''}}</view>
+					<view class="zy-disable-flex-right">{{project.project.downloadEndTime !== null ? project.project.downloadEndTime : ''}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">其他要求</view>
 				</view>
 				<view class="zy-project-desc-textarea">
-					{{project.otherDemand}}
+					{{project.project.otherDemand}}
 				</view>
 				<view class="zy-project-desc-title zy-text-bold">
 					开标信息
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">开标时间</view>
-					<view class="zy-disable-flex-right">{{project.openMarkTime !== null ? project.openMarkTime : ''}}</view>
+					<view class="zy-disable-flex-right">{{project.project.openMarkTime !== null ? project.project.openMarkTime : ''}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">开标地点</view>
-					<view class="zy-disable-flex-right">{{project.openMarkAddr}}</view>
+					<view class="zy-disable-flex-right">{{project.project.openMarkAddr}}</view>
 				</view>
 				<view class="zy-project-desc-title zy-text-bold">
 					中标公示
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">中标单位名称</view>
-					<view class="zy-disable-flex-right">{{project.inMarkComp}}</view>
+					<view class="zy-disable-flex-right">{{project.project.inMarkComp}}</view>
 				</view>
 			</view>
 			<!-- 开标详情 -->
 			<view v-if="currTabIndex === 2">
-				<view v-if="project.markStatus === '已开标'">
+				<view v-if="project.project.markStatus === '已开标'">
 					<view class="zy-project-desc-title zy-text-bold">
 						开标信息
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">开标时间</view>
-						<view class="zy-disable-flex-right">{{project.openMarkTime}}</view>
+						<view class="zy-disable-flex-right">{{project.project.openMarkTime}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">开标地点</view>
-						<view class="zy-disable-flex-right">{{project.openMarkTime}}</view>
+						<view class="zy-disable-flex-right">{{project.project.openMarkTime}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">开标状态</view>
-						<view class="zy-disable-flex-right">{{project.markStatus}}</view>
+						<view class="zy-disable-flex-right">{{project.project.markStatus}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">中标单位</view>
-						<view class="zy-disable-flex-right">{{project.inMarkComp}}</view>
+						<view class="zy-disable-flex-right">{{project.project.inMarkComp}}</view>
 					</view>
 				</view>
 				<zyworkNoData v-else text="暂无开标信息"></zyworkNoData>
@@ -394,15 +406,15 @@
 			/** 初始化数据 */
 			initData() {
 				this.initCollectionIcon();
-				getProjectAnnounce(this, this.project.id);
-				this.pager.projectId = this.project.id;
+				getProjectAnnounce(this, this.project.project.id);
+				this.pager.projectId = this.project.project.id;
 				getCarpoolList(this, this.pager);
 				getSeekcarList(this, this.pager);
 			},
 			// 初始化项目图标
 			initCollectionIcon() {
 				// 请求后台判断该项目是否已经被当前用户收藏
-				getProjectCollectionInfo(this, this.project.id)
+				getProjectCollectionInfo(this, this.project.project.id)
 			},
 			// 切换项目收藏的图标颜色
 			collectionOperation(projectId) {
@@ -416,17 +428,17 @@
 			collectionProject() {
 				if (this.isCollection) {
 					// 取消收藏
-					cancelProjectCollection(this, this.project.id);
+					cancelProjectCollection(this, this.project.project.id);
 				} else {
 					// 保存收藏
-					saveProjectCollection(this, this.project.id);
+					saveProjectCollection(this, this.project.project.id);
 				}
 			},
 			// 切换标签页
 			tapTab(type) {
 				if (type == 1) {
 					// 公告详情
-					this.toWebViewPage("公告详情", DOCUMENT_BASE_URL +"/"+ this.project.inwardHtmlUrl)
+					this.toWebViewPage("公告详情", DOCUMENT_BASE_URL +"/"+ this.project.project.inwardHtmlUrl)
 				} else {
 					this.currTabIndex = type;
 				}

@@ -189,7 +189,7 @@ public class ProjectController extends BaseController {
      * @return
      */
     @PostMapping("user/update")
-    public ResponseStatusVO userUpdate(@RequestBody @Validated ProjectVO projectVO, BindingResult bindingResult) {
+    public ResponseStatusVO userUpdate(@RequestBody ProjectVO projectVO, BindingResult bindingResult) {
         return update(projectVO, bindingResult);
     }
 

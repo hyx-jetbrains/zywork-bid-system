@@ -70,7 +70,7 @@
             :on-exceeded-size="handleMaxSize"
             multiple
             type="drag"
-            :action="baseUrl + urls.uploadUrl"
+            :action="urls.uploadUrl"
             style="display: inline-block;width:58px;"
           >
             <div style="width: 58px;height:58px;line-height: 58px;">
@@ -295,6 +295,7 @@ import * as utils from '@/api/utils'
 import * as ResponseStatus from '@/api/response-status'
 import { isActiveSelect } from '@/api/select'
 import Editor from '_c/editor'
+import config from '@/config'
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
 
 export default {

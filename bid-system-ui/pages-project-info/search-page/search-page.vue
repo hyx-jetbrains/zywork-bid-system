@@ -46,7 +46,7 @@
 			<view class="zy-page-list zy-project" v-if="projects.length > 0">
 				<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
 					<!-- <zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.project.id)" /> -->
-					<view @click="toProjectDetail(project.project)">
+					<view @click="toProjectDetail(project)">
 						<view class="zy-disable-flex">
 							<image class="zy-project-icon" :src="imgIcon" />
 							<view>
@@ -505,8 +505,8 @@
 			},
 			/** 前往项目详情 */
 			toProjectDetail(item) {
-				item.clickCount += 1;
-				projectInfo.projectClickCount(this, item);
+				item.project.clickCount += 1;
+				projectInfo.projectClickCount(this, item.project);
 				uni.navigateTo({
 					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})

@@ -44,7 +44,7 @@
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
 			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
 				<!-- <zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.project.id)" /> -->
-				<view @click="toProjectDetail(project.project)">
+				<view @click="toProjectDetail(project)">
 					<view class="zy-disable-flex">
 						<image class="zy-project-icon" :src="imgIcon" />
 						<view>
@@ -186,11 +186,11 @@
 		<uni-popup :show="customerPopup" position="bottom" @hidePopup="trigger(false)">
 			<view class="zy-popup-bottom-title">选择联系类型</view>
 			<view class="zy-popup-bottom-content">
-				<button @click="callPhone" style="background-color: #FFF;">
+				<button @click="callPhone" style="background-color: #FFF;" @tap="trigger(false)">
 					<zywork-icon type="icondianhua" size="26" color="#77e663"></zywork-icon>
 					<view class="zy-popup-bottom-content-text">电话咨询</view>
 				</button>
-				<button open-type="contact" style="background-color: #FFF;">
+				<button open-type="contact" style="background-color: #FFF;" @tap="trigger(false)">
 					<zywork-icon type="iconweixin" size="26" color="#5bb674"></zywork-icon>
 					<view class="zy-popup-bottom-content-text">微信咨询</view>
 				</button>
@@ -528,8 +528,8 @@
 				})
 			},
 			toProjectDetail(item) {
-				item.clickCount += 1;
-				projectInfo.projectClickCount(this, item);
+				item.project.clickCount += 1;
+				projectInfo.projectClickCount(this, item.project);
 				uni.navigateTo({
 					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})

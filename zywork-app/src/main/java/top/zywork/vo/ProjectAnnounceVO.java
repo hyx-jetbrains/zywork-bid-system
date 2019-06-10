@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectAnnounceVO值对象类<br/>
  *
- * 创建于2019-05-14<br/>
+ * 创建于2019-06-10<br/>
  *
- * @author http://zywork.top 危锦辉
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ProjectAnnounceVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372034924679324L;
+    private static final long serialVersionUID = -9223372036615110972L;
 
     // 公示编号
 	private Long id;
@@ -29,8 +29,14 @@ public class ProjectAnnounceVO extends BaseVO {
 	@Size(min = 0, max = 65535, message = "必须小于65535个字符")
 	private String announceDesc;
 	// 第一候选人
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 100, message = "必须小于100个字符")
 	private String firstCandidate;
+	// 建造师姓名
+	@Size(min = 0, max = 32, message = "必须小于32个字符")
+	private String firstBuilderName;
+	// 中标金额
+	@Size(min = 0, max = 32, message = "必须小于32个字符")
+	private String firstMarkMoney;
 	// 第二候选人
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String secondCandidate;
@@ -56,11 +62,13 @@ public class ProjectAnnounceVO extends BaseVO {
 	
     public ProjectAnnounceVO () {}
 
-    public ProjectAnnounceVO (Long id, Long projectId, String announceDesc, String firstCandidate, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectAnnounceVO (Long id, Long projectId, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
 		this.announceDesc = announceDesc;
 		this.firstCandidate = firstCandidate;
+		this.firstBuilderName = firstBuilderName;
+		this.firstMarkMoney = firstMarkMoney;
 		this.secondCandidate = secondCandidate;
 		this.thirdCandidate = thirdCandidate;
 		this.sourceUrl = sourceUrl;
@@ -102,6 +110,22 @@ public class ProjectAnnounceVO extends BaseVO {
 
 	public void setFirstCandidate(String firstCandidate) {
 		this.firstCandidate = firstCandidate;
+	}
+
+	public String getFirstBuilderName() {
+		return firstBuilderName;
+	}
+
+	public void setFirstBuilderName(String firstBuilderName) {
+		this.firstBuilderName = firstBuilderName;
+	}
+
+	public String getFirstMarkMoney() {
+		return firstMarkMoney;
+	}
+
+	public void setFirstMarkMoney(String firstMarkMoney) {
+		this.firstMarkMoney = firstMarkMoney;
 	}
 
 	public String getSecondCandidate() {
@@ -176,6 +200,8 @@ public class ProjectAnnounceVO extends BaseVO {
 				", projectId = " + projectId + 
 				", announceDesc = " + announceDesc + 
 				", firstCandidate = " + firstCandidate + 
+				", firstBuilderName = " + firstBuilderName + 
+				", firstMarkMoney = " + firstMarkMoney + 
 				", secondCandidate = " + secondCandidate + 
 				", thirdCandidate = " + thirdCandidate + 
 				", sourceUrl = " + sourceUrl + 

@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * ProjectAnnounceDTO数据传输对象类<br/>
  *
- * 创建于2019-05-14<br/>
+ * 创建于2019-06-10<br/>
  *
- * @author http://zywork.top 危锦辉
+ * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ProjectAnnounceDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -9223372035951999402L;
+    private static final long serialVersionUID = -9223372036326159526L;
 
     // 公示编号
 	private Long id;
@@ -23,6 +23,10 @@ public class ProjectAnnounceDTO extends BaseDTO {
 	private String announceDesc;
 	// 第一候选人
 	private String firstCandidate;
+	// 建造师姓名
+	private String firstBuilderName;
+	// 中标金额
+	private String firstMarkMoney;
 	// 第二候选人
 	private String secondCandidate;
 	// 第三候选人
@@ -42,11 +46,13 @@ public class ProjectAnnounceDTO extends BaseDTO {
 	
     public ProjectAnnounceDTO () {}
 
-    public ProjectAnnounceDTO (Long id, Long projectId, String announceDesc, String firstCandidate, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectAnnounceDTO (Long id, Long projectId, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
 		this.announceDesc = announceDesc;
 		this.firstCandidate = firstCandidate;
+		this.firstBuilderName = firstBuilderName;
+		this.firstMarkMoney = firstMarkMoney;
 		this.secondCandidate = secondCandidate;
 		this.thirdCandidate = thirdCandidate;
 		this.sourceUrl = sourceUrl;
@@ -88,6 +94,22 @@ public class ProjectAnnounceDTO extends BaseDTO {
 
 	public void setFirstCandidate(String firstCandidate) {
 		this.firstCandidate = firstCandidate;
+	}
+
+	public String getFirstBuilderName() {
+		return firstBuilderName;
+	}
+
+	public void setFirstBuilderName(String firstBuilderName) {
+		this.firstBuilderName = firstBuilderName;
+	}
+
+	public String getFirstMarkMoney() {
+		return firstMarkMoney;
+	}
+
+	public void setFirstMarkMoney(String firstMarkMoney) {
+		this.firstMarkMoney = firstMarkMoney;
 	}
 
 	public String getSecondCandidate() {
@@ -162,6 +184,8 @@ public class ProjectAnnounceDTO extends BaseDTO {
 				", projectId = " + projectId + 
 				", announceDesc = " + announceDesc + 
 				", firstCandidate = " + firstCandidate + 
+				", firstBuilderName = " + firstBuilderName + 
+				", firstMarkMoney = " + firstMarkMoney + 
 				", secondCandidate = " + secondCandidate + 
 				", thirdCandidate = " + thirdCandidate + 
 				", sourceUrl = " + sourceUrl + 

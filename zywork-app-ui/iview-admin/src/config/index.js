@@ -2,7 +2,7 @@ export default {
   /**
    * @description 配置显示在浏览器标签的title
    */
-  title: 'zywork-app后台管理',
+  title: '江西招投标信息共享平台',
   /**
    * @description token在Cookie中存储的天数，默认1天
    */
