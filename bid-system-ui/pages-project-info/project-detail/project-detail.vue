@@ -414,8 +414,6 @@
 				this.initCollectionIcon();
 				getProjectAnnounce(this, this.project.project.id);
 				this.pager.markCarpoolProjectId = this.pager.markSeekcarProjectId = this.project.project.id;
-				getCarpoolList(this, this.pager);
-				getSeekcarList(this, this.pager);
 			},
 			// 初始化项目图标
 			initCollectionIcon() {
@@ -447,6 +445,9 @@
 					this.toWebViewPage("公告详情", DOCUMENT_BASE_URL +"/"+ this.project.project.inwardHtmlUrl)
 				} else {
 					this.currTabIndex = type;
+					if (type === 4) {
+						getCarpoolList(this, this.pager);
+					}
 				}
 			},
 			/** 前往webview页面 */
