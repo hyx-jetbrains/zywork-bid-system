@@ -11,7 +11,8 @@ import {
 	invalidToken,
 	showInfoToast,
 	showSuccessToast,
-	IMAGE_BASE_URL
+	IMAGE_BASE_URL,
+	nullToStr
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -30,6 +31,18 @@ export const getListInfoToPost = (self, url, params) => {
 }
 
 /**
+ * 根据id获取单个对象
+ */
+export const getOneById = (self, url, id) => {
+	return uni.request({
+		url: BASE_URL + url + id,
+		method: 'GET',
+		data: {},
+		header: {},
+	})
+}
+
+/**
  * 根据公司id，查询公司信息
  */
 export const getCompanyInfoById = (self, id) => {
@@ -40,7 +53,7 @@ export const getCompanyInfoById = (self, id) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.company = res.data.data;
+				self.company = nullToStr(res.data.data);
 			} else {
 				showInfoToast(res.data.message);
 			}

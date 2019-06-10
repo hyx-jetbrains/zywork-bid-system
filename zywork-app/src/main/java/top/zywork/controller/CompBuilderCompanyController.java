@@ -61,6 +61,11 @@ public class CompBuilderCompanyController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    @PostMapping("any/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody CompBuilderCompanyQuery compBuilderCompanyQuery) {
+        return listPageByCondition(compBuilderCompanyQuery);
+    }
+
     @Autowired
     public void setCompBuilderCompanyService(CompBuilderCompanyService compBuilderCompanyService) {
         this.compBuilderCompanyService = compBuilderCompanyService;

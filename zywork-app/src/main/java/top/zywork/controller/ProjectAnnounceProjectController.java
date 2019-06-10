@@ -70,7 +70,7 @@ public class ProjectAnnounceProjectController extends BaseController {
     }
 
     @PostMapping("user/pager-cond")
-    @HideProperty(url = "/ProjectAnnounceProject/user/pager-cond", properties = {"projectAnnounceFirstCandidate","projectAnnounceSecondCandidate","projectAnnounceThirdCandidate"})
+    @HideProperty(url = "/ProjectAnnounceProject/user/pager-cond", properties = {"projectAnnounceFirstCandidate","projectAnnounceSecondCandidate","projectAnnounceThirdCandidate","projectAnnounceFirstBuilderName","projectAnnounceFirstMarkMoney"})
     public ResponseStatusVO userListPageByCondition(HttpServletRequest request, @RequestBody ProjectAnnounceProjectQuery projectAnnounceProjectQuery) {
         ResponseStatusVO responseStatusVO = listPageByCondition(projectAnnounceProjectQuery);
         Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);

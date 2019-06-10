@@ -5,13 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.ReflectUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.query.CompAptitudeCompanyQuery;
+import top.zywork.query.CompAptitudeQuery;
 import top.zywork.service.CompAptitudeCompanyService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.CompAptitudeCompanyVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * CompAptitudeCompanyController控制器类<br/>
@@ -59,6 +65,18 @@ public class CompAptitudeCompanyController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), CompAptitudeCompanyVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    @PostMapping("user/pager-cond")
+    @HideProperty(url = "/comp-aptitude/user/pager-cond", properties = {"compAptitudeCertificateNum","compAptitudeCertificateDetail"})
+    public ResponseStatusVO userListPageByCondition(HttpServletRequest request, @RequestBody CompAptitudeCompanyQuery compAptitudeCompanyQuery) {
+        ResponseStatusVO responseStatusVO = listPageByCondition(compAptitudeCompanyQuery);
+        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+        if (vipFlag != null && ((Boolean) vipFlag)) {
+            return responseStatusVO;
+        }
+        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "userListPageByCondition",
+                responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
     @Autowired

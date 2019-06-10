@@ -64,6 +64,10 @@
 						<view class="zy-disable-flex-right">{{item.buildComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
+						<view class="zy-text-bold">中标单位</view>
+						<view class="zy-disable-flex-right">{{item.markComp}}</view>
+					</view>
+					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程地址</view>
 						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
 							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.projectAddr}}</view>

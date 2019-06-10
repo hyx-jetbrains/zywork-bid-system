@@ -425,7 +425,8 @@
 	} from '@/common/picker.data.js'
 	import {
 		callPhone,
-		validText
+		validText,
+		nullToStr
 	} from '@/common/util.js'
 
 	/** 企业建造师信息 */
@@ -484,6 +485,7 @@
 				this.item = JSON.parse(payload);
 			}
 			this.pager.compId = this.item.id;
+			this.tapTab(this.item.tabIndex);
 		},
 		methods: {
 			/** 切换标签页 */
@@ -521,7 +523,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.builderList = res.data.data.rows;
+							this.builderList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -560,7 +562,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.achievementList = res.data.data.rows;
+							this.achievementList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -576,7 +578,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.aptitudeList = res.data.data.rows;
+							this.aptitudeList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -592,7 +594,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.personnelList = res.data.data.rows;
+							this.personnelList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
 						}

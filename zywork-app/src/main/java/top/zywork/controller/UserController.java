@@ -3,6 +3,7 @@ package top.zywork.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -43,6 +44,7 @@ public class UserController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        userVO.setPassword(new BCryptPasswordEncoder().encode(userVO.getPassword()));
         userService.save(BeanUtils.copy(userVO, UserDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -73,6 +75,7 @@ public class UserController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        userVO.setPassword(new BCryptPasswordEncoder().encode(userVO.getPassword()));
         int updateRows = userService.update(BeanUtils.copy(userVO, UserDTO.class));
         if (updateRows == 1) {
             return ResponseStatusVO.ok("更新成功", null);

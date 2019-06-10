@@ -40,11 +40,9 @@
 			}
 		}
 	],
-	"subPackages": [
-		{
+	"subPackages": [{
 			"root": "pages-project-info",
-			"pages": [
-				{
+			"pages": [{
 					"path": "search-page/search-page",
 					"style": {
 						"navigationBarTitleText": "招标信息搜索",
@@ -84,8 +82,7 @@
 		},
 		{
 			"root": "pages-info-share",
-			"pages": [
-				{
+			"pages": [{
 					"path": "search-page/search-page",
 					"style": {
 						"navigationBarTitleText": "信息共享搜索",
@@ -215,20 +212,17 @@
 		},
 		{
 			"root": "pages-message-notify",
-			"pages": [
-				{
-					"path": "message-detail/message-detail",
-					"style": {
-						"navigationBarTitleText": "消息详情",
-						"backgroundTextStyle": "light"
-					}
+			"pages": [{
+				"path": "message-detail/message-detail",
+				"style": {
+					"navigationBarTitleText": "消息详情",
+					"backgroundTextStyle": "light"
 				}
-			]
+			}]
 		},
 		{
 			"root": "pages-credit-query",
-			"pages": [
-				{
+			"pages": [{
 					"path": "search-page/search-page",
 					"style": {
 						"navigationBarTitleText": "企业征信搜索",
@@ -253,8 +247,7 @@
 		},
 		{
 			"root": "pages-user-center",
-			"pages": [
-				{
+			"pages": [{
 					"path": "user-setting/user-setting",
 					"style": {
 						"navigationBarTitleText": "个人详情",
@@ -561,8 +554,7 @@
 		},
 		{
 			"root": "pages-static",
-			"pages": [
-				{
+			"pages": [{
 					"path": "privacy/privacy",
 					"style": {
 						"navigationBarTitleText": "用户协议与隐私声明",
@@ -579,6 +571,28 @@
 			]
 		}
 	],
+	"preloadRule": {
+		"pages/project-info/project-info": {
+			"network": "all",
+			"packages": ["pages-project-info"]
+		},
+		"pages/info-share/info-share": {
+			"network": "all",
+			"packages": ["pages-info-share"]
+		},
+		"pages/message-notify/message-notify": {
+			"network": "all",
+			"packages": ["pages-message-notify"]
+		},
+		"pages/credit-query/credit-query": {
+			"network": "all",
+			"packages": ["pages-credit-query"]
+		},
+		"pages/user-center/user-center": {
+			"network": "all",
+			"packages": ["pages-user-center"]
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "江西招投标信息共享平台",

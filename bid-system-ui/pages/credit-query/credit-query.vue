@@ -19,7 +19,7 @@
 		<view v-if="infoType.tabIndex === 0">
 			<view class="zy-page-list zy-page-card" v-if="companyList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in companyList" :key="index">
-					<view @click="toCompanyDetail(item)">
+					<view @click="toCompanyDetail(item, 0)">
 						<!-- 头部 -->
 						<view class="zy-disable-flex">
 							<zywork-icon type="iconqiyejianjie" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
@@ -159,7 +159,8 @@
 							<!-- 水利监理业绩 -->
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">项目类型:</view>
-								<view v-if="item.projectType != null && item.projectType != '' && item.projectType != undefined" class="zy-text-info">
+								<view v-if="item.projectType != ''" @click="validText(item.projectType)" class="zy-text-info"
+								 :class="item.projectType === '请购买VIP服务' ? 'zy-detail-phone' : ''">
 									{{item.projectType}}
 								</view>
 								<view v-else class="zy-text-info">
@@ -168,8 +169,9 @@
 							</view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-								<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined" class="zy-text-info">
-									{{item.contractAmount / 100}}
+								<view v-if="item.contractAmount != ''" @click="validText(item.contractAmount)" class="zy-text-info"
+								 :class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -189,7 +191,8 @@
 							<!-- 水利勘查设计业绩 -->
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">项目类型:</view>
-								<view v-if="item.tenderingComp != null && item.tenderingComp != '' && item.tenderingComp != undefined" class="zy-text-info">
+								<view v-if="item.tenderingComp != ''" @click="validText(item.tenderingComp)" class="zy-text-info"
+								 :class="item.tenderingComp === '请购买VIP服务' ? 'zy-detail-phone' : ''">
 									{{item.tenderingComp}}
 								</view>
 								<view v-else class="zy-text-info">
@@ -198,8 +201,9 @@
 							</view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-								<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined" class="zy-text-info">
-									{{item.contractAmount / 100}}
+								<view v-if="item.contractAmount != ''" @click="validText(item.contractAmount)" class="zy-text-info"
+								 :class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -219,8 +223,9 @@
 							<!-- 水利业绩和交通业绩和重点工程 -->
 							<view v-if="achievementOpts.current == 3" class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
-								<view v-if="item.markMoney != null && item.markMoney != '' && item.markMoney != undefined" class="zy-text-info">
-									{{item.markMoney / 100}}
+								<view v-if="item.markMoney != ''" @click="validText(item.markMoney)" class="zy-text-info"
+								 :class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -228,8 +233,9 @@
 							</view>
 							<view v-else class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-								<view v-if="item.contractAmount != null && item.contractAmount != '' && item.contractAmount != undefined" class="zy-text-info">
-									{{item.contractAmount / 100}}
+								<view v-if="item.contractAmount != ''" @click="validText(item.contractAmount)" class="zy-text-info"
+								 :class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -264,20 +270,20 @@
 		<view v-if="infoType.tabIndex === 2">
 			<view class="zy-page-list zy-page-card" v-if="builderList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in builderList" :key="index">
-					<view>
+					<view @click="toCompanyDetail(item.compBuilderCompId, 1)">
 						<!-- 头部 -->
 						<view class="zy-disable-flex">
 							<zywork-icon type="iconjiaozaoshi" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 							<view>
 								<view class="zy-disable-flex">
-									<text class="zy-text-bold" style="margin-right: 20upx;">{{item.name}}</text>
-									<zywork-icon v-if="item.gender === 0" type="iconyincang" color="#BFBFBF" size="20" />
-									<zywork-icon v-else-if="item.gender === 1" type="iconnan" color="#108EE9" size="20" />
-									<zywork-icon v-else-if="item.gender === 2" type="iconnv" color="#dd524d" size="20" />
+									<text class="zy-text-bold" style="margin-right: 20upx;">{{item.compBuilderName}}</text>
+									<zywork-icon v-if="item.compBuilderGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+									<zywork-icon v-else-if="item.compBuilderGender === 1" type="iconnan" color="#108EE9" size="20" />
+									<zywork-icon v-else-if="item.compBuilderGender === 2" type="iconnv" color="#dd524d" size="20" />
 								</view>
 								<view class="zy-text-mini zy-text-info">
 									<text class="zy-text-mini zy-text-info">
-										{{item.createTime}}
+										{{item.companyCompName}}
 									</text>
 								</view>
 							</view>
@@ -286,8 +292,9 @@
 						<view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
-								<view v-if="item.regNum != null && item.regNum != '' && item.regNum != undefined" class="zy-text-info">
-									{{item.regNum}}
+								<view v-if="item.compBuilderRegNum != null && item.compBuilderRegNum != '' && item.compBuilderRegNum != undefined"
+								 class="zy-text-info">
+									{{item.compBuilderRegNum}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -295,8 +302,9 @@
 							</view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
-								<view v-if="item.majorLevel != null && item.majorLevel != '' && item.majorLevel != undefined" class="zy-text-info">
-									{{item.majorLevel}}
+								<view v-if="item.compBUilderMajorLevel != null && item.compBUilderMajorLevel != '' && item.compBUilderMajorLevel != undefined"
+								 class="zy-text-info">
+									{{item.compBUilderMajorLevel}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -313,7 +321,7 @@
 		<view v-if="infoType.tabIndex === 3">
 			<view class="zy-page-list zy-page-card" v-if="aptitudeList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in aptitudeList" :key="index">
-					<view>
+					<view @click="toCompanyDetail(item.compAptitudeCompId, 2)">
 						<!-- 头部 -->
 						<view class="zy-disable-flex">
 							<zywork-icon type="iconrongyu" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
@@ -321,7 +329,7 @@
 								<text class="zy-text-bold">企业资质</text>
 								<view class="zy-text-mini zy-text-info">
 									<text class="zy-text-mini zy-text-info">
-										{{item.createTime}}
+										{{item.companyCompName}}
 									</text>
 								</view>
 							</view>
@@ -330,9 +338,9 @@
 						<view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">证件号码:</view>
-								<view v-if="item.certificateNum != ''" @click="validText(item.certificateNum)"
-									class="zy-text-info" :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-									{{item.certificateNum}}
+								<view v-if="item.compAptitudeCertificateNum != ''" @click="validText(item.compAptitudeCertificateNum)" class="zy-text-info"
+								 :class="item.compAptitudeCertificateNum === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.compAptitudeCertificateNum}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -340,9 +348,9 @@
 							</view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">资质详情:</view>
-								<view v-if="item.certificateDetail != ''" @click="validText(item.certificateDetail)"
-								 class="zy-text-info" :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-									{{item.certificateDetail}}
+								<view v-if="item.compAptitudeCertificateDetail != ''" @click="validText(item.compAptitudeCertificateDetail)"
+								 class="zy-text-info" :class="item.compAptitudeCertificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.compAptitudeCertificateDetail}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -376,9 +384,8 @@
 						<view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">第一中标人:</view>
-								<view v-if="item.projectAnnounceFirstCandidate !== ''" class="zy-text-info" 
-									@click="validText(item.projectAnnounceFirstCandidate)"
-									:class="item.projectAnnounceFirstCandidate === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+								<view v-if="item.projectAnnounceFirstCandidate !== ''" class="zy-text-info" @click="validText(item.projectAnnounceFirstCandidate)"
+								 :class="item.projectAnnounceFirstCandidate === '请购买VIP服务' ? 'zy-detail-phone' : ''">
 									{{item.projectAnnounceFirstCandidate}}
 								</view>
 								<view v-else class="zy-text-info">
@@ -386,23 +393,20 @@
 								</view>
 							</view>
 							<view class="zy-disable-flex">
-								<view class="zy-text-info zy-text-bold zy-content-label">第二中标人:</view>
-								<view v-if="item.projectAnnounceSecondCandidate !== ''"
-									class="zy-text-info"
-									@click="validText(item.projectAnnounceSecondCandidate)"
-									:class="item.projectAnnounceSecondCandidate === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-									{{item.projectAnnounceSecondCandidate}}
+								<view class="zy-text-info zy-text-bold zy-content-label">建造师:</view>
+								<view v-if="item.projectAnnounceFirstBuilderName !== ''" class="zy-text-info" @click="validText(item.projectAnnounceFirstBuilderName)"
+								 :class="item.projectAnnounceFirstBuilderName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.projectAnnounceFirstBuilderName}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
 								</view>
 							</view>
 							<view class="zy-disable-flex">
-								<view class="zy-text-info zy-text-bold zy-content-label">第三中标人:</view>
-								<view v-if="item.projectAnnounceThirdCandidate !== ''" class="zy-text-info"
-									@click="validText(item.projectAnnounceThirdCandidate)"
-									:class="item.projectAnnounceThirdCandidate === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-									{{item.projectAnnounceThirdCandidate}}
+								<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
+								<view v-if="item.projectAnnounceFirstMarkMoney !== ''" class="zy-text-info" @click="validText(item.projectAnnounceFirstMarkMoney)"
+								 :class="item.projectAnnounceFirstMarkMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+									{{item.projectAnnounceFirstMarkMoney}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -494,14 +498,16 @@
 					keyProjectAchievementUrl: '/comp-key-projecachievement/user/pager-cond',
 					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/user/pager-cond',
 					waterDeviseAchievementUrl: '/comp-water-devise-achievement/user/pager-cond',
-					builderUrl: '/comp-builder/any/pager-cond',
-					aptitudeUrl: '/comp-aptitude/user/pager-cond',
+					builderUrl: '/CompBuilderCompany/any/pager-cond',
+					aptitudeUrl: '/CompAptitudeCompany/user/pager-cond',
 					projectAnnounceUrl: '/ProjectAnnounceProject/user/pager-cond',
 				},
 				pager: {
 					pageNo: 1,
 					pageSize: 10,
-					isActive: 0
+					isActive: 0,
+					compBuilderIsActive: 0,
+					compAptitudeIsActive: 0
 				},
 				companyList: [],
 				achievementList: [],
@@ -528,7 +534,7 @@
 		},
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();
-			return  {
+			return {
 				title: '江西招投标平台信息共享',
 				path: '/pages/project-info/project-info?shareCode=' + shareCode,
 				imageUrl: SHARE_CODE_PAGE_IMG
@@ -551,10 +557,28 @@
 				})
 			},
 			/** 查看企业详情 */
-			toCompanyDetail(item) {
-				uni.navigateTo({
-					url: '/pages-credit-query/company-detail/company-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
-				})
+			toCompanyDetail(item, type) {
+				if (type !== 0) {
+					creditQuery.getOneById(this, '/company/any/one/', item)
+						.then(data => {
+							var [error, res] = data;
+							if (res.data.code === ResponseStatus.OK) {
+								item = res.data.data
+								item.tabIndex = type
+								uni.navigateTo({
+									url: '/pages-credit-query/company-detail/company-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+								})
+							} else {
+								showInfoToast(res.data.message)
+							}
+						})
+				} else {
+					// 从企业信息点进来的
+					item.tabIndex = type
+					uni.navigateTo({
+						url: '/pages-credit-query/company-detail/company-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					})
+				}
 			},
 			/** 查看企业业绩详情 */
 			toAchievementDetail(item) {
