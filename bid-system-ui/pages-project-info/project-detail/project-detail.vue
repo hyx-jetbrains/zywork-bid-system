@@ -412,7 +412,6 @@
 			/** 初始化数据 */
 			initData() {
 				this.initCollectionIcon();
-				getProjectAnnounce(this, this.project.project.id);
 				this.pager.markCarpoolProjectId = this.pager.markSeekcarProjectId = this.project.project.id;
 			},
 			// 初始化项目图标
@@ -445,8 +444,11 @@
 					this.toWebViewPage("公告详情", DOCUMENT_BASE_URL +"/"+ this.project.project.inwardHtmlUrl)
 				} else {
 					this.currTabIndex = type;
+					if (type === 3) {
+						getProjectAnnounce(this, this.project.project.id)
+					}
 					if (type === 4) {
-						getCarpoolList(this, this.pager);
+						getCarpoolList(this, this.pager)
 					}
 				}
 			},
