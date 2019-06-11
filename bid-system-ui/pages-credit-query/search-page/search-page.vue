@@ -23,19 +23,114 @@
 			</view>
 		</view>
 		<view v-else>
-			<view class="uni-tab-bar zy-tab-bar">
-				<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="infoType.scrollLeft">
-					<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
-					 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
-				</scroll-view>
+			<view class="uni-tab-bar zy-tab-bar zy-disable-flex">
+				<view style="width: 90%;">
+					<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="infoType.scrollLeft">
+						<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
+						 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
+					</scroll-view>
+				</view>
+				<view class="zy-disable-flex-right">
+					<zywork-icon type="iconwebicon03" size="30" @tap="showSearchDrawer"></zywork-icon>
+					<uni-drawer :visible="searchDrawer" mode="right" @close="closeSearchDrawer">
+						<view v-if="infoType.tabIndex === 0" class="zy-search-view zy-search-title">
+							<text class="zy-text-bold">查企业</text>
+						</view>
+						<view v-else-if="infoType.tabIndex === 1" class="zy-search-view zy-search-title">
+							<text class="zy-text-bold">查业绩</text>
+						</view>
+						<view v-else-if="infoType.tabIndex === 2" class="zy-search-view zy-search-title">
+							<text class="zy-text-bold">查建造师</text>
+						</view>
+						<view v-else-if="infoType.tabIndex === 3" class="zy-search-view zy-search-title">
+							<text class="zy-text-bold">查资质</text>
+						</view>
+						<view v-else-if="infoType.tabIndex === 4" class="zy-search-view zy-search-title">
+							<text class="zy-text-bold">查中标记录</text>
+						</view>
+						<view class="zy-search-view">
+							<view class="zy-search-bar zy-search">
+								<zywork-icon type="iconchaxun" />
+								<input type="text" v-model="searchVal" :placeholder="keywordMemo" @confirm="searchData" />
+							</view>
+						</view>
+						<!-- 企业信息搜索条件 -->
+						<view v-if="infoType.tabIndex === 0">
+						</view>
+						<!-- 业绩信息搜索条件 -->
+						<view v-if="infoType.tabIndex === 1">
+							<view class="zy-search-view">
+								<view class="zy-search-bar zy-search">
+									<zywork-icon type="iconchaxun" />
+									<input type="text" v-model="pager.markMoneyMin" placeholder="输入开始中标金额" @confirm="searchData" />
+								</view>
+								<view class="zy-search-division">
+									-
+								</view>
+								<view class="zy-search-bar zy-search">
+									<zywork-icon type="iconchaxun" />
+									<input type="text" v-model="pager.markMoneyMax" placeholder="输入结束中标金额" @confirm="searchData" />
+								</view>
+							</view>
+						</view>
+						<!-- 建造师信息搜索条件 -->
+						<view v-else-if="infoType.tabIndex === 2">
+							<view class="zy-search-view">
+								<view class="zy-search-bar zy-search">
+									<zywork-icon type="iconchaxun" />
+									<input type="text" v-model="pager.compBuilderRegNum" placeholder="输入证件号码关键字搜索" @confirm="searchData" />
+								</view>
+							</view>
+							<view class="zy-search-view">
+								<view class="zy-search-bar zy-search">
+									<zywork-icon type="iconchaxun" />
+									<input type="text" v-model="pager.companyCompName" placeholder="输入企业名称关键字搜索" @confirm="searchData" />
+								</view>
+							</view>
+						</view>
+						<!-- 资质信息搜索条件 -->
+						<view v-if="infoType.tabIndex === 3">
+							<view class="zy-search-view">
+								<view class="zy-search-bar zy-search">
+									<zywork-icon type="iconchaxun" />
+									<input type="text" v-model="pager.companyCompName" placeholder="输入企业名称关键字搜索" @confirm="searchData" />
+								</view>
+							</view>
+						</view>
+						<!-- 中标记录信息搜索条件 -->
+						<view v-if="infoType.tabIndex === 4">
+							<view class="zy-search-view">
+								<view class="zy-search-bar zy-search">
+									<zywork-icon type="iconchaxun" />
+									<input type="text" v-model="pager.projectAnnounceFirstBuilderName" placeholder="输入建造师/项目负责人关键字搜索" @confirm="searchData" />
+								</view>
+							</view>
+						</view>
+						<view class="zy-search-view zy-search-bottom">
+							<button class="mini-btn" type="default" size="mini" @click="clearSearchData">清空</button>
+							<button class="mini-btn" type="primary" size="mini" @click="drawerSearchData">搜索</button>
+						</view>
+					</uni-drawer>
+				</view>
 			</view>
 			<view style="height: 10upx; background-color: #F8F8F8;"></view>
-
+			<view class="zy-search-result zy-disable-flex">
+				<view>
+					已找到
+					<text class="zy-search-count" v-text="totalCount"></text>
+					条相关信息
+				</view>
+				<view class="zy-disable-flex-right">
+					<uni-tag text="已选条件" type="primary" size="small" :inverted="true" :circle="false" style="margin-right: 10upx;" @tap="showSearchDrawer"></uni-tag>
+					<uni-tag text="重新查询" type="primary" size="small" :inverted="false" :circle="false" @tap="searchData"></uni-tag>
+				</view>
+			</view>
+			<view style="height: 10upx; background-color: #F8F8F8;"></view>
 			<!-- 企业信息 -->
 			<view v-if="infoType.tabIndex === 0">
 				<view class="zy-page-list zy-page-card" v-if="companyList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in companyList" :key="index">
-						<view @click="toCompanyDetail(item)">
+						<view @click="toCompanyDetail(item, 0)">
 							<!-- 头部 -->
 							<view class="zy-disable-flex">
 								<zywork-icon type="iconqiyejianjie" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
@@ -55,7 +150,7 @@
 								</view>
 								<view class="zy-disable-flex-right" style="width: 38%; margin-right: 0upx;">
 									<view>
-										<uni-tag :text="item.compType" type="primary" size="small" :inverted="true" :circle="true" style="margin-right: 20upx;"></uni-tag>
+										<uni-tag :text="item.compType" type="primary" size="small" :inverted="true" :circle="true" style="margin-right: 10upx;"></uni-tag>
 										<uni-tag v-if="item.jurisdictionType === 0" text="省内" type="primary" size="small" :inverted="true" :circle="true"></uni-tag>
 										<uni-tag v-else text="省外" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
 									</view>
@@ -437,6 +532,7 @@
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import uniDrawer from '@/components/uni-drawer/uni-drawer.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
 	import {
 		showInfoToast,
@@ -464,7 +560,8 @@
 		components: {
 			zyworkIcon,
 			zyworkNoData,
-			uniTag
+			uniTag,
+			uniDrawer,
 		},
 		data() {
 			return {
@@ -512,13 +609,7 @@
 					aptitudeUrl: '/CompAptitudeCompany/user/pager-cond',
 					projectAnnounceUrl: '/ProjectAnnounceProject/user/pager-cond',
 				},
-				pager: {
-					pageNo: 1,
-					pageSize: 10,
-					isActive: 0,
-					compBuilderIsActive: 0,
-					compAptitudeIsActive: 0
-				},
+				pager: {},
 				companyList: [],
 				achievementList: [],
 				builderList: [],
@@ -527,7 +618,9 @@
 				achievementOpts: {
 					current: 0,
 					items: achievementTypeArray
-				}
+				},
+				totalCount: 0,
+				searchDrawer: false,
 			}
 		},
 		onLoad() {
@@ -544,11 +637,27 @@
 			initData() {
 				// 加载历史搜索数据
 				this.loadOldKeyword();
+				this.initPagerData();
 			},
 			/** 初始化查询数据 */
 			initPager() {
 				this.pager.pageNo = 1;
 				this.showLoadMore = false;
+			},
+			/** 初始化查询数据的值 */
+			initPagerData() {
+				this.pager = {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0,
+					compBuilderIsActive: 0,
+					compAptitudeIsActive: 0,
+					companyCompName: '',
+					compBuilderRegNum: '',
+					markMoneyMin: '',
+					markMoneyMax: '',
+					projectAnnounceFirstBuilderName: ''
+				}
 			},
 			/** 返回上个页面 */
 			toBackPage() {
@@ -687,7 +796,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -726,7 +835,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -742,7 +851,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -758,7 +867,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -774,7 +883,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
+							this.requestSuccess(this.infoType.tabIndex, type, res.data.data);
 						} else {
 							showInfoToast(res.data.message)
 						}
@@ -786,7 +895,9 @@
 			 * @param type 刷新的类型：init、pullDown、reachBottom
 			 * @param rows 请求到的数据
 			 */
-			requestSuccess(tabIndex, type, rows) {
+			requestSuccess(tabIndex, type, data) {
+				this.totalCount = data.total;
+				const rows = data.rows;
 				if (type === 'init') {
 					this.setListValue(tabIndex, rows, 'use');
 				} else if (type === 'pullDown') {
@@ -866,12 +977,12 @@
 					this.keywordMemo = '输入工程名称关键字搜索';
 				} else if (INFO_BUILDER === tabIndex) {
 					// 企业建造师信息
-					this.pager.name = tempSearchVal;
+					this.pager.compBuilderName = tempSearchVal;
 					this.refreshBuilderList(type);
 					this.keywordMemo = '输入建造师姓名关键字搜索';
 				} else if (INFO_APTITUDE === tabIndex) {
 					// 企业资质信息
-					this.pager.certificateDetail = tempSearchVal;
+					this.pager.compAptitudeCertificateDetail = tempSearchVal;
 					this.refreshAptitudeList(type);
 					this.keywordMemo = '输入资质详情信息关键字搜索';
 				} else if (INFO_MARK === tabIndex) {
@@ -897,6 +1008,24 @@
 			/** 验证文字 */
 			validText(text) {
 				validText(text);
+			},
+			/** 显示查询的弹窗 */
+			showSearchDrawer() {
+				this.searchDrawer = true;
+			},
+			/** 关闭查询的弹窗 */
+			closeSearchDrawer() {
+				this.searchDrawer = false;
+			},
+			/** 抽屉搜索按钮点击事件 */
+			drawerSearchData() {
+				this.closeSearchDrawer();
+				this.searchData();
+			},
+			/** 清空搜索条件 */
+			clearSearchData() {
+				this.initPagerData()
+				this.searchVal = ''
 			}
 		}
 	}
@@ -924,4 +1053,38 @@
 	.zy-achievement-type {
 		background-color: #FFF;
 	}
+
+	.zy-search-result {
+		padding: 0 20upx;
+
+		.zy-search-count {
+			color: $warning-text-color;
+			margin: 0upx 10upx;
+			font-size: 40upx;
+		}
+	}
+
+	.zy-search {
+		margin: 20upx auto;
+		width: 90%;
+	}
+
+	.zy-search-view {
+		padding: 10upx 0upx;
+		border-bottom: 1upx solid $seperator-color;
+	}
+	.zy-search-title {
+		text-align: center;
+	}
+	.zy-search-bottom {
+		line-height: 2upx;
+		text-align: right;
+	}
+	.zy-search-bottom button {
+		margin-right: 20upx;
+	}
+	.zy-search-division {
+		text-align: center;
+	}
+	
 </style>

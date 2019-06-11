@@ -380,7 +380,8 @@
 		getCompanyInfoById
 	} from '@/common/credit-query.js'
 	import {
-		validText
+		validText,
+		nullToStr
 	} from '@/common/util.js'
 
 	export default {
@@ -407,6 +408,7 @@
 			uni.setNavigationBarTitle({
 				title: this.item.projectName
 			});
+			this.item = nullToStr(this.item)
 			this.initCompany();
 		},
 		methods: {
@@ -416,8 +418,10 @@
 			},
 			/** 前往公司详情 */
 			toCompanyDetail() {
+				var item = this.company
+				item.tabIndex = 0
 				uni.navigateTo({
-					url: '/pages-credit-query/company-detail/company-detail?itemData=' + encodeURIComponent(JSON.stringify(this.company))
+					url: '/pages-credit-query/company-detail/company-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			},
 			/** 验证文字 */
