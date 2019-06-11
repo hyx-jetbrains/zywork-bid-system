@@ -274,6 +274,7 @@
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
             type="drag"
             :data="uploadHeadIcon"
             :action="urls.uploadUrl"
@@ -302,6 +303,7 @@
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
             type="drag"
             :data="uploadMenuIconMin"
             :action="urls.uploadUrl"
@@ -330,6 +332,7 @@
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
             type="drag"
             :data="uploadMenuIconMax"
             :action="urls.uploadUrl"
@@ -358,6 +361,7 @@
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
             type="drag"
             :data="uploadDefaultHead"
             :action="urls.uploadUrl"
@@ -389,6 +393,7 @@
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
             type="drag"
             :data="uploadBackgroundIcon"
             :action="urls.uploadUrl"
@@ -1388,6 +1393,12 @@ export default {
       this.$Notice.warning({
         title: '超出文件大小限制',
         desc: file.name + ' 太大，不超过2M.'
+      })
+    },
+    handleProgress(event, file) {
+      this.$Notice.info({
+        title: '文件正在上传',
+        desc: file.name + ' 上传中...'
       })
     }
   }

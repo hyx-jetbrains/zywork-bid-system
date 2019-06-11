@@ -68,6 +68,7 @@
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
             multiple
             type="drag"
             :action="urls.uploadUrl"
@@ -107,6 +108,7 @@
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
             multiple
             type="drag"
             :action="urls.uploadUrl"
@@ -304,6 +306,7 @@ import { isActiveSelect } from '@/api/select'
 import Editor from '_c/editor'
 import config from '@/config'
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
+const cdnUrl = config.baseUrl.cdnUrl
 
 export default {
   name: 'Advertisement',
@@ -467,12 +470,18 @@ export default {
             }
           },
           {
-            title: '封面图片',
+            title: '图片地址',
             key: 'imgUrl',
             minWidth: 180,
             sortable: true,
+          },
+          {
+            title: 'URL链接',
+            key: 'url',
+            minWidth: 180,
+            sortable: true,
             render: (h, params) => {
-              const imgSrc = params.row.imgUrl
+              const imgSrc = params.row.url
               if (imgSrc == null || imgSrc == '' || imgSrc == undefined) {
                 return h('span',{},'暂无图片')
               }
@@ -495,25 +504,6 @@ export default {
                   }
                 },
                 ''
-              )
-            }
-          },
-          {
-            title: 'URL链接',
-            key: 'url',
-            minWidth: 180,
-            sortable: true,
-            render: (h, params) => {
-              const url = params.row.url
-              return h(
-                'a',
-                {
-                  attrs: {
-                    href: url,
-                    target: '_blank'
-                  }
-                },
-                url
               )
             }
           },
@@ -784,6 +774,12 @@ export default {
         desc: file.name + ' 太大，不得超过2M.'
       })
     },
+    handleProgress(event, file) {
+      this.$Notice.info({
+        title: '文件正在上传',
+        desc: file.name + ' 上传中...'
+      })
+    }
   }
 }
 </script>
