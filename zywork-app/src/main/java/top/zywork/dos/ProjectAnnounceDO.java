@@ -6,19 +6,23 @@ import java.util.Date;
 /**
  * ProjectAnnounceDO数据对象实体类<br/>
  *
- * 创建于2019-06-10<br/>
+ * 创建于2019-06-11<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ProjectAnnounceDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372035115495800L;
+    private static final long serialVersionUID = -9223372036336248351L;
 
     // 公示编号
 	private Long id;
 	// 项目编号
 	private Long projectId;
+	// 标题
+	private String title;
+	// 项目类型
+	private String projectType;
 	// 公示详情
 	private String announceDesc;
 	// 第一候选人
@@ -46,9 +50,11 @@ public class ProjectAnnounceDO extends BaseDO {
 	
     public ProjectAnnounceDO () {}
 
-    public ProjectAnnounceDO (Long id, Long projectId, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectAnnounceDO (Long id, Long projectId, String title, String projectType, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
+		this.title = title;
+		this.projectType = projectType;
 		this.announceDesc = announceDesc;
 		this.firstCandidate = firstCandidate;
 		this.firstBuilderName = firstBuilderName;
@@ -78,6 +84,22 @@ public class ProjectAnnounceDO extends BaseDO {
 
 	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
 	}
 
 	public String getAnnounceDesc() {
@@ -182,6 +204,8 @@ public class ProjectAnnounceDO extends BaseDO {
         return "ProjectAnnounceDO {" +
                 "id = " + id + 
 				", projectId = " + projectId + 
+				", title = " + title + 
+				", projectType = " + projectType + 
 				", announceDesc = " + announceDesc + 
 				", firstCandidate = " + firstCandidate + 
 				", firstBuilderName = " + firstBuilderName + 

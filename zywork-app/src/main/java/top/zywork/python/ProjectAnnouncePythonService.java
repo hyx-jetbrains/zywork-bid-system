@@ -8,7 +8,7 @@ package top.zywork.python;
  * @author http://zywork.top 危锦辉
  * @version 1.0
  */
-public interface ProjectPythonService {
+public interface ProjectAnnouncePythonService {
 
-    void saveProject(String data);
+    void saveProjectAnnounce(String data);
 }

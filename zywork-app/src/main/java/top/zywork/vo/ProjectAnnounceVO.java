@@ -12,19 +12,25 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectAnnounceVO值对象类<br/>
  *
- * 创建于2019-06-10<br/>
+ * 创建于2019-06-11<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ProjectAnnounceVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372036615110972L;
+    private static final long serialVersionUID = -9223372034980587964L;
 
     // 公示编号
 	private Long id;
 	// 项目编号
 	private Long projectId;
+	// 标题
+	@Size(min = 0, max = 65535, message = "必须小于65535个字符")
+	private String title;
+	// 项目类型
+	@Size(min = 0, max = 10, message = "必须小于10个字符")
+	private String projectType;
 	// 公示详情
 	@Size(min = 0, max = 65535, message = "必须小于65535个字符")
 	private String announceDesc;
@@ -62,9 +68,11 @@ public class ProjectAnnounceVO extends BaseVO {
 	
     public ProjectAnnounceVO () {}
 
-    public ProjectAnnounceVO (Long id, Long projectId, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectAnnounceVO (Long id, Long projectId, String title, String projectType, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
+		this.title = title;
+		this.projectType = projectType;
 		this.announceDesc = announceDesc;
 		this.firstCandidate = firstCandidate;
 		this.firstBuilderName = firstBuilderName;
@@ -94,6 +102,22 @@ public class ProjectAnnounceVO extends BaseVO {
 
 	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
 	}
 
 	public String getAnnounceDesc() {
@@ -198,6 +222,8 @@ public class ProjectAnnounceVO extends BaseVO {
         return "ProjectAnnounceVO {" +
                 "id = " + id + 
 				", projectId = " + projectId + 
+				", title = " + title + 
+				", projectType = " + projectType + 
 				", announceDesc = " + announceDesc + 
 				", firstCandidate = " + firstCandidate + 
 				", firstBuilderName = " + firstBuilderName + 

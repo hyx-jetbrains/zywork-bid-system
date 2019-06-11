@@ -17,10 +17,6 @@
         <span v-text="form.city"></span>
       </p>
       <p>
-        项目详情:
-        <span v-html="form.projectDetail"></span>
-      </p>
-      <p>
         发布状态:
         <span v-text="form.releaseStatus"></span>
       </p>

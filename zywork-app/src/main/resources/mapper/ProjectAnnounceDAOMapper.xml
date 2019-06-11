@@ -13,6 +13,12 @@
             <if test="projectId != null">
 				project_id,
 			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="projectType != null">
+				project_type,
+			</if>
 			<if test="announceDesc != null">
 				announce_desc,
 			</if>
@@ -54,6 +60,12 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="projectId != null">
 				#{projectId},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="projectType != null">
+				#{projectType},
 			</if>
 			<if test="announceDesc != null">
 				#{announceDesc},
@@ -105,6 +117,12 @@
                 <if test="item.projectId != null">
 				project_id,
 			</if>
+			<if test="item.title != null">
+				title,
+			</if>
+			<if test="item.projectType != null">
+				project_type,
+			</if>
 			<if test="item.announceDesc != null">
 				announce_desc,
 			</if>
@@ -146,6 +164,12 @@
             <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="item.projectId != null">
 				#{item.projectId},
+			</if>
+			<if test="item.title != null">
+				#{item.title},
+			</if>
+			<if test="item.projectType != null">
+				#{item.projectType},
 			</if>
 			<if test="item.announceDesc != null">
 				#{item.announceDesc},
@@ -205,6 +229,12 @@
             <if test="projectId != null">
 				project_id = #{projectId},
 			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="projectType != null">
+				project_type = #{projectType},
+			</if>
 			<if test="announceDesc != null">
 				announce_desc = #{announceDesc},
 			</if>
@@ -253,6 +283,12 @@
                 <if test="item.projectId != null">
 				project_id = #{item.projectId},
 			</if>
+			<if test="item.title != null">
+				title = #{item.title},
+			</if>
+			<if test="item.projectType != null">
+				project_type = #{item.projectType},
+			</if>
 			<if test="item.announceDesc != null">
 				announce_desc = #{item.announceDesc},
 			</if>
@@ -299,7 +335,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, project_id as projectId, announce_desc as announceDesc, first_candidate as firstCandidate, first_builder_name as firstBuilderName, first_mark_money as firstMarkMoney, second_candidate as secondCandidate, third_candidate as thirdCandidate, source_url as sourceUrl, inword_html_url as inwordHtmlUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, project_id as projectId, title as title, project_type as projectType, announce_desc as announceDesc, first_candidate as firstCandidate, first_builder_name as firstBuilderName, first_mark_money as firstMarkMoney, second_candidate as secondCandidate, third_candidate as thirdCandidate, source_url as sourceUrl, inword_html_url as inwordHtmlUrl, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -326,6 +362,12 @@
 		</if>
 		<if test="query != null and query.projectIdMin != null and query.projectIdMax != null">
 			and project_id <![CDATA[ >= ]]> #{query.projectIdMin} and project_id <![CDATA[ <= ]]> #{query.projectIdMax}
+		</if>
+		<if test="query != null and query.title != null and query.title != ''">
+			and title like concat('%', #{query.title}, '%')
+		</if>
+		<if test="query != null and query.projectType != null and query.projectType != ''">
+			and project_type like concat('%', #{query.projectType}, '%')
 		</if>
 		<if test="query != null and query.announceDesc != null and query.announceDesc != ''">
 			and announce_desc like concat('%', #{query.announceDesc}, '%')

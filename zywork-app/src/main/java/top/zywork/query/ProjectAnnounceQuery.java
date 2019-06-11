@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * ProjectAnnounceQuery查询对象类<br/>
  *
- * 创建于2019-06-10<br/>
+ * 创建于2019-06-11<br/>
  *
  * @author http://zywork.top 邓敏
  * @version 1.0
  */
 public class ProjectAnnounceQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372034740204591L;
+    private static final long serialVersionUID = -9223372034941604367L;
 
     // 公示编号
 	private Long id;
@@ -29,6 +29,10 @@ public class ProjectAnnounceQuery extends PageQuery {
 	private Long projectIdMin;
 	// 项目编号（最大值）
 	private Long projectIdMax;
+	// 标题
+	private String title;
+	// 项目类型
+	private String projectType;
 	// 公示详情
 	private String announceDesc;
 	// 第一候选人
@@ -78,13 +82,15 @@ public class ProjectAnnounceQuery extends PageQuery {
 	
     public ProjectAnnounceQuery () {}
 
-    public ProjectAnnounceQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ProjectAnnounceQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, String title, String projectType, String announceDesc, String firstCandidate, String firstBuilderName, String firstMarkMoney, String secondCandidate, String thirdCandidate, String sourceUrl, String inwordHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
 		this.projectId = projectId;
 		this.projectIdMin = projectIdMin;
 		this.projectIdMax = projectIdMax;
+		this.title = title;
+		this.projectType = projectType;
 		this.announceDesc = announceDesc;
 		this.firstCandidate = firstCandidate;
 		this.firstBuilderName = firstBuilderName;
@@ -154,6 +160,22 @@ public class ProjectAnnounceQuery extends PageQuery {
 
 	public void setProjectIdMax(Long projectIdMax) {
 		this.projectIdMax = projectIdMax;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
 	}
 
 	public String getAnnounceDesc() {
@@ -326,6 +348,8 @@ public class ProjectAnnounceQuery extends PageQuery {
 				", projectId = " + projectId + 
 				", projectIdMin = " + projectIdMin + 
 				", projectIdMax = " + projectIdMax + 
+				", title = " + title + 
+				", projectType = " + projectType + 
 				", announceDesc = " + announceDesc + 
 				", firstCandidate = " + firstCandidate + 
 				", firstBuilderName = " + firstBuilderName + 

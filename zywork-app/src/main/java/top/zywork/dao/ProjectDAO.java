@@ -30,4 +30,6 @@ public interface ProjectDAO extends BaseDAO {
 
     Long countByUserId(@Param("query") Object queryObj, @Param("userId") Long userId);
 
+    Object getByTitle(@Param("title") String title);
+
 }

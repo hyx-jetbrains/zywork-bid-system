@@ -59,6 +59,12 @@
           <span v-text="form.projectId" />
           &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
+				<FormItem label="项目标题" prop="title">
+				  <Input v-model="form.title" placeholder="请输入项目标题"/>
+				</FormItem>
+				<FormItem label="项目类型" prop="title">
+				  <Input v-model="form.projectType" placeholder="请输入项目类型"/>
+				</FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
@@ -97,6 +103,12 @@
           <span v-text="form.projectId" />
           &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
+				<FormItem label="项目标题" prop="title">
+				  <Input v-model="form.title" placeholder="请输入项目标题"/>
+				</FormItem>
+				<FormItem label="项目类型" prop="title">
+				  <Input v-model="form.projectType" placeholder="请输入项目类型"/>
+				</FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
@@ -172,6 +184,12 @@
             </i-col>
           </Row>
         </FormItem>
+				<FormItem label="项目标题" prop="title">
+				  <Input v-model="searchForm.title" placeholder="请输入项目标题"/>
+				</FormItem>
+				<FormItem label="项目类型" prop="title">
+				  <Input v-model="searchForm.projectType" placeholder="请输入项目类型"/>
+				</FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="searchForm.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
@@ -289,6 +307,14 @@
         >搜索</Button>
       </div>
     </Modal>
+		
+		<Modal
+		 v-model="modal.detailContent"
+		 :fullscreen="true"
+	 	 title="公示详情">
+			<span v-html="form.announceDesc"></span>
+		</Modal>
+		
     <Modal
       v-model="modal.detail"
       title="详情"
@@ -301,6 +327,14 @@
         项目编号:
         <span v-text="form.projectId"></span>
       </p>
+			<p>
+			  项目类型:
+			  <span v-text="form.projectType"></span>
+			</p>
+			<p>
+				项目标题
+				<span v-text="form.title"></span>
+			</p>
       <p>
         第一候选人:
         <span v-text="form.firstCandidate"></span>
@@ -341,8 +375,6 @@
         是否激活:
         <span v-text="form.isActive"></span>
       </p>
-      <p>公示详情:</p>
-      <span v-html="form.announceDesc"></span>
     </Modal>
 
     <Modal :transfer="false" v-model="modal.projectDetail" title="招投标项目详情">
@@ -427,6 +459,7 @@ export default {
         edit: false,
         search: false,
         detail: false,
+				detailContent: false,
         projectDetail: false,
         projectDetailSearch: false,
         projectChoice: false
@@ -458,6 +491,8 @@ export default {
       form: {
         id: null,
         projectId: null,
+				title: null,
+				projectType: null,
         announceDesc: null,
         firstCandidate: null,
         firstBuilderName: null,
@@ -508,6 +543,8 @@ export default {
         id: null,
         idMin: null,
         idMax: null,
+				title: null,
+				projectType: null,
         projectId: null,
         projectIdMin: null,
         projectIdMax: null,
@@ -617,6 +654,18 @@ export default {
               )
             }
           },
+					{
+					  title: '项目标题',
+					  key: 'title',
+					  minWidth: 200,
+					  sortable: true
+					},
+					{
+					  title: '项目类型',
+					  key: 'projectType',
+					  minWidth: 150,
+					  sortable: true
+					},
           {
             title: '公示详情',
             key: 'announceDesc',
@@ -628,7 +677,7 @@ export default {
                 {
                   on: {
                     click: () => {
-                      utils.showModal(this, 'detail')
+                      utils.showModal(this, 'detailContent')
                       this.form = JSON.parse(JSON.stringify(params.row))
                     }
                   }
