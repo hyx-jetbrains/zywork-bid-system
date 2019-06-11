@@ -10,9 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.UserMessageConstants;
 import top.zywork.dto.PagerDTO;
+import top.zywork.dto.UserMessageDTO;
 import top.zywork.dto.UserNoticeDTO;
 import top.zywork.query.UserNoticeQuery;
+import top.zywork.query.UserUserMessageQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.UserNoticeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -132,6 +137,42 @@ public class UserNoticeController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), UserNoticeVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    /**
+     * 用户查询消息
+     * @param userNoticeQuery
+     * @return
+     */
+    @PostMapping("user/pager-cond")
+    public ResponseStatusVO userListPageByCondition(@RequestBody UserNoticeQuery userNoticeQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+        userNoticeQuery.setUserId(jwtUser.getUserId());
+        return listPageByCondition(userNoticeQuery);
+    }
+
+    @GetMapping("user/read/{id}")
+    public ResponseStatusVO readMessage(@PathVariable("id") Long id) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+        Object obj = userNoticeService.getById(id);
+        if (obj == null ) {
+            return ResponseStatusVO.error("读取失败，消息不存在", null);
+        }
+        UserNoticeDTO userNoticeDTO = new UserNoticeDTO();
+        userNoticeDTO = BeanUtils.copy(obj, UserNoticeDTO.class);
+        userNoticeDTO.setIsRead(UserMessageConstants.MESSAGE_IS_READ_TRUE.byteValue());
+        int updateRows = userNoticeService.update(userNoticeDTO);
+        if (updateRows == 1) {
+            return ResponseStatusVO.ok("读取成功", null);
+        } else {
+            return ResponseStatusVO.dataError("数据版本号有问题，在此更新前数据已被更新", null);
+        }
     }
 
     @Autowired

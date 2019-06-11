@@ -64,6 +64,18 @@ public class UserMarkSeekcarController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /***
+     * @description: 用户端查询单个拼车信息
+     * @param id
+     * @return: top.zywork.vo.ResponseStatusVO
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-06-11 18:21
+     */
+    @GetMapping("user/one/{id}")
+    public ResponseStatusVO userGetByid(@PathVariable("id") Long id) {
+        return listById(id);
+    }
+
     /**
      * User: DengMin
      * Date: 2019/05/13

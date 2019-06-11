@@ -6,7 +6,7 @@ import * as ResponseStatus from './response-status.js'
  */
 export const loadMessage = (self, params, type) => {
 	uni.request({
-		url: BASE_URL + '/user-usermessage/user/pager-cond',
+		url: BASE_URL + '/user-notice/user/pager-cond',
 		data: params,
 		method: 'POST',
 		header: {
@@ -46,7 +46,7 @@ export const loadMessage = (self, params, type) => {
  */
 export const readMessage = (self, id) => {
 	uni.request({
-		url: BASE_URL + '/user-message/user/read/' + id,
+		url: BASE_URL + '/user-notice/user/read/' + id,
 		data: '',
 		method: 'GET',
 		header: {
@@ -72,9 +72,9 @@ export const readMessage = (self, id) => {
  */
 export const countNotReadMsg = () => {
 	uni.request({
-		url: BASE_URL + '/user-usermessage/user/pager-cond',
+		url: BASE_URL + '/user-notice/user/pager-cond',
 		data: {
-			userMessageIsRead: 0
+			isRead: 0
 		},
 		method: 'POST',
 		header: {
@@ -97,5 +97,17 @@ export const countNotReadMsg = () => {
 		fail: () => {
 			networkError()
 		}
+	})
+}
+
+/**
+ * get根据id获取对象信息，封装Promise
+ */
+export const getOneById = (self, url) => {
+	return uni.request({
+		url: BASE_URL + url,
+		method: 'GET',
+		data: {},
+		header: {},
 	})
 }

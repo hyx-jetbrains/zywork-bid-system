@@ -172,8 +172,11 @@ public class MarkSeekcarRecordController extends BaseController {
         if (markSeekcarRecordDTO != null) {
             return ResponseStatusVO.error("申请失败，已经申请过了", null);
         }
-        int recordCount = markSeekcarVO.getRecordCount();
-        markSeekcarVO.setRecordCount(++recordCount);
+        int recordCount = markSeekcarVO.getRecordCount() + 1;
+        if (recordCount > 1) {
+            return ResponseStatusVO.error("申请失败，人数已满", null);
+        }
+        markSeekcarVO.setRecordCount(recordCount);
         markSeekcarService.update(BeanUtils.copy(markSeekcarVO, MarkSeekcarDTO.class));
         MarkSeekcarRecordVO markSeekcarRecordVO = new MarkSeekcarRecordVO();
         markSeekcarRecordVO.setUserId(userId);

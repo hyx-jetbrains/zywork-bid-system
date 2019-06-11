@@ -1,5 +1,11 @@
 <template>
 	<view>
+		<view class="uni-tab-bar zy-tab-bar">
+			<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="infoType.scrollLeft">
+				<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
+				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
+			</scroll-view>
+		</view>
 		<view class="zy-uni-segmented-control">
 			<uni-segmented-control :current="messageStatus.current" :values="messageStatus.items" v-on:clickItem="onClickItem"
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
@@ -7,12 +13,14 @@
 		<view v-if="messageList.length > 0" class="zy-page-list" style="margin-top: 10upx;">
 			<view v-for="(message, index) in messageList" :key="index" class="zy-page-list-item" @click="toMessageDetail(message)">
 				<view class="zy-message-head">
-					<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{message.messageTitle}}</view>
-					<uni-tag v-if="message.userMessageIsRead === 0" text="未读" type="error" size="small" :inverted="true"></uni-tag>
-					<uni-tag v-else text="已读" type="success" size="small" :inverted="true"></uni-tag>
+					<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{message.title}}</view>
+					<view style="width: 20%;">
+						<uni-tag v-if="message.isRead === 0" text="未读" type="error" size="small" :inverted="true"></uni-tag>
+						<uni-tag v-else text="已读" type="success" size="small" :inverted="true"></uni-tag>
+					</view>
 				</view>
-				<view class="zy-message-content zy-overflow-hidden">{{message.messageContent}}</view>
-				<view class="zy-text-info zy-text-small zy-message-time">{{message.userMessageCreateTime}}</view>
+				<view class="zy-message-content zy-overflow-hidden">{{message.mainContent}}</view>
+				<view class="zy-text-info zy-text-small zy-message-time">{{message.createTime}}</view>
 			</view>
 		</view>
 		<zywork-no-data v-else text="暂无消息通知"></zywork-no-data>
@@ -49,6 +57,35 @@
 		},
 		data() {
 			return {
+				infoType: {
+					scrollLeft: 0,
+					tabIndex: 0,
+					tabbars: [{
+							id: 'subscribleNotice',
+							name: '订阅通知'
+						},
+						{
+							id: 'markTimeNotice',
+							name: '开标通知'
+						},
+						{
+							id: 'markCarpoolNotice',
+							name: '拼车通知'
+						},
+						{
+							id: 'markSeekcarNotice',
+							name: '找车通知'
+						},
+						{
+							id: 'systemNotice',
+							name: '系统通知'
+						},
+						{
+							id: 'expertReplyNotice',
+							name: '专家回复通知'
+						},
+					]
+				},
 				loadMoreText: "加载中...",
 				showLoadMore: false,
 				messageStatus: {
@@ -59,8 +96,9 @@
 				pager: {
 					pageNo: 1,
 					pageSize: 10,
-					userMessageIsRead: '',
-					sortColumn: 't_user_message.is_read',
+					isRead: '',
+					noticeType: 0,
+					sortColumn: 'isRead',
 					sortOrder: 'asc',
 				}
 			}
@@ -91,6 +129,7 @@
 		methods: {
 			/** 初始化消息 */
 			initMessage() {
+				console.log(this.pager);
 				loadMessage(this, this.pager, 'init');
 			},
 			/** 初始查询信息 */
@@ -98,18 +137,42 @@
 				this.pager.pageNo = 1;
 				this.showLoadMore = false;
 			},
+			getElSize(id) {
+				return new Promise((res, rej) => {
+					uni.createSelectorQuery().select("#" + id).fields({
+						size: true,
+						scrollOffset: true
+					}, (data) => {
+						res(data);
+					}).exec();
+				})
+			},
+			async tapTab(e) {
+				let tabIndex = e.target.dataset.current
+				if (this.infoType.tabIndex === tabIndex) {
+					return false
+				} else {
+					let tabBar = await this.getElSize("tab-bar"),
+						tabBarScrollLeft = tabBar.scrollLeft
+					this.infoType.scrollLeft = tabBarScrollLeft
+					this.infoType.tabIndex = tabIndex
+					this.pager.noticeType = tabIndex
+					this.initPager();
+					this.initMessage();
+				}
+			},
 			/** 分段器选择器 */
 			onClickItem(index) {
 				if (this.messageStatus.current !== index) {
 					this.messageStatus.current = index
 					if (MESSAGE_ALL === index) {
-						this.pager.userMessageIsRead = '';
-						this.pager.sortColumn = 't_user_message.is_read';
+						this.pager.isRead = '';
+						this.pager.sortColumn = 'isRead';
 						this.pager.sortOrder = 'asc';
 					} else {
-						this.pager.sortColumn = 't_user_message.create_time';
+						this.pager.sortColumn = 'createTime';
 						this.pager.sortOrder = 'desc';
-						this.pager.userMessageIsRead = --index;
+						this.pager.isRead = --index;
 					}
 					this.initPager();
 					this.initMessage();
@@ -117,8 +180,8 @@
 			},
 			/** 查看消息详情 */
 			toMessageDetail(item) {
-				if (item.userMessageIsRead === 0) {
-					readMessage(this, item.userMessageId);
+				if (item.isRead === 0) {
+					readMessage(this, item.id);
 				}
 				uni.navigateTo({
 					url: '/pages-message-notify/message-detail/message-detail?itemData=' + encodeURIComponent(JSON.stringify(item))

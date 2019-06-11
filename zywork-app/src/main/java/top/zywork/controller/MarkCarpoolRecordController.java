@@ -171,8 +171,11 @@ public class MarkCarpoolRecordController extends BaseController {
         if (markCarpoolRecordDTO != null) {
             return ResponseStatusVO.error("拼车失败，已经拼过该车了", null);
         }
-        int recordCount = markCarpoolVO.getRecordCount();
-        markCarpoolVO.setRecordCount(++recordCount);
+        int recordCount = markCarpoolVO.getRecordCount() + 1;
+        if (recordCount > markCarpoolVO.getPeopleCount()) {
+            return ResponseStatusVO.error("拼车失败，人数已满", null);
+        }
+        markCarpoolVO.setRecordCount(recordCount);
         markCarpoolService.update(BeanUtils.copy(markCarpoolVO, MarkCarpoolDTO.class));
         MarkCarpoolRecordVO markCarpoolRecordVO = new MarkCarpoolRecordVO();
         markCarpoolRecordVO.setUserId(userId);
