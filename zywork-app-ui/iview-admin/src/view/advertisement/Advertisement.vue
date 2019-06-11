@@ -270,10 +270,6 @@
         <span v-html="form.content"></span>
       </p>
       <p>
-        封面图:
-        <img :src="form.url" />
-      </p>
-      <p>
         版本号:
         <span v-text="form.version"></span>
       </p>
@@ -286,6 +282,17 @@
         <span v-text="form.updateTime"></span>
       </p>
       <p>是否激活: <span v-text="form.isActive === 0 ? '激活' : '冻结'"></span></p>
+    </Modal>
+    <Modal
+      v-model="modal.detailContent"
+      title="内容详情"
+      :fullscreen="true"
+    >
+      <span v-html="form.content"></span>
+      
+    </Modal>
+    <Modal title="预览图片" v-model="modal.img">
+      <img :src="form.imgUrl" style="width: 100%">
     </Modal>
   </div>
 </template>
@@ -309,7 +316,9 @@ export default {
         add: false,
         edit: false,
         search: false,
-        detail: false
+        detail: false,
+        detailContent: false,
+        img: false
       },
       loading: {
         add: false,
@@ -450,7 +459,7 @@ export default {
               return h('a', {
                   on: {
                     click: () => {
-                      utils.showModal(this, 'detail')
+                      this.showModal('detailContent')
                       this.form = JSON.parse(JSON.stringify(params.row))
                     }
                   }
@@ -458,16 +467,55 @@ export default {
             }
           },
           {
-            title: '图片地址',
+            title: '封面图片',
             key: 'imgUrl',
             minWidth: 180,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const imgSrc = params.row.imgUrl
+              if (imgSrc == null || imgSrc == '' || imgSrc == undefined) {
+                return h('span',{},'暂无图片')
+              }
+              return h(
+                'img',
+                {
+                  attrs: {
+                    src: imgSrc
+                  },
+                  style: {
+                    width: '100px',
+                    height: '80px',
+                    cursor: 'pointer'
+                  },
+                  on: {
+                    click: () => {
+                      this.showModal('img')
+                      this.form = JSON.parse(JSON.stringify(params.row))
+                    }
+                  }
+                },
+                ''
+              )
+            }
           },
           {
             title: 'URL链接',
             key: 'url',
             minWidth: 180,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const url = params.row.url
+              return h(
+                'a',
+                {
+                  attrs: {
+                    href: url,
+                    target: '_blank'
+                  }
+                },
+                url
+              )
+            }
           },
           {
             title: '版本号',

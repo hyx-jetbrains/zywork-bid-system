@@ -215,8 +215,6 @@
     <Modal
       v-model="modal.detail"
       title="详情"
-      @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
-			:fullscreen="true"
     >
       <p>
         头条编号:
@@ -225,10 +223,6 @@
       <p>
         标题:
         <span v-text="form.title"></span>
-      </p>
-      <p>
-        内容:
-        <span v-html="form.content"></span>
       </p>
       <p>
         版本号:
@@ -246,6 +240,13 @@
         是否激活:
         <span v-text="form.isActive === 0 ? '激活' : '冻结'"></span>
       </p>
+    </Modal>
+    <Modal
+      v-model="modal.detailContent"
+      title="内容详情"
+			:fullscreen="true"
+    >
+      <span v-html="form.content"></span>
     </Modal>
   </div>
 </template>
@@ -265,7 +266,8 @@ export default {
         add: false,
         edit: false,
         search: false,
-        detail: false
+        detail: false,
+        detailContent: false
       },
       loading: {
         add: false,
@@ -390,7 +392,7 @@ export default {
               return h('a', {
                   on: {
                     click: () => {
-                      utils.showModal(this, 'detail')
+                      utils.showModal(this, 'detailContent')
                       this.form = JSON.parse(JSON.stringify(params.row))
                     }
                   }
