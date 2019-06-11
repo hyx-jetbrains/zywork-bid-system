@@ -71,7 +71,8 @@
             :on-progress="handleProgress"
             multiple
             type="drag"
-            :action="urls.uploadUrl"
+            :action="urls.uploadImgUrl"
+						:headers="uploadHeader"
             style="display: inline-block;width:58px;"
           >
             <div style="width: 58px;height:58px;line-height: 58px;">
@@ -111,7 +112,8 @@
             :on-progress="handleProgress"
             multiple
             type="drag"
-            :action="urls.uploadUrl"
+            :action="urls.uploadImgUrl"
+						:headers="uploadHeader"
             style="display: inline-block;width:58px;"
           >
             <div style="width: 58px;height:58px;line-height: 58px;">
@@ -307,6 +309,7 @@ import Editor from '_c/editor'
 import config from '@/config'
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
 const cdnUrl = config.baseUrl.cdnUrl
+import { getLocalStorageToken, localStorage } from '@/libs/util'
 
 export default {
   name: 'Advertisement',
@@ -315,6 +318,9 @@ export default {
   },
   data() {
     return {
+			uploadHeader: {
+			  Authorization: 'Bearer ' + getLocalStorageToken()
+			},
       modal: {
         add: false,
         edit: false,
@@ -340,7 +346,8 @@ export default {
         detailUrl: '/advertisement/admin/one/',
         activeUrl: '/advertisement/admin/active',
         batchActiveUrl: '/advertisement/admin/batch-active',
-        uploadUrl: baseUrl + '/advertisement/admin/upload-img'
+        uploadImgUrl: baseUrl + '/advertisement/admin/upload-img',
+				uploadUrl: '/advertisement/admin/upload-img'
       },
       page: {
         total: 0
