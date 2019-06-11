@@ -401,7 +401,7 @@
 		</Modal>
 
 		<Modal width="1000" v-model="modal.markCarpoolRecordSeach" title="拼车记录">
-			<markCarpoolRecord-list-single ref="MarkCarpoolRecordListSingle" />
+			<markCarpoolRecord-list-single :markCarpoolId="markCarpoolId" ref="MarkCarpoolRecordListSingle" />
 			<div slot="footer">
 				<Button type="text" size="large" @click="cancelModal('markCarpoolRecordSeach')">取消</Button>
 			</div>
@@ -441,6 +441,7 @@
 		},
 		data() {
 			return {
+				markCarpoolId: null,
 				userDetailForm: {
 					userId: null,
 					userPhone: null,
@@ -1077,6 +1078,7 @@
 					utils.showModal(this, 'projectDetalSearch')
 				} else if (itemName === 'showMarkCarpoolRecord') {
 					utils.showModal(this, 'markCarpoolRecordSeach')
+					this.markCarpoolId = row.id
 				}
 			},
 			showUserDetailModal(id) {

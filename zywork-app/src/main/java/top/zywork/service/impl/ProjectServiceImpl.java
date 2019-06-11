@@ -134,4 +134,11 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         return pagerDTO;
     }
 
+    @Override
+    public PagerDTO findProjectByd(Long id) {
+        ProjectQuery projectQuery = new ProjectQuery();
+        projectQuery.setId(id);
+        return listProjectByPage(projectQuery);
+    }
+
 }

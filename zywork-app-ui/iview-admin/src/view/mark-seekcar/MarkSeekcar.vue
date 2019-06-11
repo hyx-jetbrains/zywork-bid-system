@@ -520,7 +520,7 @@
       </div>
     </Modal>
 		
-		<Modal width="1000" v-model="modal.markSeekcarRecord" title="找车记录">
+		<Modal width="1000" v-model="modal.markSeekcarRecord" :markSeekcarId="markSeekcarId" title="找车记录">
 		  <markSeekcarRecord-list-single ref="MarkSeekcarRecordListSingle" />
 		  <div slot="footer">
 		    <Button type="text" size="large" @click="cancelModal('markSeekcarRecord')">取消</Button>
@@ -555,6 +555,7 @@ export default {
   },
   data() {
     return {
+			markSeekcarId: null,
       userDetailForm: {
         userId: null,
         userPhone: null,
@@ -1191,6 +1192,7 @@ export default {
 				utils.showModal(this, 'projectDetalSearch')
 			} else if(itemName === 'markSeekcarRecordSeach') {
 				utils.showModal(this, 'markSeekcarRecord')
+				this.markSeekcarId = row.id
 			}
     },
     showUserDetailModal(id) {

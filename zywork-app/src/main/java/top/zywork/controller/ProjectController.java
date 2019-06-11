@@ -1,5 +1,6 @@
 package top.zywork.controller;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,6 +206,16 @@ public class ProjectController extends BaseController {
         PagerDTO pagerDTO = projectService.listProjectByPage(projectQuery);
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         if(pagerDTO.getRows() != null) {
+            pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectResourceCountVO.class));
+        }
+        return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    @GetMapping("user/multi/{id}")
+    public ResponseStatusVO findProjectById(@PathVariable("id") Long id) {
+        PagerDTO pagerDTO = projectService.findProjectByd(id);
+        PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
+        if (null != pagerDTO && null != pagerDTO.getRows()) {
             pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), ProjectResourceCountVO.class));
         }
         return ResponseStatusVO.ok("查询成功", pagerVO);

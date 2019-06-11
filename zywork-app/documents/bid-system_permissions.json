@@ -126,6 +126,19 @@
         ]
     },
     {
+        "moduleTitle": "系统信息配置管理",
+        "permissions": [
+            {
+                "title": "后台-系统信息配置管理",
+                "permission": "/sys-info/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            }
+        ]
+    },
+    {
         "moduleTitle": "系统日志管理",
         "permissions": [
             {
@@ -617,7 +630,7 @@
                 "title": "用户-商品基础信息管理",
                 "permission": "/goods-info/user/**",
                 "roles": [
-                    "sys_shop_owner"
+                    "sys_user"
                 ]
             }
         ]
@@ -637,7 +650,7 @@
                 "title": "用户-商品图片管理",
                 "permission": "/goods-pic/user/**",
                 "roles": [
-                    "sys_shop_owner"
+                    "sys_user"
                 ]
             }
         ]
@@ -1205,6 +1218,28 @@
         ]
     },
     {
+        "moduleTitle": "更新公告",
+        "permissions": [
+            {
+                "title": "后台-更新公告",
+                "permission": "/user-notice/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-更新公告",
+                "permission": "/user-notice/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+                ]
+            }
+        ]
+    },
+    {
         "moduleTitle": "企业信息管理",
         "permissions": [
             {
@@ -1516,6 +1551,52 @@
             {
                 "title": "用户-用户抵扣券使用记录查询",
                 "permission": "/coupon-record/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "用户服务",
+        "permissions": [
+            {
+                "title": "后台-用户服务",
+                "permission": "/user-service/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-用户服务查询",
+                "permission": "/user-service/user/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin",
+                    "sys_user"
+
+                ]
+            }
+        ]
+    },
+    {
+        "moduleTitle": "服务",
+        "permissions": [
+            {
+                "title": "后台-服务",
+                "permission": "/service/admin/**",
+                "roles": [
+                    "super_sys_admin",
+                    "sys_admin"
+                ]
+            },
+            {
+                "title": "用户-服务查询",
+                "permission": "/service/user/**",
                 "roles": [
                     "super_sys_admin",
                     "sys_admin",

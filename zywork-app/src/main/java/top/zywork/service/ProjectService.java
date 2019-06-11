@@ -46,4 +46,6 @@ public interface ProjectService extends BaseService {
 
     PagerDTO  listProjectByPage(ProjectQuery projectQuery);
 
+    PagerDTO findProjectByd(@Param("id") Long id);
+
 }
