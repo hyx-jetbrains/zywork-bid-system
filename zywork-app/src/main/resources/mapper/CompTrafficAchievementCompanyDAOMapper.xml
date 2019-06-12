@@ -1,0 +1,196 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.CompTrafficAchievementCompanyDAO">
+
+    <sql id="select_columns">
+        t_comp_traffic_achievement.id as compTrafficAchievementId, t_comp_traffic_achievement.comp_id as compTrafficAchievementCompId, t_comp_traffic_achievement.project_name as compTrafficAchievementProjectName, t_comp_traffic_achievement.name as compTrafficAchievementName, t_comp_traffic_achievement.technology_name as compTrafficAchievementTechnologyName, t_comp_traffic_achievement.contract_amount as compTrafficAchievementContractAmount, t_comp_traffic_achievement.work_addr as compTrafficAchievementWorkAddr, t_comp_traffic_achievement.start_date as compTrafficAchievementStartDate, t_comp_traffic_achievement.end_date as compTrafficAchievementEndDate, t_comp_traffic_achievement.valid_status as compTrafficAchievementValidStatus, t_comp_traffic_achievement.version as compTrafficAchievementVersion, t_comp_traffic_achievement.create_time as compTrafficAchievementCreateTime, t_comp_traffic_achievement.update_time as compTrafficAchievementUpdateTime, t_comp_traffic_achievement.is_active as compTrafficAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.compTrafficAchievementId != null">
+			and t_comp_traffic_achievement.id = #{query.compTrafficAchievementId}
+		</if>
+		<if test="query != null and query.compTrafficAchievementIdMin != null and query.compTrafficAchievementIdMax == null">
+			and t_comp_traffic_achievement.id <![CDATA[ >= ]]> #{query.compTrafficAchievementIdMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementIdMin == null and query.compTrafficAchievementIdMax != null">
+			and t_comp_traffic_achievement.id <![CDATA[ <= ]]> #{query.compTrafficAchievementIdMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementIdMin != null and query.compTrafficAchievementIdMax != null">
+			and t_comp_traffic_achievement.id <![CDATA[ >= ]]> #{query.compTrafficAchievementIdMin} and t_comp_traffic_achievement.id <![CDATA[ <= ]]> #{query.compTrafficAchievementIdMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCompId != null">
+			and t_comp_traffic_achievement.comp_id = #{query.compTrafficAchievementCompId}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCompIdMin != null and query.compTrafficAchievementCompIdMax == null">
+			and t_comp_traffic_achievement.comp_id <![CDATA[ >= ]]> #{query.compTrafficAchievementCompIdMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCompIdMin == null and query.compTrafficAchievementCompIdMax != null">
+			and t_comp_traffic_achievement.comp_id <![CDATA[ <= ]]> #{query.compTrafficAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCompIdMin != null and query.compTrafficAchievementCompIdMax != null">
+			and t_comp_traffic_achievement.comp_id <![CDATA[ >= ]]> #{query.compTrafficAchievementCompIdMin} and t_comp_traffic_achievement.comp_id <![CDATA[ <= ]]> #{query.compTrafficAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementProjectName != null and query.compTrafficAchievementProjectName != ''">
+			and t_comp_traffic_achievement.project_name like concat('%', #{query.compTrafficAchievementProjectName}, '%')
+		</if>
+		<if test="query != null and query.compTrafficAchievementName != null and query.compTrafficAchievementName != ''">
+			and t_comp_traffic_achievement.name like concat('%', #{query.compTrafficAchievementName}, '%')
+		</if>
+		<if test="query != null and query.compTrafficAchievementTechnologyName != null and query.compTrafficAchievementTechnologyName != ''">
+			and t_comp_traffic_achievement.technology_name like concat('%', #{query.compTrafficAchievementTechnologyName}, '%')
+		</if>
+		<if test="query != null and query.compTrafficAchievementContractAmount != null and query.compTrafficAchievementContractAmount != ''">
+			and t_comp_traffic_achievement.contract_amount like concat('%', #{query.compTrafficAchievementContractAmount}, '%')
+		</if>
+		<if test="query != null and query.compTrafficAchievementWorkAddr != null and query.compTrafficAchievementWorkAddr != ''">
+			and t_comp_traffic_achievement.work_addr like concat('%', #{query.compTrafficAchievementWorkAddr}, '%')
+		</if>
+		<if test="query != null and query.compTrafficAchievementStartDate != null">
+			and t_comp_traffic_achievement.start_date = #{query.compTrafficAchievementStartDate}
+		</if>
+		<if test="query != null and query.compTrafficAchievementStartDateMin != null and query.compTrafficAchievementStartDateMax == null">
+			and t_comp_traffic_achievement.start_date <![CDATA[ >= ]]> #{query.compTrafficAchievementStartDateMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementStartDateMin == null and query.compTrafficAchievementStartDateMax != null">
+			and t_comp_traffic_achievement.start_date <![CDATA[ <= ]]> #{query.compTrafficAchievementStartDateMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementStartDateMin != null and query.compTrafficAchievementStartDateMax != null">
+			and t_comp_traffic_achievement.start_date <![CDATA[ >= ]]> #{query.compTrafficAchievementStartDateMin} and t_comp_traffic_achievement.start_date <![CDATA[ <= ]]> #{query.compTrafficAchievementStartDateMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementEndDate != null">
+			and t_comp_traffic_achievement.end_date = #{query.compTrafficAchievementEndDate}
+		</if>
+		<if test="query != null and query.compTrafficAchievementEndDateMin != null and query.compTrafficAchievementEndDateMax == null">
+			and t_comp_traffic_achievement.end_date <![CDATA[ >= ]]> #{query.compTrafficAchievementEndDateMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementEndDateMin == null and query.compTrafficAchievementEndDateMax != null">
+			and t_comp_traffic_achievement.end_date <![CDATA[ <= ]]> #{query.compTrafficAchievementEndDateMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementEndDateMin != null and query.compTrafficAchievementEndDateMax != null">
+			and t_comp_traffic_achievement.end_date <![CDATA[ >= ]]> #{query.compTrafficAchievementEndDateMin} and t_comp_traffic_achievement.end_date <![CDATA[ <= ]]> #{query.compTrafficAchievementEndDateMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementValidStatus != null and query.compTrafficAchievementValidStatus != ''">
+			and t_comp_traffic_achievement.valid_status like concat('%', #{query.compTrafficAchievementValidStatus}, '%')
+		</if>
+		<if test="query != null and query.compTrafficAchievementVersion != null">
+			and t_comp_traffic_achievement.version = #{query.compTrafficAchievementVersion}
+		</if>
+		<if test="query != null and query.compTrafficAchievementVersionMin != null and query.compTrafficAchievementVersionMax == null">
+			and t_comp_traffic_achievement.version <![CDATA[ >= ]]> #{query.compTrafficAchievementVersionMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementVersionMin == null and query.compTrafficAchievementVersionMax != null">
+			and t_comp_traffic_achievement.version <![CDATA[ <= ]]> #{query.compTrafficAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementVersionMin != null and query.compTrafficAchievementVersionMax != null">
+			and t_comp_traffic_achievement.version <![CDATA[ >= ]]> #{query.compTrafficAchievementVersionMin} and t_comp_traffic_achievement.version <![CDATA[ <= ]]> #{query.compTrafficAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCreateTime != null">
+			and t_comp_traffic_achievement.create_time = #{query.compTrafficAchievementCreateTime}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCreateTimeMin != null and query.compTrafficAchievementCreateTimeMax == null">
+			and t_comp_traffic_achievement.create_time <![CDATA[ >= ]]> #{query.compTrafficAchievementCreateTimeMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCreateTimeMin == null and query.compTrafficAchievementCreateTimeMax != null">
+			and t_comp_traffic_achievement.create_time <![CDATA[ <= ]]> #{query.compTrafficAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementCreateTimeMin != null and query.compTrafficAchievementCreateTimeMax != null">
+			and t_comp_traffic_achievement.create_time <![CDATA[ >= ]]> #{query.compTrafficAchievementCreateTimeMin} and t_comp_traffic_achievement.create_time <![CDATA[ <= ]]> #{query.compTrafficAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementUpdateTime != null">
+			and t_comp_traffic_achievement.update_time = #{query.compTrafficAchievementUpdateTime}
+		</if>
+		<if test="query != null and query.compTrafficAchievementUpdateTimeMin != null and query.compTrafficAchievementUpdateTimeMax == null">
+			and t_comp_traffic_achievement.update_time <![CDATA[ >= ]]> #{query.compTrafficAchievementUpdateTimeMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementUpdateTimeMin == null and query.compTrafficAchievementUpdateTimeMax != null">
+			and t_comp_traffic_achievement.update_time <![CDATA[ <= ]]> #{query.compTrafficAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementUpdateTimeMin != null and query.compTrafficAchievementUpdateTimeMax != null">
+			and t_comp_traffic_achievement.update_time <![CDATA[ >= ]]> #{query.compTrafficAchievementUpdateTimeMin} and t_comp_traffic_achievement.update_time <![CDATA[ <= ]]> #{query.compTrafficAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementIsActive != null">
+			and t_comp_traffic_achievement.is_active = #{query.compTrafficAchievementIsActive}
+		</if>
+		<if test="query != null and query.compTrafficAchievementIsActiveMin != null and query.compTrafficAchievementIsActiveMax == null">
+			and t_comp_traffic_achievement.is_active <![CDATA[ >= ]]> #{query.compTrafficAchievementIsActiveMin}
+		</if>
+		<if test="query != null and query.compTrafficAchievementIsActiveMin == null and query.compTrafficAchievementIsActiveMax != null">
+			and t_comp_traffic_achievement.is_active <![CDATA[ <= ]]> #{query.compTrafficAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.compTrafficAchievementIsActiveMin != null and query.compTrafficAchievementIsActiveMax != null">
+			and t_comp_traffic_achievement.is_active <![CDATA[ >= ]]> #{query.compTrafficAchievementIsActiveMin} and t_comp_traffic_achievement.is_active <![CDATA[ <= ]]> #{query.compTrafficAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.companyCompType != null and query.companyCompType != ''">
+			and t_company.comp_type like concat('%', #{query.companyCompType}, '%')
+		</if>
+		<if test="query != null and query.companyIndustryType != null and query.companyIndustryType != ''">
+			and t_company.industry_type like concat('%', #{query.companyIndustryType}, '%')
+		</if>
+		<if test="query != null and query.companyCompName != null and query.companyCompName != ''">
+			and t_company.comp_name like concat('%', #{query.companyCompName}, '%')
+		</if>
+		
+        and
+        t_comp_traffic_achievement.comp_id = t_company.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="compTrafficAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_traffic_achievement, t_company where t_comp_traffic_achievement.id = #{id} and
+        t_comp_traffic_achievement.comp_id = t_company.id
+    </select>
+
+    <select id="listAll" resultType="compTrafficAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_traffic_achievement, t_company
+        where
+        t_comp_traffic_achievement.comp_id = t_company.id
+        order by t_comp_traffic_achievement.update_time desc, t_comp_traffic_achievement.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="compTrafficAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_traffic_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_traffic_achievement.update_time desc, t_comp_traffic_achievement.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="compTrafficAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_traffic_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_traffic_achievement.update_time desc, t_comp_traffic_achievement.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_comp_traffic_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

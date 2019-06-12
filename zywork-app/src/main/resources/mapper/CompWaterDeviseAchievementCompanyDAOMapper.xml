@@ -1,0 +1,181 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.CompWaterDeviseAchievementCompanyDAO">
+
+    <sql id="select_columns">
+        t_comp_water_devise_achievement.id as compWaterDeviseAchievementId, t_comp_water_devise_achievement.comp_id as compWaterDeviseAchievementCompId, t_comp_water_devise_achievement.project_name as compWaterDeviseAchievementProjectName, t_comp_water_devise_achievement.tendering_comp as compWaterDeviseAchievementTenderingComp, t_comp_water_devise_achievement.build_comp as compWaterDeviseAchievementBuildComp, t_comp_water_devise_achievement.mark_date as compWaterDeviseAchievementMarkDate, t_comp_water_devise_achievement.contract_amount as compWaterDeviseAchievementContractAmount, t_comp_water_devise_achievement.name as compWaterDeviseAchievementName, t_comp_water_devise_achievement.version as compWaterDeviseAchievementVersion, t_comp_water_devise_achievement.create_time as compWaterDeviseAchievementCreateTime, t_comp_water_devise_achievement.update_time as compWaterDeviseAchievementUpdateTime, t_comp_water_devise_achievement.is_active as compWaterDeviseAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.compWaterDeviseAchievementId != null">
+			and t_comp_water_devise_achievement.id = #{query.compWaterDeviseAchievementId}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementIdMin != null and query.compWaterDeviseAchievementIdMax == null">
+			and t_comp_water_devise_achievement.id <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementIdMin}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementIdMin == null and query.compWaterDeviseAchievementIdMax != null">
+			and t_comp_water_devise_achievement.id <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementIdMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementIdMin != null and query.compWaterDeviseAchievementIdMax != null">
+			and t_comp_water_devise_achievement.id <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementIdMin} and t_comp_water_devise_achievement.id <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementIdMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCompId != null">
+			and t_comp_water_devise_achievement.comp_id = #{query.compWaterDeviseAchievementCompId}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCompIdMin != null and query.compWaterDeviseAchievementCompIdMax == null">
+			and t_comp_water_devise_achievement.comp_id <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementCompIdMin}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCompIdMin == null and query.compWaterDeviseAchievementCompIdMax != null">
+			and t_comp_water_devise_achievement.comp_id <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCompIdMin != null and query.compWaterDeviseAchievementCompIdMax != null">
+			and t_comp_water_devise_achievement.comp_id <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementCompIdMin} and t_comp_water_devise_achievement.comp_id <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementProjectName != null and query.compWaterDeviseAchievementProjectName != ''">
+			and t_comp_water_devise_achievement.project_name like concat('%', #{query.compWaterDeviseAchievementProjectName}, '%')
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementTenderingComp != null and query.compWaterDeviseAchievementTenderingComp != ''">
+			and t_comp_water_devise_achievement.tendering_comp like concat('%', #{query.compWaterDeviseAchievementTenderingComp}, '%')
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementBuildComp != null and query.compWaterDeviseAchievementBuildComp != ''">
+			and t_comp_water_devise_achievement.build_comp like concat('%', #{query.compWaterDeviseAchievementBuildComp}, '%')
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementMarkDate != null">
+			and t_comp_water_devise_achievement.mark_date = #{query.compWaterDeviseAchievementMarkDate}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementMarkDateMin != null and query.compWaterDeviseAchievementMarkDateMax == null">
+			and t_comp_water_devise_achievement.mark_date <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementMarkDateMin}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementMarkDateMin == null and query.compWaterDeviseAchievementMarkDateMax != null">
+			and t_comp_water_devise_achievement.mark_date <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementMarkDateMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementMarkDateMin != null and query.compWaterDeviseAchievementMarkDateMax != null">
+			and t_comp_water_devise_achievement.mark_date <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementMarkDateMin} and t_comp_water_devise_achievement.mark_date <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementMarkDateMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementContractAmount != null and query.compWaterDeviseAchievementContractAmount != ''">
+			and t_comp_water_devise_achievement.contract_amount like concat('%', #{query.compWaterDeviseAchievementContractAmount}, '%')
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementName != null and query.compWaterDeviseAchievementName != ''">
+			and t_comp_water_devise_achievement.name like concat('%', #{query.compWaterDeviseAchievementName}, '%')
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementVersion != null">
+			and t_comp_water_devise_achievement.version = #{query.compWaterDeviseAchievementVersion}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementVersionMin != null and query.compWaterDeviseAchievementVersionMax == null">
+			and t_comp_water_devise_achievement.version <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementVersionMin}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementVersionMin == null and query.compWaterDeviseAchievementVersionMax != null">
+			and t_comp_water_devise_achievement.version <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementVersionMin != null and query.compWaterDeviseAchievementVersionMax != null">
+			and t_comp_water_devise_achievement.version <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementVersionMin} and t_comp_water_devise_achievement.version <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCreateTime != null">
+			and t_comp_water_devise_achievement.create_time = #{query.compWaterDeviseAchievementCreateTime}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCreateTimeMin != null and query.compWaterDeviseAchievementCreateTimeMax == null">
+			and t_comp_water_devise_achievement.create_time <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementCreateTimeMin}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCreateTimeMin == null and query.compWaterDeviseAchievementCreateTimeMax != null">
+			and t_comp_water_devise_achievement.create_time <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementCreateTimeMin != null and query.compWaterDeviseAchievementCreateTimeMax != null">
+			and t_comp_water_devise_achievement.create_time <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementCreateTimeMin} and t_comp_water_devise_achievement.create_time <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementUpdateTime != null">
+			and t_comp_water_devise_achievement.update_time = #{query.compWaterDeviseAchievementUpdateTime}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementUpdateTimeMin != null and query.compWaterDeviseAchievementUpdateTimeMax == null">
+			and t_comp_water_devise_achievement.update_time <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementUpdateTimeMin}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementUpdateTimeMin == null and query.compWaterDeviseAchievementUpdateTimeMax != null">
+			and t_comp_water_devise_achievement.update_time <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementUpdateTimeMin != null and query.compWaterDeviseAchievementUpdateTimeMax != null">
+			and t_comp_water_devise_achievement.update_time <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementUpdateTimeMin} and t_comp_water_devise_achievement.update_time <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementIsActive != null">
+			and t_comp_water_devise_achievement.is_active = #{query.compWaterDeviseAchievementIsActive}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementIsActiveMin != null and query.compWaterDeviseAchievementIsActiveMax == null">
+			and t_comp_water_devise_achievement.is_active <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementIsActiveMin}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementIsActiveMin == null and query.compWaterDeviseAchievementIsActiveMax != null">
+			and t_comp_water_devise_achievement.is_active <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.compWaterDeviseAchievementIsActiveMin != null and query.compWaterDeviseAchievementIsActiveMax != null">
+			and t_comp_water_devise_achievement.is_active <![CDATA[ >= ]]> #{query.compWaterDeviseAchievementIsActiveMin} and t_comp_water_devise_achievement.is_active <![CDATA[ <= ]]> #{query.compWaterDeviseAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.companyCompType != null and query.companyCompType != ''">
+			and t_company.comp_type like concat('%', #{query.companyCompType}, '%')
+		</if>
+		<if test="query != null and query.companyIndustryType != null and query.companyIndustryType != ''">
+			and t_company.industry_type like concat('%', #{query.companyIndustryType}, '%')
+		</if>
+		<if test="query != null and query.companyCompName != null and query.companyCompName != ''">
+			and t_company.comp_name like concat('%', #{query.companyCompName}, '%')
+		</if>
+		
+        and
+        t_comp_water_devise_achievement.comp_id = t_company.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="compWaterDeviseAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_devise_achievement, t_company where t_comp_water_devise_achievement.id = #{id} and
+        t_comp_water_devise_achievement.comp_id = t_company.id
+    </select>
+
+    <select id="listAll" resultType="compWaterDeviseAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_devise_achievement, t_company
+        where
+        t_comp_water_devise_achievement.comp_id = t_company.id
+        order by t_comp_water_devise_achievement.update_time desc, t_comp_water_devise_achievement.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="compWaterDeviseAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_devise_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_water_devise_achievement.update_time desc, t_comp_water_devise_achievement.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="compWaterDeviseAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_devise_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_water_devise_achievement.update_time desc, t_comp_water_devise_achievement.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_comp_water_devise_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

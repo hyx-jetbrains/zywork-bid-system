@@ -1,0 +1,187 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.CompKeyProjectAchievementCompanyDAO">
+
+    <sql id="select_columns">
+        t_comp_key_project_achievement.id as compKeyProjectAchievementId, t_comp_key_project_achievement.comp_id as compKeyProjectAchievementCompId, t_comp_key_project_achievement.project_name as compKeyProjectAchievementProjectName, t_comp_key_project_achievement.build_comp as compKeyProjectAchievementBuildComp, t_comp_key_project_achievement.mark_money as compKeyProjectAchievementMarkMoney, t_comp_key_project_achievement.start_date as compKeyProjectAchievementStartDate, t_comp_key_project_achievement.end_date as compKeyProjectAchievementEndDate, t_comp_key_project_achievement.version as compKeyProjectAchievementVersion, t_comp_key_project_achievement.create_time as compKeyProjectAchievementCreateTime, t_comp_key_project_achievement.update_time as compKeyProjectAchievementUpdateTime, t_comp_key_project_achievement.is_active as compKeyProjectAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.compKeyProjectAchievementId != null">
+			and t_comp_key_project_achievement.id = #{query.compKeyProjectAchievementId}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementIdMin != null and query.compKeyProjectAchievementIdMax == null">
+			and t_comp_key_project_achievement.id <![CDATA[ >= ]]> #{query.compKeyProjectAchievementIdMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementIdMin == null and query.compKeyProjectAchievementIdMax != null">
+			and t_comp_key_project_achievement.id <![CDATA[ <= ]]> #{query.compKeyProjectAchievementIdMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementIdMin != null and query.compKeyProjectAchievementIdMax != null">
+			and t_comp_key_project_achievement.id <![CDATA[ >= ]]> #{query.compKeyProjectAchievementIdMin} and t_comp_key_project_achievement.id <![CDATA[ <= ]]> #{query.compKeyProjectAchievementIdMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCompId != null">
+			and t_comp_key_project_achievement.comp_id = #{query.compKeyProjectAchievementCompId}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCompIdMin != null and query.compKeyProjectAchievementCompIdMax == null">
+			and t_comp_key_project_achievement.comp_id <![CDATA[ >= ]]> #{query.compKeyProjectAchievementCompIdMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCompIdMin == null and query.compKeyProjectAchievementCompIdMax != null">
+			and t_comp_key_project_achievement.comp_id <![CDATA[ <= ]]> #{query.compKeyProjectAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCompIdMin != null and query.compKeyProjectAchievementCompIdMax != null">
+			and t_comp_key_project_achievement.comp_id <![CDATA[ >= ]]> #{query.compKeyProjectAchievementCompIdMin} and t_comp_key_project_achievement.comp_id <![CDATA[ <= ]]> #{query.compKeyProjectAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementProjectName != null and query.compKeyProjectAchievementProjectName != ''">
+			and t_comp_key_project_achievement.project_name like concat('%', #{query.compKeyProjectAchievementProjectName}, '%')
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementBuildComp != null and query.compKeyProjectAchievementBuildComp != ''">
+			and t_comp_key_project_achievement.build_comp like concat('%', #{query.compKeyProjectAchievementBuildComp}, '%')
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementMarkMoney != null and query.compKeyProjectAchievementMarkMoney != ''">
+			and t_comp_key_project_achievement.mark_money like concat('%', #{query.compKeyProjectAchievementMarkMoney}, '%')
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementStartDate != null">
+			and t_comp_key_project_achievement.start_date = #{query.compKeyProjectAchievementStartDate}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementStartDateMin != null and query.compKeyProjectAchievementStartDateMax == null">
+			and t_comp_key_project_achievement.start_date <![CDATA[ >= ]]> #{query.compKeyProjectAchievementStartDateMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementStartDateMin == null and query.compKeyProjectAchievementStartDateMax != null">
+			and t_comp_key_project_achievement.start_date <![CDATA[ <= ]]> #{query.compKeyProjectAchievementStartDateMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementStartDateMin != null and query.compKeyProjectAchievementStartDateMax != null">
+			and t_comp_key_project_achievement.start_date <![CDATA[ >= ]]> #{query.compKeyProjectAchievementStartDateMin} and t_comp_key_project_achievement.start_date <![CDATA[ <= ]]> #{query.compKeyProjectAchievementStartDateMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementEndDate != null">
+			and t_comp_key_project_achievement.end_date = #{query.compKeyProjectAchievementEndDate}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementEndDateMin != null and query.compKeyProjectAchievementEndDateMax == null">
+			and t_comp_key_project_achievement.end_date <![CDATA[ >= ]]> #{query.compKeyProjectAchievementEndDateMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementEndDateMin == null and query.compKeyProjectAchievementEndDateMax != null">
+			and t_comp_key_project_achievement.end_date <![CDATA[ <= ]]> #{query.compKeyProjectAchievementEndDateMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementEndDateMin != null and query.compKeyProjectAchievementEndDateMax != null">
+			and t_comp_key_project_achievement.end_date <![CDATA[ >= ]]> #{query.compKeyProjectAchievementEndDateMin} and t_comp_key_project_achievement.end_date <![CDATA[ <= ]]> #{query.compKeyProjectAchievementEndDateMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementVersion != null">
+			and t_comp_key_project_achievement.version = #{query.compKeyProjectAchievementVersion}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementVersionMin != null and query.compKeyProjectAchievementVersionMax == null">
+			and t_comp_key_project_achievement.version <![CDATA[ >= ]]> #{query.compKeyProjectAchievementVersionMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementVersionMin == null and query.compKeyProjectAchievementVersionMax != null">
+			and t_comp_key_project_achievement.version <![CDATA[ <= ]]> #{query.compKeyProjectAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementVersionMin != null and query.compKeyProjectAchievementVersionMax != null">
+			and t_comp_key_project_achievement.version <![CDATA[ >= ]]> #{query.compKeyProjectAchievementVersionMin} and t_comp_key_project_achievement.version <![CDATA[ <= ]]> #{query.compKeyProjectAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCreateTime != null">
+			and t_comp_key_project_achievement.create_time = #{query.compKeyProjectAchievementCreateTime}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCreateTimeMin != null and query.compKeyProjectAchievementCreateTimeMax == null">
+			and t_comp_key_project_achievement.create_time <![CDATA[ >= ]]> #{query.compKeyProjectAchievementCreateTimeMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCreateTimeMin == null and query.compKeyProjectAchievementCreateTimeMax != null">
+			and t_comp_key_project_achievement.create_time <![CDATA[ <= ]]> #{query.compKeyProjectAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementCreateTimeMin != null and query.compKeyProjectAchievementCreateTimeMax != null">
+			and t_comp_key_project_achievement.create_time <![CDATA[ >= ]]> #{query.compKeyProjectAchievementCreateTimeMin} and t_comp_key_project_achievement.create_time <![CDATA[ <= ]]> #{query.compKeyProjectAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementUpdateTime != null">
+			and t_comp_key_project_achievement.update_time = #{query.compKeyProjectAchievementUpdateTime}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementUpdateTimeMin != null and query.compKeyProjectAchievementUpdateTimeMax == null">
+			and t_comp_key_project_achievement.update_time <![CDATA[ >= ]]> #{query.compKeyProjectAchievementUpdateTimeMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementUpdateTimeMin == null and query.compKeyProjectAchievementUpdateTimeMax != null">
+			and t_comp_key_project_achievement.update_time <![CDATA[ <= ]]> #{query.compKeyProjectAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementUpdateTimeMin != null and query.compKeyProjectAchievementUpdateTimeMax != null">
+			and t_comp_key_project_achievement.update_time <![CDATA[ >= ]]> #{query.compKeyProjectAchievementUpdateTimeMin} and t_comp_key_project_achievement.update_time <![CDATA[ <= ]]> #{query.compKeyProjectAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementIsActive != null">
+			and t_comp_key_project_achievement.is_active = #{query.compKeyProjectAchievementIsActive}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementIsActiveMin != null and query.compKeyProjectAchievementIsActiveMax == null">
+			and t_comp_key_project_achievement.is_active <![CDATA[ >= ]]> #{query.compKeyProjectAchievementIsActiveMin}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementIsActiveMin == null and query.compKeyProjectAchievementIsActiveMax != null">
+			and t_comp_key_project_achievement.is_active <![CDATA[ <= ]]> #{query.compKeyProjectAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.compKeyProjectAchievementIsActiveMin != null and query.compKeyProjectAchievementIsActiveMax != null">
+			and t_comp_key_project_achievement.is_active <![CDATA[ >= ]]> #{query.compKeyProjectAchievementIsActiveMin} and t_comp_key_project_achievement.is_active <![CDATA[ <= ]]> #{query.compKeyProjectAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.companyCompType != null and query.companyCompType != ''">
+			and t_company.comp_type like concat('%', #{query.companyCompType}, '%')
+		</if>
+		<if test="query != null and query.companyIndustryType != null and query.companyIndustryType != ''">
+			and t_company.industry_type like concat('%', #{query.companyIndustryType}, '%')
+		</if>
+		<if test="query != null and query.companyCompName != null and query.companyCompName != ''">
+			and t_company.comp_name like concat('%', #{query.companyCompName}, '%')
+		</if>
+		
+        and
+        t_comp_key_project_achievement.comp_id = t_company.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="compKeyProjectAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_key_project_achievement, t_company where t_comp_key_project_achievement.id = #{id} and
+        t_comp_key_project_achievement.comp_id = t_company.id
+    </select>
+
+    <select id="listAll" resultType="compKeyProjectAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_key_project_achievement, t_company
+        where
+        t_comp_key_project_achievement.comp_id = t_company.id
+        order by t_comp_key_project_achievement.update_time desc, t_comp_key_project_achievement.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="compKeyProjectAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_key_project_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_key_project_achievement.update_time desc, t_comp_key_project_achievement.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="compKeyProjectAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_key_project_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_key_project_achievement.update_time desc, t_comp_key_project_achievement.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_comp_key_project_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,190 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.CompWaterMonitorAchievementCompanyDAO">
+
+    <sql id="select_columns">
+        t_comp_water_monitor_achievement.id as compWaterMonitorAchievementId, t_comp_water_monitor_achievement.comp_id as compWaterMonitorAchievementCompId, t_comp_water_monitor_achievement.project_name as compWaterMonitorAchievementProjectName, t_comp_water_monitor_achievement.project_type as compWaterMonitorAchievementProjectType, t_comp_water_monitor_achievement.build_comp as compWaterMonitorAchievementBuildComp, t_comp_water_monitor_achievement.contract_amount as compWaterMonitorAchievementContractAmount, t_comp_water_monitor_achievement.contract_date as compWaterMonitorAchievementContractDate, t_comp_water_monitor_achievement.start_date as compWaterMonitorAchievementStartDate, t_comp_water_monitor_achievement.version as compWaterMonitorAchievementVersion, t_comp_water_monitor_achievement.create_time as compWaterMonitorAchievementCreateTime, t_comp_water_monitor_achievement.update_time as compWaterMonitorAchievementUpdateTime, t_comp_water_monitor_achievement.is_active as compWaterMonitorAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.compWaterMonitorAchievementId != null">
+			and t_comp_water_monitor_achievement.id = #{query.compWaterMonitorAchievementId}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementIdMin != null and query.compWaterMonitorAchievementIdMax == null">
+			and t_comp_water_monitor_achievement.id <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementIdMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementIdMin == null and query.compWaterMonitorAchievementIdMax != null">
+			and t_comp_water_monitor_achievement.id <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementIdMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementIdMin != null and query.compWaterMonitorAchievementIdMax != null">
+			and t_comp_water_monitor_achievement.id <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementIdMin} and t_comp_water_monitor_achievement.id <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementIdMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCompId != null">
+			and t_comp_water_monitor_achievement.comp_id = #{query.compWaterMonitorAchievementCompId}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCompIdMin != null and query.compWaterMonitorAchievementCompIdMax == null">
+			and t_comp_water_monitor_achievement.comp_id <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementCompIdMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCompIdMin == null and query.compWaterMonitorAchievementCompIdMax != null">
+			and t_comp_water_monitor_achievement.comp_id <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCompIdMin != null and query.compWaterMonitorAchievementCompIdMax != null">
+			and t_comp_water_monitor_achievement.comp_id <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementCompIdMin} and t_comp_water_monitor_achievement.comp_id <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementCompIdMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementProjectName != null and query.compWaterMonitorAchievementProjectName != ''">
+			and t_comp_water_monitor_achievement.project_name like concat('%', #{query.compWaterMonitorAchievementProjectName}, '%')
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementProjectType != null and query.compWaterMonitorAchievementProjectType != ''">
+			and t_comp_water_monitor_achievement.project_type like concat('%', #{query.compWaterMonitorAchievementProjectType}, '%')
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementBuildComp != null and query.compWaterMonitorAchievementBuildComp != ''">
+			and t_comp_water_monitor_achievement.build_comp like concat('%', #{query.compWaterMonitorAchievementBuildComp}, '%')
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementContractAmount != null and query.compWaterMonitorAchievementContractAmount != ''">
+			and t_comp_water_monitor_achievement.contract_amount like concat('%', #{query.compWaterMonitorAchievementContractAmount}, '%')
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementContractDate != null">
+			and t_comp_water_monitor_achievement.contract_date = #{query.compWaterMonitorAchievementContractDate}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementContractDateMin != null and query.compWaterMonitorAchievementContractDateMax == null">
+			and t_comp_water_monitor_achievement.contract_date <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementContractDateMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementContractDateMin == null and query.compWaterMonitorAchievementContractDateMax != null">
+			and t_comp_water_monitor_achievement.contract_date <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementContractDateMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementContractDateMin != null and query.compWaterMonitorAchievementContractDateMax != null">
+			and t_comp_water_monitor_achievement.contract_date <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementContractDateMin} and t_comp_water_monitor_achievement.contract_date <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementContractDateMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementStartDate != null">
+			and t_comp_water_monitor_achievement.start_date = #{query.compWaterMonitorAchievementStartDate}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementStartDateMin != null and query.compWaterMonitorAchievementStartDateMax == null">
+			and t_comp_water_monitor_achievement.start_date <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementStartDateMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementStartDateMin == null and query.compWaterMonitorAchievementStartDateMax != null">
+			and t_comp_water_monitor_achievement.start_date <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementStartDateMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementStartDateMin != null and query.compWaterMonitorAchievementStartDateMax != null">
+			and t_comp_water_monitor_achievement.start_date <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementStartDateMin} and t_comp_water_monitor_achievement.start_date <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementStartDateMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementVersion != null">
+			and t_comp_water_monitor_achievement.version = #{query.compWaterMonitorAchievementVersion}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementVersionMin != null and query.compWaterMonitorAchievementVersionMax == null">
+			and t_comp_water_monitor_achievement.version <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementVersionMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementVersionMin == null and query.compWaterMonitorAchievementVersionMax != null">
+			and t_comp_water_monitor_achievement.version <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementVersionMin != null and query.compWaterMonitorAchievementVersionMax != null">
+			and t_comp_water_monitor_achievement.version <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementVersionMin} and t_comp_water_monitor_achievement.version <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementVersionMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCreateTime != null">
+			and t_comp_water_monitor_achievement.create_time = #{query.compWaterMonitorAchievementCreateTime}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCreateTimeMin != null and query.compWaterMonitorAchievementCreateTimeMax == null">
+			and t_comp_water_monitor_achievement.create_time <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementCreateTimeMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCreateTimeMin == null and query.compWaterMonitorAchievementCreateTimeMax != null">
+			and t_comp_water_monitor_achievement.create_time <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementCreateTimeMin != null and query.compWaterMonitorAchievementCreateTimeMax != null">
+			and t_comp_water_monitor_achievement.create_time <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementCreateTimeMin} and t_comp_water_monitor_achievement.create_time <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementCreateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementUpdateTime != null">
+			and t_comp_water_monitor_achievement.update_time = #{query.compWaterMonitorAchievementUpdateTime}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementUpdateTimeMin != null and query.compWaterMonitorAchievementUpdateTimeMax == null">
+			and t_comp_water_monitor_achievement.update_time <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementUpdateTimeMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementUpdateTimeMin == null and query.compWaterMonitorAchievementUpdateTimeMax != null">
+			and t_comp_water_monitor_achievement.update_time <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementUpdateTimeMin != null and query.compWaterMonitorAchievementUpdateTimeMax != null">
+			and t_comp_water_monitor_achievement.update_time <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementUpdateTimeMin} and t_comp_water_monitor_achievement.update_time <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementUpdateTimeMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementIsActive != null">
+			and t_comp_water_monitor_achievement.is_active = #{query.compWaterMonitorAchievementIsActive}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementIsActiveMin != null and query.compWaterMonitorAchievementIsActiveMax == null">
+			and t_comp_water_monitor_achievement.is_active <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementIsActiveMin}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementIsActiveMin == null and query.compWaterMonitorAchievementIsActiveMax != null">
+			and t_comp_water_monitor_achievement.is_active <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.compWaterMonitorAchievementIsActiveMin != null and query.compWaterMonitorAchievementIsActiveMax != null">
+			and t_comp_water_monitor_achievement.is_active <![CDATA[ >= ]]> #{query.compWaterMonitorAchievementIsActiveMin} and t_comp_water_monitor_achievement.is_active <![CDATA[ <= ]]> #{query.compWaterMonitorAchievementIsActiveMax}
+		</if>
+		<if test="query != null and query.companyCompType != null and query.companyCompType != ''">
+			and t_company.comp_type like concat('%', #{query.companyCompType}, '%')
+		</if>
+		<if test="query != null and query.companyIndustryType != null and query.companyIndustryType != ''">
+			and t_company.industry_type like concat('%', #{query.companyIndustryType}, '%')
+		</if>
+		<if test="query != null and query.companyCompName != null and query.companyCompName != ''">
+			and t_company.comp_name like concat('%', #{query.companyCompName}, '%')
+		</if>
+		
+        and
+        t_comp_water_monitor_achievement.comp_id = t_company.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="compWaterMonitorAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_monitor_achievement, t_company where t_comp_water_monitor_achievement.id = #{id} and
+        t_comp_water_monitor_achievement.comp_id = t_company.id
+    </select>
+
+    <select id="listAll" resultType="compWaterMonitorAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_monitor_achievement, t_company
+        where
+        t_comp_water_monitor_achievement.comp_id = t_company.id
+        order by t_comp_water_monitor_achievement.update_time desc, t_comp_water_monitor_achievement.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="compWaterMonitorAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_monitor_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_water_monitor_achievement.update_time desc, t_comp_water_monitor_achievement.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="compWaterMonitorAchievementCompanyDO">
+        select
+        <include refid="select_columns"/>
+        from t_comp_water_monitor_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_comp_water_monitor_achievement.update_time desc, t_comp_water_monitor_achievement.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_comp_water_monitor_achievement, t_company
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>
