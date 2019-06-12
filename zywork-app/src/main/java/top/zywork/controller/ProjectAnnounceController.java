@@ -9,14 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import top.zywork.common.BeanUtils;
-import top.zywork.common.BindingResultUtils;
-import top.zywork.common.StringUtils;
-import top.zywork.common.UploadUtils;
+import top.zywork.annotation.HideProperty;
+import top.zywork.common.*;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.UploadTypeEnum;
+import top.zywork.query.ProjectAnnounceProjectQuery;
 import top.zywork.query.ProjectAnnounceQuery;
 import top.zywork.service.ProjectAnnounceService;
 import top.zywork.service.UploadService;
@@ -25,6 +25,7 @@ import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectAnnounceVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -197,6 +198,18 @@ public class ProjectAnnounceController extends BaseController {
     @PostMapping("any/pager-cond")
     public ResponseStatusVO userListPageByCondition(@RequestBody ProjectAnnounceQuery projectAnnounceQuery) {
         return listPageByCondition(projectAnnounceQuery);
+    }
+
+    @PostMapping("user/pager-cond")
+    @HideProperty(url = "/projecannounce/user/pager-cond", properties = {"title"})
+    public ResponseStatusVO userListPageByCond(HttpServletRequest request, @RequestBody ProjectAnnounceQuery projectAnnounceQuery) {
+        ResponseStatusVO responseStatusVO = listPageByCondition(projectAnnounceQuery);
+        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+        if (vipFlag != null && ((Boolean) vipFlag)) {
+            return responseStatusVO;
+        }
+        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "userListPageByCond",
+                responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
     @Autowired

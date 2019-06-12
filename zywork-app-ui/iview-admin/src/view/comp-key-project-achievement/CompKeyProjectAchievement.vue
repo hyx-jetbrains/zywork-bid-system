@@ -43,7 +43,7 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="中标金额" prop="markMoneyDisplay">
+				<FormItem label="中标金额（万元）" prop="markMoneyDisplay">
 					<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
@@ -74,7 +74,7 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="中标金额" prop="markMoneyDisplay">
+				<FormItem label="中标金额（万元）" prop="markMoneyDisplay">
 					<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
@@ -321,7 +321,8 @@
 					compId: null,
 					projectName: null,
 					buildComp: null,
-					markMoney: null,
+          markMoney: null,
+          money: null,
 					markMoneyDisplay: null,
 					startDate: null,
 					endDate: null,
@@ -514,12 +515,12 @@
 							sortable: true
 						},
 						{
-							title: '中标金额',
+							title: '中标金额（万元）',
 							key: 'markMoney',
 							minWidth: 120,
 							sortable: true,
 							render: (h, params) => {
-								let text = params.row.markMoney/100;
+								let text = params.row.markMoney;
 								return h('span', '￥'+text)
 							}
 						},
@@ -737,15 +738,16 @@
 			  this.$refs.CompanyListSingle.confirmSelection()
 			},
 			setPrice(type) {
-				if (type === 0) {
-					if (this.form.markMoney !== null && this.form.markMoney !== 0) {
-						this.form.markMoneyDisplay = this.form.markMoney / 100
-					}
-				} else if (type === 1) {
-					if (this.form.markMoneyDisplay !== null && this.form.markMoneyDisplay !== 0) {
-						this.form.markMoney = this.form.markMoneyDisplay * 100
-					}
-				}
+				// if (type === 0) {
+				// 	if (this.form.markMoney !== null && this.form.markMoney !== 0) {
+				// 		this.form.markMoneyDisplay = this.form.markMoney / 100
+				// 	}
+				// } else if (type === 1) {
+				// 	if (this.form.markMoneyDisplay !== null && this.form.markMoneyDisplay !== 0) {
+				// 		this.form.markMoney = this.form.markMoneyDisplay * 100
+				// 	}
+        // }
+        this.form.money = this.from.markMoney
 			},
 			add() {
 				this.setPrice(1)

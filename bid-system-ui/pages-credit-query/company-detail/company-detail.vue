@@ -104,14 +104,14 @@
 								<zywork-icon type="iconjiaozaoshi" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 								<view>
 									<view class="zy-disable-flex">
-										<text class="zy-text-bold" style="margin-right: 20upx;">{{item.name}}</text>
-										<zywork-icon v-if="item.gender === 0" type="iconyincang" color="#BFBFBF" size="20" />
-										<zywork-icon v-else-if="item.gender === 1" type="iconnan" color="#108EE9" size="20" />
-										<zywork-icon v-else-if="item.gender === 2" type="iconnv" color="#dd524d" size="20" />
+										<text class="zy-text-bold" style="margin-right: 20upx;">{{item.compBuilderName}}</text>
+										<zywork-icon v-if="item.compBuilderGender === '0'" type="iconyincang" color="#BFBFBF" size="20" />
+										<zywork-icon v-else-if="item.compBuilderGender === '1'" type="iconnan" color="#108EE9" size="20" />
+										<zywork-icon v-else-if="item.compBuilderGender === '2'" type="iconnv" color="#dd524d" size="20" />
 									</view>
 									<view class="zy-text-mini zy-text-info">
 										<text class="zy-text-mini zy-text-info">
-											{{item.createTime}}
+											{{item.companyCompName}}
 										</text>
 									</view>
 								</view>
@@ -120,8 +120,9 @@
 							<view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
-									<view v-if="item.regNum != null && item.regNum != '' && item.regNum != undefined" class="zy-text-info">
-										{{item.regNum}}
+									<view v-if="item.compBuilderRegNum != null && item.compBuilderRegNum != '' && item.compBuilderRegNum != undefined"
+									 class="zy-text-info">
+										{{item.compBuilderRegNum}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -129,8 +130,9 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
-									<view v-if="item.majorLevel != null && item.majorLevel != '' && item.majorLevel != undefined" class="zy-text-info">
-										{{item.majorLevel}}
+									<view v-if="item.compBUilderMajorLevel != null && item.compBUilderMajorLevel != '' && item.compBUilderMajorLevel != undefined"
+									 class="zy-text-info">
+										{{item.compBUilderMajorLevel}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -154,10 +156,12 @@
 							<view class="zy-disable-flex">
 								<zywork-icon type="iconrongyu" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 								<view>
-									<text class="zy-text-bold">企业资质</text>
+									<text class="zy-text-bold zy-text-info" @click="validText(item.companyCompName)" :class="item.companyCompName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+										{{item.companyCompName}}
+									</text>
 									<view class="zy-text-mini zy-text-info">
 										<text class="zy-text-mini zy-text-info">
-											{{item.createTime}}
+											{{item.companyIndustryType}}
 										</text>
 									</view>
 								</view>
@@ -166,8 +170,8 @@
 							<view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">证件号码:</view>
-									<view v-if="item.certificateNum != ''" @click="validText(item.certificateNum)" class="zy-text-info" :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-										{{item.certificateNum}}
+									<view v-if="item.compAptitudeCertificateNum != ''">
+										{{item.compAptitudeCertificateNum}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -175,9 +179,8 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">资质详情:</view>
-									<view v-if="item.certificateDetail != ''" @click="validText(item.certificateDetail)" class="zy-text-info"
-									 :class="item.certificateDetail === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-										{{item.certificateDetail}}
+									<view v-if="item.compAptitudeCertificateDetail != ''">
+										{{item.compAptitudeCertificateDetail}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -195,7 +198,7 @@
 					<view>
 						企业中标业绩
 					</view>
-					<view class="zy-disable-flex-right">
+					<view class="zy-disable-flex-right" style="margin-right: 0upx;">
 						<view class="">
 							<picker @change="onClickAchievementItem" :value="achievementOpts.current" :range="achievementOpts.items">
 								<view class="zy-disable-flex">
@@ -209,37 +212,36 @@
 				<view class="zy-page-list zy-page-card" v-if="achievementList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in achievementList" :key="index">
 						<view @click="toAchievementDetail(item)">
-							<!-- 头部 -->
-							<view class="zy-disable-flex">
-								<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
-								<view>
-									<view>
-										<text class="zy-text-bold">{{item.projectName}}</text>
-									</view>
-									<view class="zy-text-mini zy-text-info">
-										<text class="zy-text-mini zy-text-info">
-											{{item.createTime}}
-										</text>
-									</view>
-								</view>
-							</view>
-							<!-- 内容部分 -->
 							<view v-if="achievementOpts.current == 0">
 								<!-- 房建业绩 -->
 								<view class="zy-disable-flex">
+									<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+									<view>
+										<view>
+											<text class="zy-text-bold" @click="validText(item.compHouseAchievementProjectName)" :class="item.compHouseAchievementProjectName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.compHouseAchievementProjectName}}
+											</text>
+										</view>
+										<view class="zy-text-mini zy-text-info">
+											<text class="zy-text-mini zy-text-info" @click="validText(item.companyCompName)" :class="item.companyCompName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.companyCompName}}
+											</text>
+										</view>
+									</view>
+								</view>
+								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">注册建造师:</view>
-									<view v-if="item.builderName != null && item.builderName != '' && item.builderName != undefined" class="zy-text-info">
-										{{item.builderName}}
+									<view v-if="item.compHouseAchievementBuilderName != ''" class="zy-text-info">
+										{{item.compHouseAchievementBuilderName}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
-									<view v-if="item.markMoney != ''" class="zy-text-info"
-										:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-										{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
+									<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
+									<view v-if="item.compHouseAchievementName != ''" class="zy-text-info">
+										{{item.compHouseAchievementName}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -247,8 +249,143 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">建设单位:</view>
-									<view v-if="item.buildComp != null && item.buildComp != '' && item.buildComp != undefined" class="zy-text-info">
-										{{item.buildComp}}
+									<view v-if="item.compHouseAchievementBuildComp != ''" class="zy-text-info">
+										{{item.compHouseAchievementBuildComp}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+							</view>
+							<view v-else-if="achievementOpts.current == 1">
+								<!-- 水利业绩 -->
+								<view class="zy-disable-flex">
+									<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+									<view>
+										<view>
+											<text class="zy-text-bold" @click="validText(item.compWaterAchievementProjectName)" :class="item.compWaterAchievementProjectName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.compWaterAchievementProjectName}}
+											</text>
+										</view>
+										<view class="zy-text-mini zy-text-info">
+											<text class="zy-text-mini zy-text-info" @click="validText(item.companyCompName)" :class="item.companyCompName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.companyCompName}}
+											</text>
+										</view>
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
+									<view v-if="item.compWaterAchievementContractAmount != ''" class="zy-text-info">
+										{{item.compWaterAchievementContractAmount}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">开工时间:</view>
+									<view v-if="item.compWaterAchievementStartDate != ''" class="zy-text-info">
+										{{item.compWaterAchievementStartDate}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">竣工时间:</view>
+									<view v-if="item.compWaterAchievementEndDate != ''" class="zy-text-info">
+										{{item.compWaterAchievementEndDate}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+							</view>
+							<view v-else-if="achievementOpts.current == 2">
+								<!-- 交通业绩 -->
+								<view class="zy-disable-flex">
+									<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+									<view>
+										<view>
+											<text class="zy-text-bold" @click="validText(item.compTrafficAchievementProjectName)" :class="item.compTrafficAchievementProjectName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.compTrafficAchievementProjectName}}
+											</text>
+										</view>
+										<view class="zy-text-mini zy-text-info">
+											<text class="zy-text-mini zy-text-info" @click="validText(item.companyCompName)" :class="item.companyCompName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.companyCompName}}
+											</text>
+										</view>
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
+									<view v-if="item.compTrafficAchievementContractAmount != ''" class="zy-text-info">
+										{{item.compTrafficAchievementContractAmount}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">开工时间:</view>
+									<view v-if="item.compTrafficAchievementStartDate != ''" class="zy-text-info">
+										{{item.compTrafficAchievementStartDate}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">竣工时间:</view>
+									<view v-if="item.compTrafficAchievementEndDate != ''" class="zy-text-info">
+										{{item.compTrafficAchievementEndDate}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+							</view>
+							<view v-else-if="achievementOpts.current == 3">
+								<!-- 重点工程业绩 -->
+								<view class="zy-disable-flex">
+									<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+									<view>
+										<view>
+											<text class="zy-text-bold" @click="validText(item.compKeyProjectAchievementProjectName)" :class="item.compKeyProjectAchievementProjectName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.compKeyProjectAchievementProjectName}}
+											</text>
+										</view>
+										<view class="zy-text-mini zy-text-info">
+											<text class="zy-text-mini zy-text-info" @click="validText(item.companyCompName)" :class="item.companyCompName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.companyCompName}}
+											</text>
+										</view>
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
+									<view v-if="item.compKeyProjectAchievementMarkMoney != ''" class="zy-text-info">
+										{{item.compKeyProjectAchievementMarkMoney}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">开工时间:</view>
+									<view v-if="item.compKeyProjectAchievementStartDate != ''" class="zy-text-info">
+										{{item.compKeyProjectAchievementStartDate}}
+									</view>
+									<view v-else class="zy-text-info">
+										暂无
+									</view>
+								</view>
+								<view class="zy-disable-flex">
+									<view class="zy-text-info zy-text-bold zy-content-label">竣工时间:</view>
+									<view v-if="item.compKeyProjectAchievementEndDate != ''" class="zy-text-info">
+										{{item.compKeyProjectAchievementEndDate}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -258,9 +395,24 @@
 							<view v-else-if="achievementOpts.current == 4">
 								<!-- 水利监理业绩 -->
 								<view class="zy-disable-flex">
+									<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+									<view>
+										<view>
+											<text class="zy-text-bold" @click="validText(item.compWaterMonitorAchievementProjectName)" :class="item.compWaterMonitorAchievementProjectName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.compWaterMonitorAchievementProjectName}}
+											</text>
+										</view>
+										<view class="zy-text-mini zy-text-info">
+											<text class="zy-text-mini zy-text-info" @click="validText(item.companyCompName)" :class="item.companyCompName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.companyCompName}}
+											</text>
+										</view>
+									</view>
+								</view>
+								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">项目类型:</view>
-									<view v-if="item.projectType != null && item.projectType != '' && item.projectType != undefined" class="zy-text-info">
-										{{item.projectType}}
+									<view v-if="item.compWaterMonitorAchievementProjectType != ''" class="zy-text-info">
+										{{item.compWaterMonitorAchievementProjectType}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -268,9 +420,8 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-									<view v-if="item.contractAmount != ''" class="zy-text-info"
-										:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-										{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+									<view v-if="item.contractAmount != ''" class="zy-text-info">
+										{{item.compWaterMonitorAchievementContractAmount}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -278,8 +429,8 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">开工时间:</view>
-									<view v-if="item.startDate != null && item.startDate != '' && item.startDate != undefined" class="zy-text-info">
-										{{item.startDate}}
+									<view v-if="item.compWaterMonitorAchievementStartDate != ''" class="zy-text-info">
+										{{item.compWaterMonitorAchievementStartDate}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -289,9 +440,24 @@
 							<view v-else-if="achievementOpts.current == 5">
 								<!-- 水利勘查设计业绩 -->
 								<view class="zy-disable-flex">
+									<zywork-icon type="iconicon-test2" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
+									<view>
+										<view>
+											<text class="zy-text-bold" @click="validText(item.compWaterDeviseAchievementProjectName)" :class="item.compWaterDeviseAchievementProjectName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.compWaterDeviseAchievementProjectName}}
+											</text>
+										</view>
+										<view class="zy-text-mini zy-text-info">
+											<text class="zy-text-mini zy-text-info" @click="validText(item.companyCompName)" :class="item.companyCompName === '请购买VIP服务' ? 'zy-detail-phone' : ''">
+												{{item.companyCompName}}
+											</text>
+										</view>
+									</view>
+								</view>
+								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">项目类型:</view>
-									<view v-if="item.tenderingComp != null && item.tenderingComp != '' && item.tenderingComp != undefined" class="zy-text-info">
-										{{item.tenderingComp}}
+									<view v-if="item.compWaterDeviseAchievementTenderingComp != ''" class="zy-text-info">
+										{{item.compWaterDeviseAchievementTenderingComp}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -299,9 +465,8 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-									<view v-if="item.contractAmount != ''"
-										class="zy-text-info" :class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-										{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+									<view v-if="item.compWaterDeviseAchievementContractAmount != ''" class="zy-text-info">
+										{{item.compWaterDeviseAchievementContractAmount}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -309,55 +474,15 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
-									<view v-if="item.name != null && item.name != '' && item.name != undefined" class="zy-text-info">
-										{{item.name}}
+									<view v-if="item.compWaterDeviseAchievementName != ''" class="zy-text-info">
+										{{item.compWaterDeviseAchievementName}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
 									</view>
 								</view>
 							</view>
-							<view v-else>
-								<!-- 水利业绩和交通业绩和重点工程 -->
-								<view v-if="achievementOpts.current == 3" class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
-									<view v-if="item.markMoney != ''" class="zy-text-info"
-										:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-										{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
-									</view>
-									<view v-else class="zy-text-info">
-										暂无
-									</view>
-								</view>
-								<view v-else class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
-									<view v-if="item.contractAmount != ''"
-									 class="zy-text-info" :class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-										{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
-									</view>
-									<view v-else class="zy-text-info">
-										暂无
-									</view>
-								</view>
-								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">开工时间:</view>
-									<view v-if="item.startDate != null && item.startDate != '' && item.startDate != undefined" class="zy-text-info">
-										{{item.startDate}}
-									</view>
-									<view v-else class="zy-text-info">
-										暂无
-									</view>
-								</view>
-								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">竣工时间:</view>
-									<view v-if="item.endDate != null && item.endDate != '' && item.endDate != undefined" class="zy-text-info">
-										{{item.endDate}}
-									</view>
-									<view v-else class="zy-text-info">
-										暂无
-									</view>
-								</view>
-							</view>
+
 						</view>
 					</view>
 				</view>
@@ -426,7 +551,10 @@
 	import {
 		callPhone,
 		validText,
-		nullToStr
+		nullToStr,
+		showInfoToast,
+		USER_FLAG,
+		USER_FLAG_VIP,
 	} from '@/common/util.js'
 
 	/** 企业建造师信息 */
@@ -448,14 +576,14 @@
 				item: {},
 				currTabIndex: 0,
 				urls: {
-					houseAchievementUrl: '/comp-house-achievement/user/pager-cond',
-					waterAchievementUrl: '/comp-water-achievement/user/pager-cond',
-					trafficAchievementUrl: '/comp-traffic-achievement/user/pager-cond',
-					keyProjectAchievementUrl: '/comp-key-projecachievement/user/pager-cond',
-					waterMonitorAchievementUrl: '/comp-water-monitor-achievement/user/pager-cond',
-					waterDeviseAchievementUrl: '/comp-water-devise-achievement/user/pager-cond',
-					builderUrl: '/comp-builder/any/pager-cond',
-					aptitudeUrl: '/comp-aptitude/user/pager-cond',
+					houseAchievementUrl: '/CompHouseAchievementCompany/user/pager-cond',
+					waterAchievementUrl: '/CompWaterAchievementCompany/user/pager-cond',
+					trafficAchievementUrl: '/CompTrafficAchievementCompany/user/pager-cond',
+					keyProjectAchievementUrl: '/CompKeyProjectAchievementCompany/user/pager-cond',
+					waterMonitorAchievementUrl: '/CompWaterMonitorAchievementCompany/user/pager-cond',
+					waterDeviseAchievementUrl: '/CompWaterDeviseAchievementCompany/user/pager-cond',
+					builderUrl: '/CompBuilderCompany/any/pager-cond',
+					aptitudeUrl: '/CompAptitudeCompany/user/pager-cond',
 					personnelUrl: '/comp-personnel/any/pager-cond'
 				},
 				pager: {
@@ -484,10 +612,15 @@
 			} catch (error) {
 				this.item = JSON.parse(payload);
 			}
-			this.pager.compId = this.item.id;
+			this.initCompId();
 			this.tapTab(this.item.tabIndex);
 		},
 		methods: {
+			initCompId() {
+				this.pager.compHouseAchievementId = this.pager.compKeyProjectAchievementCompId = this.pager.compTrafficAchievementCompId =
+					this.pager.compWaterAchievementCompId = this.pager.compWaterAchievementCompId = this.pager.compWaterMonitorAchievementCompId =
+					this.pager.compAptitudeCompId = this.pager.compBuilderCompId = this.pager.compId = this.item.id;
+			},
 			/** 切换标签页 */
 			tapTab(type) {
 				this.currTabIndex = type;
@@ -507,7 +640,42 @@
 			},
 			/** 查看企业业绩详情 */
 			toAchievementDetail(item) {
+				let userFlag = uni.getStorageSync(USER_FLAG);
+				if (userFlag != USER_FLAG_VIP) {
+					showInfoToast("只有VIP用户才能查看");
+					return;
+				}
 				item.achievementType = this.achievementOpts.current;
+				let projectName = '';
+				let compId = '';
+				const index = this.achievementOpts.current;
+				if (index == 0) {
+					// 房屋业绩
+					projectName = item.compHouseAchievementProjectName;
+					compId = item.compHouseAchievementCompId;
+				} else if (index == 1) {
+					// 水利业绩
+					projectName = item.compWaterAchievementProjectName
+					compId = item.compWaterAchievementCompId;
+				} else if (index == 2) {
+					// 交通业绩
+					projectName = item.compTrafficAchievementProjectName
+					compId = item.compTrafficAchievementCompId;
+				} else if (index == 3) {
+					// 重点工程业绩
+					projectName = item.compKeyProjectAchievementProjectName
+					compId = item.compKeyProjectAchievementCompId;
+				} else if (index == 4) {
+					// 水利监理业绩
+					projectName = item.compWaterMonitorAchievementProjectName
+					compId = item.compWaterMonitorAchievementCompId;
+				} else if (index == 5) {
+					// 水利勘查设计业绩
+					projectName = item.compWaterDeviseAchievementProjectName
+					compId = item.compWaterDeviseAchievementCompId;
+				}
+				item.projectName = projectName;
+				item.compId = compId;
 				uni.navigateTo({
 					url: '/pages-credit-query/company-achievement-detail/company-achievement-detail?itemData=' + encodeURIComponent(
 						JSON.stringify(item))

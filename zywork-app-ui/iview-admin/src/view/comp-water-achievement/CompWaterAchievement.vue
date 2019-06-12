@@ -43,7 +43,7 @@
 				<FormItem label="项目负责人" prop="name">
 					<Input v-model="form.name" placeholder="请输入项目负责人" />
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmountDisplay">
+				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
 					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
@@ -74,7 +74,7 @@
 				<FormItem label="项目负责人" prop="name">
 					<Input v-model="form.name" placeholder="请输入项目负责人" />
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmountDisplay">
+				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
 					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
@@ -320,7 +320,8 @@
 					id: null,
 					compId: null,
 					projectName: null,
-					name: null,
+          name: null,
+          money: null,
 					contractAmount: null,
 					contractAmountDisplay: null,
 					startDate: null,
@@ -514,12 +515,12 @@
 							sortable: true
 						},
 						{
-							title: '合同金额',
+							title: '合同金额（万元）',
 							key: 'contractAmount',
 							minWidth: 120,
 							sortable: true,
 							render: (h, params) => {
-								let text = params.row.contractAmount/100;
+								let text = params.row.contractAmount;
 								return h('span', '￥'+text)
 							}
 						},
@@ -737,15 +738,16 @@
 			  this.$refs.CompanyListSingle.confirmSelection()
 			},
 			setPrice(type) {
-				if (type === 0) {
-					if (this.form.contractAmount !== null && this.form.contractAmount !== 0) {
-						this.form.contractAmountDisplay = this.form.contractAmount / 100
-					}
-				} else if (type === 1) {
-					if (this.form.contractAmountDisplay !== null && this.form.contractAmountDisplay !== 0) {
-						this.form.contractAmount = this.form.contractAmountDisplay * 100
-					}
-				}
+				// if (type === 0) {
+				// 	if (this.form.contractAmount !== null && this.form.contractAmount !== 0) {
+				// 		this.form.contractAmountDisplay = this.form.contractAmount / 100
+				// 	}
+				// } else if (type === 1) {
+				// 	if (this.form.contractAmountDisplay !== null && this.form.contractAmountDisplay !== 0) {
+				// 		this.form.contractAmount = this.form.contractAmountDisplay * 100
+				// 	}
+        // }
+        this.from.money = this.form.contractAmount
 			},
 			add() {
 				this.setPrice(1)

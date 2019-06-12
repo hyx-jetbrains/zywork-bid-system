@@ -5,13 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.ReflectUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.query.CompKeyProjectAchievementCompanyQuery;
+import top.zywork.query.CompKeyProjectAchievementQuery;
 import top.zywork.service.CompKeyProjectAchievementCompanyService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.CompKeyProjectAchievementCompanyVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * CompKeyProjectAchievementCompanyController控制器类<br/>
@@ -59,6 +65,18 @@ public class CompKeyProjectAchievementCompanyController extends BaseController {
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), CompKeyProjectAchievementCompanyVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    @PostMapping("user/pager-cond")
+    @HideProperty(url = "/CompKeyProjectAchievementCompany/user/pager-cond", properties = {"companyCompName", "compKeyProjectAchievementProjectName"})
+    public ResponseStatusVO userListPageByCondition(HttpServletRequest request, @RequestBody CompKeyProjectAchievementCompanyQuery compKeyProjectAchievementCompanyQuery) {
+        ResponseStatusVO responseStatusVO = listPageByCondition(compKeyProjectAchievementCompanyQuery);
+        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+        if (vipFlag != null && ((Boolean) vipFlag)) {
+            return responseStatusVO;
+        }
+        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "userListPageByCondition",
+                responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
     @Autowired

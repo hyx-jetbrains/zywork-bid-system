@@ -64,6 +64,16 @@ public class CompKeyProjectAchievementCompanyVO extends BaseVO {
 	@NotBlank(message = "此项是必须项")
 	@Size(min = 1, max = 20, message = "必须是1-20个字符")
 	private String companyCompName;
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
 	
     public CompKeyProjectAchievementCompanyVO () {}
 

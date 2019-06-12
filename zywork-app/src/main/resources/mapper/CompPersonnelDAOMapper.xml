@@ -209,7 +209,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, comp_id as compId, name as name, job_title as jobTitle, job_detail as jobDetail, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+       id as id, comp_id as compId, name as name, job_title as jobTitle, job_detail as jobDetail, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">

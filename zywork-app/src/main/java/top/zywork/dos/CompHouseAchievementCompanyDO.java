@@ -107,8 +107,18 @@ public class CompHouseAchievementCompanyDO extends BaseDO {
 	private String companyIndustryType;
 	// 企业名称
 	private String companyCompName;
-	
-    public CompHouseAchievementCompanyDO () {}
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+
+	public CompHouseAchievementCompanyDO () {}
 
     public CompHouseAchievementCompanyDO (Long compHouseAchievementId, Long compHouseAchievementCompId, String compHouseAchievementProjectName, String compHouseAchievementBuilderName, String compHouseAchievementMarkMoney, String compHouseAchievementBuildScale, String compHouseAchievementRegionType, String compHouseAchievementMarkComp, String compHouseAchievementBuildComp, String compHouseAchievementProjectAddr, Date compHouseAchievementContractDate, Date compHouseAchievementMarkDate, String compHouseAchievementName, String compHouseAchievementCertificateNum, String compHouseAchievementConstructors, String compHouseAchievementConstructorsCertificateNum, String compHouseAchievementConstructorsIdNum, String compHouseAchievementQualityWorker, String compHouseAchievementQualityWorkerCertificateNum, String compHouseAchievementQualityWorkerIdNum, String compHouseAchievementSecurityOfficer, String compHouseAchievementSecurityOfficerCertificateNum, String compHouseAchievementSecurityOfficerIdNum, String compHouseAchievementStandardWorker, String compHouseAchievementStandardWorkerCertificateNum, String compHouseAchievementStandardWorkerIdNum, String compHouseAchievementMaterialMan, String compHouseAchievementMaterialManCertificateNum, String compHouseAchievementMaterialManIdNum, String compHouseAchievementMechanic, String compHouseAchievementMechanicCertificateNum, String compHouseAchievementMechanicIdNum, String compHouseAchievementLabors, String compHouseAchievementLaborsCertificateNum, String compHouseAchievementLaborsIdNum, String compHouseAchievementDataClerk, String compHouseAchievementDataClerkCertificateNum, String compHouseAchievementDataClerkIdNum, Integer compHouseAchievementVersion, Date compHouseAchievementCreateTime, Date compHouseAchievementUpdateTime, Byte compHouseAchievementIsActive, String companyCompType, String companyIndustryType, String companyCompName) {
         this.compHouseAchievementId = compHouseAchievementId;

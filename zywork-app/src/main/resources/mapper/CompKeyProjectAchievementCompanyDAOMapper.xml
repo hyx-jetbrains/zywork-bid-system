@@ -5,10 +5,19 @@
 <mapper namespace="top.zywork.dao.CompKeyProjectAchievementCompanyDAO">
 
     <sql id="select_columns">
-        t_comp_key_project_achievement.id as compKeyProjectAchievementId, t_comp_key_project_achievement.comp_id as compKeyProjectAchievementCompId, t_comp_key_project_achievement.project_name as compKeyProjectAchievementProjectName, t_comp_key_project_achievement.build_comp as compKeyProjectAchievementBuildComp, t_comp_key_project_achievement.mark_money as compKeyProjectAchievementMarkMoney, t_comp_key_project_achievement.start_date as compKeyProjectAchievementStartDate, t_comp_key_project_achievement.end_date as compKeyProjectAchievementEndDate, t_comp_key_project_achievement.version as compKeyProjectAchievementVersion, t_comp_key_project_achievement.create_time as compKeyProjectAchievementCreateTime, t_comp_key_project_achievement.update_time as compKeyProjectAchievementUpdateTime, t_comp_key_project_achievement.is_active as compKeyProjectAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
+        t_comp_key_project_achievement.money as money, t_comp_key_project_achievement.id as compKeyProjectAchievementId, t_comp_key_project_achievement.comp_id as compKeyProjectAchievementCompId, t_comp_key_project_achievement.project_name as compKeyProjectAchievementProjectName, t_comp_key_project_achievement.build_comp as compKeyProjectAchievementBuildComp, t_comp_key_project_achievement.mark_money as compKeyProjectAchievementMarkMoney, t_comp_key_project_achievement.start_date as compKeyProjectAchievementStartDate, t_comp_key_project_achievement.end_date as compKeyProjectAchievementEndDate, t_comp_key_project_achievement.version as compKeyProjectAchievementVersion, t_comp_key_project_achievement.create_time as compKeyProjectAchievementCreateTime, t_comp_key_project_achievement.update_time as compKeyProjectAchievementUpdateTime, t_comp_key_project_achievement.is_active as compKeyProjectAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
     </sql>
 
     <sql id="query_where_clause">
+		<if test="query != null and query.money != null">
+			and t_comp_key_project_achievement.money = #{query.money}
+		</if>
+		<if test="query != null and query.moneyMin != null">
+			and t_comp_key_project_achievement.money <![CDATA[ >= ]]> #{query.moneyMin}
+		</if>
+		<if test="query != null and query.moneyMax != null">
+			and t_comp_key_project_achievement.money <![CDATA[ <= ]]> #{query.moneyMax}
+		</if>
         <if test="query != null and query.compKeyProjectAchievementId != null">
 			and t_comp_key_project_achievement.id = #{query.compKeyProjectAchievementId}
 		</if>

@@ -144,6 +144,16 @@ public class CompHouseAchievementVO extends BaseVO {
 	// 是否激活
 	@NotNull(message = "此项是必须项")
 	private Byte isActive;
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
 	
     public CompHouseAchievementVO () {}
 

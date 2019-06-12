@@ -60,6 +60,16 @@ public class CompTrafficAchievementVO extends BaseVO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
 	
     public CompTrafficAchievementVO () {}
 

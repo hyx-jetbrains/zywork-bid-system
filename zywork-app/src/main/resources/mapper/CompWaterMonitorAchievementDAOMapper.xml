@@ -263,10 +263,19 @@
     </update>
 
     <sql id="select_columns">
-        id as id, comp_id as compId, project_name as projectName, project_type as projectType, build_comp as buildComp, contract_amount as contractAmount, contract_date as contractDate, start_date as startDate, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        money as money, id as id, comp_id as compId, project_name as projectName, project_type as projectType, build_comp as buildComp, contract_amount as contractAmount, contract_date as contractDate, start_date as startDate, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
+		<if test="query != null and query.money != null">
+			and money = #{query.money}
+		</if>
+		<if test="query != null and query.moneyMin != null">
+			and money <![CDATA[ >= ]]> #{query.moneyMin}
+		</if>
+		<if test="query != null and query.moneyMax != null">
+			and money <![CDATA[ <= ]]> #{query.moneyMax}
+		</if>
         <if test="query != null and query.id != null">
 			and id = #{query.id}
 		</if>

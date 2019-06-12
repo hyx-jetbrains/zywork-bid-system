@@ -4,7 +4,7 @@
 			<view class="zy-detail-card-title zy-text-bold zy-text-big">
 				{{item.title}}
 			</view>
-			<image :src="item.url"></image>
+			<image :src="item.url" style="width: 100%;"></image>
 			<view v-html="item.content"></view>
 			<view class="zy-text-info zy-detail-card-time" v-text="item.createTime"></view>
 		</view>

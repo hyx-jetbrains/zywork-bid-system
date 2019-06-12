@@ -5,10 +5,19 @@
 <mapper namespace="top.zywork.dao.CompWaterDeviseAchievementCompanyDAO">
 
     <sql id="select_columns">
-        t_comp_water_devise_achievement.id as compWaterDeviseAchievementId, t_comp_water_devise_achievement.comp_id as compWaterDeviseAchievementCompId, t_comp_water_devise_achievement.project_name as compWaterDeviseAchievementProjectName, t_comp_water_devise_achievement.tendering_comp as compWaterDeviseAchievementTenderingComp, t_comp_water_devise_achievement.build_comp as compWaterDeviseAchievementBuildComp, t_comp_water_devise_achievement.mark_date as compWaterDeviseAchievementMarkDate, t_comp_water_devise_achievement.contract_amount as compWaterDeviseAchievementContractAmount, t_comp_water_devise_achievement.name as compWaterDeviseAchievementName, t_comp_water_devise_achievement.version as compWaterDeviseAchievementVersion, t_comp_water_devise_achievement.create_time as compWaterDeviseAchievementCreateTime, t_comp_water_devise_achievement.update_time as compWaterDeviseAchievementUpdateTime, t_comp_water_devise_achievement.is_active as compWaterDeviseAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
+        t_comp_water_devise_achievement.money as money, t_comp_water_devise_achievement.id as compWaterDeviseAchievementId, t_comp_water_devise_achievement.comp_id as compWaterDeviseAchievementCompId, t_comp_water_devise_achievement.project_name as compWaterDeviseAchievementProjectName, t_comp_water_devise_achievement.tendering_comp as compWaterDeviseAchievementTenderingComp, t_comp_water_devise_achievement.build_comp as compWaterDeviseAchievementBuildComp, t_comp_water_devise_achievement.mark_date as compWaterDeviseAchievementMarkDate, t_comp_water_devise_achievement.contract_amount as compWaterDeviseAchievementContractAmount, t_comp_water_devise_achievement.name as compWaterDeviseAchievementName, t_comp_water_devise_achievement.version as compWaterDeviseAchievementVersion, t_comp_water_devise_achievement.create_time as compWaterDeviseAchievementCreateTime, t_comp_water_devise_achievement.update_time as compWaterDeviseAchievementUpdateTime, t_comp_water_devise_achievement.is_active as compWaterDeviseAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
     </sql>
 
     <sql id="query_where_clause">
+		<if test="query != null and query.money != null">
+			and t_comp_water_devise_achievement.money = #{query.money}
+		</if>
+		<if test="query != null and query.moneyMin != null">
+			and t_comp_water_devise_achievement.money <![CDATA[ >= ]]> #{query.moneyMin}
+		</if>
+		<if test="query != null and query.moneyMax != null">
+			and t_comp_water_devise_achievement.money <![CDATA[ <= ]]> #{query.moneyMax}
+		</if>
         <if test="query != null and query.compWaterDeviseAchievementId != null">
 			and t_comp_water_devise_achievement.id = #{query.compWaterDeviseAchievementId}
 		</if>

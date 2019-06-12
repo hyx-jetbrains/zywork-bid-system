@@ -34,6 +34,9 @@
 		createAppointment,
 		getExpertQuesTionTypeByUserId
 	} from '@/common/user-center.js'
+	import {
+		showInfoToast
+	} from '@/common/util.js'
 	export default {
 		components: {
 			uniTag
@@ -67,6 +70,10 @@
 			},
 			// 咨询
 			addAppointment() {
+				if (this.consultDesc === '' || this.consultDesc === null || this.consultDesc === undefined) {
+					showInfoToast('请输入质询内容')
+					return;
+				}
 				createAppointment(this)
 			},
 		}

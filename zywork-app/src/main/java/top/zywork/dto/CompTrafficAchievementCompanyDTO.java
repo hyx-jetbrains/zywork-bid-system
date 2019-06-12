@@ -51,6 +51,16 @@ public class CompTrafficAchievementCompanyDTO extends BaseDTO {
 	private String companyIndustryType;
 	// 企业名称
 	private String companyCompName;
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
 	
     public CompTrafficAchievementCompanyDTO () {}
 

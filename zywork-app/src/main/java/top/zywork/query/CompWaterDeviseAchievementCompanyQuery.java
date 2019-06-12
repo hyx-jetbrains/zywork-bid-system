@@ -86,6 +86,36 @@ public class CompWaterDeviseAchievementCompanyQuery extends PageQuery {
 	private String companyIndustryType;
 	// 企业名称
 	private String companyCompName;
+	// 金额 （最小值）
+	private BigDecimal moneyMin;
+	// 金额 （最大值）
+	private BigDecimal moneyMax;
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoneyMin() {
+		return moneyMin;
+	}
+
+	public void setMoneyMin(BigDecimal moneyMin) {
+		this.moneyMin = moneyMin;
+	}
+
+	public BigDecimal getMoneyMax() {
+		return moneyMax;
+	}
+
+	public void setMoneyMax(BigDecimal moneyMax) {
+		this.moneyMax = moneyMax;
+	}
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
 	
     public CompWaterDeviseAchievementCompanyQuery () {}
 

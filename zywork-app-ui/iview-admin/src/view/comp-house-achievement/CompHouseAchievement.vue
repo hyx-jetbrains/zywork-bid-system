@@ -62,7 +62,7 @@
 				</Row>
 				<Row>
 					<i-col span="12">
-						<FormItem label="中标金额" prop="markMoneyDisplay">
+						<FormItem label="中标金额（元）" prop="markMoneyDisplay">
 							<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 						</FormItem>
 					</i-col>
@@ -116,7 +116,6 @@
 						<FormItem label="项目负责人" prop="name">
 							<Input v-model="form.name" placeholder="请输入项目负责人" />
 						</FormItem>
-					</i-col>
 					</i-col>
 					<i-col span="12">
 						<FormItem label="项目负责人证书号" prop="certificateNum">
@@ -298,7 +297,7 @@
 				</Row>
 				<Row>
 					<i-col span="12">
-						<FormItem label="中标金额" prop="markMoneyDisplay">
+						<FormItem label="中标金额（元）" prop="markMoneyDisplay">
 							<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
 						</FormItem>
 					</i-col>
@@ -352,7 +351,6 @@
 						<FormItem label="项目负责人" prop="name">
 							<Input v-model="form.name" placeholder="请输入项目负责人" />
 						</FormItem>
-					</i-col>
 					</i-col>
 					<i-col span="12">
 						<FormItem label="项目负责人证书号" prop="certificateNum">
@@ -863,7 +861,8 @@
 					compId: null,
 					projectName: null,
 					builderName: null,
-					markMoney: null,
+          markMoney: null,
+          money: null,
 					markMoneyDisplay: null,
 					buildScale: null,
 					regionType: null,
@@ -1328,12 +1327,12 @@
 							sortable: true
 						},
 						{
-							title: '中标金额',
+							title: '中标金额（元）',
 							key: 'markMoney',
 							minWidth: 120,
 							sortable: true,
 							render: (h, params) => {
-								let text = params.row.markMoney/100;
+								let text = params.row.markMoney;
 								return h('span', '￥'+text)
 							}
 						},
@@ -1755,15 +1754,17 @@
 				}
 			},
 			setPrice(type) {
-				if (type === 0) {
-					if (this.form.markMoney !== null && this.form.markMoney !== 0) {
-						this.form.markMoneyDisplay = this.form.markMoney / 100
-					}
-				} else if (type === 1) {
-					if (this.form.markMoneyDisplay !== null && this.form.markMoneyDisplay !== 0) {
-						this.form.markMoney = this.form.markMoneyDisplay * 100
-					}
-				}
+				// if (type === 0) {
+				// 	if (this.form.markMoney !== null && this.form.markMoney !== 0) {
+				// 		this.form.markMoneyDisplay = this.form.markMoney / 100
+				// 	}
+				// } else if (type === 1) {
+				// 	if (this.form.markMoneyDisplay !== null && this.form.markMoneyDisplay !== 0) {
+				// 		this.form.markMoney = this.form.markMoneyDisplay * 100
+				// 	}
+        // }
+        // 把元转万元
+        this.form.money = this.form.markMoney / 10000
 			},
 			add() {
 				this.setAddress()

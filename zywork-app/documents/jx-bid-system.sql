@@ -260,6 +260,7 @@ DROP TABLE IF EXISTS `t_comp_house_achievement`;
 CREATE TABLE `t_comp_house_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业房建业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `money` decimal(20,6) NOT NULL DEFAULT 0.000000 COMMENT '金额',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `builder_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册建造师',
   `mark_money` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标金额',
@@ -310,6 +311,7 @@ DROP TABLE IF EXISTS `t_comp_key_project_achievement`;
 CREATE TABLE `t_comp_key_project_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业重点工程业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `money` decimal(20,6) NOT NULL DEFAULT 0.000000 COMMENT '金额',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
   `mark_money` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标金额',
@@ -346,6 +348,7 @@ DROP TABLE IF EXISTS `t_comp_traffic_achievement`;
 CREATE TABLE `t_comp_traffic_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业交通业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `money` decimal(20,6) NOT NULL DEFAULT 0.000000 COMMENT '金额',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
   `technology_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '技术负责人',
@@ -368,6 +371,7 @@ DROP TABLE IF EXISTS `t_comp_water_achievement`;
 CREATE TABLE `t_comp_water_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `money` decimal(20,6) NOT NULL DEFAULT 0.000000 COMMENT '金额',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
   `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
@@ -387,6 +391,7 @@ DROP TABLE IF EXISTS `t_comp_water_devise_achievement`;
 CREATE TABLE `t_comp_water_devise_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利勘查设计业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `money` decimal(20,6) NOT NULL DEFAULT 0.000000 COMMENT '金额',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '标段(包)名称',
   `tendering_comp` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
   `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标(单位)人',
@@ -407,6 +412,7 @@ DROP TABLE IF EXISTS `t_comp_water_monitor_achievement`;
 CREATE TABLE `t_comp_water_monitor_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利监理业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `money` decimal(20,6) NOT NULL DEFAULT 0.000000 COMMENT '金额',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
   `project_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
   `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
@@ -509,14 +515,14 @@ CREATE TABLE `t_coupon_record`  (
 DROP TABLE IF EXISTS `t_expert_question_type`;
 CREATE TABLE `t_expert_question_type`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家问题分类编号',
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '类别名称',
-  `memo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '类别名称',
+  `memo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '专家问题分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家问题分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_expert_subscribe
@@ -1868,15 +1874,15 @@ SET FOREIGN_KEY_CHECKS = 1;
 DROP TABLE IF EXISTS `t_update_notice`;
 CREATE TABLE `t_update_notice`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '更新公告编号',
-  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '公告标题',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '公告内容',
-  `synopsis` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公告简介',
+  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公告标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '公告内容',
+  `synopsis` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公告简介',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '更新公告表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '更新公告表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -1896,7 +1902,7 @@ CREATE TABLE `t_service` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '服务配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '服务配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_service
@@ -1913,7 +1919,7 @@ CREATE TABLE `t_user_service` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户服务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户服务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_sys_info
@@ -1921,23 +1927,23 @@ CREATE TABLE `t_user_service` (
 DROP TABLE IF EXISTS `t_sys_info`;
 CREATE TABLE `t_sys_info`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '系统信息编号',
-  `comp_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公司名称',
-  `head_icon` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头部图标',
-  `menu_icon_min` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单小图标',
-  `menu_icon_max` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单大图标',
-  `default_head` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '默认头像',
-  `background_icon` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '背景图片',
-  `do_main` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '域名',
-  `comp_addr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公司地址',
-  `comp_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公司电话',
-  `comp_email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公司邮箱',
-  `comp_memo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公司说明',
+  `comp_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司名称',
+  `head_icon` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头部图标',
+  `menu_icon_min` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单小图标',
+  `menu_icon_max` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单大图标',
+  `default_head` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '默认头像',
+  `background_icon` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '背景图片',
+  `do_main` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '域名',
+  `comp_addr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司地址',
+  `comp_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司电话',
+  `comp_email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司邮箱',
+  `comp_memo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司说明',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统信息表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -1949,16 +1955,17 @@ CREATE TABLE `t_user_notice`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息通知编号',
   `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
   `item_id` bigint(20) NULL DEFAULT NULL COMMENT '链接编号',
-  `page_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '页面路径',
-  `title` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '项目名称',
-  `main_content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '主要内容',
-  `detail_content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '详细内容',
+  `page_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面路径',
+  `title` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目名称',
+  `main_content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '主要内容',
+  `detail_content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细内容',
+  `is_read` tinyint(4) NULL DEFAULT 0 COMMENT '是否已读',
   `notice_type` tinyint(4) NULL DEFAULT NULL COMMENT '通知类型',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '消息通知表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息通知表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

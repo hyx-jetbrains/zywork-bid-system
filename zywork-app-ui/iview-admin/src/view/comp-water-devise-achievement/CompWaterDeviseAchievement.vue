@@ -58,7 +58,7 @@
 					<DatePicker @on-change="form.markDate=$event" :value="form.markDate" placeholder="请输入中标时间" type="datetime" format="yyyy-MM-dd HH:mm:ss"
 					 style="width: 100%;"></DatePicker>
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmountDisplay">
+				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
 					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="项目负责人" prop="name">
@@ -99,7 +99,7 @@
 					<DatePicker @on-change="form.markDate=$event" :value="form.markDate" placeholder="请输入中标时间" type="datetime" format="yyyy-MM-dd HH:mm:ss"
 					 style="width: 100%;"></DatePicker>
 				</FormItem>
-				<FormItem label="合同金额" prop="contractAmountDisplay">
+				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
 					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="项目负责人" prop="name">
@@ -332,7 +332,8 @@
 					id: null,
 					compId: null,
 					projectName: null,
-					tenderingComp: null,
+          tenderingComp: null,
+          money: null,
 					buildComp: null,
 					markDate: null,
 					contractAmount: null,
@@ -553,12 +554,12 @@
 							sortable: true
 						},
 						{
-							title: '合同金额',
+							title: '合同金额（万元）',
 							key: 'contractAmount',
 							minWidth: 120,
 							sortable: true,
 							render: (h, params) => {
-								let text = params.row.contractAmount/100;
+								let text = params.row.contractAmount;
 								return h('span', '￥'+text)
 							}
 						},
@@ -772,15 +773,16 @@
 			  this.$refs.CompanyListSingle.confirmSelection()
 			},
 			setPrice(type) {
-				if (type === 0) {
-					if (this.form.contractAmount !== null && this.form.contractAmount !== 0) {
-						this.form.contractAmountDisplay = this.form.contractAmount / 100
-					}
-				} else if (type === 1) {
-					if (this.form.contractAmountDisplay !== null && this.form.contractAmountDisplay !== 0) {
-						this.form.contractAmount = this.form.contractAmountDisplay * 100
-					}
-				}
+				// if (type === 0) {
+				// 	if (this.form.contractAmount !== null && this.form.contractAmount !== 0) {
+				// 		this.form.contractAmountDisplay = this.form.contractAmount / 100
+				// 	}
+				// } else if (type === 1) {
+				// 	if (this.form.contractAmountDisplay !== null && this.form.contractAmountDisplay !== 0) {
+				// 		this.form.contractAmount = this.form.contractAmountDisplay * 100
+				// 	}
+        // }
+        this.form.money = this.form.contractAmount
 			},
 			add() {
 				this.setPrice(1)

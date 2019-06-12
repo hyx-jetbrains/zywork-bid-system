@@ -145,6 +145,36 @@ public class CompHouseAchievementQuery extends PageQuery {
 	private Byte isActiveMin;
 	// 是否激活（最大值）
 	private Byte isActiveMax;
+	// 金额 （最小值）
+	private BigDecimal moneyMin;
+	// 金额 （最大值）
+	private BigDecimal moneyMax;
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoneyMin() {
+		return moneyMin;
+	}
+
+	public void setMoneyMin(BigDecimal moneyMin) {
+		this.moneyMin = moneyMin;
+	}
+
+	public BigDecimal getMoneyMax() {
+		return moneyMax;
+	}
+
+	public void setMoneyMax(BigDecimal moneyMax) {
+		this.moneyMax = moneyMax;
+	}
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
 	
     public CompHouseAchievementQuery () {}
 

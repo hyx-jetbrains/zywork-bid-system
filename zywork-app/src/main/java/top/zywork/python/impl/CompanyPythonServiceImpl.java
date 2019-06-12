@@ -16,6 +16,7 @@ import top.zywork.dto.*;
 import top.zywork.enums.DatePatternEnum;
 import top.zywork.python.CompanyPythonService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -302,6 +303,8 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 中标金额
                 String markMoney = jsonObj.getString("markMoney");
                 compKeyProjectAchievementDTO.setMarkMoney(markMoney);
+                // 金额
+                compKeyProjectAchievementDTO.setMoney(new BigDecimal(markMoney));
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
                 compKeyProjectAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
@@ -330,6 +333,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
                 compTrafficAchievementDTO.setContractAmount(contractAmount);
+                compTrafficAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 // 工程地点
                 String workAddr = jsonObj.getString("workAddr");
                 compTrafficAchievementDTO.setWorkAddr(workAddr);
@@ -358,6 +362,8 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
                 compWaterAchievementDTO.setContractAmount(contractAmount);
+                // 金额
+                compWaterAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
                 compWaterAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
@@ -389,6 +395,8 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
                 compWaterMonitorAchievementDTO.setContractAmount(contractAmount);
+                // 金额
+                compWaterMonitorAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 // 合同签订日期
                 String contractDate = jsonObj.getString("contractDate");
                 compWaterMonitorAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
@@ -417,6 +425,8 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
                 compWaterDeviseAchievementDTO.setContractAmount(contractAmount);
+                // 金额
+                compWaterDeviseAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 // 项目负责人
                 String name = jsonObj.getString("name");
                 compWaterDeviseAchievementDTO.setName(name);
@@ -501,6 +511,8 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 中标金额
                 String markMoney = jsonObject.getString("markMoney");
                 compHouseAchievementDTO.setMarkMoney(markMoney);
+                // 金额 元转成万元
+                compHouseAchievementDTO.setMoney(new BigDecimal(markMoney).divide(new BigDecimal(10000)));
                 // 建设规模
                 String buildScale = jsonObject.getString("buildScale");
                 compHouseAchievementDTO.setBuildScale(buildScale);

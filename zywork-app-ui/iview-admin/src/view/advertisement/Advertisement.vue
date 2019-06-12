@@ -59,7 +59,7 @@
           <Input v-model="form.title" placeholder="请输入轮播图标题"/>
         </FormItem>
         <FormItem label="封面图片" prop="imgUrl">
-          <img :v-if="form.url !== ''" :src="form.url">
+          <img :v-if="form.url !== ''" :src="form.url" style="width: 80px; margin-right: 20px;">
           <Upload
             ref="upload"
             :show-upload-list="false"
@@ -100,7 +100,7 @@
           <Input v-model="form.title" placeholder="请输入轮播图标题"/>
         </FormItem>
         <FormItem label="封面图片" prop="imgUrl">
-          <img :v-if="form.url !== ''" :src="form.url">
+          <img :v-if="form.url !== ''" :src="form.url" style="width: 80px; margin-right: 20px;">
           <Upload
             ref="upload"
             :show-upload-list="false"
@@ -296,7 +296,7 @@
       
     </Modal>
     <Modal title="预览图片" v-model="modal.img">
-      <img :src="form.imgUrl" style="width: 100%">
+      <img :src="form.url" style="width: 100%">
     </Modal>
   </div>
 </template>

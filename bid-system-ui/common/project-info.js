@@ -28,7 +28,11 @@ export const getAdvertisementInfo = (self) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.swiperItems = nullToStr(res.data.data.rows);
+				var tempSwiperItems = nullToStr(res.data.data.rows);
+				tempSwiperItems.forEach(item => {
+					item.url = IMAGE_BASE_URL + item.url;
+					self.swiperItems.push(item);
+				})
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -274,7 +278,7 @@ export const getProjectAnnounce = (self, projectId) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.projectAnnounce = res.data.data;
+				self.projectAnnounce = nullToStr(res.data.data);
 			} else {
 				showInfoToast(res.data.message)
 			}

@@ -153,8 +153,38 @@ public class CompHouseAchievementCompanyQuery extends PageQuery {
 	private String companyIndustryType;
 	// 企业名称
 	private String companyCompName;
-	
-    public CompHouseAchievementCompanyQuery () {}
+	// 金额 （最小值）
+	private BigDecimal moneyMin;
+	// 金额 （最大值）
+	private BigDecimal moneyMax;
+	// 金额
+	private BigDecimal money;
+
+	public BigDecimal getMoneyMin() {
+		return moneyMin;
+	}
+
+	public void setMoneyMin(BigDecimal moneyMin) {
+		this.moneyMin = moneyMin;
+	}
+
+	public BigDecimal getMoneyMax() {
+		return moneyMax;
+	}
+
+	public void setMoneyMax(BigDecimal moneyMax) {
+		this.moneyMax = moneyMax;
+	}
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+
+	public CompHouseAchievementCompanyQuery () {}
 
     public CompHouseAchievementCompanyQuery (Long compHouseAchievementId, Long compHouseAchievementIdMin, Long compHouseAchievementIdMax, Long compHouseAchievementCompId, Long compHouseAchievementCompIdMin, Long compHouseAchievementCompIdMax, String compHouseAchievementProjectName, String compHouseAchievementBuilderName, String compHouseAchievementMarkMoney, String compHouseAchievementBuildScale, String compHouseAchievementRegionType, String compHouseAchievementMarkComp, String compHouseAchievementBuildComp, String compHouseAchievementProjectAddr, Date compHouseAchievementContractDate, Date compHouseAchievementContractDateMin, Date compHouseAchievementContractDateMax, Date compHouseAchievementMarkDate, Date compHouseAchievementMarkDateMin, Date compHouseAchievementMarkDateMax, String compHouseAchievementName, String compHouseAchievementCertificateNum, String compHouseAchievementConstructors, String compHouseAchievementConstructorsCertificateNum, String compHouseAchievementConstructorsIdNum, String compHouseAchievementQualityWorker, String compHouseAchievementQualityWorkerCertificateNum, String compHouseAchievementQualityWorkerIdNum, String compHouseAchievementSecurityOfficer, String compHouseAchievementSecurityOfficerCertificateNum, String compHouseAchievementSecurityOfficerIdNum, String compHouseAchievementStandardWorker, String compHouseAchievementStandardWorkerCertificateNum, String compHouseAchievementStandardWorkerIdNum, String compHouseAchievementMaterialMan, String compHouseAchievementMaterialManCertificateNum, String compHouseAchievementMaterialManIdNum, String compHouseAchievementMechanic, String compHouseAchievementMechanicCertificateNum, String compHouseAchievementMechanicIdNum, String compHouseAchievementLabors, String compHouseAchievementLaborsCertificateNum, String compHouseAchievementLaborsIdNum, String compHouseAchievementDataClerk, String compHouseAchievementDataClerkCertificateNum, String compHouseAchievementDataClerkIdNum, Integer compHouseAchievementVersion, Integer compHouseAchievementVersionMin, Integer compHouseAchievementVersionMax, Date compHouseAchievementCreateTime, Date compHouseAchievementCreateTimeMin, Date compHouseAchievementCreateTimeMax, Date compHouseAchievementUpdateTime, Date compHouseAchievementUpdateTimeMin, Date compHouseAchievementUpdateTimeMax, Byte compHouseAchievementIsActive, Byte compHouseAchievementIsActiveMin, Byte compHouseAchievementIsActiveMax, String companyCompType, String companyIndustryType, String companyCompName) {
         this.compHouseAchievementId = compHouseAchievementId;

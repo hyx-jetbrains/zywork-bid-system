@@ -68,7 +68,7 @@ public class CompAptitudeCompanyController extends BaseController {
     }
 
     @PostMapping("user/pager-cond")
-    @HideProperty(url = "/comp-aptitude/user/pager-cond", properties = {"compAptitudeCertificateNum","compAptitudeCertificateDetail"})
+    @HideProperty(url = "/comp-aptitude/user/pager-cond", properties = {"companyCompName"})
     public ResponseStatusVO userListPageByCondition(HttpServletRequest request, @RequestBody CompAptitudeCompanyQuery compAptitudeCompanyQuery) {
         ResponseStatusVO responseStatusVO = listPageByCondition(compAptitudeCompanyQuery);
         Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);

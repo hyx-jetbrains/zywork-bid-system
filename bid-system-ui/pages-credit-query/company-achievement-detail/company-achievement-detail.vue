@@ -8,15 +8,11 @@
 					<zywork-icon type="iconqiyejianjie" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 					<view @click="toCompanyDetail">
 						<view>
-							<text class="zy-text-bold">{{company.compName}}</text>
+							<text class="zy-text-bold">{{item.companyCompName}}</text>
 						</view>
 						<view class="zy-text-mini zy-text-info">
-							法人：
-							<text v-if="company.legalPerson !== null && company.legalPerson !== undefined" class="zy-text-mini zy-text-info">
-								{{company.legalPerson}}
-							</text>
-							<text v-else class="zy-text-mini zy-text-info">
-								暂无
+							<text v-if="item.companyIndustryType !== ''" class="zy-text-mini zy-text-info">
+								{{item.companyIndustryType}}
 							</text>
 						</view>
 					</view>
@@ -36,333 +32,294 @@
 					<!-- 房建业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.projectName}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">注册建造师</view>
-						<view class="zy-disable-flex-right">{{item.builderName}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementBuilderName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标金额</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-							{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
+						<view class="zy-disable-flex-right">
+							{{item.compHouseAchievementMarkMoney}} 元
 						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">建设规模</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.buildScale}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementBuildScale}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目所属地区归类</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.regionType}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementRegionType}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">建设单位</view>
-						<view class="zy-disable-flex-right">{{item.buildComp}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementBuildComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标单位</view>
-						<view class="zy-disable-flex-right">{{item.markComp}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMarkComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程地址</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.projectAddr}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementProjectAddr}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同签订日期</view>
-						<view class="zy-disable-flex-right">{{item.contractDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementContractDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标日期</view>
-						<view class="zy-disable-flex-right">{{item.markDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMarkDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人</view>
-						<view class="zy-disable-flex-right">{{item.name}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.certificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">施工员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.constructors}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementConstructors}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">施工员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.constructorsCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementConstructorsCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">施工员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.constructorsIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementConstructorsIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">质量员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.qualityWorker}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementQualityWorker}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">质量员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.qualityWorkerCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementQualityWorkerCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">质量员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.qualityWorkerIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementQualityWorkerIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">安全员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.securityOfficer}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementSecurityOfficer}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">安全员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.securityOfficerCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementSecurityOfficerCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">安全员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.securityOfficerIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementSecurityOfficerIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">标准员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.standardWorker}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementStandardWorker}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">标准员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.standardWorkerCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementStandardWorkerCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">标准员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.standardWorkerIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementStandardWorkerIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">材料员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.materialMan}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMaterialMan}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">材料员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.materialManCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMaterialManCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">材料员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.materialManIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMaterialManIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">机械员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.mechanic}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMechanic}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">机械员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.mechanicCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMechanicCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">机械员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.mechanicIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementMechanicIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">劳务员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.labors}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementLabors}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">劳务员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.laborsCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementLaborsCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">劳务员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.laborsIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementLaborsIdNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">资料员</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.dataClerk}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementDataClerk}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">资料员证书号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.dataClerkCertificateNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementDataClerkCertificateNum}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">资料员身份证号</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.dataClerkIdNum}}</view>
+						<view class="zy-disable-flex-right">{{item.compHouseAchievementDataClerkIdNum}}</view>
 					</view>
 				</view>
 				<view v-if="item.achievementType == 1">
 					<!-- 水利业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.projectName}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人</view>
-						<view class="zy-disable-flex-right">{{item.name}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterAchievementName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						<view class="zy-disable-flex-right">
+							{{item.compWaterAchievementContractAmount}} 万元
 						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">开工时间</view>
-						<view class="zy-disable-flex-right">{{item.startDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterAchievementStartDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">竣工时间</view>
-						<view class="zy-disable-flex-right">{{item.endDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterAchievementEndDate}}</view>
 					</view>
 				</view>
 				<view v-if="item.achievementType == 2">
 					<!-- 交通业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.projectName}}</view>
+						<view class="zy-disable-flex-right">{{item.compTrafficAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人</view>
-						<view class="zy-disable-flex-right">{{item.name}}</view>
+						<view class="zy-disable-flex-right">{{item.compTrafficAchievementName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">技术负责人</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.technologyName}}</view>
+						<view class="zy-disable-flex-right">{{item.compTrafficAchievementTechnologyName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						<view class="zy-disable-flex-right">
+							{{item.compTrafficAchievementContractAmount}} 万元
 						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程地点</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.workAddr}}</view>
+						<view class="zy-disable-flex-right">{{item.compTrafficAchievementWorkAddr}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">开工时间</view>
-						<view class="zy-disable-flex-right">{{item.startDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compTrafficAchievementStartDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">竣工时间</view>
-						<view class="zy-disable-flex-right">{{item.endDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compTrafficAchievementEndDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">验证状态</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.validStatus}}</view>
+						<view class="zy-disable-flex-right">{{item.compTrafficAchievementValidStatus}}</view>
 					</view>
 				</view>
 				<view v-if="item.achievementType == 3">
 					<!-- 重点工程业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.projectName}}</view>
+						<view class="zy-disable-flex-right">{{item.compKeyProjectAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">建设单位</view>
-						<view class="zy-disable-flex-right">{{item.buildComp}}</view>
+						<view class="zy-disable-flex-right">{{item.compKeyProjectAchievementBuildComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标金额</view>
-						<view class="zy-disable-flex-right" @click="validText(item.markMoney)"
-							:class="item.markMoney === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-							{{item.markMoney === '请购买VIP服务' ? item.markMoney : item.markMoney / 100}}
+						<view class="zy-disable-flex-right">
+							{{item.compKeyProjectAchievementMarkMoney}} 万元
 						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">开工时间</view>
-						<view class="zy-disable-flex-right">{{item.startDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compKeyProjectAchievementStartDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">竣工时间</view>
-						<view class="zy-disable-flex-right">{{item.endDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compKeyProjectAchievementEndDate}}</view>
 					</view>
 				</view>
 				<view v-if="item.achievementType == 4">
 					<!-- 水利监理业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.projectName}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterMonitorAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目类型</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.projectType}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterMonitorAchievementProjectType}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">建设单位</view>
-						<view class="zy-disable-flex-right">{{item.buildComp}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterMonitorAchievementBuildComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						<view class="zy-disable-flex-right">
+							{{item.compWaterMonitorAchievementContractAmount}} 万元
 						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同签订日期</view>
-						<view class="zy-disable-flex-right">{{item.contractDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterMonitorAchievementContractDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">开工时间</view>
-						<view class="zy-disable-flex-right">{{item.startDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterMonitorAchievementStartDate}}</view>
 					</view>
 				</view>
 				<view v-if="item.achievementType == 5">
 					<!-- 水利勘查设计业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.projectName}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterDeviseAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目类型</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">{{item.tenderingComp}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterDeviseAchievementTenderingComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">招标(单位)人</view>
-						<view class="zy-disable-flex-right">{{item.buildComp}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterDeviseAchievementBuildComp}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标时间</view>
-						<view class="zy-disable-flex-right">{{item.markDate}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterDeviseAchievementMarkDate}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">合同金额</view>
-						<view class="zy-disable-flex-right" @click="validText(item.contractAmount)"
-							:class="item.contractAmount === '请购买VIP服务' ? 'zy-detail-phone' : ''">
-							{{item.contractAmount === '请购买VIP服务' ? item.contractAmount : item.contractAmount / 100}}
+						<view class="zy-disable-flex-right">
+							{{item.compWaterDeviseAchievementContractAmount}} 万元
 						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人</view>
-						<view class="zy-disable-flex-right">{{item.name}}</view>
+						<view class="zy-disable-flex-right">{{item.compWaterDeviseAchievementName}}</view>
 					</view>
 				</view>
 
@@ -408,7 +365,6 @@
 			uni.setNavigationBarTitle({
 				title: this.item.projectName
 			});
-			this.item = nullToStr(this.item)
 			this.initCompany();
 		},
 		methods: {

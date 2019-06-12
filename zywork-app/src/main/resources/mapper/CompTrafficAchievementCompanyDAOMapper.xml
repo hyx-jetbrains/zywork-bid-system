@@ -5,10 +5,19 @@
 <mapper namespace="top.zywork.dao.CompTrafficAchievementCompanyDAO">
 
     <sql id="select_columns">
-        t_comp_traffic_achievement.id as compTrafficAchievementId, t_comp_traffic_achievement.comp_id as compTrafficAchievementCompId, t_comp_traffic_achievement.project_name as compTrafficAchievementProjectName, t_comp_traffic_achievement.name as compTrafficAchievementName, t_comp_traffic_achievement.technology_name as compTrafficAchievementTechnologyName, t_comp_traffic_achievement.contract_amount as compTrafficAchievementContractAmount, t_comp_traffic_achievement.work_addr as compTrafficAchievementWorkAddr, t_comp_traffic_achievement.start_date as compTrafficAchievementStartDate, t_comp_traffic_achievement.end_date as compTrafficAchievementEndDate, t_comp_traffic_achievement.valid_status as compTrafficAchievementValidStatus, t_comp_traffic_achievement.version as compTrafficAchievementVersion, t_comp_traffic_achievement.create_time as compTrafficAchievementCreateTime, t_comp_traffic_achievement.update_time as compTrafficAchievementUpdateTime, t_comp_traffic_achievement.is_active as compTrafficAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
+        t_comp_traffic_achievement.money as money, t_comp_traffic_achievement.id as compTrafficAchievementId, t_comp_traffic_achievement.comp_id as compTrafficAchievementCompId, t_comp_traffic_achievement.project_name as compTrafficAchievementProjectName, t_comp_traffic_achievement.name as compTrafficAchievementName, t_comp_traffic_achievement.technology_name as compTrafficAchievementTechnologyName, t_comp_traffic_achievement.contract_amount as compTrafficAchievementContractAmount, t_comp_traffic_achievement.work_addr as compTrafficAchievementWorkAddr, t_comp_traffic_achievement.start_date as compTrafficAchievementStartDate, t_comp_traffic_achievement.end_date as compTrafficAchievementEndDate, t_comp_traffic_achievement.valid_status as compTrafficAchievementValidStatus, t_comp_traffic_achievement.version as compTrafficAchievementVersion, t_comp_traffic_achievement.create_time as compTrafficAchievementCreateTime, t_comp_traffic_achievement.update_time as compTrafficAchievementUpdateTime, t_comp_traffic_achievement.is_active as compTrafficAchievementIsActive, t_company.comp_type as companyCompType, t_company.industry_type as companyIndustryType, t_company.comp_name as companyCompName
     </sql>
 
     <sql id="query_where_clause">
+		<if test="query != null and query.money != null">
+			and t_comp_traffic_achievement.money = #{query.money}
+		</if>
+		<if test="query != null and query.moneyMin != null">
+			and t_comp_traffic_achievement.money <![CDATA[ >= ]]> #{query.moneyMin}
+		</if>
+		<if test="query != null and query.moneyMax != null">
+			and t_comp_traffic_achievement.money <![CDATA[ <= ]]> #{query.moneyMax}
+		</if>
         <if test="query != null and query.compTrafficAchievementId != null">
 			and t_comp_traffic_achievement.id = #{query.compTrafficAchievementId}
 		</if>

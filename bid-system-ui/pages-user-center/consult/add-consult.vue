@@ -22,6 +22,9 @@
 		createConsult,
 		getExpertQuesTionTypeByUserId
 	} from '@/common/user-center.js'
+	import {
+		showInfoToast
+	} from '@/common/util.js'
 	export default {
 		components: {
 			uniTag
@@ -44,6 +47,10 @@
 			},
 			// 咨询
 			addConsult() {
+				if (this.consultDesc === '' || this.consultDesc === null || this.consultDesc === undefined) {
+					showInfoToast("请输入咨询内容")
+					return;
+				}
 				createConsult(this)
 			},
 		}

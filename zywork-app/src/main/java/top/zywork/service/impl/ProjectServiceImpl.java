@@ -64,7 +64,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             long currTime = DateUtils.millis(DateUtils.currentDate());
             // 开标时间
             long openMarkTime = DateUtils.millis(openMarkDate);
-            if (openMarkTime < currTime) {
+            if (openMarkTime > currTime) {
                 // 待开标
                 markStatus = ProjectConstants.MARK_PUBLICIT_WAIT_MARK;
             } else {
