@@ -87,6 +87,10 @@ export const countNotReadMsg = () => {
 						index: 2,
 						text: res.data.data.total + ''
 					})
+				} else {
+					uni.removeTabBarBadge({
+						index: 2
+					})
 				}
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				invalidToken()
