@@ -32,4 +32,6 @@ public interface ProjectDAO extends BaseDAO {
 
     Object getByTitle(@Param("title") String title);
 
+    Object getProjectBySelect(@Param("id") Long id, @Param("city") String city, @Param("list") List<Object> list);
+
 }

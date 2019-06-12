@@ -12,15 +12,19 @@ import top.zywork.common.BindingResultUtils;
 import top.zywork.common.DateUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.constant.ExpertSubscribeConstants;
+import top.zywork.constant.NoticeConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ExpertSubscribeDTO;
+import top.zywork.enums.NoticeEnum;
 import top.zywork.query.ExpertSubscribeQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.ExpertSubscribeService;
+import top.zywork.service.UserNoticeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ExpertSubscribeVO;
+import top.zywork.vo.UserNoticeVO;
 
 import java.util.List;
 
@@ -39,6 +43,8 @@ public class ExpertSubscribeController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(ExpertSubscribeController.class);
 
     private ExpertSubscribeService expertSubscribeService;
+
+    private UserNoticeService userNoticeService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO, BindingResult bindingResult) {
@@ -144,6 +150,17 @@ public class ExpertSubscribeController extends BaseController {
         if (null == jwtUser) {
             return ResponseStatusVO.authenticationError();
         }
+
+        UserNoticeVO userNoticeVO= new UserNoticeVO();
+        userNoticeVO.setUserId(expertSubscribeVO.getUserId());
+        userNoticeVO.setItemId(expertSubscribeVO.getId());
+        userNoticeVO.setPageUrl(NoticeConstants.expertSubscribe);
+        userNoticeVO.setTitle("专家预约问题回复");
+        userNoticeVO.setMainContent("专家预约问题回复");
+        userNoticeVO.setDetailContent("您有一条新的专家回复记录，具体内容可点击《立即查看》按钮前往查看");
+        userNoticeVO.setNoticeType(NoticeEnum.APPOINTMENT_EXPERT_MESSAGE.getValue());
+        userNoticeService.save(userNoticeVO);
+
         expertSubscribeVO.setReplyUserId(jwtUser.getUserId());
         expertSubscribeVO.setReplyTime(DateUtils.currentDate());
         expertSubscribeVO.setSubscribeStatus(ExpertSubscribeConstants.SUBSCRIBE_STATUS_YES);
@@ -187,5 +204,10 @@ public class ExpertSubscribeController extends BaseController {
     @Autowired
     public void setExpertSubscribeService(ExpertSubscribeService expertSubscribeService) {
         this.expertSubscribeService = expertSubscribeService;
+    }
+
+    @Autowired
+    public void setUserNoticeService(UserNoticeService userNoticeService) {
+        this.userNoticeService = userNoticeService;
     }
 }

@@ -48,4 +48,6 @@ public interface ProjectService extends BaseService {
 
     PagerDTO findProjectByd(@Param("id") Long id);
 
+    Object getProjectBySelect(@Param("id") Long id, @Param("city") String city, @Param("list") List<Object> list);
+
 }

@@ -1,6 +1,5 @@
 package top.zywork.controller;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +10,25 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.*;
+import top.zywork.constant.NoticeConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
+import top.zywork.enums.NoticeEnum;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.ProjectService;
+import top.zywork.service.SubscribeService;
 import top.zywork.service.UploadService;
-import top.zywork.vo.ProjectResourceCountVO;
-import top.zywork.vo.ResponseStatusVO;
-import top.zywork.vo.PagerVO;
-import top.zywork.vo.ProjectVO;
+import top.zywork.service.UserNoticeService;
+import top.zywork.vo.*;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * ProjectController控制器类<br/>
@@ -57,15 +62,33 @@ public class ProjectController extends BaseController {
     @Value("${storage.local.project.imgUrl}")
     private String imgUrl;
 
+    @Value("${projectDetail.uri}")
+    private String uri;
+
+    @Value("${projectDetail.location}")
+    private String location;
+
     private ProjectService projectService;
 
     private UploadService uploadService;
+
+    private SubscribeService subscribeService;
+
+    private UserNoticeService userNoticeService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectVO projectVO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+
+        String fileName = UUIDUtils.uuid() +".html";
+        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
+        String foot = "</body></html>";
+
+        IOUtils.writeText(head +projectVO.getProjectDetail()+ foot, location + "/" + fileName);
+
+        projectVO.setInwardHtmlUrl(uri + "/" + fileName);
         projectVO = projectService.getOpenMark(projectVO);
         projectService.save(BeanUtils.copy(projectVO, ProjectDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
@@ -98,6 +121,24 @@ public class ProjectController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+
+        Object obj = projectService.getById(projectVO.getId());
+        if(obj != null) {
+            ProjectVO project = BeanUtils.copy(obj, ProjectVO.class);
+            String url = "/data/bid-system/" + project.getInwardHtmlUrl();
+            File file = new File(url);
+            if(file.exists()) {
+                file.delete();
+            }
+        }
+
+        String fileName = UUIDUtils.uuid() +".html";
+        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
+        String foot = "</body></html>";
+
+        IOUtils.writeText(head +projectVO.getProjectDetail()+ foot, location + "/" + fileName);
+        projectVO.setInwardHtmlUrl(uri + "/" + fileName);
+
         projectVO = projectService.getOpenMark(projectVO);
         int updateRows = projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
         if (updateRows == 1) {
@@ -171,10 +212,69 @@ public class ProjectController extends BaseController {
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
     }
 
+    public static void main(String[] args) {
+        String arr = "房建市政,交通工程,政府采购,其他项目";
+        String[] ptarray = arr.split(",");
+        for(String pt : ptarray) {
+            System.out.println(pt);
+        }
+    }
+
     @PostMapping("admin/releaseProject")
     public ResponseStatusVO releaseProject(@RequestBody ProjectVO projectVO) {
         projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
+
+        PagerDTO pagerDTO = subscribeService.listAll();
+        List<Object> obj = pagerDTO.getRows();
+        if(obj != null && obj.size() > 0) {
+           List<SubscribeVO> list = BeanUtils.copy(obj, SubscribeVO.class);
+           if(list != null && list.size() > 0) {
+               for(SubscribeVO subscribeVO: list) {
+                   List<Object> ls = new ArrayList<>();
+                   if(subscribeVO.getProjectType() != null) {
+                       String[] ptarray = subscribeVO.getProjectType().split(",");
+                       for(String pt : ptarray) {
+                           ls.add(pt);
+                       }
+                   }
+                   // 根据ID 查询城市、项目类型是否存在
+                   Object pobj = projectService.getProjectBySelect(projectVO.getId(), subscribeVO.getCity(), ls);
+                   if(pobj != null) {
+                      ProjectVO project = BeanUtils.copy(pobj, ProjectVO.class);
+
+                       if(subscribeVO.getCity() != null || ls.size() > 0) {
+                           saveNotice(subscribeVO.getUserId(), project.getId());
+                       } else if(project.getProjectInvest() != null) {
+                           Pattern pat = Pattern.compile("[\\u4e00-\\u9fa5]");
+                           Matcher mat = pat.matcher(project.getProjectInvest());
+                           Double projectInvest = Double.valueOf(mat.replaceAll(""));
+
+                           if((projectInvest > subscribeVO.getMinMoney() && projectInvest < subscribeVO.getMaxMoney())) {// 设置最大最小金额
+                               saveNotice(subscribeVO.getUserId(), project.getId());
+                           } else if(projectInvest > subscribeVO.getMinMoney() && subscribeVO.getMaxMoney() == null) {// 设置最小金额
+                               saveNotice(subscribeVO.getUserId(), project.getId());
+                           } else if(projectInvest < subscribeVO.getMaxMoney() && subscribeVO.getMinMoney() == null) {// 设置最大金额
+                               saveNotice(subscribeVO.getUserId(), project.getId());
+                           }
+                       }
+
+                   }
+               }
+           }
+        }
         return ResponseStatusVO.ok("发布成功", null);
+    }
+
+    public void saveNotice(Long userId, Long ProjectId) {
+        UserNoticeVO userNoticeVO= new UserNoticeVO();
+        userNoticeVO.setUserId(userId);
+        userNoticeVO.setItemId(ProjectId);
+        userNoticeVO.setPageUrl(NoticeConstants.projectUrl);
+        userNoticeVO.setTitle("项目订阅更新");
+        userNoticeVO.setMainContent("项目订阅更新");
+        userNoticeVO.setDetailContent("您订阅的项目有一条新的申请记录，具体内容可点击《立即查看》按钮前往查看");
+        userNoticeVO.setNoticeType(NoticeEnum.SUBSCRIBE_MESSAGE.getValue());
+        userNoticeService.save(userNoticeVO);
     }
 
     @PostMapping("admin/batch-release")
@@ -261,5 +361,15 @@ public class ProjectController extends BaseController {
     @Autowired
     public void setUploadService(UploadService uploadService) {
         this.uploadService = uploadService;
+    }
+
+    @Autowired
+    public void setSubscribeService(SubscribeService subscribeService) {
+        this.subscribeService = subscribeService;
+    }
+
+    @Autowired
+    public void setUserNoticeService(UserNoticeService userNoticeService) {
+        this.userNoticeService = userNoticeService;
     }
 }

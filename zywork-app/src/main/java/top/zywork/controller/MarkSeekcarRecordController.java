@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.NoticeConstants;
 import top.zywork.dto.MarkSeekcarDTO;
 import top.zywork.dto.MarkSeekcarRecordDTO;
 import top.zywork.dto.PagerDTO;
@@ -184,11 +185,12 @@ public class MarkSeekcarRecordController extends BaseController {
         markSeekcarRecordService.save(BeanUtils.copy(markSeekcarRecordVO, MarkSeekcarRecordDTO.class));
 
         UserNoticeVO userNoticeVO= new UserNoticeVO();
+        userNoticeVO.setUserId(markSeekcarVO.getUserId());
         userNoticeVO.setItemId(markSeekcarVO.getId());
-        userNoticeVO.setPageUrl("publish-seekcar-detail/publish-seekcar-detail");
-        userNoticeVO.setTitle("开标找车'"+markSeekcarVO.getStartCity()+ "' - '"+ markSeekcarVO.getEndCity()+"'申请记录");
-        userNoticeVO.setMainContent("您发起的开标找车由'"+markSeekcarVO.getStartCity()+ "' - '"+ markSeekcarVO.getEndCity()+"'有一条新的申请记录");
-        userNoticeVO.setDetailContent("您发起的开标找车由'"+markSeekcarVO.getStartCity()+"/"+markSeekcarVO.getStartAddr()+ "' - '"+ markSeekcarVO.getEndCity()+"/"+markSeekcarVO.getEndAddr()+"'有一条新的申请记录，具体内容可前往"+ userNoticeVO.getPageUrl()+"查看");
+        userNoticeVO.setPageUrl(NoticeConstants.markSeekcarUrl);
+        userNoticeVO.setTitle("开标找车"+markSeekcarVO.getStartCity()+ " - "+ markSeekcarVO.getEndCity()+"申请记录");
+        userNoticeVO.setMainContent("您发起的开标找车由“"+markSeekcarVO.getStartCity()+ "” - “"+ markSeekcarVO.getEndCity()+"”有一条新的申请记录");
+        userNoticeVO.setDetailContent("您发起的开标找车由“"+markSeekcarVO.getStartCity()+"/"+markSeekcarVO.getStartAddr()+ "” - “"+ markSeekcarVO.getEndCity()+"/"+markSeekcarVO.getEndAddr()+"”有一条新的申请记录，具体内容可点击《立即查看》按钮前往查看");
         userNoticeVO.setNoticeType(NoticeEnum.MARKSEEKCAR_MESSAGE.getValue());
         userNoticeService.save(userNoticeVO);
         return ResponseStatusVO.ok("申请成功", null);

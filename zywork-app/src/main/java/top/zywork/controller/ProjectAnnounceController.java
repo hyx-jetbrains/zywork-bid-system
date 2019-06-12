@@ -16,7 +16,6 @@ import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.UploadTypeEnum;
-import top.zywork.query.ProjectAnnounceProjectQuery;
 import top.zywork.query.ProjectAnnounceQuery;
 import top.zywork.service.ProjectAnnounceService;
 import top.zywork.service.UploadService;
@@ -26,6 +25,7 @@ import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectAnnounceVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -60,6 +60,12 @@ public class ProjectAnnounceController extends BaseController {
     @Value("${storage.local.project.imgUrl}")
     private String imgUrl;
 
+    @Value("${projectDetail.uri}")
+    private String uri;
+
+    @Value("${projectDetail.location}")
+    private String location;
+
     private ProjectAnnounceService projectAnnounceService;
 
     private UploadService uploadService;
@@ -69,6 +75,14 @@ public class ProjectAnnounceController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+
+        String fileName = UUIDUtils.uuid() +".html";
+        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
+        String foot = "</body></html>";
+
+        IOUtils.writeText(head +projectAnnounceVO.getAnnounceDesc()+ foot, location + "/" + fileName);
+        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
+
         projectAnnounceService.save(BeanUtils.copy(projectAnnounceVO, ProjectAnnounceDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -99,6 +113,24 @@ public class ProjectAnnounceController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+
+        Object obj = projectAnnounceService.getById(projectAnnounceVO.getId());
+        if(obj != null) {
+            ProjectAnnounceVO projectAnnounce = BeanUtils.copy(obj, ProjectAnnounceVO.class);
+            String url = "/data/bid-system/" + projectAnnounce.getInwordHtmlUrl();
+            File file = new File(url);
+            if(file.exists()) {
+                file.delete();
+            }
+        }
+
+        String fileName = UUIDUtils.uuid() +".html";
+        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
+        String foot = "</body></html>";
+
+        IOUtils.writeText(head +projectAnnounceVO.getAnnounceDesc()+ foot, location + "/" + fileName);
+        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
+
         int updateRows = projectAnnounceService.update(BeanUtils.copy(projectAnnounceVO, ProjectAnnounceDTO.class));
         if (updateRows == 1) {
             return ResponseStatusVO.ok("更新成功", null);

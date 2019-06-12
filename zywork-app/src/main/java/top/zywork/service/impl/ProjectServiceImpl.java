@@ -141,4 +141,9 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         return listProjectByPage(projectQuery);
     }
 
+    @Override
+    public Object getProjectBySelect(Long id, String city, List<Object> list) {
+        return projectDAO.getProjectBySelect(id, city, list);
+    }
+
 }

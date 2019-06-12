@@ -9,5 +9,4 @@
         	id as id, user_id as userId, city as city, project_type as projectType, min_money as minMoney, max_money as maxMoney, tenderee as tenderee, aptitude_type as aptitudeType, keyword as keyword, is_subscribe as isSubscribe, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
         from t_subscribe where user_id = #{userId}
     </select>
-
 </mapper>
