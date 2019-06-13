@@ -78,6 +78,7 @@
             :on-exceeded-size="handleMaxSize"
             :before-upload="handleBeforeUpload"
             :on-remove="handleRemoveFile"
+            :on-progress="handleProgress"
             :format="['doc','docx','pdf']"
             :max-size="10240"
             :headers="uploadHeader"
@@ -476,14 +477,6 @@ export default {
         projectId: [
           {
             type: 'integer',
-            required: true,
-            message: '此项为必须项',
-            trigger: 'blur, change'
-          }
-        ],
-        resType: [
-          {
-            type: 'String',
             required: true,
             message: '此项为必须项',
             trigger: 'blur, change'
@@ -991,6 +984,12 @@ export default {
     handleRemoveFile(file) {
       console.log('reomve')
       this.form.resourceId = null
+    },
+    handleProgress(event, file) {
+      this.$Notice.info({
+        title: '文件正在上传',
+        desc: file.name + ' 上传中...'
+      })
     },
     // 查看资源
     showResource(row) {
