@@ -1064,7 +1064,7 @@ export const resume = (self) => {
 				if (res.data.data.id == null) {
 					self.initPicker();
 				} else {
-					self.formInfo = res.data.data
+					self.formInfo = nullToStr(res.data.data)
 					self.setValue()
 				}
 			} else {
@@ -1081,9 +1081,25 @@ export const resume = (self) => {
 }
 
 /**
+ * 验证简历数据
+ */
+export const checkResume = (resume) => {
+	if (resume.name === null
+		|| resume.name === undefined
+		|| resume.name === "") {
+		showInfoToast("请输入姓名");
+		return false;
+	}
+	return true;
+}
+
+/**
  * 保存我的简历
  */
 export const saveResume = (self, params) => {
+	if (!checkResume(params)) {
+		return;
+	}
 	uni.showLoading({
 		title: '正在保存'
 	})

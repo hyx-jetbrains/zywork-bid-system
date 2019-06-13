@@ -76,7 +76,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold zy-list-form-label">要求新增/月</view>
+							<view class="uni-label zy-text-bold zy-list-form-label">要求薪资/月</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<picker @change="chooseSalary" :range="salaryArray">
@@ -351,9 +351,18 @@
 					}
 				}
 				
-				this.salaryIndex = this.salaryArray.findIndex(item => item === this.formInfo.salary)
-				this.educationIndex = this.educationArray.findIndex(item=>item===this.formInfo.education)
+				if (this.formInfo.salary !== '') {
+					this.salaryIndex = this.salaryArray.findIndex(item => item === this.formInfo.salary)
+				} else {
+					this.formInfo.salary = this.salaryArray[this.salaryIndex]
+				}
+				if (this.formInfo.education !== '') {
+					this.educationIndex = this.educationArray.findIndex(item=>item===this.formInfo.education)
+				} else {
+					this.formInfo.education = this.educationArray[this.educationIndex]
+				}
 			},
+			/** 初始化数据 */
 			initData() {
 				resume(this)
 			}
