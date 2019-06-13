@@ -28,8 +28,8 @@ public class ProjectProcurementJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectProcurementJob......");
-        String url = PythonConstants.BASE_URL+"project/procurement";
-        HttpUtils.timeout(60000);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_PROCUREMENT;
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         projectPythonService.saveProject(data);
         logger.info("executed ProjectProcurementJob......");

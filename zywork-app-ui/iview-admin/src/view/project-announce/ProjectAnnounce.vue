@@ -20,6 +20,7 @@
             </DropdownMenu>
           </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
+          <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
           </Tooltip>
@@ -56,15 +57,16 @@
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <span v-text="form.projectId" />
-          &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
+          <span v-text="form.projectId"/>
+          &nbsp;
+          <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
-				<FormItem label="项目标题" prop="title">
-				  <Input v-model="form.title" placeholder="请输入项目标题"/>
-				</FormItem>
-				<FormItem label="项目类型" prop="title">
-				  <Input v-model="form.projectType" placeholder="请输入项目类型"/>
-				</FormItem>
+        <FormItem label="项目标题" prop="title">
+          <Input v-model="form.title" placeholder="请输入项目标题"/>
+        </FormItem>
+        <FormItem label="项目类型" prop="title">
+          <Input v-model="form.projectType" placeholder="请输入项目类型"/>
+        </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
@@ -79,9 +81,9 @@
         </FormItem>
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
-        </FormItem> -->
+        </FormItem>-->
         <FormItem label="源地址" prop="sourceUrl">
-          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
         </FormItem>
         <FormItem label="公示详情" prop="announceDesc">
           <editor ref="editorAdd" :value="form.announceDesc" @on-change="handleChange"/>
@@ -100,15 +102,16 @@
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <span v-text="form.projectId" />
-          &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
+          <span v-text="form.projectId"/>
+          &nbsp;
+          <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
-				<FormItem label="项目标题" prop="title">
-				  <Input v-model="form.title" placeholder="请输入项目标题"/>
-				</FormItem>
-				<FormItem label="项目类型" prop="title">
-				  <Input v-model="form.projectType" placeholder="请输入项目类型"/>
-				</FormItem>
+        <FormItem label="项目标题" prop="title">
+          <Input v-model="form.title" placeholder="请输入项目标题"/>
+        </FormItem>
+        <FormItem label="项目类型" prop="title">
+          <Input v-model="form.projectType" placeholder="请输入项目类型"/>
+        </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
@@ -123,9 +126,9 @@
         </FormItem>
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="form.thirdCandidate" placeholder="请输入第三候选人"/>
-        </FormItem> -->
+        </FormItem>-->
         <FormItem label="源地址" prop="sourceUrl">
-          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
         </FormItem>
         <FormItem label="公示详情" prop="announceDesc">
           <editor ref="editorEdit" :value="form.announceDesc" @on-change="handleChange"/>
@@ -184,12 +187,12 @@
             </i-col>
           </Row>
         </FormItem>
-				<FormItem label="项目标题" prop="title">
-				  <Input v-model="searchForm.title" placeholder="请输入项目标题"/>
-				</FormItem>
-				<FormItem label="项目类型" prop="title">
-				  <Input v-model="searchForm.projectType" placeholder="请输入项目类型"/>
-				</FormItem>
+        <FormItem label="项目标题" prop="title">
+          <Input v-model="searchForm.title" placeholder="请输入项目标题"/>
+        </FormItem>
+        <FormItem label="项目类型" prop="title">
+          <Input v-model="searchForm.projectType" placeholder="请输入项目类型"/>
+        </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="searchForm.firstCandidate" placeholder="请输入第一候选人"/>
         </FormItem>
@@ -204,7 +207,7 @@
         </FormItem>
         <FormItem label="第三候选人" prop="thirdCandidate">
           <Input v-model="searchForm.thirdCandidate" placeholder="请输入第三候选人"/>
-        </FormItem> -->
+        </FormItem>-->
         <FormItem label="是否激活" prop="isActive">
           <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
             <i-option
@@ -307,18 +310,12 @@
         >搜索</Button>
       </div>
     </Modal>
-		
-		<Modal
-		 v-model="modal.detailContent"
-		 :fullscreen="true"
-	 	 title="公示详情">
-			<span v-html="form.announceDesc"></span>
-		</Modal>
-		
-    <Modal
-      v-model="modal.detail"
-      title="详情"
-    >
+
+    <Modal v-model="modal.detailContent" :fullscreen="true" title="公示详情">
+      <span v-html="form.announceDesc"></span>
+    </Modal>
+
+    <Modal v-model="modal.detail" title="详情">
       <p>
         公示编号:
         <span v-text="form.id"></span>
@@ -327,14 +324,14 @@
         项目编号:
         <span v-text="form.projectId"></span>
       </p>
-			<p>
-			  项目类型:
-			  <span v-text="form.projectType"></span>
-			</p>
-			<p>
-				项目标题
-				<span v-text="form.title"></span>
-			</p>
+      <p>
+        项目类型:
+        <span v-text="form.projectType"></span>
+      </p>
+      <p>
+        项目标题
+        <span v-text="form.title"></span>
+      </p>
       <p>
         第一候选人:
         <span v-text="form.firstCandidate"></span>
@@ -354,7 +351,7 @@
       <p>
         第三候选人:
         <span v-text="form.thirdCandidate"></span>
-      </p> -->
+      </p>-->
       <p>
         源地址：
         <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a>
@@ -378,11 +375,14 @@
     </Modal>
 
     <Modal :transfer="false" v-model="modal.projectDetail" title="招投标项目详情">
-      <project-detail :form="projectDetailForm" />
+      <project-detail :form="projectDetailForm"/>
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.projectDetailSearch" title="搜索主表信息">
-      <project-list-single ref="ProjectListSingle" v-on:confirmSelectionProject="confirmSelectionProject"/>
+      <project-list-single
+        ref="ProjectListSingle"
+        v-on:confirmSelectionProject="confirmSelectionProject"
+      />
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('projectDetailSearch')">取消</Button>
         <Button type="primary" size="large" @click="confirmProject">确认选择</Button>
@@ -390,10 +390,39 @@
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.projectChoice" title="选择招投标项目">
-      <project-list-choice ref="ProjectListChoice" v-on:confirmChoiceProject="confirmChoiceProject"/>
+      <project-list-choice
+        ref="ProjectListChoice"
+        v-on:confirmChoiceProject="confirmChoiceProject"
+      />
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('projectChoice')">取消</Button>
         <Button type="primary" size="large" @click="confirmChoice">确认选择</Button>
+      </div>
+    </Modal>
+
+    <Modal
+      v-model="modal.python"
+      title="爬取数据"
+      @on-visible-change="changeModalVisibleResetForm('pythonForm', $event)"
+    >
+      <Form ref="pythonForm" :model="python" :label-width="80" :rules="validateRules">
+        <FormItem label="数据来源" prop="sourse">
+          <a :href="sourceDataUrl" target="_blank">{{sourceDataUrl}}</a>
+        </FormItem>
+        <FormItem label="爬取说明" prop="desc">增量爬取<span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取</FormItem>
+        <FormItem label="爬取类型" prop="title">
+          <Select v-model="python.title" placeholder="请选择爬取类型" :label-in-value="true" @on-change="switchSourceDataUrl">
+            <i-option
+              v-for="item in pythonProjectAnnounceTypeSelect"
+              :value="item.value"
+              :key="item.key"
+            >{{item.label}}</i-option>
+          </Select>
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('python')">取消</Button>
+        <Button type="primary" size="large" @click="crawlData" :loading="loading.python">爬取</Button>
       </div>
     </Modal>
   </div>
@@ -401,14 +430,15 @@
 
 <script>
 import * as utils from '@/api/utils'
-import * as ResponseStatus from '@/api/response-status'
 import * as projectUtils from '@/api/project'
 import ProjectDetail from '@/view/project/ProjectDetail.vue'
 import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
 import { getProjectById } from '@/api/module'
 import ProjectListChoice from '@/view/project/ProjectListChoice.vue'
 import Editor from '_c/editor'
-import { isActiveSelect } from '@/api/select'
+import { isActiveSelect, pythonProjectAnnounceTypeSelect } from '@/api/select'
+import axios from '@/libs/api.request'
+import * as ResponseStatus from '@/api/response-status'
 
 export default {
   name: 'ProjectAnnounce',
@@ -459,15 +489,17 @@ export default {
         edit: false,
         search: false,
         detail: false,
-				detailContent: false,
+        detailContent: false,
         projectDetail: false,
         projectDetailSearch: false,
-        projectChoice: false
+        projectChoice: false,
+        python: false
       },
       loading: {
         add: false,
         edit: false,
-        search: false
+        search: false,
+        python: false
       },
       urls: {
         addUrl: '/projecannounce/admin/save',
@@ -483,16 +515,22 @@ export default {
         batchActiveUrl: '/projecannounce/admin/batch-active',
         uploadUrl: '/projecannounce/admin/upload-img',
         projectSelectUrl: '/projecannounce/admin/project-select',
-        oneProjectUrl: '/project/admin/one/'
+        oneProjectUrl: '/project/admin/one/',
+        pythonUpdateDataUrl: '/projecannounce/admin/python'
       },
       page: {
         total: 0
       },
+      sourceDataUrl: 'http://jxsggzy.cn/web/jyxx/002001/002001004/jyxx.html',
+      typeLabel: '',
+      python: {
+        title: ''
+      },
       form: {
         id: null,
         projectId: null,
-				title: null,
-				projectType: null,
+        title: null,
+        projectType: null,
         announceDesc: null,
         firstCandidate: null,
         firstBuilderName: null,
@@ -543,8 +581,8 @@ export default {
         id: null,
         idMin: null,
         idMax: null,
-				title: null,
-				projectType: null,
+        title: null,
+        projectType: null,
         projectId: null,
         projectIdMin: null,
         projectIdMax: null,
@@ -654,18 +692,18 @@ export default {
               )
             }
           },
-					{
-					  title: '项目标题',
-					  key: 'title',
-					  minWidth: 200,
-					  sortable: true
-					},
-					{
-					  title: '项目类型',
-					  key: 'projectType',
-					  minWidth: 150,
-					  sortable: true
-					},
+          {
+            title: '项目标题',
+            key: 'title',
+            minWidth: 200,
+            sortable: true
+          },
+          {
+            title: '项目类型',
+            key: 'projectType',
+            minWidth: 150,
+            sortable: true
+          },
           {
             title: '公示详情',
             key: 'announceDesc',
@@ -860,7 +898,7 @@ export default {
                           }
                         },
                         '详情'
-                      ),
+                      )
                       /* h(
                         'DropdownItem',
                         {
@@ -890,7 +928,8 @@ export default {
         tableDetails: [],
         selections: []
       },
-      isActiveSelect: isActiveSelect
+      isActiveSelect: isActiveSelect,
+      pythonProjectAnnounceTypeSelect: pythonProjectAnnounceTypeSelect
     }
   },
   computed: {},
@@ -901,6 +940,10 @@ export default {
   },
   methods: {
     showModal(modal) {
+      if (modal === 'python') {
+        this.python.title = this.pythonProjectAnnounceTypeSelect[0].value
+        this.typeLabel = this.pythonProjectAnnounceTypeSelect[0].label
+      }
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
@@ -1005,6 +1048,48 @@ export default {
     handleChange(html, text) {
       this.form.announceDesc = html
     },
+    // 切换原地址
+    switchSourceDataUrl(val) {
+      const label = val.label;
+      if ('房建市政公示' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002001/002001004/jyxx.html';
+      } else if ('水利工程公示' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002003/002003004/jyxx.html';
+      } else if ('交通工程公示' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002002/002002005/jyxx.html';
+      } else if ('政府采购公示' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002006/002006004/jyxx.html';
+      } else if ('重点项目公示' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002005/002005004/jyxx.html';
+      } else if ('其他项目公示' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002013/002013002/jyxx.html';
+      }
+      this.typeLabel = label;
+    },
+    // 爬取数据
+    crawlData() {
+      this.loading['python'] = true
+      axios
+        .request({
+          url: this.urls.pythonUpdateDataUrl,
+          method: 'POST',
+          data: this.python
+        })
+        .then(res => {
+          if (res.data.code !== ResponseStatus.OK) {
+            this.$Message.error(res.data.message)
+          } else {
+            this.$Message.success(res.data.message)
+          }
+          this.loading['python'] = false
+          this.cancelModal('python')
+        })
+        .catch(err => {
+          this.loading['python'] = false
+          console.log(err)
+          this.$Message.error('爬取数据失败')
+        })
+    }
   }
 }
 </script>

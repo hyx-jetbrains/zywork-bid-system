@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.*;
 import top.zywork.constant.NoticeConstants;
+import top.zywork.constant.PythonConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.NoticeEnum;
 import top.zywork.enums.UploadTypeEnum;
+import top.zywork.python.ProjectPythonService;
 import top.zywork.query.ProjectQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
@@ -75,6 +77,8 @@ public class ProjectController extends BaseController {
     private SubscribeService subscribeService;
 
     private UserNoticeService userNoticeService;
+
+    private ProjectPythonService projectPythonService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectVO projectVO, BindingResult bindingResult) {
@@ -353,6 +357,22 @@ public class ProjectController extends BaseController {
         return getById(id);
     }
 
+    /***
+     * @description:  python爬取数据
+     * @param projectQuery
+     * @return: top.zywork.vo.ResponseStatusVO
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-06-13 11:34
+     */
+    @PostMapping("admin/python")
+    public ResponseStatusVO pythonGetData(@RequestBody ProjectQuery projectQuery) {
+        String url = PythonConstants.BASE_URL + projectQuery.getTitle();
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
+        String data = HttpUtils.get(url);
+        projectPythonService.saveProject(data);
+        return ResponseStatusVO.ok("后台更新中", null);
+    }
+
     @Autowired
     public void setProjectService(ProjectService projectService) {
         this.projectService = projectService;
@@ -371,5 +391,10 @@ public class ProjectController extends BaseController {
     @Autowired
     public void setUserNoticeService(UserNoticeService userNoticeService) {
         this.userNoticeService = userNoticeService;
+    }
+
+    @Autowired
+    public void setProjectPythonService(ProjectPythonService projectPythonService) {
+        this.projectPythonService = projectPythonService;
     }
 }

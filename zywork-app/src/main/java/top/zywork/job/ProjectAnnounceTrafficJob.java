@@ -29,8 +29,8 @@ public class ProjectAnnounceTrafficJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectAnnounceTrafficJob......");
-        String url = PythonConstants.BASE_URL+"project-announce/traffic";
-        HttpUtils.timeout(60000);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_ANNOUNCE_TRAFFIC;
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         projectAnnouncePythonService.saveProjectAnnounce(data);
         logger.info("executed ProjectAnnounceTrafficJob......");

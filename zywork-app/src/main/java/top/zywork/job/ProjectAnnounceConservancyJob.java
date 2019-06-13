@@ -29,8 +29,8 @@ public class ProjectAnnounceConservancyJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectAnnounceConservancyJob......");
-        String url = PythonConstants.BASE_URL+"project-announce/conservancy";
-        HttpUtils.timeout(60000);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_ANNOUNCE_CONSERVANCY;
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         projectAnnouncePythonService.saveProjectAnnounce(data);
         logger.info("executed ProjectAnnounceConservancyJob......");

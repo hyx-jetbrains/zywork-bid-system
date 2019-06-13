@@ -12,11 +12,14 @@ import org.springframework.web.multipart.MultipartFile;
 import top.zywork.annotation.HideProperty;
 import top.zywork.common.*;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.PythonConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.UploadTypeEnum;
+import top.zywork.python.ProjectPythonService;
 import top.zywork.query.ProjectAnnounceQuery;
+import top.zywork.query.ProjectQuery;
 import top.zywork.service.ProjectAnnounceService;
 import top.zywork.service.UploadService;
 import top.zywork.vo.ProjectVO;
@@ -69,6 +72,8 @@ public class ProjectAnnounceController extends BaseController {
     private ProjectAnnounceService projectAnnounceService;
 
     private UploadService uploadService;
+
+    private ProjectPythonService projectPythonService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectAnnounceVO projectAnnounceVO, BindingResult bindingResult) {
@@ -244,6 +249,22 @@ public class ProjectAnnounceController extends BaseController {
                 responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
+    /***
+     * @description:  python爬取数据
+     * @param projectAnnounceQuery
+     * @return: top.zywork.vo.ResponseStatusVO
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-06-13 11:34
+     */
+    @PostMapping("admin/python")
+    public ResponseStatusVO pythonGetData(@RequestBody ProjectAnnounceQuery projectAnnounceQuery) {
+        String url = PythonConstants.BASE_URL + projectAnnounceQuery.getTitle();
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
+        String data = HttpUtils.get(url);
+        projectPythonService.saveProject(data);
+        return ResponseStatusVO.ok("后台更新中", null);
+    }
+
     @Autowired
     public void setProjectAnnounceService(ProjectAnnounceService projectAnnounceService) {
         this.projectAnnounceService = projectAnnounceService;
@@ -252,6 +273,11 @@ public class ProjectAnnounceController extends BaseController {
     @Autowired
     public void setUploadService(UploadService uploadService) {
         this.uploadService = uploadService;
+    }
+
+    @Autowired
+    public void setProjectPythonService(ProjectPythonService projectPythonService) {
+        this.projectPythonService = projectPythonService;
     }
 
 }

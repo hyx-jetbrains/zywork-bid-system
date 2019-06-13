@@ -1380,3 +1380,62 @@ export const pythonTypeSelect = [
     label: '投标人'
   }
 ]
+
+/**
+ * 爬取项目信息爬取类型下拉框
+ */
+export const pythonProjectTypeSelect = [
+  {
+    value: 'project/house',
+    label: '房建市政'
+  },
+  {
+    value: 'project/conservancy',
+    label: '水利工程'
+  },
+  {
+    value: 'project/traffic',
+    label: '交通工程'
+  }, 
+  {
+    value: 'project/procurement',
+    label: '政府采购'
+  },
+  {
+    value: 'project/key',
+    label: '重点项目'
+  },
+  {
+    value: 'project/other',
+    label: '其他项目'
+  }
+]
+/**
+ * 爬取项目公示信息爬取类型下拉框
+ */
+export const pythonProjectAnnounceTypeSelect = [
+  {
+    value: 'project-announce/house',
+    label: '房建市政公示'
+  },
+  {
+    value: 'project-announce/conservancy',
+    label: '水利工程公示'
+  },
+  {
+    value: 'project-announce/traffic',
+    label: '交通工程公示'
+  },
+  {
+    value: 'project-announce/procurement',
+    label: '政府采购公示'
+  },
+  {
+    value: 'project-announce/key',
+    label: '重点项目公示'
+  },
+  {
+    value: 'project-announce/other',
+    label: '其他项目公示'
+  }
+]

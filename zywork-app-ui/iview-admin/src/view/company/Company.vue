@@ -396,7 +396,7 @@
 					add: false,
 					edit: false,
           search: false,
-          pythone: false
+          python: false
 				},
 				urls: {
 					addUrl: '/company/admin/save',
@@ -1016,21 +1016,21 @@
       },
       // 爬取数据
       crawlData() {
-        this.loading.python = true
+        this.loading['python'] = true
         axios.request({
           url: this.urls.pythonUpdateDataUrl,
           method: 'POST',
           data: this.python,
         }).then(res => {
-          console.log(res)
-          this.loading.python = false
           if (res.data.code !== ResponseStatus.OK) {
             this.$Message.error(res.data.message)
           } else {
             this.$Message.success(res.data.message)
           }
+          this.loading['python'] = false
           this.cancelModal('python')
         }).catch(err => {
+          this.loading['python'] = false
           console.log(err)
           this.$Message.error("爬取数据失败")
         })

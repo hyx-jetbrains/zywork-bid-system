@@ -28,8 +28,8 @@ public class ProjectConservancyJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectConservancyJob......");
-        String url = PythonConstants.BASE_URL+"project/conservancy";
-        HttpUtils.timeout(60000);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_CONSERVANCY;
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         projectPythonService.saveProject(data);
         logger.info("executed ProjectConservancyJob......");

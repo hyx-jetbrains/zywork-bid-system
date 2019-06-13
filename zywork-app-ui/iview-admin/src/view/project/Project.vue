@@ -21,6 +21,7 @@
             </DropdownMenu>
           </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
+          <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
           </Tooltip>
@@ -160,7 +161,11 @@
         <Row>
           <i-col span="12">
             <FormItem label="要约价(元)" prop="offerPriceDisplay">
-              <InputNumber v-model="form.offerPriceDisplay" placeholder="请输入要约价(元)" style="width: 100%;"/>
+              <InputNumber
+                v-model="form.offerPriceDisplay"
+                placeholder="请输入要约价(元)"
+                style="width: 100%;"
+              />
             </FormItem>
           </i-col>
           <i-col span="12">
@@ -241,7 +246,7 @@
           </i-col>
         </Row>
         <FormItem label="源地址" prop="sourceUrl">
-          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
         </FormItem>
         <FormItem label="其他要求" prop="otherDemand">
           <Input
@@ -372,7 +377,11 @@
         <Row>
           <i-col span="12">
             <FormItem label="要约价(元)" prop="offerPriceDisplay">
-              <InputNumber v-model="form.offerPriceDisplay" placeholder="请输入要约价(元)" style="width: 100%;"/>
+              <InputNumber
+                v-model="form.offerPriceDisplay"
+                placeholder="请输入要约价(元)"
+                style="width: 100%;"
+              />
             </FormItem>
           </i-col>
           <i-col span="12">
@@ -446,7 +455,7 @@
           </i-col>
         </Row>
         <FormItem label="源地址" prop="sourceUrl">
-          <Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+          <Input v-model="form.sourceUrl" placeholder="请输入源地址"/>
         </FormItem>
         <FormItem label="其他要求" prop="otherDemand">
           <Input
@@ -853,7 +862,7 @@
         <span v-text="form.isActive === 0 ? '激活' : '冻结'"></span>
       </p>
     </Modal>
-		
+
     <Modal v-model="modal.projectDetail" title="招投标项目公示详情" :fullscreen="true">
       <span v-html="form.projectDetail"></span>
     </Modal>
@@ -880,6 +889,31 @@
         <Button type="primary" size="large" @click="edit" :loading="loading.edit">修改</Button>
       </div>
     </Modal>
+    <Modal
+      v-model="modal.python"
+      title="爬取数据"
+      @on-visible-change="changeModalVisibleResetForm('pythonForm', $event)"
+    >
+      <Form ref="pythonForm" :model="python" :label-width="80" :rules="validateRules">
+        <FormItem label="数据来源" prop="sourse">
+          <a :href="sourceDataUrl" target="_blank">{{sourceDataUrl}}</a>
+        </FormItem>
+        <FormItem label="爬取说明" prop="desc">增量爬取<span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取</FormItem>
+        <FormItem label="爬取类型" prop="title">
+          <Select v-model="python.title" placeholder="请选择爬取类型" :label-in-value="true" @on-change="switchSourceDataUrl">
+            <i-option
+              v-for="item in pythonProjectTypeSelect"
+              :value="item.value"
+              :key="item.key"
+            >{{item.label}}</i-option>
+          </Select>
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('python')">取消</Button>
+        <Button type="primary" size="large" @click="crawlData" :loading="loading.python">爬取</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -893,9 +927,12 @@ import {
   projectReleaseStatus,
   projectCity,
   projectMarkStatus,
-  checkPatternSelect
+  checkPatternSelect,
+  pythonProjectTypeSelect
 } from '@/api/select'
 import Editor from '_c/editor'
+import axios from '@/libs/api.request'
+import * as ResponseStatus from '@/api/response-status'
 
 export default {
   name: 'Project',
@@ -910,13 +947,14 @@ export default {
         search: false,
         detail: false,
         projectDetail: false,
-        markDate: false
-
+        markDate: false,
+        python: false
       },
       loading: {
         add: false,
         edit: false,
-        search: false
+        search: false,
+        python: false
       },
       urls: {
         addUrl: '/project/admin/save',
@@ -932,10 +970,16 @@ export default {
         batchActiveUrl: '/project/admin/batch-active',
         uploadUrl: '/project/admin/upload-img',
         releaseStatusUrl: '/project/admin/releaseProject',
-        batchReleaseUrl: '/project/admin/batch-release'
+        batchReleaseUrl: '/project/admin/batch-release',
+        pythonUpdateDataUrl: '/project/admin/python'
       },
       page: {
         total: 0
+      },
+      sourceDataUrl: 'http://jxsggzy.cn/web/jyxx/002001/002001001/jyxx.html',
+      typeLabel: '',
+      python: {
+        title: ''
       },
       form: {
         id: null,
@@ -946,7 +990,7 @@ export default {
         releaseStatus: null,
         markUnitName: null,
         projectInvest: null,
-				projectInvestDisplay: null,
+        projectInvestDisplay: null,
         checkPattern: null,
         compAptitudeType: null,
         builderLevel: null,
@@ -954,9 +998,9 @@ export default {
         tenderingAgent: null,
         phone: null,
         offerPrice: 0,
-				offerPriceDisplay: 0,
+        offerPriceDisplay: 0,
         assurePrice: 0,
-				assurePriceDisplay: 0,
+        assurePriceDisplay: 0,
         constructionPeriod: null,
         downloadEndTime: null,
         otherDemand: null,
@@ -1367,10 +1411,10 @@ export default {
             sortable: true,
             render: (h, params) => {
               const row = params.row
-							let moneyToImplement = 0
-							if(row.moneyToImplement != null) {
-								moneyToImplement = row.moneyToImplement;
-							}
+              let moneyToImplement = 0
+              if (row.moneyToImplement != null) {
+                moneyToImplement = row.moneyToImplement
+              }
               return h(
                 'Progress',
                 {
@@ -1401,8 +1445,8 @@ export default {
             minWidth: 120,
             sortable: true,
             render: (h, params) => {
-							let text = params.row.offerPrice/100;
-							return h('span', '￥' + text)
+              let text = params.row.offerPrice / 100
+              return h('span', '￥' + text)
             }
           },
           {
@@ -1411,8 +1455,8 @@ export default {
             minWidth: 130,
             sortable: true,
             render: (h, params) => {
-            	let text = params.row.assurePrice/100;
-            	return h('span', '￥' + text)
+              let text = params.row.assurePrice / 100
+              return h('span', '￥' + text)
             }
           },
           {
@@ -1457,20 +1501,20 @@ export default {
             key: 'otherDemand',
             minWidth: 120,
             sortable: true,
-						render: (h, params) => {
-						  return h(
-						    'a',
-						    {
-						      on: {
-						        click: () => {
-						          utils.showModal(this, 'detail')
-						          this.form = JSON.parse(JSON.stringify(params.row))
-						        }
-						      }
-						    },
-						    '点击查看'
-						  )
-						}
+            render: (h, params) => {
+              return h(
+                'a',
+                {
+                  on: {
+                    click: () => {
+                      utils.showModal(this, 'detail')
+                      this.form = JSON.parse(JSON.stringify(params.row))
+                    }
+                  }
+                },
+                '点击查看'
+              )
+            }
           },
           {
             title: '开标时间',
@@ -1747,7 +1791,8 @@ export default {
         minRows: 3,
         maxRows: 5
       },
-      projectId: this.$route.params.projectId
+      projectId: this.$route.params.projectId,
+      pythonProjectTypeSelect: pythonProjectTypeSelect
     }
   },
   computed: {},
@@ -1766,6 +1811,10 @@ export default {
         this.form.checkPattern = this.checkPatternSelect[0].value
         this.form.releaseStatus = this.projectReleaseStatus[0].value
         this.form.isElectronic = this.isElectronic[0].value
+      }
+      if (modal === 'python') {
+        this.python.title = this.pythonProjectTypeSelect[0].value
+        this.typeLabel = this.pythonProjectTypeSelect[0].label
       }
       utils.showModal(this, modal)
     },
@@ -1833,16 +1882,22 @@ export default {
         if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
           this.form.offerPriceDisplay = this.form.offerPrice / 100
         }
-				
+
         if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
           this.form.assurePriceDisplay = this.form.assurePrice / 100
         }
       } else if (type === 1) {
-        if (this.form.offerPriceDisplay !== null && this.form.offerPriceDisplay !== 0) {
+        if (
+          this.form.offerPriceDisplay !== null &&
+          this.form.offerPriceDisplay !== 0
+        ) {
           this.form.offerPrice = this.form.offerPriceDisplay * 100
         }
-				
-        if (this.form.assurePriceDisplay !== null && this.form.assurePriceDisplay !== 0) {
+
+        if (
+          this.form.assurePriceDisplay !== null &&
+          this.form.assurePriceDisplay !== 0
+        ) {
           this.form.assurePrice = this.form.assurePriceDisplay * 100
         }
       }
@@ -1885,6 +1940,48 @@ export default {
         name: 'project_resource_manage',
         params: { projectId: projectId }
       })
+    },
+    // 切换原地址
+    switchSourceDataUrl(val) {
+      const label = val.label;
+      if ('房建市政' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002001/002001001/jyxx.html';
+      } else if ('水利工程' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002003/002003001/jyxx.html';
+      } else if ('交通工程' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002002/002002002/jyxx.html';
+      } else if ('政府采购' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002006/002006001/jyxx.html';
+      } else if ('重点项目' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002005/002005001/jyxx.html';
+      } else if ('其他项目' == label) {
+        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002013/002013001/jyxx.html';
+      }
+      this.typeLabel = label;
+    },
+    // 爬取数据
+    crawlData() {
+      this.loading['python'] = true
+      axios
+        .request({
+          url: this.urls.pythonUpdateDataUrl,
+          method: 'POST',
+          data: this.python
+        })
+        .then(res => {
+          if (res.data.code !== ResponseStatus.OK) {
+            this.$Message.error(res.data.message)
+          } else {
+            this.$Message.success(res.data.message)
+          }
+          this.loading['python'] = false
+          this.cancelModal('python')
+        })
+        .catch(err => {
+          this.loading['python'] = false
+          console.log(err)
+          this.$Message.error('爬取数据失败')
+        })
     }
   }
 }

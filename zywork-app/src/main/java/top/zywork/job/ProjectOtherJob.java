@@ -28,8 +28,8 @@ public class ProjectOtherJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectOtherJob......");
-        String url = PythonConstants.BASE_URL+"project/other";
-        HttpUtils.timeout(60000);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_OTHER;
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         projectPythonService.saveProject(data);
         logger.info("executed ProjectOtherJob......");

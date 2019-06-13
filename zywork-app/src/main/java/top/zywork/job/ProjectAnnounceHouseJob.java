@@ -29,8 +29,8 @@ public class ProjectAnnounceHouseJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectAnnounceHouseJob......");
-        String url = PythonConstants.BASE_URL+"project-announce/house";
-        HttpUtils.timeout(60000);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_ANNOUNCE_HOUSE;
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         projectAnnouncePythonService.saveProjectAnnounce(data);
         logger.info("executed ProjectAnnounceHouseJob......");

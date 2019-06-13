@@ -20,6 +20,54 @@ public class PythonConstants {
      * 获取房建业绩信息接口地址
      */
     public static final String COMP_HOUSE_ACHIEVEMENt_INFO_URL = "comp-house-achievement/house";
+    /**
+     * 获取房建工程信息接口地址
+     */
+    public static final String PROJECT_HOUSE = "project/house";
+    /**
+     * 获取重点工程信息接口地址
+     */
+    public static final String PROJECT_KEY = "project/key";
+    /**
+     * 获取其他项目信息接口地址
+     */
+    public static final String PROJECT_OTHER = "project/other";
+    /**
+     * 获取政府采购信息接口地址
+     */
+    public static final String PROJECT_PROCUREMENT = "project/procurement";
+    /**
+     * 获取交通工程信息接口地址
+     */
+    public static final String PROJECT_TRAFFIC = "project/traffic";
+    /**
+     * 获取水利信息接口地址
+     */
+    public static final String PROJECT_CONSERVANCY = "project/conservancy";
+    /**
+     * 获取房建工程公示信息接口地址
+     */
+    public static final String PROJECT_ANNOUNCE_HOUSE = "project-announce/house";
+    /**
+     * 获取重点工程公示信息接口地址
+     */
+    public static final String PROJECT_ANNOUNCE_KEY = "project-announce/key";
+    /**
+     * 获取其他项目公示信息接口地址
+     */
+    public static final String PROJECT_ANNOUNCE_OTHER = "project-announce/other";
+    /**
+     * 获取政府采购公示信息接口地址
+     */
+    public static final String PROJECT_ANNOUNCE_PROCUREMENT = "project-announce/procurement";
+    /**
+     * 获取交通工程公示信息接口地址
+     */
+    public static final String PROJECT_ANNOUNCE_TRAFFIC = "project-announce/traffic";
+    /**
+     * 获取水利公示信息接口地址
+     */
+    public static final String PROJECT_ANNOUNCE_CONSERVANCY = "project-announce/conservancy";
 
 
     /**

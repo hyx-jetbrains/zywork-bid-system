@@ -29,8 +29,8 @@ public class ProjectAnnounceOtherJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectAnnounceOtherJob......");
-        String url = PythonConstants.BASE_URL+"project-announce/other";
-        HttpUtils.timeout(60000);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_ANNOUNCE_CONSERVANCY;
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         projectAnnouncePythonService.saveProjectAnnounce(data);
         logger.info("executed ProjectAnnounceOtherJob......");
