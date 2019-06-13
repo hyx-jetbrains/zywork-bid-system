@@ -194,7 +194,7 @@ public class ArticleController extends BaseController {
 
     @PostMapping("admin/upload-img")
     public ResponseStatusVO upload(MultipartFile file) {
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, false);
         uploadOptions.generateCompressSizes(compressSizes);
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.*;
 import top.zywork.constant.NoticeConstants;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.PythonConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
@@ -211,7 +212,7 @@ public class ProjectController extends BaseController {
 
     @PostMapping("admin/upload-img")
     public ResponseStatusVO upload(MultipartFile file) {
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, false);
         uploadOptions.generateCompressSizes(compressSizes);
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
     }
@@ -249,7 +250,7 @@ public class ProjectController extends BaseController {
                        if(subscribeVO.getCity() != null || ls.size() > 0) {
                            saveNotice(subscribeVO.getUserId(), project.getId());
                        } else if(project.getProjectInvest() != null) {
-                           Pattern pat = Pattern.compile("[\\u4e00-\\u9fa5]");
+                           Pattern pat = Pattern.compile(ProjectConstants.ZHCN_TEXT_REG);
                            Matcher mat = pat.matcher(project.getProjectInvest());
                            Double projectInvest = Double.valueOf(mat.replaceAll(""));
 

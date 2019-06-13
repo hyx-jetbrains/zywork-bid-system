@@ -78,7 +78,6 @@
             :on-exceeded-size="handleMaxSize"
             :before-upload="handleBeforeUpload"
             :on-remove="handleRemoveFile"
-            :on-progress="handleProgress"
             :format="['doc','docx','pdf']"
             :max-size="10240"
             :headers="uploadHeader"

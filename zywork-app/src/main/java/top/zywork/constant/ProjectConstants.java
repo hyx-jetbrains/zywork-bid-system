@@ -48,4 +48,10 @@ public final class ProjectConstants {
      * vip开通服务提示-请购买VIP服务
      */
     public static final String VIP_TEXT_TIP = "请购买VIP服务";
+
+
+    /**
+     * 中字正则
+     */
+    public static final String ZHCN_TEXT_REG = "[\\\\u4e00-\\\\u9fa5]";
 }

@@ -75,7 +75,7 @@ public class ProcessController extends BaseController {
         }
         ProcessDTO processDTO = (ProcessDTO) object;
         String filePath = processDTO.getFilePath();
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(processDir, "", processDir);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(processDir, "", processDir, false);
         ResponseStatusVO responseStatusVO = uploadService.uploadFile(StorageProviderEnum.LOCAL.getProvider(), file, allowedExts, maxSize * 1024 * 1024L, uploadOptions);
         if (responseStatusVO.getCode().intValue() == ResponseStatusEnum.OK.getCode().intValue()) {
             processDTO.setFilePath(responseStatusVO.getData().toString());

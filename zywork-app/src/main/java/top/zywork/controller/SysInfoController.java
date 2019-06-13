@@ -148,7 +148,7 @@ public class SysInfoController extends BaseController {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
                 ResourceConstants.RESOURCE_TYPE_IMAGE, UploadTypeEnum.IMAGE.getAllowedExts(),
-                UploadTypeEnum.IMAGE.getMaxSize());
+                UploadTypeEnum.IMAGE.getMaxSize(), false);
         if (ResponseStatusEnum.OK.getCode().equals(responseStatusVO.getCode())) {
             responseStatusVO.setMessage(type);
         }

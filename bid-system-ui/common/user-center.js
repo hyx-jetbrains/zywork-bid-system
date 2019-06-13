@@ -1256,6 +1256,9 @@ export const getOftenQuerstion = (self, params, type) => {
 		url: BASE_URL + '/often-question/user/list-page',
 		method: 'POST',
 		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				var rows = nullToStr(res.data.data.rows);
@@ -1395,7 +1398,9 @@ export const listAllService = (self) => {
 		url: BASE_URL + '/service/user/all-cond',
 		method: 'POST',
 		data: {},
-		header: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				if (self.myServiceList.length > 0) {

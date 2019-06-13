@@ -78,11 +78,11 @@ public class UploadServiceImpl implements UploadService {
     private ResponseStatusVO saveLocalFile(MultipartFile file, UploadUtils.UploadOptions uploadOptions) {
         ResponseStatusVO responseStatusVO;
         if (uploadOptions.getCompressSizes() != null) {
-            responseStatusVO = UploadUtils.uploadImg(file, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressSizes());
+            responseStatusVO = UploadUtils.uploadImg(file, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressSizes(), uploadOptions.isKeepFileName());
         } else if (uploadOptions.getCompressScales() != null) {
-            responseStatusVO = UploadUtils.uploadImg(file, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressScales());
+            responseStatusVO = UploadUtils.uploadImg(file, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressScales(), uploadOptions.isKeepFileName());
         } else {
-            responseStatusVO = UploadUtils.uploadFile(file, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir());
+            responseStatusVO = UploadUtils.uploadFile(file, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.isKeepFileName());
         }
         if (responseStatusVO.getCode().intValue() == ResponseStatusEnum.OK.getCode().intValue()) {
             responseStatusVO.setData(uploadOptions.getDbSaveUrl() + "/" + responseStatusVO.getData());
@@ -93,11 +93,11 @@ public class UploadServiceImpl implements UploadService {
     private ResponseStatusVO saveLocalFiles(MultipartFile[] files, UploadUtils.UploadOptions uploadOptions) {
         ResponseStatusVO responseStatusVO;
         if (uploadOptions.getCompressSizes() != null) {
-            responseStatusVO = UploadUtils.uploadImgs(files, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressSizes());
+            responseStatusVO = UploadUtils.uploadImgs(files, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressSizes(), uploadOptions.isKeepFileName());
         } else if (uploadOptions.getCompressScales() != null) {
-            responseStatusVO = UploadUtils.uploadImgs(files, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressScales());
+            responseStatusVO = UploadUtils.uploadImgs(files, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.getCompressScales(), uploadOptions.isKeepFileName());
         } else {
-            responseStatusVO = UploadUtils.uploadFiles(files, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir());
+            responseStatusVO = UploadUtils.uploadFiles(files, uploadOptions.getUploadParentDir(), uploadOptions.getUploadDir(), uploadOptions.isKeepFileName());
         }
         if (responseStatusVO.getCode().intValue() == ResponseStatusEnum.OK.getCode().intValue()) {
             for (Object fileName : (List) responseStatusVO.getData()) {

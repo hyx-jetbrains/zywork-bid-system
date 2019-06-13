@@ -201,7 +201,7 @@ public class UserDetailController extends BaseController {
      */
     @PostMapping("admin/upload-headicon/{userId}")
     public ResponseStatusVO uploadHeadicon(@PathVariable("userId") Long userId, MultipartFile file) {
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, false);
         ResponseStatusVO responseStatusVO = uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
         if (responseStatusVO.getCode() == ResponseStatusEnum.OK.getCode().intValue()) {
             UserDetailVO userDetailVO = new UserDetailVO();
@@ -237,7 +237,7 @@ public class UserDetailController extends BaseController {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, false);
         ResponseStatusVO responseStatusVO = uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
         if (responseStatusVO.getCode() == ResponseStatusEnum.OK.getCode().intValue()) {
             UserDetailVO userDetailVO = new UserDetailVO();
@@ -259,7 +259,7 @@ public class UserDetailController extends BaseController {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, false);
         ResponseStatusVO responseStatusVO = uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
         if (responseStatusVO.getCode() == ResponseStatusEnum.OK.getCode().intValue()) {
             UserDetailVO userDetailVO = new UserDetailVO();
@@ -281,7 +281,7 @@ public class UserDetailController extends BaseController {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, false);
         ResponseStatusVO responseStatusVO = uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
         if (responseStatusVO.getCode() == ResponseStatusEnum.OK.getCode().intValue()) {
             UserDetailVO userDetailVO = new UserDetailVO();

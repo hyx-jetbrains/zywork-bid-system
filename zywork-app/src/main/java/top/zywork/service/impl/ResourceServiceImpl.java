@@ -96,11 +96,11 @@ public class ResourceServiceImpl extends AbstractBaseService implements Resource
 
     @Override
     public ResponseStatusVO saveResource(JwtUser jwtUser, MultipartFile file, String resourceType,
-                                         String resourceExts, Long resourceSize) {
+                                         String resourceExts, Long resourceSize, boolean keepFileName) {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, keepFileName);
         if (ResourceConstants.RESOURCE_TYPE_IMAGE.equals(resourceType)) {
             // 如果是图片资源，则需要压缩
             uploadOptions.generateCompressSizes(compressSizes);

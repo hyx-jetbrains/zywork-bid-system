@@ -50,7 +50,7 @@ public class TestController {
         if (file == null) {
             return ResponseStatusVO.dataError("未上传文件", null);
         }
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions("./upload", "test", "dbSaveUrl");
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions("./upload", "test", "dbSaveUrl", false);
         uploadOptions.generateCompressSizes("200x200,300x300");
         return uploadService.uploadFile(StorageProviderEnum.LOCAL.getProvider(), file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
     }

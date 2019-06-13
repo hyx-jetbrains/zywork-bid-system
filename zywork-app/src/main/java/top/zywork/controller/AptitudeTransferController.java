@@ -158,7 +158,7 @@ public class AptitudeTransferController extends BaseController {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
                 ResourceConstants.RESOURCE_TYPE_IMAGE, UploadTypeEnum.IMAGE.getAllowedExts(),
-                UploadTypeEnum.IMAGE.getMaxSize());
+                UploadTypeEnum.IMAGE.getMaxSize(), false);
         return responseStatusVO;
     }
 

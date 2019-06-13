@@ -104,7 +104,7 @@
 								</view>
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 							</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
+							<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
 						</view>
 						<!-- 已开标内容部分 -->
 						<view v-else-if="project.project.markStatus === '已开标'">
@@ -135,7 +135,7 @@
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.project.constructionPeriod}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 						</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
+						<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
 					</view>
 					<!-- 已开标内容部分 -->
 					<view v-else-if="projectStatus.current === 3">

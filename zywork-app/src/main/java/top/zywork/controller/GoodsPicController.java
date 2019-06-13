@@ -68,7 +68,7 @@ public class GoodsPicController extends BaseController {
      */
     @PostMapping("admin/upload/{goodsId}")
     public ResponseStatusVO upload(@PathVariable("goodsId") Long goodsId, MultipartFile file) {
-        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl);
+        UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, false);
         uploadOptions.generateCompressSizes(compressSizes);
         ResponseStatusVO responseStatusVO = uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
         if (responseStatusVO.getCode().intValue() == ResponseStatusEnum.OK.getCode().intValue()) {

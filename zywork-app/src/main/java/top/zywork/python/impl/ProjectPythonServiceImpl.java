@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import top.zywork.common.IOUtils;
 import top.zywork.common.UUIDUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dao.ProjectDAO;
 import top.zywork.python.ProjectPythonService;
 import top.zywork.vo.ProjectVO;
@@ -57,6 +58,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setMoneyToImplement(obj.getFloat("moneyToImplement"));
                     projectVO.setTenderingAgent(obj.getString("tenderingAgent"));
                     projectVO.setPhone(obj.getString("phone"));
+                    projectVO.setMarkStatus(ProjectConstants.MARK_PUBLICIT_NOTICE);
                     if(obj.getLong("offerPrice") != null) {
                         projectVO.setOfferPrice(obj.getLong("offerPrice") * 100);
                     }
