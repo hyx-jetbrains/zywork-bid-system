@@ -458,8 +458,14 @@
 					'title': title,
 					'url': url
 				}
+				uni.showLoading({
+					title: '加载中...'
+				})
 				uni.navigateTo({
-					url: '/pages-static/web-view/web-view?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-static/web-view/web-view?itemData=' + encodeURIComponent(JSON.stringify(item)),
+					complete: () => {
+						uni.hideLoading()
+					}
 				});
 			},
 			/** 公示详情 */
