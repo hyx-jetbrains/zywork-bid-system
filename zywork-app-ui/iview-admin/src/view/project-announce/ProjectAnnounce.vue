@@ -61,11 +61,20 @@
           &nbsp;
           <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
-        <FormItem label="项目标题" prop="title">
-          <Input v-model="form.title" placeholder="请输入项目标题"/>
+        <FormItem label="项目" prop="projectTitle">
+          <span v-text="projectTitle"/>
         </FormItem>
-        <FormItem label="项目类型" prop="title">
-          <Input v-model="form.projectType" placeholder="请输入项目类型"/>
+        <FormItem label="公示标题" prop="title">
+          <Input v-model="form.title" placeholder="请输入公示标题"/>
+        </FormItem>
+        <FormItem label="项目类型" prop="projectType">
+          <Select v-model="form.projectType" placeholder="请选择项目类型" clearable filterable>
+            <i-option
+              v-for="item in projectType"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
@@ -106,11 +115,20 @@
           &nbsp;
           <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
-        <FormItem label="项目标题" prop="title">
-          <Input v-model="form.title" placeholder="请输入项目标题"/>
+         <FormItem label="项目" prop="projectTitle">
+          <span v-text="projectTitle"/>
         </FormItem>
-        <FormItem label="项目类型" prop="title">
-          <Input v-model="form.projectType" placeholder="请输入项目类型"/>
+        <FormItem label="公示标题" prop="title">
+          <Input v-model="form.title" placeholder="请输入公示标题"/>
+        </FormItem>
+        <FormItem label="项目类型" prop="projectType">
+          <Select v-model="form.projectType" placeholder="请选择项目类型" clearable filterable>
+            <i-option
+              v-for="item in projectType"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="第一候选人" prop="firstCandidate">
           <Input v-model="form.firstCandidate" placeholder="请输入第一候选人"/>
@@ -409,9 +427,17 @@
         <FormItem label="数据来源" prop="sourse">
           <a :href="sourceDataUrl" target="_blank">{{sourceDataUrl}}</a>
         </FormItem>
-        <FormItem label="爬取说明" prop="desc">增量爬取<span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取</FormItem>
+        <FormItem label="爬取说明" prop="desc">
+          增量爬取
+          <span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取
+        </FormItem>
         <FormItem label="爬取类型" prop="title">
-          <Select v-model="python.title" placeholder="请选择爬取类型" :label-in-value="true" @on-change="switchSourceDataUrl">
+          <Select
+            v-model="python.title"
+            placeholder="请选择爬取类型"
+            :label-in-value="true"
+            @on-change="switchSourceDataUrl"
+          >
             <i-option
               v-for="item in pythonProjectAnnounceTypeSelect"
               :value="item.value"
@@ -436,7 +462,11 @@ import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
 import { getProjectById } from '@/api/module'
 import ProjectListChoice from '@/view/project/ProjectListChoice.vue'
 import Editor from '_c/editor'
-import { isActiveSelect, pythonProjectAnnounceTypeSelect } from '@/api/select'
+import {
+  isActiveSelect,
+  pythonProjectAnnounceTypeSelect,
+  projectType
+} from '@/api/select'
 import axios from '@/libs/api.request'
 import * as ResponseStatus from '@/api/response-status'
 
@@ -929,7 +959,9 @@ export default {
         selections: []
       },
       isActiveSelect: isActiveSelect,
-      pythonProjectAnnounceTypeSelect: pythonProjectAnnounceTypeSelect
+      pythonProjectAnnounceTypeSelect: pythonProjectAnnounceTypeSelect,
+      projectType: projectType,
+      projectTitle: ''
     }
   },
   computed: {},
@@ -944,6 +976,7 @@ export default {
         this.python.title = this.pythonProjectAnnounceTypeSelect[0].value
         this.typeLabel = this.pythonProjectAnnounceTypeSelect[0].label
       }
+      this.projectTitle = ''
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
@@ -980,6 +1013,10 @@ export default {
         this.showModal('edit')
         this.form = JSON.parse(JSON.stringify(row))
         this.$refs.editorEdit.setHtml(this.form.announceDesc)
+        utils.getOneById('/project/admin/one/', this.form.projectId)
+          .then(res => {
+            this.projectTitle = res.data.data.title
+          })
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -1014,8 +1051,11 @@ export default {
     confirmProject() {
       this.$refs.ProjectListSingle.confirmSelection()
     },
-    confirmChoiceProject(projectId) {
+    confirmChoiceProject(projectId, projectTitle, projectType) {
       this.form.projectId = projectId
+      this.form.title = projectTitle + '[中标候选人公示]'
+      this.projectTitle = projectTitle
+      this.form.projectType = projectType
       this.cancelModal('projectChoice')
     },
     confirmChoice() {
@@ -1050,21 +1090,27 @@ export default {
     },
     // 切换原地址
     switchSourceDataUrl(val) {
-      const label = val.label;
+      const label = val.label
       if ('房建市政公示' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002001/002001004/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002001/002001004/jyxx.html'
       } else if ('水利工程公示' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002003/002003004/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002003/002003004/jyxx.html'
       } else if ('交通工程公示' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002002/002002005/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002002/002002005/jyxx.html'
       } else if ('政府采购公示' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002006/002006004/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002006/002006004/jyxx.html'
       } else if ('重点项目公示' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002005/002005004/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002005/002005004/jyxx.html'
       } else if ('其他项目公示' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002013/002013002/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002013/002013002/jyxx.html'
       }
-      this.typeLabel = label;
+      this.typeLabel = label
     },
     // 爬取数据
     crawlData() {

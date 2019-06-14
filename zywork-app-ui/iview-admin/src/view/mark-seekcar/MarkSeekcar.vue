@@ -555,7 +555,7 @@ export default {
   },
   data() {
     return {
-			markSeekcarId: null,
+			markSeekcarId: 0,
       userDetailForm: {
         userId: null,
         userPhone: null,

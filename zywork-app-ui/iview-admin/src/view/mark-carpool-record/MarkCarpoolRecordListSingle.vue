@@ -157,7 +157,7 @@
 	export default {
 		props: {
 			markCarpoolId: {
-				type: String,
+				type: Number,
         required: true
 			}
 		},

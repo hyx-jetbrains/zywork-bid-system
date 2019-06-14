@@ -15,6 +15,7 @@ import top.zywork.common.StringUtils;
 import top.zywork.common.UploadUtils;
 import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
+import top.zywork.dto.ProjectDTO;
 import top.zywork.dto.ProjectResourceDTO;
 import top.zywork.dto.ResourceDTO;
 import top.zywork.enums.ResponseStatusEnum;
@@ -23,6 +24,7 @@ import top.zywork.query.ProjectResourceQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.ProjectResourceService;
+import top.zywork.service.ProjectService;
 import top.zywork.service.ResourceService;
 import top.zywork.service.UploadService;
 import top.zywork.vo.ResourceVO;
@@ -50,12 +52,23 @@ public class ProjectResourceController extends BaseController {
 
     private ResourceService resourceService;
 
+    private ProjectService projectService;
+
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectResourceVO projectResourceVO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
-        projectResourceService.save(BeanUtils.copy(projectResourceVO, ProjectResourceDTO.class));
+
+        int i = projectResourceService.save(BeanUtils.copy(projectResourceVO, ProjectResourceDTO.class));
+        if (i > 0) {
+            // 保存成功更新项目表个数
+            Object obj = projectService.getById(projectResourceVO.getProjectId());
+            ProjectDTO projectDTO = BeanUtils.copy(obj, ProjectDTO.class);
+            int resourceCount = projectDTO.getResourceCount() + 1;
+            projectDTO.setResourceCount(resourceCount);
+            projectService.update(projectDTO);
+        }
         return ResponseStatusVO.ok("添加成功", null);
     }
 
@@ -165,5 +178,10 @@ public class ProjectResourceController extends BaseController {
     @Autowired
     public void setResourceService(ResourceService resourceService) {
         this.resourceService = resourceService;
+    }
+
+    @Autowired
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
     }
 }

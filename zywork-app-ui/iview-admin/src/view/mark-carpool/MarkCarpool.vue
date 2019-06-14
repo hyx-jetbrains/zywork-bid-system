@@ -441,7 +441,7 @@
 		},
 		data() {
 			return {
-				markCarpoolId: null,
+				markCarpoolId: 0,
 				userDetailForm: {
 					userId: null,
 					userPhone: null,
@@ -1077,8 +1077,8 @@
 				} else if (itemName === 'projectShowSearch') {
 					utils.showModal(this, 'projectDetalSearch')
 				} else if (itemName === 'showMarkCarpoolRecord') {
-					utils.showModal(this, 'markCarpoolRecordSeach')
-					this.markCarpoolId = row.id
+          this.markCarpoolId = row.id
+          utils.showModal(this, 'markCarpoolRecordSeach')
 				}
 			},
 			showUserDetailModal(id) {

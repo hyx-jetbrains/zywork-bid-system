@@ -157,7 +157,7 @@
 	export default {
 		props: {
 			markSeekcarId: {
-				type: String,
+				type: Number,
 		    required: true
 			}
 		},

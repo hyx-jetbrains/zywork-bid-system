@@ -20,6 +20,21 @@
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>&nbsp;
+          <Dropdown @on-click="projectTypeSearch">
+            <Button type="primary">
+              {{currProjectType}}
+              <Icon type="ios-arrow-down"></Icon>
+            </Button>
+            <DropdownMenu slot="list">
+              <DropdownItem name="all">全部</DropdownItem>
+              <DropdownItem name="building">房建市政</DropdownItem>
+              <DropdownItem name="hydraulic">水利工程</DropdownItem>
+              <DropdownItem name="traffic">交通工程</DropdownItem>
+              <DropdownItem name="purchase">政府采购</DropdownItem>
+              <DropdownItem name="important">重点工程</DropdownItem>
+              <DropdownItem name="other">其他项目</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
           <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
@@ -758,6 +773,10 @@
         <span v-text="form.releaseStatus"></span>
       </p>
       <p>
+        附件个数:
+        <span v-text="form.resourceCount"></span>
+      </p>
+      <p>
         招标单位名称:
         <span v-text="form.markUnitName"></span>
       </p>
@@ -1017,7 +1036,8 @@ export default {
         version: null,
         createTime: null,
         updateTime: null,
-        isActive: null
+        isActive: null,
+        resourceCount: null
       },
       validateRules: {
         title: [
@@ -1265,7 +1285,7 @@ export default {
             fixed: 'left'
           },
           {
-            width: 60,
+            width: 50,
             align: 'center',
             fixed: 'left',
             render: (h, params) => {
@@ -1278,16 +1298,24 @@ export default {
             }
           },
           {
-            title: '招投标项目编号',
-            key: 'id',
-            minWidth: 140,
-            sortable: true
-          },
-          {
             title: '项目名称',
             key: 'title',
             minWidth: 180,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              return h(
+                'a',
+                {
+                  on: {
+                    click: () => {
+                      utils.showModal(this, 'projectDetail')
+                      this.form = JSON.parse(JSON.stringify(params.row))
+                    }
+                  }
+                },
+                params.row.title
+              )
+            }
           },
           {
             title: '项目类型',
@@ -1300,6 +1328,50 @@ export default {
             key: 'city',
             minWidth: 120,
             sortable: true
+          },
+          {
+            title: '开标时间',
+            key: 'openMarkTime',
+            minWidth: 120,
+            sortable: true
+          },
+          {
+            title: '源地址',
+            key: 'sourceUrl',
+            minWidth: 180,
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              return h(
+                'a',
+                {
+                  attrs: {
+                    href: row.sourceUrl,
+                    target: '_blank'
+                  }
+                },
+                row.sourceUrl
+              )
+            }
+          },
+          {
+            title: '附件个数',
+            key: 'resourceCount',
+            minWidth: 100,
+            render: (h, params) => {
+              const resourceCount = params.row.resourceCount
+              return h(
+                'a',
+                {
+                  on: {
+                    click: () => {
+                      this.userOpt('showEnclosure', params.row)
+                    }
+                  }
+                },
+                resourceCount
+              )
+            }
           },
           {
             title: '项目详情',
@@ -1472,25 +1544,6 @@ export default {
             sortable: true
           },
           {
-            title: '源地址',
-            key: 'sourceUrl',
-            minWidth: 180,
-            sortable: true,
-            render: (h, params) => {
-              const row = params.row
-              return h(
-                'a',
-                {
-                  attrs: {
-                    href: row.sourceUrl,
-                    target: '_blank'
-                  }
-                },
-                row.sourceUrl
-              )
-            }
-          },
-          {
             title: '内部地址',
             key: 'inwardHtmlUrl',
             minWidth: 120,
@@ -1515,12 +1568,6 @@ export default {
                 '点击查看'
               )
             }
-          },
-          {
-            title: '开标时间',
-            key: 'openMarkTime',
-            minWidth: 120,
-            sortable: true
           },
           {
             title: '开标地点',
@@ -1792,7 +1839,8 @@ export default {
         maxRows: 5
       },
       projectId: this.$route.params.projectId,
-      pythonProjectTypeSelect: pythonProjectTypeSelect
+      pythonProjectTypeSelect: pythonProjectTypeSelect,
+      currProjectType: '全部'
     }
   },
   computed: {},
@@ -1838,6 +1886,32 @@ export default {
       this.searchForm.pageNo = 1
       utils.search(this)
     },
+    /** 项目类型查询 */
+    projectTypeSearch(itemName) {
+      let projectType = ''
+      if (itemName === 'building') {
+        projectType = '房建市政'
+      } else if (itemName === 'hydraulic') {
+        projectType = '水利工程'
+      } else if (itemName === 'traffic') {
+        projectType = '交通工程'
+      } else if (itemName === 'purchase') {
+        projectType = '政府采购'
+      } else if (itemName === 'important') {
+        projectType = '重点工程'
+      } else if (itemName === 'other') {
+        projectType = '其他项目'
+      } else if (itemName === 'all') {
+        projectType = ''
+      }
+      if (itemName === 'all') {
+        this.currProjectType = '全部'
+      } else {
+        this.currProjectType = projectType
+      }
+      this.searchForm.projectType = projectType;
+      this.search();
+    },
     batchOpt(itemName) {
       if (itemName === 'batchActive') {
         utils.batchActive(this, 0)
@@ -1863,6 +1937,10 @@ export default {
       } else if (itemName === 'releaseProject') {
         if (row.releaseStatus !== '待审核') {
           this.$Message.warning('该信息不是待审核状态，不能发布')
+          return
+        }
+        if (row.city === '' || row.city === null || row.city === undefined) {
+          this.$Message.warning('请先设置城市后再发布')
           return
         }
         row.releaseStatus = '已发布'

@@ -154,7 +154,16 @@ public class ProjectQuery extends PageQuery {
 	private Byte isActiveMin;
 	// 是否激活（最大值）
 	private Byte isActiveMax;
-	
+	// 附件个数
+	private Integer resourceCount;
+
+	public Integer getResourceCount() {
+		return resourceCount;
+	}
+
+	public void setResourceCount(Integer resourceCount) {
+		this.resourceCount = resourceCount;
+	}
     public ProjectQuery () {}
 
     public ProjectQuery (Long id, Long idMin, Long idMax, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, Float moneyToImplementMin, Float moneyToImplementMax, String tenderingAgent, String phone, Long offerPrice, Long offerPriceMin, Long offerPriceMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Date downloadEndTime, Date downloadEndTimeMin, Date downloadEndTimeMax, String otherDemand, String openMarkInfo, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Date noticeTimeMin, Date noticeTimeMax, Long clickCount, Long clickCountMin, Long clickCountMax, Byte isElectronic, Byte isElectronicMin, Byte isElectronicMax, String sourceUrl, String inwardHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {

@@ -81,7 +81,16 @@ public class ProjectDTO extends BaseDTO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
-	
+	// 附件个数
+	private Integer resourceCount;
+
+	public Integer getResourceCount() {
+		return resourceCount;
+	}
+
+	public void setResourceCount(Integer resourceCount) {
+		this.resourceCount = resourceCount;
+	}
     public ProjectDTO () {}
 
     public ProjectDTO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, String inwardHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {

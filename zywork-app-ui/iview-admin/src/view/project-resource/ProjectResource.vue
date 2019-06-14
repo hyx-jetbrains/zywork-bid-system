@@ -60,6 +60,9 @@
           &nbsp;
           <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
+        <FormItem label="项目" prop="projectTitle">
+          <span v-text="projectTitle"/>
+        </FormItem>
         <FormItem label="资源类别" prop="resType">
           <Select v-model="form.resType" placeholder="请选择资源类别" clearable filterable>
             <i-option
@@ -105,6 +108,9 @@
           <span v-text="form.projectId"/>
           &nbsp;
           <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
+        </FormItem>
+        <FormItem label="项目" prop="projectTitle">
+          <span v-text="projectTitle"/>
         </FormItem>
         <FormItem label="资源类别" prop="resType">
           <Select v-model="form.resType" placeholder="请选择资源类别" clearable filterable>
@@ -821,6 +827,7 @@ export default {
       },
       projectId: this.$route.params.projectId,
       imgUrl: '',
+      projectTitle: ''
     }
   },
   computed: {},
@@ -845,6 +852,8 @@ export default {
         this.form.resourceId = null
         this.$refs.uploadFile.clearFiles()
       }
+      this.form.projectId = ''
+      this.projectTitle = ''
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
@@ -880,6 +889,10 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
+        utils.getOneById('/project/admin/one/', this.form.projectId)
+          .then(res => {
+            this.projectTitle = res.data.data.title
+          })
       } else if (itemName === 'showDetail') {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
@@ -914,8 +927,9 @@ export default {
     confirmProject() {
       this.$refs.ProjectListSingle.confirmSelection()
     },
-    confirmChoiceProject(projectId) {
+    confirmChoiceProject(projectId, projectTitle, projectType) {
       this.form.projectId = projectId
+      this.projectTitle = projectTitle
       this.cancelModal('projectChoice')
     },
     confirmChoice() {

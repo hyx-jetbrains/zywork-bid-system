@@ -37,7 +37,7 @@ public class ProcessDO extends BaseDO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
-	
+
     public ProcessDO () {}
 
     public ProcessDO (Long id, String processName, String processKey, String filePath, String description, Byte isDeploy, Date deployTime, Integer version, Date createTime, Date updateTime, Byte isActive) {

@@ -1815,6 +1815,7 @@ CREATE TABLE `t_project`  (
   `is_electronic` tinyint(4) NULL DEFAULT 0 COMMENT '是否电子标',
   `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
   `inward_html_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内部地址',
+  `version` int(11) NULL DEFAULT 0 COMMENT '附件个数',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
