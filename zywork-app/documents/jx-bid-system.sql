@@ -1269,7 +1269,7 @@ CREATE TABLE `t_project`  (
   `open_mark_info` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标信息',
   `open_mark_time` datetime(0) NULL DEFAULT NULL COMMENT '开标时间',
   `open_mark_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标地点',
-  `mark_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标状态',
+  `mark_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '公告中' COMMENT '开标状态',
   `in_mark_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标单位',
   `notice_time` datetime(0) NULL DEFAULT NULL COMMENT '公告时间',
   `click_count` bigint(20) NULL DEFAULT 0 COMMENT '点击次数',

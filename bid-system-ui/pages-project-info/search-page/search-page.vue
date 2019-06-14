@@ -56,8 +56,8 @@
 								</view>
 								<view class="zy-text-mini zy-text-info">
 									公告时间：
-									<text v-if="project.project.noticeTime !== null && project.project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
-										{{project.project.noticeTime}}
+									<text v-if="project.project.noticeTime !== ''" class="zy-text-mini zy-text-info">
+										{{project.project.noticeTime.split(' ')[0]}}
 									</text>
 									<text v-else class="zy-text-mini zy-text-info">
 										暂无
@@ -70,14 +70,13 @@
 									<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
 									<uni-tag :text="project.project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
 								</view>
-								<view class="zy-text-mini zy-text-warning" 
-									v-if="project.project.openMarkTime !== ''">
+								<view class="zy-text-mini zy-text-warning" v-if="project.project.openMarkTime !== ''">
 									开标日期：{{project.project.openMarkTime}}
 								</view>
 								<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view>
 							</view>
 						</view>
-			
+
 						<!-- 全部内容部分 -->
 						<view v-if="projectStatus.current === 0">
 							<!-- 公告中内容部分 -->
@@ -106,7 +105,7 @@
 									</view>
 									<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 								</view>
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
+								<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
 							</view>
 							<!-- 已开标内容部分 -->
 							<view v-else-if="project.project.markStatus === '已开标'">
@@ -137,7 +136,7 @@
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.project.constructionPeriod}}</view>
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 							</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
+							<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
 						</view>
 						<!-- 已开标内容部分 -->
 						<view v-else-if="projectStatus.current === 3">
@@ -148,17 +147,23 @@
 					<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
 						<view></view>
 						<view class="zy-disable-flex-right zy-disable-flex">
-							<view  v-for="(item, index_1) in project.obj" :key="index_1">
-								<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-								<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-								<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-								<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-								<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<view v-for="(item, index_1) in project.obj" :key="index_1">
+								<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
+
 			<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
 
 			<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
@@ -172,7 +177,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
 			<scroll-view :scroll-y="true" class="uni-center center-box">
 				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
@@ -189,12 +194,13 @@
 
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
-	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import zyworkNoticeBar from '@/components/zywork-notice-bar/zywork-notice-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import zyworkCalendar from '@/components/zywork-calendar/zywork-calendar.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
-
+	import zyworkFab from '@/components/zywork-fab/zywork-fab.vue'
 	import {
 		IMAGE_BASE_URL,
 		DEFAULT_HEADICON,
@@ -202,7 +208,14 @@
 		toLoginPage,
 		getCalendarDate,
 		formatCalendarDate,
-		DOCUMENT_BASE_URL
+		DOCUMENT_BASE_URL,
+		SHARE_CODE_PAGE_IMG,
+		getShareCode,
+		SHARE_CODE,
+		getResourceByProjectId,
+		callPhone,
+		CUSTOMER_CONFIG,
+		getCurrentDate
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -285,7 +298,7 @@
 						},
 						{
 							id: 'important',
-							name: '重点项目'
+							name: '重点工程'
 						},
 						{
 							id: 'other',
@@ -301,7 +314,8 @@
 					startDate: '',
 					date: '',
 					timeData: null,
-					currentFormatDate: formatCalendarDate(new Date())
+					// currentFormatDate: formatCalendarDate(new Date())
+					currentFormatDate: '暂未选择'
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				projectTypeName: '房建市政',
@@ -315,8 +329,9 @@
 					markStatus: '',
 					isActive: 0,
 					releaseStatus: '已发布',
-					title: '',
-					city: ''
+					city: '',
+					openMarkTimeMin: null,
+					openMarkTimeMax: null
 				},
 				imgBaseUrl: IMAGE_BASE_URL,
 				headicon: DEFAULT_HEADICON,
@@ -475,19 +490,27 @@
 						this.projectPager.markStatus = this.projectStatus.items[index]
 					}
 					this.initPager();
-					this.updateProjectList('init');
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
 					} else {
 						this.showChooseDate = false
+						this.projectPager.openMarkTimeMin = null
+						this.projectPager.openMarkTimeMax = null
 					}
+					this.updateProjectList('init');
 				}
 			},
-			/** 打开日期框 */
 			openCalendar() {
 				this.calendar.startDate = getCalendarDate(new Date())
 				this.calendar.date = this.calendar.date === '' ? getCalendarDate(new Date()) : this.calendar.date
 				this.calendar.showCalendar = true
+			},
+			resetCalendar() {
+				this.calendar.currentFormatDate = '暂未选择'
+				this.initPager();
+				this.projectPager.openMarkTimeMin = null
+				this.projectPager.openMarkTimeMax = null
+				this.updateProjectList('init');
 			},
 			change(e) {
 				this.calendar.timeData = e;
@@ -502,13 +525,17 @@
 				this.calendar.date = this.calendar.timeData.fulldate
 				this.calendar.currentFormatDate = this.calendar.timeData.fulldate + ' ' + this.calendar.timeData.lunar.ncWeek
 				this.calendar.showCalendar = false;
+				this.initPager()
+				this.projectPager.openMarkTimeMin = this.calendar.date + ' 0:0:0'
+				this.projectPager.openMarkTimeMax = this.calendar.date + ' 23:59:59'
+				this.updateProjectList('init');
 			},
 			/** 前往项目详情 */
 			toProjectDetail(item) {
 				item.project.clickCount += 1;
 				projectInfo.projectClickCount(this, item.project);
 				uni.navigateTo({
-					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(item.project.id)
 				})
 			},
 			getResourceFile(projectId, type) {
@@ -537,6 +564,9 @@
 				if (this.isShowFileList) {
 					this.isShowFileList = false;
 				}
+				uni.showLoading({
+					title: '加载中...'
+				})
 				uni.downloadFile({
 					url: DOCUMENT_BASE_URL + "/" + url,
 					success: (res) => {
@@ -544,6 +574,9 @@
 							filePath: res.tempFilePath,
 							success: () => {
 								console.log('打开文档成功');
+							},
+							complete: () => {
+								uni.hideLoading()
 							}
 						});
 					}

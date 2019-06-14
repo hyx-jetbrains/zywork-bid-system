@@ -27,8 +27,8 @@
 							</view>
 							<view class="zy-text-mini zy-text-info">
 								公告时间：
-								<text v-if="project.project.noticeTime !== null && project.project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
-									{{project.project.noticeTime}}
+								<text v-if="project.project.noticeTime !== ''" class="zy-text-mini zy-text-info">
+									{{project.project.noticeTime.split(' ')[0]}}
 								</text>
 								<text v-else class="zy-text-mini zy-text-info">
 									暂无
@@ -48,7 +48,7 @@
 							<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view>
 						</view>
 					</view>
-		
+
 					<!-- 全部内容部分 -->
 					<view v-if="projectStatus.current === 0">
 						<!-- 公告中内容部分 -->
@@ -77,7 +77,7 @@
 								</view>
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 							</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
+							<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
 						</view>
 						<!-- 已开标内容部分 -->
 						<view v-else-if="project.project.markStatus === '已开标'">
@@ -108,7 +108,7 @@
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.project.constructionPeriod}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 						</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view>
+						<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
 					</view>
 					<!-- 已开标内容部分 -->
 					<view v-else-if="projectStatus.current === 3">
@@ -120,11 +120,11 @@
 					<view></view>
 					<view class="zy-disable-flex-right zy-disable-flex">
 						<view  v-for="(item, index_1) in project.obj" :key="index_1">
-							<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 						</view>
 					</view>
 				</view>
@@ -233,7 +233,7 @@
 						},
 						{
 							id: 'important',
-							name: '重点项目'
+							name: '重点工程'
 						},
 						{
 							id: 'other',
@@ -334,6 +334,9 @@
 				if (this.isShowFileList) {
 					this.isShowFileList = false;
 				}
+				uni.showLoading({
+					title: '加载中...'
+				})
 				uni.downloadFile({
 					url: DOCUMENT_BASE_URL + "/" + url,
 					success: (res) => {
@@ -341,6 +344,9 @@
 							filePath: res.tempFilePath,
 							success: () => {
 								console.log('打开文档成功');
+							},
+							complete: () => {
+								uni.hideLoading()
 							}
 						});
 					}
@@ -348,8 +354,10 @@
 			},
 			// 前往项目详情
 			toProjectDetail(item) {
+				item.project.clickCount += 1;
+				projectInfo.projectClickCount(this, item.project);
 				uni.navigateTo({
-					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(item.project.id)
 				})
 			},
 			getResourceFile(projectId, type) {

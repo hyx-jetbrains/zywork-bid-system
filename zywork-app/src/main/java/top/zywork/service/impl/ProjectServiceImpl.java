@@ -104,9 +104,9 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 resourceCountVO.setObj(obj);
                 arrList.add(resourceCountVO);
             }
-            pagerDTO.setRows(arrList);
-            pagerDTO.setTotal(count);
         }
+        pagerDTO.setRows(arrList);
+        pagerDTO.setTotal(count);
         return pagerDTO;
     }
 
