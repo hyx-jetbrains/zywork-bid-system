@@ -188,7 +188,10 @@ export const projectClickCount = (self, projectItem) => {
 	uni.request({
 		url: BASE_URL + '/project/user/update',
 		method: 'POST',
-		data: projectItem,
+		data: {
+			id: projectItem.id,
+			clickCount: projectItem.clickCount
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},

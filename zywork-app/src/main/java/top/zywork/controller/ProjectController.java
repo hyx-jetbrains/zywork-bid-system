@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -296,7 +295,11 @@ public class ProjectController extends BaseController {
      */
     @PostMapping("user/update")
     public ResponseStatusVO userUpdate(@RequestBody ProjectVO projectVO, BindingResult bindingResult) {
-        return update(projectVO, bindingResult);
+        int updateRows = projectService.update(projectVO);
+        if (updateRows == 1) {
+            return ResponseStatusVO.ok("更新成功", null);
+        }
+        return ResponseStatusVO.error("更新失败", null);
     }
 
     /**
