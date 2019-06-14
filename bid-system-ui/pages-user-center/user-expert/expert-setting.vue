@@ -5,7 +5,7 @@
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold">姓名</view>
+							<view class="uni-label zy-text-bold zy-required">姓名</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入真实姓名" v-model="formInfo.name"></input>
@@ -26,7 +26,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold">年龄</view>
+							<view class="uni-label zy-text-bold zy-required">年龄</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="number" :disabled="false" placeholder="输入年龄" v-model="formInfo.age"></input>
@@ -69,7 +69,7 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
-							<view class="uni-label zy-text-bold">联系电话</view>
+							<view class="uni-label zy-text-bold zy-required">联系电话</view>
 						</view>
 						<view class="uni-list-cell-db">
 							<input class="uni-input" type="text" :disabled="false" placeholder="输入联系电话" v-model="formInfo.phone"></input>

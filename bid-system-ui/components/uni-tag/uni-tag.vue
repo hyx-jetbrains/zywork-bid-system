@@ -48,7 +48,7 @@
 
 	.uni-tag {
 		box-sizing: border-box;
-		padding: 0 32upx;
+		padding: 0 28upx;
 		height: 60upx;
 		line-height: calc(60upx - 2px);
 		font-size: 28upx;

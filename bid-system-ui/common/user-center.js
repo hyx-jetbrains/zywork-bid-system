@@ -112,11 +112,38 @@ export const getExpertQuesTionTypeByUserId = (self) => {
 		}
 	})
 }
-
+/**
+ * 检测用户申请专家的数据
+ * @param {Object} params
+ */
+export const checkSaveExpert = (params) => {
+	if (params.name === null
+		|| params.name === undefined
+		|| params.name === '') {
+		showInfoToast("请输入姓名");
+		return false;
+	}
+	if (params.phone === null
+		|| params.phone === undefined
+		|| params.phone === '') {
+		showInfoToast("请输入手机号");
+		return false;
+	}
+	if (params.age === null
+		|| params.age === undefined
+		|| params.age === '') {
+		showInfoToast("请输入年龄");
+		return false;
+	}
+	return true;
+}
 /**
  * 申请成为专家
  */
 export const saveExpert = (self, params) => {
+	if (!checkSaveExpert(params)) {
+		return;
+	}
 	uni.showLoading({
 		title: '加载中'
 	})

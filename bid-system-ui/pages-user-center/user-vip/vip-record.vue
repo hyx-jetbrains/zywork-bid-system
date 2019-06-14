@@ -79,9 +79,7 @@
 		<view class="zy-record-card-left"></view>
 		<view class="zy-record-card-right"></view>
 		<view class="zy-bottom-button" v-if="showBtn">
-			<!-- #ifdef MP-WEIXIN -->
 			<button type="primary" @click="payRecord" :disabled="payBtnDisabled">立即支付</button>
-			<!-- #endif -->
 		</view>
 	</view>
 </template>
@@ -309,5 +307,10 @@
 	.zy-record-card-item-border {
 		border-bottom: 2upx solid $border-color;
 		margin: 80upx 30upx;
+	}
+	.zy-bottom-button {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
 	}
 </style>

@@ -86,11 +86,11 @@
 							<view></view>
 							<view class="zy-disable-flex-right zy-disable-flex">
 								<view  v-for="(item, index_1) in project.obj" :key="index_1">
-									<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-									<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-									<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-									<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="default" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
-									<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="small" :inverted="true" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 								</view> 
 							</view>
 						</view>
