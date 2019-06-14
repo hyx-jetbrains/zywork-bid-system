@@ -54,8 +54,8 @@
 							</view>
 							<view class="zy-text-mini zy-text-info">
 								公告时间：
-								<text v-if="project.project.noticeTime !== null && project.project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
-									{{project.project.noticeTime}}
+								<text v-if="project.project.noticeTime !== ''" class="zy-text-mini zy-text-info">
+									{{project.project.noticeTime.split(' ')[0]}}
 								</text>
 								<text v-else class="zy-text-mini zy-text-info">
 									暂无
@@ -324,7 +324,7 @@
 						},
 						{
 							id: 'important',
-							name: '重点项目'
+							name: '重点工程'
 						},
 						{
 							id: 'other',

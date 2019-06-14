@@ -123,22 +123,21 @@ export const getProjectList = (self, type, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				const rows = nullToStr(res.data.data.rows);
 				if (type === 'init') {
-					self.projects = res.data.data.rows;
+					self.projects = rows;
 				} else if (type === 'pullDown') {
-					self.projects = self.projects.concat(res.data.data.rows)
-					self.projects = res.data.data.rows;
+					self.projects = rows;
 					uni.stopPullDownRefresh()
 					self.showLoadMore = false
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
+					if (res.data.data.total > 0) {
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
 					}
 				}
-				self.projects = nullToStr(self.projects)
 			} else {
 				showInfoToast(res.data.message)
 			}
