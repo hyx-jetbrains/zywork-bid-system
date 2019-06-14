@@ -226,7 +226,8 @@
 		SHARE_CODE,
 		getResourceByProjectId,
 		callPhone,
-		CUSTOMER_CONFIG
+		CUSTOMER_CONFIG,
+		getCurrentDate
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -353,7 +354,9 @@
 					markStatus: '',
 					isActive: 0,
 					releaseStatus: '已发布',
-					city: ''
+					city: '',
+					openMarkTimeMin: null,
+					openMarkTimeMax: null
 				},
 				imgBaseUrl: IMAGE_BASE_URL,
 				headicon: DEFAULT_HEADICON,
@@ -487,12 +490,17 @@
 						this.projectPager.markStatus = this.projectStatus.items[index]
 					}
 					this.initPager();
-					this.updateProjectList('init');
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
+						let date = getCurrentDate()
+						this.projectPager.openMarkTimeMin = date + ' 0:0:0'
+						this.projectPager.openMarkTimeMax = date + ' 23:59:59'
 					} else {
 						this.showChooseDate = false
+						this.projectPager.openMarkTimeMin = null
+						this.projectPager.openMarkTimeMax = null
 					}
+					this.updateProjectList('init');
 				}
 			},
 			openCalendar() {
@@ -513,6 +521,10 @@
 				this.calendar.date = this.calendar.timeData.fulldate
 				this.calendar.currentFormatDate = this.calendar.timeData.fulldate + ' ' + this.calendar.timeData.lunar.ncWeek
 				this.calendar.showCalendar = false;
+				this.initPager()
+				this.projectPager.openMarkTimeMin = this.calendar.date + ' 0:0:0'
+				this.projectPager.openMarkTimeMax = this.calendar.date + ' 23:59:59'
+				this.updateProjectList('init');
 			},
 			toSearchPage() {
 				uni.navigateTo({

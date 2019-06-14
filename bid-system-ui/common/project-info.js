@@ -133,6 +133,7 @@ export const getProjectList = (self, type, params) => {
 					self.loadMoreText = '加载中...'
 				} else if (type === 'reachBottom') {
 					if (res.data.data.total > 0) {
+						self.projects = self.projects.concat(rows)
 						self.loadMoreText = '加载更多'
 					} else {
 						self.loadMoreText = '已加载全部'
