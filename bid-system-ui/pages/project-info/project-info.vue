@@ -39,7 +39,10 @@
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
 
-		<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
+		<view class="zy-choose-date" v-if="showChooseDate">
+			<text @click="openCalendar">开标日期：{{calendar.currentFormatDate}}</text>
+			<text style="color: #108EE9; margin-left: 10upx;" @click="resetCalendar">重置</text>
+		</view>
 
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
 			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
@@ -341,7 +344,8 @@
 					startDate: '',
 					date: '',
 					timeData: null,
-					currentFormatDate: formatCalendarDate(new Date())
+					// currentFormatDate: formatCalendarDate(new Date())
+					currentFormatDate: '暂未选择'
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				projects: [],
@@ -492,9 +496,6 @@
 					this.initPager();
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
-						let date = getCurrentDate()
-						this.projectPager.openMarkTimeMin = date + ' 0:0:0'
-						this.projectPager.openMarkTimeMax = date + ' 23:59:59'
 					} else {
 						this.showChooseDate = false
 						this.projectPager.openMarkTimeMin = null
@@ -507,6 +508,13 @@
 				this.calendar.startDate = getCalendarDate(new Date())
 				this.calendar.date = this.calendar.date === '' ? getCalendarDate(new Date()) : this.calendar.date
 				this.calendar.showCalendar = true
+			},
+			resetCalendar() {
+				this.calendar.currentFormatDate = '暂未选择'
+				this.initPager();
+				this.projectPager.openMarkTimeMin = null
+				this.projectPager.openMarkTimeMax = null
+				this.updateProjectList('init');
 			},
 			change(e) {
 				this.calendar.timeData = e;
