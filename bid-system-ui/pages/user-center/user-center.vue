@@ -11,11 +11,15 @@
 							<view class="zy-text-small">获取手机号</view>
 						</button>
 					</view>
-					<view style="margin-left: 100upx;">
-						<zywork-icon type="iconhuiyuanquanyi" :color="vipIconColor" size="24" style="display: inline-block; margin-right: 20upx;"
-						 @click.native="toUserVip" />
-						<zywork-icon type="iconzhuanjiarenzheng" :color="expertIconColor" size="24" style="display: inline-block;"
-						 @click.native="toUserExpert" />
+					<view style="margin-left: 100upx; display: flex; flex-direction: row; align-items: center;">
+						<view class="zy-icon-text" @click="toUserVip">
+							<zywork-icon type="iconhuiyuanquanyi" :color="vipIconColor" size="20" style="display: inline-block; margin-right: 20upx;"/>
+							 <text :style="{color:vipIconColor}">服务订购</text>
+						</view>
+						<view class="zy-icon-text" @click="toUserExpert">
+							<zywork-icon type="iconzhuanjiarenzheng" :color="expertIconColor" size="20" style="display: inline-block;"/>
+							 <text :style="{color:expertIconColor}">专家申请</text>
+						 </view>
 					</view>
 				</view>
 				<zywork-icon class="zy-user-more" type="iconiconfonti" size="20" color="#FFFFFF" @click.native="toUserSetting" />
@@ -334,5 +338,16 @@
 
 	.zy-user-balance-item:first-child {
 		border-right: 1px solid $seperator-color;
+	}
+	
+	.zy-icon-text {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-right: 20upx;
+	}
+	
+	.zy-icon-text zywork-icon view {
+		line-height: 1.0;
 	}
 </style>
