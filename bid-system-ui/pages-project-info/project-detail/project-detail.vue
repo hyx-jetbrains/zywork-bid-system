@@ -481,7 +481,7 @@
 			},
 			/** 公示详情 */
 			toAnnounceDetail() {
-				if (this.projectAnnounce.id !== null && this.projectAnnounce.inwordHtmlUrl !== null) {
+				if (this.projectAnnounce.id !== null && this.projectAnnounce.inwordHtmlUrl !== '') {
 					this.toWebViewPage("公示详情", DOCUMENT_BASE_URL +"/"+ this.projectAnnounce.inwordHtmlUrl);
 				} else {
 					uni.showModal({

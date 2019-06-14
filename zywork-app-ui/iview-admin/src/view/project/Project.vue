@@ -1328,7 +1328,7 @@ export default {
           {
             title: '发布状态',
             key: 'releaseStatus',
-            minWidth: 100,
+            minWidth: 90,
             sortable: true,
             render: (h, params) => {
               const row = params.row
@@ -1382,13 +1382,13 @@ export default {
           {
             title: '项目类型',
             key: 'projectType',
-            minWidth: 100,
+            minWidth: 90,
             sortable: true
           },
           {
             title: '城市',
             key: 'city',
-            minWidth: 90,
+            minWidth: 80,
             sortable: true
           },
           {
