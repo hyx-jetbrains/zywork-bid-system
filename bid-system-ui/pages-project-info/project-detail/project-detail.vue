@@ -393,7 +393,14 @@
 				},
 				actionSheetArray: fileTypeArray,
 				isShowFileList: false,
-				fileList: []
+				fileList: [],
+				projectPager: {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0,
+					releaseStatus: '已发布',
+					id: ''
+				},
 			}
 		},
 		onLoad(event) {
@@ -401,23 +408,33 @@
 			// TODO 后面把参数名替换成 payload
 			const payload = event.itemData || event.payload;
 			// 目前在某些平台参数会被主动 decode，暂时这样处理。
-			try {
-				this.project = JSON.parse(decodeURIComponent(payload));
-			} catch (error) {
-				this.project = JSON.parse(payload);
-			}
+			console.log(payload);
+			this.projectPager.id = payload;
+			console.log(this.projectPager);
+			// try {
+			// 	this.project = JSON.parse(decodeURIComponent(payload));
+			// } catch (error) {
+			// 	this.project = JSON.parse(payload);
+			// }
 			this.initData();
 		},
 		methods: {
 			/** 初始化数据 */
 			initData() {
 				this.initCollectionIcon();
-				this.pager.markCarpoolProjectId = this.pager.markSeekcarProjectId = this.project.project.id;
+				this.updateProject();
+				this.pager.markCarpoolProjectId = this.pager.markSeekcarProjectId = this.projectPager.id;
+			},
+			/** 更新项目 */
+			updateProject() {
+				console.log(this.projectPager.id);
+				console.log("获取项目");
+				projectInfo.getProjectById(this, this.projectPager);
 			},
 			// 初始化项目图标
 			initCollectionIcon() {
 				// 请求后台判断该项目是否已经被当前用户收藏
-				getProjectCollectionInfo(this, this.project.project.id)
+				getProjectCollectionInfo(this, this.projectPager.id)
 			},
 			// 切换项目收藏的图标颜色
 			collectionOperation(projectId) {
@@ -431,10 +448,10 @@
 			collectionProject() {
 				if (this.isCollection) {
 					// 取消收藏
-					cancelProjectCollection(this, this.project.project.id);
+					cancelProjectCollection(this, this.projectPager.id);
 				} else {
 					// 保存收藏
-					saveProjectCollection(this, this.project.project.id);
+					saveProjectCollection(this, this.projectPager.id);
 				}
 			},
 			// 切换标签页
@@ -445,7 +462,7 @@
 				} else {
 					this.currTabIndex = type;
 					if (type === 3) {
-						getProjectAnnounce(this, this.project.project.id)
+						getProjectAnnounce(this, this.projectPager.id)
 					}
 					if (type === 4) {
 						getCarpoolList(this, this.pager)

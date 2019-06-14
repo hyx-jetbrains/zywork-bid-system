@@ -545,7 +545,7 @@
 				item.project.clickCount += 1;
 				projectInfo.projectClickCount(this, item.project);
 				uni.navigateTo({
-					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(item.project.id)
 				})
 			},
 			getResourceFile(projectId, type) {

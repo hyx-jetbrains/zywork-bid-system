@@ -153,6 +153,35 @@ export const getProjectList = (self, type, params) => {
 }
 
 /**
+ * 根据id获取项目
+ */
+export const getProjectById = (self, params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/project/any/list-pager-cond',
+		method: 'POST',
+		data: params,
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				const rows = nullToStr(res.data.data.rows);
+				self.project = rows[0];
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
  * 更新点击次数
  */
 export const projectClickCount = (self, projectItem) => {

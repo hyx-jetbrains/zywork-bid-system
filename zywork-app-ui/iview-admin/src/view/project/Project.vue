@@ -917,9 +917,17 @@
         <FormItem label="数据来源" prop="sourse">
           <a :href="sourceDataUrl" target="_blank">{{sourceDataUrl}}</a>
         </FormItem>
-        <FormItem label="爬取说明" prop="desc">增量爬取<span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取</FormItem>
+        <FormItem label="爬取说明" prop="desc">
+          增量爬取
+          <span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取
+        </FormItem>
         <FormItem label="爬取类型" prop="title">
-          <Select v-model="python.title" placeholder="请选择爬取类型" :label-in-value="true" @on-change="switchSourceDataUrl">
+          <Select
+            v-model="python.title"
+            placeholder="请选择爬取类型"
+            :label-in-value="true"
+            @on-change="switchSourceDataUrl"
+          >
             <i-option
               v-for="item in pythonProjectTypeSelect"
               :value="item.value"
@@ -1318,15 +1326,69 @@ export default {
             }
           },
           {
+            title: '发布状态',
+            key: 'releaseStatus',
+            minWidth: 100,
+            sortable: true,
+            render: (h, params) => {
+              const row = params.row
+              const color =
+                row.releaseStatus === '待审核'
+                  ? 'default'
+                  : row.releaseStatus === '已发布'
+                  ? 'success'
+                  : 'error'
+              if (row.releaseStatus === '待审核') {
+                return h(
+                  'Tooltip',
+                  {
+                    props: {
+                      placement: 'top',
+                      content: '点击发布'
+                    }
+                  },
+                  [
+                    h(
+                      'Button',
+                      {
+                        on: {
+                          click: () => {
+                            this.userOpt('releaseProject', row)
+                          }
+                        },
+                        props: {
+                          size: 'small',
+                          type: color
+                        }
+                      },
+                      row.releaseStatus
+                    )
+                  ]
+                )
+              } else {
+                return h(
+                  'Button',
+                  {
+                    props: {
+                      size: 'small',
+                      type: color
+                    }
+                  },
+                  row.releaseStatus
+                )
+              }
+            }
+          },
+          {
             title: '项目类型',
             key: 'projectType',
-            minWidth: 120,
+            minWidth: 100,
             sortable: true
           },
           {
             title: '城市',
             key: 'city',
-            minWidth: 120,
+            minWidth: 90,
             sortable: true
           },
           {
@@ -1390,60 +1452,6 @@ export default {
                 },
                 '点击查看'
               )
-            }
-          },
-          {
-            title: '发布状态',
-            key: 'releaseStatus',
-            minWidth: 120,
-            sortable: true,
-            render: (h, params) => {
-              const row = params.row
-              const color =
-                row.releaseStatus === '待审核'
-                  ? 'default'
-                  : row.releaseStatus === '已发布'
-                  ? 'success'
-                  : 'error'
-              if (row.releaseStatus === '待审核') {
-                return h(
-                  'Tooltip',
-                  {
-                    props: {
-                      placement: 'top',
-                      content: '点击发布'
-                    }
-                  },
-                  [
-                    h(
-                      'Button',
-                      {
-                        on: {
-                          click: () => {
-                            this.userOpt('releaseProject', row)
-                          }
-                        },
-                        props: {
-                          size: 'small',
-                          type: color
-                        }
-                      },
-                      row.releaseStatus
-                    )
-                  ]
-                )
-              } else {
-                return h(
-                  'Button',
-                  {
-                    props: {
-                      size: 'small',
-                      type: color
-                    }
-                  },
-                  row.releaseStatus
-                )
-              }
             }
           },
           {
@@ -1909,8 +1917,8 @@ export default {
       } else {
         this.currProjectType = projectType
       }
-      this.searchForm.projectType = projectType;
-      this.search();
+      this.searchForm.projectType = projectType
+      this.search()
     },
     batchOpt(itemName) {
       if (itemName === 'batchActive') {
@@ -1935,16 +1943,7 @@ export default {
       } else if (itemName === 'remove') {
         utils.remove(this, row)
       } else if (itemName === 'releaseProject') {
-        if (row.releaseStatus !== '待审核') {
-          this.$Message.warning('该信息不是待审核状态，不能发布')
-          return
-        }
-        if (row.city === '' || row.city === null || row.city === undefined) {
-          this.$Message.warning('请先设置城市后再发布')
-          return
-        }
-        row.releaseStatus = '已发布'
-        projectUtils.releaseProject(this, row)
+        this.releaseProject(row)
       } else if (itemName === 'showEnclosure') {
         // 查看附件
         this.showBuilderEnclosure(row.id)
@@ -1979,6 +1978,26 @@ export default {
           this.form.assurePrice = this.form.assurePriceDisplay * 100
         }
       }
+    },
+    // 发布项目
+    releaseProject(row) {
+      if (row.releaseStatus !== '待审核') {
+        this.$Message.warning('该信息不是待审核状态，不能发布')
+        return
+      }
+      if (row.city === '' || row.city === null || row.city === undefined) {
+        this.$Message.warning('请先设置城市后再发布')
+        return
+      }
+      this.$Modal.confirm({
+        title: '确认发布',
+        content: '请确认重要信息是否填写完毕？确认无误后点击确定按钮发布',
+        onOk: () => {
+          row.releaseStatus = '已发布'
+          projectUtils.releaseProject(this, row)
+        },
+        onCancel: () => {}
+      })
     },
     add() {
       this.setPrice(1)
@@ -2021,21 +2040,27 @@ export default {
     },
     // 切换原地址
     switchSourceDataUrl(val) {
-      const label = val.label;
+      const label = val.label
       if ('房建市政' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002001/002001001/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002001/002001001/jyxx.html'
       } else if ('水利工程' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002003/002003001/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002003/002003001/jyxx.html'
       } else if ('交通工程' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002002/002002002/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002002/002002002/jyxx.html'
       } else if ('政府采购' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002006/002006001/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002006/002006001/jyxx.html'
       } else if ('重点项目' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002005/002005001/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002005/002005001/jyxx.html'
       } else if ('其他项目' == label) {
-        this.sourceDataUrl = 'http://jxsggzy.cn/web/jyxx/002013/002013001/jyxx.html';
+        this.sourceDataUrl =
+          'http://jxsggzy.cn/web/jyxx/002013/002013001/jyxx.html'
       }
-      this.typeLabel = label;
+      this.typeLabel = label
     },
     // 爬取数据
     crawlData() {

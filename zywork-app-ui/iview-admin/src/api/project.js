@@ -39,40 +39,48 @@ export const releaseProject = (self, row) => {
  */
 export const batchRelease = (self, releaseStatus) => {
   return new Promise((resolve, reject) => {
-    let rowArray = []
-    if (self.table.selections.length === 0) {
-      self.$Message.warning('请选择需要批量发布的数据')
-    } else {
-      self.table.selections.forEach((row, index) => {
-        if (row.releaseStatus !== releaseStatus) {
-          rowArray.push({
-            id: row.id,
-            releaseStatus: releaseStatus
+    self.$Modal.confirm({
+      title: '确认发布',
+      content: '请确认重要信息是否填写完毕？确认无误后点击确定按钮发布',
+      onOk: () => {
+        let rowArray = []
+        if (self.table.selections.length === 0) {
+          self.$Message.warning('请选择需要批量发布的数据')
+        } else {
+          self.table.selections.forEach((row, index) => {
+            if (row.releaseStatus !== releaseStatus) {
+              rowArray.push({
+                id: row.id,
+                releaseStatus: releaseStatus
+              })
+            }
           })
-        }
-      })
-      if (rowArray.length > 0) {
-        axios.request({
-          url: self.urls.batchReleaseUrl,
-          method: 'POST',
-          data: rowArray
-        }).then(response => {
-          if (response.data.code !== ResponseStatus.OK) {
-            self.$Message.error(response.data.message)
+          if (rowArray.length > 0) {
+            axios.request({
+              url: self.urls.batchReleaseUrl,
+              method: 'POST',
+              data: rowArray
+            }).then(response => {
+              if (response.data.code !== ResponseStatus.OK) {
+                self.$Message.error(response.data.message)
+              } else {
+                self.$Message.success(response.data.message)
+                self.table.selections = []
+                utils.search(self)
+              }
+              resolve(response)
+            }).catch(error => {
+              console.log(error)
+              self.$Message.error('批量发布数据失败，稍候再试')
+              reject(error)
+            })
           } else {
-            self.$Message.success(response.data.message)
-            self.table.selections = []
-            utils.search(self)
+            self.$Message.warning('没有需要批量发布的数据')
           }
-          resolve(response)
-        }).catch(error => {
-          console.log(error)
-          self.$Message.error('批量发布数据失败，稍候再试')
-          reject(error)
-        })
-      } else {
-        self.$Message.warning('没有需要批量发布的数据')
-      }
-    }
+        }
+      },
+      onCancel: () => { }
+    })
+    
   })
 }
