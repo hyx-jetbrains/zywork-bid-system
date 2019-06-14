@@ -500,6 +500,9 @@
 				if (this.isShowFileList) {
 					this.isShowFileList = false;
 				}
+				uni.showLoading({
+					title: '加载中...'
+				})
 				uni.downloadFile({
 					url: DOCUMENT_BASE_URL + "/" + url,
 					success: (res) => {
@@ -507,6 +510,9 @@
 							filePath: res.tempFilePath,
 							success: () => {
 								console.log('打开文档成功');
+							},
+							complete: () => {
+								uni.hideLoading()
 							}
 						});
 					}
