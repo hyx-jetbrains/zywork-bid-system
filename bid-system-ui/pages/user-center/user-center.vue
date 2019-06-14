@@ -347,6 +347,10 @@
 		margin-right: 20upx;
 	}
 	
+	.zy-icon-text text {
+		font-size: 24upx;
+	}
+	
 	.zy-icon-text zywork-icon view {
 		line-height: 1.0;
 	}
