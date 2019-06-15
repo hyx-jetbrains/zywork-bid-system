@@ -111,7 +111,6 @@ export default {
 		if (this.top === 0) {
 			this.fabShow = true;
 		}
-		console.log(this.showContent);
 		// 初始化样式
 		this.styles = Object.assign({}, this.styles, this.pattern);
 	},

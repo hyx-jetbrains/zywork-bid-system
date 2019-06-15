@@ -29,6 +29,7 @@ export const getAdvertisementInfo = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				var tempSwiperItems = nullToStr(res.data.data.rows);
+				self.swiperItems = []
 				tempSwiperItems.forEach(item => {
 					item.url = IMAGE_BASE_URL + item.url;
 					self.swiperItems.push(item);

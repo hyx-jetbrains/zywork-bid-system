@@ -397,6 +397,7 @@
 		onPullDownRefresh() {
 			this.projectPager.pageNo = 1
 			this.updateProjectList('pullDown');
+			this.initHeadInfo();
 		},
 		onReachBottom() {
 			this.showLoadMore = true
@@ -414,10 +415,14 @@
 		methods: {
 			/** 初始化数据 */
 			initData() {
-				projectInfo.getAdvertisementInfo(this);
-				projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
+				this.initHeadInfo();
 				this.updateProjectList('init');
 				this.initCustomerFab();
+			},
+			/** 初始化头部的轮播图和头条 */
+			initHeadInfo() {
+				projectInfo.getAdvertisementInfo(this);
+				projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
 			},
 			/** 初始化客服悬浮 */
 			initCustomerFab() {
@@ -658,6 +663,7 @@
 
 	.swiper-item image {
 		width: 100%;
+		height: 100%;
 	}
 
 	.segmented-control view {

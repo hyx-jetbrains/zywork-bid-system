@@ -805,13 +805,13 @@
 					// 大按钮
 					if (INFO_BUILDER === tabIndex) {
 						// 建造师
-						url = '/pages-info-share/publish-builder/publish-builder'
+						url = '/pages-info-share/publish-builder/publish-builder?itemData=' + encodeURIComponent(this.builderOpts.current)
 					} else if (INFO_APTITUDE === tabIndex) {
 						// 资质转让
-						url = '/pages-info-share/publish-aptitude/publish-aptitude'
+						url = '/pages-info-share/publish-aptitude/publish-aptitude?itemData=' + encodeURIComponent(this.aptitudeOpts.current)
 					} else if (INFO_CARPOOL === tabIndex) {
 						// 开标拼车
-						url = '/pages-info-share/publish-carpool/publish-carpool'
+						url = '/pages-info-share/publish-carpool/publish-carpool?itemData=' + encodeURIComponent(this.carPoolOpts.current)
 					} else if (INFO_HIRE === tabIndex) {
 						// 其他岗位招聘
 						url = '/pages-info-share/publish-hire/publish-hire'

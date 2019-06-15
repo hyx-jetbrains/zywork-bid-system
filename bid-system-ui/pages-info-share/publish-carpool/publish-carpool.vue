@@ -429,9 +429,15 @@
 				showBtn: true
 			}
 		},
-		onLoad() {
+		onLoad(event) {
 			uni.hideShareMenu();
-			this.initPicker()
+			this.initPicker();
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			if (payload !== undefined) {
+				this.type.current = payload
+			}
 		},
 		methods: {
 			/** 分段器选择类别 */

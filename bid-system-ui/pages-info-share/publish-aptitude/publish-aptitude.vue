@@ -180,18 +180,26 @@
 				count: [1, 2, 3, 4, 5],
 			}
 		},
-		onLoad() {
+		onLoad(event) {
 			uni.hideShareMenu();
-			this.initPicker()
+			this.initPicker();
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			if (payload !== undefined) {
+				this.aptitude.type = payload;
+				this.aptitude.typeName = this.aptitudeTypeArray[this.aptitude.type];
+			} else {
+				this.aptitude.type = 0;
+				this.aptitude.typeName = this.aptitudeTypeArray[this.aptitude.type];
+			}
+			this.switchAptitudeType();
 		},
 		methods: {
 			/** 初始化下拉选择器 */
 			initPicker() {
-				this.aptitude.type = 0;
-				this.aptitude.typeName = this.aptitudeTypeArray[this.aptitude.type];
 				this.aptitude.compAptitudeLevel = this.companyAptitudeLevelArray[0];
 				this.aptitude.compAptitudeType = this.companyAptitudeTypeArray[0];
-				this.switchAptitudeType();
 			},
 			/** 监听发布资质类型选择器 */
 			chooseAptitudeType: function(e) {
