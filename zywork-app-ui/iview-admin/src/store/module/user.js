@@ -147,8 +147,16 @@ export default {
         getUserInfo().then(res => {
           const data = res.data
           if (data.code === ResponseStatus.OK) {
-            commit('setUserName', data.data.rows[0].userDetailNickname ? data.data.rows[0].userDetailNickname : '暂无昵称')
-            commit('setAvator', data.data.rows[0].userDetailHeadicon ? data.data.rows[0].userDetailHeadicon : headImg)
+            let nickname = data.data.rows[0].userDetailNickname;
+            if (nickname === null || nickname === '' || nickname === undefined || nickname === 'null') {
+              nickname = '暂无昵称'
+            }
+            let headIcon = data.data.rows[0].userDetailHeadicon;
+            if (headIcon === null || headIcon === '' || headIcon === undefined || headIcon === 'null') {
+              headIcon = '暂无昵称'
+            }
+            commit('setUserName', nickname)
+            commit('setAvator', headIcon)
             commit('setUserId', '1')
             commit('setHasGetInfo', true)
             resolve(res)

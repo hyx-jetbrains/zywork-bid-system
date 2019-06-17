@@ -3,6 +3,7 @@ package top.zywork.python.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -302,15 +303,21 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compKeyProjectAchievementDTO.setBuildComp(buildComp);
                 // 中标金额
                 String markMoney = jsonObj.getString("markMoney");
-                compKeyProjectAchievementDTO.setMarkMoney(markMoney);
-                // 金额
-                compKeyProjectAchievementDTO.setMoney(new BigDecimal(markMoney));
+                if (!StringUtils.isEmpty(markMoney)) {
+                    compKeyProjectAchievementDTO.setMarkMoney(markMoney);
+                    // 金额
+                    compKeyProjectAchievementDTO.setMoney(new BigDecimal(markMoney));
+                }
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
-                compKeyProjectAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(startDate)) {
+                    compKeyProjectAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate");
-                compKeyProjectAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(endDate)) {
+                    compKeyProjectAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 保存重点工程业绩
                 compKeyProjectAchievementDAO.save(compKeyProjectAchievementDTO);
             } else if (PythonConstants.COMPANY_TYPE_TRAFFIC.equals(compType)) {
@@ -332,17 +339,23 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compTrafficAchievementDTO.setTechnologyName(technologyName);
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
-                compTrafficAchievementDTO.setContractAmount(contractAmount);
-                compTrafficAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                if (!StringUtils.isEmpty(contractAmount)) {
+                    compTrafficAchievementDTO.setContractAmount(contractAmount);
+                    compTrafficAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                }
                 // 工程地点
                 String workAddr = jsonObj.getString("workAddr");
                 compTrafficAchievementDTO.setWorkAddr(workAddr);
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
-                compTrafficAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(startDate)) {
+                    compTrafficAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate");
-                compTrafficAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(endDate)) {
+                    compTrafficAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 验证状态
                 String validStatus = jsonObj.getString("validStatus");
                 compTrafficAchievementDTO.setValidStatus(validStatus);
@@ -361,15 +374,21 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compWaterAchievementDTO.setProjectName(projectName);
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
-                compWaterAchievementDTO.setContractAmount(contractAmount);
-                // 金额
-                compWaterAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                if (!StringUtils.isEmpty(contractAmount)) {
+                    compWaterAchievementDTO.setContractAmount(contractAmount);
+                    // 金额
+                    compWaterAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                }
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
-                compWaterAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(startDate)) {
+                    compWaterAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate");
-                compWaterAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(endDate)) {
+                    compWaterAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 项目负责人
                 String name = jsonObj.getString("name");
                 compWaterAchievementDTO.setName(name);
@@ -394,15 +413,21 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compWaterMonitorAchievementDTO.setBuildComp(buildComp);
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
-                compWaterMonitorAchievementDTO.setContractAmount(contractAmount);
-                // 金额
-                compWaterMonitorAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                if (!StringUtils.isEmpty(contractAmount)) {
+                    compWaterMonitorAchievementDTO.setContractAmount(contractAmount);
+                    // 金额
+                    compWaterMonitorAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                }
                 // 合同签订日期
                 String contractDate = jsonObj.getString("contractDate");
-                compWaterMonitorAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(contractDate)) {
+                    compWaterMonitorAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
-                compWaterMonitorAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(startDate)) {
+                    compWaterMonitorAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 保存水利监理业绩
                 compWaterMonitorAchievementDAO.save(compWaterMonitorAchievementDTO);
             } else if (PythonConstants.COMPANY_TYPE_WATER_DEVISE.equals(compType)) {
@@ -424,15 +449,19 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compWaterDeviseAchievementDTO.setBuildComp(buildComp);
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
-                compWaterDeviseAchievementDTO.setContractAmount(contractAmount);
-                // 金额
-                compWaterDeviseAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                if (!StringUtils.isEmpty(contractAmount)) {
+                    compWaterDeviseAchievementDTO.setContractAmount(contractAmount);
+                    // 金额
+                    compWaterDeviseAchievementDTO.setMoney(new BigDecimal(contractAmount));
+                }
                 // 项目负责人
                 String name = jsonObj.getString("name");
                 compWaterDeviseAchievementDTO.setName(name);
                 // 中标时间
                 String markDate = jsonObj.getString("markDate");
-                compWaterDeviseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(markDate)) {
+                    compWaterDeviseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 保存水利勘查业绩
                 compWaterDeviseAchievementDAO.save(compWaterDeviseAchievementDTO);
             } else {
@@ -510,9 +539,11 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compHouseAchievementDTO.setBuilderName(builderName);
                 // 中标金额
                 String markMoney = jsonObject.getString("markMoney");
-                compHouseAchievementDTO.setMarkMoney(markMoney);
-                // 金额 元转成万元
-                compHouseAchievementDTO.setMoney(new BigDecimal(markMoney).divide(new BigDecimal(10000)));
+                if (!StringUtils.isEmpty(markMoney)) {
+                    compHouseAchievementDTO.setMarkMoney(markMoney);
+                    // 金额 元转成万元
+                    compHouseAchievementDTO.setMoney(new BigDecimal(markMoney).divide(new BigDecimal(10000)));
+                }
                 // 建设规模
                 String buildScale = jsonObject.getString("buildScale");
                 compHouseAchievementDTO.setBuildScale(buildScale);
@@ -527,10 +558,14 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compHouseAchievementDTO.setProjectAddr(projectAddr);
                 // 合同签订日期
                 String contractDate = jsonObject.getString("contractDate");
-                compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(contractDate)) {
+                    compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 中标日期
                 String markDate = jsonObject.getString("markDate");
-                compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                if (!StringUtils.isEmpty(markDate)) {
+                    compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                }
                 // 项目负责人
                 String name = jsonObject.getString("name");
                 compHouseAchievementDTO.setName(name);

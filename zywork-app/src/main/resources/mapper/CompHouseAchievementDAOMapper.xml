@@ -22,6 +22,9 @@
 			<if test="markMoney != null">
 				mark_money,
 			</if>
+			<if test="money != null">
+				money,
+			</if>
 			<if test="buildScale != null">
 				build_scale,
 			</if>
@@ -147,6 +150,9 @@
 			</if>
 			<if test="markMoney != null">
 				#{markMoney},
+			</if>
+			<if test="money != null">
+				#{money},
 			</if>
 			<if test="buildScale != null">
 				#{buildScale},
@@ -282,6 +288,9 @@
 			<if test="item.markMoney != null">
 				mark_money,
 			</if>
+				<if test="item.money != null">
+					money,
+				</if>
 			<if test="item.buildScale != null">
 				build_scale,
 			</if>
@@ -408,6 +417,9 @@
 			<if test="item.markMoney != null">
 				#{item.markMoney},
 			</if>
+				<if test="item.money != null">
+					#{item.money},
+				</if>
 			<if test="item.buildScale != null">
 				#{item.buildScale},
 			</if>
@@ -550,6 +562,9 @@
 			<if test="markMoney != null">
 				mark_money = #{markMoney},
 			</if>
+			<if test="money != null">
+				money = #{money},
+			</if>
 			<if test="buildScale != null">
 				build_scale = #{buildScale},
 			</if>
@@ -682,6 +697,9 @@
 			<if test="item.markMoney != null">
 				mark_money = #{item.markMoney},
 			</if>
+				<if test="item.money != null">
+					money = #{item.money},
+				</if>
 			<if test="item.buildScale != null">
 				build_scale = #{item.buildScale},
 			</if>

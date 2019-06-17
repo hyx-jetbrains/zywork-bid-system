@@ -15,6 +15,26 @@
 							<DropdownItem name="batchRemove" divided><span style="color: red;">批量删除</span></DropdownItem>
 						</DropdownMenu>
 					</Dropdown>&nbsp;
+          <Dropdown @on-click="projectTypeSearch">
+            <Button type="primary">
+              {{currProjectType}}
+              <Icon type="ios-arrow-down"></Icon>
+            </Button>
+            <DropdownMenu slot="list">
+              <DropdownItem name="all">全部</DropdownItem>
+              <Divider orientation="left">代理机构</Divider>
+              <DropdownItem name="agentHouse">房建招标代理</DropdownItem>
+              <DropdownItem name="agentTraffic">交通招标代理</DropdownItem>
+              <DropdownItem name="agentWater">水利招标代理</DropdownItem>
+              <Divider orientation="left">投标人</Divider>
+              <DropdownItem name="bidderHouse">房建及市政施工单位</DropdownItem>
+              <DropdownItem name="bidderTraffic">交通施工单位</DropdownItem>
+              <DropdownItem name="bidderWater">水利施工单位</DropdownItem>
+              <DropdownItem name="bidderkeyProject">重点工程投标单位</DropdownItem>
+              <DropdownItem name="bidderWaterDevise">水利监理单位</DropdownItem>
+              <DropdownItem name="bidderWaterMonitor">水利勘查设计单位</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>&nbsp;
 					<Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
           <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
 					<Tooltip content="刷新" placement="right">
@@ -351,6 +371,7 @@
 				</FormItem>
 				<FormItem label="个数" prop="pageSize">
 					<Input v-model="python.pageSize" placeholder="请输入爬取个数" />
+          <p style="color: red;">建议每页爬取个数为10个，以防数据量过大，导致爬取失败</p>
 				</FormItem>
 			</Form>
 			<div slot="footer">
@@ -860,6 +881,7 @@
 					minRows: 3,
 					maxRows: 5
         },
+        currProjectType: '全部'
 			}
 		},
 		computed: {},
@@ -873,11 +895,11 @@
 					this.regAddress = []
           this.compAddr = []
           this.form.compType = this.compTypeList[0].label
-          this.initIndustryTypeList(this.compTypeList[0].value)
+          this.initIndustryType(this.compTypeList[0].value)
         }
         if (modal === 'python') {
-          this.python.compType = this.compTypeList[0].value
-          this.initIndustryTypeList(this.python.compType)
+          this.python.compType = ''
+          this.python.industryType = ''
         }
 				utils.showModal(this, modal)
 			},
@@ -1013,6 +1035,38 @@
           this.python.industryType = this.industryTypeList[0].value
           this.form.industryType = this.industryTypeList[0].label
         }
+      },
+      /** 项目类型查询 */
+      projectTypeSearch(itemName) {
+        let industryType = ''
+        if (itemName === 'agentHouse') {
+          industryType = '房建招标代理'
+        } else if (itemName === 'agentTraffic') {
+          industryType = '交通招标代理'
+        } else if (itemName === 'agentWater') {
+          industryType = '水利招标代理'
+        } else if (itemName === 'bidderHouse') {
+          industryType = '房建及市政施工单位'
+        } else if (itemName === 'bidderTraffic') {
+          industryType = '交通施工单位'
+        } else if (itemName === 'bidderWater') {
+          industryType = '水利施工单位'
+        } else if (itemName === 'bidderkeyProject') {
+          industryType = '重点工程投标单位'
+        } else if (itemName === 'bidderWaterDevise') {
+          industryType = '水利监理单位'
+        } else if (itemName === 'bidderWaterMonitor') {
+          industryType = '水利勘查设计单位'
+        } else if (itemName === 'all') {
+          industryType = ''
+        }
+        if (itemName === 'all') {
+          this.currProjectType = '全部'
+        } else {
+          this.currProjectType = industryType
+        }
+        this.searchForm.industryType = industryType
+        this.search()
       },
       // 爬取数据
       crawlData() {

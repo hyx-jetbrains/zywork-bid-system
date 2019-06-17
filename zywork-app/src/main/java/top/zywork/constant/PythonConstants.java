@@ -101,9 +101,9 @@ public class PythonConstants {
      */
     public static final int TIME_OUT = 60000;
     /**
-     * 默认查询个数-10
+     * 默认查询个数-22
      */
-    public static final String DEFAULT_PAGE_SIXE = "1";
+    public static final String DEFAULT_PAGE_SIXE = "10";
 
 
     /**

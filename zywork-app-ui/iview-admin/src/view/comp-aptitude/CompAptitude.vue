@@ -548,7 +548,11 @@
 					],
 					tableDetails: [],
 					selections: []
-				}
+        },
+        descriptionAutoSize: {
+					minRows: 3,
+					maxRows: 5
+        },
 			}
 		},
 		computed: {},
