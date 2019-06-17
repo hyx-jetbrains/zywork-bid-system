@@ -14,7 +14,7 @@
         </infor-card>
       </i-col>
     </Row>
-    <Row style="margin-bottom: 20px;">
+    <!-- <Row style="margin-bottom: 20px;">
       <i-col :xs="24" :md="12" :lg="8">
         <Card>
           <p slot="title">
@@ -84,7 +84,7 @@
         </ul>
         </Card>
       </i-col>
-    </Row>
+    </Row> -->
     <DauEcharts/>
   </div>
 </template>
@@ -206,65 +206,65 @@ export default {
         })
 
       // 取指派人任务
-      this.assigneeDataShow = true
-      searchWaitTask(this, this.taskUrls.assigneeTasksUrl)
-        .then(res => {
-          const data = res.data
-          if (data.code !== ResponseStatus.OK) {
-            self.$Message.error(res.data.message)
-            return
-          }
-          this.assigneeCount = data.data.total
-          if (data.data.total === 0) {
-            this.assigneeDataShow = true
-          } else {
-            this.assigneeDataShow = false
-            this.assigneeTaskList = data.data.rows
-          }
-        })
-        .catch(err => {
-          this.$Message.error(err)
-        })
+      // this.assigneeDataShow = true
+      // searchWaitTask(this, this.taskUrls.assigneeTasksUrl)
+      //   .then(res => {
+      //     const data = res.data
+      //     if (data.code !== ResponseStatus.OK) {
+      //       self.$Message.error(res.data.message)
+      //       return
+      //     }
+      //     this.assigneeCount = data.data.total
+      //     if (data.data.total === 0) {
+      //       this.assigneeDataShow = true
+      //     } else {
+      //       this.assigneeDataShow = false
+      //       this.assigneeTaskList = data.data.rows
+      //     }
+      //   })
+      //   .catch(err => {
+      //     this.$Message.error(err)
+      //   })
       // 取候选人任务
-      this.candidateDataShow = true
-      searchWaitTask(this, this.taskUrls.candidateTasksUrl)
-        .then(res => {
-          const data = res.data
-          if (data.code !== ResponseStatus.OK) {
-            self.$Message.error(res.data.message)
-            return
-          }
-          this.candidateCount = data.data.total
-          if (data.data.total === 0) {
-            this.candidateDataShow = true
-          } else {
-            this.candidateDataShow = false
-            this.candidateTaskList = data.data.rows
-          }
-        })
-        .catch(err => {
-          this.$Message.error(err)
-        })
+      // this.candidateDataShow = true
+      // searchWaitTask(this, this.taskUrls.candidateTasksUrl)
+      //   .then(res => {
+      //     const data = res.data
+      //     if (data.code !== ResponseStatus.OK) {
+      //       self.$Message.error(res.data.message)
+      //       return
+      //     }
+      //     this.candidateCount = data.data.total
+      //     if (data.data.total === 0) {
+      //       this.candidateDataShow = true
+      //     } else {
+      //       this.candidateDataShow = false
+      //       this.candidateTaskList = data.data.rows
+      //     }
+      //   })
+      //   .catch(err => {
+      //     this.$Message.error(err)
+      //   })
       // 取候选组任务
-      this.groupDataShow = true
-      searchWaitTask(this, this.taskUrls.groupTasksUrl)
-        .then(res => {
-          const data = res.data
-          if (data.code !== ResponseStatus.OK) {
-            self.$Message.error(res.data.message)
-            return
-          }
-          this.groupCount = data.data.total
-          if (data.data.total === 0) {
-            this.groupDataShow = true
-          } else {
-            this.groupDataShow = false
-            this.groupTaskList = data.data.rows
-          }
-        })
-        .catch(err => {
-          this.$Message.error(err)
-        })
+      // this.groupDataShow = true
+      // searchWaitTask(this, this.taskUrls.groupTasksUrl)
+      //   .then(res => {
+      //     const data = res.data
+      //     if (data.code !== ResponseStatus.OK) {
+      //       self.$Message.error(res.data.message)
+      //       return
+      //     }
+      //     this.groupCount = data.data.total
+      //     if (data.data.total === 0) {
+      //       this.groupDataShow = true
+      //     } else {
+      //       this.groupDataShow = false
+      //       this.groupTaskList = data.data.rows
+      //     }
+      //   })
+      //   .catch(err => {
+      //     this.$Message.error(err)
+      //   })
     },
     showTaskDetail(type) {
       this.$router.push({

@@ -37,4 +37,6 @@ public interface ProjectAnnounceDAO extends BaseDAO {
 
     Object getByProjectId(@Param("projectId") Long projectId);
 
+    Object getByTitle(@Param("title") String title);
+
 }

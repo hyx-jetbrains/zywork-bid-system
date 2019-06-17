@@ -102,11 +102,11 @@
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">要约价(元)</view>
-					<view class="zy-disable-flex-right zy-warning">{{project.project.offerPrice / 100}}</view>
+					<view class="zy-disable-flex-right zy-warning">{{project.project.offerPrice}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">保证金(万元)</view>
-					<view class="zy-disable-flex-right zy-primary">{{project.project.assurePrice / 100}}</view>
+					<view class="zy-disable-flex-right zy-primary">{{project.project.assurePrice}}</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">工期(天)</view>

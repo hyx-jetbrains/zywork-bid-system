@@ -175,21 +175,13 @@
         </Row>
         <Row>
           <i-col span="12">
-            <FormItem label="要约价(元)" prop="offerPriceDisplay">
-              <InputNumber
-                v-model="form.offerPriceDisplay"
-                placeholder="请输入要约价(元)"
-                style="width: 100%;"
-              />
+            <FormItem label="要约价(元)" prop="offerPrice">
+              <Input v-model="form.offerPrice" placeholder="请输入要约价(元)"/>
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="保证金(万元)" prop="assurePriceDisplay">
-              <InputNumber
-                v-model="form.assurePriceDisplay"
-                placeholder="请输入保证金(万元)"
-                style="width: 100%;"
-              />
+            <FormItem label="保证金(万元)" prop="assurePrice">
+              <Input v-model="form.assurePrice" placeholder="请输入保证金(万元)"/>
             </FormItem>
           </i-col>
         </Row>
@@ -391,21 +383,13 @@
         </Row>
         <Row>
           <i-col span="12">
-            <FormItem label="要约价(元)" prop="offerPriceDisplay">
-              <InputNumber
-                v-model="form.offerPriceDisplay"
-                placeholder="请输入要约价(元)"
-                style="width: 100%;"
-              />
+            <FormItem label="要约价(元)" prop="offerPrice">
+              <Input v-model="form.offerPrice" placeholder="请输入要约价(元)"/>
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem label="保证金(万元)" prop="assurePriceDisplay">
-              <InputNumber
-                v-model="form.assurePriceDisplay"
-                placeholder="请输入保证金(万元)"
-                style="width: 100%;"
-              />
+            <FormItem label="保证金(万元)" prop="assurePrice">
+              <Input v-model="form.assurePrice" placeholder="请输入保证金(万元)"/>
             </FormItem>
           </i-col>
         </Row>
@@ -491,6 +475,16 @@
       </div>
     </Modal>
     <Modal v-model="modal.search" title="高级搜索">
+      <div slot="header">
+        <Button type="text" size="large" @click="resetForm('searchForm')">清空</Button>
+        <Button type="text" size="large" @click="cancelModal('search')">取消</Button>
+        <Button
+          type="primary"
+          size="large"
+          @click="searchOkModal('search')"
+          :loading="loading.search"
+        >搜索</Button>
+      </div>
       <Form ref="searchForm" :model="searchForm" :label-width="80">
         <FormItem label="招投标项目编号">
           <Row>
@@ -587,29 +581,7 @@
         <FormItem label="联系电话" prop="phone">
           <Input v-model="searchForm.phone" placeholder="请输入联系电话"/>
         </FormItem>
-        <FormItem label="保证金(万元)">
-          <Row>
-            <i-col span="11">
-              <FormItem prop="assurePriceMin">
-                <InputNumber
-                  v-model="searchForm.assurePriceMin"
-                  placeholder="请输入开始保证金(万元)"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-            <i-col span="2" style="text-align: center">-</i-col>
-            <i-col span="11">
-              <FormItem prop="assurePriceMax">
-                <InputNumber
-                  v-model="searchForm.assurePriceMax"
-                  placeholder="请输入结束保证金(万元)"
-                  style="width: 100%;"
-                />
-              </FormItem>
-            </i-col>
-          </Row>
-        </FormItem>
+        
         <FormItem label="其他要求" prop="otherDemand">
           <Input v-model="searchForm.otherDemand" placeholder="请输入其他要求"/>
         </FormItem>
@@ -1220,8 +1192,8 @@ export default {
       searchForm: {
         pageNo: 1,
         pageSize: 10,
-        sortColumn: null,
-        sortOrder: null,
+        sortColumn: 'releaseStatus',
+        sortOrder: 'desc',
         id: null,
         idMin: null,
         idMax: null,
@@ -1525,7 +1497,7 @@ export default {
             minWidth: 120,
             sortable: true,
             render: (h, params) => {
-              let text = params.row.offerPrice / 100
+              let text = params.row.offerPrice
               return h('span', '￥' + text)
             }
           },
@@ -1535,7 +1507,7 @@ export default {
             minWidth: 130,
             sortable: true,
             render: (h, params) => {
-              let text = params.row.assurePrice / 100
+              let text = params.row.assurePrice
               return h('span', '￥' + text)
             }
           },
@@ -1946,7 +1918,7 @@ export default {
         this.releaseProject(row)
       } else if (itemName === 'showEnclosure') {
         // 查看附件
-        this.showBuilderEnclosure(row.id)
+        this.showBuilderEnclosure(row.id, row.title)
       } else if (itemName === 'setMarkDate') {
         // 设置开标时间
         utils.showModal(this, 'markDate')
@@ -1955,29 +1927,29 @@ export default {
     },
     // 设置价格
     setPrice(type) {
-      if (type === 0) {
-        if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
-          this.form.offerPriceDisplay = this.form.offerPrice / 100
-        }
+      // if (type === 0) {
+      //   if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
+      //     this.form.offerPriceDisplay = this.form.offerPrice / 100
+      //   }
 
-        if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
-          this.form.assurePriceDisplay = this.form.assurePrice / 100
-        }
-      } else if (type === 1) {
-        if (
-          this.form.offerPriceDisplay !== null &&
-          this.form.offerPriceDisplay !== 0
-        ) {
-          this.form.offerPrice = this.form.offerPriceDisplay * 100
-        }
+      //   if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
+      //     this.form.assurePriceDisplay = this.form.assurePrice / 100
+      //   }
+      // } else if (type === 1) {
+      //   if (
+      //     this.form.offerPriceDisplay !== null &&
+      //     this.form.offerPriceDisplay !== 0
+      //   ) {
+      //     this.form.offerPrice = this.form.offerPriceDisplay * 100
+      //   }
 
-        if (
-          this.form.assurePriceDisplay !== null &&
-          this.form.assurePriceDisplay !== 0
-        ) {
-          this.form.assurePrice = this.form.assurePriceDisplay * 100
-        }
-      }
+      //   if (
+      //     this.form.assurePriceDisplay !== null &&
+      //     this.form.assurePriceDisplay !== 0
+      //   ) {
+      //     this.form.assurePrice = this.form.assurePriceDisplay * 100
+      //   }
+      // }
     },
     // 发布项目
     releaseProject(row) {
@@ -2032,14 +2004,17 @@ export default {
       this.form.projectDetail = html
     },
     // 前往附件页面
-    showBuilderEnclosure(projectId) {
+    showBuilderEnclosure(projectId, projectTitle) {
       this.$router.push({
         name: 'project_resource_manage',
-        params: { projectId: projectId }
+        params: { projectId: projectId,projectTitle:  projectTitle}
       })
     },
     // 切换原地址
     switchSourceDataUrl(val) {
+      if (val === undefined) {
+        return;
+      }
       const label = val.label
       if ('房建市政' == label) {
         this.sourceDataUrl =

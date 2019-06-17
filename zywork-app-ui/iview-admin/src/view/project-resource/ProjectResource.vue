@@ -827,22 +827,23 @@ export default {
       },
       projectId: this.$route.params.projectId,
       imgUrl: '',
-      projectTitle: ''
+      projectTitle: this.$route.params.projectTitle,
     }
   },
   computed: {},
   mounted() {
     if (this.projectId !== undefined) {
-      this.initData(this.projectId)
+      this.initData(this.projectId, this.projectTitle)
     } else {
       this.modal.project = true
     }
   },
   methods: {
     // 初始化数据
-    initData(projectId) {
+    initData(projectId, projectTitle) {
       this.cancelModal('project')
       this.projectId = projectId
+      this.projectTitle = projectTitle
       this.searchForm.projectIdMin = this.searchForm.projectIdMax = this.projectId
       this.search()
     },
@@ -851,9 +852,10 @@ export default {
         this.form.projectId = this.projectId
         this.form.resourceId = null
         this.$refs.uploadFile.clearFiles()
+      } else {
+        this.form.projectId = ''
+        this.projectTitle = ''
       }
-      this.form.projectId = ''
-      this.projectTitle = ''
       utils.showModal(this, modal)
     },
     changeModalVisibleResetForm(formRef, visible) {
@@ -919,7 +921,7 @@ export default {
           this.$Message.error(err)
         })
     },
-    confirmSelectionProject(id) {
+    confirmSelectionProject(id, title) {
       this.cancelModal('projectDetailSearch')
       this.searchForm.projectIdMin = this.searchForm.projectIdMax = id
       utils.search(this)
@@ -928,7 +930,7 @@ export default {
       this.$refs.ProjectListSingle.confirmSelection()
     },
     confirmChoiceProject(projectId, projectTitle, projectType) {
-      this.form.projectId = projectId
+      this.projectId = this.form.projectId = projectId
       this.projectTitle = projectTitle
       this.cancelModal('projectChoice')
     },
@@ -995,7 +997,6 @@ export default {
       return false
     },
     handleRemoveFile(file) {
-      console.log('reomve')
       this.form.resourceId = null
     },
     handleProgress(event, file) {

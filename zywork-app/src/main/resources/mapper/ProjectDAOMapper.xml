@@ -106,7 +106,7 @@
 			<if test="isActive != null">
 				is_active,
 			</if>
-			<if test="resource_count != null">
+			<if test="resourceCount != null">
 				resource_count,
 			</if>
 			update_time,

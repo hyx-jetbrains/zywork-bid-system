@@ -1416,26 +1416,26 @@ export const pythonProjectTypeSelect = [
 export const pythonProjectAnnounceTypeSelect = [
   {
     value: 'project-announce/house',
-    label: '房建市政公示'
+    label: '房建市政'
   },
   {
     value: 'project-announce/conservancy',
-    label: '水利工程公示'
+    label: '水利工程'
   },
   {
     value: 'project-announce/traffic',
-    label: '交通工程公示'
+    label: '交通工程'
   },
   {
     value: 'project-announce/procurement',
-    label: '政府采购公示'
+    label: '政府采购'
   },
   {
     value: 'project-announce/key',
-    label: '重点项目公示'
+    label: '重点项目'
   },
   {
     value: 'project-announce/other',
-    label: '其他项目公示'
+    label: '其他项目'
   }
 ]

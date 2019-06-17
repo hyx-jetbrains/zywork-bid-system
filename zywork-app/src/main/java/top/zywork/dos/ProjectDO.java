@@ -44,9 +44,9 @@ public class ProjectDO extends BaseDO {
 	// 联系电话
 	private String phone;
 	// 要约价(元)
-	private Long offerPrice;
+	private BigDecimal offerPrice;
 	// 保证金(万元)
-	private Long assurePrice;
+	private BigDecimal assurePrice;
 	// 工期(天)
 	private Integer constructionPeriod;
 	// 下载截止时间
@@ -93,7 +93,7 @@ public class ProjectDO extends BaseDO {
 	}
     public ProjectDO () {}
 
-    public ProjectDO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, Long offerPrice, Long assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, String inwardHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectDO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, BigDecimal offerPrice, BigDecimal assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, String inwardHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.projectType = projectType;
@@ -242,19 +242,19 @@ public class ProjectDO extends BaseDO {
 		this.phone = phone;
 	}
 
-	public Long getOfferPrice() {
+	public BigDecimal getOfferPrice() {
 		return offerPrice;
 	}
 
-	public void setOfferPrice(Long offerPrice) {
+	public void setOfferPrice(BigDecimal offerPrice) {
 		this.offerPrice = offerPrice;
 	}
 
-	public Long getAssurePrice() {
+	public BigDecimal getAssurePrice() {
 		return assurePrice;
 	}
 
-	public void setAssurePrice(Long assurePrice) {
+	public void setAssurePrice(BigDecimal assurePrice) {
 		this.assurePrice = assurePrice;
 	}
 

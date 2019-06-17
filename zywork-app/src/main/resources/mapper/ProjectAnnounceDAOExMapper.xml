@@ -29,10 +29,18 @@
 
 	<select id="getByProjectId" parameterType="long" resultType="projectAnnounceDO">
 		select
-			id as id, project_id as projectId, announce_desc as announceDesc, first_candidate as firstCandidate, second_candidate as secondCandidate, third_candidate as thirdCandidate, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        <include refid="select_columns"/>
 		from
 	 		t_project_announce
 	 	where
 			project_id = #{projectId}
+	</select>
+    <select id="getByTitle" parameterType="string" resultType="projectAnnounceDO">
+		select
+        <include refid="select_columns"/>
+		from
+	 		t_project_announce
+	 	where
+			title = #{title}
 	</select>
 </mapper>

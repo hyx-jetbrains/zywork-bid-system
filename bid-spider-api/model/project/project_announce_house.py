@@ -36,7 +36,7 @@ def get_house_announce_projects():
         projectAnnounce = ProjectAnnounce()
         projectAnnounce.title = li.a.text
         projectAnnounce.sourceUrl = href
-        projectAnnounce.projectType = '房建及市政工程'
+        projectAnnounce.projectType = '房建市政'
         # 打开招标详情页面
         project_res = requests.get(href)
         project_res.encoding = project_res.apparent_encoding

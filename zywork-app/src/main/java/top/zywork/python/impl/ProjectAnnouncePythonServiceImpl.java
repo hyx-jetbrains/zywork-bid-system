@@ -46,13 +46,16 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                     JSONObject obj = jsonArray.getJSONObject(i);
                     ProjectAnnounceVO projectAnnounceVO = new ProjectAnnounceVO();
 
-
+                    String inMarkComp = obj.getString("firstCandidate");
                     if(obj.getString("title") != null && obj.getString("title") != "") {
                         String title = obj.getString("title").replace("[中标候选人公示]","");
                         Object pobj = projectDAO.getByTitle(title);
                         if(pobj != null) {
                             ProjectDO projectDO = BeanUtils.copy(pobj, ProjectDO.class);
                             projectAnnounceVO.setProjectId(projectDO.getId());
+                            // 把中标单位更新进去
+                            projectDO.setInMarkComp(inMarkComp);
+                            projectDAO.update(projectDO);
                         }
                     }
 
@@ -63,7 +66,7 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                     projectAnnounceVO.setProjectType(obj.getString("projectType"));
                     projectAnnounceVO.setTitle(obj.getString("title"));
                     projectAnnounceVO.setAnnounceDesc(obj.getString("announceDesc"));
-                    projectAnnounceVO.setFirstCandidate(obj.getString("firstCandidate"));
+                    projectAnnounceVO.setFirstCandidate(inMarkComp);
                     projectAnnounceVO.setFirstBuilderName(obj.getString("firstBuilderName"));
                     projectAnnounceVO.setFirstMarkMoney(obj.getString("firstMarkMoney"));
                     projectAnnounceVO.setSecondCandidate(obj.getString("secondCandidate"));

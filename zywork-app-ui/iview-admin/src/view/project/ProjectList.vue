@@ -964,7 +964,7 @@ export default {
         this.$Message.warning("只能选择一个项目")
         return
       }
-      this.$emit('initData', this.table.selections[0].id)
+      this.$emit('initData', this.table.selections[0].id, this.table.selections[0].title)
     }
   }
 }

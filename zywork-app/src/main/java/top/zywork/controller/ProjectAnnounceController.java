@@ -17,6 +17,7 @@ import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
 import top.zywork.dto.ProjectDTO;
 import top.zywork.enums.UploadTypeEnum;
+import top.zywork.python.ProjectAnnouncePythonService;
 import top.zywork.python.ProjectPythonService;
 import top.zywork.query.ProjectAnnounceQuery;
 import top.zywork.query.ProjectQuery;
@@ -73,7 +74,7 @@ public class ProjectAnnounceController extends BaseController {
 
     private UploadService uploadService;
 
-    private ProjectPythonService projectPythonService;
+    private ProjectAnnouncePythonService projectAnnouncePythonService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectAnnounceVO projectAnnounceVO, BindingResult bindingResult) {
@@ -261,7 +262,7 @@ public class ProjectAnnounceController extends BaseController {
         String url = PythonConstants.BASE_URL + projectAnnounceQuery.getTitle();
         HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
-        projectPythonService.saveProject(data);
+        projectAnnouncePythonService.saveProjectAnnounce(data);
         return ResponseStatusVO.ok("后台更新中", null);
     }
 
@@ -276,8 +277,8 @@ public class ProjectAnnounceController extends BaseController {
     }
 
     @Autowired
-    public void setProjectPythonService(ProjectPythonService projectPythonService) {
-        this.projectPythonService = projectPythonService;
+    public void setProjectPythonService(ProjectAnnouncePythonService projectAnnouncePythonService) {
+        this.projectAnnouncePythonService = projectAnnouncePythonService;
     }
 
 }

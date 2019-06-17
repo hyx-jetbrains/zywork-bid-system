@@ -5,10 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import top.zywork.common.BeanUtils;
 import top.zywork.common.IOUtils;
 import top.zywork.common.UUIDUtils;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.dao.ProjectAnnounceDAO;
 import top.zywork.dao.ProjectDAO;
+import top.zywork.dto.ProjectAnnounceDTO;
 import top.zywork.python.ProjectPythonService;
 import top.zywork.vo.ProjectVO;
 
@@ -24,6 +27,8 @@ import top.zywork.vo.ProjectVO;
 public class ProjectPythonServiceImpl implements ProjectPythonService {
 
     private ProjectDAO projectDAO;
+
+    private ProjectAnnounceDAO projectAnnounceDAO;
 
     @Value("${projectDetail.uri}")
     private String uri;
@@ -42,11 +47,12 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     String fileName = UUIDUtils.uuid() +".html";
                     String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
                     String foot = "</body></html>";
+                    String title = obj.getString("title");
 
                     IOUtils.writeText(head +obj.getString("projectDetail")+ foot, location + "/" + fileName);
 
                     ProjectVO projectVO = new ProjectVO();
-                    projectVO.setTitle(obj.getString("title"));
+                    projectVO.setTitle(title);
                     projectVO.setProjectType(obj.getString("projectType"));
                     projectVO.setCity(obj.getString("city"));
                     projectVO.setProjectDetail(obj.getString("projectDetail"));
@@ -60,11 +66,11 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setPhone(obj.getString("phone"));
                     projectVO.setMarkStatus(ProjectConstants.MARK_PUBLICIT_NOTICE);
                     if(obj.getLong("offerPrice") != null) {
-                        projectVO.setOfferPrice(obj.getLong("offerPrice") * 100);
+                        projectVO.setOfferPrice(obj.getBigDecimal("offerPrice"));
                     }
 
                     if(obj.getLong("assurePrice") != null) {
-                        projectVO.setAssurePrice(obj.getLong("assurePrice") * 100);
+                        projectVO.setAssurePrice(obj.getBigDecimal("assurePrice"));
                     }
                     projectVO.setConstructionPeriod(obj.getInteger("constructionPeriod"));
                     projectVO.setDownloadEndTime(obj.getDate("downloadEndTime"));
@@ -75,7 +81,23 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setNoticeTime(obj.getDate("noticeTime"));
                     projectVO.setSourceUrl(obj.getString("sourceUrl"));
                     projectVO.setInwardHtmlUrl(uri + "/" + fileName);
+                    projectVO.setResourceCount(0);
                     projectDAO.save(projectVO);
+
+                    // 根据名称查询业绩，如果有查询到，则更新
+                    Object tempObj = projectAnnounceDAO.getByTitle(title + "[中标候选人公示]");
+                    if (null != tempObj) {
+                        ProjectAnnounceDTO projectAnnounceDTO = BeanUtils.copy(tempObj, ProjectAnnounceDTO.class);
+                        if (projectAnnounceDTO.getId() == 0) {
+                            // 说明该业绩还未匹配对应的项目
+                            projectAnnounceDTO.setProjectId(projectVO.getId());
+                            projectAnnounceDAO.update(projectAnnounceDTO);
+                            projectVO.setInMarkComp(projectAnnounceDTO.getFirstCandidate());
+                            projectDAO.update(projectVO);
+                        }
+                    }
+
+
                 }
             }
         }
@@ -84,5 +106,10 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
     @Autowired
     public void setProjectDAO(ProjectDAO projectDAO) {
         this.projectDAO = projectDAO;
+    }
+
+    @Autowired
+    public void setProjectAnnounceDAO(ProjectAnnounceDAO projectAnnounceDAO) {
+        this.projectAnnounceDAO = projectAnnounceDAO;
     }
 }

@@ -30,7 +30,7 @@ export default {
   /**
    * @description 分配权限时权限树的标题
    */
-  permissionTreeTitle: '赣州智悦科技',
+  permissionTreeTitle: '江西招投标信息共享平台',
   /**
    * @description 需要加载的插件
    */
@@ -41,5 +41,5 @@ export default {
     }
   },
   showDemoAccount: false, // 是否在登录页面显示体验账号
-  hasAccessPermissionRoles: ['super_sys_admin', 'sys_admin', 'sys_dev', 'sys_user_demo'] // 可访问后台系统的角色
+  hasAccessPermissionRoles: ['super_sys_admin', 'sys_admin', 'sys_dev', 'sys_user_demo', 'customer_service', 'bidding_information_collector'] // 可访问后台系统的角色
 }

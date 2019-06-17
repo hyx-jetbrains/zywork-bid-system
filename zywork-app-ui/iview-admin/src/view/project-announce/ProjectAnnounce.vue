@@ -19,6 +19,21 @@
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>&nbsp;
+          <Dropdown @on-click="projectTypeSearch">
+            <Button type="primary">
+              {{currProjectType}}
+              <Icon type="ios-arrow-down"></Icon>
+            </Button>
+            <DropdownMenu slot="list">
+              <DropdownItem name="all">全部</DropdownItem>
+              <DropdownItem name="building">房建市政</DropdownItem>
+              <DropdownItem name="hydraulic">水利工程</DropdownItem>
+              <DropdownItem name="traffic">交通工程</DropdownItem>
+              <DropdownItem name="purchase">政府采购</DropdownItem>
+              <DropdownItem name="important">重点工程</DropdownItem>
+              <DropdownItem name="other">其他项目</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
           <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
@@ -429,7 +444,7 @@
         </FormItem>
         <FormItem label="爬取说明" prop="desc">
           增量爬取
-          <span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取
+          <span style="color: red;" v-text="typeLabel"></span>公示数据，只会爬取最新的数据，如网站未更新数据，则不会爬取
         </FormItem>
         <FormItem label="爬取类型" prop="title">
           <Select
@@ -579,8 +594,8 @@ export default {
           {
             type: 'string',
             min: 1,
-            max: 20,
-            message: '必须1-20个字符',
+            max: 100,
+            message: '必须1-100个字符',
             trigger: 'blur'
           }
         ],
@@ -961,7 +976,8 @@ export default {
       isActiveSelect: isActiveSelect,
       pythonProjectAnnounceTypeSelect: pythonProjectAnnounceTypeSelect,
       projectType: projectType,
-      projectTitle: ''
+      projectTitle: '',
+      currProjectType: '全部'
     }
   },
   computed: {},
@@ -998,6 +1014,32 @@ export default {
       utils.cancelModal(this, modal)
       this.searchForm.pageNo = 1
       utils.search(this)
+    },
+    /** 项目类型查询 */
+    projectTypeSearch(itemName) {
+      let projectType = ''
+      if (itemName === 'building') {
+        projectType = '房建市政'
+      } else if (itemName === 'hydraulic') {
+        projectType = '水利工程'
+      } else if (itemName === 'traffic') {
+        projectType = '交通工程'
+      } else if (itemName === 'purchase') {
+        projectType = '政府采购'
+      } else if (itemName === 'important') {
+        projectType = '重点工程'
+      } else if (itemName === 'other') {
+        projectType = '其他项目'
+      } else if (itemName === 'all') {
+        projectType = ''
+      }
+      if (itemName === 'all') {
+        this.currProjectType = '全部'
+      } else {
+        this.currProjectType = projectType
+      }
+      this.searchForm.projectType = projectType
+      this.search()
     },
     batchOpt(itemName) {
       if (itemName === 'batchActive') {
@@ -1090,23 +1132,26 @@ export default {
     },
     // 切换原地址
     switchSourceDataUrl(val) {
+      if (val === undefined) {
+        return;
+      }
       const label = val.label
-      if ('房建市政公示' == label) {
+      if ('房建市政' == label) {
         this.sourceDataUrl =
           'http://jxsggzy.cn/web/jyxx/002001/002001004/jyxx.html'
-      } else if ('水利工程公示' == label) {
+      } else if ('水利工程' == label) {
         this.sourceDataUrl =
           'http://jxsggzy.cn/web/jyxx/002003/002003004/jyxx.html'
-      } else if ('交通工程公示' == label) {
+      } else if ('交通工程' == label) {
         this.sourceDataUrl =
           'http://jxsggzy.cn/web/jyxx/002002/002002005/jyxx.html'
-      } else if ('政府采购公示' == label) {
+      } else if ('政府采购' == label) {
         this.sourceDataUrl =
           'http://jxsggzy.cn/web/jyxx/002006/002006004/jyxx.html'
-      } else if ('重点项目公示' == label) {
+      } else if ('重点项目' == label) {
         this.sourceDataUrl =
           'http://jxsggzy.cn/web/jyxx/002005/002005004/jyxx.html'
-      } else if ('其他项目公示' == label) {
+      } else if ('其他项目' == label) {
         this.sourceDataUrl =
           'http://jxsggzy.cn/web/jyxx/002013/002013002/jyxx.html'
       }
