@@ -5,40 +5,43 @@ import * as ResponseStatus from './response-status.js'
  * 加载消息
  */
 export const loadMessage = (self, params, type) => {
-	uni.request({
-		url: BASE_URL + '/user-notice/user/pager-cond',
-		data: params,
-		method: 'POST',
-		header: {
-			'Authorization': 'Bearer ' + getUserToken()
-		},
-		success: (res) => {
-			if (res.data.code === ResponseStatus.OK) {
-				if (type === 'init') {
-					self.messageList = res.data.data.rows
-				} else if (type === 'pullDown') {
-					self.messageList = res.data.data.rows
-					uni.stopPullDownRefresh()
-					self.showLoadMore = false
-					self.loadMoreText = '加载中...'
-				} else if (type === 'reachBottom') {
-					if (res.data.data.rows.length > 0) {
-						self.messageList = self.messageList.concat(res.data.data.rows)
-						self.loadMoreText = '加载更多'
-					} else {
-						self.loadMoreText = '已加载全部'
+	const token = getUserToken()
+	if (token) {
+		uni.request({
+			url: BASE_URL + '/user-notice/user/pager-cond',
+			data: params,
+			method: 'POST',
+			header: {
+				'Authorization': 'Bearer ' + token
+			},
+			success: (res) => {
+				if (res.data.code === ResponseStatus.OK) {
+					if (type === 'init') {
+						self.messageList = res.data.data.rows
+					} else if (type === 'pullDown') {
+						self.messageList = res.data.data.rows
+						uni.stopPullDownRefresh()
+						self.showLoadMore = false
+						self.loadMoreText = '加载中...'
+					} else if (type === 'reachBottom') {
+						if (res.data.data.rows.length > 0) {
+							self.messageList = self.messageList.concat(res.data.data.rows)
+							self.loadMoreText = '加载更多'
+						} else {
+							self.loadMoreText = '已加载全部'
+						}
 					}
+				} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
+					invalidToken()
+				} else {
+					showInfoToast(res.data.message)
 				}
-			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
-				invalidToken()
-			} else {
-				showInfoToast(res.data.message)
+			},
+			fail: () => {
+				networkError()
 			}
-		},
-		fail: () => {
-			networkError()
-		}
-	})
+		})
+	}
 }
 
 /**
@@ -71,37 +74,40 @@ export const readMessage = (self, id) => {
  * 统计未读消息
  */
 export const countNotReadMsg = () => {
-	uni.request({
-		url: BASE_URL + '/user-notice/user/pager-cond',
-		data: {
-			isRead: 0
-		},
-		method: 'POST',
-		header: {
-			'Authorization': 'Bearer ' + getUserToken()
-		},
-		success: (res) => {
-			if (res.data.code === ResponseStatus.OK) {
-				if (res.data.data.total > 0) {
-					uni.setTabBarBadge({
-						index: 2,
-						text: res.data.data.total + ''
-					})
+	const token = getUserToken()
+	if (token) {
+		uni.request({
+			url: BASE_URL + '/user-notice/user/pager-cond',
+			data: {
+				isRead: 0
+			},
+			method: 'POST',
+			header: {
+				'Authorization': 'Bearer ' + token
+			},
+			success: (res) => {
+				if (res.data.code === ResponseStatus.OK) {
+					if (res.data.data.total > 0) {
+						uni.setTabBarBadge({
+							index: 2,
+							text: res.data.data.total + ''
+						})
+					} else {
+						uni.removeTabBarBadge({
+							index: 2
+						})
+					}
+				} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
+					invalidToken()
 				} else {
-					uni.removeTabBarBadge({
-						index: 2
-					})
+					showInfoToast(res.data.message)
 				}
-			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
-				invalidToken()
-			} else {
-				showInfoToast(res.data.message)
+			},
+			fail: () => {
+				networkError()
 			}
-		},
-		fail: () => {
-			networkError()
-		}
-	})
+		})
+	}
 }
 
 /**
