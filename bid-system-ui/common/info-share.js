@@ -212,3 +212,35 @@ export const saveBuilderReq = (self, params) => {
 		}
 	})
 }
+
+/**
+ * 获取通知公告附件信息
+ */
+export const getUpdateNoticeResourceById = (self, id) => {
+	uni.request({
+		url: BASE_URL + '/resource/any/one/' + id,
+		method: 'GET',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				
+				const data = res.data.data;
+				if (data.id !== null) {
+					self.resource = res.data.data
+					var tempFileNameArr = data.url.split('/')
+					self.fileName = tempFileNameArr[tempFileNameArr.length - 1]
+				}
+				
+			} else {
+				showInfoToast(res.data.message);
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			
+		}
+	})
+}

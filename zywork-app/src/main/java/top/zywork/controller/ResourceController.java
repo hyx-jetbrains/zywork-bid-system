@@ -140,7 +140,10 @@ public class ResourceController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
-
+    @GetMapping("any/one/{id}")
+    public ResponseStatusVO anyGetById(@PathVariable("id") Long id) {
+        return getById(id);
+    }
 
 
     @Autowired

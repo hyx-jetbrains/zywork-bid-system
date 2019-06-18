@@ -97,8 +97,8 @@
 							<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
 							<view class="zy-project-item-row">
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.project.assurePrice / 100}}</view>
-								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.project.offerPrice / 100}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.project.assurePrice}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.project.offerPrice}}</view>
 							</view>
 							<view class="zy-project-item-row">
 								<view class="zy-text-info">

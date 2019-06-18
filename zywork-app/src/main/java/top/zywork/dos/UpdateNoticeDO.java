@@ -31,8 +31,18 @@ public class UpdateNoticeDO extends BaseDO {
 	private Date createTime;
 	// 是否激活
 	private Byte isActive;
-	
-    public UpdateNoticeDO () {}
+	// 资源编号
+	private Long resourceId;
+
+	public Long getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(Long resourceId) {
+		this.resourceId = resourceId;
+	}
+
+	public UpdateNoticeDO () {}
 
     public UpdateNoticeDO (Long id, String title, String content, String synopsis, Integer version, Date updateTime, Date createTime, Byte isActive) {
         this.id = id;

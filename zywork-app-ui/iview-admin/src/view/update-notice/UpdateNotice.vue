@@ -66,6 +66,24 @@
             placeholder="请输入公告简介"
           />
         </FormItem>
+        <FormItem label="资源编号" prop="resourceId">
+          <Upload
+            type="drag"
+            :action="urls.uploadResourceUrl"
+            :on-success="handleSuccess"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            :format="['doc','docx','pdf']"
+            :max-size="10240"
+            :headers="uploadHeader"
+          >
+            <div style="padding: 20px 0">
+              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+              <p>单击或拖动文件到此处上传</p>
+            </div>
+          </Upload>
+        </FormItem>
         <FormItem label="公告内容" prop="content">
           <editor ref="editorAdd" :value="form.content" @on-change="handleChange"/>
         </FormItem>
@@ -269,13 +287,8 @@
         <span v-text="form.isActive"></span>
       </p>
     </Modal>
-    <Modal
-      v-model="modal.detailContent"
-      title="内容详情"
-      :fullscreen="true"
-    >
+    <Modal v-model="modal.detailContent" title="内容详情" :fullscreen="true">
       <span v-html="form.content"></span>
-      
     </Modal>
   </div>
 </template>
@@ -284,6 +297,14 @@
 import * as utils from '@/api/utils'
 import Editor from '_c/editor'
 import { isActiveSelect } from '@/api/select'
+import * as ResponseStatus from '@/api/response-status'
+import config from '@/config'
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? config.baseUrl.dev
+    : config.baseUrl.pro
+const cdnUrl = config.baseUrl.cdnUrl
+import { getLocalStorageToken } from '@/libs/util'
 
 export default {
   name: 'UpdateNotice',
@@ -297,7 +318,7 @@ export default {
         edit: false,
         search: false,
         detail: false,
-        detailContent: false,
+        detailContent: false
       },
       loading: {
         add: false,
@@ -316,7 +337,8 @@ export default {
         detailUrl: '/update-notice/admin/one/',
         activeUrl: '/update-notice/admin/active',
         batchActiveUrl: '/update-notice/admin/batch-active',
-        uploadUrl: '/update-notice/admin/admin/upload-img'
+        uploadUrl: '/update-notice/admin/admin/upload-img',
+        uploadResourceUrl: baseUrl + '/update-notice/admin/upload-res/'
       },
       page: {
         total: 0
@@ -326,6 +348,7 @@ export default {
         title: null,
         content: null,
         synopsis: null,
+        resourceId: null,
         version: null,
         updateTime: null,
         createTime: null,
@@ -369,6 +392,7 @@ export default {
         idMin: null,
         idMax: null,
         title: null,
+        resourceId: null,
         content: null,
         synopsis: null,
         version: null,
@@ -425,19 +449,29 @@ export default {
             minWidth: 120,
             sortable: true,
             render: (h, params) => {
-              return h('a', {
+              return h(
+                'a',
+                {
                   on: {
                     click: () => {
                       this.showModal('detailContent')
                       this.form = JSON.parse(JSON.stringify(params.row))
                     }
                   }
-                },'点击查看')
+                },
+                '点击查看'
+              )
             }
           },
           {
             title: '公告简介',
             key: 'synopsis',
+            minWidth: 120,
+            sortable: true
+          },
+          {
+            title: '附件编号',
+            key: 'resourceId',
             minWidth: 120,
             sortable: true
           },
@@ -586,16 +620,16 @@ export default {
                             '删除'
                           )
                         ]
-                      ),
-                      h(
-                        'DropdownItem',
-                        {
-                          props: {
-                            name: 'showEnclosure'
-                          }
-                        },
-                        '附件'
-                      ),
+                      )
+                      // h(
+                      //   'DropdownItem',
+                      //   {
+                      //     props: {
+                      //       name: 'showEnclosure'
+                      //     }
+                      //   },
+                      //   '附件'
+                      // ),
                     ]
                   )
                 ]
@@ -610,7 +644,10 @@ export default {
         minRows: 3,
         maxRows: 5
       },
-      isActiveSelect: isActiveSelect
+      isActiveSelect: isActiveSelect,
+      uploadHeader: {
+        Authorization: 'Bearer ' + getLocalStorageToken()
+      }
     }
   },
   computed: {},
@@ -665,15 +702,15 @@ export default {
       } else if (itemName === 'showEnclosure') {
         // 查看附件
         this.showNoticeResource(row.id)
-      } 
+      }
     },
     // 前往通知公告附件
     showNoticeResource(id) {
-		  this.$router.push({
+      this.$router.push({
         name: 'update_notice_resource',
         params: { noticeId: id }
-      });
-		},
+      })
+    },
     add() {
       utils.add(this)
     },
@@ -701,6 +738,39 @@ export default {
     handleChange(html, text) {
       this.form.content = html
     },
+    handleSuccess(res, file) {
+      if (res.code === ResponseStatus.OK) {
+        this.$Notice.success({
+          title: '上传成功',
+          desc: file.name + ' 上传成功'
+        })
+        this.form.resourceId = res.data.id
+      } else {
+        this.$Notice.error({
+          title: '上传失败',
+          desc: res.message
+        })
+      }
+    },
+    handleFormatError(file) {
+      this.$Notice.warning({
+        title: '资源格式不正确',
+        desc:
+          file.name + ' 资源格式不正确，请选择DOC或者DOCX或者PDF格式的文档。'
+      })
+    },
+    handleMaxSize(file) {
+      this.$Notice.warning({
+        title: '超出文件大小限制',
+        desc: file.name + ' 太大，不得超10M.'
+      })
+    },
+    handleProgress(event, file) {
+      this.$Notice.info({
+        title: '文件正在上传',
+        desc: file.name + ' 上传中...'
+      })
+    }
   }
 }
 </script>

@@ -31,7 +31,9 @@
 			<if test="isActive != null">
 				is_active,
 			</if>
-			
+			<if test="resourceId != null">
+				resource_id,
+			</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null">
@@ -55,7 +57,9 @@
 			<if test="isActive != null">
 				#{isActive},
 			</if>
-			
+			<if test="resourceId != null">
+				#{resourceId},
+			</if>
         </trim>
     </insert>
 
@@ -87,7 +91,9 @@
 			<if test="item.isActive != null">
 				is_active,
 			</if>
-			
+				<if test="item.resourceId != null">
+					resource_id,
+				</if>
             </trim>
             <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="item.title != null">
@@ -111,7 +117,9 @@
 			<if test="item.isActive != null">
 				#{item.isActive},
 			</if>
-			
+				<if test="item.resourceId != null">
+					#{item.resourceId},
+				</if>
             </trim>
         </foreach>
     </insert>
@@ -151,6 +159,9 @@
 			<if test="isActive != null">
 				is_active = #{isActive},
 			</if>
+			<if test="resourceId != null">
+				resource_id = #{resourceId},
+			</if>
 			update_time = CURRENT_TIMESTAMP,
         </set>
         where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
@@ -181,6 +192,9 @@
 			<if test="item.isActive != null">
 				is_active = #{item.isActive},
 			</if>
+				<if test="item.resourceId != null">
+					item.resource_id = #{item.resourceId},
+				</if>
 			update_time = CURRENT_TIMESTAMP,
                 <if test="item.version == null">
                     version = version + 1,
@@ -191,12 +205,15 @@
     </update>
 
     <sql id="select_columns">
-        id as id, title as title, content as content, synopsis as synopsis, version as version, update_time as updateTime, create_time as createTime, is_active as isActive
+        resource_id as resourceId, id as id, title as title, content as content, synopsis as synopsis, version as version, update_time as updateTime, create_time as createTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
         <if test="query != null and query.id != null">
 			and id = #{query.id}
+		</if>
+		<if test="query != null and query.resourceId != null">
+			and resourceId = #{query.resourceId}
 		</if>
 		<if test="query != null and query.idMin != null and query.idMax == null">
 			and id <![CDATA[ >= ]]> #{query.idMin}

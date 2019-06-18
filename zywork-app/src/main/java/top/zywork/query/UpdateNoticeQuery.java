@@ -59,7 +59,16 @@ public class UpdateNoticeQuery extends PageQuery {
 	private Byte isActiveMin;
 	// 是否激活（最大值）
 	private Byte isActiveMax;
-	
+	// 资源编号
+	private Long resourceId;
+
+	public Long getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(Long resourceId) {
+		this.resourceId = resourceId;
+	}
     public UpdateNoticeQuery () {}
 
     public UpdateNoticeQuery (Long id, Long idMin, Long idMax, String title, String content, String synopsis, Integer version, Integer versionMin, Integer versionMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Date createTime, Date createTimeMin, Date createTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {

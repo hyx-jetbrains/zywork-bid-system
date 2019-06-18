@@ -5,7 +5,11 @@
 				{{item.title}}
 			</view>
 			<view v-html="item.content"></view>
-			<view class="zy-text-info zy-detail-card-time" v-text="item.createTime"></view>
+			<view class="zy-disable-flex">
+				<view style="color: #108EE9" @click="openDocument">{{fileName}}</view>
+				<view class="zy-text-info zy-disable-flex-right" v-text="item.createTime"></view>
+			</view>
+			
 		</view>
 		<zywork-fab :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction" 
 			:showContent="appointmentPopup" :iconType="iconType"
@@ -31,8 +35,12 @@
 		showInfoToast,
 		USER_FLAG,
 		USER_FLAG_VIP,
-		USER_FLAG_ORDINARY
+		USER_FLAG_ORDINARY,
+		DOCUMENT_BASE_URL
 	} from '@/common/util.js'
+	import {
+		getUpdateNoticeResourceById
+	} from '@/common/info-share.js'
 	export default {
 		components: {
 			zyworkFab,
@@ -42,6 +50,8 @@
 		data() {
 			return {
 				item: {},
+				resource: {},
+				fileName: '',
 				directionStr: '垂直',
 				horizontal: 'right',
 				vertical: 'bottom',
@@ -112,6 +122,8 @@
 						}
 					]
 				}
+				// 获取附件资源
+				getUpdateNoticeResourceById(this, this.item.resourceId);
 			},
 			/** 悬浮按钮事件监听 */
 			trigger(e) {
@@ -129,7 +141,28 @@
 					})
 				}
 				
-			}
+			},
+			/** 打开文档 */
+			openDocument() {
+				const url = this.resource.url;
+				uni.showLoading({
+					title: '加载中...'
+				})
+				uni.downloadFile({
+					url: DOCUMENT_BASE_URL + "/" + url,
+					success: (res) => {
+						uni.openDocument({
+							filePath: res.tempFilePath,
+							success: () => {
+								console.log('打开文档成功');
+							},
+							complete: () => {
+								uni.hideLoading()
+							}
+						});
+					}
+				});
+			},
 		}
 	}
 </script>

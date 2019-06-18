@@ -19,6 +19,19 @@
 		<view style="height: 10upx; background-color: #F8F8F8;"></view>
 		<!-- 企业信息 -->
 		<view v-if="infoType.tabIndex === 0">
+			<view class="zy-disable-flex zy-achievement-type">
+				<view class="zy-type-title zy-text-bold">选择企业类别</view>
+				<view class="zy-disable-flex-right">
+					<view class="uni-list-cell-db">
+						<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
+							<view class="zy-disable-flex">
+								<text>{{industryTypeArray[industryTypeIndex]}}</text>
+								<zywork-icon type="iconxiangxia" />
+							</view>
+						</picker>
+					</view>
+				</view>
+			</view>
 			<view class="zy-page-list zy-page-card" v-if="companyList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in companyList" :key="index">
 					<view>
@@ -218,7 +231,7 @@
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
 								<view v-if="item.compTrafficAchievementContractAmount != ''" class="zy-text-info">
-									{{item.compTrafficAchievementContractAmount}}
+									{{item.compTrafficAchievementContractAmount}} 万元
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -263,7 +276,7 @@
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
 								<view v-if="item.compKeyProjectAchievementMarkMoney != ''" class="zy-text-info">
-									{{item.compKeyProjectAchievementMarkMoney}}
+									{{item.compKeyProjectAchievementMarkMoney}} 万元
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -317,7 +330,7 @@
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
 								<view v-if="item.contractAmount != ''" class="zy-text-info">
-									{{item.compWaterMonitorAchievementContractAmount}}
+									{{item.compWaterMonitorAchievementContractAmount}} 万元
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -362,7 +375,7 @@
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">合同金额:</view>
 								<view v-if="item.compWaterDeviseAchievementContractAmount != ''" class="zy-text-info">
-									{{item.compWaterDeviseAchievementContractAmount}}
+									{{item.compWaterDeviseAchievementContractAmount}} 万元
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -438,6 +451,19 @@
 
 		<!-- 资质信息 -->
 		<view v-if="infoType.tabIndex === 3">
+			<view class="zy-disable-flex zy-achievement-type">
+				<view class="zy-type-title zy-text-bold">选择企业类别</view>
+				<view class="zy-disable-flex-right">
+					<view class="uni-list-cell-db">
+						<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
+							<view class="zy-disable-flex">
+								<text>{{industryTypeArray[industryTypeIndex]}}</text>
+								<zywork-icon type="iconxiangxia" />
+							</view>
+						</picker>
+					</view>
+				</view>
+			</view>
 			<view class="zy-page-list zy-page-card" v-if="aptitudeList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in aptitudeList" :key="index">
 					<view @click="toCompanyDetail(item.compAptitudeCompId, 2)">
@@ -547,7 +573,8 @@
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
 	import {
-		achievementTypeArray
+		achievementTypeArray,
+		industryTypeArray
 	} from '@/common/picker.data.js'
 	import {
 		showInfoToast,
@@ -622,7 +649,9 @@
 					pageSize: 10,
 					isActive: 0,
 					compBuilderIsActive: 0,
-					compAptitudeIsActive: 0
+					compAptitudeIsActive: 0,
+					industryType: '',
+					companyIndustryType: ''
 				},
 				companyList: [],
 				achievementList: [],
@@ -633,6 +662,8 @@
 					current: 0,
 					items: achievementTypeArray
 				},
+				industryTypeArray: industryTypeArray,
+				industryTypeIndex: 0,
 			}
 		},
 		onLoad() {
@@ -973,6 +1004,20 @@
 				let index = e.target.value
 				if (this.achievementOpts.current !== index) {
 					this.achievementOpts.current = index
+					this.initPager();
+					this.checkRefresh(this.infoType.tabIndex, 'init');
+				}
+			},
+			/** 行业分类选择器 */
+			onClickIndustryItem: function(e) {
+				let index = e.target.value
+				if (this.industryTypeIndex !== index) {
+					this.industryTypeIndex = index
+					if (index != 0) {
+						this.pager.companyIndustryType = this.pager.industryType = this.industryTypeArray[index];
+					} else {
+						this.pager.companyIndustryType = this.pager.industryType = '';
+					}
 					this.initPager();
 					this.checkRefresh(this.infoType.tabIndex, 'init');
 				}

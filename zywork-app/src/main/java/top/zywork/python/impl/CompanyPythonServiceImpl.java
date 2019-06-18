@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.DateParseUtils;
 import top.zywork.common.HttpUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.PythonConstants;
 import top.zywork.dao.*;
 import top.zywork.dto.*;
@@ -91,6 +92,19 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 if (companyFlag) {
                     // 如果公司信息已经存在，则不需要再储存公司信息
                     companyDTO.setCompName(compName);
+                    // 注册地区
+                    String regAddress = jsonObject.getString("regAddress");
+                    companyDTO.setRegAddress(regAddress);
+                    // 默认省外
+                    Integer jurisdictionType = 1;
+                    if (!StringUtils.isEmpty(regAddress)) {
+                        String tempProvince = regAddress.split("/")[0];
+                        if (tempProvince.equals("江西省")) {
+                            // 是江西省，则设置成省内
+                            jurisdictionType = 0;
+                        }
+                    }
+                    companyDTO.setJurisdictionType(jurisdictionType.byteValue());
                     // 城市
                     String city = jsonObject.getString("city");
                     companyDTO.setCity(city);
@@ -106,9 +120,6 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     // 法人电话
                     String legalPersonPhone = jsonObject.getString("legalPersonPhone");
                     companyDTO.setLegalPerson(legalPerson);
-                    // 注册地区
-                    String regAddress = jsonObject.getString("regAddress");
-                    companyDTO.setRegAddress(regAddress);
                     // 负责人
                     String responsible = jsonObject.getString("responsible");
                     companyDTO.setResponsible(responsible);

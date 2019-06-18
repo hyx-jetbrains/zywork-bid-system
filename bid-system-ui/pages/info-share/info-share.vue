@@ -18,7 +18,7 @@
 
 		<view>
 			<!-- 建造师 -->
-			<view v-if="infoType.tabIndex === 0">
+			<view v-if="infoType.tabIndex === 3">
 				<view class="zy-uni-segmented-control">
 					<uni-segmented-control :current="builderOpts.current" :values="builderOpts.items" v-on:clickItem="onClickBuilderItem"
 					 styleType="button" activeColor="#108EE9"></uni-segmented-control>
@@ -145,7 +145,7 @@
 			</view>
 
 			<!-- 开标拼车 -->
-			<view v-if="infoType.tabIndex === 2">
+			<view v-if="infoType.tabIndex === 5">
 				<view class="zy-uni-segmented-control">
 					<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem"
 					 styleType="button" activeColor="#108EE9"></uni-segmented-control>
@@ -246,7 +246,7 @@
 			</view>
 
 			<!-- 岗位招聘 -->
-			<view v-if="infoType.tabIndex === 3">
+			<view v-if="infoType.tabIndex === 6">
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
 					<!-- 其他岗位招聘信息 -->
 					<view class="zy-page-list" v-if="recruitList.length > 0">
@@ -342,7 +342,7 @@
 			</view>
 
 			<!-- 更新公告 -->
-			<view v-if="infoType.tabIndex === 5">
+			<view v-if="infoType.tabIndex === 0">
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
 					<!-- 更新公告信息 -->
 					<view class="zy-page-list" v-if="updateNoticeList.length > 0">
@@ -352,7 +352,7 @@
 									<view style="width: 100upx;">
 										<image class="zy-page-mini-headicon" :src="defaultIcon" />
 									</view>
-									<view style="text-align: center;">
+									<view>
 										<view class="zy-text-bold" v-text="item.title"></view>
 										<view class="zy-text-mini zy-text-info" style="color: #108EE9">公告时间：{{item.createTime}}</view>
 									</view>
@@ -366,7 +366,7 @@
 			</view>
 
 			<!-- 申请保函 -->
-			<view v-if="infoType.tabIndex === 6">
+			<view v-if="infoType.tabIndex === 2">
 				<view class="zy-page-list-item" style="padding-top: 10upx;">
 					<!-- 申请保函信息 -->
 					<view class="zy-page-list" v-if="guaranteeList.length > 0">
@@ -437,13 +437,20 @@
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as infoShare from '@/common/info-share.js'
 
-	const INFO_BUILDER = 0
+	// 通知公告
+	const INFO_NOTICE = 0
+	// 资质转让
 	const INFO_APTITUDE = 1
-	const INFO_CARPOOL = 2
-	const INFO_HIRE = 3
+	// 申请保函
+	const INFO_GUARANTEE = 2
+	// 建造师
+	const INFO_BUILDER = 3
+	// 求带资料
 	const INFO_MATERIAL = 4
-	const INFO_NOTICE = 5
-	const INFO_GUARANTEE = 6
+	// 开标拼车
+	const INFO_CARPOOL = 5
+	// 岗位招聘
+	const INFO_HIRE = 6
 
 	export default {
 		components: {
@@ -477,13 +484,26 @@
 				infoType: {
 					scrollLeft: 0,
 					tabIndex: 0,
-					tabbars: [{
-							id: 'builder',
-							name: '建造师'
+					tabbars: [
+						{
+							id: 'notice',
+							name: '通知公告'
 						},
 						{
 							id: 'aptitude',
 							name: '资质转让'
+						},
+						{
+							id: 'guarantee',
+							name: '申请保函'
+						},
+						{
+							id: 'builder',
+							name: '建造师'
+						},
+						{
+							id: 'material',
+							name: '求带资料'
 						},
 						{
 							id: 'carPool',
@@ -492,18 +512,6 @@
 						{
 							id: 'hire',
 							name: '岗位招聘'
-						},
-						{
-							id: 'material',
-							name: '求带资料'
-						},
-						{
-							id: 'notice',
-							name: '通知公告'
-						},
-						{
-							id: 'guarantee',
-							name: '申请保函'
 						}
 					]
 				},

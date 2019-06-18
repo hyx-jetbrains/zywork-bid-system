@@ -76,7 +76,7 @@
 				</view>
 				<view class="zy-disable-flex zy-detail-desc-item">
 					<view class="zy-text-bold">注册资本</view>
-					<view class="zy-disable-flex-right">{{item.regCapital}}</view>
+					<view class="zy-disable-flex-right">{{item.regCapital}}万元</view>
 				</view>
 				<view class="zy-disable-flex zy-detail-desc-item">
 					<view class="zy-text-bold">经营范围</view>

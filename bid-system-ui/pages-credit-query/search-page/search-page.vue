@@ -22,6 +22,21 @@
 					<zywork-icon type="iconwebicon03" size="30" @tap="showSearchDrawer"></zywork-icon>
 				</view>
 			</view>
+			<view v-if="infoType.tabIndex === 0">
+				<view class="zy-disable-flex zy-achievement-type">
+					<view class="zy-type-title zy-text-bold">选择企业类别</view>
+					<view class="zy-disable-flex-right">
+						<view class="uni-list-cell-db">
+							<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
+								<view class="zy-disable-flex">
+									<text>{{industryTypeArray[industryTypeIndex]}}</text>
+									<zywork-icon type="iconxiangxia" />
+								</view>
+							</picker>
+						</view>
+					</view>
+				</view>
+			</view>
 			<view class="zy-disable-flex zy-search-page-history-record">
 				<view class="zy-type-title zy-text-bold">历史搜索</view>
 				<view class="zy-disable-flex-right">
@@ -61,6 +76,19 @@
 			<view style="height: 10upx; background-color: #F8F8F8;"></view>
 			<!-- 企业信息 -->
 			<view v-if="infoType.tabIndex === 0">
+				<view class="zy-disable-flex zy-achievement-type">
+					<view class="zy-type-title zy-text-bold">选择企业类别</view>
+					<view class="zy-disable-flex-right">
+						<view class="uni-list-cell-db">
+							<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
+								<view class="zy-disable-flex">
+									<text>{{industryTypeArray[industryTypeIndex]}}</text>
+									<zywork-icon type="iconxiangxia" />
+								</view>
+							</picker>
+						</view>
+					</view>
+				</view>
 				<view class="zy-page-list zy-page-card" v-if="companyList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in companyList" :key="index">
 						<view>
@@ -480,6 +508,19 @@
 
 			<!-- 资质信息 -->
 			<view v-if="infoType.tabIndex === 3">
+				<view class="zy-disable-flex zy-achievement-type">
+					<view class="zy-type-title zy-text-bold">选择企业类别</view>
+					<view class="zy-disable-flex-right">
+						<view class="uni-list-cell-db">
+							<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
+								<view class="zy-disable-flex">
+									<text>{{industryTypeArray[industryTypeIndex]}}</text>
+									<zywork-icon type="iconxiangxia" />
+								</view>
+							</picker>
+						</view>
+					</view>
+				</view>
 				<view class="zy-page-list zy-page-card" v-if="aptitudeList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in aptitudeList" :key="index">
 						<view @click="toCompanyDetail(item.compAptitudeCompId, 2)">
@@ -602,7 +643,7 @@
 			</view>
 			<!-- 企业信息搜索条件 -->
 			<view v-if="infoType.tabIndex === 0">
-				<view class="zy-search-view">
+				<!-- <view class="zy-search-view">
 					<view class="zy-search-bar zy-search">
 						<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
 							<view class="zy-disable-flex">
@@ -611,7 +652,7 @@
 							</view>
 						</picker>
 					</view>
-				</view>
+				</view> -->
 			</view>
 			<!-- 业绩信息搜索条件 -->
 			<view v-if="infoType.tabIndex === 1">
@@ -649,7 +690,7 @@
 				<view class="zy-search-view">
 					<view class="zy-search-bar zy-search">
 						<zywork-icon type="iconchaxun" />
-						<input type="text" v-model="pager.compAptitudeCertificateDetail" placeholder="输入资质关键字搜索" @confirm="searchData" />
+						<input type="text" v-model="pager.companyCompName" placeholder="输入企业名称关键字搜索" @confirm="searchData" />
 					</view>
 				</view>
 			</view>
@@ -658,7 +699,7 @@
 				<view class="zy-search-view">
 					<view class="zy-search-bar zy-search">
 						<zywork-icon type="iconchaxun" />
-						<input type="text" v-model="pager.projectAnnounceFirstBuilderName" placeholder="输入建造师/项目负责人关键字搜索" @confirm="searchData" />
+						<input type="text" v-model="pager.firstBuilderName" placeholder="输入建造师/项目负责人关键字搜索" @confirm="searchData" />
 					</view>
 				</view>
 			</view>
@@ -792,7 +833,7 @@
 					this.keywordMemo = '输入建造师姓名关键字搜索';
 				} else if (INFO_APTITUDE === tabIndex) {
 					// 企业资质信息
-					this.keywordMemo = '输入企业名称关键字搜索';
+					this.keywordMemo = '输入资质关键字搜索';
 				} else if (INFO_MARK === tabIndex) {
 					// 中标记录
 					this.keywordMemo = '输入中标单位关键字搜索';
@@ -812,9 +853,10 @@
 					markMoneyMax: '',
 					contractAmountMin: '',
 					contractAmountMax: '',
-					projectAnnounceFirstBuilderName: '',
+					firstBuilderName: '',
 					compAptitudeCertificateDetail: '',
-					industryType: ''
+					industryType: '',
+					companyIndustryType: ''
 				}
 			},
 			/** 返回上个页面 */
@@ -1180,7 +1222,7 @@
 					this.refreshBuilderList(type);
 				} else if (INFO_APTITUDE === tabIndex) {
 					// 企业资质信息
-					this.pager.companyCompName = tempSearchVal;
+					this.pager.compAptitudeCertificateDetail = tempSearchVal;
 					this.refreshAptitudeList(type);
 				} else if (INFO_MARK === tabIndex) {
 					// 中标记录
@@ -1206,7 +1248,7 @@
 					this.initPagerData();
 					console.log(index)
 					if (index != 0) {
-						this.pager.industryType = this.industryTypeArray[index];
+						this.pager.companyIndustryType = this.pager.industryType = this.industryTypeArray[index];
 					}
 					this.closeSearchDrawer();
 					this.searchData();

@@ -152,7 +152,7 @@ public class UpdateNoticeController extends BaseController {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
                 ResourceConstants.RESOURCE_TYPE_DOCUMENT, UploadTypeEnum.OFFICE.getAllowedExts(),
-                UploadTypeEnum.OFFICE.getMaxSize(), false);
+                UploadTypeEnum.OFFICE.getMaxSize(), true);
         return responseStatusVO;
     }
 
