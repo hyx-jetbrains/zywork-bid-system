@@ -160,6 +160,7 @@ export default {
   user_expert_question_type_manage: 'Expert Type Management',
   expert_question_type_manage: 'Expert Type Question Management',
   update_notice: 'Update Notice',
+  update_notice_resource: 'Update Notice Resource',
   credit_enquiry: 'Credit Enquiry',
   company_info_manage: 'Company Information Management',
   company_personnel_manage: 'Company Personnel Management',

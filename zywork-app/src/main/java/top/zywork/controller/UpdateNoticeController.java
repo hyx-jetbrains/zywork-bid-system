@@ -7,12 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.UpdateNoticeDTO;
+import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.UpdateNoticeQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
+import top.zywork.service.ResourceService;
 import top.zywork.service.UpdateNoticeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -35,6 +41,8 @@ public class UpdateNoticeController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(UpdateNoticeController.class);
 
     private UpdateNoticeService updateNoticeService;
+
+    private ResourceService resourceService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated UpdateNoticeVO updateNoticeVO, BindingResult bindingResult) {
@@ -139,8 +147,22 @@ public class UpdateNoticeController extends BaseController {
         return listPageByCondition(updateNoticeQuery);
     }
 
+    @PostMapping("admin/upload-res")
+    public ResponseStatusVO upload(MultipartFile file) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
+                ResourceConstants.RESOURCE_TYPE_DOCUMENT, UploadTypeEnum.OFFICE.getAllowedExts(),
+                UploadTypeEnum.OFFICE.getMaxSize(), false);
+        return responseStatusVO;
+    }
+
     @Autowired
     public void setUpdateNoticeService(UpdateNoticeService updateNoticeService) {
         this.updateNoticeService = updateNoticeService;
+    }
+
+    @Autowired
+    public void setResourceService(ResourceService resourceService) {
+        this.resourceService = resourceService;
     }
 }

@@ -1970,3 +1970,19 @@ CREATE TABLE `t_user_notice`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息通知表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+--
+-- Table structure for table `t_update_notice_resource`
+--
+DROP TABLE IF EXISTS `t_update_notice_resource`;
+CREATE TABLE `t_update_notice_resource` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '更新公告资源编号',
+  `notice_id` bigint(20) DEFAULT NULL COMMENT '更新公告编号',
+  `resource_id` bigint(20) DEFAULT NULL COMMENT '资源编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '更新公告资源表' ROW_FORMAT = Dynamic;
+SET FOREIGN_KEY_CHECKS = 1;

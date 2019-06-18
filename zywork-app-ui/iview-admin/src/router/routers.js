@@ -271,11 +271,20 @@ export default [
 			  path: 'UpdateNotice',
 			  name: 'update_notice',
 			  meta: {
-			    title: '更新公告',
+			    title: '通知公告',
 			    icon: 'ios-person'
 			  },
 			  component: () => import('@/view/update-notice/UpdateNotice.vue')
-			},
+      },
+      {
+        path: 'UpdateNoticeResource',
+        name: 'update_notice_resource',
+        meta: {
+          title: '通知公告附件',
+          icon: 'ios-person'
+        },
+        component: () => import('@/view/update-notice-resource/UpdateNoticeResource.vue')
+      },
     ]
   },
   {
