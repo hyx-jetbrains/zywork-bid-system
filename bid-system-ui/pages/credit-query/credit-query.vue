@@ -21,9 +21,9 @@
 		<view v-if="infoType.tabIndex === 0">
 			<view class="zy-page-list zy-page-card" v-if="companyList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in companyList" :key="index">
-					<view @click="toCompanyDetail(item, 0)">
+					<view>
 						<!-- 头部 -->
-						<view class="zy-disable-flex">
+						<view class="zy-disable-flex" @click="toCompanyDetail(item, 0)">
 							<zywork-icon type="iconqiyejianjie" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 							<view>
 								<view>

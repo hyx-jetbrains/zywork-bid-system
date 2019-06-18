@@ -361,7 +361,7 @@
 							</view>
 						</view>
 					</view>
-					<zyworkNoData v-else text="暂无更新公告信息"></zyworkNoData>
+					<zyworkNoData v-else text="暂无通知公告信息"></zyworkNoData>
 				</view>
 			</view>
 
@@ -499,7 +499,7 @@
 						},
 						{
 							id: 'notice',
-							name: '更新公告'
+							name: '通知公告'
 						},
 						{
 							id: 'guarantee',

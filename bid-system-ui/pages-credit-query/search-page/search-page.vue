@@ -63,9 +63,9 @@
 			<view v-if="infoType.tabIndex === 0">
 				<view class="zy-page-list zy-page-card" v-if="companyList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in companyList" :key="index">
-						<view @click="toCompanyDetail(item, 0)">
+						<view>
 							<!-- 头部 -->
-							<view class="zy-disable-flex">
+							<view class="zy-disable-flex" @click="toCompanyDetail(item, 0)">
 								<zywork-icon type="iconqiyejianjie" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 								<view>
 									<view>
@@ -602,6 +602,16 @@
 			</view>
 			<!-- 企业信息搜索条件 -->
 			<view v-if="infoType.tabIndex === 0">
+				<view class="zy-search-view">
+					<view class="zy-search-bar zy-search">
+						<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
+							<view class="zy-disable-flex">
+								<text>{{industryTypeArray[industryTypeIndex]}}</text>
+								<zywork-icon type="iconxiangxia" />
+							</view>
+						</picker>
+					</view>
+				</view>
 			</view>
 			<!-- 业绩信息搜索条件 -->
 			<view v-if="infoType.tabIndex === 1">
@@ -678,7 +688,8 @@
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
 	import {
-		achievementTypeArray
+		achievementTypeArray,
+		industryTypeArray
 	} from '@/common/picker.data.js'
 
 	/** 企业信息 */
@@ -727,6 +738,8 @@
 				builderList: [],
 				aptitudeList: [],
 				projectAnnounceList: [],
+				industryTypeArray: industryTypeArray,
+				industryTypeIndex: 0,
 				achievementOpts: {
 					current: 0,
 					items: achievementTypeArray
@@ -800,7 +813,8 @@
 					contractAmountMin: '',
 					contractAmountMax: '',
 					projectAnnounceFirstBuilderName: '',
-					compAptitudeCertificateDetail: ''
+					compAptitudeCertificateDetail: '',
+					industryType: ''
 				}
 			},
 			/** 返回上个页面 */
@@ -1184,6 +1198,20 @@
 					this.checkRefresh(this.infoType.tabIndex, 'init');
 				}
 			},
+			/** 行业分类选择器 */
+			onClickIndustryItem: function(e) {
+				let index = e.target.value
+				if (this.industryTypeIndex !== index) {
+					this.industryTypeIndex = index
+					this.initPagerData();
+					console.log(index)
+					if (index != 0) {
+						this.pager.industryType = this.industryTypeArray[index];
+					}
+					this.closeSearchDrawer();
+					this.searchData();
+				}
+			},
 			/** 拨打电话 */
 			callPhone(phone) {
 				callPhone(phone);
@@ -1209,6 +1237,7 @@
 			clearSearchData() {
 				this.initPagerData()
 				this.searchVal = ''
+				this.industryTypeIndex = 0
 			}
 		}
 	}

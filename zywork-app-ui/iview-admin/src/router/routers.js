@@ -658,15 +658,15 @@ export default [
         },
         component: () => import('@/view/sys-info/SysInfo.vue')
       },
-      {
-        path: 'Message',
-        name: 'system_message',
-        meta: {
-          title: '消息管理',
-          icon: 'ios-information-circle'
-        },
-        component: () => import('@/view/message/Message.vue')
-      },
+      // {
+      //   path: 'Message',
+      //   name: 'system_message',
+      //   meta: {
+      //     title: '消息管理',
+      //     icon: 'ios-information-circle'
+      //   },
+      //   component: () => import('@/view/message/Message.vue')
+      // },
       {
         path: 'UserMessage',
         name: 'user_message',
@@ -741,24 +741,24 @@ export default [
         },
         component: () => import('@/view/redis-cache/RedisCache.vue')
       },
-      {
-        path: 'DruidSql',
-        name: 'druid_sql',
-        meta: {
-          title: 'Druid SQL监控',
-          href: baseUrl + ':8088/druid/index.html',
-          icon: 'md-trending-up'
-        }
-      },
-      {
-        path: 'SpringBootAdmin',
-        name: 'spring_boot_admin',
-        meta: {
-          title: 'SpringBoot Admin',
-          href: baseUrl + ':8086',
-          icon: 'md-speedometer'
-        }
-      }
+      // {
+      //   path: 'DruidSql',
+      //   name: 'druid_sql',
+      //   meta: {
+      //     title: 'Druid SQL监控',
+      //     href: baseUrl + ':8088/druid/index.html',
+      //     icon: 'md-trending-up'
+      //   }
+      // },
+      // {
+      //   path: 'SpringBootAdmin',
+      //   name: 'spring_boot_admin',
+      //   meta: {
+      //     title: 'SpringBoot Admin',
+      //     href: baseUrl + ':8086',
+      //     icon: 'md-speedometer'
+      //   }
+      // }
     ]
   },
   {
