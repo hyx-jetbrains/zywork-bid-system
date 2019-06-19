@@ -890,8 +890,8 @@
           <a :href="sourceDataUrl" target="_blank">{{sourceDataUrl}}</a>
         </FormItem>
         <FormItem label="爬取说明" prop="desc">
-          增量爬取
-          <span style="color: red;" v-text="typeLabel"></span>数据，只会爬取最新的数据，如网站未更新数据，则不会爬取
+          爬取
+          <span style="color: red;">{{typeLabel}}</span>第<span style="color: red;">{{python.pageNo}}</span>页的数据，如果已经爬取到了的数据，则不会再爬取。
         </FormItem>
         <FormItem label="爬取类型" prop="title">
           <Select
@@ -907,6 +907,9 @@
             >{{item.label}}</i-option>
           </Select>
         </FormItem>
+        <FormItem label="页码" prop="pageNo">
+					<Input v-model="python.pageNo" placeholder="请输入更新页码" />
+				</FormItem>
       </Form>
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('python')">取消</Button>
@@ -978,7 +981,8 @@ export default {
       sourceDataUrl: 'http://jxsggzy.cn/web/jyxx/002001/002001001/jyxx.html',
       typeLabel: '',
       python: {
-        title: ''
+        title: '',
+        pageNo: 1
       },
       form: {
         id: null,

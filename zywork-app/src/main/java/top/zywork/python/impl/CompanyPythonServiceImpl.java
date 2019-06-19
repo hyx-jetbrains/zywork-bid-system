@@ -322,12 +322,12 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
                 if (!StringUtils.isEmpty(startDate)) {
-                    compKeyProjectAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                    compKeyProjectAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, "YYYY/dd/mm"));
                 }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate");
                 if (!StringUtils.isEmpty(endDate)) {
-                    compKeyProjectAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                    compKeyProjectAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, "YYYY/dd/mm"));
                 }
                 // 保存重点工程业绩
                 compKeyProjectAchievementDAO.save(compKeyProjectAchievementDTO);
@@ -360,12 +360,12 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
                 if (!StringUtils.isEmpty(startDate)) {
-                    compTrafficAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                    compTrafficAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, "YYYY/dd/mm"));
                 }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate");
                 if (!StringUtils.isEmpty(endDate)) {
-                    compTrafficAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                    compTrafficAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, "YYYY/dd/mm"));
                 }
                 // 验证状态
                 String validStatus = jsonObj.getString("validStatus");
@@ -393,12 +393,12 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
                 if (!StringUtils.isEmpty(startDate)) {
-                    compWaterAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                    compWaterAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, "YYYY/dd/mm"));
                 }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate");
                 if (!StringUtils.isEmpty(endDate)) {
-                    compWaterAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                    compWaterAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, "YYYY/dd/mm"));
                 }
                 // 项目负责人
                 String name = jsonObj.getString("name");
@@ -432,12 +432,12 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 合同签订日期
                 String contractDate = jsonObj.getString("contractDate");
                 if (!StringUtils.isEmpty(contractDate)) {
-                    compWaterMonitorAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                    compWaterMonitorAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, "YYYY/dd/mm"));
                 }
                 // 开工时间
                 String startDate = jsonObj.getString("startDate");
                 if (!StringUtils.isEmpty(startDate)) {
-                    compWaterMonitorAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                    compWaterMonitorAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, "YYYY/dd/mm"));
                 }
                 // 保存水利监理业绩
                 compWaterMonitorAchievementDAO.save(compWaterMonitorAchievementDTO);
@@ -471,7 +471,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 中标时间
                 String markDate = jsonObj.getString("markDate");
                 if (!StringUtils.isEmpty(markDate)) {
-                    compWaterDeviseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                    compWaterDeviseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, "YYYY/dd/mm"));
                 }
                 // 保存水利勘查业绩
                 compWaterDeviseAchievementDAO.save(compWaterDeviseAchievementDTO);
@@ -570,12 +570,12 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 合同签订日期
                 String contractDate = jsonObject.getString("contractDate");
                 if (!StringUtils.isEmpty(contractDate)) {
-                    compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                    compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, "YYYY/dd/mm"));
                 }
                 // 中标日期
                 String markDate = jsonObject.getString("markDate");
                 if (!StringUtils.isEmpty(markDate)) {
-                    compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                    compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, "YYYY/dd/mm"));
                 }
                 // 项目负责人
                 String name = jsonObject.getString("name");

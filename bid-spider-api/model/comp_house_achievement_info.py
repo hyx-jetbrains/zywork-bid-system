@@ -1,14 +1,52 @@
 import requests
+import json
 from bs4 import BeautifulSoup
 
 from model.comp_house_achievement import CompHouseAchievement
 
+# 获取请求的data数据
+def get_request_data(url, pageNo):
+    response = requests.get(url=url)
+    # 获取文本原来编码，使两者编码一致才能正确显示
+    response.encoding = response.apparent_encoding
+    # 使用的是html解析，一般使用lxml解析更好
+    soup = BeautifulSoup(response.text, 'html5lib')
+    # find根据名称获取input的值
+    viewState = soup.find('input', {'id': '__VIEWSTATE'})['value']
+    eventValidation = soup.find('input', {'id': '__EVENTVALIDATION'})['value']
+    data = {
+        "__EVENTTARGET": "ctl00$ContentPlaceHolder1$Pager",
+        "__EVENTARGUMENT": pageNo,
+        "__VIEWSTATE": viewState,
+        "__EVENTVALIDATION": eventValidation
+    }
+    cookie_value = {}
+    for key, value in response.cookies.items():
+        cookie_value[key] = value
+    returnData = [
+        data, cookie_value
+    ]
+    return returnData
 
-def get_house_achievement():
-    current_house_file = open('current_house_achievement_file.txt', 'r+')
+# 获取房建业绩信息
+def get_house_achievement(pageNo):
+    # current_house_file = open('current_house_achievement_file.txt', 'r+')
     # 获取已爬取的最新的链接
-    current_house_href = current_house_file.readline()
-    response = requests.get(url="http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx")
+    # current_house_href = current_house_file.readline()
+    # response = requests.get(url="http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx")
+    url = "http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx"
+
+    returnData = get_request_data(url, pageNo)
+    requestData = returnData[0]
+    cookie_value = returnData[1]
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': 'ASP.NET_SessionId=' + cookie_value['ASP.NET_SessionId'],
+        'Connection': 'keep-alive',
+        'Cache-Control': 'no-cache',
+        'Accept-Encoding': 'gzip, deflate'
+    }
+    response = requests.post(url=url, data=requestData, headers = headers)
     # 获取文本原来编码，使两者编码一致才能正确显示
     response.encoding = response.apparent_encoding
     # 使用的是html解析，一般使用lxml解析更好
@@ -27,17 +65,17 @@ def get_house_achievement():
         ahref = a.get('href')
         href = 'http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/ZBTZS_Detail.aspx?' + ahref.split('?')[1]
         # 如果已爬取的最新链接不等于现在抓取的链接，则表示网站有更新新数据
-        if current_house_href != href:
-            if not latest_flag:
-                # 清除文件原内容
-                current_house_file.seek(0)
-                current_house_file.truncate()
-                # 记录新链接到文件中
-                current_house_file.write(href)
-                latest_flag = True
-        else:
-            # 网站没有更新新数据，则停止爬取
-            break
+        # if current_house_href != href:
+        #     if not latest_flag:
+        #         # 清除文件原内容
+        #         current_house_file.seek(0)
+        #         current_house_file.truncate()
+        #         # 记录新链接到文件中
+        #         current_house_file.write(href)
+        #         latest_flag = True
+        # else:
+        #     # 网站没有更新新数据，则停止爬取
+        #     break
         # 有更新，打开业绩详情
         detailResponse = requests.get(href)
         # 获取文本原来编码，使两者编码一致才能正确显示
@@ -48,7 +86,7 @@ def get_house_achievement():
         compHouseAchievement = CompHouseAchievement()
         compHouseAchievement = get_from_table(compHouseAchievement, table)
         compHouseAchievements.append(compHouseAchievement.__dict__)
-    current_house_file.close()
+    # current_house_file.close()
     print(compHouseAchievements)
     return compHouseAchievements
 

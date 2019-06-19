@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 from model.project.project_conservancy import get_conservancy_project
 from model.project.project_house import get_house_projects
@@ -13,29 +13,35 @@ project = Blueprint('project', __name__)
 # 房建及市政工程
 @project.route('/house')
 def index():
-    return jsonify(get_house_projects())
+    pageNo = request.args.get('pageNo')
+    return jsonify(get_house_projects(pageNo))
 
 # 水利工程
 @project.route('/conservancy')
 def conservancy():
-    return jsonify(get_conservancy_project())
+    pageNo = request.args.get('pageNo')
+    return jsonify(get_conservancy_project(pageNo))
 
 # 交通工程
 @project.route('/traffic')
 def traffic():
-    return jsonify(get_traffic_project())
+    pageNo = request.args.get('pageNo')
+    return jsonify(get_traffic_project(pageNo))
 
 # 政府采购
 @project.route('/procurement')
 def procurement():
-    return jsonify(get_procurement_project())
+    pageNo = request.args.get('pageNo')
+    return jsonify(get_procurement_project(pageNo))
 
 # 重点项目
 @project.route('/key')
 def key():
-    return jsonify(get_key_project())
+    pageNo = request.args.get('pageNo')
+    return jsonify(get_key_project(pageNo))
 
 # 其他项目
 @project.route('/other')
 def other():
-    return jsonify(get_other_project())
+    pageNo = request.args.get('pageNo')
+    return jsonify(get_other_project(pageNo))

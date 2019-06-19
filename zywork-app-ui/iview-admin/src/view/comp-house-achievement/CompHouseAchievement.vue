@@ -16,7 +16,7 @@
 						</DropdownMenu>
 					</Dropdown>&nbsp;
 					<Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
-          <Button @click="crawlData" :loading="loading.python" type="primary">爬取数据</Button>&nbsp;
+          <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
 					<Tooltip content="刷新" placement="right">
 						<Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
 					</Tooltip>
@@ -801,6 +801,28 @@
 		    <Button type="primary" size="large" @click="confirm">确认选择</Button>
 		  </div>
 		</Modal>
+    <Modal
+      v-model="modal.python"
+      title="爬取数据"
+      @on-visible-change="changeModalVisibleResetForm('pythonForm', $event)"
+    >
+      <Form ref="pythonForm" :model="python" :label-width="80" :rules="validateRules">
+        <FormItem label="数据来源" prop="sourse">
+          <a :href="sourceDataUrl" target="_blank">{{sourceDataUrl}}</a>
+        </FormItem>
+        <FormItem label="爬取说明" prop="desc">
+          只会爬取最新的数据，如果网站未更新数据，则不会去爬取。
+        </FormItem>
+        
+        <FormItem label="页码" prop="pageNo">
+					<Input v-model="python.pageNo" placeholder="请输入更新页码" />
+				</FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('python')">取消</Button>
+        <Button type="primary" size="large" @click="crawlData" :loading="loading.python">爬取</Button>
+      </div>
+    </Modal>
 	</div>
 </template>
 
@@ -831,7 +853,8 @@
 					detail: false,
 					companyDetail: false,
 					companyChoice: false,
-					operate: ''
+          operate: '',
+          python: false
 				},
 				loading: {
 					add: false,
@@ -855,7 +878,11 @@
 				},
 				page: {
 					total: 0
-				},
+        },
+        sourceDataUrl: 'http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx',
+        python: {
+          pageNo: 1
+        },
 				form: {
 					id: null,
 					compId: null,

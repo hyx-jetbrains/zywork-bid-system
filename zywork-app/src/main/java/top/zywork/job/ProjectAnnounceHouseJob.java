@@ -29,10 +29,8 @@ public class ProjectAnnounceHouseJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectAnnounceHouseJob......");
-        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_ANNOUNCE_HOUSE;
-        HttpUtils.timeout(PythonConstants.TIME_OUT);
-        String data = HttpUtils.get(url);
-        projectAnnouncePythonService.saveProjectAnnounce(data);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_ANNOUNCE_HOUSE + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;;
+        projectAnnouncePythonService.saveProjectAnnounce(url);
         logger.info("executed ProjectAnnounceHouseJob......");
     }
 

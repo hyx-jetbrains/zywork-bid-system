@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.HttpUtils;
 import top.zywork.common.IOUtils;
 import top.zywork.common.UUIDUtils;
+import top.zywork.constant.PythonConstants;
 import top.zywork.dao.ProjectAnnounceDAO;
 import top.zywork.dao.ProjectDAO;
 import top.zywork.dos.ProjectDO;
@@ -43,7 +45,9 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
     private String location;
 
     @Override
-    public void saveProjectAnnounce(String data) {
+    public void saveProjectAnnounce(String url) {
+        HttpUtils.timeout(PythonConstants.TIME_OUT);
+        String data = HttpUtils.get(url);
         if(data != null) {
             JSONArray jsonArray = JSONArray.parseArray(data);
             if(jsonArray != null && jsonArray.size()> 0) {

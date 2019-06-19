@@ -6,11 +6,11 @@ from model.project.project import Project
 
 
 # 其他项目
-def get_other_project():
-    current_other_file = open('current_other_file.txt', 'r+')
+def get_other_project(pageNo):
+    # current_other_file = open('current_other_file.txt', 'r+')
     # 获取已爬取的最新的链接
-    current_other_href = current_other_file.readline()
-    response = requests.get(url="http://ggzy.jiangxi.gov.cn/web/jyxx/002013/002013001/jyxx.html")
+    # current_other_href = current_other_file.readline()
+    response = requests.get(url="http://ggzy.jiangxi.gov.cn/web/jyxx/002013/002013001/"+pageNo+".html")
     # 获取文本原来编码，使两者编码一致才能正确显示
     response.encoding = response.apparent_encoding
     # 使用的是html解析，一般使用lxml解析更好
@@ -22,17 +22,17 @@ def get_other_project():
     for li in li_list:
         href = 'http://ggzy.jiangxi.gov.cn' + li.a.get('href')
         # 如果已爬取的最新链接不等于现在抓取的链接，则表示网站有更新新数据
-        if current_other_href != href:
-            if not latest_flag:
-                # 清除文件原内容
-                current_other_file.seek(0)
-                current_other_file.truncate()
-                # 记录新链接到文件中
-                current_other_file.write(href)
-                latest_flag = True
-        else:
-            # 网站没有更新新数据，则停止爬取
-            break
+        # if current_other_href != href:
+        #     if not latest_flag:
+        #         # 清除文件原内容
+        #         current_other_file.seek(0)
+        #         current_other_file.truncate()
+        #         # 记录新链接到文件中
+        #         current_other_file.write(href)
+        #         latest_flag = True
+        # else:
+        #     # 网站没有更新新数据，则停止爬取
+        #     break
         project = Project()
         project.projectType = '其他项目'
         project.title = li.a.text
@@ -49,7 +49,7 @@ def get_other_project():
         project.projectDetail = str(article_info)
         project.noticeTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         projects.append(project.__dict__)
-    current_other_file.close()
+    # current_other_file.close()
     print(projects)
     return projects
 

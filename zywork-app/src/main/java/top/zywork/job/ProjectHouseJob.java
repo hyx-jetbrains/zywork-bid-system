@@ -28,10 +28,8 @@ public class ProjectHouseJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectHouseJob......");
-        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_HOUSE;
-        HttpUtils.timeout(PythonConstants.TIME_OUT);
-        String data = HttpUtils.get(url);
-        projectPythonService.saveProject(data);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_HOUSE + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;;
+        projectPythonService.saveProject(url);
         logger.info("executed ProjectHouseJob......");
     }
 

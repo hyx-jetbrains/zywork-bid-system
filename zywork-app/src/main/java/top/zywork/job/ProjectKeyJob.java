@@ -28,10 +28,8 @@ public class ProjectKeyJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectKeyJob......");
-        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_KEY;
-        HttpUtils.timeout(PythonConstants.TIME_OUT);
-        String data = HttpUtils.get(url);
-        projectPythonService.saveProject(data);
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_KEY + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;;
+        projectPythonService.saveProject(url);
         logger.info("executed ProjectKeyJob......");
     }
 
