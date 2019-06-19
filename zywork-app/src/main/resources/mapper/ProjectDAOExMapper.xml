@@ -77,4 +77,8 @@
 		</where>
 	</select>
 
+	<update id="updateMarkStatus">
+		update t_project set mark_status = '已开标',update_time = CURRENT_TIMESTAMP, version = version+1 where mark_status = '待开标' and open_mark_time <![CDATA[<=]]> CURRENT_TIMESTAMP
+	</update>
+
 </mapper>

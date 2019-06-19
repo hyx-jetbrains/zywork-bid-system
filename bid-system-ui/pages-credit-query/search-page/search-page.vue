@@ -567,6 +567,19 @@
 
 			<!-- 中标记录 -->
 			<view v-if="infoType.tabIndex === 4">
+				<view class="zy-disable-flex zy-achievement-type">
+					<view class="zy-type-title zy-text-bold">选择项目类别</view>
+					<view class="zy-disable-flex-right">
+						<view class="uni-list-cell-db">
+							<picker @change="onClickProjectTypeItem" :value="projectTypeIndex" :range="projectTypeArray">
+								<view class="zy-disable-flex">
+									<text>{{projectTypeArray[projectTypeIndex]}}</text>
+									<zywork-icon type="iconxiangxia" />
+								</view>
+							</picker>
+						</view>
+					</view>
+				</view>
 				<view class="zy-page-list zy-page-card" v-if="projectAnnounceList.length > 0">
 					<view class="zy-page-list-item" v-for="(item, index) in projectAnnounceList" :key="index">
 						<view>
@@ -730,7 +743,8 @@
 	import * as creditQuery from '@/common/credit-query.js'
 	import {
 		achievementTypeArray,
-		industryTypeArray
+		industryTypeArray,
+		projectTypeArray
 	} from '@/common/picker.data.js'
 
 	/** 企业信息 */
@@ -780,6 +794,8 @@
 				aptitudeList: [],
 				projectAnnounceList: [],
 				industryTypeArray: industryTypeArray,
+				projectTypeArray: projectTypeArray,
+				projectTypeIndex: 0,
 				industryTypeIndex: 0,
 				achievementOpts: {
 					current: 0,
@@ -856,7 +872,8 @@
 					firstBuilderName: '',
 					compAptitudeCertificateDetail: '',
 					industryType: '',
-					companyIndustryType: ''
+					companyIndustryType: '',
+					projectType: ''
 				}
 			},
 			/** 返回上个页面 */
@@ -1246,9 +1263,21 @@
 				if (this.industryTypeIndex !== index) {
 					this.industryTypeIndex = index
 					this.initPagerData();
-					console.log(index)
 					if (index != 0) {
 						this.pager.companyIndustryType = this.pager.industryType = this.industryTypeArray[index];
+					}
+					this.closeSearchDrawer();
+					this.searchData();
+				}
+			},
+			/** 项目分类选择器 */
+			onClickProjectTypeItem: function(e) {
+				let index = e.target.value
+				if (this.projectTypeIndex !== index) {
+					this.projectTypeIndex = index
+					this.initPagerData();
+					if (index != 0) {
+						this.pager.projectType = this.projectTypeArray[index];
 					}
 					this.closeSearchDrawer();
 					this.searchData();

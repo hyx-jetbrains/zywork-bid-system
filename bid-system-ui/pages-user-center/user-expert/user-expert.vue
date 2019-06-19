@@ -12,16 +12,15 @@
 		<button v-else-if="userExpert.examineStatus == 0" type="primary" disabled="true">审核中</button>
 		<view class="zy-type-title zy-text-bold zy-expert-equity">专家权益</view>
 		<label class="uni-list-cell uni-list-cell-pd">
-			<text>1、第一条好处</text>	
+			<text>1、咨询回报：通过为用户解决问题，获得相应的劳动报酬；</text>	
 		</label>
 		<label class="uni-list-cell uni-list-cell-pd">
 			<text>
-				2、第二条好处测试长内容测试长内容测试长内容测试长内容测试长内容测试长内容
-				测试长内容测试长内容测试长内容测试长内容测试长内容测试长内容测试长内容测试长内容测试长内容
+				2、资讯渠道：与平台签约，成为平台专家，获得所在行业最新信息，及时了解行业重大发展；
 			</text>	
 		</label>
 		<label class="uni-list-cell uni-list-cell-pd">
-			<text>3、第三条好处</text>	
+			<text>3、人脉交流：通过平台所组织的行业培训、沙龙聚会、在线会议、网络互动，帮助您拓展更多精英人脉；</text>	
 		</label>
 	</view>
 </template>

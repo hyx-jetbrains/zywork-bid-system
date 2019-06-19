@@ -34,4 +34,11 @@ public interface ProjectDAO extends BaseDAO {
 
     Object getProjectBySelect(@Param("id") Long id, @Param("city") String city, @Param("list") List<Object> list);
 
+    /***
+     * @description:  更新开标状态，改成已开标，job执行这个方法，其他地方请不要调用
+     * @return: void
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-06-18 18:28
+     */
+    void updateMarkStatus();
 }

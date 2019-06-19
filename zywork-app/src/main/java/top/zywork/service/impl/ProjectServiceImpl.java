@@ -145,4 +145,9 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         return projectDAO.getProjectBySelect(id, city, list);
     }
 
+    @Override
+    public void updateMarkStatus() {
+        projectDAO.updateMarkStatus();
+    }
+
 }

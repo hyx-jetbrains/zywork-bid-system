@@ -2,6 +2,8 @@ package top.zywork.python.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ import top.zywork.vo.ProjectVO;
 @Service(value = "projectPythonService")
 public class ProjectPythonServiceImpl implements ProjectPythonService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProjectPythonServiceImpl.class);
+
     private ProjectDAO projectDAO;
 
     private ProjectAnnounceDAO projectAnnounceDAO;
@@ -43,11 +47,17 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
             if(jsonArray != null && jsonArray.size()> 0) {
                 for (int i = 0; i < jsonArray.size() ; i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
+                    String title = obj.getString("title");
+
+                    Object projectObj = projectDAO.getByTitle(title);
+                    if (null != projectObj) {
+                        logger.error("项目已存在：" + title);
+                        continue;
+                    }
 
                     String fileName = UUIDUtils.uuid() +".html";
                     String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
                     String foot = "</body></html>";
-                    String title = obj.getString("title");
 
                     IOUtils.writeText(head +obj.getString("projectDetail")+ foot, location + "/" + fileName);
 

@@ -6,7 +6,7 @@
 			</view>
 			<view class="zy-text-bold zy-text-big zy-company-name">{{sysInfo.compName}}</view>
 			<uni-list>
-				<zywork-list-item title="客服电话" :note="sysInfo.compPhone" @click="callPhone"></zywork-list-item>
+				<!-- <zywork-list-item title="客服电话" :note="sysInfo.compPhone" @click="callPhone"></zywork-list-item> -->
 				<zywork-list-item title="公司邮箱" :note="sysInfo.compEmail" @click="copyData(sysInfo.compEmail)"></zywork-list-item>
 				<zywork-list-item title="公司地址" :note="sysInfo.compAddr" @click="copyData(sysInfo.compAddr)"></zywork-list-item>
 			</uni-list>

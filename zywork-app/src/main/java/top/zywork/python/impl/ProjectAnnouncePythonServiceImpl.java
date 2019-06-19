@@ -2,6 +2,9 @@ package top.zywork.python.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,8 @@ import top.zywork.vo.ProjectVO;
 @Service(value = "projectAnnouncePythonService")
 public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProjectAnnouncePythonServiceImpl.class);
+
     private ProjectAnnounceDAO projectAnnounceDAO;
 
     private ProjectDAO projectDAO;
@@ -45,10 +50,17 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                 for (int i = 0; i < jsonArray.size() ; i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
                     ProjectAnnounceVO projectAnnounceVO = new ProjectAnnounceVO();
+                    String tempTitle = obj.getString("title");
+
+                    Object projectAnnounceObj = projectAnnounceDAO.getByTitle(tempTitle);
+                    if (projectAnnounceObj != null) {
+                        logger.error("该公示已存在：" + tempTitle);
+                        continue;
+                    }
 
                     String inMarkComp = obj.getString("firstCandidate");
-                    if(obj.getString("title") != null && obj.getString("title") != "") {
-                        String title = obj.getString("title").replace("[中标候选人公示]","");
+                    if(!StringUtils.isEmpty(tempTitle)) {
+                        String title = tempTitle.replace("[中标候选人公示]","");
                         Object pobj = projectDAO.getByTitle(title);
                         if(pobj != null) {
                             ProjectDO projectDO = BeanUtils.copy(pobj, ProjectDO.class);
@@ -64,7 +76,7 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                     String foot = "</body></html>";
                     IOUtils.writeText(head +obj.getString("projectDetail")+ foot, location + "/" + fileName);
                     projectAnnounceVO.setProjectType(obj.getString("projectType"));
-                    projectAnnounceVO.setTitle(obj.getString("title"));
+                    projectAnnounceVO.setTitle(tempTitle);
                     projectAnnounceVO.setAnnounceDesc(obj.getString("announceDesc"));
                     projectAnnounceVO.setFirstCandidate(inMarkComp);
                     projectAnnounceVO.setFirstBuilderName(obj.getString("firstBuilderName"));

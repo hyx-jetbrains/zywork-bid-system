@@ -156,7 +156,7 @@ export const getUserDetail = (self) => {
 				self.getUserInfo = true
 				self.user.nickname = res.data.data.rows[0].userDetailNickname
 				self.user.headicon = res.data.data.rows[0].userDetailHeadicon
-				if (self.user.headicon !== undefined && self.user.headicon.indexOf('http') < 0) {
+				if (self.user.headicon !== undefined && self.user.headicon !== null && self.user.headicon.indexOf('http') < 0) {
 					self.user.headicon = IMAGE_BASE_URL + '/' + self.uesr.headicon
 				}
 				self.user.gender = res.data.data.rows[0].userDetailGender

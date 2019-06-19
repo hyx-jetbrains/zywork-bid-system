@@ -510,6 +510,19 @@
 
 		<!-- 中标记录 -->
 		<view v-if="infoType.tabIndex === 4">
+			<view class="zy-disable-flex zy-achievement-type">
+				<view class="zy-type-title zy-text-bold">选择项目类别</view>
+				<view class="zy-disable-flex-right">
+					<view class="uni-list-cell-db">
+						<picker @change="onClickProjectTypeItem" :value="projectTypeIndex" :range="projectTypeArray">
+							<view class="zy-disable-flex">
+								<text>{{projectTypeArray[projectTypeIndex]}}</text>
+								<zywork-icon type="iconxiangxia" />
+							</view>
+						</picker>
+					</view>
+				</view>
+			</view>
 			<view class="zy-page-list zy-page-card" v-if="projectAnnounceList.length > 0">
 				<view class="zy-page-list-item" v-for="(item, index) in projectAnnounceList" :key="index">
 					<view>
@@ -574,7 +587,8 @@
 	import * as creditQuery from '@/common/credit-query.js'
 	import {
 		achievementTypeArray,
-		industryTypeArray
+		industryTypeArray,
+		projectTypeArray
 	} from '@/common/picker.data.js'
 	import {
 		showInfoToast,
@@ -651,7 +665,8 @@
 					compBuilderIsActive: 0,
 					compAptitudeIsActive: 0,
 					industryType: '',
-					companyIndustryType: ''
+					companyIndustryType: '',
+					projectType: ''
 				},
 				companyList: [],
 				achievementList: [],
@@ -664,6 +679,8 @@
 				},
 				industryTypeArray: industryTypeArray,
 				industryTypeIndex: 0,
+				projectTypeArray: projectTypeArray,
+				projectTypeIndex: 0,
 			}
 		},
 		onLoad() {
@@ -1017,6 +1034,20 @@
 						this.pager.companyIndustryType = this.pager.industryType = this.industryTypeArray[index];
 					} else {
 						this.pager.companyIndustryType = this.pager.industryType = '';
+					}
+					this.initPager();
+					this.checkRefresh(this.infoType.tabIndex, 'init');
+				}
+			},
+			/** 项目分类选择器 */
+			onClickProjectTypeItem: function(e) {
+				let index = e.target.value
+				if (this.projectTypeIndex !== index) {
+					this.projectTypeIndex = index
+					if (index != 0) {
+						this.pager.projectType = this.projectTypeArray[index];
+					} else {
+						this.pager.projectType = '';
 					}
 					this.initPager();
 					this.checkRefresh(this.infoType.tabIndex, 'init');
