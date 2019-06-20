@@ -58,7 +58,7 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
 
                     Object projectAnnounceObj = projectAnnounceDAO.getByTitle(tempTitle);
                     if (projectAnnounceObj != null) {
-                        logger.error("该公示已存在：" + tempTitle);
+                        logger.info("该公示已存在：" + tempTitle);
                         continue;
                     }
 

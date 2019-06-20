@@ -2,20 +2,19 @@ package top.zywork.python.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import top.zywork.common.BeanUtils;
-import top.zywork.common.HttpUtils;
-import top.zywork.common.IOUtils;
-import top.zywork.common.UUIDUtils;
+import top.zywork.common.*;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.PythonConstants;
 import top.zywork.dao.ProjectAnnounceDAO;
 import top.zywork.dao.ProjectDAO;
 import top.zywork.dto.ProjectAnnounceDTO;
+import top.zywork.enums.DatePatternEnum;
 import top.zywork.python.ProjectPythonService;
 import top.zywork.vo.ProjectVO;
 
@@ -55,7 +54,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
 
                     Object projectObj = projectDAO.getByTitle(title);
                     if (null != projectObj) {
-                        logger.error("项目已存在：" + title);
+                        logger.info("项目已存在：" + title);
                         continue;
                     }
 
@@ -92,7 +91,10 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setOpenMarkTime(obj.getDate("openMarkTime"));
                     projectVO.setOpenMarkAddr(obj.getString("openMarkAddr"));
                     projectVO.setInMarkComp(obj.getString("inMarkComp"));
-                    projectVO.setNoticeTime(obj.getDate("noticeTime"));
+                    String noticeTime = obj.getString("noticeTime");
+                    if (!StringUtils.isEmpty(noticeTime)) {
+                        projectVO.setNoticeTime(DateParseUtils.parseDate(noticeTime, DatePatternEnum.DATE.getValue()));
+                    }
                     projectVO.setSourceUrl(obj.getString("sourceUrl"));
                     projectVO.setInwardHtmlUrl(uri + "/" + fileName);
                     projectVO.setResourceCount(0);
