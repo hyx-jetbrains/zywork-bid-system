@@ -29,7 +29,7 @@ public class ProjectConservancyJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectConservancyJob......");
         String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_CONSERVANCY + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;
-        projectPythonService.saveProject(url);
+        projectPythonService.saveProject(url, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         logger.info("executed ProjectConservancyJob......");
     }
 

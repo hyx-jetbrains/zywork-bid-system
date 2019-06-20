@@ -29,7 +29,7 @@ public class CompHouseAchievementJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompHouseAchievementJob......");
-        companyPythonService.getCompHouseAchievement();
+        companyPythonService.getCompHouseAchievement(PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         logger.info("executed CompHouseAchievementJob......");
     }
 

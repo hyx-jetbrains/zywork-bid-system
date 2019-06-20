@@ -31,7 +31,7 @@ public class CompInfoWaterAgentJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompInfoWaterAgentJob......");
-        companyPythonService.getCompanyInfo(PythonConstants.TYPE_AGENT, PythonConstants.COMP_TYPE_WATER_AGENT, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
+        companyPythonService.getCompanyInfo(PythonConstants.TYPE_AGENT, PythonConstants.COMP_TYPE_WATER_AGENT, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         pageNo++;
         logger.info("executed CompInfoWaterAgentJob......");
     }

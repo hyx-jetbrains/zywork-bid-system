@@ -31,7 +31,7 @@ public class CompInfoKeyProjectBidderJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompInfoKeyProjectBidderJob......");
-        companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_KEY_PROJECT_BIDDER, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
+        companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_KEY_PROJECT_BIDDER, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         pageNo++;
         logger.info("executed CompInfoKeyProjectBidderJob......");
     }

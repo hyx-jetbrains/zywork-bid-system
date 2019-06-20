@@ -55,7 +55,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
     private CompHouseAchievementDAO compHouseAchievementDAO;
 
     @Override
-    public void getCompanyInfo(String type, String compType, String pageNo, String pageSize) {
+    public void getCompanyInfo(String type, String compType, String pageNo, String pageSize, boolean isUpate) {
         try {
             StringBuilder url = new StringBuilder();
             url.append(PythonConstants.BASE_URL)
@@ -73,7 +73,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             String content = HttpUtils.get(url.toString());
             JSONArray jsonArray = JSON.parseArray(content);
             if (null == jsonArray) {
-                logger.error("未获取到企业信息");
+                logger.info("未获取到企业信息");
                 return;
             }
             int len = jsonArray.size();
@@ -84,10 +84,16 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 String compName = jsonObject.getString("compName");
                 Object obj = companyDAO.getByName(compName);
                 boolean companyFlag = true;
+                // 默认是保存数据
+                boolean updateFlag = false;
                 if (null != obj) {
-                    companyFlag = false;
+                    updateFlag = true;
                     companyDTO = BeanUtils.copy(obj, CompanyDTO.class);
-                    logger.error("该公司已存在：" + compName);
+                    logger.info("该公司已存在：" + compName + ",是否更新数据：" + isUpate);
+                    if (!isUpate) {
+                        // 如果不需要更新数据，则不用处理公司信息
+                        companyFlag = false;
+                    }
                 }
                 if (companyFlag) {
                     // 如果公司信息已经存在，则不需要再储存公司信息
@@ -144,29 +150,35 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     // 源地址
                     String sourceUrl = jsonObject.getString("sourceUrl");
                     companyDTO.setSourceUrl(sourceUrl);
-                    // 保存公司信息
-                    companyDAO.save(companyDTO);
+                    if (updateFlag) {
+                        // 更新公司信息
+                        companyDAO.update(companyDTO);
+                    } else {
+                        // 保存公司信息
+                        companyDAO.save(companyDTO);
+                    }
+
                 }
                 Long compId = companyDTO.getId();
                 // 企业人员
                 JSONArray personnelArray = jsonObject.getJSONArray("compPersonnelList");
                 if (null != personnelArray && !personnelArray.isEmpty()) {
-                    saveCompPersonnelInfo(compId, personnelArray);
+                    saveCompPersonnelInfo(compId, personnelArray, isUpate);
                 }
                 // 企业资质
                 JSONArray aptitudeArray = jsonObject.getJSONArray("compAptitudeList");
                 if (null != aptitudeArray && !aptitudeArray.isEmpty()) {
-                    saveCompAptitudeInfo(compId, aptitudeArray);
+                    saveCompAptitudeInfo(compId, aptitudeArray, isUpate);
                 }
                 // 企业建造师
                 JSONArray builderArray = jsonObject.getJSONArray("compBuilderList");
                 if (null != builderArray && !builderArray.isEmpty()) {
-                    saveCompBuilderInfo(compId, builderArray);
+                    saveCompBuilderInfo(compId, builderArray, isUpate);
                 }
                 // 企业业绩
                 JSONArray achievementArray = jsonObject.getJSONArray("compAchievementList");
                 if (null != achievementArray && !achievementArray.isEmpty()) {
-                    saveCompAchievementInfo(compId, achievementArray, companyDTO.getIndustryType());
+                    saveCompAchievementInfo(compId, achievementArray, companyDTO.getIndustryType(), isUpate);
                 }
                 // 需要判断需不需要匹配房建业绩
                 if (PythonConstants.COMPANY_TYPE_HOUSE.equals(companyDTO.getIndustryType())) {
@@ -189,7 +201,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-05 13:36
      */
-    private void saveCompPersonnelInfo(Long compId, JSONArray array) {
+    private void saveCompPersonnelInfo(Long compId, JSONArray array, boolean isUpdate) {
         int len = array.size();
         for (int i = 0; i < len; i++) {
             JSONObject jsonObj = array.getJSONObject(i);
@@ -197,10 +209,14 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             // 姓名
             String name = jsonObj.getString("name");
             Object obj = compPersonnelDAO.getByCompIdAndName(compId, name);
+            boolean updateFlag = false;
             if (null != obj) {
+                updateFlag = true;
                 // 说明该人员信息已经存在
-                logger.error(compId + "该人员已存在：" + name);
-                continue;
+                logger.info(compId + "该人员已存在：" + name + "，是否需要更新：" + isUpdate);
+                if (!isUpdate) {
+                    continue;
+                }
             }
             compPersonnelDTO.setCompId(compId);
             compPersonnelDTO.setName(name);
@@ -210,8 +226,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             // 职业资格及专业
             String jobDetail = jsonObj.getString("jobDetail");
             compPersonnelDTO.setJobDetail(jobDetail);
-            // 保存企业人员信息
-            compPersonnelDAO.save(compPersonnelDTO);
+            if (updateFlag) {
+                // 更新企业人员信息
+                compPersonnelDAO.update(compPersonnelDTO);
+            } else {
+                // 保存企业人员信息
+                compPersonnelDAO.save(compPersonnelDTO);
+            }
         }
     }
 
@@ -223,7 +244,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-05 13:37
      */
-    private void saveCompAptitudeInfo(Long compId, JSONArray array) {
+    private void saveCompAptitudeInfo(Long compId, JSONArray array, boolean isUpdate) {
         int len = array.size();
         for (int i = 0; i < len; i++) {
             JSONObject jsonObj = array.getJSONObject(i);
@@ -231,18 +252,27 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             // 证件号码
             String certificateNum = jsonObj.getString("certificateNum");
             Object obj = compAptitudeDAO.getByCompIdAndCertificateNum(compId, certificateNum);
+            boolean updateFlag = false;
             if (null != obj) {
+                updateFlag = true;
                 // 说明该资质信息已经存在
-                logger.error(compId + "该资质已存在：" + certificateNum);
-                continue;
+                logger.info(compId + "该资质已存在：" + certificateNum + ",是否需要更新：" + isUpdate);
+                if (!isUpdate) {
+                    continue;
+                }
             }
             compAptitudeDTO.setCompId(compId);
             compAptitudeDTO.setCertificateNum(certificateNum);
             // 资质详情
             String certificateDetail = jsonObj.getString("certificateDetail");
             compAptitudeDTO.setCertificateDetail(certificateDetail);
-            // 保存企业资质信息
-            compAptitudeDAO.save(compAptitudeDTO);
+            if (updateFlag) {
+                // 更新企业资质信息
+                compAptitudeDAO.update(compAptitudeDTO);
+            } else {
+                // 保存企业资质信息
+                compAptitudeDAO.save(compAptitudeDTO);
+            }
         }
     }
 
@@ -254,7 +284,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-05 13:51
      */
-    private void saveCompBuilderInfo(Long compId, JSONArray array) {
+    private void saveCompBuilderInfo(Long compId, JSONArray array, boolean isUpdate) {
         int len = array.size();
         for (int i = 0; i < len; i++) {
             JSONObject jsonObj = array.getJSONObject(i);
@@ -262,10 +292,14 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             // 姓名
             String name = jsonObj.getString("name");
             Object obj = compBuilderDAO.getByCompIdAndName(compId, name);
+            boolean updateFlag = false;
             if (null != obj) {
+                updateFlag = true;
                 // 说明该建造师信息已经存在
-                logger.error(compId + "该建造师已存在：" + name);
-                continue;
+                logger.info(compId + "该建造师已存在：" + name + ",是否需要更新：" + isUpdate);
+                if (!isUpdate) {
+                    continue;
+                }
             }
             compBuilderDTO.setCompId(compId);
             compBuilderDTO.setName(name);
@@ -278,8 +312,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             // 专业等级
             String majorLevel = jsonObj.getString("majorLevel");
             compBuilderDTO.setMajorLevel(majorLevel);
-            // 保存企业建造师信息
-            compBuilderDAO.save(compBuilderDTO);
+            if (updateFlag) {
+                // 更新企业建造师信息
+                compBuilderDAO.update(compBuilderDTO);
+            } else {
+                // 保存企业建造师信息
+                compBuilderDAO.save(compBuilderDTO);
+            }
 
         }
     }
@@ -293,19 +332,23 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-05 14:33
      */
-    private void saveCompAchievementInfo(Long compId, JSONArray array, String compType) {
+    private void saveCompAchievementInfo(Long compId, JSONArray array, String compType, boolean isUpdate) {
         int len = array.size();
         for (int i = 0; i < len; i++) {
             JSONObject jsonObj = array.getJSONObject(i);
             String projectName = jsonObj.getString("projectName");
+            boolean updateFlag = false;
             if (PythonConstants.COMPANY_TYPE_KEY_PROJECT.equals(compType)) {
                 // 重点工程业绩
                 CompKeyProjectAchievementDTO compKeyProjectAchievementDTO = new CompKeyProjectAchievementDTO();
                 Object obj = compKeyProjectAchievementDAO.getByCompIdAndProjectName(compId, projectName);
                 if (null != obj) {
+                    updateFlag = true;
                     // 说明该业绩已存在
-                    logger.error(compId + ":" + compType + "业绩已存在：" + projectName);
-                    continue;
+                    logger.info(compId + ":" + compType + "业绩已存在：" + projectName + ",是否需要更新：" + isUpdate);
+                    if (!isUpdate) {
+                        continue;
+                    }
                 }
                 compKeyProjectAchievementDTO.setCompId(compId);
                 compKeyProjectAchievementDTO.setProjectName(projectName);
@@ -320,25 +363,33 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     compKeyProjectAchievementDTO.setMoney(new BigDecimal(markMoney));
                 }
                 // 开工时间
-                String startDate = jsonObj.getString("startDate");
+                String startDate = jsonObj.getString("startDate").trim();
                 if (!StringUtils.isEmpty(startDate)) {
                     compKeyProjectAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 竣工时间
-                String endDate = jsonObj.getString("endDate");
+                String endDate = jsonObj.getString("endDate").trim();
                 if (!StringUtils.isEmpty(endDate)) {
                     compKeyProjectAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
                 }
-                // 保存重点工程业绩
-                compKeyProjectAchievementDAO.save(compKeyProjectAchievementDTO);
+                if (updateFlag) {
+                    // 更新重点工程业绩
+                    compKeyProjectAchievementDAO.update(compKeyProjectAchievementDTO);
+                } else {
+                    // 保存重点工程业绩
+                    compKeyProjectAchievementDAO.save(compKeyProjectAchievementDTO);
+                }
             } else if (PythonConstants.COMPANY_TYPE_TRAFFIC.equals(compType)) {
                 // 交通施工业绩
                 CompTrafficAchievementDTO compTrafficAchievementDTO = new CompTrafficAchievementDTO();
                 Object obj = compTrafficAchievementDAO.getByCompIdAndProjectName(compId, projectName);
                 if (null != obj) {
+                    updateFlag = true;
                     // 说明该业绩已存在
-                    logger.error(compId + ":" + compType + "业绩已存在：" + projectName);
-                    continue;
+                    logger.info(compId + ":" + compType + "业绩已存在：" + projectName + ",是否需要更新：" + isUpdate);
+                    if (!isUpdate) {
+                        continue;
+                    }
                 }
                 compTrafficAchievementDTO.setCompId(compId);
                 compTrafficAchievementDTO.setProjectName(projectName);
@@ -358,28 +409,36 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 String workAddr = jsonObj.getString("workAddr");
                 compTrafficAchievementDTO.setWorkAddr(workAddr);
                 // 开工时间
-                String startDate = jsonObj.getString("startDate");
+                String startDate = jsonObj.getString("startDate").trim();
                 if (!StringUtils.isEmpty(startDate)) {
                     compTrafficAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 竣工时间
-                String endDate = jsonObj.getString("endDate");
+                String endDate = jsonObj.getString("endDate").trim();
                 if (!StringUtils.isEmpty(endDate)) {
                     compTrafficAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 验证状态
                 String validStatus = jsonObj.getString("validStatus");
                 compTrafficAchievementDTO.setValidStatus(validStatus);
-                // 保存交通业绩
-                compTrafficAchievementDAO.save(compTrafficAchievementDTO);
+                if (updateFlag) {
+                    // 更新交通业绩
+                    compTrafficAchievementDAO.update(compTrafficAchievementDTO);
+                } else {
+                    // 保存交通业绩
+                    compTrafficAchievementDAO.save(compTrafficAchievementDTO);
+                }
             } else if (PythonConstants.COMPANY_TYPE_WATER.equals(compType)) {
                 // 水利施工业绩
                 CompWaterAchievementDTO compWaterAchievementDTO = new CompWaterAchievementDTO();
                 Object obj = compWaterAchievementDAO.getByCompIdAndProjectName(compId, projectName);
                 if (null != obj) {
                     // 说明该业绩已存在
-                    logger.error(compId + ":" + compType + "业绩已存在：" + projectName);
-                    continue;
+                    updateFlag = true;
+                    logger.info(compId + ":" + compType + "业绩已存在：" + projectName + ",是否需要更新：" + isUpdate);
+                    if (!isUpdate) {
+                        continue;
+                    }
                 }
                 compWaterAchievementDTO.setCompId(compId);
                 compWaterAchievementDTO.setProjectName(projectName);
@@ -391,28 +450,36 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     compWaterAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 }
                 // 开工时间
-                String startDate = jsonObj.getString("startDate");
+                String startDate = jsonObj.getString("startDate").trim();
                 if (!StringUtils.isEmpty(startDate)) {
                     compWaterAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 竣工时间
-                String endDate = jsonObj.getString("endDate");
+                String endDate = jsonObj.getString("endDate").trim();
                 if (!StringUtils.isEmpty(endDate)) {
                     compWaterAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 项目负责人
                 String name = jsonObj.getString("name");
                 compWaterAchievementDTO.setName(name);
-                // 保存水利施工业绩
-                compWaterAchievementDAO.save(compWaterAchievementDTO);
+                if (updateFlag) {
+                    // 更新水利施工业绩
+                    compWaterAchievementDAO.update(compWaterAchievementDTO);
+                } else {
+                    // 保存水利施工业绩
+                    compWaterAchievementDAO.save(compWaterAchievementDTO);
+                }
             } else if (PythonConstants.COMPANY_TYPE_WATER_MONITOR.equals(compType)) {
                 // 水利监理业绩
                 CompWaterMonitorAchievementDTO compWaterMonitorAchievementDTO = new CompWaterMonitorAchievementDTO();
                 Object obj = compWaterMonitorAchievementDAO.getByCompIdAndProjectName(compId, projectName);
                 if (null != obj) {
                     // 说明该业绩已存在
-                    logger.error(compId + ":" + compType + "业绩已存在：" + projectName);
-                    continue;
+                    updateFlag = true;
+                    logger.info(compId + ":" + compType + "业绩已存在：" + projectName + "，是否更新：" + isUpdate);
+                    if (!isUpdate) {
+                        continue;
+                    }
                 }
                 compWaterMonitorAchievementDTO.setCompId(compId);
                 compWaterMonitorAchievementDTO.setProjectName(projectName);
@@ -430,25 +497,33 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     compWaterMonitorAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 }
                 // 合同签订日期
-                String contractDate = jsonObj.getString("contractDate");
+                String contractDate = jsonObj.getString("contractDate").trim();
                 if (!StringUtils.isEmpty(contractDate)) {
                     compWaterMonitorAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 开工时间
-                String startDate = jsonObj.getString("startDate");
+                String startDate = jsonObj.getString("startDate").trim();
                 if (!StringUtils.isEmpty(startDate)) {
                     compWaterMonitorAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
                 }
-                // 保存水利监理业绩
-                compWaterMonitorAchievementDAO.save(compWaterMonitorAchievementDTO);
+                if (updateFlag) {
+                    // 更新水利简历业绩
+                    compWaterMonitorAchievementDAO.update(compWaterMonitorAchievementDTO);
+                } else {
+                    // 保存水利监理业绩
+                    compWaterMonitorAchievementDAO.save(compWaterMonitorAchievementDTO);
+                }
             } else if (PythonConstants.COMPANY_TYPE_WATER_DEVISE.equals(compType)) {
                 // 水利勘查业绩
                 CompWaterDeviseAchievementDTO compWaterDeviseAchievementDTO = new CompWaterDeviseAchievementDTO();
                 Object obj = compWaterDeviseAchievementDAO.getByCompIdAndProjectName(compId, projectName);
                 if (null != obj) {
                     // 说明该业绩已存在
-                    logger.error(compId + ":" + compType + "业绩已存在：" + projectName);
-                    continue;
+                    updateFlag = true;
+                    logger.info(compId + ":" + compType + "业绩已存在：" + projectName + "，是否更新：" + isUpdate);
+                    if (!isUpdate) {
+                        continue;
+                    }
                 }
                 compWaterDeviseAchievementDTO.setCompId(compId);
                 compWaterDeviseAchievementDTO.setProjectName(projectName);
@@ -469,12 +544,17 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 String name = jsonObj.getString("name");
                 compWaterDeviseAchievementDTO.setName(name);
                 // 中标时间
-                String markDate = jsonObj.getString("markDate");
+                String markDate = jsonObj.getString("markDate").trim();
                 if (!StringUtils.isEmpty(markDate)) {
                     compWaterDeviseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
                 }
-                // 保存水利勘查业绩
-                compWaterDeviseAchievementDAO.save(compWaterDeviseAchievementDTO);
+                if (updateFlag) {
+                    // 更新水利勘查业绩
+                    compWaterDeviseAchievementDAO.update(compWaterDeviseAchievementDTO);
+                } else {
+                    // 保存水利勘查业绩
+                    compWaterDeviseAchievementDAO.save(compWaterDeviseAchievementDTO);
+                }
             } else {
                 break;
             }
@@ -508,7 +588,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
 
 
     @Override
-    public void getCompHouseAchievement() {
+    public void getCompHouseAchievement(boolean isUpdate) {
         try {
             StringBuilder url = new StringBuilder();
             url.append(PythonConstants.BASE_URL)
@@ -527,10 +607,14 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 工程名称
                 String projectName = jsonObject.getString("projectName");
                 Object obj = compHouseAchievementDAO.getByProjectName(projectName);
+                boolean updateFlag = false;
                 if (null != obj) {
                     // 说明该业绩已存在
-                    logger.info("业绩已存在：" + projectName);
-                    continue;
+                    updateFlag = true;
+                    logger.info("业绩已存在：" + projectName + ",是否更新：" + isUpdate);
+                    if (!isUpdate) {
+                        continue;
+                    }
                 }
                 // 中标单位
                 String markComp = jsonObject.getString("markComp");
@@ -568,12 +652,12 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 String projectAddr = jsonObject.getString("projectAddr");
                 compHouseAchievementDTO.setProjectAddr(projectAddr);
                 // 合同签订日期
-                String contractDate = jsonObject.getString("contractDate");
+                String contractDate = jsonObject.getString("contractDate").trim();
                 if (!StringUtils.isEmpty(contractDate)) {
                     compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 中标日期
-                String markDate = jsonObject.getString("markDate");
+                String markDate = jsonObject.getString("markDate").trim();
                 if (!StringUtils.isEmpty(markDate)) {
                     compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
                 }
@@ -655,8 +739,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 资料员身份证号
                 String dataClerkIdNum = jsonObject.getString("dataClerkIdNum");
                 compHouseAchievementDTO.setDataClerkIdNum(dataClerkIdNum);
-                // 保存房建业绩信息
-                compHouseAchievementDAO.save(compHouseAchievementDTO);
+                if (updateFlag) {
+                    // 更新房建业绩信息
+                    compHouseAchievementDAO.update(compHouseAchievementDTO);
+                } else {
+                    // 保存房建业绩信息
+                    compHouseAchievementDAO.save(compHouseAchievementDTO);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

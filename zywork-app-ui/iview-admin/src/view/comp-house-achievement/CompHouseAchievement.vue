@@ -817,6 +817,9 @@
         <FormItem label="页码" prop="pageNo">
 					<Input v-model="python.pageNo" placeholder="请输入更新页码" />
 				</FormItem>
+        <FormItem label="是否更新" prop="isUpdate">
+					<i-switch v-model="python.isUpdate" @on-change="changeIsUpdate" />
+				</FormItem>
       </Form>
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('python')">取消</Button>
@@ -881,7 +884,9 @@
         },
         sourceDataUrl: 'http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx',
         python: {
-          pageNo: 1
+          pageNo: 1,
+          isUpdate: false,
+          projectName: 'save'
         },
 				form: {
 					id: null,
@@ -1820,6 +1825,13 @@
 			},
 			changePageSize(pageSize) {
 				utils.changePageSize(this, pageSize)
+      },
+      changeIsUpdate(status) {
+        if (status) {
+          this.python.projectName = 'update'
+        } else {
+          this.python.projectName = 'save'
+        }
       },
       // 爬取数据
       crawlData() {

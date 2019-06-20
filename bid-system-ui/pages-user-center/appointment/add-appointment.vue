@@ -71,7 +71,7 @@
 			// 咨询
 			addAppointment() {
 				if (this.consultDesc === '' || this.consultDesc === null || this.consultDesc === undefined) {
-					showInfoToast('请输入质询内容')
+					showInfoToast('请输入咨询内容')
 					return;
 				}
 				createAppointment(this)

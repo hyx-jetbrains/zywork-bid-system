@@ -10,5 +10,5 @@ package top.zywork.python;
  */
 public interface ProjectAnnouncePythonService {
 
-    void saveProjectAnnounce(String data);
+    void saveProjectAnnounce(String url, boolean isUpdate);
 }

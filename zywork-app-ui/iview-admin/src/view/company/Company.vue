@@ -93,7 +93,8 @@
 					<Input v-model="form.compPhone" placeholder="请输入单位电话" />
 				</FormItem>
 				<FormItem label="联系地址" prop="compAddr">
-					<Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable />
+					<!-- <Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable /> -->
+          <Input v-model="form.compAddr" placeholder="请输入联系地址" />
 				</FormItem>
 				<FormItem label="注册资本" prop="regCapitalDisplay">
 					<Input v-model="form.regCapitalDisplay" placeholder="请输入注册资本" />
@@ -155,7 +156,8 @@
 					<Input v-model="form.compPhone" placeholder="请输入单位电话" />
 				</FormItem>
 				<FormItem label="联系地址" prop="compAddr">
-					<Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable />
+					<!-- <Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable /> -->
+          <Input v-model="form.compAddr" placeholder="请输入联系地址" />
 				</FormItem>
 				<FormItem label="注册资本" prop="regCapitalDisplay">
 					<Input v-model="form.regCapitalDisplay" placeholder="请输入注册资本" />
@@ -236,9 +238,6 @@
 				</FormItem>
 				<FormItem label="单位电话" prop="compPhone">
 					<Input v-model="searchForm.compPhone" placeholder="请输入单位电话" />
-				</FormItem>
-				<FormItem label="联系地址" prop="compAddr">
-					<Cascader :data="cityData" v-model="compAddr" trigger="hover" change-on-select filterable clearable />
 				</FormItem>
 				<FormItem label="注册资本" prop="regCapital">
 					<Input v-model="searchForm.regCapital" placeholder="请输入注册资本" />
@@ -373,6 +372,9 @@
 					<Input v-model="python.pageSize" placeholder="请输入爬取个数" />
           <p style="color: red;">建议每页爬取个数为10个，以防数据量过大，导致爬取失败</p>
 				</FormItem>
+        <FormItem label="是否更新" prop="isUpdate">
+					<i-switch v-model="python.isUpdate" @on-change="changeIsUpdate" />
+				</FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="cancelModal('python')">取消</Button>
@@ -440,7 +442,9 @@
           industryType: null,
           compType: null,
           pageNo: '1',
-          pageSize: '10'
+          pageSize: '10',
+          isUpdate: false,
+          compName: 'save'
         },
 				form: {
 					id: null,
@@ -1067,6 +1071,13 @@
         }
         this.searchForm.industryType = industryType
         this.search()
+      },
+      changeIsUpdate(status) {
+        if (status) {
+          this.python.compName = 'update'
+        } else {
+          this.python.compName = 'save'
+        }
       },
       // 爬取数据
       crawlData() {

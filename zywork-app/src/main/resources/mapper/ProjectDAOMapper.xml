@@ -725,27 +725,11 @@
 		<if test="query != null and query.offerPrice != null">
 			and offer_price = #{query.offerPrice}
 		</if>
-		<if test="query != null and query.offerPriceMin != null and query.offerPriceMax == null">
-			and offer_price <![CDATA[ >= ]]> #{query.offerPriceMin}
-		</if>
-		<if test="query != null and query.offerPriceMin == null and query.offerPriceMax != null">
-			and offer_price <![CDATA[ <= ]]> #{query.offerPriceMax}
-		</if>
-		<if test="query != null and query.offerPriceMin != null and query.offerPriceMax != null">
-			and offer_price <![CDATA[ >= ]]> #{query.offerPriceMin} and offer_price <![CDATA[ <= ]]> #{query.offerPriceMax}
-		</if>
+
 		<if test="query != null and query.assurePrice != null">
 			and assure_price = #{query.assurePrice}
 		</if>
-		<if test="query != null and query.assurePriceMin != null and query.assurePriceMax == null">
-			and assure_price <![CDATA[ >= ]]> #{query.assurePriceMin}
-		</if>
-		<if test="query != null and query.assurePriceMin == null and query.assurePriceMax != null">
-			and assure_price <![CDATA[ <= ]]> #{query.assurePriceMax}
-		</if>
-		<if test="query != null and query.assurePriceMin != null and query.assurePriceMax != null">
-			and assure_price <![CDATA[ >= ]]> #{query.assurePriceMin} and assure_price <![CDATA[ <= ]]> #{query.assurePriceMax}
-		</if>
+
 		<if test="query != null and query.constructionPeriod != null">
 			and construction_period = #{query.constructionPeriod}
 		</if>

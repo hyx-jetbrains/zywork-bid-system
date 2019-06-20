@@ -463,6 +463,9 @@
         <FormItem label="页码" prop="pageNo">
 					<Input v-model="python.pageNo" placeholder="请输入更新页码" />
 				</FormItem>
+        <FormItem label="是否更新" prop="isUpdate">
+					<i-switch v-model="python.isUpdate" @on-change="changeIsUpdate" />
+				</FormItem>
       </Form>
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('python')">取消</Button>
@@ -573,7 +576,9 @@ export default {
       typeLabel: '',
       python: {
         title: '',
-        pageNo: 1
+        pageNo: 1,
+        isUpdate: false,
+        firstBuilderName: 'save'
       },
       form: {
         id: null,
@@ -1161,6 +1166,13 @@ export default {
       }
       this.typeLabel = label
     },
+    changeIsUpdate(status) {
+        if (status) {
+          this.python.firstBuilderName = 'update'
+        } else {
+          this.python.firstBuilderName = 'save'
+        }
+      },
     // 爬取数据
     crawlData() {
       this.loading['python'] = true

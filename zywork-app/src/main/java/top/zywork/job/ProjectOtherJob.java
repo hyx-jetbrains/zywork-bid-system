@@ -29,7 +29,7 @@ public class ProjectOtherJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectOtherJob......");
         String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_OTHER + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;;
-        projectPythonService.saveProject(url);
+        projectPythonService.saveProject(url, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         logger.info("executed ProjectOtherJob......");
     }
 

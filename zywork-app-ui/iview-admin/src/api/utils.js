@@ -311,9 +311,13 @@ export const changeCurrent = (self, currentRow, oldCurrentRow) => {
  * @param sortColumn 排序字段信息
  */
 export const changeSort = (self, sortColumn) => {
-  self.searchForm.sortColumn = sortColumn.key
-  self.searchForm.sortOrder = sortColumn.order
-  search(self)
+  const key = sortColumn.key
+  const order = sortColumn.order
+  if (order != 'normal') {
+    self.searchForm.sortColumn = key
+    self.searchForm.sortOrder = order
+    search(self)
+  }
 }
 
 /**

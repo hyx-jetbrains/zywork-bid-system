@@ -31,7 +31,7 @@ public class CompInfoWaterMonitorBidderJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompInfoWaterMonitorBidderJob......");
-        companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_WATER_MONITOR_BIDDER, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
+        companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_WATER_MONITOR_BIDDER, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         pageNo++;
         logger.info("executed CompInfoWaterMonitorBidderJob......");
     }

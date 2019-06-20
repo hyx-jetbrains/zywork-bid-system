@@ -371,7 +371,8 @@ public class ProjectController extends BaseController {
     @PostMapping("admin/python")
     public ResponseStatusVO pythonGetData(@RequestBody ProjectQuery projectQuery) {
         String url = PythonConstants.BASE_URL + projectQuery.getTitle() + "?pageNo=" + projectQuery.getPageNo();
-        projectPythonService.saveProject(url);
+        boolean isUpdate = projectQuery.getInMarkComp().equals(PythonConstants.IS_UPDATE_FLAG_STR);
+        projectPythonService.saveProject(url, isUpdate);
         return ResponseStatusVO.ok("后台更新中", null);
     }
 

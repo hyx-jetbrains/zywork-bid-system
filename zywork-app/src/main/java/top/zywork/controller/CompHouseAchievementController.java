@@ -14,6 +14,7 @@ import top.zywork.common.BindingResultUtils;
 import top.zywork.common.ReflectUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.PythonConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.CompHouseAchievementDTO;
 import top.zywork.python.CompanyPythonService;
@@ -156,8 +157,9 @@ public class CompHouseAchievementController extends BaseController {
     }
 
     @GetMapping("admin/python")
-    public ResponseStatusVO pythonCompHouseAchievementInfo() {
-        companyPythonService.getCompHouseAchievement();
+    public ResponseStatusVO pythonCompHouseAchievementInfo(@RequestBody CompHouseAchievementQuery compHouseAchievementQuery) {
+        boolean isUpdate = compHouseAchievementQuery.getProjectName().equals(PythonConstants.IS_UPDATE_FLAG_STR);
+        companyPythonService.getCompHouseAchievement(isUpdate);
         return ResponseStatusVO.ok("后台更新中", null);
     }
 

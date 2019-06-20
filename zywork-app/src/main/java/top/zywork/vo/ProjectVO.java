@@ -62,9 +62,9 @@ public class ProjectVO extends BaseVO {
 	@Size(min = 0, max = 15, message = "必须小于15个字符")
 	private String phone;
 	// 要约价(元)
-	private BigDecimal offerPrice;
+	private String offerPrice;
 	// 保证金(万元)
-	private BigDecimal assurePrice;
+	private String assurePrice;
 	// 工期(天)
 	private Integer constructionPeriod;
 	// 下载截止时间
@@ -123,7 +123,7 @@ public class ProjectVO extends BaseVO {
 	}
     public ProjectVO () {}
 
-    public ProjectVO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, BigDecimal offerPrice, BigDecimal assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, String inwardHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public ProjectVO (Long id, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, String tenderingAgent, String phone, String offerPrice, String assurePrice, Integer constructionPeriod, Date downloadEndTime, String otherDemand, String openMarkInfo, Date openMarkTime, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Long clickCount, Byte isElectronic, String sourceUrl, String inwardHtmlUrl, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.title = title;
 		this.projectType = projectType;
@@ -272,19 +272,19 @@ public class ProjectVO extends BaseVO {
 		this.phone = phone;
 	}
 
-	public BigDecimal getOfferPrice() {
+	public String getOfferPrice() {
 		return offerPrice;
 	}
 
-	public void setOfferPrice(BigDecimal offerPrice) {
+	public void setOfferPrice(String offerPrice) {
 		this.offerPrice = offerPrice;
 	}
 
-	public BigDecimal getAssurePrice() {
+	public String getAssurePrice() {
 		return assurePrice;
 	}
 
-	public void setAssurePrice(BigDecimal assurePrice) {
+	public void setAssurePrice(String assurePrice) {
 		this.assurePrice = assurePrice;
 	}
 

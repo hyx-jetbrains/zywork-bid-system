@@ -30,7 +30,7 @@ public class ProjectAnnounceOtherJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectAnnounceOtherJob......");
         String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_ANNOUNCE_CONSERVANCY + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;;
-        projectAnnouncePythonService.saveProjectAnnounce(url);
+        projectAnnouncePythonService.saveProjectAnnounce(url, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         logger.info("executed ProjectAnnounceOtherJob......");
     }
 

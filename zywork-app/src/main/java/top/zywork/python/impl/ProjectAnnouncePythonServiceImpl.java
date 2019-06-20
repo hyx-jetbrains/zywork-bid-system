@@ -45,7 +45,7 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
     private String location;
 
     @Override
-    public void saveProjectAnnounce(String url) {
+    public void saveProjectAnnounce(String url, boolean isUpdate) {
         HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         if(data != null) {
@@ -57,9 +57,13 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                     String tempTitle = obj.getString("title");
 
                     Object projectAnnounceObj = projectAnnounceDAO.getByTitle(tempTitle);
+                    boolean updateFlag = false;
                     if (projectAnnounceObj != null) {
-                        logger.info("该公示已存在：" + tempTitle);
-                        continue;
+                        updateFlag = true;
+                        logger.info("该公示已存在：" + tempTitle + ",是否更新：" + isUpdate);
+                        if (!isUpdate) {
+                            continue;
+                        }
                     }
 
                     String inMarkComp = obj.getString("firstCandidate");
@@ -89,7 +93,11 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                     projectAnnounceVO.setThirdCandidate(obj.getString("thirdCandidate"));
                     projectAnnounceVO.setSourceUrl(obj.getString("sourceUrl"));
                     projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
-                    projectAnnounceDAO.save(projectAnnounceVO);
+                    if (updateFlag) {
+                        projectAnnounceDAO.update(projectAnnounceVO);
+                    } else {
+                        projectAnnounceDAO.save(projectAnnounceVO);
+                    }
                 }
             }
         }

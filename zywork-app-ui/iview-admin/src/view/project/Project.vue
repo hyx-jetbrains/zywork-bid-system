@@ -581,7 +581,7 @@
         <FormItem label="联系电话" prop="phone">
           <Input v-model="searchForm.phone" placeholder="请输入联系电话"/>
         </FormItem>
-        
+
         <FormItem label="其他要求" prop="otherDemand">
           <Input v-model="searchForm.otherDemand" placeholder="请输入其他要求"/>
         </FormItem>
@@ -891,7 +891,8 @@
         </FormItem>
         <FormItem label="爬取说明" prop="desc">
           爬取
-          <span style="color: red;">{{typeLabel}}</span>第<span style="color: red;">{{python.pageNo}}</span>页的数据，如果已经爬取到了的数据，则不会再爬取。
+          <span style="color: red;">{{typeLabel}}</span>第
+          <span style="color: red;">{{python.pageNo}}</span>页的数据，如果已经爬取到了的数据，则不会再爬取。
         </FormItem>
         <FormItem label="爬取类型" prop="title">
           <Select
@@ -908,8 +909,11 @@
           </Select>
         </FormItem>
         <FormItem label="页码" prop="pageNo">
-					<Input v-model="python.pageNo" placeholder="请输入更新页码" />
-				</FormItem>
+          <Input v-model="python.pageNo" placeholder="请输入更新页码"/>
+        </FormItem>
+        <FormItem label="是否更新" prop="isUpdate">
+          <i-switch v-model="python.isUpdate" @on-change="changeIsUpdate"/>
+        </FormItem>
       </Form>
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('python')">取消</Button>
@@ -982,7 +986,9 @@ export default {
       typeLabel: '',
       python: {
         title: '',
-        pageNo: 1
+        pageNo: 1,
+        isUpdate: false,
+        inMarkComp: 'save'
       },
       form: {
         id: null,
@@ -1935,7 +1941,6 @@ export default {
       //   if (this.form.offerPrice !== null && this.form.offerPrice !== 0) {
       //     this.form.offerPriceDisplay = this.form.offerPrice / 100
       //   }
-
       //   if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
       //     this.form.assurePriceDisplay = this.form.assurePrice / 100
       //   }
@@ -1946,7 +1951,6 @@ export default {
       //   ) {
       //     this.form.offerPrice = this.form.offerPriceDisplay * 100
       //   }
-
       //   if (
       //     this.form.assurePriceDisplay !== null &&
       //     this.form.assurePriceDisplay !== 0
@@ -2011,13 +2015,13 @@ export default {
     showBuilderEnclosure(projectId, projectTitle) {
       this.$router.push({
         name: 'project_resource_manage',
-        params: { projectId: projectId,projectTitle:  projectTitle}
+        params: { projectId: projectId, projectTitle: projectTitle }
       })
     },
     // 切换原地址
     switchSourceDataUrl(val) {
       if (val === undefined) {
-        return;
+        return
       }
       const label = val.label
       if ('房建市政' == label) {
@@ -2040,6 +2044,13 @@ export default {
           'http://jxsggzy.cn/web/jyxx/002013/002013001/jyxx.html'
       }
       this.typeLabel = label
+    },
+    changeIsUpdate(status) {
+      if (status) {
+        this.python.inMarkComp = 'update'
+      } else {
+        this.python.inMarkComp = 'save'
+      }
     },
     // 爬取数据
     crawlData() {

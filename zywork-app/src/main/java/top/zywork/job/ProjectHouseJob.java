@@ -29,7 +29,7 @@ public class ProjectHouseJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectHouseJob......");
         String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_HOUSE + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;;
-        projectPythonService.saveProject(url);
+        projectPythonService.saveProject(url, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         logger.info("executed ProjectHouseJob......");
     }
 

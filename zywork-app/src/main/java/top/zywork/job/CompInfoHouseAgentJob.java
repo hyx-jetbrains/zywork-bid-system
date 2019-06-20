@@ -31,7 +31,7 @@ public class CompInfoHouseAgentJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompInfoHouseAgentJob......");
-        companyPythonService.getCompanyInfo(PythonConstants.TYPE_AGENT, PythonConstants.COMP_TYPE_HOUSE_AGENT, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE);
+        companyPythonService.getCompanyInfo(PythonConstants.TYPE_AGENT, PythonConstants.COMP_TYPE_HOUSE_AGENT, String.valueOf(pageNo), PythonConstants.DEFAULT_PAGE_SIXE, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         pageNo++;
         logger.info("executed CompInfoHouseAgentJob......");
     }

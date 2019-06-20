@@ -42,7 +42,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
     private String location;
 
     @Override
-    public void saveProject(String url) {
+    public void saveProject(String url, boolean isUpdate) {
         HttpUtils.timeout(PythonConstants.TIME_OUT);
         String data = HttpUtils.get(url);
         if(data != null) {
@@ -53,9 +53,13 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     String title = obj.getString("title");
 
                     Object projectObj = projectDAO.getByTitle(title);
+                    boolean updateFlag = false;
                     if (null != projectObj) {
-                        logger.info("项目已存在：" + title);
-                        continue;
+                        updateFlag = true;
+                        logger.info("项目已存在：" + title + ",是否更新：" + isUpdate);
+                        if (!isUpdate) {
+                            continue;
+                        }
                     }
 
                     String fileName = UUIDUtils.uuid() +".html";
@@ -78,27 +82,26 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setTenderingAgent(obj.getString("tenderingAgent"));
                     projectVO.setPhone(obj.getString("phone"));
                     projectVO.setMarkStatus(ProjectConstants.MARK_PUBLICIT_NOTICE);
-                    if(obj.getLong("offerPrice") != null) {
-                        projectVO.setOfferPrice(obj.getBigDecimal("offerPrice"));
-                    }
-
-                    if(obj.getLong("assurePrice") != null) {
-                        projectVO.setAssurePrice(obj.getBigDecimal("assurePrice"));
-                    }
+                    projectVO.setOfferPrice(obj.getString("offerPrice"));
+                    projectVO.setAssurePrice(obj.getString("assurePrice"));
                     projectVO.setConstructionPeriod(obj.getInteger("constructionPeriod"));
                     projectVO.setDownloadEndTime(obj.getDate("downloadEndTime"));
                     projectVO.setOtherDemand(obj.getString("otherDemand"));
                     projectVO.setOpenMarkTime(obj.getDate("openMarkTime"));
                     projectVO.setOpenMarkAddr(obj.getString("openMarkAddr"));
                     projectVO.setInMarkComp(obj.getString("inMarkComp"));
-                    String noticeTime = obj.getString("noticeTime");
+                    String noticeTime = obj.getString("noticeTime").trim();
                     if (!StringUtils.isEmpty(noticeTime)) {
                         projectVO.setNoticeTime(DateParseUtils.parseDate(noticeTime, DatePatternEnum.DATE.getValue()));
                     }
                     projectVO.setSourceUrl(obj.getString("sourceUrl"));
                     projectVO.setInwardHtmlUrl(uri + "/" + fileName);
                     projectVO.setResourceCount(0);
-                    projectDAO.save(projectVO);
+                    if (updateFlag) {
+                        projectDAO.update(projectVO);
+                    } else {
+                        projectDAO.save(projectVO);
+                    }
 
                     // 根据名称查询业绩，如果有查询到，则更新
                     Object tempObj = projectAnnounceDAO.getByTitle(title + "[中标候选人公示]");

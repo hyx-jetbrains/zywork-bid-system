@@ -54,17 +54,9 @@ public class ProjectQuery extends PageQuery {
 	// 联系电话
 	private String phone;
 	// 要约价(元)
-	private BigDecimal offerPrice;
-	// 要约价(元)（最小值）
-	private BigDecimal offerPriceMin;
-	// 要约价(元)（最大值）
-	private BigDecimal offerPriceMax;
+	private String offerPrice;
 	// 保证金(万元)
-	private BigDecimal assurePrice;
-	// 保证金(万元)（最小值）
-	private BigDecimal assurePriceMin;
-	// 保证金(万元)（最大值）
-	private BigDecimal assurePriceMax;
+	private String assurePrice;
 	// 工期(天)
 	private Integer constructionPeriod;
 	// 工期(天)（最小值）
@@ -166,7 +158,7 @@ public class ProjectQuery extends PageQuery {
 	}
     public ProjectQuery () {}
 
-    public ProjectQuery (Long id, Long idMin, Long idMax, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, Float moneyToImplementMin, Float moneyToImplementMax, String tenderingAgent, String phone, BigDecimal offerPrice, BigDecimal offerPriceMin, BigDecimal offerPriceMax, BigDecimal assurePrice, BigDecimal assurePriceMin, BigDecimal assurePriceMax, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Date downloadEndTime, Date downloadEndTimeMin, Date downloadEndTimeMax, String otherDemand, String openMarkInfo, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Date noticeTimeMin, Date noticeTimeMax, Long clickCount, Long clickCountMin, Long clickCountMax, Byte isElectronic, Byte isElectronicMin, Byte isElectronicMax, String sourceUrl, String inwardHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public ProjectQuery (Long id, Long idMin, Long idMax, String title, String projectType, String city, String projectDetail, String releaseStatus, String markUnitName, String projectInvest, String checkPattern, String compAptitudeType, String builderLevel, Float moneyToImplement, Float moneyToImplementMin, Float moneyToImplementMax, String tenderingAgent, String phone, String offerPrice, String assurePrice, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Date downloadEndTime, Date downloadEndTimeMin, Date downloadEndTimeMax, String otherDemand, String openMarkInfo, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String openMarkAddr, String markStatus, String inMarkComp, Date noticeTime, Date noticeTimeMin, Date noticeTimeMax, Long clickCount, Long clickCountMin, Long clickCountMax, Byte isElectronic, Byte isElectronicMin, Byte isElectronicMax, String sourceUrl, String inwardHtmlUrl, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -186,11 +178,7 @@ public class ProjectQuery extends PageQuery {
 		this.tenderingAgent = tenderingAgent;
 		this.phone = phone;
 		this.offerPrice = offerPrice;
-		this.offerPriceMin = offerPriceMin;
-		this.offerPriceMax = offerPriceMax;
 		this.assurePrice = assurePrice;
-		this.assurePriceMin = assurePriceMin;
-		this.assurePriceMax = assurePriceMax;
 		this.constructionPeriod = constructionPeriod;
 		this.constructionPeriodMin = constructionPeriodMin;
 		this.constructionPeriodMax = constructionPeriodMax;
@@ -375,52 +363,20 @@ public class ProjectQuery extends PageQuery {
 		this.phone = phone;
 	}
 
-	public BigDecimal getOfferPrice() {
+	public String getOfferPrice() {
 		return offerPrice;
 	}
 
-	public void setOfferPrice(BigDecimal offerPrice) {
+	public void setOfferPrice(String offerPrice) {
 		this.offerPrice = offerPrice;
 	}
 
-	public BigDecimal getOfferPriceMin() {
-		return offerPriceMin;
-	}
-
-	public void setOfferPriceMin(BigDecimal offerPriceMin) {
-		this.offerPriceMin = offerPriceMin;
-	}
-
-	public BigDecimal getOfferPriceMax() {
-		return offerPriceMax;
-	}
-
-	public void setOfferPriceMax(BigDecimal offerPriceMax) {
-		this.offerPriceMax = offerPriceMax;
-	}
-
-	public BigDecimal getAssurePrice() {
+	public String getAssurePrice() {
 		return assurePrice;
 	}
 
-	public void setAssurePrice(BigDecimal assurePrice) {
+	public void setAssurePrice(String assurePrice) {
 		this.assurePrice = assurePrice;
-	}
-
-	public BigDecimal getAssurePriceMin() {
-		return assurePriceMin;
-	}
-
-	public void setAssurePriceMin(BigDecimal assurePriceMin) {
-		this.assurePriceMin = assurePriceMin;
-	}
-
-	public BigDecimal getAssurePriceMax() {
-		return assurePriceMax;
-	}
-
-	public void setAssurePriceMax(BigDecimal assurePriceMax) {
-		this.assurePriceMax = assurePriceMax;
 	}
 
 	public Integer getConstructionPeriod() {
@@ -741,12 +697,8 @@ public class ProjectQuery extends PageQuery {
 				", moneyToImplementMax = " + moneyToImplementMax + 
 				", tenderingAgent = " + tenderingAgent + 
 				", phone = " + phone + 
-				", offerPrice = " + offerPrice + 
-				", offerPriceMin = " + offerPriceMin + 
-				", offerPriceMax = " + offerPriceMax + 
-				", assurePrice = " + assurePrice + 
-				", assurePriceMin = " + assurePriceMin + 
-				", assurePriceMax = " + assurePriceMax + 
+				", offerPrice = " + offerPrice +
+				", assurePrice = " + assurePrice +
 				", constructionPeriod = " + constructionPeriod + 
 				", constructionPeriodMin = " + constructionPeriodMin + 
 				", constructionPeriodMax = " + constructionPeriodMax + 

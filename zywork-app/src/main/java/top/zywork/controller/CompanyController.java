@@ -14,6 +14,7 @@ import top.zywork.common.BindingResultUtils;
 import top.zywork.common.ReflectUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.PythonConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.CompanyDTO;
 import top.zywork.python.CompanyPythonService;
@@ -161,7 +162,8 @@ public class CompanyController extends BaseController {
         String compType = companyQuery.getIndustryType();
         String pageNo = String.valueOf(companyQuery.getPageNo());
         String pageSize = String.valueOf(companyQuery.getPageSize());
-        companyPythonService.getCompanyInfo(type, compType, pageNo, pageSize);
+        boolean isUpdate = companyQuery.getCompName().equals(PythonConstants.IS_UPDATE_FLAG_STR);
+        companyPythonService.getCompanyInfo(type, compType, pageNo, pageSize, isUpdate);
         return ResponseStatusVO.ok("后台更新中", null);
     }
 

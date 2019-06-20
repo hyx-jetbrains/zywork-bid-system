@@ -154,4 +154,13 @@ public class PythonConstants {
      * 水利勘查设计单位-163
      */
     public static final String COMP_TYPE_WATER_DEVISE_BIDDER = "163";
+
+    /**
+     * 是否更新标识
+     */
+    public static final boolean DEFAULT_IS_UPDATE_FLAG = false;
+    /**
+     * 是否更新标识字符串
+     */
+    public static final String IS_UPDATE_FLAG_STR = "update";
 }
