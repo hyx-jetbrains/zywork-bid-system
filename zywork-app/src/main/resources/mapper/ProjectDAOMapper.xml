@@ -109,7 +109,9 @@
 			<if test="resourceCount != null">
 				resource_count,
 			</if>
-			update_time,
+			<if test="updateTime == null">
+				update_time,
+			</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null">
@@ -211,7 +213,9 @@
 			<if test="resourceCount != null">
 				#{resourceCount},
 			</if>
-		  		CURRENT_TIMESTAMP,
+			<if test="updateTime == null">
+				CURRENT_TIMESTAMP,
+			</if>
         </trim>
     </insert>
 

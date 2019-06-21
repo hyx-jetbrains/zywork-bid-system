@@ -52,4 +52,9 @@ public class ProjectAnnounceServiceImpl extends AbstractBaseService implements P
     public Object getByProjectId(Long projectId) {
         return projectAnnounceDAO.getByProjectId(projectId);
     }
+
+    @Override
+    public Object getByTitle(String title) {
+        return projectAnnounceDAO.getByTitle(title);
+    }
 }

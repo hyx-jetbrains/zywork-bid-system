@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import top.zywork.common.BeanUtils;
-import top.zywork.common.HttpUtils;
-import top.zywork.common.IOUtils;
-import top.zywork.common.UUIDUtils;
+import top.zywork.common.*;
 import top.zywork.constant.PythonConstants;
 import top.zywork.dao.ProjectAnnounceDAO;
 import top.zywork.dao.ProjectDAO;
@@ -80,9 +77,9 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                     }
 
                     String fileName = UUIDUtils.uuid() +".html";
-                    String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
-                    String foot = "</body></html>";
-                    IOUtils.writeText(head +obj.getString("projectDetail")+ foot, location + "/" + fileName);
+                    String projectDetail = obj.getString("projectDetail");
+                    CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
+
                     projectAnnounceVO.setProjectType(obj.getString("projectType"));
                     projectAnnounceVO.setTitle(tempTitle);
                     projectAnnounceVO.setAnnounceDesc(obj.getString("announceDesc"));

@@ -150,4 +150,9 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         projectDAO.updateMarkStatus();
     }
 
+    @Override
+    public Object getByTitle(String title) {
+        return projectDAO.getByTitle(title);
+    }
+
 }

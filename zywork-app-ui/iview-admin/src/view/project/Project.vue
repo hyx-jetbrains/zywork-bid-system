@@ -229,10 +229,10 @@
         </Row>
         <Row>
           <i-col span="12">
-            <FormItem label="公告时间" prop="notice_time">
+            <FormItem label="公告时间" prop="noticeTime">
               <DatePicker
-                @on-change="form.notice_time=$event"
-                :value="form.notice_time"
+                @on-change="form.noticeTime=$event"
+                :value="form.noticeTime"
                 placeholder="请选择公告时间"
                 type="datetime"
                 format="yyyy-MM-dd HH:mm:ss"

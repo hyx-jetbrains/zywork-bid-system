@@ -165,4 +165,12 @@ public class PythonConstants {
     public static final String IS_UPDATE_FLAG_STR = "update";
 
 
+    /**
+     * 生成静态html页面的头部部分代码
+     */
+    public static final String HTML_HEAD = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
+    /**
+     * 生成静态html底部的部分代码
+     */
+    public static final String HTML_FOOT = "</body></html>";
 }

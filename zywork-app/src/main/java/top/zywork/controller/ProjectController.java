@@ -86,15 +86,12 @@ public class ProjectController extends BaseController {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        Object obj = projectService.getByTitle(projectVO.getTitle());
+        if (null != obj) {
+            return ResponseStatusVO.error("该信息已存在", null);
+        }
 
-        String fileName = UUIDUtils.uuid() +".html";
-        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
-        String foot = "</body></html>";
-
-        IOUtils.writeText(head +projectVO.getProjectDetail()+ foot, location + "/" + fileName);
-
-        projectVO.setInwardHtmlUrl(uri + "/" + fileName);
-        projectVO = projectService.getOpenMark(projectVO);
+        projectVO = generatorProjectVo(projectVO);
         projectService.save(BeanUtils.copy(projectVO, ProjectDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -137,20 +134,21 @@ public class ProjectController extends BaseController {
             }
         }
 
-        String fileName = UUIDUtils.uuid() +".html";
-        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
-        String foot = "</body></html>";
-
-        IOUtils.writeText(head +projectVO.getProjectDetail()+ foot, location + "/" + fileName);
-        projectVO.setInwardHtmlUrl(uri + "/" + fileName);
-
-        projectVO = projectService.getOpenMark(projectVO);
+        projectVO = generatorProjectVo(projectVO);
         int updateRows = projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
         if (updateRows == 1) {
             return ResponseStatusVO.ok("更新成功", null);
         } else {
             return ResponseStatusVO.dataError("数据版本号有问题，在此更新前数据已被更新", null);
         }
+    }
+
+    private ProjectVO generatorProjectVo(ProjectVO projectVO) {
+        String fileName = UUIDUtils.uuid() +".html";
+        CommonMethodUtils.generatorHtmlCode(fileName, projectVO.getProjectDetail(), location);
+        projectVO.setInwardHtmlUrl(uri + "/" + fileName);
+        projectVO = projectService.getOpenMark(projectVO);
+        return projectVO;
     }
 
     @PostMapping("admin/batch-update")

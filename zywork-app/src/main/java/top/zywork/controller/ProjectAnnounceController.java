@@ -82,12 +82,12 @@ public class ProjectAnnounceController extends BaseController {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
 
-        String fileName = UUIDUtils.uuid() +".html";
-        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
-        String foot = "</body></html>";
+        Object obj = projectAnnounceService.getByTitle(projectAnnounceVO.getTitle());
+        if (null != obj) {
+            return ResponseStatusVO.error("该信息已存在", null);
+        }
 
-        IOUtils.writeText(head +projectAnnounceVO.getAnnounceDesc()+ foot, location + "/" + fileName);
-        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
+        projectAnnounceVO = generatorProjectAnnounceVO(projectAnnounceVO);
 
         projectAnnounceService.save(BeanUtils.copy(projectAnnounceVO, ProjectAnnounceDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
@@ -130,12 +130,7 @@ public class ProjectAnnounceController extends BaseController {
             }
         }
 
-        String fileName = UUIDUtils.uuid() +".html";
-        String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
-        String foot = "</body></html>";
-
-        IOUtils.writeText(head +projectAnnounceVO.getAnnounceDesc()+ foot, location + "/" + fileName);
-        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
+        projectAnnounceVO = generatorProjectAnnounceVO(projectAnnounceVO);
 
         int updateRows = projectAnnounceService.update(BeanUtils.copy(projectAnnounceVO, ProjectAnnounceDTO.class));
         if (updateRows == 1) {
@@ -143,6 +138,13 @@ public class ProjectAnnounceController extends BaseController {
         } else {
             return ResponseStatusVO.dataError("数据版本号有问题，在此更新前数据已被更新", null);
         }
+    }
+
+    private ProjectAnnounceVO generatorProjectAnnounceVO(ProjectAnnounceVO projectAnnounceVO) {
+        String fileName = UUIDUtils.uuid() +".html";
+        CommonMethodUtils.generatorHtmlCode(fileName, projectAnnounceVO.getAnnounceDesc(), location);
+        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
+        return projectAnnounceVO;
     }
 
     @PostMapping("admin/batch-update")

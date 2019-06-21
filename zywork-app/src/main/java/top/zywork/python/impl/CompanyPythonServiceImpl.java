@@ -653,11 +653,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compHouseAchievementDTO.setProjectAddr(projectAddr);
                 // 合同签订日期
                 String contractDate = jsonObject.getString("contractDate").trim();
+                contractDate.replaceAll("/", "-");
                 if (!StringUtils.isEmpty(contractDate)) {
                     compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
                 }
                 // 中标日期
                 String markDate = jsonObject.getString("markDate").trim();
+                markDate.replaceAll("/", "-");
                 if (!StringUtils.isEmpty(markDate)) {
                     compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
                 }

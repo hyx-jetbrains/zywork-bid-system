@@ -42,13 +42,13 @@ public interface ProjectService extends BaseService {
      * Time: 15:11
      * Description: 根据用户id查询收藏项目
      */
-    PagerDTO listPageByUserId(@Param("query") Object queryObj, @Param("userId") Long userId);
+    PagerDTO listPageByUserId(Object queryObj, Long userId);
 
     PagerDTO  listProjectByPage(ProjectQuery projectQuery);
 
-    PagerDTO findProjectByd(@Param("id") Long id);
+    PagerDTO findProjectByd(Long id);
 
-    Object getProjectBySelect(@Param("id") Long id, @Param("city") String city, @Param("list") List<Object> list);
+    Object getProjectBySelect(Long id, String city, List<Object> list);
 
     /***
      * @description:  更新项目的状态为待开标，只有job调用，其他地方请不要调用这个方法
@@ -57,4 +57,6 @@ public interface ProjectService extends BaseService {
      * @date: 2019-06-18 18:29
      */
     void updateMarkStatus();
+
+    Object getByTitle(String title);
 }

@@ -61,12 +61,9 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                             continue;
                         }
                     }
-
                     String fileName = UUIDUtils.uuid() +".html";
-                    String head = "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>";
-                    String foot = "</body></html>";
-
-                    IOUtils.writeText(head +obj.getString("projectDetail")+ foot, location + "/" + fileName);
+                    String projectDetail = obj.getString("projectDetail");
+                    CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
 
                     ProjectVO projectVO = new ProjectVO();
                     projectVO.setTitle(title);
@@ -125,6 +122,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
             }
         }
     }
+
 
     @Autowired
     public void setProjectDAO(ProjectDAO projectDAO) {

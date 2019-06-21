@@ -21,10 +21,19 @@
 		<view class="zy-type-title zy-text-bold">奖励说明</view>
 		<label class="uni-list-cell uni-list-cell-pd">
 			<text>
-				1、每成功邀请5位用户，即可随机获得VIP充值抵扣券。
+				1、每成功邀请1位用户，即可获得一定金额的抵用券。
 			</text>	
 		</label>
-		
+		<label class="uni-list-cell uni-list-cell-pd">
+			<text>
+				2、抵用券可用于服务购买抵扣使用。
+			</text>	
+		</label>
+		<label class="uni-list-cell uni-list-cell-pd">
+			<text>
+				3、抵用券可累积使用。
+			</text>	
+		</label>
 		<view class="zy-type-title zy-text-bold">邀请记录</view>
 		<view class="zy-share-record">
 			<view v-if="shareRecordList.length > 0" class="zy-page-list" style="padding: 0upx 30upx;">

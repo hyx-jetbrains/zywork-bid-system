@@ -25,6 +25,8 @@ public interface ProjectAnnounceService extends BaseService {
      */
     List<ProjectDTO> getProjectSelect(Long projectId);
 
-    Object getByProjectId(@Param("projectId") Long projectId);
+    Object getByProjectId(Long projectId);
+
+    Object getByTitle(String title);
 
 }

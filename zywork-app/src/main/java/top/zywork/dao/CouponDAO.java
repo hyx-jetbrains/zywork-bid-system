@@ -25,4 +25,6 @@ public interface CouponDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    int updateCouponCount(@Param("id") Long id);
 }

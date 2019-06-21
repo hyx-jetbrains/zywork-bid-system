@@ -5,13 +5,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.zywork.common.BeanUtils;
+import top.zywork.common.DateUtils;
 import top.zywork.common.RandomUtils;
-import top.zywork.dao.UserInviteDAO;
-import top.zywork.dao.UserRegDAO;
-import top.zywork.dao.UserRoleRegDAO;
+import top.zywork.constant.CouponConstant;
+import top.zywork.dao.*;
 import top.zywork.dos.UserRegDO;
+import top.zywork.dto.CouponDTO;
+import top.zywork.dto.UserCouponDTO;
 import top.zywork.enums.RandomCodeEnum;
+import top.zywork.query.CouponQuery;
 import top.zywork.service.UserRegService;
+
+import java.util.List;
 
 /**
  * 用户注册保存用户信息Service接口实现类<br/>
@@ -33,6 +39,10 @@ public class UserRegServiceImpl implements UserRegService {
     private UserRoleRegDAO userRoleRegDAO;
 
     private UserInviteDAO userInviteDAO;
+
+    private CouponDAO couponDAO;
+
+    private UserCouponDAO userCouponDAO;
 
     @Override
     public void saveUser(String email, String password, Long roleId, Long inviteUserId) {
@@ -80,6 +90,32 @@ public class UserRegServiceImpl implements UserRegService {
         }
         if (inviteUserId != null) {
             userInviteDAO.saveUserHierarchy(inviteUserId, userRegDO.getId());
+            // 发放抵用券
+            CouponQuery couponQuery = new CouponQuery();
+            couponQuery.setIsActive(CouponConstant.IS_ACTIVE_TRUE.byteValue());
+            couponQuery.setSortColumn("createTime");
+            couponQuery.setSortOrder("desc");
+            // 最少还有一张
+            couponQuery.setCouponCountMin(1);
+            // 有效期大于今天
+            couponQuery.setValidTimeMin(DateUtils.currentDate());
+            couponQuery.setPageSize(1);
+            List<Object> objectList = couponDAO.listPageByCondition(couponQuery);
+            if (null == objectList || objectList.size() <= 0) {
+                System.err.println("没有可用的抵用券");
+                return;
+            }
+            // 获取到抵用券
+            CouponDTO couponDTO = BeanUtils.copy(objectList.get(0), CouponDTO.class);
+            int updateRow = couponDAO.updateCouponCount(couponDTO.getId());
+            if (updateRow >= 1) {
+                // 更新抵用券数量成功
+                UserCouponDTO userCouponDTO = new UserCouponDTO();
+                userCouponDTO.setUserId(inviteUserId);
+                userCouponDTO.setCouponId(couponDTO.getId());
+                userCouponDTO.setUseStatus(CouponConstant.COUPON_STATUS_WAIT);
+                userCouponDAO.save(userCouponDTO);
+            }
         }
     }
 
@@ -140,5 +176,15 @@ public class UserRegServiceImpl implements UserRegService {
     @Autowired
     public void setUserInviteDAO(UserInviteDAO userInviteDAO) {
         this.userInviteDAO = userInviteDAO;
+    }
+
+    @Autowired
+    public void setCouponDAO(CouponDAO couponDAO) {
+        this.couponDAO = couponDAO;
+    }
+
+    @Autowired
+    public void setUserCouponDAO(UserCouponDAO userCouponDAO) {
+        this.userCouponDAO = userCouponDAO;
     }
 }
