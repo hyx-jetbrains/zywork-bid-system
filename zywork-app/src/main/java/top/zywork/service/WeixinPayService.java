@@ -12,7 +12,7 @@ import top.zywork.weixin.WeixinXcxConfig;
  */
 public interface WeixinPayService extends BaseService {
 
-    ResponseStatusVO ServicePay(Long UserId, String openid, Long serviceId, int validYear, Long userCouponId, int type, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig);
+    ResponseStatusVO ServicePay(Long UserId, String openid, Long serviceId, int validYear, String userCouponId, int type, long userCouponMoney, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig);
 
     ResponseStatusVO ExpertSubscribePay(Long UserId, String openid, Long id, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig);
 

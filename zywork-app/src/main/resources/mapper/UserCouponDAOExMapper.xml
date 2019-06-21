@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserCouponDAO">
+
+    <select id="getByUserIdAndCouponIds" resultType="userCouponDO">
+        select
+        <include refid="select_columns"/>
+        from t_user_coupon
+        <where>
+           and user_id = #{userId} and coupon_id in
+           <foreach collection="couponIds" item="couponId" index="index" open="(" close=")" separator=",">
+			  #{couponId}
+		   </foreach>
+		   and use_status = 0 and is_active = 0
+        </where>
+
+    </select>
+
+	<select id="sumMoneyByUserIdAndCouponIds" resultType="userCouponDO">
+		select
+		sum(c.money) as userId
+		from t_user_coupon uc, t_coupon c
+		<where>
+			and uc.user_id = #{userId} and uc.coupon_id in
+			<foreach collection="couponIds" item="couponId" index="index" open="(" close=")" separator=",">
+				#{couponId}
+			</foreach>
+			and uc.use_status = 0 and uc.is_active = 0 and uc.coupon_id = c.id
+		</where>
+
+	</select>
+
+</mapper>

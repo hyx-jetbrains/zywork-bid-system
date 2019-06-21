@@ -34,6 +34,16 @@
       </i-col>
     </Row>
     <Modal v-model="modal.search" title="高级搜索">
+      <div slot="header">
+        <Button type="text" size="large" @click="resetForm('searchForm')">清空</Button>
+        <Button type="text" size="large" @click="cancelModal('search')">取消</Button>
+        <Button
+          type="primary"
+          size="large"
+          @click="searchOkModal('search')"
+          :loading="loading.search"
+        >搜索</Button>
+      </div>
       <Form ref="searchForm" :model="searchForm" :label-width="80">
         <FormItem label="招投标项目编号">
           <Row>

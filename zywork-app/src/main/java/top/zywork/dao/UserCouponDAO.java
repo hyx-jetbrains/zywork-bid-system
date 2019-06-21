@@ -2,6 +2,8 @@ package top.zywork.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import top.zywork.dos.UserCouponDO;
+import top.zywork.dto.UserCouponDTO;
 import top.zywork.query.PageQuery;
 
 import java.util.List;
@@ -25,4 +27,8 @@ public interface UserCouponDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    List<UserCouponDO> getByUserIdAndCouponIds(@Param("userId") Long userId, @Param("couponIds") String[] couponIds);
+
+    Long sumMoneyByUserIdAndCouponIds(@Param("userId") Long userId, @Param("couponIds") String[] couponIds);
 }

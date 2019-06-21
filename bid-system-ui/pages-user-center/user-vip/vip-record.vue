@@ -58,12 +58,29 @@
 							<text v-else>选择抵用券</text>
 							<zywork-icon type="iconiconfonti" />
 						</view>
-						<uni-drawer :visible="couponDrawer" mode="right" @close="couponDrawer = false">
+						<uni-drawer :visible="couponDrawer" mode="right" @close="hideCouponDrawer">
 							<uni-list>
 								<view v-if="couponList.length > 0">
-									<zywork-list-item title="暂不使用" @click="cancelUseCoupon"></zywork-list-item>
+									<!-- <zywork-list-item title="暂不使用" @click="cancelUseCoupon"></zywork-list-item>
 									<zywork-list-item v-for="(couponItem, index) in couponList" :key="index" :title="'¥' + couponItem.couponMoney / 100"
-									 note="点击使用" @click="useCoupon(couponItem.userCouponId, couponItem.couponMoney)"></zywork-list-item>
+									 note="点击使用" @click="useCoupon(couponItem.userCouponId, couponItem.couponMoney)"></zywork-list-item> -->
+									 <view class="zy-search-view zy-search-title">
+										<text class="zy-text-bold">选择需要使用的抵用券</text>
+									</view>
+									 <view class="uni-list">
+										<checkbox-group @change="couponChange">
+											<label class="uni-list-cell uni-list-cell-pd" v-for="(couponItem, index) in couponList" :key="index">
+												<view>
+													<checkbox :value="index" />
+												</view>
+												<view class="zy-price">¥{{couponItem.couponMoney / 100}}</view>
+											</label>
+										</checkbox-group>
+									</view>
+									<view class="zy-search-view zy-search-bottom">
+										<button class="mini-btn" type="default" size="mini" @click="hideCouponDrawer">取消</button>
+										<button class="mini-btn" type="primary" size="mini" @click="useCouponConfim">确定</button>
+									</view>
 								</view>
 								<zywork-no-data v-else text="暂无可用的抵用券"></zywork-no-data>
 							</uni-list>
@@ -72,7 +89,7 @@
 				</view>
 				<view class="zy-disable-flex zy-record-card-item">
 					<view class="zy-record-card-title">实付金额：</view>
-					<view class="zy-price zy-disable-flex-right">¥{{recordInfo.money / 100}}</view>
+					<view class="zy-price zy-disable-flex-right">¥{{recordInfo.money}}</view>
 				</view>
 			</view>
 		</view>
@@ -98,6 +115,9 @@
 		getCouponByUserId,
 		payServiceRecord
 	} from '@/common/user-center.js'
+	import {
+		showInfoToast
+	} from '@/common/util.js'
 
 	export default {
 		components: {
@@ -124,7 +144,6 @@
 					status: 1
 				},
 				couponList: [],
-				initPrice: 0,
 				recordInfo: {
 					validYear: 1,
 					discount: 100,
@@ -135,31 +154,34 @@
 				showDiscount: false,
 				loading: false,
 				payBtnDisabled: false,
+				initMoney: 0,
 				formData: {
 					serviceId: 0,
 					validYear: 1,
-					userCouponId: 0,
+					userCouponIds: '',
+					userCouponMoney: 0,
 					type: 0
-				}
+				},
+				couponIndexArray: []
 			}
 		},
 		computed: {
 			oldMoney() {
 				return this.recordInfo.oldMoney
 			},
-			couponMoney() {
-				return this.recordInfo.couponMoney
-			}
+			// couponMoney() {
+			// 	return this.recordInfo.couponMoney
+			// }
 		},
 		watch: {
 			oldMoney(val) {
 				if (!this.showDiscount) {
-					this.recordInfo.money = val - this.recordInfo.couponMoney
+					this.recordInfo.money = (val - this.recordInfo.couponMoney) / 100
 				}
 			},
-			couponMoney(val) {
-				this.recordInfo.money = this.recordInfo.money - val
-			}
+			// couponMoney(val) {
+			// 	this.recordInfo.money = this.recordInfo.money - val
+			// }
 		},
 		onLoad(event) {
 			uni.hideShareMenu();
@@ -171,7 +193,7 @@
 			} catch (error) {
 				this.item = JSON.parse(payload);
 			}
-			this.initPrice = this.recordInfo.oldMoney = this.item.price;
+			this.initMoney = this.recordInfo.oldMoney = this.item.price;
 			this.recordInfo.discount = this.item.discount;
 			this.formData.serviceId = this.item.id;
 			this.formData.type = this.item.type;
@@ -179,21 +201,25 @@
 		methods: {
 			/** 监听购买年数 */
 			chooseValidYear(e) {
-				this.validYearIndex = e.target.value
-				this.setRecordDiscount(this.validYearIndex)
-				this.recordInfo.couponMoney = 0
+				this.validYearIndex = e.target.value;
+				this.formData.validYear = this.recordInfo.validYear = parseInt(this.validYearIndex) + 1;
+				// 清空优惠券
+				this.initCoupon();
+				this.setRecordDiscount(this.recordInfo.validYear);
 			},
 			/** 设置订单折扣 */
 			setRecordDiscount(year) {
-				var tempYear = parseInt(year) + 1;
-				this.formData.validYear = tempYear;
-				if (tempYear > 1) {
+				year = parseInt(year);
+				let oldMoney = year * this.initMoney;
+				let discount = this.recordInfo.discount / 100;
+				if (year > 1) {
 					this.showDiscount = true;
-					this.recordInfo.money = tempYear * this.initPrice * (this.recordInfo.discount / 100);
+					this.recordInfo.money = parseFloat((oldMoney * discount - this.recordInfo.couponMoney) / 100).toFixed(2);
 				} else {
 					this.showDiscount = false;
+					this.recordInfo.money = parseFloat((oldMoney - this.recordInfo.couponMoney) / 100).toFixed(2);
 				}
-				this.recordInfo.oldMoney = tempYear * this.initPrice;
+				this.recordInfo.oldMoney = oldMoney;
 			},
 			// 监听支付方式选中
 			choosePayType(e) {
@@ -205,15 +231,60 @@
 				this.showBtn = false;
 				getCouponByUserId(this, 'init');
 			},
-			// 使用抵用券
+			// 使用抵用券 - 之前的逻辑
 			useCoupon(id, money) {
 				this.formData.userCouponId = id;
+				this.recordInfo.couponMoney = money;
 				this.hideCouponDrawer()
-				this.recordInfo.couponMoney = money
+			},
+			// 确定使用抵用券
+			useCouponConfim() {
+				if (this.couponIndexArray.length <= 0) {
+					// 未使用抵用券
+					this.cancelUseCoupon();
+					return;
+				}
+				var couponMoney = 0;
+				var couponId = '';
+				this.couponIndexArray.forEach(item => {
+					const itemObj = this.couponList[item];
+					couponMoney += parseInt(itemObj.couponMoney);
+					couponId += itemObj.userCouponId + ",";
+				})
+				var money = 0;
+				money = parseInt(this.recordInfo.money) - couponMoney;
+				if (money <= 0) {
+					showInfoToast("抵用券金额不能大于总金额，请重新选择抵用券");
+					return;
+				}
+				this.recordInfo.couponMoney = couponMoney;
+				this.setRecordDiscount(this.recordInfo.validYear);
+				this.formData.userCouponIds = couponId;
+				this.formData.userCouponMoney = couponMoney;
+				this.hideCouponDrawer();
+			},
+ 			couponChange: function(e) {
+				// var items = this.couponList,
+				var	values = e.detail.value;
+				this.couponIndexArray = values;
+				// for (var i = 0, lenI = items.length; i < lenI; ++i) {
+				// 	const item = items[i]
+				// 	if(values.includes(item.value)){
+				// 		this.$set(item,'checked',true)
+				// 	}else{
+				// 		this.$set(item,'checked',false)
+				// 	}
+				// }
 			},
 			// 取消使用抵用券
 			cancelUseCoupon() {
-				this.hideCouponDrawer()
+				this.recordInfo.couponMoney = 0;
+				this.hideCouponDrawer();
+				this.initCoupon();
+				this.setRecordDiscount(this.recordInfo.validYear);
+			},
+			// 初始化抵用券
+			initCoupon() {
 				this.recordInfo.couponMoney = 0;
 				this.formData.userCouponId = 0;
 			},
@@ -224,6 +295,11 @@
 			},
 			// 支付订单
 			payRecord() {
+				if (this.recordInfo.money <= 0) {
+					// 抵扣钱大于需要支付的金额
+					showInfoToast('抵扣券金额不能大于总金额')
+					return;
+				}
 				console.log("发起支付");
 				this.payBtnDisabled = true;
 				payServiceRecord(this, this.formData);
@@ -308,9 +384,26 @@
 		border-bottom: 2upx solid $border-color;
 		margin: 80upx 30upx;
 	}
+	.zy-search-view {
+		padding: 10upx 0upx;
+		border-bottom: 1upx solid $seperator-color;
+	}
+
+	.zy-search-title {
+		text-align: center;
+	}
 	.zy-bottom-button {
 		position: fixed;
 		bottom: 0;
 		width: 100%;
+	}
+	.zy-search-bottom {
+		line-height: 2upx;
+		text-align: right;
+		margin-top: 10upx;
+	}
+
+	.zy-search-bottom button {
+		margin-right: 20upx;
 	}
 </style>

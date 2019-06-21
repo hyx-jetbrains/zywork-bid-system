@@ -44,6 +44,10 @@
 				<FormItem label="服务价格" prop="priceDisplay">
 					<InputNumber v-model="form.priceDisplay" placeholder="请输入服务价格" style="width: 100%;" />
 				</FormItem>
+        <FormItem label="折扣" prop="discount">
+					<InputNumber v-model="form.discount" placeholder="请输入超过一年的折扣" style="width: 100%;" />
+          <p style="color: red;">注：购买时效超过一年该折扣才有效</p>
+				</FormItem>
 
 			</Form>
 			<div slot="footer">
@@ -65,7 +69,10 @@
 				<FormItem label="服务价格" prop="priceDisplay">
 					<InputNumber v-model="form.priceDisplay" placeholder="请输入服务价格" style="width: 100%;" />
 				</FormItem>
-
+        <FormItem label="折扣" prop="discount">
+					<InputNumber v-model="form.discount" placeholder="请输入超过一年的折扣" style="width: 100%;" />
+          <p style="color: red;">注：购买时效超过一年该折扣才有效</p>
+				</FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="resetFormCancelModal('editForm', 'edit')">取消</Button>
@@ -191,6 +198,7 @@
 			<p>详细说明: <span v-text="form.memo"></span></p>
 			<p>所有收费的url: <span v-text="form.urls"></span></p>
 			<p>服务价格: <span v-text="form.price/100"></span></p>
+      <p>折扣: <span v-text="form.discount"></span></p>
 			<p>版本号: <span v-text="form.version"></span></p>
 			<p>创建时间: <span v-text="form.createTime"></span></p>
 			<p>更新时间: <span v-text="form.updateTime"></span></p>
@@ -240,7 +248,8 @@
 					memo: null,
 					urls: null,
 					price: null,
-					priceDisplay: null,
+          priceDisplay: null,
+          discount: 100,
 					version: null,
 					createTime: null,
 					updateTime: null,
@@ -349,6 +358,12 @@
 								let text = params.row.price/100;
 								return h('span', text)
 							}
+            },
+            {
+							title: '折扣',
+							key: 'discount',
+							minWidth: 120,
+							sortable: true
 						},
 						{
 							title: '版本号',

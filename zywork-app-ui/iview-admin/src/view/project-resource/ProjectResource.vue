@@ -328,8 +328,8 @@
       v-model="modal.project"
       title="选择招投标项目"
       @on-visible-change="changeModalVisibleResetForm('editForm', $event)"
-      :closable="false"
-      :mask-closable="false"
+      :closable="true"
+      :mask-closable="true"
       width="1000"
     >
       <project-list ref="projectListItem" @initData="initData"></project-list>

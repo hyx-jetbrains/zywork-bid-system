@@ -78,7 +78,11 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setCheckPattern(obj.getString("checkPattern"));
                     projectVO.setCompAptitudeType(obj.getString("compAptitudeType"));
                     projectVO.setBuilderLevel(obj.getString("builderLevel"));
-                    projectVO.setMoneyToImplement(obj.getFloat("moneyToImplement"));
+                    Float moneyToImpl = obj.getFloat("moneyToImplement");
+                    if (StringUtils.isEmpty(moneyToImpl.toString())) {
+                        moneyToImpl = new Float(100);
+                    }
+                    projectVO.setMoneyToImplement(moneyToImpl);
                     projectVO.setTenderingAgent(obj.getString("tenderingAgent"));
                     projectVO.setPhone(obj.getString("phone"));
                     projectVO.setMarkStatus(ProjectConstants.MARK_PUBLICIT_NOTICE);

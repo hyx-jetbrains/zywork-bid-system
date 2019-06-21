@@ -14,7 +14,7 @@
 		</label>
 		<label class="uni-list-cell uni-list-cell-pd">
 			<text>
-				2、好友点击链接，授权登入成功，则视为分享成功。
+				2、好友点击分享卡片，进入个人中心，授权登入成功，则视为分享成功。
 			</text>	
 		</label>
 		

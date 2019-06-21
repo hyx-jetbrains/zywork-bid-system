@@ -1,13 +1,19 @@
 package top.zywork.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.RandomUtils;
+import top.zywork.constant.UserCouponConstants;
 import top.zywork.dao.*;
+import top.zywork.dos.UserCouponDO;
+import top.zywork.dto.UserCouponDTO;
 import top.zywork.enums.DatePatternEnum;
 import top.zywork.enums.FundsChangeTypeEnum;
 import top.zywork.enums.GoodsOrderStatusEnum;
@@ -21,6 +27,7 @@ import top.zywork.weixin.WeixinXcxConfig;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +39,8 @@ import java.util.Map;
 @Service(value = "weixinPayService")
 @Transactional(rollbackFor = Exception.class)
 public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinPayService {
+
+    private static final Logger logger = LoggerFactory.getLogger(WeixinPayServiceImpl.class);
 
     private ServiceDAO serviceDAO;
 
@@ -48,61 +57,49 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     private UserWalletDAO userWalletDAO;
 
     @Override
-    public ResponseStatusVO ServicePay(Long UserId, String openid, Long serviceId, int validYear, Long userCouponId, int type, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig) {
+    public ResponseStatusVO ServicePay(Long userId, String openid, Long serviceId, int validYear, String userCouponIds, int type, long userCouponMoney, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig) {
         Object obj = serviceDAO.getById(serviceId);
         if(obj == null) {
             return ResponseStatusVO.dataError("服务不存在", null);
         }
-
+        logger.info("params:" + userId + "---" + openid + "--" + serviceId +  "---" + validYear + "---" + userCouponIds + "---" + type + "---" + userCouponMoney);
         JSONObject json = new JSONObject();
 
         ServiceVO serviceVO = BeanUtils.copy(obj, ServiceVO.class);
 
         int totalFee = 0;
-
+        int price = serviceVO.getPrice().intValue();
+        int discount = serviceVO.getDiscount()/100;
         if(validYear > 1) {
-            // 购买服务大于1年可以获取折扣。
-            totalFee = serviceVO.getPrice().intValue() * (serviceVO.getDiscount()/100);
+            // 购买服务大于1年,给打折
+            totalFee = validYear * price * discount;
         } else if(validYear == 1) {
-            totalFee = serviceVO.getPrice().intValue();
+            totalFee = price;
         }
 
-        if(userCouponId != null && userCouponId != 0) {
-            // 使用抵扣券进行抵扣。
-            Object uconObj = userCouponDAO.getById(userCouponId);
-            if(uconObj == null) {
-                return ResponseStatusVO.dataError("抵扣券不存在", null);
+        if (!StringUtils.isEmpty(userCouponIds) && userCouponMoney > 0) {
+            // 用户有选择抵用券
+            String[] userCouponIdsArr = userCouponIds.split(",");
+            List<UserCouponDO> userCouponDOList = userCouponDAO.getByUserIdAndCouponIds(userId, userCouponIdsArr);
+            if (userCouponDOList.size() != userCouponIdsArr.length) {
+                return ResponseStatusVO.dataError("抵扣券使用异常", null);
             }
-
-            UserCouponVO userCouponVO = BeanUtils.copy(uconObj, UserCouponVO.class);
-            if(userCouponVO.getUseStatus() == 1) {
-                return ResponseStatusVO.dataError("抵扣券已使用", null);
+            // 查询抵用券金额
+            long couponMoney = userCouponDAO.sumMoneyByUserIdAndCouponIds(userId, userCouponIdsArr);
+            if (userCouponMoney != couponMoney) {
+                return ResponseStatusVO.dataError("抵扣券使用异常", null);
             }
-
-            Object couObj = couponDAO.getById(userCouponVO.getCouponId());
-
-            if(couObj == null) {
-                return ResponseStatusVO.dataError("系统中不存在这类抵扣券", null);
-            }
-
-            CouponVO couponVO = BeanUtils.copy(couObj, CouponVO.class);
-            if((couponVO.getValidTime().getTime() - System.currentTimeMillis()) < 0) {
-                return ResponseStatusVO.dataError("抵扣券已过期", null);
-            }
-
-            if(totalFee == 0) {
-                // 购买服务没有折扣（购买服务没有大于1年），但是使用了抵扣券。
-                totalFee = serviceVO.getPrice().intValue() -  couponVO.getMoney().intValue();
-            } else {// 购买服务有折扣，并使用了抵扣券。
-                totalFee = totalFee - couponVO.getMoney().intValue();
-            }
-
-            json.put("userCouponId",userCouponVO.getId());
+            // 减去抵用券的金额
+            totalFee -= couponMoney;
+            json.put("userCouponId", userCouponIds);
         } else {
             json.put("userCouponId", null);
         }
-
-        json.put("userId", UserId);
+        if (totalFee <= 0) {
+            return ResponseStatusVO.dataError("抵扣券使用异常", null);
+        }
+        logger.info("totalFee:" + totalFee);
+        json.put("userId", userId);
         json.put("serviceId", serviceId);
         json.put("validYear", validYear);
         json.put("type", type);
@@ -115,6 +112,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
         return WechatPay(openid, order, totalFee , body, attach, weixinXcxConfig, wXPayConfig);
     }
 
+
+    @Override
     public ResponseStatusVO ExpertSubscribePay (Long UserId, String openid, Long id, WeixinXcxConfig weixinXcxConfig, WXPayConfig wXPayConfig) {
         String order = DateFormatUtils.format(System.currentTimeMillis(), DatePatternEnum.DATETIME_SIMPLE.getValue()) + RandomUtils.randomNum(10000, 99999);
 
@@ -155,45 +154,54 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
         int payType = json.getIntValue("payType");
         Long userId = json.getLong("userId");
         String accountDetailType = null;
-        if(payType == 1) {// 服务购买
+        if(payType == UserCouponConstants.PAY_TYPE_SERVICE) {
+            // 服务购买
             accountDetailType = FundsChangeTypeEnum.PURCHASE_SERVICE.getValue();
-            Long userCouponId = json.getLong("userCouponId");
+            String userCouponIds = json.getString("userCouponId");
             Long serviceId = json.getLong("serviceId");
             int validYear = json.getInteger("validYear");
             int type = json.getIntValue("type");
 
-            if(userCouponId != null) {
-                int version = userCouponDAO.getVersionById(userCouponId);
-                UserCouponVO uc = new UserCouponVO();
-                uc.setId(userCouponId);
-                uc.setUseStatus(1);
-                uc.setVersion(version + 1);
-                userCouponDAO.update(uc);
+            if(!StringUtils.isEmpty(userCouponIds)) {
+                // 有使用抵用券，更新抵扣券使用状态
+                String[] couponIdsArr = userCouponIds.split(",");
+                for (String couponId : couponIdsArr) {
+                    Object couponObj = userCouponDAO.getById(couponId);
+                    if (null != couponObj) {
+                        UserCouponDTO userCouponDTO = BeanUtils.copy(couponObj, UserCouponDTO.class);
+                        userCouponDTO.setUseStatus(UserCouponConstants.COUPON_STATUS_TRUE);
+                        userCouponDAO.update(userCouponDTO);
+                    }
+                }
             }
 
             UserServiceVO userServiceVO = new UserServiceVO();
-            if(type == 0) {
+            boolean updateFlag = false;
+            if(type == UserCouponConstants.BUY_FLAG_FIRST) {
+                // 第一次购买
+                updateFlag = false;
                 userServiceVO.setUserId(userId);
                 userServiceVO.setServiceId(serviceId);
-                userServiceVO.setValidYear(validYear);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(new Date());
-                cal.add(Calendar.YEAR, validYear);
-                userServiceVO.setEndDate(cal.getTime());
-                userServiceDAO.save(userServiceVO);
-            } else if(type == 1) {
+            } else if(type == UserCouponConstants.BUY_FLAG_SECOND) {
+                // 续费购买
+                updateFlag = true;
                 Object obj = userServiceDAO.getByUsetIdEndService(userId, serviceId);
-                UserServiceVO uc = BeanUtils.copy(obj, UserServiceVO.class);
-
-                userServiceVO.setId(uc.getId());
-                userServiceVO.setValidYear(validYear);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(new Date());
-                cal.add(Calendar.YEAR, validYear);
-                userServiceVO.setEndDate(cal.getTime());
-                userServiceDAO.update(userServiceVO);
+                userServiceVO = BeanUtils.copy(obj, UserServiceVO.class);
             }
-        } else if(payType == 2) {// 预约专家
+            userServiceVO.setValidYear(validYear);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            cal.add(Calendar.YEAR, validYear);
+            userServiceVO.setEndDate(cal.getTime());
+            if(updateFlag) {
+                // 续费购买
+                userServiceDAO.update(userServiceVO);
+            } else {
+                // 第一次购买
+                userServiceDAO.save(userServiceVO);
+            }
+        } else if(payType == UserCouponConstants.PAY_TYPE_EXPER) {
+            // 预约专家
             accountDetailType = FundsChangeTypeEnum.APPOINTMENT_EXPERT.getValue();
             Long expertSubscribeId = json.getLong("expertSubscribeId");
             String transactionNo = json.getString("transactionNo");

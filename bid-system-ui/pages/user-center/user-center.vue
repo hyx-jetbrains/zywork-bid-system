@@ -149,7 +149,6 @@
 		},
 		onLoad() {
 			this.initData('init');
-			this.initUserIcon();
 		},
 		onPullDownRefresh() {
 			this.initData('pullDown')
@@ -165,6 +164,7 @@
 		methods: {
 			initData(type) {
 				judgeLogin(this, type)
+				this.initUserIcon();
 			},
 			/** 初始用户权益标识 */
 			initUserIcon() {

@@ -232,8 +232,18 @@
 				formObj.tenderee = this.subscrible.tenderee;
 				
 				// 设置金额
-				formObj.minMoney *= 100;
-				formObj.maxMoney *= 100;
+				if (formObj.minMoney !== '') {
+					formObj.minMoney *= 100;
+				}
+				if (formObj.maxMoney !== '') {
+					formObj.maxMoney *= 100;
+				}
+				if (formObj.minMoney !== 0 && formObj.maxMoney !== 0) {
+					if (formObj.maxMoney <= formObj.minMoney) {
+						showInfoToast('最大金额不能小于等于最小金额');
+						return;
+					}
+				}
 
 				saveSubscribe(this, JSON.stringify(formObj))
 			},

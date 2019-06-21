@@ -10,7 +10,7 @@
               <Icon type="ios-arrow-down"></Icon>
             </Button>
             <DropdownMenu slot="list">
-              <DropdownItem name="batchRelease">批量发布</DropdownItem>
+              <!-- <DropdownItem name="batchRelease">批量发布</DropdownItem> -->
               <DropdownItem name="batchActive">批量激活</DropdownItem>
               <DropdownItem name="batchInactive">
                 <span style="color: red;">批量冻结</span>
@@ -1040,8 +1040,8 @@ export default {
           {
             type: 'string',
             min: 1,
-            max: 32,
-            message: '必须1-32个字符',
+            max: 200,
+            message: '必须1-200个字符',
             trigger: 'blur'
           }
         ],

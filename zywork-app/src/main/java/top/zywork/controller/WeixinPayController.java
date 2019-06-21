@@ -1,5 +1,7 @@
 package top.zywork.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +9,7 @@ import top.zywork.enums.SysConfigEnum;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.*;
+import top.zywork.service.impl.AbstractPayService;
 import top.zywork.vo.*;
 import top.zywork.weixin.*;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,8 @@ import java.util.Map;
 @RequestMapping("/wx-pay")
 public class WeixinPayController extends BaseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(WeixinPayController.class);
+
     private SysConfigService sysConfigService;
 
     private WeixinPayService weixinPayService;
@@ -34,7 +39,7 @@ public class WeixinPayController extends BaseController {
      * Description: 服务购买
      */
     @PostMapping("user/servicePay")
-    public ResponseStatusVO ServicePay(Long serviceId, int validYear, Long userCouponId, int type) {
+    public ResponseStatusVO ServicePay(Long serviceId, int validYear, String userCouponIds, int type, long userCouponMoney) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
@@ -43,7 +48,7 @@ public class WeixinPayController extends BaseController {
         WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_XCX_CONFIG.getValue(), WeixinXcxConfig.class);
         WXPayConfig wXPayConfig = sysConfigService.getByName(SysConfigEnum.WX_PAY_CONFIG.getValue(), WXPayConfig.class);
 
-        return weixinPayService.ServicePay(jwtUser.getUserId(), jwtUser.getUsername(), serviceId, validYear, userCouponId, type, weixinXcxConfig, wXPayConfig);
+        return weixinPayService.ServicePay(jwtUser.getUserId(), jwtUser.getUsername(), serviceId, validYear, userCouponIds, type, userCouponMoney, weixinXcxConfig, wXPayConfig);
     }
 
     /**
@@ -68,6 +73,7 @@ public class WeixinPayController extends BaseController {
     public void payNotifyUrl(HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> payResultMap = WeixinUtils.payResultMap(request);
         PayResult payResult = WeixinUtils.payResult(payResultMap);
+        logger.info("payResult:" + payResult.getOutTradeNo() + "-------" + payResult.getTotalFee());
         if(WeixinUtils.isReturnSuccess(payResultMap)) {
             weixinPayService.payNotif(payResult.getOutTradeNo(), payResult.getTotalFee(), payResultMap.get("attach"));
         }
