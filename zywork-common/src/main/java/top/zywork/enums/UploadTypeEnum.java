@@ -10,9 +10,9 @@ package top.zywork.enums;
 public enum UploadTypeEnum {
 
     IMAGE(".jpg,.jpeg,.png,.gif,.bmp", 10 * 1024 * 1024L),
-    OFFICE(".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt", 10 * 1024 * 1024L),
+    OFFICE(".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt", 50 * 1024 * 1024L),
     ZIP(".zip,.rar", 10 * 1024 * 1024L),
-    OFFICE_ZIP(".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt,.zip,.rar", 10 * 1024 * 1024L);
+    OFFICE_ZIP(".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt,.zip,.rar", 50 * 1024 * 1024L);
 
     private String allowedExts;
     private Long maxSize;

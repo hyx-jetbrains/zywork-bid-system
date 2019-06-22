@@ -81,8 +81,9 @@
             :on-exceeded-size="handleMaxSize"
             :before-upload="handleBeforeUpload"
             :on-remove="handleRemoveFile"
+            :on-progress="handleProgress"
             :format="['doc','docx','pdf']"
-            :max-size="10240"
+            :max-size="51200"
             :headers="uploadHeader"
             ref="uploadFile"
           >
@@ -480,6 +481,14 @@ export default {
       },
       validateRules: {
         projectId: [
+          {
+            type: 'integer',
+            required: true,
+            message: '此项为必须项',
+            trigger: 'blur, change'
+          }
+        ],
+        resourceId: [
           {
             type: 'integer',
             required: true,
@@ -973,6 +982,8 @@ export default {
           title: '上传失败',
           desc: res.message
         })
+        this.form.resourceId = null
+        this.$refs.uploadFile.clearFiles()
       }
     },
     handleFormatError(file) {
@@ -984,7 +995,7 @@ export default {
     handleMaxSize(file) {
       this.$Notice.warning({
         title: '超出文件大小限制',
-        desc: file.name + ' 太大，不得超10M.'
+        desc: file.name + ' 太大，不得超50M.'
       })
     },
     handleBeforeUpload(file) {
