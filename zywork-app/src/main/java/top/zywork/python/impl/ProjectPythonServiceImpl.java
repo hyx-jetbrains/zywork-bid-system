@@ -76,7 +76,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setCompAptitudeType(obj.getString("compAptitudeType"));
                     projectVO.setBuilderLevel(obj.getString("builderLevel"));
                     Float moneyToImpl = obj.getFloat("moneyToImplement");
-                    if (StringUtils.isEmpty(moneyToImpl.toString())) {
+                    if (null == moneyToImpl || StringUtils.isEmpty(moneyToImpl.toString())) {
                         moneyToImpl = new Float(100);
                     }
                     projectVO.setMoneyToImplement(moneyToImpl);

@@ -162,6 +162,11 @@ public class AptitudeTransferController extends BaseController {
         return responseStatusVO;
     }
 
+    @PostMapping("user/upload-res")
+    public ResponseStatusVO userUpload(MultipartFile file) {
+        return upload(file);
+    }
+
     /**
      * User: DengMin
      * Date: 2019/05/14

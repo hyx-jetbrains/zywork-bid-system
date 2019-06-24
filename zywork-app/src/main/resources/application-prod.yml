@@ -174,3 +174,4 @@ storage:
 projectDetail:
   location: "/data/bid-system/upload/file/"
   uri: "upload/file"
+pythonPageNoFilesPath: "/data/bid-system/txt/"

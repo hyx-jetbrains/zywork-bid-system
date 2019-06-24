@@ -173,4 +173,46 @@ public class PythonConstants {
      * 生成静态html底部的部分代码
      */
     public static final String HTML_FOOT = "</body></html>";
+
+
+    /**
+     * 房建业绩的页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT = "comp_house_achievement_page_no.text";
+    /**
+     * 房建招标代理页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_AGENT = "comp_house_agent_page_no.text";
+    /**
+     * 房建投标人页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_BIDDER = "comp_house_bidder_page_no.text";
+    /**
+     * 重点工程页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_KEY_PROJECT_BIDDER = "comp_key_project_bidder_page_no.text";
+    /**
+     * 交通工程招标代理页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_TRAFFIC_AGENT = "comp_traffic_agent_page_no.text";
+    /**
+     * 交通工程投标人页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_TRAFFIC_BIDDER = "comp_traffic_bidder_page_no.text";
+    /**
+     * 水利工程招标代理页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_AGENT = "comp_water_agent_page_no.text";
+    /**
+     * 水利工程投标人页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_BIDDER = "comp_water_bidder_page_no.text";
+    /**
+     * 水利勘查投标人页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_DEVISE_BIDDER = "comp_water_devise_bidder_page_no.text";
+    /**
+     * 水利监理工程投标人页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_MONITOR_BIDDER = "comp_water_monitor_bidder_page_no.text";
 }

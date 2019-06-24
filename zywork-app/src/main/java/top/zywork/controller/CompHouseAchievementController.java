@@ -158,8 +158,16 @@ public class CompHouseAchievementController extends BaseController {
 
     @GetMapping("admin/python")
     public ResponseStatusVO pythonCompHouseAchievementInfo(@RequestBody CompHouseAchievementQuery compHouseAchievementQuery) {
+        if (null == compHouseAchievementQuery.getPageNo()) {
+            return ResponseStatusVO.error("请输入页码", null);
+        }
+        String pageNo = compHouseAchievementQuery.getPageNo().toString();
         boolean isUpdate = compHouseAchievementQuery.getProjectName().equals(PythonConstants.IS_UPDATE_FLAG_STR);
-        companyPythonService.getCompHouseAchievement(isUpdate);
+        try {
+            companyPythonService.getCompHouseAchievement(pageNo, isUpdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseStatusVO.ok("后台更新中", null);
     }
 

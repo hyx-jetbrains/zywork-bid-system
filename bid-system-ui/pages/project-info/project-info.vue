@@ -39,9 +39,9 @@
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 		</view>
 
-		<view class="zy-choose-date" v-if="showChooseDate">
-			<text @click="openCalendar">开标日期：{{calendar.currentFormatDate}}</text>
-			<text style="color: #108EE9; margin-left: 10upx;" @click="resetCalendar">重置</text>
+		<view class="zy-choose-date zy-disable-flex" v-if="showChooseDate">
+			<text style="margin-left:25%;" @click="openCalendar">开标日期：{{calendar.currentFormatDate}}</text>
+			<text style="color: #108EE9;" class="zy-disable-flex-right" @click="resetCalendar">重置</text>
 		</view>
 
 		<view class="zy-page-list zy-project" v-if="projects.length > 0">
@@ -71,8 +71,7 @@
 								<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
 								<uni-tag :text="project.project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
 							</view>
-							<view class="zy-text-mini zy-text-warning" 
-								v-if="project.project.openMarkTime !== ''">
+							<view class="zy-text-mini zy-text-warning" v-if="project.project.openMarkTime !== ''">
 								开标日期：{{project.project.openMarkTime}}
 							</view>
 							<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view>
@@ -149,22 +148,34 @@
 				<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
 					<view></view>
 					<view class="zy-disable-flex-right zy-disable-flex">
-						<view  v-for="(item, index_1) in project.obj" :key="index_1">
-							<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+						<view v-for="(item, index_1) in project.obj" :key="index_1">
+							<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error"
+							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary"
+							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning"
+							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary"
+							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success"
+							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-
 		<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
-
+		
 		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
 			<view class="calendar-box" @click.stop="">
+				<view class="zy-type-title zy-text-bold">待开标检索</view>
+				<view class="zy-date-tag">
+					<uni-tag text="本周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(1)"></uni-tag>
+					<uni-tag text="下周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(2)"></uni-tag>
+					<uni-tag text="本月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(3)"></uni-tag>
+					<uni-tag text="下月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(4)"></uni-tag>
+				</view>
+				<view class="zy-type-title zy-text-bold">日期检索</view>
 				<zywork-calendar :slide="calendar.slide" :disableBefore="calendar.disableBefore" :start-date="calendar.startDate"
 				 :date="calendar.date" @change="change" @to-click="toClick" />
 				<view class="calendar-button-groups">
@@ -184,9 +195,8 @@
 			</scroll-view>
 		</uni-popup>
 
-		<zywork-fab v-if="customerShow" :pattern="pattern" :horizontal="horizontal" :vertical="vertical" 
-			:direction="direction" :showContent="customerPopup" :iconType="iconType"
-		 @trigger="trigger"></zywork-fab>
+		<zywork-fab v-if="customerShow" :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction"
+		 :showContent="customerPopup" :iconType="iconType" @trigger="trigger"></zywork-fab>
 		<uni-popup :show="customerPopup" position="bottom" @hidePopup="trigger(false)">
 			<view class="zy-popup-bottom-title">选择联系类型</view>
 			<view class="zy-popup-bottom-content">
@@ -230,7 +240,11 @@
 		getResourceByProjectId,
 		callPhone,
 		CUSTOMER_CONFIG,
-		getCurrentDate
+		getCurrentDate,
+		showInfoToast,
+		getAppointWeekDate,
+		showMonthFirstOrLastDay,
+		showNextMonthFirstOrLastDay
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -345,7 +359,7 @@
 					date: '',
 					timeData: null,
 					// currentFormatDate: formatCalendarDate(new Date())
-					currentFormatDate: '暂未选择'
+					currentFormatDate: '请选择日期'
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				projects: [],
@@ -406,7 +420,7 @@
 		},
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();
-			return  {
+			return {
 				title: '江西招投标平台信息共享',
 				path: '/pages/project-info/project-info?shareCode=' + shareCode,
 				imageUrl: SHARE_CODE_PAGE_IMG
@@ -515,7 +529,7 @@
 				this.calendar.showCalendar = true
 			},
 			resetCalendar() {
-				this.calendar.currentFormatDate = '暂未选择'
+				this.calendar.currentFormatDate = '请选择日期'
 				this.initPager();
 				this.projectPager.openMarkTimeMin = null
 				this.projectPager.openMarkTimeMax = null
@@ -633,8 +647,36 @@
 			/** 拨打电话 */
 			callPhone() {
 				callPhone(this.customer.phone)
+			},
+			/** 日期搜索，根据选择的时间搜索数据 */
+			dateSearch(type) {
+				var startTime = null;
+				var endTime = null;
+				if (1 === type) {
+					// 本周
+					startTime = getAppointWeekDate(0);
+					endTime = getAppointWeekDate(-6);
+				} else if (2 === type) {
+					// 下周
+					startTime = getAppointWeekDate(-7);
+					endTime = getAppointWeekDate(-13);
+				} else if (3 === type) {
+					// 本月
+					startTime = showMonthFirstOrLastDay(0);
+					endTime = showMonthFirstOrLastDay(1);
+				} else if (4 === type) {
+					// 下月
+					startTime = showNextMonthFirstOrLastDay(0);
+					endTime = showNextMonthFirstOrLastDay(1);
+				} else {
+					showInfoToast("类型错误");
+					return;
+				}
+				this.projectPager.openMarkTimeMin = startTime + ' 0:0:0';
+				this.projectPager.openMarkTimeMax = endTime + ' 23:59:59';
+				this.calendar.showCalendar = false;
+				this.updateProjectList('init');
 			}
-
 		}
 	}
 </script>
@@ -747,9 +789,14 @@
 		top: -2upx;
 		right: -10upx;
 	}
-	
-	button::after{
-		border:0;
+	.zy-date-tag {
+		text-align: center;
 	}
-	
+	.zy-date-tag uni-tag {
+		margin-left: 40upx;
+	}
+
+	button::after {
+		border: 0;
+	}
 </style>

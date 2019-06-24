@@ -247,7 +247,7 @@
 							title: '正在上传'
 						})
 						uni.uploadFile({
-							url: BASE_URL + '/aptitude-transfer/admin/upload-res',
+							url: BASE_URL + '/aptitude-transfer/user/upload-res',
 							filePath: tempFilePaths[0],
 							name: 'file',
 							header: {

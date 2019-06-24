@@ -475,6 +475,7 @@
 				</FormItem>
         <FormItem label="是否更新" prop="isUpdate">
 					<i-switch v-model="python.isUpdate" @on-change="changeIsUpdate" />
+          <p style="color: red;">说明：选择是-爬取的数据如果已存在，会更新数据。选择否-爬取的数据如果已存在，不会去更新数据。</p>
 				</FormItem>
       </Form>
       <div slot="footer">
@@ -1185,6 +1186,18 @@ export default {
       },
     // 爬取数据
     crawlData() {
+      if (!this.python.pageNo) {
+        this.$Message.error("请输入页码")
+        return;
+      }
+      if (!this.python.title) {
+        this.$Message.error("请选择爬取类型")
+        return;
+      }
+      if (!this.python.firstBuilderName) {
+        this.$Message.error("请选择是否更新")
+        return;
+      } 
       this.loading['python'] = true
       axios
         .request({

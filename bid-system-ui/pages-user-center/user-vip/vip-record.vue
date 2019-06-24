@@ -116,7 +116,8 @@
 		payServiceRecord
 	} from '@/common/user-center.js'
 	import {
-		showInfoToast
+		showInfoToast,
+		getDate
 	} from '@/common/util.js'
 
 	export default {
@@ -138,10 +139,11 @@
 				showBtn: true,
 				pager: {
 					pageNo: 1,
-					pageSize: 10,
+					pageSize: 100,
 					sortColumn: 'couponValidTime',
 					sortOrder: 'desc',
-					status: 1
+					status: 1,
+					userCouponUseStatus: 0,
 				},
 				couponList: [],
 				recordInfo: {
@@ -197,6 +199,7 @@
 			this.recordInfo.discount = this.item.discount;
 			this.formData.serviceId = this.item.id;
 			this.formData.type = this.item.type;
+			this.pager.couponValidTimeMin = getDate({format: true}) + " 00:00:00";
 		},
 		methods: {
 			/** 监听购买年数 */
@@ -252,7 +255,9 @@
 					couponId += itemObj.userCouponId + ",";
 				})
 				var money = 0;
-				money = parseInt(this.recordInfo.money) - couponMoney;
+				money = parseInt(this.recordInfo.money * 100) - couponMoney;
+				console.log(money)
+				console.log(parseInt(this.recordInfo.money))
 				if (money <= 0) {
 					showInfoToast("抵用券金额不能大于总金额，请重新选择抵用券");
 					return;
@@ -295,6 +300,7 @@
 			},
 			// 支付订单
 			payRecord() {
+				console.log(this.recordInfo.money)
 				if (this.recordInfo.money <= 0) {
 					// 抵扣钱大于需要支付的金额
 					showInfoToast('抵扣券金额不能大于总金额')

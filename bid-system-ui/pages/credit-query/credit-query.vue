@@ -423,8 +423,8 @@
 						<!-- 内容部分 -->
 						<view>
 							<view class="zy-disable-flex">
-								<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
-								<view v-if="item.compBuilderRegNum != null && item.compBuilderRegNum != '' && item.compBuilderRegNum != undefined"
+								<view class="zy-text-info zy-text-bold zy-content-label" style="width: 40%;">注册证件号码:</view>
+								<view v-if="item.compBuilderRegNum != ''"
 								 class="zy-text-info">
 									{{item.compBuilderRegNum}}
 								</view>
@@ -433,10 +433,10 @@
 								</view>
 							</view>
 							<view class="zy-disable-flex">
-								<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
-								<view v-if="item.compBUilderMajorLevel != null && item.compBUilderMajorLevel != '' && item.compBUilderMajorLevel != undefined"
+								<view class="zy-text-info zy-text-bold zy-content-label" style="width: 40%;">专业等级:</view>
+								<view v-if="item.compBuilderMajorLevel != ''"
 								 class="zy-text-info">
-									{{item.compBUilderMajorLevel}}
+									{{item.compBuilderMajorLevel}}
 								</view>
 								<view v-else class="zy-text-info">
 									暂无
@@ -539,7 +539,7 @@
 							</view>
 						</view>
 						<!-- 内容部分 -->
-						<view>
+						<view @click="toAnnounceDetail(item)">
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label">第一中标人:</view>
 								<view v-if="item.firstCandidate !== ''" class="zy-text-info">
@@ -596,7 +596,8 @@
 		validText,
 		USER_FLAG,
 		USER_FLAG_VIP,
-		nullToStr
+		nullToStr,
+		DOCUMENT_BASE_URL
 	} from '@/common/util.js'
 
 	/** 企业信息 */
@@ -1037,6 +1038,28 @@
 					}
 					this.initPager();
 					this.checkRefresh(this.infoType.tabIndex, 'init');
+				}
+			},
+			/** 前往webview页面 */
+			toWebViewPage(title, url) {
+				var item = {
+					'title': title,
+					'url': url
+				}
+				uni.navigateTo({
+					url: '/pages-static/web-view/web-view?itemData=' + encodeURIComponent(JSON.stringify(item))
+				});
+			},
+			/** 公示详情 */
+			toAnnounceDetail(item) {
+				if (item.id !== null && item.inwordHtmlUrl !== '') {
+					this.toWebViewPage("公示详情", DOCUMENT_BASE_URL +"/"+ item.inwordHtmlUrl);
+				} else {
+					uni.showModal({
+						title: '提示',
+						content: '没有公示信息',
+						showCancel: false
+					})
 				}
 			},
 			/** 项目分类选择器 */

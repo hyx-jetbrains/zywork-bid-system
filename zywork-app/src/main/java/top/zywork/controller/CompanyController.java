@@ -158,12 +158,28 @@ public class CompanyController extends BaseController {
 
     @PostMapping("admin/python")
     public ResponseStatusVO pythonCompanyInfo(@RequestBody CompanyQuery companyQuery) {
+        if (null == companyQuery.getPageNo()) {
+            return ResponseStatusVO.error("请输入页码", null);
+        }
+        if (null == companyQuery.getPageSize()) {
+            return ResponseStatusVO.error("请输入个数", null);
+        }
+        if (org.apache.commons.lang.StringUtils.isEmpty(companyQuery.getCompType())) {
+            return ResponseStatusVO.error("请选择企业类型", null);
+        }
+        if (org.apache.commons.lang.StringUtils.isEmpty(companyQuery.getIndustryType())) {
+            return ResponseStatusVO.error("请选择行业类型", null);
+        }
         String type = companyQuery.getCompType();
         String compType = companyQuery.getIndustryType();
         String pageNo = String.valueOf(companyQuery.getPageNo());
         String pageSize = String.valueOf(companyQuery.getPageSize());
         boolean isUpdate = companyQuery.getCompName().equals(PythonConstants.IS_UPDATE_FLAG_STR);
-        companyPythonService.getCompanyInfo(type, compType, pageNo, pageSize, isUpdate);
+        try {
+            companyPythonService.getCompanyInfo(type, compType, pageNo, pageSize, isUpdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseStatusVO.ok("后台更新中", null);
     }
 

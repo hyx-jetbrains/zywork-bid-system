@@ -399,6 +399,9 @@ public class ProjectController extends BaseController {
      */
     @PostMapping("admin/python")
     public ResponseStatusVO pythonGetData(@RequestBody ProjectQuery projectQuery) {
+        if (null == projectQuery.getPageNo()) {
+            return ResponseStatusVO.error("请输入页码", null);
+        }
         String url = PythonConstants.BASE_URL + projectQuery.getTitle() + "?pageNo=" + projectQuery.getPageNo();
         boolean isUpdate = projectQuery.getInMarkComp().equals(PythonConstants.IS_UPDATE_FLAG_STR);
         projectPythonService.saveProject(url, isUpdate);

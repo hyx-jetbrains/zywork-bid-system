@@ -6,7 +6,9 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import top.zywork.annotation.ExposeClass;
+import top.zywork.common.IOUtils;
 import top.zywork.constant.PythonConstants;
 import top.zywork.python.CompanyPythonService;
 
@@ -26,10 +28,22 @@ public class CompHouseAchievementJob implements Job {
 
     private CompanyPythonService companyPythonService;
 
+    @Value("${pythonPageNoFilesPath}")
+    private String filesPath;
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompHouseAchievementJob......");
-        companyPythonService.getCompHouseAchievement(PythonConstants.DEFAULT_IS_UPDATE_FLAG);
+        String path = filesPath + PythonConstants.PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT;
+        String pageNo = IOUtils.getText(path).replaceAll("\r\n", "");
+        try {
+            companyPythonService.getCompHouseAchievement(pageNo, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
+            int tempPageNo = Integer.valueOf(pageNo);
+            tempPageNo++;
+            IOUtils.writeText(tempPageNo + "", path);
+        } catch (Exception e) {
+            logger.error("CompHouseAchievementJob Error:pageNo:{}", pageNo);
+        }
         logger.info("executed CompHouseAchievementJob......");
     }
 

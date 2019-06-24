@@ -21,7 +21,7 @@ public interface CompanyPythonService {
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-05 17:26
      */
-    void getCompanyInfo(String type, String compType, String pageNo, String pageSize, boolean isUpdate);
+    void getCompanyInfo(String type, String compType, String pageNo, String pageSize, boolean isUpdate) throws Exception;
 
     /***
      * @description:  获取企业房建业绩信息
@@ -30,5 +30,5 @@ public interface CompanyPythonService {
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-05 17:29
      */
-    void getCompHouseAchievement(boolean isUpdate);
+    void getCompHouseAchievement(String pageNo, boolean isUpdate) throws Exception;
 }

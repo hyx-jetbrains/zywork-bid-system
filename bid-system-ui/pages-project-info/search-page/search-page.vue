@@ -17,6 +17,16 @@
 			</view>
 		</view>
 		<view v-if="isShowHistroy" class="zy-search-page-history-record">
+			<view class="uni-tab-bar zy-tab-bar">
+				<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x>
+					<view v-for="(tab,index) in projectType.tabbars" :key="tab.id" class="swiper-tab-list" :class="projectType.tabIndex==index ? 'active' : ''"
+					 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
+				</scroll-view>
+			</view>
+			<view style="background-color: #FFFFFF; padding-bottom: 10upx;">
+				<uni-segmented-control :current="projectStatus.current" :values="projectStatus.items" v-on:clickItem="onClickItem"
+				 styleType="button" activeColor="#108EE9"></uni-segmented-control>
+			</view>
 			<view class="zy-disable-flex">
 				<view class="zy-type-title zy-text-bold">历史搜索</view>
 				<view class="zy-disable-flex-right">
@@ -40,7 +50,10 @@
 				 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 			</view>
 
-			<view class="zy-choose-date" v-if="showChooseDate" @click="openCalendar">选择开标日期：{{calendar.currentFormatDate}}</view>
+			<view class="zy-choose-date zy-disable-flex" v-if="showChooseDate">
+				<text style="margin-left:25%;" @click="openCalendar">开标日期：{{calendar.currentFormatDate}}</text>
+				<text style="color: #108EE9;" class="zy-disable-flex-right" @click="resetCalendar">重置</text>
+			</view>
 
 			<view style="height: 10upx; background-color: #F8F8F8;"></view>
 			<view class="zy-page-list zy-project" v-if="projects.length > 0">
@@ -167,6 +180,14 @@
 			<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
 
 			<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
+				<view class="zy-type-title zy-text-bold">待开标检索</view>
+				<view class="zy-date-tag">
+					<uni-tag text="本周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(1)"></uni-tag>
+					<uni-tag text="下周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(2)"></uni-tag>
+					<uni-tag text="本月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(3)"></uni-tag>
+					<uni-tag text="下月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(4)"></uni-tag>
+				</view>
+				<view class="zy-type-title zy-text-bold">日期检索</view>
 				<view class="calendar-box" @click.stop="">
 					<zywork-calendar :slide="calendar.slide" :disableBefore="calendar.disableBefore" :start-date="calendar.startDate"
 					 :date="calendar.date" @change="change" @to-click="toClick" />
@@ -315,7 +336,7 @@
 					date: '',
 					timeData: null,
 					// currentFormatDate: formatCalendarDate(new Date())
-					currentFormatDate: '暂未选择'
+					currentFormatDate: '请选择日期'
 				},
 				imgIcon: PROJECT_TYPE_ICONS[0],
 				projectTypeName: '房建市政',
@@ -478,6 +499,9 @@
 					this.projectPager.projectType = this.projectType.tabbars[tabIndex].name
 					this.initPager();
 					this.updateProjectList('init');
+					if (this.isShowHistroy) {
+						this.isShowHistroy = false;
+					}
 				}
 			},
 			/** 项目状态切换 */
@@ -498,6 +522,9 @@
 						this.projectPager.openMarkTimeMax = null
 					}
 					this.updateProjectList('init');
+					if (this.isShowHistroy) {
+						this.isShowHistroy = false;
+					}
 				}
 			},
 			openCalendar() {
@@ -506,7 +533,7 @@
 				this.calendar.showCalendar = true
 			},
 			resetCalendar() {
-				this.calendar.currentFormatDate = '暂未选择'
+				this.calendar.currentFormatDate = '请选择日期'
 				this.initPager();
 				this.projectPager.openMarkTimeMin = null
 				this.projectPager.openMarkTimeMax = null
@@ -603,6 +630,35 @@
 					})
 				}
 
+			},
+			/** 日期搜索，根据选择的时间搜索数据 */
+			dateSearch(type) {
+				var startTime = null;
+				var endTime = null;
+				if (1 === type) {
+					// 本周
+					startTime = getAppointWeekDate(0);
+					endTime = getAppointWeekDate(-6);
+				} else if (2 === type) {
+					// 下周
+					startTime = getAppointWeekDate(-7);
+					endTime = getAppointWeekDate(-13);
+				} else if (3 === type) {
+					// 本月
+					startTime = showMonthFirstOrLastDay(0);
+					endTime = showMonthFirstOrLastDay(1);
+				} else if (4 === type) {
+					// 下月
+					startTime = showNextMonthFirstOrLastDay(0);
+					endTime = showNextMonthFirstOrLastDay(1);
+				} else {
+					showInfoToast("类型错误");
+					return;
+				}
+				this.projectPager.openMarkTimeMin = startTime + ' 0:0:0';
+				this.projectPager.openMarkTimeMax = endTime + ' 23:59:59';
+				this.calendar.showCalendar = false;
+				this.updateProjectList('init');
 			}
 		}
 	}

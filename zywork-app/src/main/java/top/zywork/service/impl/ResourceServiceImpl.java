@@ -111,7 +111,8 @@ public class ResourceServiceImpl extends AbstractBaseService implements Resource
             return responseStatusVO;
         }
         String url = responseStatusVO.getData().toString();
-        String extension = url.split("\\.")[1];
+        String[] urlArr = url.split("\\.");
+        String extension = urlArr[urlArr.length-1];
         ResourceDTO resourceDTO = saveResourceData(jwtUser.getUserId(), resourceType, url, extension);
         ResourceVO resourceVO = BeanUtils.copy(resourceDTO, ResourceVO.class);
         return ResponseStatusVO.ok("上传成功", resourceVO);

@@ -150,6 +150,7 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
 
     @Override
     public void payNotif(String outTradeNo, int totalFee, String attach) {
+        logger.info("notify:" + outTradeNo + "---" + totalFee + "---" + attach);
         JSONObject json = JSONObject.parseObject(attach);
         int payType = json.getIntValue("payType");
         Long userId = json.getLong("userId");
@@ -209,7 +210,6 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             ExpertSubscribeVO expertSubscribeVO = new ExpertSubscribeVO();
             expertSubscribeVO.setId(expertSubscribeId);
             expertSubscribeVO.setPayStatus(GoodsOrderStatusEnum.PAY_SUCCESS.getDes());
-            expertSubscribeVO.setPayType(PaymentTypeEnum.WEIXIN_PAY.getDes());
             expertSubscribeVO.setTransactionNo(transactionNo);
             expertSubscribeDAO.update(expertSubscribeVO);
         }
@@ -218,11 +218,9 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
         Object walletObj = userWalletDAO.getById(userId);
         if(walletObj != null) {
             UserWalletVO userWalletVO = BeanUtils.copy(walletObj, UserWalletVO.class);
-            UserWalletVO uw = new UserWalletVO();
-            uw.setId(userId);
-            uw.setIntegral(userWalletVO.getIntegral()+totalFee);
-            uw.setVersion(userWalletVO.getVersion()+1);
-            userWalletDAO.update(uw);
+            long integral = userWalletVO.getIntegral();
+            userWalletVO.setIntegral(integral + totalFee);
+            userWalletDAO.update(userWalletVO);
         }
 
         AccountDetailVO accountDetailVO = new AccountDetailVO();

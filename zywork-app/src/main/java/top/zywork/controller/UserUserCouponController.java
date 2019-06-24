@@ -29,7 +29,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/UserUserCoupon")
-public class UserUserCouponController extends BaseController {
+public class  UserUserCouponController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserUserCouponController.class);
 

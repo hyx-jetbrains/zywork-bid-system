@@ -153,7 +153,7 @@
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">开标地点</view>
-						<view class="zy-disable-flex-right">{{project.project.openMarkTime}}</view>
+						<view class="zy-disable-flex-right">{{project.project.openMarkAddr}}</view>
 					</view>
 					<view class="zy-disable-flex zy-project-desc-item">
 						<view class="zy-text-bold">开标状态</view>

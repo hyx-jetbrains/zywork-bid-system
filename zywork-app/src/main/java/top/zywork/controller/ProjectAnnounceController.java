@@ -16,12 +16,14 @@ import top.zywork.constant.PythonConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
 import top.zywork.dto.ProjectDTO;
+import top.zywork.enums.ResponseStatusEnum;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.python.ProjectAnnouncePythonService;
 import top.zywork.python.ProjectPythonService;
 import top.zywork.query.ProjectAnnounceQuery;
 import top.zywork.query.ProjectQuery;
 import top.zywork.service.ProjectAnnounceService;
+import top.zywork.service.ProjectService;
 import top.zywork.service.UploadService;
 import top.zywork.vo.ProjectVO;
 import top.zywork.vo.ResponseStatusVO;
@@ -72,6 +74,8 @@ public class ProjectAnnounceController extends BaseController {
 
     private ProjectAnnounceService projectAnnounceService;
 
+    private ProjectService projectService;
+
     private UploadService uploadService;
 
     private ProjectAnnouncePythonService projectAnnouncePythonService;
@@ -85,6 +89,15 @@ public class ProjectAnnounceController extends BaseController {
         Object obj = projectAnnounceService.getByTitle(projectAnnounceVO.getTitle());
         if (null != obj) {
             return ResponseStatusVO.error("该信息已存在", null);
+        }
+        Long projectId = projectAnnounceVO.getProjectId();
+        String firstCandidate = projectAnnounceVO.getFirstCandidate();
+        if (!org.apache.commons.lang.StringUtils.isEmpty(projectId.toString())
+                && !org.apache.commons.lang.StringUtils.isEmpty(firstCandidate)) {
+            // 有选择项目，并且有招标单位
+            if (!ResponseStatusEnum.OK.getCode().equals(updateProject(projectId, firstCandidate).getCode())) {
+                return ResponseStatusVO.error("更新项目失败，请重试", null);
+            }
         }
 
         projectAnnounceVO = generatorProjectAnnounceVO(projectAnnounceVO);
@@ -120,6 +133,17 @@ public class ProjectAnnounceController extends BaseController {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
 
+        Long projectId = projectAnnounceVO.getProjectId();
+        String firstCandidate = projectAnnounceVO.getFirstCandidate();
+        if (!org.apache.commons.lang.StringUtils.isEmpty(projectId.toString())
+            && !org.apache.commons.lang.StringUtils.isEmpty(firstCandidate)) {
+            // 有选择项目，并且有招标单位
+            if (!ResponseStatusEnum.OK.getCode().equals(updateProject(projectId, firstCandidate).getCode())) {
+                return ResponseStatusVO.error("更新项目失败，请重试", null);
+            }
+        }
+
+
         Object obj = projectAnnounceService.getById(projectAnnounceVO.getId());
         if(obj != null) {
             ProjectAnnounceVO projectAnnounce = BeanUtils.copy(obj, ProjectAnnounceVO.class);
@@ -147,6 +171,24 @@ public class ProjectAnnounceController extends BaseController {
         return projectAnnounceVO;
     }
 
+    /***
+     * @description:  更新项目的中标单位信息
+     * @param projectId 项目id
+     * @param firstCandidate 中标公司
+     * @return: top.zywork.vo.ResponseStatusVO
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-06-22 11:38
+     */
+    private ResponseStatusVO updateProject(Long projectId, String firstCandidate) {
+        Object projectObj = projectService.getById(projectId);
+        if (null == projectObj) {
+            return ResponseStatusVO.error("项目不存在", null);
+        }
+        ProjectDTO projectDTO = BeanUtils.copy(projectObj, ProjectDTO.class);
+        projectDTO.setInMarkComp(firstCandidate);
+        projectService.update(projectDTO);
+        return ResponseStatusVO.ok("更新成功", null);
+    }
     @PostMapping("admin/batch-update")
     public ResponseStatusVO updateBatch(@RequestBody @Validated List<ProjectAnnounceVO> projectAnnounceVOList, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -261,6 +303,9 @@ public class ProjectAnnounceController extends BaseController {
      */
     @PostMapping("admin/python")
     public ResponseStatusVO pythonGetData(@RequestBody ProjectAnnounceQuery projectAnnounceQuery) {
+        if (null == projectAnnounceQuery.getPageNo()) {
+            return ResponseStatusVO.error("请输入页码", null);
+        }
         String url = PythonConstants.BASE_URL + projectAnnounceQuery.getTitle() + "?pageNo=" + projectAnnounceQuery.getPageNo();
         boolean isUpdate = projectAnnounceQuery.getFirstBuilderName().equals(PythonConstants.IS_UPDATE_FLAG_STR);
         projectAnnouncePythonService.saveProjectAnnounce(url, isUpdate);
@@ -280,6 +325,11 @@ public class ProjectAnnounceController extends BaseController {
     @Autowired
     public void setProjectPythonService(ProjectAnnouncePythonService projectAnnouncePythonService) {
         this.projectAnnouncePythonService = projectAnnouncePythonService;
+    }
+
+    @Autowired
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
 }

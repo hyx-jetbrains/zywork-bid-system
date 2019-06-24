@@ -19,6 +19,7 @@ import top.zywork.enums.DatePatternEnum;
 import top.zywork.python.CompanyPythonService;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
     private CompHouseAchievementDAO compHouseAchievementDAO;
 
     @Override
-    public void getCompanyInfo(String type, String compType, String pageNo, String pageSize, boolean isUpate) {
+    public void getCompanyInfo(String type, String compType, String pageNo, String pageSize, boolean isUpate) throws Exception {
         try {
             StringBuilder url = new StringBuilder();
             url.append(PythonConstants.BASE_URL)
@@ -190,6 +191,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             System.out.println(content);
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
     }
 
@@ -357,20 +359,20 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compKeyProjectAchievementDTO.setBuildComp(buildComp);
                 // 中标金额
                 String markMoney = jsonObj.getString("markMoney");
-                if (!StringUtils.isEmpty(markMoney)) {
+                if (StringUtils.isNotEmpty(markMoney)) {
                     compKeyProjectAchievementDTO.setMarkMoney(markMoney);
                     // 金额
                     compKeyProjectAchievementDTO.setMoney(new BigDecimal(markMoney));
                 }
                 // 开工时间
                 String startDate = jsonObj.getString("startDate").trim();
-                if (!StringUtils.isEmpty(startDate)) {
-                    compKeyProjectAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(startDate)) {
+                    compKeyProjectAchievementDTO.setStartDate(formatDate(startDate));
                 }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate").trim();
-                if (!StringUtils.isEmpty(endDate)) {
-                    compKeyProjectAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(endDate)) {
+                    compKeyProjectAchievementDTO.setEndDate(formatDate(endDate));
                 }
                 if (updateFlag) {
                     // 更新重点工程业绩
@@ -401,7 +403,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compTrafficAchievementDTO.setTechnologyName(technologyName);
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
-                if (!StringUtils.isEmpty(contractAmount)) {
+                if (StringUtils.isNotEmpty(contractAmount)) {
                     compTrafficAchievementDTO.setContractAmount(contractAmount);
                     compTrafficAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 }
@@ -410,13 +412,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compTrafficAchievementDTO.setWorkAddr(workAddr);
                 // 开工时间
                 String startDate = jsonObj.getString("startDate").trim();
-                if (!StringUtils.isEmpty(startDate)) {
-                    compTrafficAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(startDate)) {
+                    compTrafficAchievementDTO.setStartDate(formatDate(startDate));
                 }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate").trim();
-                if (!StringUtils.isEmpty(endDate)) {
-                    compTrafficAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(endDate)) {
+                    compTrafficAchievementDTO.setEndDate(formatDate(endDate));
                 }
                 // 验证状态
                 String validStatus = jsonObj.getString("validStatus");
@@ -444,20 +446,20 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compWaterAchievementDTO.setProjectName(projectName);
                 // 合同金额
                 String contractAmount = jsonObj.getString("contractAmount");
-                if (!StringUtils.isEmpty(contractAmount)) {
+                if (StringUtils.isNotEmpty(contractAmount)) {
                     compWaterAchievementDTO.setContractAmount(contractAmount);
                     // 金额
                     compWaterAchievementDTO.setMoney(new BigDecimal(contractAmount));
                 }
                 // 开工时间
                 String startDate = jsonObj.getString("startDate").trim();
-                if (!StringUtils.isEmpty(startDate)) {
-                    compWaterAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(startDate)) {
+                    compWaterAchievementDTO.setStartDate(formatDate(startDate));
                 }
                 // 竣工时间
                 String endDate = jsonObj.getString("endDate").trim();
-                if (!StringUtils.isEmpty(endDate)) {
-                    compWaterAchievementDTO.setEndDate(DateParseUtils.parseDate(endDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(endDate)) {
+                    compWaterAchievementDTO.setEndDate(formatDate(endDate));
                 }
                 // 项目负责人
                 String name = jsonObj.getString("name");
@@ -498,13 +500,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 }
                 // 合同签订日期
                 String contractDate = jsonObj.getString("contractDate").trim();
-                if (!StringUtils.isEmpty(contractDate)) {
-                    compWaterMonitorAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(contractDate)) {
+                    compWaterMonitorAchievementDTO.setContractDate(formatDate(contractDate));
                 }
                 // 开工时间
                 String startDate = jsonObj.getString("startDate").trim();
-                if (!StringUtils.isEmpty(startDate)) {
-                    compWaterMonitorAchievementDTO.setStartDate(DateParseUtils.parseDate(startDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(startDate)) {
+                    compWaterMonitorAchievementDTO.setStartDate(formatDate(startDate));
                 }
                 if (updateFlag) {
                     // 更新水利简历业绩
@@ -545,8 +547,8 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compWaterDeviseAchievementDTO.setName(name);
                 // 中标时间
                 String markDate = jsonObj.getString("markDate").trim();
-                if (!StringUtils.isEmpty(markDate)) {
-                    compWaterDeviseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(markDate)) {
+                    compWaterDeviseAchievementDTO.setMarkDate(formatDate(markDate));
                 }
                 if (updateFlag) {
                     // 更新水利勘查业绩
@@ -588,11 +590,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
 
 
     @Override
-    public void getCompHouseAchievement(boolean isUpdate) {
+    public void getCompHouseAchievement(String pageNo, boolean isUpdate) throws Exception {
         try {
             StringBuilder url = new StringBuilder();
             url.append(PythonConstants.BASE_URL)
-                    .append(PythonConstants.COMP_HOUSE_ACHIEVEMENt_INFO_URL);
+                    .append(PythonConstants.COMP_HOUSE_ACHIEVEMENt_INFO_URL)
+                    .append("?pageNo=")
+                    .append(pageNo);
             HttpUtils.timeout(PythonConstants.TIME_OUT);
             String content = HttpUtils.get(url.toString());
             JSONArray jsonArray = JSON.parseArray(content);
@@ -653,15 +657,13 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compHouseAchievementDTO.setProjectAddr(projectAddr);
                 // 合同签订日期
                 String contractDate = jsonObject.getString("contractDate").trim();
-                contractDate.replaceAll("/", "-");
-                if (!StringUtils.isEmpty(contractDate)) {
-                    compHouseAchievementDTO.setContractDate(DateParseUtils.parseDate(contractDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(contractDate)) {
+                    compHouseAchievementDTO.setContractDate(formatDate(contractDate));
                 }
                 // 中标日期
                 String markDate = jsonObject.getString("markDate").trim();
-                markDate.replaceAll("/", "-");
-                if (!StringUtils.isEmpty(markDate)) {
-                    compHouseAchievementDTO.setMarkDate(DateParseUtils.parseDate(markDate, DatePatternEnum.DATE.getValue()));
+                if (StringUtils.isNotEmpty(markDate)) {
+                    compHouseAchievementDTO.setMarkDate(formatDate(markDate));
                 }
                 // 项目负责人
                 String name = jsonObject.getString("name");
@@ -751,7 +753,18 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
+    }
+
+    private Date formatDate(String dateStr) {
+        if (StringUtils.isNotEmpty(dateStr)) {
+            if (dateStr.contains("/")) {
+                dateStr = dateStr.replaceAll("/", "-");
+            }
+            return DateParseUtils.parseDate(dateStr, DatePatternEnum.DATE.getValue());
+        }
+        return null;
     }
 
     @Autowired

@@ -169,7 +169,7 @@ export const getCurrentDate = () => {
 	let day = date.getDate()
 	month = month > 9 ? month : '0' + month
 	day = day > 9 ? day : '0' + day
-	return year + '-' + month + '-' + day 
+	return year + '-' + month + '-' + day
 }
 
 /**
@@ -242,4 +242,94 @@ export const validText = (text) => {
 			url: '/pages-user-center/user-vip/user-vip'
 		})
 	}
+}
+
+/**
+ * 取指定的日期
+ * @param {type} 7：上周开始时间 1：上周结束时间 0：本周开始时间 -6：本周结束时间 -7：下周开始时间 -13：下周结束时间  
+ */
+export const getAppointWeekDate = (n) => {
+	var now = new Date();
+	var year = now.getFullYear();
+	//因为月份是从0开始的,所以获取这个月的月份数要加1才行
+	var month = now.getMonth() + 1;
+	var date = now.getDate();
+	var day = now.getDay();
+	//判断是否为周日,如果不是的话,就让今天的day-1(例如星期二就是2-1)
+	if (day !== 0) {
+		n = n + (day - 1);
+	} else {
+		n = n + day;
+	}
+	if (day) {
+		//这个判断是为了解决跨年的问题
+		if (month > 1) {
+			month = month;
+		}
+		//这个判断是为了解决跨年的问题,月份是从0开始的
+		else {
+			year = year - 1;
+			month = 12;
+		}
+	}
+	now.setDate(now.getDate() - n);
+	year = now.getFullYear();
+	month = now.getMonth() + 1;
+	date = now.getDate();
+	// console.log(n);
+	var s = year + "-" + (month < 10 ? ('0' + month) : month) + "-" + (date < 10 ? ('0' + date) : date);
+	return s;
+}
+
+/**
+ * 获取本月第一天或最后一天的日期
+ * @param type 默认是获取本月第一天的日期，传入1:获取本月最后一天的日期
+ */
+export const showMonthFirstOrLastDay = (type) => {
+	var nowDate = new Date();
+	var monthFirstDay = new Date(nowDate.getYear(), nowDate.getMonth() + 1, 1);
+	var monthLastDay = new Date(monthFirstDay - 86400000);
+	var month = Number(monthFirstDay.getMonth())
+	if (month === 0) {
+		month = 12
+	}
+	var day = monthFirstDay.getDate();
+	if (1 === type) {
+		month = Number(monthLastDay.getMonth()) + 1
+		day = Number(monthLastDay.getDate());
+	}
+	month = month < 10 ? '0' + month : month;
+	day = day < 10 ? '0' + day : day;
+	return nowDate.getFullYear() + "-" + month + "-" + day;
+}
+
+/**
+ * 获取下月第一天或最后一天的日期
+ * @param type 默认是获取下月第一天的日期，传入1:获取下月最后一天的日期
+ */
+export const showNextMonthFirstOrLastDay = (type) => {
+	var now = new Date();
+	var year = now.getFullYear();
+	var month = now.getMonth() + 1;
+	var date = now.getDate();
+	// 解决跨年的问题
+	if (12 === month) {
+		// 当前是12月，则下月是1月
+		month = 1;
+		year = year + 1;
+	} else {
+		// 获取下个月的月份
+		month = month + 1;
+	}
+	var monthFirstDay = new Date(year, month, 1);
+	var monthLastDay = new Date(year, month, 0);
+	var tempMonth = Number(monthFirstDay.getMonth())
+	var tempDay = monthFirstDay.getDate();
+	if (1 === type) {
+		tempMonth = Number(monthLastDay.getMonth()) + 1
+		tempDay = Number(monthLastDay.getDate());
+	}
+	tempMonth = tempMonth < 10 ? '0' + tempMonth : tempMonth;
+	tempDay = tempDay < 10 ? '0' + tempDay : tempDay;
+	return year + "-" + tempMonth + "-" + tempDay;
 }

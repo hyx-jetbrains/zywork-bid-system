@@ -9,7 +9,7 @@
         <include refid="select_columns"/>
         from t_user_coupon
         <where>
-           and user_id = #{userId} and coupon_id in
+           and user_id = #{userId} and id in
            <foreach collection="couponIds" item="couponId" index="index" open="(" close=")" separator=",">
 			  #{couponId}
 		   </foreach>
@@ -18,12 +18,12 @@
 
     </select>
 
-	<select id="sumMoneyByUserIdAndCouponIds" resultType="userCouponDO">
+	<select id="sumMoneyByUserIdAndCouponIds" resultType="long">
 		select
-		sum(c.money) as userId
+		sum(c.money)
 		from t_user_coupon uc, t_coupon c
 		<where>
-			and uc.user_id = #{userId} and uc.coupon_id in
+			and uc.user_id = #{userId} and uc.id in
 			<foreach collection="couponIds" item="couponId" index="index" open="(" close=")" separator=",">
 				#{couponId}
 			</foreach>

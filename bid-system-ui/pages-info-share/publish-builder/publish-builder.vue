@@ -494,7 +494,7 @@
 							title: '正在上传'
 						})
 						uni.uploadFile({
-							url: BASE_URL + '/builder/admin/upload-res',
+							url: BASE_URL + '/builder/user/upload-res',
 							filePath: tempFilePaths[0],
 							name: 'file',
 							header: {
