@@ -12,8 +12,8 @@
 				<zywork-icon type="iconchaxun" />
 				<input type="text" v-model="projectPager.title" :focus="true" placeholder="输入关键字搜索" @confirm="searchData" />
 			</view>
-			<view class="zy-disable-flex-right zy-search-page-cancel" @click="toBackPage">
-				取消
+			<view class="zy-disable-flex-right zy-search-page-cancel" @click="searchData">
+				搜索
 			</view>
 		</view>
 		<view v-if="isShowHistroy" class="zy-search-page-history-record">

@@ -641,8 +641,8 @@ export default {
       searchForm: {
         pageNo: 1,
         pageSize: 10,
-        sortColumn: null,
-        sortOrder: null,
+        sortColumn: 'createTime',
+        sortOrder: 'desc',
         id: null,
         idMin: null,
         idMax: null,

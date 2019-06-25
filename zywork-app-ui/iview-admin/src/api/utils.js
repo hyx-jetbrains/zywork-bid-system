@@ -316,8 +316,11 @@ export const changeSort = (self, sortColumn) => {
   if (order != 'normal') {
     self.searchForm.sortColumn = key
     self.searchForm.sortOrder = order
-    search(self)
+  } else {
+    self.searchForm.sortColumn = ''
+    self.searchForm.sortOrder = ''
   }
+  search(self)
 }
 
 /**

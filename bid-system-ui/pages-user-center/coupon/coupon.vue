@@ -33,7 +33,12 @@
 						<view v-if="coupon.couponValidTime < currDate">
 							<zywork-icon class="zy-icon-yiguoqi" type="iconyiguoqi" color="#afacac" size="60" style="display: inline-block;" />
 						</view>
-						<uni-tag v-else text="立即使用" type="error" size="small" :inverted="true" :circle="true" @click="useCouupon"></uni-tag>
+						<view v-else>
+							<view v-if="coupon.userCouponUseStatus !== 0">
+								<zywork-icon class="zy-icon-yiguoqi" type="iconyishiyong" color="#afacac" size="60" style="display: inline-block;" />
+							</view>
+							<uni-tag v-else text="立即使用" type="error" size="small" :inverted="true" :circle="true" @click="useCouupon"></uni-tag>
+						</view>
 					</view>
 				</view>
 			</view>

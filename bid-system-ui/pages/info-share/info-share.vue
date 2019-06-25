@@ -581,7 +581,7 @@
 				this.pager.pageNo = 1;
 				this.showLoadMore = false;
 			},
-			/** 公告的请求部分 */
+			/** 公共的请求部分 */
 			commonRequest(url, type) {
 				uni.showLoading({
 					title: '加载中'

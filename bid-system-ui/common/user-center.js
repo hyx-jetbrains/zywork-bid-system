@@ -1468,7 +1468,9 @@ export const getOneServiceById = (self, id) => {
 		url: BASE_URL + '/service/user/one/' + id,
 		method: 'POST',
 		data: {},
-		header: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.toBuyServicePage(res.data.data, 1)

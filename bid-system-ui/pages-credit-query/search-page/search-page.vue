@@ -6,8 +6,8 @@
 				<zywork-icon type="iconchaxun" />
 				<input type="text" v-model="searchVal" :focus="true" :placeholder="keywordMemo" @confirm="searchData" />
 			</view>
-			<view class="zy-disable-flex-right zy-search-page-cancel" @click="toBackPage">
-				取消
+			<view class="zy-disable-flex-right zy-search-page-cancel" @click="searchData">
+				搜索
 			</view>
 		</view>
 		<view v-if="isShowHistroy">
@@ -1225,6 +1225,10 @@
 				if (this.searchVal != null && this.searchVal != '') {
 					tempSearchVal = this.searchVal;
 				}
+				if (type === 'init') {
+					this.initPagerData();
+				}
+				this.initInputTip();
 				if (INFO_COMPANY === tabIndex) {
 					// 企业信息
 					this.pager.compName = tempSearchVal;
@@ -1246,7 +1250,6 @@
 					this.pager.firstCandidate = tempSearchVal;
 					this.refreshProjectAnnounceList(type);
 				}
-				this.initInputTip();
 			},
 			/** 业绩类型选择器 */
 			onClickAchievementItem: function(e) {

@@ -4,13 +4,19 @@
 		<view class="zy-disable-flex zy-search-page-bar">
 			<view class="zy-search-bar">
 				<zywork-icon type="iconchaxun" />
-				<input type="text" v-model="searchVal" :focus="true" placeholder="输入关键字搜索" @confirm="searchData" />
+				<input type="text" v-model="searchVal" :focus="true" :placeholder="keywordMemo" @confirm="searchData" />
 			</view>
-			<view class="zy-disable-flex-right zy-search-page-cancel" @click="toBackPage">
-				取消
+			<view class="zy-disable-flex-right zy-search-page-cancel" @click="searchData">
+				搜索
 			</view>
 		</view>
 		<view v-if="isShowHistroy" class="zy-search-page-history-record">
+			<view class="uni-tab-bar zy-tab-bar">
+				<scroll-view id="tab-bar" class="uni-swiper-tab zy-swiper-tab-list" scroll-x :scroll-left="infoType.scrollLeft">
+					<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
+					 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
+				</scroll-view>
+			</view>
 			<view class="zy-disable-flex">
 				<view class="zy-type-title zy-text-bold">历史搜索</view>
 				<view class="zy-disable-flex-right">
@@ -24,7 +30,7 @@
 		</view>
 		<view v-else>
 			<view class="uni-tab-bar zy-tab-bar">
-				<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="infoType.scrollLeft">
+				<scroll-view id="tab-bar" class="uni-swiper-tab zy-swiper-tab-list" scroll-x :scroll-left="infoType.scrollLeft">
 					<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
 					 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
 				</scroll-view>
@@ -32,7 +38,7 @@
 
 			<view>
 				<!-- 建造师 -->
-				<view v-if="infoType.tabIndex === 0">
+				<view v-if="infoType.tabIndex === 3">
 					<view class="zy-uni-segmented-control">
 						<uni-segmented-control :current="builderOpts.current" :values="builderOpts.items" v-on:clickItem="onClickBuilderItem"
 						 styleType="button" activeColor="#108EE9"></uni-segmented-control>
@@ -73,8 +79,7 @@
 								<view class="zy-page-list-item" v-for="(item, index) in builderList" :key="index">
 									<view @click="toBuilderDetailPage(item)">
 										<view class="zy-disable-flex">
-											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-											 :src="item.userDetailHeadicon" />
+											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 											<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 											<view>
 												<view>
@@ -110,8 +115,7 @@
 								<view class="zy-page-list-item" v-for="(item, index) in aptitudeBuyList" :key="index">
 									<view @click="toAptitudeDetailPage(item)">
 										<view class="zy-disable-flex">
-											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-											 :src="item.userDetailHeadicon" />
+											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 											<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 											<view>
 												<view>
@@ -137,8 +141,7 @@
 								<view class="zy-page-list-item" v-for="(item, index) in aptitudeSellList" :key="index">
 									<view @click="toAptitudeDetailPage(item)">
 										<view class="zy-disable-flex">
-											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-											 :src="item.userDetailHeadicon" />
+											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 											<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 											<view>
 												<view>
@@ -162,7 +165,7 @@
 				</view>
 
 				<!-- 开标拼车 -->
-				<view v-if="infoType.tabIndex === 2">
+				<view v-if="infoType.tabIndex === 5">
 					<view class="zy-uni-segmented-control">
 						<uni-segmented-control :current="carPoolOpts.current" :values="carPoolOpts.items" v-on:clickItem="onClickCarPoolItem"
 						 styleType="button" activeColor="#108EE9"></uni-segmented-control>
@@ -174,8 +177,7 @@
 								<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
 									<view @click="toCarpoolDetailPage(item)">
 										<view class="zy-disable-flex">
-											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-											 :src="item.userDetailHeadicon" />
+											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 											<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 											<view>
 												<view>
@@ -222,8 +224,7 @@
 								<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
 									<view @click="toSeekcarDetailPage(item)">
 										<view class="zy-disable-flex">
-											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-											 :src="item.userDetailHeadicon" />
+											<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 											<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 											<view>
 												<view>
@@ -265,15 +266,14 @@
 				</view>
 
 				<!-- 岗位招聘 -->
-				<view v-if="infoType.tabIndex === 3">
+				<view v-if="infoType.tabIndex === 6">
 					<view class="zy-page-list-item" style="padding-top: 10upx;">
 						<!-- 其他岗位招聘信息 -->
 						<view class="zy-page-list" v-if="recruitList.length > 0">
 							<view class="zy-page-list-item" v-for="(item, index) in recruitList" :key="index">
 								<view @click="toRecruitDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view class="zy-disable-flex">
@@ -325,8 +325,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in seekDataList" :key="index">
 								<view @click="toSeekDataDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-										 :src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view class="zy-disable-flex">
@@ -361,6 +360,71 @@
 						<zyworkNoData v-else text="暂无求带资料信息"></zyworkNoData>
 					</view>
 				</view>
+
+				<!-- 更新公告 -->
+				<view v-if="infoType.tabIndex === 0">
+					<view class="zy-page-list-item" style="padding-top: 10upx;">
+						<!-- 更新公告信息 -->
+						<view class="zy-page-list" v-if="updateNoticeList.length > 0">
+							<view class="zy-page-list-item" v-for="(item, index) in updateNoticeList" :key="index">
+								<view @click="toUpdateNoticeDetailPage(item)">
+									<view class="zy-disable-flex">
+										<view style="width: 100upx;">
+											<image class="zy-page-mini-headicon" :src="defaultIcon" />
+										</view>
+										<view>
+											<view class="zy-text-bold" v-text="item.title"></view>
+											<view class="zy-text-mini zy-text-info" style="color: #108EE9">公告时间：{{item.createTime}}</view>
+										</view>
+									</view>
+									<view v-text="item.synopsis"></view>
+								</view>
+							</view>
+						</view>
+						<zyworkNoData v-else text="暂无通知公告信息"></zyworkNoData>
+					</view>
+				</view>
+
+				<!-- 申请保函 -->
+				<view v-if="infoType.tabIndex === 2">
+					<view class="zy-page-list-item" style="padding-top: 10upx;">
+						<!-- 申请保函信息 -->
+						<view class="zy-page-list" v-if="guaranteeList.length > 0">
+							<view class="zy-page-list-item" v-for="(item, index) in guaranteeList" :key="index">
+								<view @click="toGuaranteeDetailPage(item)">
+									<view class="zy-disable-flex">
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
+										<view>
+											<view>
+												<text class="zy-text-bold">{{item.userDetailNickname}}</text>
+											</view>
+											<view class="zy-text-mini zy-text-info" style="color: #108EE9">
+												{{item.guaranteeCreateTime}}
+											</view>
+										</view>
+									</view>
+									<view>
+										<view class="zy-text-bold">
+											{{item.guaranteeProjectName}}
+										</view>
+										<view class="zy-text-info zy-disable-flex">
+											<view class="zy-text-bold">
+												招标单位名称：
+												<text class="zy-text-info">{{item.guaranteeMarkUnitName}}</text>
+											</view>
+											<view class="zy-text-bold zy-disable-flex-right">
+												工期(天)：
+												<text class="zy-text-info">{{item.guaranteeConstructionPeriod}}</text>
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<zyworkNoData v-else text="暂无保函信息"></zyworkNoData>
+					</view>
+				</view>
 			</view>
 		</view>
 
@@ -383,16 +447,28 @@
 	} from '@/common/picker.data.js'
 	import {
 		DEFAULT_HEADICON,
-		showInfoToast
+		showInfoToast,
+		nullToStr,
+		SHARE_CODE_PAGE_IMG,
+		getShareCode
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as infoShare from '@/common/info-share.js'
 
-	const INFO_BUILDER = 0
+	// 通知公告
+	const INFO_NOTICE = 0
+	// 资质转让
 	const INFO_APTITUDE = 1
-	const INFO_CARPOOL = 2
-	const INFO_HIRE = 3
+	// 申请保函
+	const INFO_GUARANTEE = 2
+	// 建造师
+	const INFO_BUILDER = 3
+	// 求带资料
 	const INFO_MATERIAL = 4
+	// 开标拼车
+	const INFO_CARPOOL = 5
+	// 岗位招聘
+	const INFO_HIRE = 6
 
 	export default {
 		components: {
@@ -413,13 +489,11 @@
 					carpoolUrl: '/UserMarkCarpool/user/list-page',
 					seekcarUrl: '/UserMarkSeekcar/user/list-page',
 					recruitUrl: '/UserRecruit/user/list-page',
-					seekDataUrl: '/UserSeekData/user/list-page'
+					seekDataUrl: '/UserSeekData/user/list-page',
+					updateNoticeUrl: '/update-notice/user/list-page',
+					guaranteeUrl: '/UserGuarantee/any/list-page'
 				},
-				pager: {
-					pageNo: 1,
-					pageSize: 10,
-					isActive: 0
-				},
+				pager: {},
 				defaultIcon: DEFAULT_HEADICON,
 				searchVal: '',
 				oldKeywordList: [],
@@ -428,12 +502,24 @@
 					scrollLeft: 0,
 					tabIndex: 0,
 					tabbars: [{
-							id: 'builder',
-							name: '建造师'
+							id: 'notice',
+							name: '通知公告'
 						},
 						{
 							id: 'aptitude',
 							name: '资质转让'
+						},
+						{
+							id: 'guarantee',
+							name: '申请保函'
+						},
+						{
+							id: 'builder',
+							name: '建造师'
+						},
+						{
+							id: 'material',
+							name: '求带资料'
 						},
 						{
 							id: 'carPool',
@@ -442,10 +528,6 @@
 						{
 							id: 'hire',
 							name: '岗位招聘'
-						},
-						{
-							id: 'material',
-							name: '求带资料'
 						}
 					]
 				},
@@ -468,7 +550,9 @@
 				carpoolList: [],
 				seekcarList: [],
 				recruitList: [],
-				seekDataList: []
+				seekDataList: [],
+				updateNoticeList: [],
+				keywordMemo: '请输入公告标题关键字搜索'
 			}
 		},
 		onLoad() {
@@ -489,11 +573,55 @@
 			initData() {
 				// 加载历史搜索数据
 				this.loadOldKeyword();
+				this.initPagerData();
 			},
 			/** 初始化查询数据 */
 			initPager() {
 				this.pager.pageNo = 1;
 				this.showLoadMore = false;
+			},
+			/** 初始化input的提示信息 */
+			initInputTip() {
+				const tabIndex = this.infoType.tabIndex;
+				if (INFO_BUILDER === tabIndex) {
+					// 建造师
+					this.keywordMemo = "请输入建造师姓名关键字搜索";
+				} else if (INFO_APTITUDE === tabIndex) {
+					// 资质转让
+					this.keywordMemo = "请输入转让标题关键字搜索";
+				} else if (INFO_CARPOOL === tabIndex) {
+					// 开标拼车
+					this.keywordMemo = "请输入出发地点关键字搜索";
+				} else if (INFO_HIRE === tabIndex) {
+					// 其他岗位招聘
+					this.keywordMemo = "请输入招聘类型关键字搜索";
+				} else if (INFO_MATERIAL === tabIndex) {
+					// 求带资料
+					this.keywordMemo = "请输入出发地点关键字搜索";
+				} else if (INFO_NOTICE === tabIndex) {
+					// 更新公告
+					this.keywordMemo = "请输入公告标题关键字搜索";
+				} else if (INFO_GUARANTEE === tabIndex) {
+					// 申请保函
+					this.keywordMemo = "请输入项目名称关键字搜索";
+				}
+			},
+			/** 初始化查询数据的值 */
+			initPagerData() {
+				this.pager = {
+					pageNo: 1,
+					pageSize: 10,
+					isActive: 0,
+					title: '',
+					builderName: '',
+					builderReqName: '',
+					aptitudeTransferTitle: '',
+					guaranteeProjectName: '',
+					markCarpoolStartAddr: '',
+					markSeekcarStartAddr: '',
+					recruitJobTitle: '',
+					seekDataStartAddr: ''
+				}
 			},
 			/** 返回上个页面 */
 			toBackPage() {
@@ -567,12 +695,12 @@
 					}
 				});
 			},
-			/** 刷新建造师需求列表 */
-			refreshBuilderReqList(type) {
+			/** 公共的请求部分 */
+			commonRequest(url, type) {
 				uni.showLoading({
 					title: '加载中'
 				})
-				infoShare.getListInfoToPost(this, this.urls.builderReqUrl, this.pager)
+				infoShare.getListInfoToPost(this, url, this.pager)
 					.then(data => {
 						uni.hideLoading()
 						var [error, res] = data;
@@ -582,104 +710,43 @@
 							showInfoToast(res.data.message)
 						}
 					})
-
+			},
+			/** 刷新建造师需求列表 */
+			refreshBuilderReqList(type) {
+				this.commonRequest(this.urls.builderReqUrl, type);
 			},
 			/** 刷新建造师列表 */
 			refreshBuilderList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.builderUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.builderUrl, type);
 			},
 			/** 刷新资质转让列表 */
 			refreshAptitudeList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
 				this.pager.aptitudeTransferType = this.aptitudeOpts.current;
-				infoShare.getListInfoToPost(this, this.urls.aptitudeUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.aptitudeUrl, type);
 			},
 			/** 刷新开标拼车列表 */
 			refreshCarpoolList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.carpoolUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.carpoolUrl, type);
 			},
 			/** 刷新开标找车列表 */
 			refreshSeekcarList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.seekcarUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.seekcarUrl, type);
 			},
 			/** 刷新其他招聘列表 */
 			refreshRecruitList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.recruitUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.recruitUrl, type);
 			},
 			/** 刷新求带资料列表 */
 			refreshSeekDataList(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				infoShare.getListInfoToPost(this, this.urls.seekDataUrl, this.pager)
-					.then(data => {
-						uni.hideLoading()
-						var [error, res] = data;
-						if (res.data.code === ResponseStatus.OK) {
-							this.requestSuccess(this.infoType.tabIndex, type, res.data.data.rows);
-						} else {
-							showInfoToast(res.data.message)
-						}
-					})
+				this.commonRequest(this.urls.seekDataUrl, type);
+			},
+			/** 刷新更新公告列表 */
+			refreshUpdateNoticeList(type) {
+				this.commonRequest(this.urls.updateNoticeUrl, type);
+			},
+			/** 刷新申请保函列表 */
+			refreshGuaranteeList(type) {
+				this.commonRequest(this.urls.guaranteeUrl, type);
 			},
 			/** 
 			 * 请求成功之后的操作 
@@ -711,6 +778,7 @@
 			 * @param {Object} type 是赋值还是追加数据：use、add
 			 */
 			setListValue(tabIndex, rows, type) {
+				rows = nullToStr(rows)
 				if (INFO_BUILDER === tabIndex) {
 					// 建造师
 					if (this.builderOpts.current === 0) {
@@ -770,6 +838,20 @@
 					} else {
 						this.seekDataList = rows;
 					}
+				} else if (INFO_NOTICE === tabIndex) {
+					// 更新公告
+					if (type === 'add') {
+						this.updateNoticeList = this.updateNoticeList.concat(rows);
+					} else {
+						this.updateNoticeList = rows;
+					}
+				} else if (INFO_GUARANTEE === tabIndex) {
+					// 申请保函
+					if (type === 'add') {
+						this.guaranteeList = this.guaranteeList.concat(rows);
+					} else {
+						this.guaranteeList = rows;
+					}
 				}
 			},
 			getElSize(id) {
@@ -793,6 +875,14 @@
 					this.infoType.scrollLeft = tabBarScrollLeft
 					this.infoType.tabIndex = tabIndex
 					this.checkRefresh(tabIndex, 'init')
+					this.addPublish = true
+					if (INFO_NOTICE === tabIndex) {
+						// 更新公告
+						this.addPublish = false
+					}
+					if (this.isShowHistroy) {
+						this.isShowHistroy = false;
+					}
 				}
 			},
 			/** 检查刷新 */
@@ -801,13 +891,17 @@
 				if (this.searchVal != null && this.searchVal != '') {
 					tempSearchVal = this.searchVal;
 				}
+				if (type === 'init') {
+					this.initPagerData();
+				}
+				this.initInputTip();
 				if (INFO_BUILDER === tabIndex) {
 					// 建造师
 					if (this.builderOpts.current === 0) {
-						this.pager.builderReqCompName = tempSearchVal;
+						this.pager.builderName = tempSearchVal;
 						this.refreshBuilderReqList(type);
 					} else {
-						this.pager.builderCertificateMajorType = tempSearchVal;
+						this.pager.builderReqName = tempSearchVal;
 						this.refreshBuilderList(type);
 					}
 				} else if (INFO_APTITUDE === tabIndex) {
@@ -817,10 +911,10 @@
 				} else if (INFO_CARPOOL === tabIndex) {
 					// 开标拼车
 					if (this.carPoolOpts.current === 0) {
-						this.pager.markCarpoolCarType = tempSearchVal;
+						this.pager.markCarpoolStartAddr = tempSearchVal;
 						this.refreshCarpoolList(type);
 					} else {
-						this.pager.markSeekcarMemo = tempSearchVal;
+						this.pager.markSeekcarStartAddr = tempSearchVal;
 						this.refreshSeekcarList(type);
 					}
 				} else if (INFO_HIRE === tabIndex) {
@@ -831,16 +925,43 @@
 					// 求带资料
 					this.pager.seekDataStartAddr = tempSearchVal;
 					this.refreshSeekDataList(type);
+				} else if (INFO_NOTICE === tabIndex) {
+					// 更新公告
+					this.pager.title = tempSearchVal;
+					this.refreshUpdateNoticeList(type);
+				} else if (INFO_GUARANTEE === tabIndex) {
+					// 申请保函
+					this.pager.guaranteeProjectName = tempSearchVal;
+					this.refreshGuaranteeList(type);
 				}
 			},
-			toSearchPage() {
+			toPublishChoose(type) {
+				var url = '/pages-info-share/publish-choose/publish-choose';
+				if (type === 1) {
+					var tabIndex = this.infoType.tabIndex
+					// 大按钮
+					if (INFO_BUILDER === tabIndex) {
+						// 建造师
+						url = '/pages-info-share/publish-builder/publish-builder?itemData=' + encodeURIComponent(this.builderOpts.current)
+					} else if (INFO_APTITUDE === tabIndex) {
+						// 资质转让
+						url = '/pages-info-share/publish-aptitude/publish-aptitude?itemData=' + encodeURIComponent(this.aptitudeOpts.current)
+					} else if (INFO_CARPOOL === tabIndex) {
+						// 开标拼车
+						url = '/pages-info-share/publish-carpool/publish-carpool?itemData=' + encodeURIComponent(this.carPoolOpts.current)
+					} else if (INFO_HIRE === tabIndex) {
+						// 其他岗位招聘
+						url = '/pages-info-share/publish-hire/publish-hire'
+					} else if (INFO_MATERIAL === tabIndex) {
+						// 求带资料
+						url = '/pages-info-share/publish-material/publish-material'
+					} else if (INFO_GUARANTEE === tabIndex) {
+						// 申请保函
+						url = '/pages-info-share/publish-guarantee/publish-guarantee'
+					}
+				}
 				uni.navigateTo({
-					url: '/pages-info-share/search-page/search-page'
-				})
-			},
-			toPublishChoose() {
-				uni.navigateTo({
-					url: '/pages-info-share/publish-choose/publish-choose'
+					url: url
 				});
 			},
 			/** 前往详情页面 */
@@ -877,6 +998,14 @@
 			/** 前往求带资料详情页面 */
 			toSeekDataDetailPage(item) {
 				this.toDetailPage('seek-data', item);
+			},
+			/** 前往公告更新详情页面 */
+			toUpdateNoticeDetailPage(item) {
+				this.toDetailPage('update-notice', item);
+			},
+			/** 前往申请保函详情页面 */
+			toGuaranteeDetailPage(item) {
+				this.toDetailPage('guarantee', item);
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {
