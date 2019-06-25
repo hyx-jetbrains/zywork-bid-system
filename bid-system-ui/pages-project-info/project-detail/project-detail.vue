@@ -12,8 +12,8 @@
 					</view>
 					<view class="zy-text-mini zy-text-info">
 						公告时间：
-						<text v-if="project.project.noticeTime !== null && project.project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
-							{{project.project.noticeTime.split(' ')[0]}}
+						<text v-if="project.project.noticeTime !== '' && project.project.noticeTime !== undefined" class="zy-text-mini zy-text-info">
+							{{project.project.noticeTime}}
 						</text>
 						<text v-else class="zy-text-mini zy-text-info">
 							暂无
@@ -427,8 +427,6 @@
 			},
 			/** 更新项目 */
 			updateProject() {
-				console.log(this.projectPager.id);
-				console.log("获取项目");
 				projectInfo.getProjectById(this, this.projectPager);
 			},
 			// 初始化项目图标

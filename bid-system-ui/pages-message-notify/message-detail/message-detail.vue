@@ -19,6 +19,9 @@
 		showInfoToast,
 		nullToStr
 	} from '@/common/util.js'
+	import {
+		projectClickCount
+	} from '@/common/project-info.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	export default {
 		data() {
@@ -52,9 +55,10 @@
 				const noticeType = this.item.noticeType;
 				const pageUrl = this.item.pageUrl;
 				const id = this.item.itemId;
+				console.log(id)
 				if (noticeType === 0 || noticeType === 1) {
 					// 订阅通知 | 开标通知 - 获取项目详情
-					url = '/project/user/multi/' + id
+					url = '/project/any/getById/' + id
 				} else if (noticeType === 2) {
 					// 拼车通知 - 获取开标拼车详情
 					url = '/UserMarkCarpool/user/one/' + id
@@ -69,9 +73,11 @@
 					.then(data => {
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							const item = nullToStr(res.data.data.rows[0]);
+							let item = nullToStr(res.data.data);
+							item.clickCount += 1;
+							projectClickCount(this, item);
 							uni.navigateTo({
-								url: pageUrl + '?itemData=' + encodeURIComponent(JSON.stringify(item))
+								url: pageUrl + '?itemData=' + encodeURIComponent(JSON.stringify(item.id))
 							})
 						} else {
 							showInfoToast(res.data.message)

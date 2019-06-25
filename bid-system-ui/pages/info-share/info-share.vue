@@ -537,7 +537,7 @@
 				seekDataList: [],
 				updateNoticeList: [],
 				guaranteeList: [],
-				addPublish: true,
+				addPublish: false,
 				directionStr: '垂直',
 				horizontal: 'right',
 				vertical: 'bottom',

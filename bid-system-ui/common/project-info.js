@@ -167,8 +167,9 @@ export const getProjectById = (self, params) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				const rows = nullToStr(res.data.data.rows);
-				self.project = rows[0];
+				const rows = res.data.data.rows;
+				self.project = nullToStr(rows[0]);
+				self.project.project.noticeTime = self.project.project.noticeTime.split(" ")[0]
 			} else {
 				showInfoToast(res.data.message)
 			}

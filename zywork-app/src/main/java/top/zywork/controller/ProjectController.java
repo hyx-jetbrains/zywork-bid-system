@@ -263,13 +263,18 @@ public class ProjectController extends BaseController {
                     }
                 }
 
+                String tempProjectInvest = projectVO.getProjectInvest();
+                if (org.apache.commons.lang.StringUtils.isEmpty(tempProjectInvest)) {
+                    // 当前项目未设置金额
+                    continue;
+                }
                 Pattern pat = Pattern.compile(ProjectConstants.ZHCN_TEXT_REG);
-                Matcher mat = pat.matcher(projectVO.getProjectInvest());
-                Double projectInvest = Double.valueOf(mat.toString().trim());
+                Matcher mat = pat.matcher(tempProjectInvest);
+                Double projectInvest = Double.valueOf(mat.replaceAll("").trim());
                 // 四、用户设置了全省或者当前这个项目和用户订阅的城市匹配，并且没有设置订阅的类型，继续判断金额区间
                 if (0 != subscribeVO.getMinMoney()) {
                     // 用设置了最小金额
-                    double minMoney = Double.valueOf(subscribeVO.getMinMoney());
+                    double minMoney = Double.valueOf(subscribeVO.getMinMoney()) / 100;
                     if (projectInvest < minMoney) {
                         // 当前项目的金额小于用户订阅的最小金额
                         continue;
@@ -277,7 +282,7 @@ public class ProjectController extends BaseController {
                 }
                 if (0 != subscribeVO.getMaxMoney()) {
                     // 用户设置了最大金额
-                    double maxMoney = Double.valueOf(subscribeVO.getMaxMoney());
+                    double maxMoney = Double.valueOf(subscribeVO.getMaxMoney()) / 100;
                     if (projectInvest > maxMoney) {
                         // 当前项目的金额大于用户订阅的金额
                         continue;
@@ -298,14 +303,14 @@ public class ProjectController extends BaseController {
         return ResponseStatusVO.ok("发布成功", null);
     }
 
-    public void saveNotice(Long userId, Long ProjectId) {
+    public void saveNotice(Long userId, Long projectId) {
         UserNoticeVO userNoticeVO= new UserNoticeVO();
         userNoticeVO.setUserId(userId);
-        userNoticeVO.setItemId(ProjectId);
+        userNoticeVO.setItemId(projectId);
         userNoticeVO.setPageUrl(NoticeConstants.projectUrl);
         userNoticeVO.setTitle("项目订阅更新");
         userNoticeVO.setMainContent("项目订阅更新");
-        userNoticeVO.setDetailContent("您订阅的项目有一条新的申请记录，具体内容可点击《立即查看》按钮前往查看");
+        userNoticeVO.setDetailContent("您订阅的项目有一条符合条件新项目发布了，具体内容可点击《立即查看》按钮前往查看");
         userNoticeVO.setNoticeType(NoticeEnum.SUBSCRIBE_MESSAGE.getValue());
         userNoticeService.save(userNoticeVO);
     }

@@ -94,12 +94,8 @@ public class ProjectAnnounceController extends BaseController {
         }
         Long projectId = projectAnnounceVO.getProjectId();
         String firstCandidate = projectAnnounceVO.getFirstCandidate();
-        if (!org.apache.commons.lang.StringUtils.isEmpty(projectId.toString())
-                && !org.apache.commons.lang.StringUtils.isEmpty(firstCandidate)) {
-            // 有选择项目，并且有招标单位
-            if (!ResponseStatusEnum.OK.getCode().equals(updateProject(projectId, firstCandidate).getCode())) {
-                return ResponseStatusVO.error("更新项目失败，请重试", null);
-            }
+        if (!ResponseStatusEnum.OK.getCode().equals(updateProject(projectId, firstCandidate).getCode())) {
+            return ResponseStatusVO.error("更新项目失败，请重试", null);
         }
 
         projectAnnounceVO = generatorProjectAnnounceVO(projectAnnounceVO);
@@ -137,12 +133,8 @@ public class ProjectAnnounceController extends BaseController {
 
         Long projectId = projectAnnounceVO.getProjectId();
         String firstCandidate = projectAnnounceVO.getFirstCandidate();
-        if (!org.apache.commons.lang.StringUtils.isEmpty(projectId.toString())
-            && !org.apache.commons.lang.StringUtils.isEmpty(firstCandidate)) {
-            // 有选择项目，并且有招标单位
-            if (!ResponseStatusEnum.OK.getCode().equals(updateProject(projectId, firstCandidate).getCode())) {
-                return ResponseStatusVO.error("更新项目失败，请重试", null);
-            }
+        if (!ResponseStatusEnum.OK.getCode().equals(updateProject(projectId, firstCandidate).getCode())) {
+            return ResponseStatusVO.error("更新项目失败，请重试", null);
         }
 
 
@@ -182,6 +174,11 @@ public class ProjectAnnounceController extends BaseController {
      * @date: 2019-06-22 11:38
      */
     private ResponseStatusVO updateProject(Long projectId, String firstCandidate) {
+        if (org.apache.commons.lang.StringUtils.isEmpty(projectId.toString())
+                || org.apache.commons.lang.StringUtils.isEmpty(firstCandidate)
+                || projectId == 0) {
+            return ResponseStatusVO.ok("不需要更新", null);
+        }
         Object projectObj = projectService.getById(projectId);
         if (null == projectObj) {
             return ResponseStatusVO.error("项目不存在", null);

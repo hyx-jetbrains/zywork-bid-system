@@ -83,13 +83,22 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 // 企业名称
                 String compName = jsonObject.getString("compName");
+                String industryType = jsonObject.getString("industryType");
                 Object obj = companyDAO.getByName(compName);
                 boolean companyFlag = true;
                 // 默认是保存数据
                 boolean updateFlag = false;
                 if (null != obj) {
-                    updateFlag = true;
                     companyDTO = BeanUtils.copy(obj, CompanyDTO.class);
+                    // 公司已经存在，判断行业类型是否是一样的
+                    if (!companyDTO.getIndustryType().contains(industryType)) {
+                        // 表示该公司有两个以上的身份
+                        logger.info("该公司有两个以上的身份：" + companyDTO);
+                        companyDTO.setIndustryType(companyDTO.getIndustryType() + "," + industryType);
+                        companyDTO.setVersion(companyDTO.getVersion()+1);
+                        companyDAO.update(companyDTO);
+                    }
+                    updateFlag = true;
                     logger.info("该公司已存在：" + compName + ",是否更新数据：" + isUpate);
                     if (!isUpate) {
                         // 如果不需要更新数据，则不用处理公司信息
@@ -119,8 +128,10 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     String tempCompType = jsonObject.getString("compType");
                     companyDTO.setCompType(tempCompType);
                     // 行业分类
-                    String industryType = jsonObject.getString("industryType");
-                    companyDTO.setIndustryType(industryType);
+                    if (!updateFlag) {
+                        // 如果是需要更新数据，则不更新这个字段，否则就需要保存行业类型
+                        companyDTO.setIndustryType(industryType);
+                    }
                     // 法人
                     String legalPerson = jsonObject.getString("legalPerson");
                     companyDTO.setLegalPerson(legalPerson);
@@ -180,10 +191,10 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 企业业绩
                 JSONArray achievementArray = jsonObject.getJSONArray("compAchievementList");
                 if (null != achievementArray && !achievementArray.isEmpty()) {
-                    saveCompAchievementInfo(compId, achievementArray, companyDTO.getIndustryType(), isUpate);
+                    saveCompAchievementInfo(compId, achievementArray, industryType, isUpate);
                 }
                 // 需要判断需不需要匹配房建业绩
-                if (PythonConstants.COMPANY_TYPE_HOUSE.equals(companyDTO.getIndustryType())) {
+                if (PythonConstants.COMPANY_TYPE_HOUSE.equals(industryType)) {
                     // 需要判断当前企业是否有房屋市建业绩
                     updateCompHouseAchievement(compId, compName);
                 }

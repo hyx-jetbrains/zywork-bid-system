@@ -53,6 +53,6 @@ public final class ProjectConstants {
     /**
      * 中字正则
      */
-    public static final String ZHCN_TEXT_REG = "[\\\\u4e00-\\\\u9fa5]";
+    public static final String ZHCN_TEXT_REG = "[\\u4e00-\\u9fa5]";
 
 }

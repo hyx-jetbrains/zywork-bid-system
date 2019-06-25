@@ -617,9 +617,16 @@
 		},
 		methods: {
 			initCompId() {
-				this.pager.compHouseAchievementId = this.pager.compKeyProjectAchievementCompId = this.pager.compTrafficAchievementCompId =
-					this.pager.compWaterAchievementCompId = this.pager.compWaterAchievementCompId = this.pager.compWaterMonitorAchievementCompId =
-					this.pager.compAptitudeCompId = this.pager.compBuilderCompId = this.pager.compId = this.item.id;
+				this.pager.compHouseAchievementCompId 
+					= this.pager.compKeyProjectAchievementCompId 
+					= this.pager.compTrafficAchievementCompId 
+					= this.pager.compWaterAchievementCompId 
+					= this.pager.compWaterDeviseAchievementCompId 
+					= this.pager.compWaterMonitorAchievementCompId 
+					= this.pager.compAptitudeCompId 
+					= this.pager.compBuilderCompId 
+					= this.pager.compId 
+					= this.item.id;
 			},
 			/** 切换标签页 */
 			tapTab(type) {

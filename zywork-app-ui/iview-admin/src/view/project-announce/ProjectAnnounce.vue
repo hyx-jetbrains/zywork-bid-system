@@ -803,7 +803,7 @@ export default {
           },
           {
             title: '中标金额',
-            key: 'firstMarkName',
+            key: 'firstMarkMoney',
             minWidth: 120,
             sortable: true
           },

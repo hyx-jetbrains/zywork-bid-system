@@ -49,7 +49,7 @@ export const revenueExpenditureStatusArray = ['全部', '收入', '支出']
 /**
  * 江西城市数组
  */
-export const jxCityArray = ['全省', '南昌', '赣州', '萍乡', '吉安', '上饶', '新余', '抚州', '九江', '鹰潭', '宜春', '景德镇']
+export const jxCityArray = ['全省', '南昌市', '赣州市', '萍乡市', '吉安市', '上饶市', '新余市', '抚州市', '九江市', '鹰潭市', '宜春市', '景德镇市']
 /**
  * 消息读取状态
  */
