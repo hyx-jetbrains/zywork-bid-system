@@ -153,6 +153,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                     companyDTO.setSourceUrl(sourceUrl);
                     if (updateFlag) {
                         // 更新公司信息
+                        companyDTO.setVersion(companyDTO.getVersion()+1);
                         companyDAO.update(companyDTO);
                     } else {
                         // 保存公司信息
@@ -215,6 +216,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             if (null != obj) {
                 updateFlag = true;
                 // 说明该人员信息已经存在
+                compPersonnelDTO = BeanUtils.copy(obj, CompPersonnelDTO.class);
                 logger.info(compId + "该人员已存在：" + name + "，是否需要更新：" + isUpdate);
                 if (!isUpdate) {
                     continue;
@@ -230,6 +232,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             compPersonnelDTO.setJobDetail(jobDetail);
             if (updateFlag) {
                 // 更新企业人员信息
+                compPersonnelDTO.setVersion(compPersonnelDTO.getVersion()+1);
                 compPersonnelDAO.update(compPersonnelDTO);
             } else {
                 // 保存企业人员信息
@@ -258,6 +261,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             if (null != obj) {
                 updateFlag = true;
                 // 说明该资质信息已经存在
+                compAptitudeDTO = BeanUtils.copy(obj, CompAptitudeDTO.class);
                 logger.info(compId + "该资质已存在：" + certificateNum + ",是否需要更新：" + isUpdate);
                 if (!isUpdate) {
                     continue;
@@ -270,6 +274,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             compAptitudeDTO.setCertificateDetail(certificateDetail);
             if (updateFlag) {
                 // 更新企业资质信息
+                compAptitudeDTO.setVersion(compAptitudeDTO.getVersion()+1);
                 compAptitudeDAO.update(compAptitudeDTO);
             } else {
                 // 保存企业资质信息
@@ -298,6 +303,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             if (null != obj) {
                 updateFlag = true;
                 // 说明该建造师信息已经存在
+                compBuilderDTO = BeanUtils.copy(obj, CompBuilderDTO.class);
                 logger.info(compId + "该建造师已存在：" + name + ",是否需要更新：" + isUpdate);
                 if (!isUpdate) {
                     continue;
@@ -316,6 +322,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             compBuilderDTO.setMajorLevel(majorLevel);
             if (updateFlag) {
                 // 更新企业建造师信息
+                compBuilderDTO.setVersion(compBuilderDTO.getVersion()+1);
                 compBuilderDAO.update(compBuilderDTO);
             } else {
                 // 保存企业建造师信息
@@ -347,6 +354,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 if (null != obj) {
                     updateFlag = true;
                     // 说明该业绩已存在
+                    compKeyProjectAchievementDTO = BeanUtils.copy(obj, CompKeyProjectAchievementDTO.class);
                     logger.info(compId + ":" + compType + "业绩已存在：" + projectName + ",是否需要更新：" + isUpdate);
                     if (!isUpdate) {
                         continue;
@@ -376,6 +384,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 }
                 if (updateFlag) {
                     // 更新重点工程业绩
+                    compKeyProjectAchievementDTO.setVersion(compKeyProjectAchievementDTO.getVersion()+1);
                     compKeyProjectAchievementDAO.update(compKeyProjectAchievementDTO);
                 } else {
                     // 保存重点工程业绩
@@ -388,6 +397,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 if (null != obj) {
                     updateFlag = true;
                     // 说明该业绩已存在
+                    compTrafficAchievementDTO = BeanUtils.copy(obj, CompTrafficAchievementDTO.class);
                     logger.info(compId + ":" + compType + "业绩已存在：" + projectName + ",是否需要更新：" + isUpdate);
                     if (!isUpdate) {
                         continue;
@@ -425,6 +435,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compTrafficAchievementDTO.setValidStatus(validStatus);
                 if (updateFlag) {
                     // 更新交通业绩
+                    compTrafficAchievementDTO.setVersion(compTrafficAchievementDTO.getVersion()+1);
                     compTrafficAchievementDAO.update(compTrafficAchievementDTO);
                 } else {
                     // 保存交通业绩
@@ -437,6 +448,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 if (null != obj) {
                     // 说明该业绩已存在
                     updateFlag = true;
+                    compWaterAchievementDTO = BeanUtils.copy(obj, CompWaterAchievementDTO.class);
                     logger.info(compId + ":" + compType + "业绩已存在：" + projectName + ",是否需要更新：" + isUpdate);
                     if (!isUpdate) {
                         continue;
@@ -466,6 +478,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compWaterAchievementDTO.setName(name);
                 if (updateFlag) {
                     // 更新水利施工业绩
+                    compWaterAchievementDTO.setVersion(compWaterAchievementDTO.getVersion()+1);
                     compWaterAchievementDAO.update(compWaterAchievementDTO);
                 } else {
                     // 保存水利施工业绩
@@ -478,6 +491,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 if (null != obj) {
                     // 说明该业绩已存在
                     updateFlag = true;
+                    compWaterMonitorAchievementDTO = BeanUtils.copy(obj, CompWaterMonitorAchievementDTO.class);
                     logger.info(compId + ":" + compType + "业绩已存在：" + projectName + "，是否更新：" + isUpdate);
                     if (!isUpdate) {
                         continue;
@@ -510,6 +524,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 }
                 if (updateFlag) {
                     // 更新水利简历业绩
+                    compWaterMonitorAchievementDTO.setVersion(compWaterMonitorAchievementDTO.getVersion()+1);
                     compWaterMonitorAchievementDAO.update(compWaterMonitorAchievementDTO);
                 } else {
                     // 保存水利监理业绩
@@ -522,6 +537,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 if (null != obj) {
                     // 说明该业绩已存在
                     updateFlag = true;
+                    compWaterDeviseAchievementDTO = BeanUtils.copy(obj, CompWaterDeviseAchievementDTO.class);
                     logger.info(compId + ":" + compType + "业绩已存在：" + projectName + "，是否更新：" + isUpdate);
                     if (!isUpdate) {
                         continue;
@@ -552,6 +568,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 }
                 if (updateFlag) {
                     // 更新水利勘查业绩
+                    compWaterDeviseAchievementDTO.setVersion(compWaterDeviseAchievementDTO.getVersion()+1);
                     compWaterDeviseAchievementDAO.update(compWaterDeviseAchievementDTO);
                 } else {
                     // 保存水利勘查业绩
@@ -581,6 +598,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             List<CompHouseAchievementDTO> compHouseAchievementDTOList = BeanUtils.copy(objectList, CompHouseAchievementDTO.class);
             for (CompHouseAchievementDTO compHouseAchievementDTO : compHouseAchievementDTOList) {
                 compHouseAchievementDTO.setCompId(compId);
+                compHouseAchievementDTO.setVersion(compHouseAchievementDTO.getVersion()+1);
                 compHouseAchievementDAO.update(compHouseAchievementDTO);
             }
         } catch (Exception e) {
@@ -615,6 +633,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 if (null != obj) {
                     // 说明该业绩已存在
                     updateFlag = true;
+                    compHouseAchievementDTO = BeanUtils.copy(obj, CompHouseAchievementDTO.class);
                     logger.info("业绩已存在：" + projectName + ",是否更新：" + isUpdate);
                     if (!isUpdate) {
                         continue;
@@ -622,7 +641,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 }
                 // 中标单位
                 String markComp = jsonObject.getString("markComp");
-                if (!"".equals(markComp)) {
+                if (StringUtils.isNotEmpty(markComp)) {
                     // 中标单位不为空，根据公司名称查询系统中是和否有对应的企业信息
                     Object companyObj = companyDAO.getByName(markComp);
                     if (null != companyObj) {
@@ -639,9 +658,10 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 中标金额
                 String markMoney = jsonObject.getString("markMoney");
                 if (!StringUtils.isEmpty(markMoney)) {
-                    compHouseAchievementDTO.setMarkMoney(markMoney);
                     // 金额 元转成万元
-                    compHouseAchievementDTO.setMoney(new BigDecimal(markMoney).divide(new BigDecimal(10000)));
+                    BigDecimal tempMoney = new BigDecimal(markMoney).divide(new BigDecimal(10000));
+                    compHouseAchievementDTO.setMarkMoney(tempMoney.toString());
+                    compHouseAchievementDTO.setMoney(tempMoney);
                 }
                 // 建设规模
                 String buildScale = jsonObject.getString("buildScale");
@@ -745,6 +765,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 compHouseAchievementDTO.setDataClerkIdNum(dataClerkIdNum);
                 if (updateFlag) {
                     // 更新房建业绩信息
+                    compHouseAchievementDTO.setVersion(compHouseAchievementDTO.getVersion()+1);
                     compHouseAchievementDAO.update(compHouseAchievementDTO);
                 } else {
                     // 保存房建业绩信息

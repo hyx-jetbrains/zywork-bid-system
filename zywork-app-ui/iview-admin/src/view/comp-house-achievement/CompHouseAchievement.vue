@@ -62,8 +62,8 @@
 				</Row>
 				<Row>
 					<i-col span="12">
-						<FormItem label="中标金额（元）" prop="markMoneyDisplay">
-							<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
+						<FormItem label="中标金额（万元）" prop="markMoneyDisplay">
+							<Input v-model="form.markMoney" placeholder="请输入中标金额" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -297,8 +297,8 @@
 				</Row>
 				<Row>
 					<i-col span="12">
-						<FormItem label="中标金额（元）" prop="markMoneyDisplay">
-							<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
+						<FormItem label="中标金额（万元）" prop="markMoneyDisplay">
+							<Input v-model="form.markMoney" placeholder="请输入中标金额" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -1360,7 +1360,7 @@
 							sortable: true
 						},
 						{
-							title: '中标金额（元）',
+							title: '中标金额（万元）',
 							key: 'markMoney',
 							minWidth: 120,
 							sortable: true,
@@ -1797,7 +1797,7 @@
 				// 	}
         // }
         // 把元转万元
-        this.form.money = this.form.markMoney / 10000
+        this.form.money = this.form.markMoney
 			},
 			add() {
 				this.setAddress()

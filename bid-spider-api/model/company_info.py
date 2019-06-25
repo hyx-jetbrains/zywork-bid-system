@@ -174,6 +174,12 @@ def set_company_type(type, compType, company, requestsCookies, scrfcokie, person
     # 水利勘查设计单位
     compTypeWaterDeviseBidder = '163'
     compTypeWaterDeviseBidderName = '水利勘查设计单位'
+    # 房建及市政设计单位
+    compTypeHouseDeviseBidder = '161'
+    compTypeHouseDeviseBidderName = '房建及市政设计单位'
+    # 房建及市政监理单位
+    compTypeHouseMonitorBidder = '141'
+    compTypeHouseMonitorBidderName = '房建及市政监理单位'
     if type == typeAgent:
         company.compType = typeAgentName
         if compType == compTypeHouseAgent:
@@ -236,6 +242,12 @@ def set_company_type(type, compType, company, requestsCookies, scrfcokie, person
             achievementControls = get_company_achievement_info(requestsCookies, scrfcokie, compType, alink)
             compAchievements = set_comp_achievement_info(achievementControls, compType)
             company.compAchievementList = compAchievements
+        elif compType == compTypeHouseDeviseBidder:
+            # 房建及市政设计单位只有资质信息
+            company.industryType = compTypeHouseDeviseBidderName
+        elif compType == compTypeHouseMonitorBidder:
+            # 房建及市政监理单位只有资质信息
+            company.industryType = compTypeHouseMonitorBidderName
     return company
 
 
@@ -319,6 +331,10 @@ def get_company_aptitude_info(requestsCookies, scrfcokie, compType, alink):
     compTypeWaterMonitorBidder = '143'
     # 水利勘查设计单位
     compTypeWaterDeviseBidder = '163'
+    # 房建及市政设计单位
+    compTypeHouseDeviseBidder = '161'
+    # 房建及市政监理单位
+    compTypeHOuseMonitorBidder = '141'
     aptitudeType = ''
     aptitudeTypeUrl = ''
     if compType == compTypeHouseBidder:
@@ -339,6 +355,12 @@ def get_company_aptitude_info(requestsCookies, scrfcokie, compType, alink):
     elif compType == compTypeWaterDeviseBidder:
         aptitudeType = 'SlKcZiZhi_List'
         aptitudeTypeUrl = 'jxpSlKcShiGongZiZhiListForWebAction.action'
+    elif compType == compTypeHouseDeviseBidder:
+        aptitudeType = 'FjSjZiZhi_List'
+        aptitudeTypeUrl = 'jxpFjSjShiGongZiZhiListForWebAction.action'
+    elif compType == compTypeHOuseMonitorBidder:
+        aptitudeType = 'FjJlZiZhi_List'
+        aptitudeTypeUrl = 'jxpFjJlShiGongZiZhiListForWebAction.action'
     else:
         return
 
@@ -507,6 +529,7 @@ def set_comp_achievement_info(controls, compType):
             compAchievement = CompAchievement()
             compAchievement.projectName = data['biaoduanname']
             if compType == compTypeTrafficBidder:
+                # 交通施工单位
                 compAchievement.name = data['pname']
                 compAchievement.technologyName = data['jspname']
                 compAchievement.contractAmount = data['hetongjine']
@@ -520,13 +543,18 @@ def set_comp_achievement_info(controls, compType):
                     validStatus = '审核通过'
                 compAchievement.validStatus = validStatus
             elif compType == compTypeWaterBidder:
-                compAchievement.contractAmount = data['hetongjine']
+                # 水利施工单位
+                contractAmount = data['hetongjine']
+                if contractAmount == '':
+                    contractAmount = data['biaoduanmoney']
+                compAchievement.contractAmount = contractAmount
                 startDate = format_date_time(data['kaigongdate'])
                 compAchievement.startDate = startDate
                 endDate = format_date_time(data['jungongdate'])
                 compAchievement.endDate = endDate
                 compAchievement.name = data['pname']
             elif compType == compTypeKeyProjectBidder:
+                # 重点工程施工单位
                 compAchievement.buildComp = data['jianshedanweiname']
                 compAchievement.markMoney = data['zhongbiaojine']
                 startDate = format_date_time(data['kaigongdate'])
@@ -534,17 +562,25 @@ def set_comp_achievement_info(controls, compType):
                 endDate = format_date_time(data['jungongdate'])
                 compAchievement.endDate = endDate
             elif compType == compTypeWaterMonitorBidder:
+                # 水利监理单位
+                contractAmount = data['hetongjine']
+                if contractAmount == '':
+                    contractAmount = data['biaoduanmoney']
+                compAchievement.contractAmount = contractAmount
                 compAchievement.projectType = data['xiangmutype']
                 compAchievement.buildComp = data['jianshedanweiname']
-                compAchievement.contractAmount = data['hetongjine']
                 contractDate = format_date_time(data['hetongdate'])
                 compAchievement.contractDate = contractDate
                 startDate = format_date_time(data['kaigongdate'])
                 compAchievement.startDate = startDate
             elif compType == compTypeWaterDeviseBidder:
+                # 水利勘查设计单位
+                contractAmount = data['hetongjine']
+                if contractAmount == '':
+                    contractAmount = data['biaoduanmoney']
+                compAchievement.contractAmount = contractAmount
                 compAchievement.tenderingComp = data['xiangmutype']
                 compAchievement.buildComp = data['jianshedanweiname']
-                compAchievement.contractAmount = data['hetongjine']
                 compAchievement.name = data['pname']
                 markDate = format_date_time(data['zhongbiaodate'])
                 compAchievement.markDate = markDate

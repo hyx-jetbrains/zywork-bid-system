@@ -94,6 +94,14 @@ public class PythonConstants {
      * 企业类型-水利勘查设计单位
      */
     public static final String COMPANY_TYPE_WATER_DEVISE = "水利勘查设计单位";
+    /**
+     * 企业类型-房建及市政设计单位
+     */
+    public static final String COMPANY_TYPE_HOUSE_DEVISE = "房建及市政设计单位";
+    /**
+     * 企业类型-房建及市政监理单位
+     */
+    public static final String COMPANY_TYPE_HOUSE_MONITOR = "房建及市政监理单位";
 
 
     /**
@@ -107,7 +115,7 @@ public class PythonConstants {
     /**
      * 默认查询个数-22
      */
-    public static final String DEFAULT_PAGE_SIXE = "10";
+    public static final String DEFAULT_PAGE_SIXE = "5";
 
 
     /**
@@ -154,6 +162,14 @@ public class PythonConstants {
      * 水利勘查设计单位-163
      */
     public static final String COMP_TYPE_WATER_DEVISE_BIDDER = "163";
+    /**
+     * 房建及市政设计单位-161
+     */
+    public static final String COMP_TYPE_HOUSE_DEVISE_BIDDER = "161";
+    /**
+     * 房建及市政监理单位-141
+     */
+    public static final String COMP_TYPE_HOUSE_MONITOR_BIDDER = "141";
 
     /**
      * 是否更新标识
@@ -178,41 +194,49 @@ public class PythonConstants {
     /**
      * 房建业绩的页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT = "comp_house_achievement_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT = "comp_house_achievement_page_no.txt";
     /**
      * 房建招标代理页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_AGENT = "comp_house_agent_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_AGENT = "comp_house_agent_page_no.txt";
     /**
      * 房建投标人页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_BIDDER = "comp_house_bidder_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_BIDDER = "comp_house_bidder_page_no.txt";
     /**
      * 重点工程页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_KEY_PROJECT_BIDDER = "comp_key_project_bidder_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_KEY_PROJECT_BIDDER = "comp_key_project_bidder_page_no.txt";
     /**
      * 交通工程招标代理页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_TRAFFIC_AGENT = "comp_traffic_agent_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_TRAFFIC_AGENT = "comp_traffic_agent_page_no.txt";
     /**
      * 交通工程投标人页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_TRAFFIC_BIDDER = "comp_traffic_bidder_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_TRAFFIC_BIDDER = "comp_traffic_bidder_page_no.txt";
     /**
      * 水利工程招标代理页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_WATER_AGENT = "comp_water_agent_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_AGENT = "comp_water_agent_page_no.txt";
     /**
      * 水利工程投标人页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_WATER_BIDDER = "comp_water_bidder_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_BIDDER = "comp_water_bidder_page_no.txt";
     /**
      * 水利勘查投标人页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_WATER_DEVISE_BIDDER = "comp_water_devise_bidder_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_DEVISE_BIDDER = "comp_water_devise_bidder_page_no.txt";
     /**
      * 水利监理工程投标人页码文件名
      */
-    public static final String PAGE_NO_FILE_NAME_COMP_WATER_MONITOR_BIDDER = "comp_water_monitor_bidder_page_no.text";
+    public static final String PAGE_NO_FILE_NAME_COMP_WATER_MONITOR_BIDDER = "comp_water_monitor_bidder_page_no.txt";
+    /**
+     * 房建及市政设计单位投标人页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_DEVISE_BIDDER = "comp_house_devise_bidder_page_no.txt";
+    /**
+     * 房建及市政监理单位投标人页码文件名
+     */
+    public static final String PAGE_NO_FILE_NAME_COMP_HOUSE_MONITOR_BIDDER = "comp_house_monitor_bidder_page_no.txt";
 }

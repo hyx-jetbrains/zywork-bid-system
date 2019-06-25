@@ -47,7 +47,8 @@ def get_other_project(pageNo):
         # 去除页面底部查看操作说明 与 交易主体登录按钮
         [s.extract() for s in article_info.find_all('a', {'class': 'buttomlink'})]
         project.projectDetail = str(article_info)
-        project.noticeTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        # project.noticeTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        project.noticeTime = project_soup.find('p', {'class': 'infotime'}).text.replace('[', '').replace(']', '')
         projects.append(project.__dict__)
     # current_other_file.close()
     print(projects)

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import top.zywork.annotation.HasHideProperty;
 import top.zywork.annotation.HideProperty;
 import top.zywork.common.*;
 import top.zywork.constant.ProjectConstants;
@@ -44,6 +45,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/projecannounce")
+@HasHideProperty
 public class ProjectAnnounceController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectAnnounceController.class);

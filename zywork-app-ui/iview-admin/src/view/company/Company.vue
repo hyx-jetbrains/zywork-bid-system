@@ -37,6 +37,8 @@
               <DropdownItem name="bidderkeyProject">重点工程投标单位</DropdownItem>
               <DropdownItem name="bidderWaterDevise">水利监理单位</DropdownItem>
               <DropdownItem name="bidderWaterMonitor">水利勘查设计单位</DropdownItem>
+              <DropdownItem name="bidderHouseMonitor">房建及市政监理单位</DropdownItem>
+              <DropdownItem name="bidderHouseDevise">房建及市政设计单位</DropdownItem>
             </DropdownMenu>
           </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
@@ -1383,7 +1385,11 @@ export default {
         industryType = '水利监理单位'
       } else if (itemName === 'bidderWaterMonitor') {
         industryType = '水利勘查设计单位'
-      } else if (itemName === 'all') {
+      } else if (itemName === 'bidderHouseMonitor') {
+        industryType = '房建及市政监理单位'
+      } else if (itemName === 'bidderHouseDevise') {
+        industryType = '房建及市政设计单位'
+      }  else if (itemName === 'all') {
         industryType = ''
       }
       if (itemName === 'all') {

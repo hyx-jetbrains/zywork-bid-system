@@ -189,6 +189,14 @@ export const industryType = {
     {
       value: '163',
       label: '水利勘查设计单位'
+    },
+    {
+      value: '141',
+      label: '房建及市政监理单位'
+    },
+    {
+      value: '161',
+      label: '房建及市政设计单位'
     }
   ]
 }

@@ -1052,6 +1052,11 @@
 			},
 			/** 公示详情 */
 			toAnnounceDetail(item) {
+				let userFlag = uni.getStorageSync(USER_FLAG);
+				if (userFlag != USER_FLAG_VIP) {
+					showInfoToast("只有VIP用户才能查看");
+					return;
+				}
 				if (item.id !== null && item.inwordHtmlUrl !== '') {
 					this.toWebViewPage("公示详情", DOCUMENT_BASE_URL +"/"+ item.inwordHtmlUrl);
 				} else {

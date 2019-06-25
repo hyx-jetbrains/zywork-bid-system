@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import top.zywork.annotation.HasHideProperty;
 import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.ReflectUtils;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/CompAptitudeCompany")
+@HasHideProperty
 public class CompAptitudeCompanyController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CompAptitudeCompanyController.class);
@@ -68,7 +70,7 @@ public class CompAptitudeCompanyController extends BaseController {
     }
 
     @PostMapping("user/pager-cond")
-    @HideProperty(url = "/comp-aptitude/user/pager-cond", properties = {"companyCompName"})
+    @HideProperty(url = "/CompAptitudeCompany/user/pager-cond", properties = {"companyCompName"})
     public ResponseStatusVO userListPageByCondition(HttpServletRequest request, @RequestBody CompAptitudeCompanyQuery compAptitudeCompanyQuery) {
         ResponseStatusVO responseStatusVO = listPageByCondition(compAptitudeCompanyQuery);
         Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);

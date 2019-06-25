@@ -6,6 +6,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.zywork.common.BeanUtils;
@@ -13,6 +14,8 @@ import top.zywork.common.RandomUtils;
 import top.zywork.constant.UserCouponConstants;
 import top.zywork.dao.*;
 import top.zywork.dos.UserCouponDO;
+import top.zywork.dto.CouponDTO;
+import top.zywork.dto.CouponRecordDTO;
 import top.zywork.dto.UserCouponDTO;
 import top.zywork.enums.DatePatternEnum;
 import top.zywork.enums.FundsChangeTypeEnum;
@@ -49,6 +52,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     private UserCouponDAO userCouponDAO;
 
     private CouponDAO couponDAO;
+
+    private CouponRecordDAO couponRecordDAO;
 
     private ExpertSubscribeDAO expertSubscribeDAO;
 
@@ -163,15 +168,38 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             int validYear = json.getInteger("validYear");
             int type = json.getIntValue("type");
 
-            if(!StringUtils.isEmpty(userCouponIds)) {
+            if(StringUtils.isNotEmpty(userCouponIds)) {
                 // 有使用抵用券，更新抵扣券使用状态
                 String[] couponIdsArr = userCouponIds.split(",");
-                for (String couponId : couponIdsArr) {
-                    Object couponObj = userCouponDAO.getById(couponId);
-                    if (null != couponObj) {
-                        UserCouponDTO userCouponDTO = BeanUtils.copy(couponObj, UserCouponDTO.class);
+                for (String couponIdStr : couponIdsArr) {
+                    logger.info("couponId:{}", couponIdStr);
+                    if (StringUtils.isEmpty(couponIdStr)) {
+                        continue;
+                    }
+                    Long userCouponId = Long.valueOf(couponIdStr);
+                    Object userCouponObj = userCouponDAO.getById(userCouponId);
+                    if (null != userCouponObj) {
+                        UserCouponDTO userCouponDTO = BeanUtils.copy(userCouponObj, UserCouponDTO.class);
                         userCouponDTO.setUseStatus(UserCouponConstants.COUPON_STATUS_TRUE);
-                        userCouponDAO.update(userCouponDTO);
+                        logger.info("update t_user_coupon:{}", userCouponDTO);
+                        userCouponDTO.setVersion(userCouponDTO.getVersion()+1);
+                        int updateRow = userCouponDAO.update(userCouponDTO);
+                        if (updateRow > 0) {
+                            logger.info("t_user_coupon update success:" + updateRow);
+                            Object couponObj = couponDAO.getById(userCouponDTO.getCouponId());
+                            CouponDTO couponDTO = BeanUtils.copy(couponObj, CouponDTO.class);
+                            long couponMoney = couponDTO.getMoney();
+                            long price = Long.valueOf(totalFee);
+                            // 更新抵用券状态成功，增加用户抵用券使用记录
+                            CouponRecordDTO couponRecordDTO = new CouponRecordDTO();
+                            couponRecordDTO.setUserId(userId);
+                            couponRecordDTO.setCouponId(userCouponDTO.getCouponId());
+                            long oldPrice = price + couponMoney;
+                            couponRecordDTO.setPrice(price);
+                            couponRecordDTO.setCouponPrice(couponMoney);
+                            couponRecordDTO.setOldPrice(oldPrice);
+                            couponRecordDAO.save(couponRecordDTO);
+                        }
                     }
                 }
             }
@@ -196,11 +224,14 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             userServiceVO.setEndDate(cal.getTime());
             if(updateFlag) {
                 // 续费购买
+                logger.info("update t_user_service:{}", userServiceVO);
+                userServiceVO.setVersion(userServiceVO.getVersion()+1);
                 userServiceDAO.update(userServiceVO);
             } else {
                 // 第一次购买
                 userServiceDAO.save(userServiceVO);
             }
+
         } else if(payType == UserCouponConstants.PAY_TYPE_EXPER) {
             // 预约专家
             accountDetailType = FundsChangeTypeEnum.APPOINTMENT_EXPERT.getValue();
@@ -211,6 +242,7 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             expertSubscribeVO.setId(expertSubscribeId);
             expertSubscribeVO.setPayStatus(GoodsOrderStatusEnum.PAY_SUCCESS.getDes());
             expertSubscribeVO.setTransactionNo(transactionNo);
+            expertSubscribeVO.setVersion(expertSubscribeVO.getVersion()+1);
             expertSubscribeDAO.update(expertSubscribeVO);
         }
 
@@ -220,6 +252,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
             UserWalletVO userWalletVO = BeanUtils.copy(walletObj, UserWalletVO.class);
             long integral = userWalletVO.getIntegral();
             userWalletVO.setIntegral(integral + totalFee);
+            logger.info("t_user_wallet:{}", userWalletVO);
+            userWalletVO.setVersion(userWalletVO.getVersion()+1);
             userWalletDAO.update(userWalletVO);
         }
 
@@ -267,5 +301,10 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
     @Autowired
     public void setUserWalletDAO(UserWalletDAO userWalletDAO) {
         this.userWalletDAO = userWalletDAO;
+    }
+
+    @Autowired
+    public void setCouponRecordDAO(CouponRecordDAO couponRecordDAO) {
+        this.couponRecordDAO = couponRecordDAO;
     }
 }
