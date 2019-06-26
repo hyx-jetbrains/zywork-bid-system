@@ -18,7 +18,10 @@ import {
 	getCalendarDate,
 	USER_FLAG,
 	USER_FLAG_VIP,
-	USER_FLAG_ORDINARY
+	USER_FLAG_ORDINARY,
+	CREDIT_QUERY_ID,
+	CREDIT_QUERY_VIP,
+	CREDIT_QUERY
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -1350,7 +1353,9 @@ export const getMyServiceUserCenter = (self) => {
 	uni.request({
 		url: BASE_URL + '/UserServiceService/user/all-cond',
 		method: 'POST',
-		data: {},
+		data: {
+			userServiceIsActive: 0
+		},
 		header: {
 			'Authorization': 'Bearer ' + getUserToken()
 		},
@@ -1361,8 +1366,22 @@ export const getMyServiceUserCenter = (self) => {
 					key: USER_FLAG,
 					data: USER_FLAG_ORDINARY
 				})
+				uni.setStorage({
+					key: CREDIT_QUERY_VIP,
+					data: USER_FLAG_ORDINARY
+				})
 				if (res.data.data.total > 0) {
 					var currDate = getCalendarDate(new Date());
+					res.data.data.rows.forEach(item => {
+						if (item.userServiceServiceId == CREDIT_QUERY_ID) {
+							// 购买的服务中有征信查询
+							uni.setStorage({
+								key: CREDIT_QUERY_VIP,
+								data: CREDIT_QUERY
+							})
+							return true;
+						}
+					})
 					res.data.data.rows.forEach(item => {
 						if (item.userServiceEndDate >= currDate) {
 							// 有购买过服务，并至少有个服务没到期，点亮图片

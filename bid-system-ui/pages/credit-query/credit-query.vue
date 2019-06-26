@@ -424,8 +424,7 @@
 						<view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label" style="width: 40%;">注册证件号码:</view>
-								<view v-if="item.compBuilderRegNum != ''"
-								 class="zy-text-info">
+								<view v-if="item.compBuilderRegNum != ''" class="zy-text-info">
 									{{item.compBuilderRegNum}}
 								</view>
 								<view v-else class="zy-text-info">
@@ -434,8 +433,7 @@
 							</view>
 							<view class="zy-disable-flex">
 								<view class="zy-text-info zy-text-bold zy-content-label" style="width: 40%;">专业等级:</view>
-								<view v-if="item.compBuilderMajorLevel != ''"
-								 class="zy-text-info">
+								<view v-if="item.compBuilderMajorLevel != ''" class="zy-text-info">
 									{{item.compBuilderMajorLevel}}
 								</view>
 								<view v-else class="zy-text-info">
@@ -597,7 +595,9 @@
 		USER_FLAG,
 		USER_FLAG_VIP,
 		nullToStr,
-		DOCUMENT_BASE_URL
+		DOCUMENT_BASE_URL,
+		CREDIT_QUERY_VIP,
+		CREDIT_QUERY
 	} from '@/common/util.js'
 
 	/** 企业信息 */
@@ -682,14 +682,15 @@
 				industryTypeIndex: 0,
 				projectTypeArray: projectTypeArray,
 				projectTypeIndex: 0,
+				creditQueryVip: false
 			}
 		},
 		onLoad() {
-			this.initData();
+			this.initData('init');
 		},
 		onPullDownRefresh() {
 			this.pager.pageNo = 1
-			this.checkRefresh(this.infoType.tabIndex, 'pullDown');
+			this.initData('pullDown');
 		},
 		onReachBottom() {
 			this.showLoadMore = true
@@ -706,8 +707,12 @@
 		},
 		methods: {
 			/** 初始化数据 */
-			initData() {
-				this.checkRefresh(this.infoType.tabIndex, 'init');
+			initData(type) {
+				this.checkRefresh(this.infoType.tabIndex, type);
+				let creditFlag = uni.getStorageSync(CREDIT_QUERY_VIP);
+				if (creditFlag == CREDIT_QUERY) {
+					this.creditQueryVip = true;
+				}
 			},
 			/** 初始化查询条件 */
 			initPager() {
@@ -724,9 +729,8 @@
 			/** 查看企业详情 */
 			toCompanyDetail(item, type) {
 				if (type !== 0) {
-					let userFlag = uni.getStorageSync(USER_FLAG);
-					if (userFlag != USER_FLAG_VIP) {
-						showInfoToast("只有VIP用户才能查看");
+					if (!this.creditQueryVip) {
+						showInfoToast("只有购买征信查询服务才能查看");
 						return;
 					}
 					creditQuery.getOneById(this, '/company/any/one/', item)
@@ -752,9 +756,8 @@
 			},
 			/** 查看企业业绩详情 */
 			toAchievementDetail(item) {
-				let userFlag = uni.getStorageSync(USER_FLAG);
-				if (userFlag != USER_FLAG_VIP) {
-					showInfoToast("只有VIP用户才能查看");
+				if (!this.creditQueryVip) {
+					showInfoToast("只有购买征信查询服务才能查看");
 					return;
 				}
 				item.achievementType = this.achievementOpts.current;
@@ -1052,13 +1055,12 @@
 			},
 			/** 公示详情 */
 			toAnnounceDetail(item) {
-				let userFlag = uni.getStorageSync(USER_FLAG);
-				if (userFlag != USER_FLAG_VIP) {
-					showInfoToast("只有VIP用户才能查看");
+				if (!this.creditQueryVip) {
+					showInfoToast("只有购买征信查询服务才能查看");
 					return;
 				}
 				if (item.id !== null && item.inwordHtmlUrl !== '') {
-					this.toWebViewPage("公示详情", DOCUMENT_BASE_URL +"/"+ item.inwordHtmlUrl);
+					this.toWebViewPage("公示详情", DOCUMENT_BASE_URL + "/" + item.inwordHtmlUrl);
 				} else {
 					uni.showModal({
 						title: '提示',

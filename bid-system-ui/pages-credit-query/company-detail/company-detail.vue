@@ -120,7 +120,7 @@
 							<view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
-									<view v-if="item.compBuilderRegNum != null && item.compBuilderRegNum != '' && item.compBuilderRegNum != undefined"
+									<view v-if="item.compBuilderRegNum != ''"
 									 class="zy-text-info">
 										{{item.compBuilderRegNum}}
 									</view>
@@ -130,9 +130,9 @@
 								</view>
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
-									<view v-if="item.compBUilderMajorLevel != null && item.compBUilderMajorLevel != '' && item.compBUilderMajorLevel != undefined"
+									<view v-if="item.compBuilderMajorLevel != ''"
 									 class="zy-text-info">
-										{{item.compBUilderMajorLevel}}
+										{{item.compBuilderMajorLevel}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无

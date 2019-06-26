@@ -18,6 +18,9 @@ export const IS_VIP_COLOR_FALSE = '#CCC'
 export const USER_FLAG = 'userFlag'
 export const USER_FLAG_VIP = 'vip'
 export const CUSTOMER_CONFIG = 'customerConfig'
+export const CREDIT_QUERY_VIP = 'creditQueryVip'
+export const CREDIT_QUERY = 'creditQuery'
+export const CREDIT_QUERY_ID = 2
 export const USER_FLAG_ORDINARY = 'ordinary'
 export const SHARE_CODE_PAGE_IMG = '/static/share.jpg'
 

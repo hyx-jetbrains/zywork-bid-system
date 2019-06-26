@@ -729,7 +729,9 @@
 		USER_FLAG,
 		USER_FLAG_VIP,
 		nullToStr,
-		DOCUMENT_BASE_URL
+		DOCUMENT_BASE_URL,
+		CREDIT_QUERY_VIP,
+		CREDIT_QUERY
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
@@ -795,7 +797,8 @@
 				},
 				totalCount: 0,
 				searchDrawer: false,
-				isVipUser: false
+				isVipUser: false,
+				creditQueryVip: false
 			}
 		},
 		onLoad(event) {
@@ -825,6 +828,10 @@
 				let userFlag = uni.getStorageSync(USER_FLAG);
 				if (userFlag == USER_FLAG_VIP) {
 					this.isVipUser = true;
+				}
+				let creditFlag = uni.getStorageSync(CREDIT_QUERY_VIP);
+				if (creditFlag == CREDIT_QUERY) {
+					this.creditQueryVip = true;
 				}
 			},
 			/** 初始化查询数据 */
@@ -948,8 +955,8 @@
 			/** 查看企业详情 */
 			toCompanyDetail(item, type) {
 				if (type !== 0) {
-					if (!this.isVipUser) {
-						showInfoToast("只有VIP用户才能查看");
+					if (!this.creditQueryVip) {
+						showInfoToast("只有购买征信查询服务才能查看");
 						return;
 					}
 					creditQuery.getOneById(this, '/company/any/one/', item)
@@ -975,8 +982,8 @@
 			},
 			/** 查看企业业绩详情 */
 			toAchievementDetail(item) {
-				if (!this.isVipUser) {
-					showInfoToast("只有VIP用户才能查看");
+				if (!this.creditQueryVip) {
+					showInfoToast("只有购买征信查询服务才能查看");
 					return;
 				}
 				item.achievementType = this.achievementOpts.current;
@@ -1280,8 +1287,8 @@
 			},
 			/** 公示详情 */
 			toAnnounceDetail(item) {
-				if (!this.isVipUser) {
-					showInfoToast("只有VIP用户才能查看");
+				if (!this.creditQueryVip) {
+					showInfoToast("只有购买征信查询服务才能查看");
 					return;
 				}
 				if (item.id !== null && item.inwordHtmlUrl !== '') {
