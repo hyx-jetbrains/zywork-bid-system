@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.SysInfoDTO;
@@ -148,7 +149,7 @@ public class SysInfoController extends BaseController {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
                 ResourceConstants.RESOURCE_TYPE_IMAGE, UploadTypeEnum.IMAGE.getAllowedExts(),
-                UploadTypeEnum.IMAGE.getMaxSize(), false);
+                UploadTypeEnum.IMAGE.getMaxSize(), false, ProjectConstants.NOT_CREATE_DIR);
         if (ResponseStatusEnum.OK.getCode().equals(responseStatusVO.getCode())) {
             responseStatusVO.setMessage(type);
         }

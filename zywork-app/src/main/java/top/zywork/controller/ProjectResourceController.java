@@ -162,11 +162,11 @@ public class ProjectResourceController extends BaseController {
     }
 
     @PostMapping("admin/upload-res")
-    public ResponseStatusVO upload(MultipartFile file) {
+    public ResponseStatusVO upload(MultipartFile file, String projectId) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
                 ResourceConstants.RESOURCE_TYPE_DOCUMENT, UploadTypeEnum.OFFICE.getAllowedExts(),
-                UploadTypeEnum.OFFICE.getMaxSize(), true);
+                UploadTypeEnum.OFFICE.getMaxSize(), true, projectId);
         return responseStatusVO;
     }
 

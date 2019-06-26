@@ -138,14 +138,10 @@ public class ProjectAnnounceController extends BaseController {
         }
 
 
-        Object obj = projectAnnounceService.getById(projectAnnounceVO.getId());
-        if(obj != null) {
-            ProjectAnnounceVO projectAnnounce = BeanUtils.copy(obj, ProjectAnnounceVO.class);
-            String url = "/data/bid-system/" + projectAnnounce.getInwordHtmlUrl();
-            File file = new File(url);
-            if(file.exists()) {
-                file.delete();
-            }
+        String url = "/data/bid-system/" + projectAnnounceVO.getInwordHtmlUrl();
+        File file = new File(url);
+        if(file.exists()) {
+            file.delete();
         }
 
         projectAnnounceVO = generatorProjectAnnounceVO(projectAnnounceVO);
@@ -159,8 +155,13 @@ public class ProjectAnnounceController extends BaseController {
     }
 
     private ProjectAnnounceVO generatorProjectAnnounceVO(ProjectAnnounceVO projectAnnounceVO) {
+        String content = projectAnnounceVO.getAnnounceDesc();
+        if (org.apache.commons.lang.StringUtils.isEmpty(content)) {
+            logger.error("项目公示生成html错误：内容为空：" + projectAnnounceVO);
+            return projectAnnounceVO;
+        }
         String fileName = UUIDUtils.uuid() +".html";
-        CommonMethodUtils.generatorHtmlCode(fileName, projectAnnounceVO.getAnnounceDesc(), location);
+        CommonMethodUtils.generatorHtmlCode(fileName, content, location);
         projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
         return projectAnnounceVO;
     }

@@ -23,9 +23,10 @@ public interface ResourceService extends BaseService {
      * @param resourceExts 资源扩展名，用于判断资源上传是否正确
      * @param resourceSize 资源最大大小
      * @param keepFileName 是否保留原文件名
+     * @param fileDir 文件目录，0：不需要新建目录
      * @return: top.zywork.vo.ResponseStatusVO
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-04-25 09:43
      */
-    ResponseStatusVO saveResource(JwtUser jwtUser, MultipartFile file, String resourceType, String resourceExts, Long resourceSize, boolean keepFileName);
+    ResponseStatusVO saveResource(JwtUser jwtUser, MultipartFile file, String resourceType, String resourceExts, Long resourceSize, boolean keepFileName, String fileDir);
 }

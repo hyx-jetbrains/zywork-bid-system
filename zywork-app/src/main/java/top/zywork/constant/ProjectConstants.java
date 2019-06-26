@@ -55,4 +55,10 @@ public final class ProjectConstants {
      */
     public static final String ZHCN_TEXT_REG = "[\\u4e00-\\u9fa5]";
 
+
+    /**
+     * 不需要新建目录标识
+     */
+    public static final String NOT_CREATE_DIR = "0";
+
 }

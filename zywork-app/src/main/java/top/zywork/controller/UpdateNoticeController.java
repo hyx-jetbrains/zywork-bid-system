@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.UpdateNoticeDTO;
@@ -152,7 +153,7 @@ public class UpdateNoticeController extends BaseController {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
                 ResourceConstants.RESOURCE_TYPE_DOCUMENT, UploadTypeEnum.OFFICE.getAllowedExts(),
-                UploadTypeEnum.OFFICE.getMaxSize(), true);
+                UploadTypeEnum.OFFICE.getMaxSize(), true, ProjectConstants.NOT_CREATE_DIR);
         return responseStatusVO;
     }
 

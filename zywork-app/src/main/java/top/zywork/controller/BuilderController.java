@@ -13,6 +13,7 @@ import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.common.UploadUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.BuilderDTO;
@@ -159,7 +160,7 @@ public class BuilderController extends BaseController {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
                 ResourceConstants.RESOURCE_TYPE_IMAGE, UploadTypeEnum.IMAGE.getAllowedExts(),
-                UploadTypeEnum.IMAGE.getMaxSize(), false);
+                UploadTypeEnum.IMAGE.getMaxSize(), false, ProjectConstants.NOT_CREATE_DIR);
         return responseStatusVO;
     }
 

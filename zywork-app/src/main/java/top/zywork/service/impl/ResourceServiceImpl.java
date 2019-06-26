@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.DateUtils;
 import top.zywork.common.UploadUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.ResourceConstants;
 import top.zywork.dao.ResourceDAO;
 import top.zywork.dos.ResourceDO;
@@ -20,6 +22,7 @@ import top.zywork.vo.ResourceVO;
 import top.zywork.vo.ResponseStatusVO;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 
 /**
  * ResourceServiceImpl服务接口实现类<br/>
@@ -96,9 +99,22 @@ public class ResourceServiceImpl extends AbstractBaseService implements Resource
 
     @Override
     public ResponseStatusVO saveResource(JwtUser jwtUser, MultipartFile file, String resourceType,
-                                         String resourceExts, Long resourceSize, boolean keepFileName) {
+                                         String resourceExts, Long resourceSize, boolean keepFileName, String fileDir) {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
+        }
+        String imgDir = this.imgDir;
+        String imgUrl = this.imgUrl;
+        if (!ProjectConstants.NOT_CREATE_DIR.equals(fileDir)) {
+            // 表示是项目资源上传，需要区分目录
+            StringBuilder sb = new StringBuilder();
+            sb.append(File.separator)
+                    .append("project_")
+                    .append(fileDir)
+                    .append(File.separator)
+                    .append(DateUtils.currentTimeMillis());
+            imgDir += sb.toString();
+            imgUrl += sb.toString();
         }
         UploadUtils.UploadOptions uploadOptions = new UploadUtils.UploadOptions(imgParentDir, imgDir, imgUrl, keepFileName);
         if (ResourceConstants.RESOURCE_TYPE_IMAGE.equals(resourceType)) {

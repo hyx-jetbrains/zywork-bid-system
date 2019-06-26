@@ -75,6 +75,7 @@
         <FormItem label="资源文件" prop="resourceId">
           <Upload
             type="drag"
+            :data="{'projectId': form.projectId}"
             :action="urls.uploadResourceUrl"
             :on-success="handleSuccess"
             :on-format-error="handleFormatError"
@@ -645,7 +646,7 @@ export default {
             render: (h, params) => {
               const row = params.row
               const color =
-               row.resType === 0
+                row.resType === 0
                   ? 'primary'
                   : row.resType === 1
                   ? 'info'
@@ -836,7 +837,7 @@ export default {
       },
       projectId: this.$route.params.projectId,
       imgUrl: '',
-      projectTitle: this.$route.params.projectTitle,
+      projectTitle: this.$route.params.projectTitle
     }
   },
   computed: {},
@@ -900,7 +901,8 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
-        utils.getOneById('/project/admin/one/', this.form.projectId)
+        utils
+          .getOneById('/project/admin/one/', this.form.projectId)
           .then(res => {
             this.projectTitle = res.data.data.title
           })
@@ -999,10 +1001,20 @@ export default {
       })
     },
     handleBeforeUpload(file) {
-      if (this.form.resourceId === undefined 
-          || this.form.resourceId == null 
-          || this.form.resourceId === 0) {
-        return true
+      if (
+        this.form.resourceId === undefined ||
+        this.form.resourceId == null ||
+        this.form.resourceId === 0
+      ) {
+        if (
+          this.form.projectId !== null &&
+          this.form.projectId !== undefined &&
+          this.form.projectId !== ''
+        ) {
+          return true
+        }
+        this.$Message.error('请先选择项目')
+        return false
       }
       this.$Message.error('只能上传一个文件')
       return false

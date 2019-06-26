@@ -728,7 +728,8 @@
 		validText,
 		USER_FLAG,
 		USER_FLAG_VIP,
-		nullToStr
+		nullToStr,
+		DOCUMENT_BASE_URL
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
