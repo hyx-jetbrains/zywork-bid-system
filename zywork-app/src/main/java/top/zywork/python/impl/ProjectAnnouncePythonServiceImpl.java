@@ -78,7 +78,9 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
 
                     String fileName = UUIDUtils.uuid() +".html";
                     String projectDetail = obj.getString("projectDetail");
-                    CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
+                    if (StringUtils.isNotEmpty(projectDetail)) {
+                        CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
+                    }
 
                     projectAnnounceVO.setProjectType(obj.getString("projectType"));
                     projectAnnounceVO.setTitle(tempTitle);
