@@ -7,6 +7,12 @@ package top.zywork.constant;
  */
 public final class ProjectConstants {
 
+
+    /**
+     * 发布状态-已发布
+     */
+    public static final String RELEASE_STAUTS_TRUE = "已发布";
+
     /**
      * 中标公示状态-公告中
      */
@@ -60,5 +66,34 @@ public final class ProjectConstants {
      * 不需要新建目录标识
      */
     public static final String NOT_CREATE_DIR = "0";
+
+
+    /**
+     * 项目订阅通知类型-项目更新
+     */
+    public static final String PROJECT_SUBSCRIBE_TYPE_UPDATE = "update";
+    /**
+     * 项目订阅通知类型-开标提醒
+     */
+    public static final String PROJECT_SUBSCRIBE_TYPE_OPEN_MARK = "openMark";
+
+    /**
+     * 短信开关-开-true
+     */
+    public static final String SMS_SWITCH_TRUE = "true";
+
+
+    /**
+     * 短信签名-江西数达信息科技有限公司
+     */
+    public static final String SMS_SIGN_NAME = "江西数达信息科技有限公司";
+    /**
+     * 短信通知模版code-订阅通知-SMS_169100937
+     */
+    public static final String SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE = "SMS_169100937";
+    /**
+     * 短信通知模版code-开标通知-SMS_169110934
+     */
+    public static final String SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE = "SMS_169110934";
 
 }

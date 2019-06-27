@@ -92,6 +92,10 @@ public class ProjectController extends BaseController {
         }
 
         projectVO = generatorProjectVo(projectVO);
+        if (ProjectConstants.RELEASE_STAUTS_TRUE.equals(projectVO.getReleaseStatus())) {
+            // 是已发布的状态
+            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
+        }
         projectService.save(BeanUtils.copy(projectVO, ProjectDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -135,6 +139,11 @@ public class ProjectController extends BaseController {
         }
 
         projectVO = generatorProjectVo(projectVO);
+
+        if (ProjectConstants.RELEASE_STAUTS_TRUE.equals(projectVO.getReleaseStatus())) {
+            // 是已发布的状态
+            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
+        }
         int updateRows = projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
         if (updateRows == 1) {
             return ResponseStatusVO.ok("更新成功", null);
@@ -223,96 +232,9 @@ public class ProjectController extends BaseController {
         }
         projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
         projectVO = BeanUtils.copy(obj, ProjectVO.class);
-        // 查询所有的订阅信息
-        PagerDTO pagerDTO = subscribeService.listAll();
-        List<Object> objList = pagerDTO.getRows();
-        if(objList != null && objList.size() > 0) {
-            List<SubscribeVO> list = BeanUtils.copy(objList, SubscribeVO.class);
-            Long projectId = projectVO.getId();
-            for(SubscribeVO subscribeVO: list) {
-                Long userId = subscribeVO.getUserId();
-                // 一、判断用户是否开通了订阅推送
-                if (0 == subscribeVO.getIsSubscribe()) {
-                    // 用户未开通订阅推送，直接跳过当前循环
-                    continue;
-                }
-                // 二、用户开通了订阅推送，判断城市是否匹配
-                if (!subscribeVO.getCity().equals("全省")) {
-                    // 用户设置的不是全省，需要判断当前项目是否满足
-                    if (!projectVO.getCity().equals(subscribeVO.getCity())) {
-                        // 和用户订阅的城市不匹配，跳出本次循环，继续判断下个用户
-                        continue;
-                    }
-                }
-                // 三、用户设置了全省或者当前这个项目和用户订阅的城市匹配，继续判断项目类型是否匹配
-                if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getProjectType())) {
-                    // 用户设置了订阅的项目类型
-                    if (!subscribeVO.getProjectType().contains(projectVO.getProjectType())) {
-                        // 当前项目不在用户订阅的项目类型当中
-                        continue;
-                    }
-                }
-                if ("政府采购".equals(projectVO.getProjectType())) {
-                    // 如果当前项目是政府采购，还需要判断用户有没有订阅关键字
-                    if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getKeyword())) {
-                        // 用户有输入关键字
-                        if (!projectVO.getTitle().contains(subscribeVO.getKeyword())) {
-                            // 当前项目不包含用户订阅的关键字
-                            continue;
-                        }
-                    }
-                }
+        projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
 
-                String tempProjectInvest = projectVO.getProjectInvest();
-                if (org.apache.commons.lang.StringUtils.isEmpty(tempProjectInvest)) {
-                    // 当前项目未设置金额
-                    continue;
-                }
-                Pattern pat = Pattern.compile(ProjectConstants.ZHCN_TEXT_REG);
-                Matcher mat = pat.matcher(tempProjectInvest);
-                Double projectInvest = Double.valueOf(mat.replaceAll("").trim());
-                // 四、用户设置了全省或者当前这个项目和用户订阅的城市匹配，并且没有设置订阅的类型，继续判断金额区间
-                if (0 != subscribeVO.getMinMoney()) {
-                    // 用设置了最小金额
-                    double minMoney = Double.valueOf(subscribeVO.getMinMoney()) / 100;
-                    if (projectInvest < minMoney) {
-                        // 当前项目的金额小于用户订阅的最小金额
-                        continue;
-                    }
-                }
-                if (0 != subscribeVO.getMaxMoney()) {
-                    // 用户设置了最大金额
-                    double maxMoney = Double.valueOf(subscribeVO.getMaxMoney()) / 100;
-                    if (projectInvest > maxMoney) {
-                        // 当前项目的金额大于用户订阅的金额
-                        continue;
-                    }
-                }
-                // 五、上面的条件都满足，继续判断订阅的招标单位
-                if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getTenderee())) {
-                    // 用户有订阅专门的投标单位
-                    if (!subscribeVO.getTenderee().contains(projectVO.getInMarkComp())) {
-                        // 当前项目的招标单位不在用户的订阅里面
-                        continue;
-                    }
-                }
-                // 六、满足用户的所有订阅条件，给用户推送消息
-                saveNotice(userId, projectId);
-            }
-        }
         return ResponseStatusVO.ok("发布成功", null);
-    }
-
-    public void saveNotice(Long userId, Long projectId) {
-        UserNoticeVO userNoticeVO= new UserNoticeVO();
-        userNoticeVO.setUserId(userId);
-        userNoticeVO.setItemId(projectId);
-        userNoticeVO.setPageUrl(NoticeConstants.projectUrl);
-        userNoticeVO.setTitle("项目订阅更新");
-        userNoticeVO.setMainContent("项目订阅更新");
-        userNoticeVO.setDetailContent("您订阅的项目有一条符合条件新项目发布了，具体内容可点击《立即查看》按钮前往查看");
-        userNoticeVO.setNoticeType(NoticeEnum.SUBSCRIBE_MESSAGE.getValue());
-        userNoticeService.save(userNoticeVO);
     }
 
     @PostMapping("admin/batch-release")

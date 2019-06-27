@@ -25,4 +25,11 @@ public interface UserDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    /**
+     * 根据用户ids获取用户列表
+     * @param ids 以逗号分割的用户id
+     * @return
+     */
+    List<Object> listByUserIds(@Param("ids") String[] ids);
 }

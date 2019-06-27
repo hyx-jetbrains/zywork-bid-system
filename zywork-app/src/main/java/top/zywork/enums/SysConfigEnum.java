@@ -18,7 +18,8 @@ public enum SysConfigEnum {
     DEFAULT_DISTRIBUTION_CONFIG("default_distribution_config"),
     ALIYUN_OSS_CONFIG("aliyun_oss_config"),
     QINIU_OSS_CONFIG("qiniu_oss_config"),
-    CUSTOMER_CONFIG("customer_config");
+    CUSTOMER_CONFIG("customer_config"),
+    SMS_SWITCH_CONFIG("sms_switch_config");
 
     private String value;
 

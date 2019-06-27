@@ -68,13 +68,14 @@
 						<input class="uni-input" v-model="subscrible.maxMoney" name="maxMoney" type="number" />
 						万
 					</view>
+					<text class="zy-text-warning">不输入或者输入‘0’表示不设置金额区间</text>
 				</view>
 				<view v-if="showKeyword" class="uni-form-item uni-column">
 					<view class="zy-text-bold">关键字(备选)</view>
 					<input class="uni-input" name="keyword" v-model="subscrible.keyword" placeholder="请输入订阅关键字" />
 					<text class="zy-text-warning">只有订阅政府采购才需要输入关键字</text>
 				</view>
-				<view class="uni-form-item uni-column">
+				<!-- <view class="uni-form-item uni-column">
 					<view class="zy-text-bold">招标人(备选)</view>
 					<view class="uni-list">
 						<uni-swipe-action v-for="(item, index) in tendereeArray" :key="index" class="uni-list-cell uni-list-cell-pd"
@@ -85,7 +86,7 @@
 							<zywork-icon type="icontianjia" color="#108ee9" size="28" />
 						</label>
 					</view>
-				</view>
+				</view> -->
 				<view class="uni-form-item uni-column zy-disable-flex">
 					<view class="zy-text-bold" style="margin-right: 30upx;">是否开通</view>
 					<switch name="isSubscribe" :checked="isSubscribe" color="#108EE9" />
@@ -292,7 +293,7 @@
 				if (this.subscrible.maxMoney !== '' && this.subscrible.maxMoney !== 0) {
 					this.subscrible.maxMoney = this.subscrible.maxMoney / 100;
 				} else {
-					this.subscrible.maxMoney = 99999;
+					this.subscrible.maxMoney = 0;
 				}
 			},
 			/** 设置订阅的项目类型 */

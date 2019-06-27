@@ -59,4 +59,13 @@ public interface ProjectService extends BaseService {
     void updateMarkStatus();
 
     Object getByTitle(String title);
+
+    /***
+     * @description:  项目订阅推送
+     * @param projectVO
+     * @return: void
+     * @author: 危锦辉 http://wjhsmart.vip
+     * @date: 2019-06-27 11:52
+     */
+    void subscribleNotice(ProjectVO projectVO, String type);
 }
