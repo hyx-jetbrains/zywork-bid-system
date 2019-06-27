@@ -357,7 +357,9 @@
 				imgBaseUrl: IMAGE_BASE_URL,
 				headicon: DEFAULT_HEADICON,
 				isCollection: false,
-				actionSheetArray: fileTypeArray
+				actionSheetArray: fileTypeArray,
+				isShowFileList: false,
+				fileList: [],
 			}
 		},
 		onLoad() {

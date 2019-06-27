@@ -63,10 +63,14 @@ public class ProjectResourceController extends BaseController {
         int i = projectResourceService.save(BeanUtils.copy(projectResourceVO, ProjectResourceDTO.class));
         if (i > 0) {
             // 保存成功更新项目表个数
+            Long projectId = projectResourceVO.getProjectId();
+            ProjectResourceQuery projectResourceQuery = new ProjectResourceQuery();
+            projectResourceQuery.setProjectId(projectId);
+            projectResourceQuery.setIsActive((byte)0);
+            Long count = projectResourceService.countByCondition(projectResourceQuery);
             Object obj = projectService.getById(projectResourceVO.getProjectId());
             ProjectDTO projectDTO = BeanUtils.copy(obj, ProjectDTO.class);
-            int resourceCount = projectDTO.getResourceCount() + 1;
-            projectDTO.setResourceCount(resourceCount);
+            projectDTO.setResourceCount(count.intValue());
             projectService.update(projectDTO);
         }
         return ResponseStatusVO.ok("添加成功", null);

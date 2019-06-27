@@ -286,9 +286,13 @@
 				
 				if (this.subscrible.minMoney !== '' && this.subscrible.minMoney !== 0) {
 					this.subscrible.minMoney = this.subscrible.minMoney / 100;
+				} else {
+					this.subscrible.minMoney = 0;
 				}
 				if (this.subscrible.maxMoney !== '' && this.subscrible.maxMoney !== 0) {
 					this.subscrible.maxMoney = this.subscrible.maxMoney / 100;
+				} else {
+					this.subscrible.maxMoney = 99999;
 				}
 			},
 			/** 设置订阅的项目类型 */

@@ -64,10 +64,12 @@ export const getCompanyList = (self, params) => {
 		title: '加载中'
 	})
 	uni.request({
-		url: BASE_URL + '/company/any/pager-cond',
+		url: BASE_URL + '/company/user/pager-cond',
 		method: 'POST',
 		data: params,
-		header: '',
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.companyList = nullToStr(res.data.data.rows);
@@ -1527,11 +1529,7 @@ export const payServiceRecord = (self, params) => {
 					signType: res.data.data.signType,
 					paySign: res.data.data.paySign,
 					success: () => {
-						// 支付成功，设置vip标识
-						uni.setStorage({
-							key: USER_FLAG,
-							data: USER_FLAG_VIP
-						})
+						getMyServiceUserCenter(self);
 						uni.redirectTo({
 							url: '/pages-user-center/user-vip/user-vip'
 						})

@@ -6,8 +6,21 @@
 				<zywork-icon type="iconchaxun" />
 				<input type="text" v-model="pager.compName" :focus="true" placeholder="输入关键字搜索" @confirm="searchData" />
 			</view>
-			<view class="zy-disable-flex-right zy-search-page-cancel" @click="toBackPage">
-				取消
+			<view class="zy-disable-flex-right zy-search-page-cancel" @click="searchData">
+				搜索
+			</view>
+		</view>
+		<view class="zy-disable-flex zy-comp-type">
+			<view class="zy-type-title zy-text-bold">选择企业类别</view>
+			<view class="zy-disable-flex-right">
+				<view class="uni-list-cell-db">
+					<picker @change="onClickIndustryItem" :value="industryTypeIndex" :range="industryTypeArray">
+						<view class="zy-disable-flex">
+							<text>{{industryTypeArray[industryTypeIndex]}}</text>
+							<zywork-icon type="iconxiangxia" />
+						</view>
+					</picker>
+				</view>
 			</view>
 		</view>
 		<view style="margin-bottom: 100upx;">
@@ -42,6 +55,9 @@
 	import {
 		getCompanyList
 	} from '@/common/user-center.js'
+	import {
+		industryTypeArray
+	} from '@/common/picker.data.js'
 	export default {
 		components: {
 			zyworkIcon,
@@ -56,11 +72,14 @@
 					pageSize: 15,
 					isActive: 0,
 					compType: '投标人',
-					compName: ''
+					compName: '',
+					industryType: ''
 				},
 				companyList: [],
 				selectArray: [],
-				allChecked: false
+				allChecked: false,
+				industryTypeArray: industryTypeArray,
+				industryTypeIndex: 0,
 			}
 		},
 		onLoad(event) {
@@ -78,9 +97,9 @@
 			/** 初始化多选框选中 */
 			initCheckBoxSelected() {
 				const tenderee = this.item.tenderee;
-				if (tenderee != null
-					&& tenderee != undefined
-					&& tenderee != '') {
+				if (tenderee != null &&
+					tenderee != undefined &&
+					tenderee != '') {
 					var tendereeArray = tenderee.split(',');
 					this.companyList.forEach(item => {
 						var compName = item.compName;
@@ -89,14 +108,14 @@
 								this.$set(item, 'checked', true)
 							}
 						})
-					})	
+					})
 					if (tendereeArray.length === this.companyList.length) {
 						this.allChecked = true;
 					}
 					this.confirmCount = tendereeArray.length;
 				}
 			},
- 			/** 返回上个页面 */
+			/** 返回上个页面 */
 			toBackPage() {
 				// uni.navigateBack({
 				// 	delta: 1
@@ -166,13 +185,30 @@
 				uni.redirectTo({
 					url: '/pages-user-center/subscrible/subscrible?itemData=' + encodeURIComponent(JSON.stringify(this.item))
 				})
-			}
+			},
+			/** 行业分类选择器 */
+			onClickIndustryItem: function(e) {
+				let index = e.target.value
+				if (this.industryTypeIndex !== index) {
+					this.industryTypeIndex = index
+					if (index != 0) {
+						this.pager.industryType = this.industryTypeArray[index];
+					} else {
+						this.pager.industryType = '';
+					}
+					this.searchData();
+				}
+			},
 		}
 	}
 </script>
 
 <style lang="scss">
 	@import '../../common/zywork-main.scss';
+
+	.uni-list-cell:last-child {
+		margin-bottom: 10upx;
+	}
 
 	.uni-list-cell {
 		justify-content: flex-start
@@ -181,5 +217,9 @@
 	.zy-comp-search-bar {
 		background-color: #FFF;
 		margin-bottom: 10upx;
+	}
+	
+	.zy-comp-type {
+		background-color: #FFF;
 	}
 </style>

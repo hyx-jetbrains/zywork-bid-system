@@ -713,6 +713,7 @@
 				if (creditFlag == CREDIT_QUERY) {
 					this.creditQueryVip = true;
 				}
+				console.log(this.creditQueryVip)
 			},
 			/** 初始化查询条件 */
 			initPager() {

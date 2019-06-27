@@ -359,8 +359,8 @@ export default {
           {
             type: 'string',
             min: 1,
-            max: 32,
-            message: '必须1-32个字符',
+            max: 200,
+            message: '必须1-200个字符',
             trigger: 'blur'
           }
         ],
