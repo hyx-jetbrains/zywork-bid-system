@@ -77,21 +77,24 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
                     }
 
                     String fileName = UUIDUtils.uuid() +".html";
-                    String projectDetail = obj.getString("projectDetail");
-                    if (StringUtils.isNotEmpty(projectDetail)) {
-                        CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
+                    String announceDetail = obj.getString("announceDesc");
+                    String newFileName = "";
+                    if (StringUtils.isNotEmpty(announceDetail)) {
+                        newFileName = CommonMethodUtils.generatorHtmlCode(fileName, announceDetail, location);
                     }
 
                     projectAnnounceVO.setProjectType(obj.getString("projectType"));
                     projectAnnounceVO.setTitle(tempTitle);
-                    projectAnnounceVO.setAnnounceDesc(obj.getString("announceDesc"));
+                    projectAnnounceVO.setAnnounceDesc(announceDetail);
                     projectAnnounceVO.setFirstCandidate(inMarkComp);
                     projectAnnounceVO.setFirstBuilderName(obj.getString("firstBuilderName"));
                     projectAnnounceVO.setFirstMarkMoney(obj.getString("firstMarkMoney"));
                     projectAnnounceVO.setSecondCandidate(obj.getString("secondCandidate"));
                     projectAnnounceVO.setThirdCandidate(obj.getString("thirdCandidate"));
                     projectAnnounceVO.setSourceUrl(obj.getString("sourceUrl"));
-                    projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
+                    if (StringUtils.isNotEmpty(newFileName)) {
+                        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + newFileName);
+                    }
                     if (updateFlag) {
                         projectAnnounceDAO.update(projectAnnounceVO);
                     } else {

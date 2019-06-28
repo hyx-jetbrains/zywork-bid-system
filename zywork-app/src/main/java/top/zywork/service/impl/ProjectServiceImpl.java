@@ -1,7 +1,10 @@
 package top.zywork.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.zywork.ali.AliyunSmsConfig;
@@ -13,6 +16,7 @@ import top.zywork.common.DateParseUtils;
 import top.zywork.common.DateUtils;
 import top.zywork.constant.NoticeConstants;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.controller.BuilderReqController;
 import top.zywork.dao.*;
 import top.zywork.dos.ProjectDO;
 import top.zywork.dto.PagerDTO;
@@ -45,6 +49,8 @@ import java.util.regex.Pattern;
  */
 @Service(value = "projectService")
 public class ProjectServiceImpl extends AbstractBaseService implements ProjectService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     private ProjectDAO projectDAO;
 
@@ -202,7 +208,6 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         List<Object> objList = subscribeDAO.listAllByCondition(subscribeQuery);
         if(objList != null && objList.size() > 0) {
             List<SubscribeVO> list = BeanUtils.copy(objList, SubscribeVO.class);
-            Long projectId = projectVO.getId();
             StringBuilder userIds = new StringBuilder();
             JSONObject templateParam = new JSONObject();
             for(SubscribeVO subscribeVO: list) {
@@ -287,7 +292,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     descContent = "您订阅的项目"+content+"于"+projectVO.getOpenMarkTime()+"开标，具体内容可点击《立即查看》按钮前往查看";
                     templateParam.put("openMarkTime", DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue()));
                 }
-                templateParam.put("projectName", projectVO.getTitle());
+                templateParam.put("projectTitle", projectVO.getTitle());
                 templateParam.put("projectType", projectVO.getProjectType());
                 saveNotice(userId, projectVO, title, content, descContent);
                 if (StringUtils.isEmpty(userIds.toString())) {
@@ -359,20 +364,27 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 // 项目订阅提醒
                 if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getSubscribeNotice())) {
                     // 只有配置中开启了短信提醒，才需要发送短信提醒
-                    AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
+                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
                             templateParam, null);
+                    if (!sendSmsResponse.getCode().equals("OK")) {
+                        logger.error("短信发送失败：" + sendSmsResponse.getMessage());
+                    }
                 }
             } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
                 // 开标提醒
                 if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getOpenMarkNotice())) {
                     // 只有配置中开启了短信提醒，才需要发送短信提醒
-                    AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE,
+                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE,
                             templateParam, null);
+                    if (!sendSmsResponse.getCode().equals("OK")) {
+                        logger.error("短信发送失败：" + sendSmsResponse.getMessage());
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 }

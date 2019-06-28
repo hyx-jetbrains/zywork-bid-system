@@ -42,7 +42,8 @@
 		genderArray
 	} from '@/common/picker.data.js'
 	import {
-		nullToStr
+		nullToStr,
+		DEFAULT_HEADICON
 	} from '@/common/util.js'
 	export default {
 		components: {
@@ -53,7 +54,7 @@
 		data() {
 			return {
 				user: {
-					headicon: '',
+					headicon: DEFAULT_HEADICON,
 					nickname: '',
 					realname: '',
 					gender: 0,
@@ -113,8 +114,13 @@
 				updateGrade(this,this.genderIndex)
 			},
 			toSettingPhone() {
+				const self = this
+				this.$event.$on('changePhone', function(data) {
+					self.user.phone = data.phone
+					self.$event.$off('changePhone')
+				});
 				uni.navigateTo({
-					url: '/pages-user-center/setting-phone/setting-phone'
+					url: '/pages-user-center/setting-phone/setting-phone?phone=' + this.user.phone
 				})
 			},
 			toSettingIdentity() {

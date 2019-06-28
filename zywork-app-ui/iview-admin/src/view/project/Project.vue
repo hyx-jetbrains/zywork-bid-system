@@ -104,7 +104,7 @@
           </i-col>
           <i-col span="12">
             <FormItem label="发布状态" prop="releaseStatus">
-              <Select v-model="form.releaseStatus" placeholder="请选择发布状态" clearable filterable>
+              <Select v-model="form.releaseStatus" placeholder="请选择发布状态" disabled>
                 <i-option
                   v-for="item in projectReleaseStatus"
                   :value="item.value"
@@ -312,7 +312,7 @@
           </i-col>
           <i-col span="12">
             <FormItem label="发布状态" prop="releaseStatus">
-              <Select v-model="form.releaseStatus" placeholder="请选择发布状态" clearable filterable>
+              <Select v-model="form.releaseStatus" placeholder="请选择发布状态" disabled>
                 <i-option
                   v-for="item in projectReleaseStatus"
                   :value="item.value"
@@ -1046,6 +1046,14 @@ export default {
             trigger: 'blur'
           }
         ],
+        projectInvest: [
+          {
+            type: 'string',
+            required: true,
+            message: '此项为必须项',
+            trigger: 'blur'
+          }
+        ],
         projectType: [
           {
             type: 'string',
@@ -1538,7 +1546,25 @@ export default {
             title: '内部地址',
             key: 'inwardHtmlUrl',
             minWidth: 120,
-            sortable: true
+            sortable: true,
+            render: (h, params) => {
+              const inwardHtmlUrl = params.row.inwardHtmlUrl
+              if (inwardHtmlUrl) {
+                return h('span', {}, inwardHtmlUrl)
+              }
+              return h(
+                'a',
+                {
+                  on: {
+                    click: () => {
+                      this.form = JSON.parse(JSON.stringify(params.row))
+                      this.updateInwardHtmlUrl()
+                    }
+                  }
+                },
+                '点击生成'
+              )
+            }
           },
           {
             title: '其他要求',
@@ -1807,6 +1833,15 @@ export default {
                           }
                         },
                         '开标时间'
+                      ),
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'updateInwordHtmlUrl'
+                          }
+                        },
+                        '生成静态文件'
                       )
                     ]
                   )
@@ -1934,6 +1969,9 @@ export default {
         // 设置开标时间
         utils.showModal(this, 'markDate')
         this.form = JSON.parse(JSON.stringify(row))
+      } else if (itemName === 'updateInwordHtmlUrl') {
+        this.form = JSON.parse(JSON.stringify(row))
+        this.updateInwardHtmlUrl()
       }
     },
     // 设置价格
@@ -1990,6 +2028,23 @@ export default {
       if (this.modal.markDate) {
         this.cancelModal('markDate')
       }
+    },
+    /**
+     * 更新项目内部地址
+     */
+    updateInwardHtmlUrl() {
+      if (this.form.inwardHtmlUrl) {
+        this.$Modal.confirm({
+          title: '确认操作',
+          content: '已存在文件，确认重新生成静态文件？',
+          onOk: () => {
+            utils.edit(this)
+          },
+          onCancel: () => {}
+        })
+        return;
+      }
+      utils.edit(this)
     },
     active(row) {
       utils.active(this, row)
@@ -2056,17 +2111,17 @@ export default {
     // 爬取数据
     crawlData() {
       if (!this.python.pageNo) {
-        this.$Message.error("请输入页码")
-        return;
+        this.$Message.error('请输入页码')
+        return
       }
       if (!this.python.title) {
-        this.$Message.error("请选择爬取类型")
-        return;
+        this.$Message.error('请选择爬取类型')
+        return
       }
       if (!this.python.inMarkComp) {
-        this.$Message.error("请选择是否更新")
-        return;
-      } 
+        this.$Message.error('请选择是否更新')
+        return
+      }
       this.loading['python'] = true
       axios
         .request({

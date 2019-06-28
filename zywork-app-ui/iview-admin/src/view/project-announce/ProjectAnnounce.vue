@@ -603,7 +603,7 @@ export default {
         secondCandidate: null,
         thirdCandidate: null,
         sourceUrl: null,
-        inwodHtmlUrl: null,
+        inwordHtmlUrl: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -841,8 +841,26 @@ export default {
           {
             title: '内部地址',
             key: 'inwordHtmlUrl',
-            minWidth: 200,
-            sortable: true
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const inwordHtmlUrl = params.row.inwordHtmlUrl
+              if (inwordHtmlUrl) {
+                return h('span',{},inwordHtmlUrl)
+              }
+              return h(
+                'a',
+                {
+                  on: {
+                    click: () => {
+                      this.form = JSON.parse(JSON.stringify(params.row))
+                      this.updateInwardHtmlUrl()
+                    }
+                  }
+                },
+                '点击生成'
+              )
+            }
           },
           {
             title: '版本号',
@@ -963,6 +981,15 @@ export default {
                           }
                         },
                         '详情'
+                      ),
+                      h(
+                        'DropdownItem',
+                        {
+                          props: {
+                            name: 'updateInwordHtmlUrl'
+                          }
+                        },
+                        '生成静态文件'
                       )
                       /* h(
                         'DropdownItem',
@@ -1088,6 +1115,9 @@ export default {
         this.showProjectDetailModal(row.projectId)
       } else if (itemName === 'showSearchProject') {
         utils.showModal(this, 'projectDetailSearch')
+      } else if (itemName === 'updateInwordHtmlUrl') {
+        this.form = JSON.parse(JSON.stringify(row))
+        this.updateInwardHtmlUrl()
       }
     },
     showProjectDetailModal(id) {
@@ -1127,6 +1157,23 @@ export default {
       utils.add(this)
     },
     edit() {
+      utils.edit(this)
+    },
+    /**
+     * 更新项目内部地址
+     */
+    updateInwardHtmlUrl() {
+      if (this.form.inwordHtmlUrl) {
+        this.$Modal.confirm({
+          title: '确认操作',
+          content: '已存在文件，确认重新生成静态文件？',
+          onOk: () => {
+            utils.edit(this)
+          },
+          onCancel: () => {}
+        })
+        return;
+      }
       utils.edit(this)
     },
     active(row) {

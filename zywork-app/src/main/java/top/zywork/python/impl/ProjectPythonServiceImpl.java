@@ -63,7 +63,8 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     }
                     String fileName = UUIDUtils.uuid() +".html";
                     String projectDetail = obj.getString("projectDetail");
-                    CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
+                    String newFileName = "";
+                    newFileName = CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
 
                     ProjectVO projectVO = new ProjectVO();
                     projectVO.setTitle(title);
@@ -96,7 +97,9 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                         projectVO.setNoticeTime(DateParseUtils.parseDate(noticeTime, DatePatternEnum.DATE.getValue()));
                     }
                     projectVO.setSourceUrl(obj.getString("sourceUrl"));
-                    projectVO.setInwardHtmlUrl(uri + "/" + fileName);
+                    if (StringUtils.isNotEmpty(newFileName)) {
+                        projectVO.setInwardHtmlUrl(uri + "/" + newFileName);
+                    }
                     projectVO.setResourceCount(0);
                     if (updateFlag) {
                         projectDAO.update(projectVO);

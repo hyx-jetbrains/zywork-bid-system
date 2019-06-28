@@ -17,9 +17,10 @@ public class CommonMethodUtils {
      * @param projectDetail 详细内容
      * @param location 地址
      */
-    public static void generatorHtmlCode(String fileName, String projectDetail, String location) {
+    public static String generatorHtmlCode(String fileName, String projectDetail, String location) {
         String head = PythonConstants.HTML_HEAD;
         String foot = PythonConstants.HTML_FOOT;
         IOUtils.writeText(head + projectDetail + foot, location + "/" + fileName);
+        return fileName;
     }
 }

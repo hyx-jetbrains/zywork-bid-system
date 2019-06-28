@@ -2,7 +2,7 @@
 	<view class="zy-page-column-center zy-page-padding">
 		<view class="zy-form">
 			<view class="uni-form-item uni-column">
-				<input v-model="phone" class="uni-input" placeholder="请输入手机号" />
+				<input v-model="phone" class="uni-input" placeholder="请输入手机号"  />
 			</view>
 			<view class="uni-form-item uni-column">
 				<input v-model="code" class="uni-input" placeholder="请输入手机验证码" />

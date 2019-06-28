@@ -41,7 +41,7 @@
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">中标金额</view>
 						<view class="zy-disable-flex-right">
-							{{item.compHouseAchievementMarkMoney}} 元
+							{{item.compHouseAchievementMarkMoney}} 万元
 						</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">

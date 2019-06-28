@@ -98,8 +98,8 @@
 					pageSize: 10,
 					isRead: '',
 					noticeType: 0,
-					sortColumn: 'isRead',
-					sortOrder: 'asc',
+					sortColumn: 'createTime',
+					sortOrder: 'desc',
 				}
 			}
 		},

@@ -9,6 +9,7 @@
 				<zywork-icon type="icontianjia" color="#108ee9" size="28" class="zy-icon" @click.native="toPublishChoose(0)" />
 			</view>
 		</view>
+		<official-account></official-account>
 		<view class="uni-tab-bar zy-tab-bar">
 			<scroll-view id="tab-bar" class="uni-swiper-tab zy-swiper-tab-list" scroll-x :scroll-left="infoType.scrollLeft">
 				<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"

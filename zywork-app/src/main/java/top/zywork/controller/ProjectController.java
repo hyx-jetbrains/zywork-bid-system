@@ -92,10 +92,10 @@ public class ProjectController extends BaseController {
         }
 
         projectVO = generatorProjectVo(projectVO);
-        if (ProjectConstants.RELEASE_STAUTS_TRUE.equals(projectVO.getReleaseStatus())) {
-            // 是已发布的状态
-            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
-        }
+//        if (ProjectConstants.RELEASE_STAUTS_TRUE.equals(projectVO.getReleaseStatus())) {
+//            // 是已发布的状态
+//            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
+//        }
         projectService.save(BeanUtils.copy(projectVO, ProjectDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -140,10 +140,10 @@ public class ProjectController extends BaseController {
 
         projectVO = generatorProjectVo(projectVO);
 
-        if (ProjectConstants.RELEASE_STAUTS_TRUE.equals(projectVO.getReleaseStatus())) {
-            // 是已发布的状态
-            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
-        }
+//        if (ProjectConstants.RELEASE_STAUTS_TRUE.equals(projectVO.getReleaseStatus())) {
+//            // 是已发布的状态
+//            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
+//        }
         int updateRows = projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
         if (updateRows == 1) {
             return ResponseStatusVO.ok("更新成功", null);
@@ -154,8 +154,10 @@ public class ProjectController extends BaseController {
 
     private ProjectVO generatorProjectVo(ProjectVO projectVO) {
         String fileName = UUIDUtils.uuid() +".html";
-        CommonMethodUtils.generatorHtmlCode(fileName, projectVO.getProjectDetail(), location);
-        projectVO.setInwardHtmlUrl(uri + "/" + fileName);
+        String newFileName = CommonMethodUtils.generatorHtmlCode(fileName, projectVO.getProjectDetail(), location);
+        if (org.apache.commons.lang.StringUtils.isNotEmpty(newFileName)) {
+            projectVO.setInwardHtmlUrl(uri + "/" + newFileName);
+        }
         projectVO = projectService.getOpenMark(projectVO);
         return projectVO;
     }

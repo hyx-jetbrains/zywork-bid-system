@@ -137,12 +137,16 @@ public class ProjectAnnounceController extends BaseController {
             return ResponseStatusVO.error("更新项目失败，请重试", null);
         }
 
-
-        String url = "/data/bid-system/" + projectAnnounceVO.getInwordHtmlUrl();
-        File file = new File(url);
-        if(file.exists()) {
-            file.delete();
+        Object obj = projectAnnounceService.getById(projectAnnounceVO.getId());
+        if (null != obj) {
+            ProjectAnnounceVO tempProjectAnnounceVO = BeanUtils.copy(obj, ProjectAnnounceVO.class);
+            String url = "/data/bid-system/" + tempProjectAnnounceVO.getInwordHtmlUrl();
+            File file = new File(url);
+            if(file.exists()) {
+                file.delete();
+            }
         }
+
 
         projectAnnounceVO = generatorProjectAnnounceVO(projectAnnounceVO);
 
@@ -161,8 +165,10 @@ public class ProjectAnnounceController extends BaseController {
             return projectAnnounceVO;
         }
         String fileName = UUIDUtils.uuid() +".html";
-        CommonMethodUtils.generatorHtmlCode(fileName, content, location);
-        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + fileName);
+        String newFileName = CommonMethodUtils.generatorHtmlCode(fileName, content, location);
+        if (org.apache.commons.lang.StringUtils.isNotEmpty(newFileName)) {
+            projectAnnounceVO.setInwordHtmlUrl(uri + "/" + newFileName);
+        }
         return projectAnnounceVO;
     }
 

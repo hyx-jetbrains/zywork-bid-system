@@ -13,6 +13,7 @@
 						</picker>
 					</view>
 				</view>
+				<text class="zy-text-warning">请选择你关注的辖区，以免太多您不需要的信息推送给您</text>
 				<!-- <view class="uni-form-item uni-column zy-disable-flex zy-label-bottom-border">
 					<view class="zy-text-bold">企业资质</view>
 					<picker name="aptitude" mode="multiSelector" @columnchange="qualificationsChange" :value="conditionIndex" :range="conditionArray">
@@ -73,7 +74,7 @@
 				<view v-if="showKeyword" class="uni-form-item uni-column">
 					<view class="zy-text-bold">关键字(备选)</view>
 					<input class="uni-input" name="keyword" v-model="subscrible.keyword" placeholder="请输入订阅关键字" />
-					<text class="zy-text-warning">只有订阅政府采购才需要输入关键字</text>
+					<text class="zy-text-warning">订阅政府采购必须输入关键字</text>
 				</view>
 				<!-- <view class="uni-form-item uni-column">
 					<view class="zy-text-bold">招标人(备选)</view>
@@ -233,15 +234,28 @@
 				formObj.tenderee = this.subscrible.tenderee;
 				
 				// 设置金额
-				if (formObj.minMoney !== '') {
+				if (formObj.minMoney !== '' && formObj.minMoney !== 0) {
 					formObj.minMoney *= 100;
+				} else {
+					formObj.minMoney = 0;
 				}
-				if (formObj.maxMoney !== '') {
+				if (formObj.maxMoney !== '' && formObj.maxMoney !== 0) {
 					formObj.maxMoney *= 100;
+				} else {
+					formObj.maxMoney = 0;
 				}
 				if (formObj.minMoney !== 0 && formObj.maxMoney !== 0) {
 					if (formObj.maxMoney <= formObj.minMoney) {
 						showInfoToast('最大金额不能小于等于最小金额');
+						return;
+					}
+				}
+				console.log(formObj.projectType.indexOf("政府采购"))
+				if (formObj.projectType.indexOf("政府采购") !== -1) {
+					// 包含政府采购
+					console.log(!formObj.keyword)
+					if (!formObj.keyword) {
+						showInfoToast('政府采购关键字属于必填项，请填写后保存订阅');
 						return;
 					}
 				}
