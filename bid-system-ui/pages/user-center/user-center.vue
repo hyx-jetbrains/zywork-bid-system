@@ -46,6 +46,7 @@
 				<text class="zy-text-info">积分</text>
 			</view>
 		</view>
+		<official-account></official-account>
 		<uni-list>
 			<zywork-list-item title="我的订阅" show-extra-icon="true" :extra-icon="{color: '#FF4539',size: '18',type: 'icondingyue'}"
 			 @click="toSubscrible"></zywork-list-item>
