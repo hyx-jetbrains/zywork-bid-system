@@ -45,7 +45,7 @@
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>
-					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone">{{item.markCarpoolPhone}}</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone(item.markCarpoolPhone)">{{item.markCarpoolPhone}}</view>
 				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">其他说明</view>
@@ -60,20 +60,26 @@
 			</view>
 		</view>
 		<view class="zy-page-list">
-			<view v-for="(item, index) in carpoolRecordList" :key="index" class="zy-disable-flex zy-page-list-item">
-				<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-				 :src="item.userDetailHeadicon" />
-				<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
-				<view>
-					<view class="zy-disable-flex">
-						<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
-						<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
-						<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
-						<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
+			<view class="zy-disable-flex" v-for="(item, index) in carpoolRecordList" :key="index">
+				<view class="zy-disable-flex zy-page-list-item">
+					<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
+					 :src="item.userDetailHeadicon" />
+					<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
+					<view>
+						<view class="zy-disable-flex">
+							<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
+							<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+							<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
+							<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
+						</view>
+						<view class="zy-text-mini zy-text-info">{{item.markCarpoolRecordCreateTime}}</view>
 					</view>
-					<view class="zy-text-mini zy-text-info">{{item.markCarpoolRecordCreateTime}}</view>
+				</view>
+				<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone(item.userPhone)">
+					{{item.userPhone}}
 				</view>
 			</view>
+			
 		</view>
 	</view>
 </template>
@@ -126,9 +132,9 @@
 				getMarkCarpoolRecord(this, this.pager);
 			},
 			// 打电话
-			callPhone() {
+			callPhone(phone) {
 				uni.makePhoneCall({
-					phoneNumber: this.item.markCarpoolPhone,
+					phoneNumber: phone + '',
 					success: () => {
 						console.log("成功拨打电话")
 					}

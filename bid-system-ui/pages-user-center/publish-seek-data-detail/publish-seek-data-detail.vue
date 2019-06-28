@@ -40,7 +40,7 @@
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">是否加急</view>
-					<view class="zy-disable-flex-right">{{item.seekDataIsUrgent === 0 ? '是' : '否'}}</view>
+					<view class="zy-disable-flex-right">{{item.seekDataIsUrgent === 1 ? '是' : '否'}}</view>
 				</view>
 				<view class="zy-disable-flex zy-page-list-item">
 					<view class="zy-text-bold">手机号</view>

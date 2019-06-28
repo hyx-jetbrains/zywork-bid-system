@@ -37,6 +37,16 @@ public class UserMarkCarpoolRecordDTO extends BaseDTO {
 	private String userDetailHeadicon;
 	// 性别
 	private Byte userDetailGender;
+	// 手机号
+	private String userPhone;
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 	
     public UserMarkCarpoolRecordDTO () {}
 

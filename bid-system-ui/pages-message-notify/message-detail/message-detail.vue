@@ -73,11 +73,16 @@
 					.then(data => {
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
-							let item = nullToStr(res.data.data);
-							item.clickCount += 1;
-							projectClickCount(this, item);
+							let item = nullToStr(res.data.data.rows[0]);
+							let itemData = item;
+							if (noticeType === 0 || noticeType === 1) {
+								// 订阅通知 | 开标通知 - 获取项目详情
+								item.clickCount += 1;
+								projectClickCount(this, item);
+								itemData = item.id;
+							}
 							uni.navigateTo({
-								url: pageUrl + '?itemData=' + encodeURIComponent(JSON.stringify(item.id))
+								url: pageUrl + '?itemData=' + encodeURIComponent(JSON.stringify(itemData))
 							})
 						} else {
 							showInfoToast(res.data.message)

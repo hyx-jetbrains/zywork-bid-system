@@ -5,7 +5,7 @@
 <mapper namespace="top.zywork.dao.UserMarkCarpoolRecordDAO">
 
     <sql id="select_columns">
-        t_mark_carpool_record.id as markCarpoolRecordId, t_mark_carpool_record.user_id as markCarpoolRecordUserId, t_mark_carpool_record.mark_carpool_id as markCarpoolRecordMarkCarpoolId, t_mark_carpool_record.version as markCarpoolRecordVersion, t_mark_carpool_record.create_time as markCarpoolRecordCreateTime, t_mark_carpool_record.update_time as markCarpoolRecordUpdateTime, t_mark_carpool_record.is_active as markCarpoolRecordIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
+        t_mark_carpool_record.id as markCarpoolRecordId, t_mark_carpool_record.user_id as markCarpoolRecordUserId, t_mark_carpool_record.mark_carpool_id as markCarpoolRecordMarkCarpoolId, t_mark_carpool_record.version as markCarpoolRecordVersion, t_mark_carpool_record.create_time as markCarpoolRecordCreateTime, t_mark_carpool_record.update_time as markCarpoolRecordUpdateTime, t_mark_carpool_record.is_active as markCarpoolRecordIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender, t_user.phone as userPhone
     </sql>
 
     <sql id="query_where_clause">
@@ -111,31 +111,36 @@
 		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
 			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
 		</if>
-		
+
+		<if test="query != null and query.userPhone != null and query.userPhone != null">
+			and t_user.phone like concat('%', #{query.userPhone}, '%')
+		</if>
         and
         t_mark_carpool_record.user_id = t_user_detail.id
+        and t_mark_carpool_record.user_id = t_user.id
     </sql>
 
     <select id="listById" parameterType="long" resultType="userMarkCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_carpool_record, t_user_detail where t_mark_carpool_record.id = #{id} and
-        t_mark_carpool_record.user_id = t_user_detail.id
+        from t_mark_carpool_record, t_user_detail, t_user where t_mark_carpool_record.id = #{id} and
+        t_mark_carpool_record.user_id = t_user_detail.id and t_mark_carpool_record.user_id = t_user.id
     </select>
 
     <select id="listAll" resultType="userMarkCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_carpool_record, t_user_detail
+        from t_mark_carpool_record, t_user_detail, t_user
         where
         t_mark_carpool_record.user_id = t_user_detail.id
+		and t_mark_carpool_record.user_id = t_user.id
         order by t_mark_carpool_record.update_time desc, t_mark_carpool_record.create_time desc
     </select>
 
     <select id="listAllByCondition" resultType="userMarkCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_carpool_record, t_user_detail
+        from t_mark_carpool_record, t_user_detail, t_user
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -151,7 +156,7 @@
     <select id="listPageByCondition" resultType="userMarkCarpoolRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_carpool_record, t_user_detail
+        from t_mark_carpool_record, t_user_detail, t_user
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -166,7 +171,7 @@
     </select>
 
     <select id="countByCondition" resultType="long">
-        select count(*) from t_mark_carpool_record, t_user_detail
+        select count(*) from t_mark_carpool_record, t_user_detail, t_user
         <where>
             <include refid="query_where_clause"/>
         </where>

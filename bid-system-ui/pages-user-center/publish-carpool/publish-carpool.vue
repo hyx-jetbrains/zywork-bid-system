@@ -37,7 +37,7 @@
 							<view class="zy-text-info zy-disable-flex">
 								<view>
 									<text style="margin-right: 20upx;">搭车人数:</text>
-									{{item.markCarpoolPeopleCount}}/{{item.markCarpoolPeopleCount}}
+									{{item.markCarpoolRecordCount}}/{{item.markCarpoolPeopleCount}}
 								</view>
 							</view>
 						</uni-swipe-action>

@@ -54,13 +54,23 @@
 		</view>
 		<view class="zy-type-title zy-text-bold">申请记录</view>
 		<view class="zy-page-list">
-			<view v-for="(item, index) in carpoolRecordList" :key="index" class="zy-disable-flex zy-page-list-item">
-				<image class="zy-page-mini-headicon" :src="item.headicon" />
-				<view>
+			<view class="zy-disable-flex" v-for="(item, index) in carpoolRecordList">
+				<view :key="index" class="zy-disable-flex zy-page-list-item">
+					<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
+					 :src="item.userDetailHeadicon" />
+					<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 					<view>
-						<text class="zy-text-bold">{{item.nickname}}</text>
+						<view class="zy-disable-flex">
+							<text class="zy-text-bold" style="margin-right: 20upx;">{{item.userDetailNickname}}</text>
+							<zywork-icon v-if="item.userDetailGender === 0" type="iconyincang" color="#BFBFBF" size="20" />
+							<zywork-icon v-else-if="item.userDetailGender === 1" type="iconnan" color="#108EE9" size="20" />
+							<zywork-icon v-else-if="item.userDetailGender === 2" type="iconnv" color="#dd524d" size="20" />
+						</view>
+						<view class="zy-text-mini zy-text-info">{{item.markCarpoolRecordCreateTime}}</view>
 					</view>
-					<view class="zy-text-mini zy-text-info">{{item.createTime}}</view>
+				</view>
+				<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone(item.userPhone)">
+					{{item.userPhone}}
 				</view>
 			</view>
 		</view>
@@ -68,16 +78,25 @@
 </template>
 
 <script>
+	import {
+		DEFAULT_HEADICON
+	} from '@/common/util.js'
+	import {
+		getMarkCarpoolRecord
+	} from '@/common/info-share.js'
 	export default {
 		data() {
 			return {
+				defaultIcon: DEFAULT_HEADICON,
 				item: {},
-				carpoolRecordList: [
-					{
-						nickname: 'Carter',
-						createTime: '2019-04-25 00:00:00'
-					}
-				]
+				carpoolRecordList: [],
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					sortColumn: 'markCarpoolRecordCreateTime',
+					sortOrder: 'desc',
+					markCarpoolRecordIsActive: 0,
+				},
 			}
 		},
 		onLoad(event) {
@@ -93,12 +112,18 @@
 			uni.setNavigationBarTitle({
 				title: this.item.name
 			});
+			this.refreshMarkCarpoolRecordList();
 		},
 		methods: {
+			/** 刷新申请列表 */
+			refreshMarkCarpoolRecordList() {
+				this.pager.markCarpoolRecordMarkCarpoolId = this.item.markCarpoolId;
+				getMarkCarpoolRecord(this, this.pager);
+			},
 			// 打电话
-			callPhone() {
+			callPhone(phone) {
 				uni.makePhoneCall({
-					phoneNumber: this.item.phone,
+					phoneNumber: phone + '',
 					success: () => {
 						console.log("成功拨打电话")
 					}

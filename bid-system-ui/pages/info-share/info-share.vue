@@ -320,7 +320,7 @@
 											赏金：
 											<text style="margin-right: 10upx;">¥{{item.seekDataPrice / 100}}</text>
 											<!-- <uni-tag v-if="item.isUrgent === 0" text="急" type="error" size="small" :inverted="true" :circle="false"></uni-tag> -->
-											<zywork-icon v-if="item.seekDataIsUrgent === 0" type="iconjinjidingdan" color="#dd524d" size="20" />
+											<zywork-icon v-if="item.seekDataIsUrgent === 1" type="iconjinjidingdan" color="#dd524d" size="20" />
 										</view>
 									</view>
 

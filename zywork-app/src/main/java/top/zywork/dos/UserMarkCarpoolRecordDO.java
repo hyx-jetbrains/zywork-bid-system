@@ -37,8 +37,19 @@ public class UserMarkCarpoolRecordDO extends BaseDO {
 	private String userDetailHeadicon;
 	// 性别
 	private Byte userDetailGender;
-	
-    public UserMarkCarpoolRecordDO () {}
+	// t_user表的字段对应的属性
+	// 手机号
+	private String userPhone;
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+
+	public UserMarkCarpoolRecordDO () {}
 
     public UserMarkCarpoolRecordDO (Long markCarpoolRecordId, Long markCarpoolRecordUserId, Long markCarpoolRecordMarkCarpoolId, Integer markCarpoolRecordVersion, Date markCarpoolRecordCreateTime, Date markCarpoolRecordUpdateTime, Byte markCarpoolRecordIsActive, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender) {
         this.markCarpoolRecordId = markCarpoolRecordId;

@@ -5,7 +5,7 @@
 <mapper namespace="top.zywork.dao.UserMarkSeekcarRecordDAO">
 
     <sql id="select_columns">
-        t_mark_seekcar_record.id as markSeekcarRecordId, t_mark_seekcar_record.user_id as markSeekcarRecordUserId, t_mark_seekcar_record.mark_seekcar_id as markSeekcarRecordMarkSeekcarId, t_mark_seekcar_record.version as markSeekcarRecordVersion, t_mark_seekcar_record.create_time as markSeekcarRecordCreateTime, t_mark_seekcar_record.update_time as markSeekcarRecordUpdateTime, t_mark_seekcar_record.is_active as markSeekcarRecordIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
+        t_mark_seekcar_record.id as markSeekcarRecordId, t_mark_seekcar_record.user_id as markSeekcarRecordUserId, t_mark_seekcar_record.mark_seekcar_id as markSeekcarRecordMarkSeekcarId, t_mark_seekcar_record.version as markSeekcarRecordVersion, t_mark_seekcar_record.create_time as markSeekcarRecordCreateTime, t_mark_seekcar_record.update_time as markSeekcarRecordUpdateTime, t_mark_seekcar_record.is_active as markSeekcarRecordIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender, t_user.phone as userPhone
     </sql>
 
     <sql id="query_where_clause">
@@ -111,31 +111,39 @@
 		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
 			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
 		</if>
+		<if test="query != null and query.userPhone != null and query.userPhone != ''">
+			and t_user.phone like concat('%', #{query.userPhone}, '%')
+		</if>
 		
         and
         t_mark_seekcar_record.user_id = t_user_detail.id
+        and
+        t_mark_seekcar_record.user_id = t_user.id
     </sql>
 
     <select id="listById" parameterType="long" resultType="userMarkSeekcarRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_seekcar_record, t_user_detail where t_mark_seekcar_record.id = #{id} and
-        t_mark_seekcar_record.user_id = t_user_detail.id
+        from t_mark_seekcar_record, t_user_detail, t_user where t_mark_seekcar_record.id = #{id} and
+        t_mark_seekcar_record.user_id = t_user_detail.id and
+		t_mark_seekcar_record.user_id = t_user.id
     </select>
 
     <select id="listAll" resultType="userMarkSeekcarRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_seekcar_record, t_user_detail
+        from t_mark_seekcar_record, t_user_detail,t_user
         where
         t_mark_seekcar_record.user_id = t_user_detail.id
+		and
+		t_mark_seekcar_record.user_id = t_user.id
         order by t_mark_seekcar_record.update_time desc, t_mark_seekcar_record.create_time desc
     </select>
 
     <select id="listAllByCondition" resultType="userMarkSeekcarRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_seekcar_record, t_user_detail
+        from t_mark_seekcar_record, t_user_detail, t_user
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -151,7 +159,7 @@
     <select id="listPageByCondition" resultType="userMarkSeekcarRecordDO">
         select
         <include refid="select_columns"/>
-        from t_mark_seekcar_record, t_user_detail
+        from t_mark_seekcar_record, t_user_detail, t_user
         <where>
             <include refid="query_where_clause"/>
         </where>
@@ -166,7 +174,7 @@
     </select>
 
     <select id="countByCondition" resultType="long">
-        select count(*) from t_mark_seekcar_record, t_user_detail
+        select count(*) from t_mark_seekcar_record, t_user_detail, t_user
         <where>
             <include refid="query_where_clause"/>
         </where>

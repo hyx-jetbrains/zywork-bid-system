@@ -77,6 +77,16 @@ public class UserMarkCarpoolRecordQuery extends PageQuery {
 	private Byte userDetailGenderMin;
 	// 性别（最大值）
 	private Byte userDetailGenderMax;
+	// 手机号
+	private String userPhone;
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 	
     public UserMarkCarpoolRecordQuery () {}
 

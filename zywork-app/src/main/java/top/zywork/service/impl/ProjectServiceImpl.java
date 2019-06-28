@@ -294,7 +294,10 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     descContent = "您订阅的项目"+content+"于"+projectVO.getOpenMarkTime()+"开标，具体内容可点击《立即查看》按钮前往查看";
                     templateParam.put("openMarkTime", DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue()));
                 }
-                String tempProjectTitle = projectVO.getTitle().substring(0,16) + "...";
+                String tempProjectTitle = projectVO.getTitle();
+                if (tempProjectTitle.length() > 16) {
+                    tempProjectTitle = tempProjectTitle.substring(0,16) + "...";
+                }
 //                Iterable<String> iterableProjectTitle = Splitter.fixedLength(ProjectConstants.SMS_PROJECT_TITLE_SPLIT_LENGTH).split(tempProjectTitle);
 //                Iterator<String> iteratorProjectTitle = iterableProjectTitle.iterator();
 //                int i = 1;
