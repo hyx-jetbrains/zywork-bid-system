@@ -32,7 +32,7 @@ public class ProjectAnnounceVO extends BaseVO {
 	@Size(min = 0, max = 10, message = "必须小于10个字符")
 	private String projectType;
 	// 公示详情
-	@Size(min = 0, max = 65535, message = "必须小于65535个字符")
+	@Size(min = 0, max = 16777215, message = "必须小于16777215个字符")
 	private String announceDesc;
 	// 第一候选人
 	@Size(min = 0, max = 100, message = "必须小于100个字符")

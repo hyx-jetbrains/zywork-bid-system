@@ -84,6 +84,11 @@ public final class ProjectConstants {
 
 
     /**
+     * 发送短信项目标题截取长度-20
+     */
+    public static final Integer SMS_PROJECT_TITLE_SPLIT_LENGTH = 20;
+
+    /**
      * 短信签名-江西数达信息科技有限公司
      */
     public static final String SMS_SIGN_NAME = "江西数达信息科技有限公司";

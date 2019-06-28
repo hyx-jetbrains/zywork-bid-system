@@ -2,6 +2,7 @@ package top.zywork.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.google.common.base.Splitter;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,7 @@ import top.zywork.vo.*;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -292,7 +294,19 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     descContent = "您订阅的项目"+content+"于"+projectVO.getOpenMarkTime()+"开标，具体内容可点击《立即查看》按钮前往查看";
                     templateParam.put("openMarkTime", DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue()));
                 }
-                templateParam.put("projectTitle", projectVO.getTitle());
+                String tempProjectTitle = projectVO.getTitle().substring(0,16) + "...";
+//                Iterable<String> iterableProjectTitle = Splitter.fixedLength(ProjectConstants.SMS_PROJECT_TITLE_SPLIT_LENGTH).split(tempProjectTitle);
+//                Iterator<String> iteratorProjectTitle = iterableProjectTitle.iterator();
+//                int i = 1;
+//                while (i < 6) {
+//                    if (iteratorProjectTitle.hasNext()) {
+//                        templateParam.put("projectTitle" + i, iteratorProjectTitle.next());
+//                    } else {
+//                        templateParam.put("projectTitle" + i, "");
+//                    }
+//                    i++;
+//                }
+                templateParam.put("projectTitle", tempProjectTitle);
                 templateParam.put("projectType", projectVO.getProjectType());
                 saveNotice(userId, projectVO, title, content, descContent);
                 if (StringUtils.isEmpty(userIds.toString())) {
@@ -324,6 +338,31 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 }
             }
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println("[铅山县][线下]江西众诚投资咨询有限公司关于江西省铅山县陈坊乡陈坊村中国传统村落保护发展规划（2019-2035）（采购编号：JXZC2019-C080）竞争性磋商采购公告".length());
+        AliyunSmsConfig aliyunSmsConfig = new AliyunSmsConfig("LTAICo2uh0fDKnN0", "Pi1UR1H2FhUiFPOP0IW2QqSuDWnC1j", "江西数达信息科技有限公司");
+        aliyunSmsConfig.setRegionId("cn-shenzhen");
+        String phones = "18279700225";
+        JSONObject templateParam = new JSONObject();
+        String tempProjectTitle = "[铅山县][线下]江西众诚投资咨询有限公司关于江西省铅山县陈坊乡陈坊村中国传统村落保护发展规划（2019-2035）（采购编号：JXZC2019-C080）竞争性磋商采购公告".substring(0, 16) + "...";
+//        Iterable<String> iterableProjectTitle = Splitter.fixedLength(ProjectConstants.SMS_PROJECT_TITLE_SPLIT_LENGTH).split(tempProjectTitle);
+//        Iterator<String> iteratorProjectTitle = iterableProjectTitle.iterator();
+//        int i = 1;
+//        while (i < 6) {
+//            if (iteratorProjectTitle.hasNext()) {
+//                templateParam.put("projectTitle" + i, iteratorProjectTitle.next());
+//            } else {
+//                templateParam.put("projectTitle" + i, "");
+//            }
+//            i++;
+//        }
+        templateParam.put("projectTitle", tempProjectTitle);
+        templateParam.put("projectType", "政府采购");
+        SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
+                templateParam.toJSONString(), null);
+        System.out.println(sendSmsResponse);
     }
 
     /***
