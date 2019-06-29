@@ -32,7 +32,6 @@
 		<activiti-starter.version>6.0.0</activiti-starter.version>
 		<swagger2.version>2.9.2</swagger2.version>
 		<swagger.version>1.5.21</swagger.version>
-		<guava.version>18.0</guava.version>
 	</properties>
 
 	<dependencies>
@@ -140,11 +139,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>

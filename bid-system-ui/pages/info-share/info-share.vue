@@ -433,7 +433,9 @@
 		showInfoToast,
 		nullToStr,
 		SHARE_CODE_PAGE_IMG,
-		getShareCode
+		getShareCode,
+		isUserIdExist,
+		notLoginToUserCenter
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as infoShare from '@/common/info-share.js'
@@ -552,12 +554,15 @@
 				},
 			}
 		},
+		onShow() {
+			this.initData('init');
+		},
 		onLoad() {
-			this.initData();
+			this.initData('init');
 		},
 		onPullDownRefresh() {
 			this.pager.pageNo = 1
-			this.checkRefresh(this.infoType.tabIndex, 'pullDown');
+			this.initData('pullDown')
 		},
 		onReachBottom() {
 			this.showLoadMore = true
@@ -574,8 +579,12 @@
 		},
 		methods: {
 			/** 初始化数据 */
-			initData() {
-				this.checkRefresh(this.infoType.tabIndex, 'init');
+			initData(type) {
+				if (isUserIdExist()) {
+					this.checkRefresh(this.infoType.tabIndex, type);
+				} else {
+					notLoginToUserCenter();
+				}
 			},
 			/** 初始化查询数据 */
 			initPager() {

@@ -77,7 +77,7 @@ public class VipServiceFilter implements Filter {
             }
         }
         hidePropertyAllUrlArray = tempUrls.toString().split(",");
-        logger.info("url数组初始化完毕：{}",hidePropertyAllUrlArray);
+        logger.info("url数组初始化完毕：{}",tempUrls.toString());
     }
 
     @Override

@@ -9,7 +9,7 @@
         update t_coupon
         <set>
 			coupon_count = coupon_count - 1,
-			version = version + 1
+			version = version + 1,
 			update_time = CURRENT_TIMESTAMP
         </set>
         where id = #{id} and coupon_count > 0

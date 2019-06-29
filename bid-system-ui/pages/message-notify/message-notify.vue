@@ -43,7 +43,9 @@
 	} from '@/common/message.js'
 	import {
 		SHARE_CODE_PAGE_IMG,
-		getShareCode
+		getShareCode,
+		isUserIdExist,
+		notLoginToUserCenter
 	} from '@/common/util.js'
 	
 	const MESSAGE_ALL = 0
@@ -105,13 +107,14 @@
 		},
 		onShow() {
 			countNotReadMsg();
+			this.initMessage('init');
 		},
 		onLoad() {
-			this.initMessage();
+			this.initMessage('init');
 		},
 		onPullDownRefresh() {
 			this.pager.pageNo = 1
-			loadMessage(this, this.pager, 'pullDown');
+			this.initMessage('pullDown')
 		},
 		onReachBottom() {
 			this.showLoadMore = true
@@ -128,9 +131,13 @@
 		},
 		methods: {
 			/** 初始化消息 */
-			initMessage() {
-				console.log(this.pager);
-				loadMessage(this, this.pager, 'init');
+			initMessage(type) {
+				if (isUserIdExist()) {
+					loadMessage(this, this.pager, type);
+				} else {
+					notLoginToUserCenter();
+				}
+				
 			},
 			/** 初始查询信息 */
 			initPager() {
@@ -158,7 +165,7 @@
 					this.infoType.tabIndex = tabIndex
 					this.pager.noticeType = tabIndex
 					this.initPager();
-					this.initMessage();
+					this.initMessage('init');
 				}
 			},
 			/** 分段器选择器 */
@@ -175,7 +182,7 @@
 						this.pager.isRead = --index;
 					}
 					this.initPager();
-					this.initMessage();
+					this.initMessage('init');
 				}
 			},
 			/** 查看消息详情 */

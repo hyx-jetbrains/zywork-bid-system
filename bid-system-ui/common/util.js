@@ -36,6 +36,11 @@ export const isUserTokenExist = () => {
 	return !isEmpty(userToken)
 }
 
+export const isUserIdExist = () => {
+	const userId = uni.getStorageSync(USER_ID)
+	return !isEmpty(userId)
+}
+
 export const saveUserToken = (userToken) => {
 	uni.setStorageSync(USER_TOKEN_KEY, userToken)
 }
@@ -245,6 +250,18 @@ export const validText = (text) => {
 			url: '/pages-user-center/user-vip/user-vip'
 		})
 	}
+}
+
+/**
+ * 未登入，前往个人中心页面
+ */
+export const notLoginToUserCenter = () => {
+	showInfoToast("请先登录哦,即将前往个人中心")
+	setTimeout(function() {
+		uni.switchTab({
+			url: '/pages/user-center/user-center'
+		})
+	}, 2000)
 }
 
 /**

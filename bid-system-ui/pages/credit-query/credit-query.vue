@@ -597,7 +597,9 @@
 		nullToStr,
 		DOCUMENT_BASE_URL,
 		CREDIT_QUERY_VIP,
-		CREDIT_QUERY
+		CREDIT_QUERY,
+		isUserIdExist,
+		notLoginToUserCenter
 	} from '@/common/util.js'
 
 	/** 企业信息 */
@@ -688,6 +690,9 @@
 		onLoad() {
 			this.initData('init');
 		},
+		onShow() {
+			this.initData('init');
+		},
 		onPullDownRefresh() {
 			this.pager.pageNo = 1
 			this.initData('pullDown');
@@ -708,12 +713,15 @@
 		methods: {
 			/** 初始化数据 */
 			initData(type) {
-				this.checkRefresh(this.infoType.tabIndex, type);
-				let creditFlag = uni.getStorageSync(CREDIT_QUERY_VIP);
-				if (creditFlag == CREDIT_QUERY) {
-					this.creditQueryVip = true;
+				if (isUserIdExist()) {
+					this.checkRefresh(this.infoType.tabIndex, type);
+					let creditFlag = uni.getStorageSync(CREDIT_QUERY_VIP);
+					if (creditFlag == CREDIT_QUERY) {
+						this.creditQueryVip = true;
+					}
+				} else {
+					notLoginToUserCenter();
 				}
-				console.log(this.creditQueryVip)
 			},
 			/** 初始化查询条件 */
 			initPager() {
