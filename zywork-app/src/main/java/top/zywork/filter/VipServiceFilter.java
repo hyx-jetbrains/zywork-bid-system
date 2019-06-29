@@ -91,6 +91,7 @@ public class VipServiceFilter implements Filter {
         }
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (null == jwtUser) {
+            httpServletRequest.setAttribute(ProjectConstants.VIP_FLAG, false);
             chain.doFilter(request, response);
             return;
         }
@@ -108,7 +109,6 @@ public class VipServiceFilter implements Filter {
             chain.doFilter(httpServletRequest, response);
             return;
         }
-        logger.info("Url Error:" + url);
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         outResponse(httpServletResponse, ResponseStatusEnum.AUTHENTICATION_TOKEN_ERROR.getCode(), "请先购买相关服务", null);
     }
