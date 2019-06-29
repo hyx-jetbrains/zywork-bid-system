@@ -336,6 +336,10 @@ export const getUserShareRecord = (self) => {
 				var tempUserId = uni.getStorageSync(USER_ID);
 				res.data.data.rows.forEach(item => {
 					if (item.userId != tempUserId) {
+						item = nullToStr(item);
+						if (item.headicon !=='' && item.headicon.indexOf('http') < 0) {
+							item.headicon = IMAGE_BASE_URL + '/' + item.headicon
+						}
 						self.shareRecordList.push(item)
 					}
 				})

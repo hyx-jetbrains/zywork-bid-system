@@ -580,11 +580,11 @@
 		methods: {
 			/** 初始化数据 */
 			initData(type) {
-				if (isUserIdExist()) {
+				// if (isUserIdExist()) {
 					this.checkRefresh(this.infoType.tabIndex, type);
-				} else {
-					notLoginToUserCenter();
-				}
+				// } else {
+				// 	notLoginToUserCenter();
+				// }
 			},
 			/** 初始化查询数据 */
 			initPager() {

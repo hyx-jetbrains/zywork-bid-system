@@ -713,15 +713,15 @@
 		methods: {
 			/** 初始化数据 */
 			initData(type) {
-				if (isUserIdExist()) {
+				// if (isUserIdExist()) {
 					this.checkRefresh(this.infoType.tabIndex, type);
 					let creditFlag = uni.getStorageSync(CREDIT_QUERY_VIP);
 					if (creditFlag == CREDIT_QUERY) {
 						this.creditQueryVip = true;
 					}
-				} else {
-					notLoginToUserCenter();
-				}
+				// } else {
+				// 	notLoginToUserCenter();
+				// }
 			},
 			/** 初始化查询条件 */
 			initPager() {

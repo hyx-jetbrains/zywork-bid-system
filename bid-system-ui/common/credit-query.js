@@ -20,12 +20,16 @@ import * as ResponseStatus from './response-status.js'
  * post请求获取列表信息，封装Promise
  */
 export const getListInfoToPost = (self, url, params) => {
+	let token = ''
+	if (getUserToken()) {
+		token = 'Bearer ' + getUserToken()
+	}
 	return uni.request({
 		url: BASE_URL + url,
 		method: 'POST',
 		data: params,
 		header: {
-			'Authorization': 'Bearer ' + getUserToken()
+			'Authorization': token
 		},
 	})
 }

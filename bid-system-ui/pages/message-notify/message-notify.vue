@@ -135,7 +135,7 @@
 				if (isUserIdExist()) {
 					loadMessage(this, this.pager, type);
 				} else {
-					notLoginToUserCenter();
+					// notLoginToUserCenter();
 				}
 				
 			},
@@ -155,6 +155,9 @@
 				})
 			},
 			async tapTab(e) {
+				if (!isUserIdExist()) {
+					return;
+				}
 				let tabIndex = e.target.dataset.current
 				if (this.infoType.tabIndex === tabIndex) {
 					return false
@@ -170,6 +173,9 @@
 			},
 			/** 分段器选择器 */
 			onClickItem(index) {
+				if (!isUserIdExist()) {
+					return;
+				}
 				if (this.messageStatus.current !== index) {
 					this.messageStatus.current = index
 					if (MESSAGE_ALL === index) {

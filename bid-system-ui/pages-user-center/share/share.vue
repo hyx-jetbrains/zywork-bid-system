@@ -41,7 +41,7 @@
 					<view class="zy-disable-flex">
 						<image class="zy-headicon" :src="shareRecordItem.headicon === '' ? headicon : shareRecordItem.headicon"></image>
 						<view>
-							<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{shareRecordItem.nickname}}</view>
+							<view class="zy-text-big zy-text-bold zy-overflow-hidden">{{shareRecordItem.nickname === '' ? '暂无昵称' : shareRecordItem.nickname}}</view>
 							<view class="zy-text-info">{{shareRecordItem.createTime}}</view>
 						</view>
 					</view>

@@ -74,15 +74,15 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
 
         int totalFee = 0;
         int price = serviceVO.getPrice().intValue();
-        int discount = serviceVO.getDiscount()/100;
+        int discount = serviceVO.getDiscount();
         if(validYear > 1) {
             // 购买服务大于1年,给打折
-            totalFee = validYear * price * discount;
+            totalFee = validYear * price * discount / 100;
         } else if(validYear == 1) {
             totalFee = price;
         }
 
-        if (!StringUtils.isEmpty(userCouponIds) && userCouponMoney > 0) {
+        if (StringUtils.isNotEmpty(userCouponIds) && userCouponMoney > 0) {
             // 用户有选择抵用券
             String[] userCouponIdsArr = userCouponIds.split(",");
             List<UserCouponDO> userCouponDOList = userCouponDAO.getByUserIdAndCouponIds(userId, userCouponIdsArr);
