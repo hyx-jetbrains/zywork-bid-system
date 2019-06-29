@@ -153,24 +153,36 @@ export const getUserDetail = (self) => {
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				self.getUserInfo = true
-				self.user.nickname = res.data.data.rows[0].userDetailNickname
-				self.user.headicon = res.data.data.rows[0].userDetailHeadicon
-				if (self.user.headicon !== undefined && self.user.headicon !== null && self.user.headicon.indexOf('http') < 0) {
+				var userInfo = res.data.data.rows[0]
+				if (userInfo.userDetailNickname) {
+					self.user.nickname = userInfo.userDetailNickname
+				}
+				if (userInfo.userDetailHeadicon) {
+					self.user.headicon = userInfo.userDetailHeadicon
+				}
+				if (self.user.headicon !=='' && self.user.headicon.indexOf('http') < 0) {
 					self.user.headicon = IMAGE_BASE_URL + '/' + self.uesr.headicon
 				}
-				self.user.gender = res.data.data.rows[0].userDetailGender
-				self.user.phone = res.data.data.rows[0].userPhone
-				setShareCode(res.data.data.rows[0].userDetailShareCode)
+				if (userInfo.userDetailGender) {
+					self.user.gender = userInfo.userDetailGender
+				}
+				if (userInfo.userPhone) {
+					self.user.phone = userInfo.userPhone
+				}
+				if (self.user.nickname !== '' && self.user.headicon !== '') {
+					self.getUserInfo = true
+				}
+				setShareCode(userInfo.userDetailShareCode)
 				uni.setStorage({
 					key: USER_ID,
-					data: res.data.data.rows[0].userId
+					data: userInfo.userId
 				})
 				getUserRoles(self)
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
 				removeUserToken()
 				removeOpenid()
+				uni.removeStorageSync(USER_ID)
 				xcxLogin(self)
 			} else {
 				showInfoToast(res.data.message)
