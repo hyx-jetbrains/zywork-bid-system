@@ -23,6 +23,7 @@ export const CREDIT_QUERY = 'creditQuery'
 export const CREDIT_QUERY_ID = 2
 export const USER_FLAG_ORDINARY = 'ordinary'
 export const SHARE_CODE_PAGE_IMG = '/static/share.jpg'
+export const LOGIN_FLAG = 'loginFlag'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 
@@ -227,6 +228,13 @@ export const getShareCode = () => {
  */
 export const callPhone = (phone) => {
 	if (phone === '请购买VIP服务') {
+		const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+		if (!loginFlag) {
+			uni.navigateTo({
+				url: '/pages-static/no-login/no-login'
+			})
+			return;
+		}
 		uni.navigateTo({
 			url: '/pages-user-center/user-vip/user-vip'
 		})
@@ -246,6 +254,13 @@ export const callPhone = (phone) => {
  */
 export const validText = (text) => {
 	if (text === '请购买VIP服务') {
+		const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+		if (!loginFlag) {
+			uni.navigateTo({
+				url: '/pages-static/no-login/no-login'
+			})
+			return;
+		}
 		uni.navigateTo({
 			url: '/pages-user-center/user-vip/user-vip'
 		})

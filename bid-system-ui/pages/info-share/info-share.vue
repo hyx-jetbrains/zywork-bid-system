@@ -435,7 +435,8 @@
 		SHARE_CODE_PAGE_IMG,
 		getShareCode,
 		isUserIdExist,
-		notLoginToUserCenter
+		notLoginToUserCenter,
+		LOGIN_FLAG
 	} from '@/common/util.js'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as infoShare from '@/common/info-share.js'
@@ -817,6 +818,13 @@
 				})
 			},
 			toPublishChoose(type) {
+				const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+				if (!loginFlag) {
+					uni.navigateTo({
+						url: '/pages-static/no-login/no-login'
+					})
+					return;
+				}
 				var url = '/pages-info-share/publish-choose/publish-choose';
 				if (type === 1) {
 					var tabIndex = this.infoType.tabIndex
@@ -890,6 +898,13 @@
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {
+				const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+				if (!loginFlag) {
+					uni.navigateTo({
+						url: '/pages-static/no-login/no-login'
+					})
+					return;
+				}
 				if (item.markCarpoolRecordCount >= item.markCarpoolPeopleCount) {
 					showInfoToast('人数已满，不能申请')
 					return;
@@ -899,6 +914,13 @@
 			},
 			/** 点击我有车，增加找车记录 */
 			addSeekcarRecord(item) {
+				const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+				if (!loginFlag) {
+					uni.navigateTo({
+						url: '/pages-static/no-login/no-login'
+					})
+					return;
+				}
 				if (item.markSeekcarRecordCount >= 1) {
 					showInfoToast('人数已满，不能申请')
 					return;

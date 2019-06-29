@@ -19,7 +19,8 @@ import {
 	IS_EXPERT_COLOR_TRUE,
 	IS_EXPERT_COLOR_FALSE,
 	CUSTOMER_CONFIG,
-	nullToStr
+	nullToStr,
+	LOGIN_FLAG
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -85,6 +86,51 @@ export const xcxLogin = (self) => {
 	})
 }
 
+/**
+ * 未登入页面调用的小程序登入
+ */
+export const xcxLoginSimple = (self) => {
+	uni.login({
+		provider: 'weixin',
+		success: function(wxRes) {
+			let theShareCode = uni.getStorageSync(SHARE_CODE)
+			if (!theShareCode) {
+				theShareCode = null
+			}
+			uni.request({
+				url: BASE_URL + '/wx-auth/xcx',
+				method: 'GET',
+				data: {
+					code: wxRes.code,
+					shareCode: theShareCode
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: (res) => {
+					if (res.data.code === ResponseStatus.OK) {
+						saveOpenid(res.data.data[1])
+						saveUserToken(res.data.data[2])
+						if (res.data.data[0] === 'firstLogin') {
+							// 第一次小程序登录，需要点击登录按钮，才能获取用户信息再保存用户信息
+							uni.removeStorageSync(SHARE_CODE)
+
+						} else {
+							// 第二次开始不需要点击登录按钮，而是直接从后台获取用户信息
+							getUserDetailSimple(self)
+						}
+					} else {
+						showInfoToast(res.data.message)
+					}
+				},
+				fail: () => {
+					networkError()
+				}
+			})
+		}
+	})
+}
+
 export const saveUserDetail = (self, params) => {
 	uni.showLoading({
 		title: '登录中'
@@ -114,9 +160,42 @@ export const saveUserDetail = (self, params) => {
 	})
 }
 
+/**
+ * 未登入页面调用的保存用户详细信息
+ */
+export const saveUserDetailSimple = (self, params) => {
+	uni.showLoading({
+		title: '登录中'
+	})
+	uni.request({
+		url: BASE_URL + '/wx-auth/xcx-userdetail',
+		method: 'POST',
+		data: params,
+		header: {
+			'content-type': 'application/x-www-form-urlencoded'
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				uni.setStorageSync(LOGIN_FLAG, true)
+				uni.navigateBack({
+					delta: 1
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
 export const saveUserPhone = (self, params) => {
 	uni.showLoading({
-		title:'保存手机号'
+		title: '保存手机号'
 	})
 	uni.request({
 		url: BASE_URL + '/wx-auth/xcx-phone',
@@ -160,7 +239,7 @@ export const getUserDetail = (self) => {
 				if (userInfo.userDetailHeadicon) {
 					self.user.headicon = userInfo.userDetailHeadicon
 				}
-				if (self.user.headicon !=='' && self.user.headicon.indexOf('http') < 0) {
+				if (self.user.headicon !== '' && self.user.headicon.indexOf('http') < 0) {
 					self.user.headicon = IMAGE_BASE_URL + '/' + self.uesr.headicon
 				}
 				if (userInfo.userDetailGender) {
@@ -171,13 +250,65 @@ export const getUserDetail = (self) => {
 				}
 				if (self.user.nickname !== '' && self.user.headicon !== '') {
 					self.getUserInfo = true
+					uni.setStorageSync(USER_ID, userInfo.userId)
+					uni.setStorageSync(LOGIN_FLAG, true)
+				} else {
+					uni.setStorageSync(LOGIN_FLAG, false)
 				}
 				setShareCode(userInfo.userDetailShareCode)
-				uni.setStorage({
-					key: USER_ID,
-					data: userInfo.userId
-				})
 				getUserRoles(self)
+			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
+				// 如果token过期了，则直接使用小程序登录，获取最新的token
+				removeUserToken()
+				removeOpenid()
+				uni.removeStorageSync(USER_ID)
+				xcxLogin(self)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
+ * 未登入页面调用保存用户id
+ */
+export const getUserDetailSimple = (self) => {
+	uni.showLoading({
+		title: '登录中'
+	})
+	uni.request({
+		url: BASE_URL + '/user-userdetail/user/get',
+		method: 'GET',
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				var userInfo = res.data.data.rows[0]
+				let nickname = ''
+				let headicon = ''
+				if (userInfo.userDetailNickname) {
+					nickname = userInfo.userDetailNickname
+				}
+				if (userInfo.userDetailHeadicon) {
+					headicon = userInfo.userDetailHeadicon
+				}
+				if (nickname !== '' && headicon !== '') {
+					uni.setStorageSync(LOGIN_FLAG, true)
+					uni.navigateBack({
+						delta: 1
+					})
+				} else {
+					uni.setStorageSync( LOGIN_FLAG, false)
+				}
+				setShareCode(userInfo.userDetailShareCode)
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
 				removeUserToken()
@@ -276,8 +407,7 @@ export const geUserWalletByUserId = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.userWallet = res.data.data
-			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
-			} else {
+			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {} else {
 				showInfoToast(res.data.message)
 			}
 		},
@@ -301,10 +431,9 @@ export const getUserExpertByUserId = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.userExpert = res.data.data
-				if(self.userExpert.examineStatus == 1) {
+				if (self.userExpert.examineStatus == 1) {
 					self.expertIconColor = IS_EXPERT_COLOR_TRUE
-				} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
-				} else {
+				} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {} else {
 					self.expertIconColor = IS_EXPERT_COLOR_FALSE
 				}
 			} else {
@@ -315,7 +444,7 @@ export const getUserExpertByUserId = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -337,7 +466,7 @@ export const getUserShareRecord = (self) => {
 				res.data.data.rows.forEach(item => {
 					if (item.userId != tempUserId) {
 						item = nullToStr(item);
-						if (item.headicon !=='' && item.headicon.indexOf('http') < 0) {
+						if (item.headicon !== '' && item.headicon.indexOf('http') < 0) {
 							item.headicon = IMAGE_BASE_URL + '/' + item.headicon
 						}
 						self.shareRecordList.push(item)
@@ -351,7 +480,7 @@ export const getUserShareRecord = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -385,7 +514,7 @@ export const getUserRoles = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -412,7 +541,7 @@ export const getUserWork = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -420,7 +549,7 @@ export const getUserWork = (self) => {
 /**
  * 修改用户办公地点
  */
-export const updateGrade = (self,gender) => {
+export const updateGrade = (self, gender) => {
 	uni.request({
 		url: BASE_URL + '/user-detail/user/update',
 		method: 'POST',
@@ -443,7 +572,7 @@ export const updateGrade = (self,gender) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -467,7 +596,7 @@ export const updateIdentity = (self) => {
 					'identity': self.identity
 				})
 				uni.navigateBack({
-				
+
 				})
 			} else {
 				showInfoToast(res.data.message)
@@ -477,7 +606,7 @@ export const updateIdentity = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -501,7 +630,7 @@ export const updateCompany = (self) => {
 					'company': self.company
 				})
 				uni.navigateBack({
-				
+
 				})
 			} else {
 				showInfoToast(res.data.message)
@@ -511,7 +640,7 @@ export const updateCompany = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -535,7 +664,7 @@ export const updateJobTitle = (self) => {
 					'job': self.job
 				})
 				uni.navigateBack({
-				
+
 				})
 			} else {
 				showInfoToast(res.data.message)
@@ -545,7 +674,7 @@ export const updateJobTitle = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -569,7 +698,7 @@ export const updateCompanyAddr = (self) => {
 					'companyAddr': self.companyAddr
 				})
 				uni.navigateBack({
-				
+
 				})
 			} else {
 				showInfoToast(res.data.message)
@@ -579,7 +708,7 @@ export const updateCompanyAddr = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -608,7 +737,7 @@ export const getCustomerConfig = () => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
@@ -633,7 +762,7 @@ export const getSysInfo = (self) => {
 			networkError()
 		},
 		complete: () => {
-			
+
 		}
 	})
 }
