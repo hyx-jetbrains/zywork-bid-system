@@ -1856,6 +1856,7 @@
             this.$Message.success(res.data.message)
           }
           this.loading.python = false
+          this.cancelModal('python')
         }).catch(err => {
           console.log(err)
           this.$Message.error("爬取数据失败")
