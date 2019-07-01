@@ -37,7 +37,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>top.zywork</groupId>
-			<artifactId>zywork-common</artifactId>
+			<artifactId>zywork-common-bid-system</artifactId>
 			<version>${zywork.version}</version>
 		</dependency>
 

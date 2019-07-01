@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>top.zywork</groupId>
-  <artifactId>zywork-common</artifactId>
+  <artifactId>zywork-common-bid-system</artifactId>
   <packaging>jar</packaging>
   <version>1.0.0</version>
 
