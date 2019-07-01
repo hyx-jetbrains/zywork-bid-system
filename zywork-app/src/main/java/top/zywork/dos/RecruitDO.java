@@ -43,8 +43,19 @@ public class RecruitDO extends BaseDO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
-	
-    public RecruitDO () {}
+
+	// 联系电话
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public RecruitDO () {}
 
     public RecruitDO (Long id, Long userId, String jobTitle, Byte isFulltime, String workYear, String education, String salary, String workAddr, String memo, String recruitStatus, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;

@@ -20,7 +20,8 @@ import {
 	IS_EXPERT_COLOR_FALSE,
 	CUSTOMER_CONFIG,
 	nullToStr,
-	LOGIN_FLAG
+	LOGIN_FLAG,
+	USER_PHONE
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -255,6 +256,7 @@ export const getUserDetail = (self) => {
 				} else {
 					uni.setStorageSync(LOGIN_FLAG, false)
 				}
+				uni.setStorageSync(USER_PHONE, userInfo.userPhone)
 				setShareCode(userInfo.userDetailShareCode)
 				getUserRoles(self)
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
@@ -308,6 +310,7 @@ export const getUserDetailSimple = (self) => {
 				} else {
 					uni.setStorageSync( LOGIN_FLAG, false)
 				}
+				uni.setStorageSync(USER_PHONE, userInfo.userPhone)
 				setShareCode(userInfo.userDetailShareCode)
 			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
 				// 如果token过期了，则直接使用小程序登录，获取最新的token
@@ -456,12 +459,14 @@ export const getUserShareRecord = (self) => {
 	uni.request({
 		url: BASE_URL + '/distribution/user/direct-below',
 		method: 'POST',
-		data: {},
+		data: self.pager,
 		header: {
-			'Authorization': 'Bearer ' + getUserToken()
+			'Authorization': 'Bearer ' + getUserToken(),
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 		},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
+				self.shareRecordList = [];
 				var tempUserId = uni.getStorageSync(USER_ID);
 				res.data.data.rows.forEach(item => {
 					if (item.userId != tempUserId) {
@@ -472,6 +477,9 @@ export const getUserShareRecord = (self) => {
 						self.shareRecordList.push(item)
 					}
 				})
+				self.pager.pageTotal = res.data.data.total
+				console.log(self.pager.pageTotal)
+				console.log(res.data.data.total)
 			} else {
 				showInfoToast(res.data.message)
 			}

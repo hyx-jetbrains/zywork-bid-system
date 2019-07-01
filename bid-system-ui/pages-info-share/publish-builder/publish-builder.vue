@@ -302,7 +302,8 @@
 		BASE_URL,
 		getUserToken,
 		networkError,
-		showSuccessToast
+		showSuccessToast,
+		getUserPhone
 	} from '@/common/util.js'
 	import * as infoPublish from '@/common/info-publish.js'
 	import * as ResponseStatus from '@/common/response-status.js'
@@ -397,6 +398,7 @@
 			if (payload !== undefined) {
 				this.builderType.current = payload
 			}
+			this.builder.phone = this.builderReq.phone = getUserPhone();
 		},
 		methods: {
 			/** 初始化选择器 */

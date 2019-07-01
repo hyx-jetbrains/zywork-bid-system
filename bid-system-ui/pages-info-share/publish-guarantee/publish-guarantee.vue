@@ -163,6 +163,9 @@
 	import {
 		guaranteeCompanyArray
 	} from '@/common/picker.data.js'
+	import {
+		getUserPhone
+	} from '@/common/util.js'
 	export default {
 		components: {
 			uniDrawer,
@@ -210,7 +213,8 @@
 		},
 		onLoad() {
 			uni.hideShareMenu();
-			this.initPicker()
+			this.initPicker();
+			this.guarantee.phone = getUserPhone();
 		},
 		methods: {
 			/** 初始化下拉框 */

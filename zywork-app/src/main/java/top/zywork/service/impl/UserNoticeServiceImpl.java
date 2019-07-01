@@ -33,4 +33,9 @@ public class UserNoticeServiceImpl extends AbstractBaseService implements UserNo
     public void init() {
         super.init(UserNoticeDO.class, UserNoticeDTO.class);
     }
+
+    @Override
+    public Long clearNoReadMessage(Long userId, Integer noticeType) {
+        return userNoticeDAO.clearNoReadMessage(userId, noticeType);
+    }
 }

@@ -38,7 +38,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/UserBuilderReq")
-@HasHideProperty
+//@HasHideProperty
 public class UserBuilderReqController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserBuilderReqController.class);
@@ -84,15 +84,16 @@ public class UserBuilderReqController extends BaseController {
      * Description: 信息共享 -- 建造师 -- 招聘信息
      */
     @PostMapping("user/list-page")
-    @HideProperty(url = "/UserBuilderReq/user/list-page", properties = {"builderReqPhone"})
+//    @HideProperty(url = "/UserBuilderReq/user/list-page", properties = {"builderReqPhone"})
     public ResponseStatusVO listPage(HttpServletRequest request, @RequestBody UserBuilderReqQuery userBuilderReqQuery) {
-        ResponseStatusVO responseStatusVO = listPageByCondition(userBuilderReqQuery);
-        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
-        if (vipFlag != null && ((Boolean) vipFlag)) {
-            return responseStatusVO;
-        }
-        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "listPage",
-                    responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
+//        ResponseStatusVO responseStatusVO = listPageByCondition(userBuilderReqQuery);
+//        Object vipFlag = request.getAttribute(ProjectConstants.VIP_FLAG);
+//        if (vipFlag != null && ((Boolean) vipFlag)) {
+//            return responseStatusVO;
+//        }
+//        return ReflectUtils.hideProperty(this.getClass().getDeclaredMethods(), "listPage",
+//                    responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
+        return listPageByCondition(userBuilderReqQuery);
     }
 
     /**

@@ -35,7 +35,8 @@
 		getExpertQuesTionTypeByUserId
 	} from '@/common/user-center.js'
 	import {
-		showInfoToast
+		showInfoToast,
+		USER_PHONE
 	} from '@/common/util.js'
 	export default {
 		components: {
@@ -70,6 +71,11 @@
 			},
 			// 咨询
 			addAppointment() {
+				const phone = uni.getStorageSync(USER_PHONE);
+				if (!phone) {
+					showInfoToast("请先在个人中心获取手机号")
+					return;
+				}
 				if (this.consultDesc === '' || this.consultDesc === null || this.consultDesc === undefined) {
 					showInfoToast('请输入咨询内容')
 					return;

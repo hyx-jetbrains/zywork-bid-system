@@ -175,6 +175,24 @@ public class UserNoticeController extends BaseController {
         }
     }
 
+    @GetMapping("user/clear-msg/{type}")
+    public ResponseStatusVO clearUserMessage(@PathVariable("type") Integer type) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+        if (null == type || type > 5) {
+            // 目前消息类型只有6种：0-6
+            return ResponseStatusVO.error("清除类型错误", null);
+        }
+        Long updateRow = userNoticeService.clearNoReadMessage(jwtUser.getUserId(), type);
+        if (updateRow > 0) {
+            return ResponseStatusVO.ok("清除成功", null);
+        } else {
+            return ResponseStatusVO.error("没有未读消息", null);
+        }
+    }
+
     @Autowired
     public void setUserNoticeService(UserNoticeService userNoticeService) {
         this.userNoticeService = userNoticeService;

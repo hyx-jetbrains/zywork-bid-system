@@ -2,6 +2,7 @@ package top.zywork.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.zywork.common.PageQueryUtils;
 import top.zywork.dao.DistributionDAO;
 import top.zywork.dto.PagerDTO;
 import top.zywork.query.DistributionUserHierarchyQuery;
@@ -73,12 +74,19 @@ public class DistributionServiceImpl implements DistributionService {
     }
 
     @Override
-    public PagerDTO allDirectBelowUsers(Long userId, Integer distributionLevel, Long level) {
+    public PagerDTO allDirectBelowUsers(Long userId, Integer distributionLevel, Long level, Integer pageNo, Integer pageSize) {
         PagerDTO pagerDTO = new PagerDTO();
-        List<Object> objectList = distributionDAO.allDirectBelowUsers(userId, distributionLevel, level);
-        pagerDTO.setTotal(objectList == null ? 0 : (long) objectList.size());
+        PageQuery pageQuery = PageQueryUtils.getPageQuery(pageNo, pageSize);
+        List<Object> objectList = distributionDAO.allDirectBelowUsers(userId, distributionLevel, level, pageQuery);
+        Long countRow = distributionDAO.countAllDirectBelowUsers(userId, distributionLevel, level);
+        pagerDTO.setTotal(countRow == null ? 0 : countRow);
         pagerDTO.setRows(objectList == null ? new ArrayList<>() : objectList);
         return pagerDTO;
+    }
+
+    @Override
+    public Long countAllDirectBelowUsers(Long userId, Integer distributionLevel, Long level) {
+        return distributionDAO.countAllDirectBelowUsers(userId, distributionLevel, level);
     }
 
     @Override

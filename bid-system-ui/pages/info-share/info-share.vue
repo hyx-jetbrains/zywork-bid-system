@@ -556,6 +556,7 @@
 			}
 		},
 		onShow() {
+			this.pager.pageNo = 1
 			this.initData('init');
 		},
 		onLoad() {
@@ -568,7 +569,7 @@
 		onReachBottom() {
 			this.showLoadMore = true
 			this.pager.pageNo += 1
-			this.checkRefresh(this.infoType.tabIndex, 'reachBottom');
+			this.initData('reachBottom')
 		},
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();
@@ -894,7 +895,7 @@
 			},
 			/** 前往申请保函详情页面 */
 			toGuaranteeDetailPage(item) {
-				this.toDetailPage('guarantee', item);
+				// this.toDetailPage('guarantee', item);
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {

@@ -1847,8 +1847,8 @@
         this.loading.python = true
         axios.request({
           url: this.urls.pythonUpdateDataUrl,
-          method: 'GET',
-          data: '',
+          method: 'POST',
+          data: this.python
         }).then(res => {
           if (res.data.code !== ResponseStatus.OK) {
             this.$Message.error(res.data.message)

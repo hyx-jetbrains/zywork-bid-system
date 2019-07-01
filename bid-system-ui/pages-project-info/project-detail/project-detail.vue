@@ -77,7 +77,7 @@
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">联系电话</view>
-					<view class="zy-disable-flex-right zy-primary">{{project.project.phone}}</view>
+					<view class="zy-disable-flex-right zy-primary" @click="callPhone(project.project.phone)">{{project.project.phone}}</view>
 				</view>
 				<view class="zy-project-desc-title zy-text-bold zy-disable-flex zy-position-relative">
 					<view>文件</view>
@@ -327,7 +327,8 @@
 	import {
 		DEFAULT_HEADICON,
 		showInfoToast,
-		DOCUMENT_BASE_URL
+		DOCUMENT_BASE_URL,
+		callPhone
 	} from '@/common/util.js'
 	import {
 		getProjectCollectionInfo,
@@ -576,6 +577,13 @@
 			/** 前往找车详情页面 */
 			toSeekcarDetailPage(item) {
 				this.toDetailPage('seekcar', item);
+			},
+			/** 拨打电话 */
+			callPhone(phone) {
+				if (!phone) {
+					return;
+				}
+				callPhone(phone);
 			},
 		}
 	}

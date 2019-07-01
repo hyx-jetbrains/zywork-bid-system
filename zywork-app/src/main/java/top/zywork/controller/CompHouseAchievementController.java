@@ -156,7 +156,7 @@ public class CompHouseAchievementController extends BaseController {
                 responseStatusVO, ProjectConstants.VIP_TEXT_TIP);
     }
 
-    @GetMapping("admin/python")
+    @PostMapping("admin/python")
     public ResponseStatusVO pythonCompHouseAchievementInfo(@RequestBody CompHouseAchievementQuery compHouseAchievementQuery) {
         if (null == compHouseAchievementQuery.getPageNo()) {
             return ResponseStatusVO.error("请输入页码", null);

@@ -56,10 +56,20 @@ public interface DistributionService {
      * @param userId 指定用户编号
      * @param distributionLevel 分销级别
      * @param level 用户下面的几级经销商，如查询用户下面的二级经销商，level = 2
+     * @param pageNo 分页查询的页码
+     * @param pageSize 分页查询的每页个数
      * @return
      */
-    PagerDTO allDirectBelowUsers(Long userId, Integer distributionLevel, Long level);
+    PagerDTO allDirectBelowUsers(Long userId, Integer distributionLevel, Long level, Integer pageNo, Integer pageSize);
 
+    /**
+     * 统计知道用户的直接夏季经销商
+     * @param userId 指定用户编号
+     * @param distributionLevel 分销级别
+     * @param level 用户厦门的几级经销商，如查询用户厦门的二级经销售，level = 2
+     * @return
+     */
+    Long countAllDirectBelowUsers(Long userId, Integer distributionLevel, Long level);
     /**
      * 分页查询指定用户的关系路径
      * @param userId 用户编号

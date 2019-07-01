@@ -46,6 +46,7 @@
 						</view>
 					</view>
 				</view>
+				<uni-pagination :current="pager.pageNo" :total="pager.pageTotal" title="标题文字" prev-text="前一页" next-text="后一页" @change="changePageTotal" />
 			</view>
 			<zywork-no-data v-else text="暂无邀请记录"></zywork-no-data>
 		</view>
@@ -55,6 +56,7 @@
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import uniPagination from '@/components/uni-pagination/uni-pagination.vue'
 	
 	import {
 		DEFAULT_HEADICON,
@@ -69,12 +71,18 @@
 	export default {
 		components: {
 			zyworkIcon,
-			zyworkNoData
+			zyworkNoData,
+			uniPagination
 		},
 		data() {
 			return {
 				headicon: DEFAULT_HEADICON,
-				shareRecordList: []
+				shareRecordList: [],
+				pager: {
+					pageNo: 1,
+					pageSize: 10,
+					pageTotal: 0
+				}
 			}
 		},
 		onLoad() {
@@ -90,7 +98,18 @@
 			}
 		},
 		methods: {
-			
+			changePageTotal(e) {
+				console.log(e.type)
+				this.pager.pageNo = e.current;
+				getUserShareRecord(this);
+				// let type = e.type;
+				// if (type === 'next') {
+				// 	// 下一页
+				// 	
+				// } else if (type === 'prev') {
+				// 	// 上一页
+				// }
+			}
 		}
 	}
 </script>

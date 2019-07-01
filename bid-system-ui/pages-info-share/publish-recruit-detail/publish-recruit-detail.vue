@@ -42,6 +42,10 @@
 					<view class="zy-text-bold">招聘状态</view>
 					<view class="zy-disable-flex-right">{{item.recruitRecruitStatus}}</view>
 				</view>
+				<view class="zy-disable-flex zy-page-list-item">
+					<view class="zy-text-bold">联系电话</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="callPhone(item.compPhone)">{{item.phone}}</view>
+				</view>
 				<view class="zy-page-list-item">
 					<view class="zy-text-bold">职位描述</view>
 					<view class="">{{item.recruitMemo}}</view>
@@ -56,7 +60,8 @@
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import {
-		DEFAULT_HEADICON
+		DEFAULT_HEADICON,
+		callPhone
 	} from '@/common/util.js'
 	export default {
 		components: {
@@ -82,7 +87,15 @@
 				title: this.item.recruitJobTitle
 			});
 		},
-		methods: {}
+		methods: {
+			/** 拨打电话 */
+			callPhone(phone) {
+				if (!phone) {
+					return;
+				}
+				callPhone(phone);
+			},
+		}
 	}
 </script>
 

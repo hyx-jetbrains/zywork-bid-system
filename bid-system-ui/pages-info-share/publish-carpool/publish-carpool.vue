@@ -344,7 +344,8 @@
 		carTypeArray
 	} from '@/common/picker.data.js'
 	import {
-		getDate
+		getDate,
+		getUserPhone
 	} from '@/common/util.js'
 	import * as infoPublish from '@/common/info-publish.js'
 	import {
@@ -438,6 +439,7 @@
 			if (payload !== undefined) {
 				this.type.current = payload
 			}
+			this.carpool.phone = this.seekcar.phone = getUserPhone();
 		},
 		methods: {
 			/** 分段器选择类别 */

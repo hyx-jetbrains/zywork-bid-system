@@ -47,7 +47,9 @@
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import {
 		getCalendarDate,
-		getDate
+		getDate,
+		USER_PHONE,
+		showInfoToast
 	} from '@/common/util.js'
 	import {
 		getMyService,
@@ -73,6 +75,11 @@
 		methods: {
 			/** 前往购买服务页面 */
 			toBuyServicePage(item, type) {
+				// const phone = uni.getStorageSync(USER_PHONE);
+				// if (!phone) {
+				// 	showInfoToast("请先在个人中心获取手机号")
+				// 	return;
+				// }
 				item.type = type;
 				uni.navigateTo({
 					url: '/pages-user-center/user-vip/vip-record?itemData=' + encodeURIComponent(JSON.stringify(item))
@@ -80,6 +87,11 @@
 			},
 			/** 续订 */
 			continuousBuy(item) {
+				// const phone = uni.getStorageSync(USER_PHONE);
+				// if (!phone) {
+				// 	showInfoToast("请先在个人中心获取手机号")
+				// 	return;
+				// }
 				var id = item.userServiceServiceId;
 				getOneServiceById(this, id);
 			}

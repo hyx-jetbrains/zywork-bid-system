@@ -60,6 +60,17 @@ public class RecruitVO extends BaseVO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
+
+	// 联系电话
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	
     public RecruitVO () {}
 

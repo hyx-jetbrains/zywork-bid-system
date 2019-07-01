@@ -1203,6 +1203,36 @@ export const getCouponByUserId = (self, type) => {
 }
 
 /**
+ * 获取我的所有抵扣券
+ */
+export const getAllCouponByUserId = (self) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/UserUserCoupon/user/list-all/' + self.pager.status,
+		method: 'POST',
+		data: self.pager,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.couponList = res.data.data.rows
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
  * 我的抵扣券使用记录
  */
 export const getCouponRecordByUserId = (self, type) => {

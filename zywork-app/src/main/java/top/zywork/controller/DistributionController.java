@@ -159,9 +159,9 @@ public class DistributionController {
      * @return
      */
     @PostMapping("admin/direct-below")
-    public ResponseStatusVO listDirectBelowUsers(Long userId) {
+    public ResponseStatusVO listDirectBelowUsers(Long userId, Integer pageNo, Integer pageSize) {
         DefaultDistributionConfig defaultDistributionConfig = sysConfigService.getByName(SysConfigEnum.DEFAULT_DISTRIBUTION_CONFIG.getValue(), DefaultDistributionConfig.class);
-        PagerDTO pagerDTO = distributionService.allDirectBelowUsers(userId, defaultDistributionConfig.getDistributionLevel(), 2L);
+        PagerDTO pagerDTO = distributionService.allDirectBelowUsers(userId, defaultDistributionConfig.getDistributionLevel(), 2L, pageNo, pageSize);
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), DistributionUserVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
@@ -173,12 +173,12 @@ public class DistributionController {
      * @return
      */
     @PostMapping("user/direct-below")
-    public ResponseStatusVO userListDirectBelowUsers() {
+    public ResponseStatusVO listDirectBelowUsers(Integer pageNo, Integer pageSize) {
         JwtUser jwtUser = SecurityUtils.getJwtUser();
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-        return listDirectBelowUsers(jwtUser.getUserId());
+        return listDirectBelowUsers(jwtUser.getUserId(), pageNo, pageSize);
     }
 
     /**

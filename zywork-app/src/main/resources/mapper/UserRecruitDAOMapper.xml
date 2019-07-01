@@ -5,7 +5,7 @@
 <mapper namespace="top.zywork.dao.UserRecruitDAO">
 
     <sql id="select_columns">
-        t_recruit.id as recruitId, t_recruit.user_id as recruitUserId, t_recruit.job_title as recruitJobTitle, t_recruit.is_fulltime as recruitIsFulltime, t_recruit.work_year as recruitWorkYear, t_recruit.education as recruitEducation, t_recruit.salary as recruitSalary, t_recruit.work_addr as recruitWorkAddr, t_recruit.memo as recruitMemo, t_recruit.recruit_status as recruitRecruitStatus, t_recruit.version as recruitVersion, t_recruit.create_time as recruitCreateTime, t_recruit.update_time as recruitUpdateTime, t_recruit.is_active as recruitIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
+        t_recruit.phone as phone, t_recruit.id as recruitId, t_recruit.user_id as recruitUserId, t_recruit.job_title as recruitJobTitle, t_recruit.is_fulltime as recruitIsFulltime, t_recruit.work_year as recruitWorkYear, t_recruit.education as recruitEducation, t_recruit.salary as recruitSalary, t_recruit.work_addr as recruitWorkAddr, t_recruit.memo as recruitMemo, t_recruit.recruit_status as recruitRecruitStatus, t_recruit.version as recruitVersion, t_recruit.create_time as recruitCreateTime, t_recruit.update_time as recruitUpdateTime, t_recruit.is_active as recruitIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
     </sql>
 
     <sql id="query_where_clause">
@@ -131,6 +131,9 @@
 		</if>
 		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
 			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		<if test="query != null and query.phone != null and query.phone != ''">
+			and t_recruit.phone like concat('%', #{query.phone}, '%')
 		</if>
 		
         and

@@ -1,4 +1,10 @@
-import {BASE_URL, getUserToken, invalidToken, networkError, showInfoToast} from './util.js'
+import {
+	BASE_URL,
+	getUserToken,
+	invalidToken,
+	networkError,
+	showInfoToast
+} from './util.js'
 import * as ResponseStatus from './response-status.js'
 
 /**
@@ -119,5 +125,30 @@ export const getOneById = (self, url) => {
 		method: 'GET',
 		data: {},
 		header: {},
+	})
+}
+
+/**
+ * 清除未读的消息
+ */
+export const clearNoReadMessage = (self, type) => {
+	uni.request({
+		url: BASE_URL + '/user-notice/user/clear-msg/' + type,
+		data: {},
+		method: 'GET',
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.initMessage('init');
+			} else {
+				showInfoToast(res.data.message)
+			}
+			countNotReadMsg();
+		},
+		fail: () => {
+			networkError()
+		}
 	})
 }

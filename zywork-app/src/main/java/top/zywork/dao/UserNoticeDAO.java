@@ -25,4 +25,12 @@ public interface UserNoticeDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    /**
+     * 清除指定用户指定类型的未读消息
+     * @param userId 指定用户编号
+     * @param noticeType 指定消息类型
+     * @return
+     */
+    Long clearNoReadMessage(@Param("userId") Long userId, @Param("noticeType") Integer noticeType);
 }

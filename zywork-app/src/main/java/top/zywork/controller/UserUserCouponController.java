@@ -92,6 +92,31 @@ public class  UserUserCouponController extends BaseController {
         return listPageByCondition(userUserCouponQuery);
     }
 
+    /**
+     * User: DengMin
+     * Date: 2019/05/18
+     * Time: 11:31
+     * Description: 抵扣券
+     */
+    @PostMapping("user/list-all/{status}")
+    public ResponseStatusVO listAllByUserId(@RequestBody UserUserCouponQuery userUserCouponQuery,@PathVariable("status") Integer status) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        if (jwtUser == null) {
+            return ResponseStatusVO.authenticationError();
+        }
+
+        if(status != null) {
+            if(status == 1) {
+                userUserCouponQuery.setCouponValidTimeMin(new Date());
+            } else if(status == 2) {
+                userUserCouponQuery.setCouponValidTimeMax(new Date());
+            }
+        }
+
+        userUserCouponQuery.setUserCouponUserId(jwtUser.getUserId());
+        return listAllByCondition(userUserCouponQuery);
+    }
+
     @Autowired
     public void setUserUserCouponService(UserUserCouponService userUserCouponService) {
         this.userUserCouponService = userUserCouponService;

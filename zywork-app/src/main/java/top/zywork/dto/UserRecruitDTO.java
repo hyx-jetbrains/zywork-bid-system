@@ -51,6 +51,17 @@ public class UserRecruitDTO extends BaseDTO {
 	private String userDetailHeadicon;
 	// 性别
 	private Byte userDetailGender;
+
+	// 联系电话
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	
     public UserRecruitDTO () {}
 

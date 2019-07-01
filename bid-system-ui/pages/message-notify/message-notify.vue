@@ -3,13 +3,17 @@
 		<view class="uni-tab-bar zy-tab-bar">
 			<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="infoType.scrollLeft">
 				<view v-for="(tab,index) in infoType.tabbars" :key="tab.id" class="swiper-tab-list" :class="infoType.tabIndex==index ? 'active' : ''"
-				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
+				 :id="tab.id" :data-current="index" @click="tapTab">
+					{{tab.name}}
+				</view>
 			</scroll-view>
 		</view>
-		<view class="zy-uni-segmented-control">
+		<view class="zy-uni-segmented-control zy-position-relative">
 			<uni-segmented-control :current="messageStatus.current" :values="messageStatus.items" v-on:clickItem="onClickItem"
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
+			 <zywork-icon class="zy-clear-message" type="iconqingchu" color="#6D6D6D" size="20" @tap="clearMessage"/>
 		</view>
+		
 		<view v-if="messageList.length > 0" class="zy-page-list" style="margin-top: 10upx;">
 			<view v-for="(message, index) in messageList" :key="index" class="zy-page-list-item" @click="toMessageDetail(message)">
 				<view class="zy-message-head">
@@ -30,8 +34,10 @@
 </template>
 
 <script>
+	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
+	import uniBadge from '@/components/uni-badge/uni-badge.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import {
 		messageReadTypeArray
@@ -39,13 +45,15 @@
 	import {
 		loadMessage,
 		readMessage,
-		countNotReadMsg
+		countNotReadMsg,
+		clearNoReadMessage
 	} from '@/common/message.js'
 	import {
 		SHARE_CODE_PAGE_IMG,
 		getShareCode,
 		isUserIdExist,
-		notLoginToUserCenter
+		notLoginToUserCenter,
+		LOGIN_FLAG
 	} from '@/common/util.js'
 	
 	const MESSAGE_ALL = 0
@@ -55,7 +63,9 @@
 		components: {
 			zyworkNoData,
 			uniTag,
-			uniSegmentedControl
+			uniSegmentedControl,
+			zyworkIcon,
+			uniBadge
 		},
 		data() {
 			return {
@@ -107,6 +117,7 @@
 		},
 		onShow() {
 			countNotReadMsg();
+			this.pager.pageNo = 1
 			this.initMessage('init');
 		},
 		onLoad() {
@@ -132,10 +143,9 @@
 		methods: {
 			/** 初始化消息 */
 			initMessage(type) {
-				if (isUserIdExist()) {
+				const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+				if (loginFlag) {
 					loadMessage(this, this.pager, type);
-				} else {
-					// notLoginToUserCenter();
 				}
 				
 			},
@@ -155,7 +165,11 @@
 				})
 			},
 			async tapTab(e) {
-				if (!isUserIdExist()) {
+				const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+				if (!loginFlag) {
+					uni.navigateTo({
+						url: '/pages-static/no-login/no-login'
+					})
 					return;
 				}
 				let tabIndex = e.target.dataset.current
@@ -173,20 +187,24 @@
 			},
 			/** 分段器选择器 */
 			onClickItem(index) {
-				if (!isUserIdExist()) {
+				const loginFlag = uni.getStorageSync(LOGIN_FLAG);
+				if (!loginFlag) {
+					uni.navigateTo({
+						url: '/pages-static/no-login/no-login'
+					})
 					return;
 				}
 				if (this.messageStatus.current !== index) {
 					this.messageStatus.current = index
-					if (MESSAGE_ALL === index) {
-						this.pager.isRead = '';
-						this.pager.sortColumn = 'isRead';
-						this.pager.sortOrder = 'asc';
-					} else {
-						this.pager.sortColumn = 'createTime';
-						this.pager.sortOrder = 'desc';
-						this.pager.isRead = --index;
-					}
+					// if (MESSAGE_ALL === index) {
+					// 	this.pager.isRead = '';
+					// 	this.pager.sortColumn = 'isRead';
+					// 	this.pager.sortOrder = 'asc';
+					// } else {
+					// 	this.pager.sortColumn = 'createTime';
+					// 	this.pager.sortOrder = 'desc';
+					// 	this.pager.isRead = --index;
+					// }
 					this.initPager();
 					this.initMessage('init');
 				}
@@ -199,7 +217,13 @@
 				uni.navigateTo({
 					url: '/pages-message-notify/message-detail/message-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
+			},
+			/** 清除未读消息 */
+			clearMessage() {
+				console.log("清除未读消息")
+				clearNoReadMessage(this, this.infoType.tabIndex);
 			}
+			
 		}
 	}
 </script>
@@ -219,5 +243,16 @@
 
 	.zy-message-time {
 		text-align: right;
+	}
+	.zy-clear-message {
+		position: absolute;
+		top: 10upx;
+		right: 30upx;
+	}
+	
+	.zy-tab-badge {
+		position: absolute;
+		top: 10upx;
+		right: 10upx;
 	}
 </style>

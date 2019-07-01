@@ -91,6 +91,17 @@ public class UserRecruitQuery extends PageQuery {
 	private Byte userDetailGenderMin;
 	// 性别（最大值）
 	private Byte userDetailGenderMax;
+
+	// 联系电话
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	
     public UserRecruitQuery () {}
 

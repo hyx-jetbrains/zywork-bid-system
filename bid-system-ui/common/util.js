@@ -1,5 +1,5 @@
-export const BASE_URL = 'https://www.shudagroup.com/api'
-// export const BASE_URL = 'http://localhost:8088'
+// export const BASE_URL = 'https://www.shudagroup.com/api'
+export const BASE_URL = 'http://localhost:8088'
 export const IMAGE_BASE_URL = 'https://www.shudagroup.com'
 export const DOCUMENT_BASE_URL = 'https://www.shudagroup.com'
 export const USER_TOKEN_KEY = 'userToken'
@@ -24,6 +24,7 @@ export const CREDIT_QUERY_ID = 2
 export const USER_FLAG_ORDINARY = 'ordinary'
 export const SHARE_CODE_PAGE_IMG = '/static/share.jpg'
 export const LOGIN_FLAG = 'loginFlag'
+export const USER_PHONE = 'userPhone'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 
@@ -221,6 +222,17 @@ export const getShareCode = () => {
 		return shareCode
 	}
 	return null
+}
+
+/**
+ * 获取当前用户的手机号，如果有则获取，没有获取到的是空字符串
+ */
+export const getUserPhone = () => {
+	const userPhone = uni.getStorageSync(USER_PHONE)
+	if (userPhone) {
+		return userPhone;
+	}
+	return "";
 }
 
 /**

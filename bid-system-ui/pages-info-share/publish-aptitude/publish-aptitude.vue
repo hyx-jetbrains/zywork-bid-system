@@ -129,7 +129,8 @@
 		BASE_URL,
 		getUserToken,
 		networkError,
-		showSuccessToast
+		showSuccessToast,
+		getUserPhone
 	} from '@/common/util.js'
 	import * as infoPublish from '@/common/info-publish.js'
 	import * as ResponseStatus from '@/common/response-status.js'
@@ -194,6 +195,7 @@
 				this.aptitude.typeName = this.aptitudeTypeArray[this.aptitude.type];
 			}
 			this.switchAptitudeType();
+			this.aptitude.phone = getUserPhone();
 		},
 		methods: {
 			/** 初始化下拉选择器 */

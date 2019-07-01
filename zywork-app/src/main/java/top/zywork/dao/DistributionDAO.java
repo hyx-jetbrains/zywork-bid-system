@@ -84,8 +84,15 @@ public interface DistributionDAO {
      * @param level 用户下面的几级经销商，如查询用户下面的二级经销商，level = 2
      * @return
      */
-    List<Object> allDirectBelowUsers(@Param("userId") Long userId, @Param("distributionLevel") Integer distributionLevel, @Param("level") Long level);
-
+    List<Object> allDirectBelowUsers(@Param("userId") Long userId, @Param("distributionLevel") Integer distributionLevel, @Param("level") Long level, @Param("query") PageQuery pageQuery);
+    /**
+     * 统计知道用户的直接夏季经销商
+     * @param userId 指定用户编号
+     * @param distributionLevel 分销级别
+     * @param level 用户厦门的几级经销商，如查询用户厦门的二级经销售，level = 2
+     * @return
+     */
+    Long countAllDirectBelowUsers(@Param("userId") Long userId, @Param("distributionLevel") Integer distributionLevel, @Param("level") Long level);
     /**
      * 分页查询指定用户的关系路径
      * @param userId 用户编号

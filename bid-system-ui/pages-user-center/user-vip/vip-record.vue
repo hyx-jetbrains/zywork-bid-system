@@ -64,19 +64,22 @@
 									<!-- <zywork-list-item title="暂不使用" @click="cancelUseCoupon"></zywork-list-item>
 									<zywork-list-item v-for="(couponItem, index) in couponList" :key="index" :title="'¥' + couponItem.couponMoney / 100"
 									 note="点击使用" @click="useCoupon(couponItem.userCouponId, couponItem.couponMoney)"></zywork-list-item> -->
-									 <view class="zy-search-view zy-search-title">
+									<view class="zy-search-view zy-search-title">
 										<text class="zy-text-bold">选择需要使用的抵用券</text>
 									</view>
-									 <view class="uni-list">
-										<checkbox-group @change="couponChange">
-											<label class="uni-list-cell uni-list-cell-pd" v-for="(couponItem, index) in couponList" :key="index">
-												<view>
-													<checkbox :value="index" />
-												</view>
-												<view class="zy-price">¥{{couponItem.couponMoney / 100}}</view>
-											</label>
-										</checkbox-group>
-									</view>
+									<scroll-view class="uni-swiper-tab" scroll-y scroll-top="0" style="height:800upx;">
+										<view class="uni-list">
+											<checkbox-group @change="couponChange">
+												<label class="uni-list-cell uni-list-cell-pd" v-for="(couponItem, index) in couponList" :key="index">
+													<view>
+														<checkbox :value="index" />
+													</view>
+													<view class="zy-price">¥{{couponItem.couponMoney / 100}}</view>
+													<view>{{couponItem.couponValidTime.split(" ")[0]}}</view>
+												</label>
+											</checkbox-group>
+										</view>
+									</scroll-view>
 									<view class="zy-search-view zy-search-bottom">
 										<button class="mini-btn" type="default" size="mini" @click="hideCouponDrawer">取消</button>
 										<button class="mini-btn" type="primary" size="mini" @click="useCouponConfim">确定</button>
@@ -112,7 +115,7 @@
 		buyServiceValidYearArray
 	} from '@/common/picker.data.js'
 	import {
-		getCouponByUserId,
+		getAllCouponByUserId,
 		payServiceRecord
 	} from '@/common/user-center.js'
 	import {
@@ -199,7 +202,9 @@
 			this.recordInfo.discount = this.item.discount;
 			this.formData.serviceId = this.item.id;
 			this.formData.type = this.item.type;
-			this.pager.couponValidTimeMin = getDate({format: true}) + " 00:00:00";
+			this.pager.couponValidTimeMin = getDate({
+				format: true
+			}) + " 00:00:00";
 		},
 		methods: {
 			/** 监听购买年数 */
@@ -232,7 +237,7 @@
 			showCouponDrawer() {
 				this.couponDrawer = true;
 				this.showBtn = false;
-				getCouponByUserId(this, 'init');
+				getAllCouponByUserId(this, 'init');
 			},
 			// 使用抵用券 - 之前的逻辑
 			useCoupon(id, money) {
@@ -268,9 +273,9 @@
 				this.formData.userCouponMoney = couponMoney;
 				this.hideCouponDrawer();
 			},
- 			couponChange: function(e) {
+			couponChange: function(e) {
 				// var items = this.couponList,
-				var	values = e.detail.value;
+				var values = e.detail.value;
 				this.couponIndexArray = values;
 				// for (var i = 0, lenI = items.length; i < lenI; ++i) {
 				// 	const item = items[i]
@@ -390,6 +395,7 @@
 		border-bottom: 2upx solid $border-color;
 		margin: 80upx 30upx;
 	}
+
 	.zy-search-view {
 		padding: 10upx 0upx;
 		border-bottom: 1upx solid $seperator-color;
@@ -398,11 +404,13 @@
 	.zy-search-title {
 		text-align: center;
 	}
+
 	.zy-bottom-button {
 		position: fixed;
 		bottom: 0;
 		width: 100%;
 	}
+
 	.zy-search-bottom {
 		line-height: 2upx;
 		text-align: right;

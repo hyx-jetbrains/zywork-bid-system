@@ -126,7 +126,8 @@
 		dataTypeArray
 	} from '@/common/picker.data.js'
 	import {
-		getDate
+		getDate,
+		getUserPhone
 	} from '@/common/util.js'
 	export default {
 		components: {
@@ -167,6 +168,7 @@
 		onLoad() {
 			uni.hideShareMenu();
 			this.initPicker();
+			this.seekData.phone = getUserPhone();
 		},
 		methods: {
 			/** 初始化下拉框 */	

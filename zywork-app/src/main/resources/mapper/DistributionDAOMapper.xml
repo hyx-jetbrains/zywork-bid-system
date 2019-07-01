@@ -155,6 +155,18 @@
         ) as uh
         where t_user.id = t_user_detail.id and t_user.id = uh.user_id
         order by uh.create_time desc
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countAllDirectBelowUsers" resultType="long">
+        select count(1) from t_user, t_user_detail,
+        (
+        select t_user_hierarchy.user_id, t_user_hierarchy.user_level, t_user_hierarchy.create_time from t_user, t_user_hierarchy
+        where t_user.id = t_user_hierarchy.ancestor_id
+        and t_user.id = #{userId}
+        and t_user_hierarchy.user_level = #{level}
+        ) as uh
+        where t_user.id = t_user_detail.id and t_user.id = uh.user_id
     </select>
 
     <select id="listUserPathsByUserId" resultType="distributionUserPathDO">

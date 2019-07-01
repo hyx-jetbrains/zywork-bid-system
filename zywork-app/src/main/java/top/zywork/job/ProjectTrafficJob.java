@@ -28,7 +28,7 @@ public class ProjectTrafficJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         logger.info("begin to execute ProjectTrafficJob......");
-        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_TRAFFIC + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;;
+        String url = PythonConstants.BASE_URL+PythonConstants.PROJECT_TRAFFIC + "?pageNo=" + PythonConstants.DEFAULT_PAGE_NO;
         projectPythonService.saveProject(url, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
         logger.info("executed ProjectTrafficJob......");
     }

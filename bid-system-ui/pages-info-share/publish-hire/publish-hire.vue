@@ -74,6 +74,14 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
+							<view class="uni-label zy-text-bold zy-list-form-label">联系电话</view>
+						</view>
+						<view class="uni-list-cell-db">
+							<input class="uni-input" type="number" placeholder="输入联系电话" v-model="recruit.phone"></input>
+						</view>
+					</view>
+					<view class="uni-list-cell">
+						<view class="uni-pd">
 							<view class="uni-label zy-text-bold">职位描述</view>
 						</view>
 						<view class="uni-list-cell-db">
@@ -104,6 +112,9 @@
 		educationArray,
 		salaryArray
 	} from '@/common/picker.data.js'
+	import {
+		getUserPhone
+	} from '@/common/util.js'
 	import * as infoPublish from '@/common/info-publish.js'
 	export default {
 		components: {
@@ -124,6 +135,7 @@
 					education: null,
 					salary: null,
 					workAddr: null,
+					phone: null,
 					memo: null,
 					version: null,
 					createTime: null,
@@ -142,6 +154,7 @@
 		},
 		onLoad() {
 			uni.hideShareMenu();
+			this.recruit.phone = getUserPhone();
 		},
 		methods: {
 			/** 初始下拉框 */
