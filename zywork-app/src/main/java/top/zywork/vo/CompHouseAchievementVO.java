@@ -26,28 +26,28 @@ public class CompHouseAchievementVO extends BaseVO {
 	// 企业编号
 	private Long compId;
 	// 工程名称
-	@Size(min = 0, max = 200, message = "必须小于200个字符")
+	@Size(min = 0, max = 500, message = "必须小于500个字符")
 	private String projectName;
 	// 注册建造师
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String builderName;
 	// 中标金额
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String markMoney;
 	// 建设规模
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 500, message = "必须小于500个字符")
 	private String buildScale;
 	// 项目所属地区归类
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String regionType;
 	// 中标单位
 	@Size(min = 0, max = 100, message = "必须小于100个字符")
 	private String markComp;
 	// 建设单位
-	@Size(min = 0, max = 100, message = "必须小于100个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String buildComp;
 	// 工程地址
-	@Size(min = 0, max = 32, message = "必须小于32个字符")
+	@Size(min = 0, max = 500, message = "必须小于500个字符")
 	private String projectAddr;
 	// 合同签订日期
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -56,82 +56,82 @@ public class CompHouseAchievementVO extends BaseVO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date markDate;
 	// 项目负责人
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String name;
 	// 项目负责人证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String certificateNum;
 	// 施工员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String constructors;
 	// 施工员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String constructorsCertificateNum;
 	// 施工员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String constructorsIdNum;
 	// 质量员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String qualityWorker;
 	// 质量员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String qualityWorkerCertificateNum;
 	// 质量员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String qualityWorkerIdNum;
 	// 安全员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String securityOfficer;
 	// 安全员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String securityOfficerCertificateNum;
 	// 安全员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String securityOfficerIdNum;
 	// 标准员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String standardWorker;
 	// 标准员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String standardWorkerCertificateNum;
 	// 标准员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String standardWorkerIdNum;
 	// 材料员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String materialMan;
 	// 材料员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于20个字符")
 	private String materialManCertificateNum;
 	// 材料员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String materialManIdNum;
 	// 机械员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String mechanic;
 	// 机械员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String mechanicCertificateNum;
 	// 机械员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String mechanicIdNum;
 	// 劳务员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String labors;
 	// 劳务员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String laborsCertificateNum;
 	// 劳务员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String laborsIdNum;
 	// 资料员
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于20个字符")
 	private String dataClerk;
 	// 资料员证书号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String dataClerkCertificateNum;
 	// 资料员身份证号
-	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	@Size(min = 0, max = 200, message = "必须小于200个字符")
 	private String dataClerkIdNum;
 	// 版本号
 	private Integer version;

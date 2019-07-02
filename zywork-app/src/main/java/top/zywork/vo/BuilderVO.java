@@ -52,7 +52,7 @@ public class BuilderVO extends BaseVO {
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String salary;
 	// 手机号
-	@Size(min = 0, max = 11, message = "必须小于11个字符")
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String phone;
 	// 说明
 	@Size(min = 0, max = 255, message = "必须小于255个字符")

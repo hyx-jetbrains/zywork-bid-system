@@ -700,10 +700,6 @@
 		onLoad() {
 			this.initData('init');
 		},
-		onShow() {
-			this.pager.pageNo = 1
-			this.initData('init');
-		},
 		onPullDownRefresh() {
 			this.pager.pageNo = 1
 			this.initData('pullDown');

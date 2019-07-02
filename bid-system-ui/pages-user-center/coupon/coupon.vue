@@ -27,7 +27,8 @@
 					</view>
 					<view>
 						<view class="zy-text-big zy-text-bold">{{coupon.couponType}}</view>
-						<view class="zy-text-info">{{coupon.couponValidTime}}</view>
+						<view class="zy-text-info">到期时间:{{coupon.couponValidTime.split(' ')[0]}}</view>
+						<view class="zy-text-info">获取时间:{{coupon.userCouponCreateTime.split(' ')[0]}}</view>
 					</view>
 					<view class="zy-disable-flex-right">
 						<view v-if="coupon.couponValidTime < currDate">
@@ -153,9 +154,13 @@
 			checkRefresh(type) {
 				if (this.functionType.current == 0) {
 					// 刷新我的抵用券
+					this.pager.sortColumn = 'couponValidTime';
+					this.pager.sortOrder = 'desc';
 					getCouponByUserId(this, type)
 				} else {
 					// 刷新用户抵用券使用记录
+					this.pager.sortColumn = '';
+					this.pager.sortOrder = '';
 					getCouponRecordByUserId(this, type)
 				}
 			},

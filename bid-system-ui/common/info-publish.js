@@ -11,7 +11,8 @@ import {
 	invalidToken,
 	showInfoToast,
 	showSuccessToast,
-	IMAGE_BASE_URL
+	IMAGE_BASE_URL,
+	isPhone
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -47,6 +48,15 @@ export const checkBuilderReq = (self) => {
 	if (self.builderReq.phone === null
 		|| self.builderReq.phone === undefined) {
 		showInfoToast("请输入手机号");
+		return false;
+	}
+	if (!isPhone(self.builderReq.phone)) {
+		showInfoToast("请输入正确的手机号");
+		return false;
+	}
+	if (self.builderReq.memo === null
+		|| self.builderReq.memo === undefined) {
+		showInfoToast("请输入说明");
 		return false;
 	}
 	return true;
@@ -107,6 +117,15 @@ export const checkBuilder = (self) => {
 		showInfoToast("请输入手机号");
 		return false;
 	}
+	if (!isPhone(self.builder.phone)) {
+		showInfoToast("请输入正确的手机号");
+		return false;
+	}
+	if (self.builderReq.memo === null
+		|| self.builderReq.memo === undefined) {
+		showInfoToast("请输入说明");
+		return false;
+	}
 	return true;
 }
 /**
@@ -160,6 +179,10 @@ export const checkAptitude = (self) => {
 	if (self.aptitude.phone === null
 		|| self.aptitude.phone === undefined) {
 		showInfoToast("请输入手机号");
+		return false;
+	}
+	if (!isPhone(self.aptitude.phone)) {
+		showInfoToast("请输入正确的手机号");
 		return false;
 	}
 	return true;
@@ -261,6 +284,10 @@ export const checkCarpool = (self) => {
 		showInfoToast("请输入手机号");
 		return false;
 	}
+	if (!isPhone(self.carpool.phone)) {
+		showInfoToast("请输入正确的手机号");
+		return false;
+	}
 	return true;
 }
 /**
@@ -341,6 +368,10 @@ export const checkSeekcar = (self) => {
 	if (self.seekcar.phone === null
 		|| self.seekcar.phone === undefined) {
 		showInfoToast("请输入手机号");
+		return false;
+	}
+	if (!isPhone(self.seekcar.phone)) {
+		showInfoToast("请输入正确的手机号");
 		return false;
 	}
 	return true;
@@ -467,6 +498,10 @@ export const checkSeekData = (self) => {
 	if (self.seekData.phone === null
 		|| self.seekData.phone === undefined) {
 		showInfoToast("请输入手机号");
+		return false;
+	}
+	if (!isPhone(self.seekData.phone)) {
+		showInfoToast("请输入正确的手机号");
 		return false;
 	}
 	return true;

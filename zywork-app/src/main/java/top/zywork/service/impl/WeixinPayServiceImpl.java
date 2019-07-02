@@ -155,117 +155,122 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
 
     @Override
     public void payNotif(String outTradeNo, int totalFee, String attach) {
-        logger.info("notify:" + outTradeNo + "---" + totalFee + "---" + attach);
-        JSONObject json = JSONObject.parseObject(attach);
-        int payType = json.getIntValue("payType");
-        Long userId = json.getLong("userId");
-        String accountDetailType = null;
-        if(payType == UserCouponConstants.PAY_TYPE_SERVICE) {
-            // 服务购买
-            accountDetailType = FundsChangeTypeEnum.PURCHASE_SERVICE.getValue();
-            String userCouponIds = json.getString("userCouponId");
-            Long serviceId = json.getLong("serviceId");
-            int validYear = json.getInteger("validYear");
-            int type = json.getIntValue("type");
+        try {
+            logger.info("notify:" + outTradeNo + "---" + totalFee + "---" + attach);
+            JSONObject json = JSONObject.parseObject(attach);
+            int payType = json.getIntValue("payType");
+            Long userId = json.getLong("userId");
+            String accountDetailType = null;
+            if(payType == UserCouponConstants.PAY_TYPE_SERVICE) {
+                // 服务购买
+                accountDetailType = FundsChangeTypeEnum.PURCHASE_SERVICE.getValue();
+                String userCouponIds = json.getString("userCouponId");
+                Long serviceId = json.getLong("serviceId");
+                int validYear = json.getInteger("validYear");
+                int type = json.getIntValue("type");
 
-            if(StringUtils.isNotEmpty(userCouponIds)) {
-                // 有使用抵用券，更新抵扣券使用状态
-                String[] couponIdsArr = userCouponIds.split(",");
-                for (String couponIdStr : couponIdsArr) {
-                    logger.info("couponId:{}", couponIdStr);
-                    if (StringUtils.isEmpty(couponIdStr)) {
-                        continue;
-                    }
-                    Long userCouponId = Long.valueOf(couponIdStr);
-                    Object userCouponObj = userCouponDAO.getById(userCouponId);
-                    if (null != userCouponObj) {
-                        UserCouponDTO userCouponDTO = BeanUtils.copy(userCouponObj, UserCouponDTO.class);
-                        userCouponDTO.setUseStatus(UserCouponConstants.COUPON_STATUS_TRUE);
-                        logger.info("update t_user_coupon:{}", userCouponDTO);
-                        userCouponDTO.setVersion(userCouponDTO.getVersion()+1);
-                        int updateRow = userCouponDAO.update(userCouponDTO);
-                        if (updateRow > 0) {
-                            logger.info("t_user_coupon update success:" + updateRow);
-                            Object couponObj = couponDAO.getById(userCouponDTO.getCouponId());
-                            CouponDTO couponDTO = BeanUtils.copy(couponObj, CouponDTO.class);
-                            long couponMoney = couponDTO.getMoney();
-                            long price = Long.valueOf(totalFee);
-                            // 更新抵用券状态成功，增加用户抵用券使用记录
-                            CouponRecordDTO couponRecordDTO = new CouponRecordDTO();
-                            couponRecordDTO.setUserId(userId);
-                            couponRecordDTO.setCouponId(userCouponDTO.getCouponId());
-                            long oldPrice = price + couponMoney;
-                            couponRecordDTO.setPrice(price);
-                            couponRecordDTO.setCouponPrice(couponMoney);
-                            couponRecordDTO.setOldPrice(oldPrice);
-                            couponRecordDAO.save(couponRecordDTO);
+                if(StringUtils.isNotEmpty(userCouponIds)) {
+                    // 有使用抵用券，更新抵扣券使用状态
+                    String[] couponIdsArr = userCouponIds.split(",");
+                    for (String couponIdStr : couponIdsArr) {
+                        logger.info("couponId:{}", couponIdStr);
+                        if (StringUtils.isEmpty(couponIdStr)) {
+                            continue;
+                        }
+                        Long userCouponId = Long.valueOf(couponIdStr);
+                        Object userCouponObj = userCouponDAO.getById(userCouponId);
+                        if (null != userCouponObj) {
+                            UserCouponDTO userCouponDTO = BeanUtils.copy(userCouponObj, UserCouponDTO.class);
+                            userCouponDTO.setUseStatus(UserCouponConstants.COUPON_STATUS_TRUE);
+                            logger.info("update t_user_coupon:{}", userCouponDTO);
+                            userCouponDTO.setVersion(userCouponDTO.getVersion()+1);
+                            int updateRow = userCouponDAO.update(userCouponDTO);
+                            if (updateRow > 0) {
+                                logger.info("t_user_coupon update success:" + updateRow);
+                                Object couponObj = couponDAO.getById(userCouponDTO.getCouponId());
+                                CouponDTO couponDTO = BeanUtils.copy(couponObj, CouponDTO.class);
+                                long couponMoney = couponDTO.getMoney();
+                                long price = Long.valueOf(totalFee);
+                                // 更新抵用券状态成功，增加用户抵用券使用记录
+                                CouponRecordDTO couponRecordDTO = new CouponRecordDTO();
+                                couponRecordDTO.setUserId(userId);
+                                couponRecordDTO.setCouponId(userCouponDTO.getCouponId());
+                                long oldPrice = price + couponMoney;
+                                couponRecordDTO.setPrice(price);
+                                couponRecordDTO.setCouponPrice(couponMoney);
+                                couponRecordDTO.setOldPrice(oldPrice);
+                                couponRecordDAO.save(couponRecordDTO);
+                            }
                         }
                     }
                 }
+
+                UserServiceVO userServiceVO = new UserServiceVO();
+                boolean updateFlag = false;
+                if(type == UserCouponConstants.BUY_FLAG_FIRST) {
+                    // 第一次购买
+                    updateFlag = false;
+                    userServiceVO.setUserId(userId);
+                    userServiceVO.setServiceId(serviceId);
+                } else if(type == UserCouponConstants.BUY_FLAG_SECOND) {
+                    // 续费购买
+                    updateFlag = true;
+                    Object obj = userServiceDAO.getByUsetIdEndService(userId, serviceId);
+                    userServiceVO = BeanUtils.copy(obj, UserServiceVO.class);
+                }
+                userServiceVO.setValidYear(validYear);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new Date());
+                cal.add(Calendar.YEAR, validYear);
+                userServiceVO.setEndDate(cal.getTime());
+                if(updateFlag) {
+                    // 续费购买
+                    logger.info("update t_user_service:{}", userServiceVO);
+                    userServiceVO.setVersion(userServiceVO.getVersion()+1);
+                    userServiceDAO.update(userServiceVO);
+                } else {
+                    // 第一次购买
+                    userServiceDAO.save(userServiceVO);
+                }
+
+            } else if(payType == UserCouponConstants.PAY_TYPE_EXPER) {
+                // 预约专家
+                accountDetailType = FundsChangeTypeEnum.APPOINTMENT_EXPERT.getValue();
+                Long expertSubscribeId = json.getLong("expertSubscribeId");
+                String transactionNo = json.getString("transactionNo");
+
+                int version = expertSubscribeDAO.getVersionById(expertSubscribeId);
+                ExpertSubscribeVO expertSubscribeVO = new ExpertSubscribeVO();
+                expertSubscribeVO.setId(expertSubscribeId);
+                expertSubscribeVO.setPayStatus(GoodsOrderStatusEnum.PAY_SUCCESS.getDes());
+                expertSubscribeVO.setTransactionNo(transactionNo);
+                expertSubscribeVO.setVersion(version+1);
+                expertSubscribeDAO.update(expertSubscribeVO);
             }
 
-            UserServiceVO userServiceVO = new UserServiceVO();
-            boolean updateFlag = false;
-            if(type == UserCouponConstants.BUY_FLAG_FIRST) {
-                // 第一次购买
-                updateFlag = false;
-                userServiceVO.setUserId(userId);
-                userServiceVO.setServiceId(serviceId);
-            } else if(type == UserCouponConstants.BUY_FLAG_SECOND) {
-                // 续费购买
-                updateFlag = true;
-                Object obj = userServiceDAO.getByUsetIdEndService(userId, serviceId);
-                userServiceVO = BeanUtils.copy(obj, UserServiceVO.class);
-            }
-            userServiceVO.setValidYear(validYear);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date());
-            cal.add(Calendar.YEAR, validYear);
-            userServiceVO.setEndDate(cal.getTime());
-            if(updateFlag) {
-                // 续费购买
-                logger.info("update t_user_service:{}", userServiceVO);
-                userServiceVO.setVersion(userServiceVO.getVersion()+1);
-                userServiceDAO.update(userServiceVO);
-            } else {
-                // 第一次购买
-                userServiceDAO.save(userServiceVO);
+
+            Object walletObj = userWalletDAO.getById(userId);
+            if(walletObj != null) {
+                UserWalletVO userWalletVO = BeanUtils.copy(walletObj, UserWalletVO.class);
+                long integral = userWalletVO.getIntegral();
+                userWalletVO.setIntegral(integral + totalFee);
+                logger.info("t_user_wallet:{}", userWalletVO);
+                userWalletVO.setVersion(userWalletVO.getVersion()+1);
+                userWalletDAO.update(userWalletVO);
             }
 
-        } else if(payType == UserCouponConstants.PAY_TYPE_EXPER) {
-            // 预约专家
-            accountDetailType = FundsChangeTypeEnum.APPOINTMENT_EXPERT.getValue();
-            Long expertSubscribeId = json.getLong("expertSubscribeId");
-            String transactionNo = json.getString("transactionNo");
-
-            ExpertSubscribeVO expertSubscribeVO = new ExpertSubscribeVO();
-            expertSubscribeVO.setId(expertSubscribeId);
-            expertSubscribeVO.setPayStatus(GoodsOrderStatusEnum.PAY_SUCCESS.getDes());
-            expertSubscribeVO.setTransactionNo(transactionNo);
-            expertSubscribeVO.setVersion(expertSubscribeVO.getVersion()+1);
-            expertSubscribeDAO.update(expertSubscribeVO);
+            AccountDetailVO accountDetailVO = new AccountDetailVO();
+            accountDetailVO.setUserId(userId);
+            accountDetailVO.setTransactionNo(outTradeNo);
+            accountDetailVO.setAmount((long)totalFee * -1);
+            accountDetailVO.setIntegral((long)totalFee);
+            accountDetailVO.setType((byte)1);
+            accountDetailVO.setPayType(PaymentTypeEnum.WEIXIN_PAY.getValue().byteValue());
+            accountDetailVO.setSubType(accountDetailType);
+            accountDetailDAO.save(accountDetailVO);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
-        Object walletObj = userWalletDAO.getById(userId);
-        if(walletObj != null) {
-            UserWalletVO userWalletVO = BeanUtils.copy(walletObj, UserWalletVO.class);
-            long integral = userWalletVO.getIntegral();
-            userWalletVO.setIntegral(integral + totalFee);
-            logger.info("t_user_wallet:{}", userWalletVO);
-            userWalletVO.setVersion(userWalletVO.getVersion()+1);
-            userWalletDAO.update(userWalletVO);
-        }
-
-        AccountDetailVO accountDetailVO = new AccountDetailVO();
-        accountDetailVO.setUserId(userId);
-        accountDetailVO.setTransactionNo(outTradeNo);
-        accountDetailVO.setAmount((long)totalFee * -1);
-        accountDetailVO.setIntegral((long)totalFee);
-        accountDetailVO.setType((byte)1);
-        accountDetailVO.setPayType(PaymentTypeEnum.WEIXIN_PAY.getValue().byteValue());
-        accountDetailVO.setSubType(accountDetailType);
-        accountDetailDAO.save(accountDetailVO);
     }
 
     @Autowired

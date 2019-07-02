@@ -75,14 +75,15 @@
 				<Row>
 					<i-col span="12">
 						<FormItem label="项目所属地区归类" prop="regionType">
-							<Cascader
+							<!-- <Cascader
 							  :data="cityData"
 							  v-model="regionType"
 							  trigger="hover"
 							  change-on-select
 							  filterable
 							  clearable
-							/>
+							/> -->
+              <Input v-model="form.regionType" placeholder="请输入项目所属地区归类" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -94,14 +95,15 @@
 				<Row>
 					<i-col span="12">
 						<FormItem label="工程地址" prop="projectAddr">
-							<Cascader
+							<!-- <Cascader
 							  :data="cityData"
 							  v-model="projectAddr"
 							  trigger="hover"
 							  change-on-select
 							  filterable
 							  clearable
-							/>
+							/> -->
+              <Input v-model="form.projectAddr" placeholder="请输入工程地址" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -310,14 +312,15 @@
 				<Row>
 					<i-col span="12">
 						<FormItem label="项目所属地区归类" prop="regionType">
-							<Cascader
+							<!-- <Cascader
 							  :data="cityData"
 							  v-model="regionType"
 							  trigger="hover"
 							  change-on-select
 							  filterable
 							  clearable
-							/>
+							/> -->
+              <Input v-model="form.regionType" placeholder="请输入项目所属地区归类" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -329,14 +332,15 @@
 				<Row>
 					<i-col span="12">
 						<FormItem label="工程地址" prop="projectAddr">
-							<Cascader
+							<!-- <Cascader
 							  :data="cityData"
 							  v-model="projectAddr"
 							  trigger="hover"
 							  change-on-select
 							  filterable
 							  clearable
-							/>
+							/> -->
+              <Input v-model="form.projectAddr" placeholder="请输入工程地址" />
 						</FormItem>
 					</i-col>
 					<i-col span="12">
@@ -968,235 +972,10 @@
 					projectName: [{
 						type: 'string',
 						min: 1,
-						max: 32,
-						message: '必须1-32个字符',
+						max: 500,
+						message: '必须1-500个字符',
 						trigger: 'blur'
-					}],
-					builderName: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					markMoney: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					buildScale: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					regionType: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					buildComp: [{
-						type: 'string',
-						min: 1,
-						max: 32,
-						message: '必须1-32个字符',
-						trigger: 'blur'
-					}],
-					projectAddr: [{
-						type: 'string',
-						min: 1,
-						max: 32,
-						message: '必须1-32个字符',
-						trigger: 'blur'
-					}],
-					name: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					certificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					constructors: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					constructorsCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					constructorsIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					qualityWorker: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					qualityWorkerCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					qualityWorkerIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					securityOfficer: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					securityOfficerCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					securityOfficerIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					standardWorker: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					standardWorkerCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					standardWorkerIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					materialMan: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					materialManCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					materialManIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					mechanic: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					mechanicCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					mechanicIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					labors: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					laborsCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					laborsIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					dataClerk: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					dataClerkCertificateNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-					dataClerkIdNum: [{
-						type: 'string',
-						min: 1,
-						max: 20,
-						message: '必须1-20个字符',
-						trigger: 'blur'
-					}],
-
+					}]
 				},
 				searchForm: {
 					pageNo: 1,
@@ -1728,15 +1507,15 @@
 					utils.showModal(this, 'edit')
 					this.form = JSON.parse(JSON.stringify(row))
 					this.setPrice(0)
-					var projectAddr = this.form.projectAddr.split("/")
-					for(var i=0; projectAddr.length>i; i++) {
-						this.projectAddr.push(projectAddr[i])
-					}
+					// var projectAddr = this.form.projectAddr.split("/")
+					// for(var i=0; projectAddr.length>i; i++) {
+					// 	this.projectAddr.push(projectAddr[i])
+					// }
 					
-					var regionType = this.form.regionType.split("/")
-					for(var i=0; regionType.length>i; i++) {
-						this.regionType.push(regionType[i])
-					}
+					// var regionType = this.form.regionType.split("/")
+					// for(var i=0; regionType.length>i; i++) {
+					// 	this.regionType.push(regionType[i])
+					// }
 				} else if (itemName === 'showDetail') {
 					utils.showModal(this, 'detail')
 					this.form = JSON.parse(JSON.stringify(row))
@@ -1800,12 +1579,12 @@
         this.form.money = this.form.markMoney
 			},
 			add() {
-				this.setAddress()
+				// this.setAddress()
 				this.setPrice(1)
 				utils.add(this)
 			},
 			edit() {
-				this.setAddress()
+				// this.setAddress()
 				this.setPrice(1)
 				utils.edit(this)
 			},

@@ -31,7 +31,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in builderReqList" :key="index">
 								<view @click="toBuilderReqDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.headicon !== null && item.headicon !== undefined" class="zy-page-mini-headicon" :src="item.headicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view>
@@ -44,7 +44,7 @@
 										</view>
 									</view>
 									<view>
-										<view class="zy-text-big zy-text-bold">建筑工程</view>
+										<view class="zy-text-big zy-text-bold">{{item.builderReqPeople}}</view>
 										<view class="zy-text-info">
 											{{item.builderReqMemo}}
 										</view>
@@ -554,10 +554,6 @@
 					buttonColor: '#007AFF'
 				},
 			}
-		},
-		onShow() {
-			this.pager.pageNo = 1
-			this.initData('init');
 		},
 		onLoad() {
 			this.initData('init');

@@ -380,3 +380,11 @@ export const showNextMonthFirstOrLastDay = (type) => {
 	tempDay = tempDay < 10 ? '0' + tempDay : tempDay;
 	return year + "-" + tempMonth + "-" + tempDay;
 }
+
+/**
+ * 判断是否是手机号
+ */
+export const isPhone = (phone) => {
+	var phoneExp = /^[1][3,4,5,7,8,9][0-9]{9}$/; 
+	return phoneExp.test(phone); 
+}

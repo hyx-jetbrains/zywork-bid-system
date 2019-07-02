@@ -85,7 +85,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold">其他说明</view>
+								<view class="uni-label zy-text-bold zy-required">其他说明</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true"></input>
@@ -228,7 +228,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">
-								<view class="uni-label zy-text-bold">其他说明</view>
+								<view class="uni-label zy-text-bold zy-required">其他说明</view>
 							</view>
 							<view class="uni-list-cell-db">
 								<input class="uni-input" type="text" :disabled="true"></input>
@@ -303,7 +303,8 @@
 		getUserToken,
 		networkError,
 		showSuccessToast,
-		getUserPhone
+		getUserPhone,
+		isPhone
 	} from '@/common/util.js'
 	import * as infoPublish from '@/common/info-publish.js'
 	import * as ResponseStatus from '@/common/response-status.js'
@@ -552,7 +553,6 @@
 			/** 发布招聘信息 */
 			addBuilderReq() {
 				infoPublish.saveBuilderReq(this, this.builderReq);
-				
 			},
 			/** 发布应聘信息 */
 			addBuilder() {

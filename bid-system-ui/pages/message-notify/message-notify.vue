@@ -117,8 +117,6 @@
 		},
 		onShow() {
 			countNotReadMsg();
-			this.pager.pageNo = 1
-			this.initMessage('init');
 		},
 		onLoad() {
 			this.initMessage('init');
