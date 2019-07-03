@@ -1161,7 +1161,7 @@ CREATE TABLE `t_comp_builder` (
   `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
   `name` varchar(10) DEFAULT '' COMMENT '姓名',
   `gender` varchar(10) DEFAULT '' COMMENT '性别',
-  `reg_num` varchar(500) DEFAULT '' COMMENT '注册编号',
+  `reg_num` varchar(2000) DEFAULT '' COMMENT '注册编号',
   `major_level` varchar(500) DEFAULT '' COMMENT '专业等级',
   `version` int(11) DEFAULT '1' COMMENT '版本号',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

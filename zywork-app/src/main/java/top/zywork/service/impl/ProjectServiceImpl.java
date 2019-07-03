@@ -402,6 +402,10 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         SmsSwitchConfig smsSwitchConfig = sysConfigService.getByName(SysConfigEnum.SMS_SWITCH_CONFIG.getValue(), SmsSwitchConfig.class);
         AliyunSmsConfig aliyunSmsConfig = sysConfigService.getByName(SysConfigEnum.ALIYUN_SMS_CONFIG.getValue(), AliyunSmsConfig.class);
         try {
+            if (StringUtils.isEmpty(phones)) {
+                logger.error("短信发送失败,发送手机号为空");
+                return;
+            }
             if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
                 // 项目订阅提醒
                 if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getSubscribeNotice())) {
@@ -409,7 +413,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
                             templateParam, null);
                     if (!sendSmsResponse.getCode().equals("OK")) {
-                        logger.error("短信发送失败：" + sendSmsResponse.getMessage());
+                        logger.error("{}:短信发送失败：{}", phones, sendSmsResponse.getMessage());
                     }
                 }
             } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
@@ -419,7 +423,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE,
                             templateParam, null);
                     if (!sendSmsResponse.getCode().equals("OK")) {
-                        logger.error("短信发送失败：" + sendSmsResponse.getMessage());
+                        logger.error("{}:短信发送失败：{}", phones, sendSmsResponse.getMessage());
                     }
                 }
             }

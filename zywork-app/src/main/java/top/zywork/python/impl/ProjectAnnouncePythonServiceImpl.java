@@ -43,65 +43,70 @@ public class ProjectAnnouncePythonServiceImpl implements ProjectAnnouncePythonSe
 
     @Override
     public void saveProjectAnnounce(String url, boolean isUpdate) {
-        HttpUtils.timeout(PythonConstants.TIME_OUT);
-        String data = HttpUtils.get(url);
-        if(data != null) {
-            JSONArray jsonArray = JSONArray.parseArray(data);
-            if(jsonArray != null && jsonArray.size()> 0) {
-                for (int i = 0; i < jsonArray.size() ; i++) {
-                    JSONObject obj = jsonArray.getJSONObject(i);
-                    ProjectAnnounceVO projectAnnounceVO = new ProjectAnnounceVO();
-                    String tempTitle = obj.getString("title");
+        try {
+            HttpUtils.timeout(PythonConstants.TIME_OUT);
+            String data = HttpUtils.get(url);
+            if (data != null) {
+                JSONArray jsonArray = JSONArray.parseArray(data);
+                if (jsonArray != null && jsonArray.size() > 0) {
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        JSONObject obj = jsonArray.getJSONObject(i);
+                        ProjectAnnounceVO projectAnnounceVO = new ProjectAnnounceVO();
+                        String tempTitle = obj.getString("title");
 
-                    Object projectAnnounceObj = projectAnnounceDAO.getByTitle(tempTitle);
-                    boolean updateFlag = false;
-                    if (projectAnnounceObj != null) {
-                        updateFlag = true;
-                        logger.info("该公示已存在：" + tempTitle + ",是否更新：" + isUpdate);
-                        if (!isUpdate) {
-                            continue;
+                        Object projectAnnounceObj = projectAnnounceDAO.getByTitle(tempTitle);
+                        boolean updateFlag = false;
+                        if (projectAnnounceObj != null) {
+                            updateFlag = true;
+                            projectAnnounceVO = BeanUtils.copy(projectAnnounceObj, ProjectAnnounceVO.class);
+                            logger.info("该公示已存在：" + tempTitle + ",是否更新：" + isUpdate);
+                            if (!isUpdate) {
+                                continue;
+                            }
                         }
-                    }
 
-                    String inMarkComp = obj.getString("firstCandidate");
-                    if(!StringUtils.isEmpty(tempTitle)) {
-                        String title = tempTitle.replace("[中标候选人公示]","");
-                        Object pobj = projectDAO.getByTitle(title);
-                        if(pobj != null) {
-                            ProjectDO projectDO = BeanUtils.copy(pobj, ProjectDO.class);
-                            projectAnnounceVO.setProjectId(projectDO.getId());
-                            // 把中标单位更新进去
-                            projectDO.setInMarkComp(inMarkComp);
-                            projectDAO.update(projectDO);
+                        String inMarkComp = obj.getString("firstCandidate");
+                        if (!StringUtils.isEmpty(tempTitle)) {
+                            String title = tempTitle.replace("[中标候选人公示]", "");
+                            Object pobj = projectDAO.getByTitle(title);
+                            if (pobj != null) {
+                                ProjectDO projectDO = BeanUtils.copy(pobj, ProjectDO.class);
+                                projectAnnounceVO.setProjectId(projectDO.getId());
+                                // 把中标单位更新进去
+                                projectDO.setInMarkComp(inMarkComp);
+                                projectDAO.update(projectDO);
+                            }
                         }
-                    }
 
-                    String fileName = UUIDUtils.uuid() +".html";
-                    String announceDetail = obj.getString("announceDesc");
-                    String newFileName = "";
-                    if (StringUtils.isNotEmpty(announceDetail)) {
-                        newFileName = CommonMethodUtils.generatorHtmlCode(fileName, announceDetail, location);
-                    }
+                        String fileName = UUIDUtils.uuid() + ".html";
+                        String announceDetail = obj.getString("announceDesc");
+                        String newFileName = "";
+                        if (StringUtils.isNotEmpty(announceDetail)) {
+                            newFileName = CommonMethodUtils.generatorHtmlCode(fileName, announceDetail, location);
+                        }
 
-                    projectAnnounceVO.setProjectType(obj.getString("projectType"));
-                    projectAnnounceVO.setTitle(tempTitle);
-                    projectAnnounceVO.setAnnounceDesc(announceDetail);
-                    projectAnnounceVO.setFirstCandidate(inMarkComp);
-                    projectAnnounceVO.setFirstBuilderName(obj.getString("firstBuilderName"));
-                    projectAnnounceVO.setFirstMarkMoney(obj.getString("firstMarkMoney"));
-                    projectAnnounceVO.setSecondCandidate(obj.getString("secondCandidate"));
-                    projectAnnounceVO.setThirdCandidate(obj.getString("thirdCandidate"));
-                    projectAnnounceVO.setSourceUrl(obj.getString("sourceUrl"));
-                    if (StringUtils.isNotEmpty(newFileName)) {
-                        projectAnnounceVO.setInwordHtmlUrl(uri + "/" + newFileName);
-                    }
-                    if (updateFlag) {
-                        projectAnnounceDAO.update(projectAnnounceVO);
-                    } else {
-                        projectAnnounceDAO.save(projectAnnounceVO);
+                        projectAnnounceVO.setProjectType(obj.getString("projectType"));
+                        projectAnnounceVO.setTitle(tempTitle);
+                        projectAnnounceVO.setAnnounceDesc(announceDetail);
+                        projectAnnounceVO.setFirstCandidate(inMarkComp);
+                        projectAnnounceVO.setFirstBuilderName(obj.getString("firstBuilderName"));
+                        projectAnnounceVO.setFirstMarkMoney(obj.getString("firstMarkMoney"));
+                        projectAnnounceVO.setSecondCandidate(obj.getString("secondCandidate"));
+                        projectAnnounceVO.setThirdCandidate(obj.getString("thirdCandidate"));
+                        projectAnnounceVO.setSourceUrl(obj.getString("sourceUrl"));
+                        if (StringUtils.isNotEmpty(newFileName)) {
+                            projectAnnounceVO.setInwordHtmlUrl(uri + "/" + newFileName);
+                        }
+                        if (updateFlag) {
+                            projectAnnounceDAO.update(projectAnnounceVO);
+                        } else {
+                            projectAnnounceDAO.save(projectAnnounceVO);
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

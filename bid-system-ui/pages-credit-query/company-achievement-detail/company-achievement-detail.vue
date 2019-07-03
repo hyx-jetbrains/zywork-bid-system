@@ -338,7 +338,8 @@
 	} from '@/common/credit-query.js'
 	import {
 		validText,
-		nullToStr
+		nullToStr,
+		showInfoToast
 	} from '@/common/util.js'
 
 	export default {
@@ -370,6 +371,10 @@
 		methods: {
 			/** 初始化公司信息 */
 			initCompany() {
+				if (!this.item.compId) {
+					showInfoToast('获取企业信息失败')
+					return;
+				}
 				getCompanyInfoById(this, this.item.compId);
 			},
 			/** 前往公司详情 */

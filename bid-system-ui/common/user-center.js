@@ -122,21 +122,21 @@ export const getExpertQuesTionTypeByUserId = (self) => {
  * @param {Object} params
  */
 export const checkSaveExpert = (params) => {
-	if (params.name === null
-		|| params.name === undefined
-		|| params.name === '') {
+	if (params.name === null ||
+		params.name === undefined ||
+		params.name === '') {
 		showInfoToast("请输入姓名");
 		return false;
 	}
-	if (params.phone === null
-		|| params.phone === undefined
-		|| params.phone === '') {
+	if (params.phone === null ||
+		params.phone === undefined ||
+		params.phone === '') {
 		showInfoToast("请输入手机号");
 		return false;
 	}
-	if (params.age === null
-		|| params.age === undefined
-		|| params.age === '') {
+	if (params.age === null ||
+		params.age === undefined ||
+		params.age === '') {
 		showInfoToast("请输入年龄");
 		return false;
 	}
@@ -243,8 +243,7 @@ export const saveSubscribe = (self, params) => {
 		fail: () => {
 			networkError()
 		},
-		complete: () => {
-		}
+		complete: () => {}
 	})
 }
 
@@ -1116,9 +1115,9 @@ export const resume = (self) => {
  * 验证简历数据
  */
 export const checkResume = (resume) => {
-	if (resume.name === null
-		|| resume.name === undefined
-		|| resume.name === "") {
+	if (resume.name === null ||
+		resume.name === undefined ||
+		resume.name === "") {
 		showInfoToast("请输入姓名");
 		return false;
 	}
@@ -1394,41 +1393,30 @@ export const getMyServiceUserCenter = (self) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				self.vipIconColor = IS_VIP_COLOR_FALSE
-				uni.setStorage({
-					key: USER_FLAG,
-					data: USER_FLAG_ORDINARY
-				})
-				uni.setStorage({
-					key: CREDIT_QUERY_VIP,
-					data: USER_FLAG_ORDINARY
-				})
+				uni.setStorageSync(USER_FLAG,USER_FLAG_ORDINARY)
+				uni.setStorageSync(CREDIT_QUERY_VIP,USER_FLAG_ORDINARY)
 				if (res.data.data.total > 0) {
 					var currDate = getCalendarDate(new Date());
 					res.data.data.rows.forEach(item => {
 						if (item.userServiceServiceId == CREDIT_QUERY_ID) {
-							// 购买的服务中有征信查询
-							uni.setStorage({
-								key: CREDIT_QUERY_VIP,
-								data: CREDIT_QUERY
-							})
-							return true;
+							// 购买的服务中有征信查询，并且没有过期
+							if (item.userServiceEndDate >= currDate) {
+								uni.setStorageSync(CREDIT_QUERY_VIP,CREDIT_QUERY)
+								return true;
+							}
 						}
 					})
 					res.data.data.rows.forEach(item => {
 						if (item.userServiceEndDate >= currDate) {
 							// 有购买过服务，并至少有个服务没到期，点亮图片
 							self.vipIconColor = IS_VIP_COLOR_TRUE
-							uni.setStorage({
-								key: USER_FLAG,
-								data: USER_FLAG_VIP
-							})
+							uni.setStorageSync(USER_FLAG,USER_FLAG_VIP)
 							return true;
 						}
 					})
 
 				}
-			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {
-			} else {
+			} else if (res.data.code === ResponseStatus.AUTHENTICATION_TOKEN_ERROR) {} else {
 				showInfoToast(res.data.message)
 			}
 		},
