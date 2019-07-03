@@ -89,8 +89,13 @@
 					</view>
 				</view> -->
 				<view class="uni-form-item uni-column zy-disable-flex">
-					<view class="zy-text-bold" style="margin-right: 30upx;">是否开通</view>
-					<switch name="isSubscribe" :checked="isSubscribe" color="#108EE9" />
+					<view class="zy-disable-flex">
+						<view class="zy-text-bold" style="margin-right: 30upx;">是否开通</view>
+						<switch name="isSubscribe" :checked="isSubscribe" color="#108EE9" />
+					</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="toUserVip">
+						前往购买项目订阅vip
+					</view>
 				</view>
 				<view class="uni-btn-v">
 					<button type="primary" formType="submit">保存订阅</button>
@@ -157,7 +162,7 @@
 				this.subscrible = JSON.parse(payload);
 			}
 			if (this.subscrible.isRequest) {
-				// 说明是从个人中心进来的
+				// 说明是从个人中心或者消息进来的
 				this.initData();
 			} else {
 				// 从选择招标人页面过来的
@@ -373,7 +378,13 @@
 				uni.redirectTo({
 					url: '/pages-user-center/choose-comp/choose-comp?itemData=' + encodeURIComponent(JSON.stringify(this.subscrible))
 				})
-			}
+			},
+			/** 前往服务定购页面 */
+			toUserVip() {
+				uni.navigateTo({
+					url: '/pages-user-center/user-vip/user-vip'
+				})
+			},
 		}
 	}
 </script>

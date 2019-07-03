@@ -9,7 +9,7 @@
 			</picker>		
 			</zywork-list-item>
 			<zywork-list-item title="身份证号" :note="userWork.idNum" @click="toSettingIdentity"></zywork-list-item>
-			<zywork-list-item title="手机号" :note="user.phone"></zywork-list-item>
+			<zywork-list-item title="手机号" :note="user.phone" @click="toSettingPhone"></zywork-list-item>
 			<zywork-list-item title="工作单位" :note="userWork.workUnit" @click="toSettingCompany"></zywork-list-item>
 			<zywork-list-item title="职务" :note="userWork.jobTitle" @click="toSettingJob"></zywork-list-item>
 			<zywork-list-item title="办公地点" :note="userWork.workAddr" @click="toSettingCompanyAddr"></zywork-list-item>

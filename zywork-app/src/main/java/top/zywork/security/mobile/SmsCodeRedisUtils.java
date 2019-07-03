@@ -23,6 +23,7 @@ public class SmsCodeRedisUtils {
     public static final String SMS_CODE_REG_PREFIX = "sms_code_reg::";
     public static final String SMS_CODE_RESET_LOGIN_PWD_PREFIX = "sms_code_reset_login_pwd::";
     public static final String SMS_CODE_RESET_PAY_PWD_PREFIX = "sms_code_reset_pay_pwd::";
+    public static final String SMS_CODE_UPDATE_PHONE_PREFIX = "sms_code_update_phone::";
 
     @Value("${verify.sms-code.expiration}")
     private Long smsCodeExpiration;

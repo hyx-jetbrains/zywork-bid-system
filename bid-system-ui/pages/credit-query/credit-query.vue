@@ -149,9 +149,9 @@
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
-									<view v-if="item.compHouseAchievementName != ''" class="zy-text-info">
-										{{item.compHouseAchievementName}}
+									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
+									<view v-if="item.compHouseAchievementMarkMoney != ''" class="zy-text-info">
+										{{item.compHouseAchievementMarkMoney}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -252,9 +252,9 @@
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">竣工时间:</view>
-									<view v-if="item.compTrafficAchievementEndDate != ''" class="zy-text-info">
-										{{item.compTrafficAchievementEndDate}}
+									<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
+									<view v-if="item.compTrafficAchievementName != ''" class="zy-text-info">
+										{{item.compTrafficAchievementName}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无

@@ -205,9 +205,9 @@
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
-									<view v-if="item.compHouseAchievementName != ''" class="zy-text-info">
-										{{item.compHouseAchievementName}}
+									<view class="zy-text-info zy-text-bold zy-content-label">中标金额:</view>
+									<view v-if="item.compHouseAchievementMarkMoney != ''" class="zy-text-info">
+										{{item.compHouseAchievementMarkMoney}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -304,9 +304,9 @@
 									</view>
 								</view>
 								<view class="zy-disable-flex">
-									<view class="zy-text-info zy-text-bold zy-content-label">竣工时间:</view>
-									<view v-if="item.compTrafficAchievementEndDate != ''" class="zy-text-info">
-										{{item.compTrafficAchievementEndDate}}
+									<view class="zy-text-info zy-text-bold zy-content-label">项目负责人:</view>
+									<view v-if="item.compTrafficAchievementName != ''" class="zy-text-info">
+										{{item.compTrafficAchievementName}}
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -681,7 +681,7 @@
 					<view class="zy-search-view">
 						<view class="zy-search-bar zy-search">
 							<zywork-icon type="iconchaxun" />
-							<input type="text" v-model="pager.compBuilderRegNum" placeholder="输入证件号码关键字搜索" @confirm="searchData" />
+							<input type="text" v-model="pager.compBuilderMajorLevel" placeholder="输入专业等级关键字搜索" @confirm="searchData" />
 						</view>
 					</view>
 				</view>
@@ -868,7 +868,7 @@
 					compBuilderIsActive: 0,
 					compAptitudeIsActive: 0,
 					companyCompName: '',
-					compBuilderRegNum: '',
+					compBuilderMajorLevel: '',
 					markMoneyMin: '',
 					markMoneyMax: '',
 					contractAmountMin: '',

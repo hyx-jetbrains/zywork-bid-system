@@ -7,7 +7,7 @@
 					<view>
 						<view class="zy-text-bold" @click="toUserSetting">{{user.nickname}}</view>
 						<view class="zy-text-small" v-if="user.phone !== ''" @click="toUserSetting">{{user.phone}}</view>
-						<button v-else class="zy-wx-btn" open-type="getPhoneNumber" lang="zh_CN" @getphonenumber="bindGetPhoneNumber">
+						<button v-else class="zy-wx-btn zy-get-phone" open-type="getPhoneNumber" lang="zh_CN" @getphonenumber="bindGetPhoneNumber">
 							<view class="zy-text-small">获取手机号</view>
 						</button>
 					</view>
@@ -130,20 +130,6 @@
 				},
 				headicon: DEFAULT_HEADICON,
 				subscrible: {
-					id: null,
-					userId: null,
-					city: '全省',
-					projectType: null,
-					minMoney: null,
-					maxMoney: null,
-					tenderee: null,
-					aptitudeType: null,
-					keyword: null,
-					isSubscribe: null,
-					version: null,
-					createTime: null,
-					updateTime: null,
-					isActive: null,
 					isRequest: true
 				},
 			}
@@ -355,4 +341,10 @@
 	.zy-icon-text zywork-icon view {
 		line-height: 1.0;
 	}
+	
+	.zy-get-phone {
+		margin-top: 20upx;
+		font-size: 30upx;
+	}
+	
 </style>

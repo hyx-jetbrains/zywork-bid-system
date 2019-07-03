@@ -83,22 +83,4 @@ public final class ProjectConstants {
     public static final String SMS_SWITCH_TRUE = "true";
 
 
-    /**
-     * 发送短信项目标题截取长度-20
-     */
-    public static final Integer SMS_PROJECT_TITLE_SPLIT_LENGTH = 20;
-
-    /**
-     * 短信签名-江西数达信息科技有限公司
-     */
-    public static final String SMS_SIGN_NAME = "江西数达信息科技有限公司";
-    /**
-     * 短信通知模版code-订阅通知-SMS_169100937
-     */
-    public static final String SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE = "SMS_169100937";
-    /**
-     * 短信通知模版code-开标通知-SMS_169110934
-     */
-    public static final String SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE = "SMS_169110934";
-
 }

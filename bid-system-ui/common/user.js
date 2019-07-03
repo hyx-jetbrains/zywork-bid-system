@@ -774,3 +774,72 @@ export const getSysInfo = (self) => {
 		}
 	})
 }
+
+/**
+ * 发送验证码
+ */
+export const sendSmsCode = (self) => {
+	uni.request({
+		url: BASE_URL + '/user/user/sms-code',
+		method: 'POST',
+		data: {
+			phone: self.phone
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken(),
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.showBtn = false;
+				self.minute = 5;
+				showInfoToast('发送成功，请注意查收')
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+
+		}
+	})
+}
+
+/**
+ * 更新用户手机号
+ */
+export const updatePhone = (self) => {
+	uni.request({
+		url: BASE_URL + '/user/user/update-phone',
+		method: 'POST',
+		data: {
+			phone: self.phone,
+			smsCode: self.code
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken(),
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showInfoToast(res.data.message)
+				setTimeout(function() {
+					uni.switchTab({
+						url: '/pages/user-center/user-center'
+					})
+				}, 2000)
+				
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+
+		}
+	})
+}

@@ -1,20 +1,30 @@
 package top.zywork.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import top.zywork.common.BeanUtils;
-import top.zywork.common.BindingResultUtils;
-import top.zywork.common.StringUtils;
+import top.zywork.ali.AliyunSmsConfig;
+import top.zywork.ali.AliyunSmsConstants;
+import top.zywork.ali.AliyunSmsUtils;
+import top.zywork.common.*;
+import top.zywork.constant.SmsConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.UserDTO;
+import top.zywork.enums.RandomCodeEnum;
+import top.zywork.enums.SysConfigEnum;
 import top.zywork.query.UserQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
+import top.zywork.security.mobile.SmsCodeRedisUtils;
+import top.zywork.service.SysConfigService;
 import top.zywork.service.UserService;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ResponseStatusVO;
@@ -36,7 +46,14 @@ public class UserController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    @Value("${verify.sms-code.expiration}")
+    private Integer smsCodeExpiration;
+
     private UserService userService;
+
+    private SmsCodeRedisUtils smsCodeRedisUtils;
+
+    private SysConfigService sysConfigService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated UserVO userVO, BindingResult bindingResult) {
@@ -159,8 +176,73 @@ public class UserController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
+    /**
+     * 发送手机验证码
+     *
+     * @param phone
+     */
+    @PostMapping("user/sms-code")
+    public ResponseStatusVO sendSmsCode(String phone) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(phone) || !RegexUtils.match(RegexUtils.REGEX_PHONE, phone)) {
+            return ResponseStatusVO.dataError("错误的手机号", null);
+        }
+        if (smsCodeRedisUtils.existsCode(SmsCodeRedisUtils.SMS_CODE_UPDATE_PHONE_PREFIX, phone)) {
+            return ResponseStatusVO.error("已获取过手机验证码，请稍候再获取", null);
+        }
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        // 是平台用户，准备发送手机验证码，此code用于发送短信
+        String code = RandomUtils.randomCode(RandomCodeEnum.NUMBER_CODE, 6);
+        try {
+            JSONObject templateParam = new JSONObject();
+            templateParam.put("code", code);
+            AliyunSmsConfig aliyunSmsConfig = sysConfigService.getByName(SysConfigEnum.ALIYUN_SMS_CONFIG.getValue(), AliyunSmsConfig.class);
+            SendSmsResponse smsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phone, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_UPDATE_PHONE, templateParam.toJSONString(), null);
+            if (smsResponse.getCode() != null && AliyunSmsConstants.ALIYUN_SMS_OK.equals(smsResponse.getCode())) {
+                smsCodeRedisUtils.storeCode(SmsCodeRedisUtils.SMS_CODE_UPDATE_PHONE_PREFIX, phone, code);
+                return ResponseStatusVO.ok("短信发送成功", smsCodeExpiration);
+            } else {
+                logger.error("短信发送失败：{}", smsResponse.getMessage());
+                return ResponseStatusVO.error("短信发送失败", null);
+            }
+        } catch (ClientException e) {
+            logger.error("短信发送失败：{}", e.getMessage());
+            return ResponseStatusVO.error("短信发送失败", null);
+        }
+    }
+
+    /**
+     * 用户修改手机号码
+     * @param phone
+     * @param smsCode
+     * @return
+     */
+    @PostMapping("user/update-phone")
+    public ResponseStatusVO updatePhone(String phone, String smsCode) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(phone) || !RegexUtils.match(RegexUtils.REGEX_PHONE, phone)) {
+            return ResponseStatusVO.dataError("错误的手机号", null);
+        }
+        if (org.apache.commons.lang3.StringUtils.isEmpty(smsCode) || !smsCode.equals(smsCodeRedisUtils.getCode(SmsCodeRedisUtils.SMS_CODE_UPDATE_PHONE_PREFIX, phone))) {
+            return ResponseStatusVO.dataError("手机验证码不正确", null);
+        }
+        Object obj = userService.getById(SecurityUtils.getJwtUser().getUserId());
+        UserDTO userDTO = BeanUtils.copy(obj, UserDTO.class);
+        userDTO.setPhone(phone);
+        userService.update(userDTO);
+        return ResponseStatusVO.ok("更新成功", null);
+    }
+
+    @Autowired
+    public void setSmsCodeRedisUtils(SmsCodeRedisUtils smsCodeRedisUtils) {
+        this.smsCodeRedisUtils = smsCodeRedisUtils;
+    }
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setSysConfigService(SysConfigService sysConfigService) {
+        this.sysConfigService = sysConfigService;
     }
 }

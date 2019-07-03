@@ -17,6 +17,7 @@ import top.zywork.common.DateParseUtils;
 import top.zywork.common.DateUtils;
 import top.zywork.constant.NoticeConstants;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.SmsConstants;
 import top.zywork.controller.BuilderReqController;
 import top.zywork.dao.*;
 import top.zywork.dos.ProjectDO;
@@ -363,7 +364,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 //        }
         templateParam.put("projectTitle", tempProjectTitle);
         templateParam.put("projectType", "政府采购");
-        SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
+        SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
                 templateParam.toJSONString(), null);
         System.out.println(sendSmsResponse);
     }
@@ -410,7 +411,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 // 项目订阅提醒
                 if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getSubscribeNotice())) {
                     // 只有配置中开启了短信提醒，才需要发送短信提醒
-                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
+                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
                             templateParam, null);
                     if (!sendSmsResponse.getCode().equals("OK")) {
                         logger.error("{}:短信发送失败：{}", phones, sendSmsResponse.getMessage());
@@ -420,7 +421,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 // 开标提醒
                 if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getOpenMarkNotice())) {
                     // 只有配置中开启了短信提醒，才需要发送短信提醒
-                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, ProjectConstants.SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE,
+                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE,
                             templateParam, null);
                     if (!sendSmsResponse.getCode().equals("OK")) {
                         logger.error("{}:短信发送失败：{}", phones, sendSmsResponse.getMessage());

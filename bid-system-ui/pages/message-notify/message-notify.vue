@@ -9,6 +9,7 @@
 			</scroll-view>
 		</view>
 		<view class="zy-uni-segmented-control zy-position-relative">
+			<text class="zy-text-subscrible" @click="toSubscriblePage">订阅</text>
 			<uni-segmented-control :current="messageStatus.current" :values="messageStatus.items" v-on:clickItem="onClickItem"
 			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
 			 <zywork-icon class="zy-clear-message" type="iconqingchu" color="#6D6D6D" size="20" @tap="clearMessage"/>
@@ -112,7 +113,10 @@
 					noticeType: 0,
 					sortColumn: 'createTime',
 					sortOrder: 'desc',
-				}
+				},
+				subscrible: {
+					isRequest: true
+				},
 			}
 		},
 		onShow() {
@@ -216,6 +220,12 @@
 					url: '/pages-message-notify/message-detail/message-detail?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})
 			},
+			/** 前往订阅页面 */
+			toSubscriblePage() {
+				uni.navigateTo({
+					url: '/pages-user-center/subscrible/subscrible?itemData=' + encodeURIComponent(JSON.stringify(this.subscrible))
+				})
+			},
 			/** 清除未读消息 */
 			clearMessage() {
 				console.log("清除未读消息")
@@ -246,6 +256,12 @@
 		position: absolute;
 		top: 10upx;
 		right: 30upx;
+	}
+	.zy-text-subscrible {
+		position: absolute;
+		top: 10upx;
+		left: 20upx;
+		color: #108EE9;
 	}
 	
 	.zy-tab-badge {
