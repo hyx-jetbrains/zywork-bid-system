@@ -214,6 +214,7 @@
 			/** 查看消息详情 */
 			toMessageDetail(item) {
 				if (item.isRead === 0) {
+					// 消息是未读，改成已读
 					readMessage(this, item.id);
 				}
 				uni.navigateTo({
