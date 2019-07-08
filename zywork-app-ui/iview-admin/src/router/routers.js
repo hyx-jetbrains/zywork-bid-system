@@ -276,6 +276,24 @@ export default [
 			  },
 			  component: () => import('@/view/update-notice/UpdateNotice.vue')
       },
+      {
+        path: 'Labour',
+        name: 'labour_manage',
+        meta: {
+          title: '劳务求职管理',
+          icon: 'ios-people'
+        },
+        component: () => import('@/view/labour/Labour.vue')
+      },
+      {
+        path: 'LabourRequest',
+        name: 'labour_req_manage',
+        meta: {
+          title: '劳务招聘管理',
+          icon: 'ios-people-outline'
+        },
+        component: () => import('@/view/labour-req/LabourReq.vue')
+      },
       // {
       //   path: 'UpdateNoticeResource',
       //   name: 'update_notice_resource',

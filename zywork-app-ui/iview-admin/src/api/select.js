@@ -1447,3 +1447,21 @@ export const pythonProjectAnnounceTypeSelect = [
     label: '其他项目'
   }
 ]
+
+/**
+ * 求职类型
+ */
+export const jobTypeSelect = [
+  {
+    value: '长期',
+    label: '长期'
+  },
+  {
+    value: '短期',
+    label: '短期'
+  },
+  {
+    value: '钟点',
+    label: '钟点'
+  }
+]

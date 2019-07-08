@@ -13,6 +13,8 @@
 			@click="toPublishMaterial"></zywork-list-item>
 			<zywork-list-item title="申请保函" note="申请保函" show-extra-icon="true" :extra-icon="{color: '#23AA22',size: '18',type: 'iconbaohan'}"
 			@click="toPublishGuarantee"></zywork-list-item>
+			<zywork-list-item title="劳务信息" note="劳务信息" show-extra-icon="true" :extra-icon="{color: '#1296db',size: '18',type: 'iconlaowu'}"
+			@click="toPublishLabour"></zywork-list-item>
 		</uni-list>
 	</view>
 </template>
@@ -62,6 +64,11 @@
 			toPublishGuarantee() {
 				uni.navigateTo({
 					url: '/pages-user-center/publish-guarantee/publish-guarantee'
+				})
+			},
+			toPublishLabour() {
+				uni.navigateTo({
+					url: '/pages-user-center/publish-labour/publish-labour'
 				})
 			}
 		}

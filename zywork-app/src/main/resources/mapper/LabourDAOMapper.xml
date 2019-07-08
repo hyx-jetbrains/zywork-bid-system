@@ -1,0 +1,492 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.LabourDAO">
+
+    <insert id="save" parameterType="labourDO">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+        insert into t_labour
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+				user_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+			<if test="workType != null">
+				work_type,
+			</if>
+			<if test="jobType != null">
+				job_type,
+			</if>
+			<if test="workAddr != null">
+				work_addr,
+			</if>
+			<if test="addrDesc != null">
+				addr_desc,
+			</if>
+			<if test="treatment != null">
+				treatment,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="memo != null">
+				memo,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="isActive != null">
+				is_active,
+			</if>
+			
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+				#{userId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="age != null">
+				#{age},
+			</if>
+			<if test="workType != null">
+				#{workType},
+			</if>
+			<if test="jobType != null">
+				#{jobType},
+			</if>
+			<if test="workAddr != null">
+				#{workAddr},
+			</if>
+			<if test="addrDesc != null">
+				#{addrDesc},
+			</if>
+			<if test="treatment != null">
+				#{treatment},
+			</if>
+			<if test="phone != null">
+				#{phone},
+			</if>
+			<if test="memo != null">
+				#{memo},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="isActive != null">
+				#{isActive},
+			</if>
+			
+        </trim>
+    </insert>
+
+    <insert id="saveBatch" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+    		SELECT LAST_INSERT_ID()
+    	</selectKey>
+    	<foreach collection="list" item="item" separator=";">
+            insert into t_labour
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null">
+				user_id,
+			</if>
+			<if test="item.name != null">
+				name,
+			</if>
+			<if test="item.age != null">
+				age,
+			</if>
+			<if test="item.workType != null">
+				work_type,
+			</if>
+			<if test="item.jobType != null">
+				job_type,
+			</if>
+			<if test="item.workAddr != null">
+				work_addr,
+			</if>
+			<if test="item.addrDesc != null">
+				addr_desc,
+			</if>
+			<if test="item.treatment != null">
+				treatment,
+			</if>
+			<if test="item.phone != null">
+				phone,
+			</if>
+			<if test="item.memo != null">
+				memo,
+			</if>
+			<if test="item.version != null">
+				version,
+			</if>
+			<if test="item.createTime != null">
+				create_time,
+			</if>
+			<if test="item.updateTime != null">
+				update_time,
+			</if>
+			<if test="item.isActive != null">
+				is_active,
+			</if>
+			
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.userId != null">
+				#{item.userId},
+			</if>
+			<if test="item.name != null">
+				#{item.name},
+			</if>
+			<if test="item.age != null">
+				#{item.age},
+			</if>
+			<if test="item.workType != null">
+				#{item.workType},
+			</if>
+			<if test="item.jobType != null">
+				#{item.jobType},
+			</if>
+			<if test="item.workAddr != null">
+				#{item.workAddr},
+			</if>
+			<if test="item.addrDesc != null">
+				#{item.addrDesc},
+			</if>
+			<if test="item.treatment != null">
+				#{item.treatment},
+			</if>
+			<if test="item.phone != null">
+				#{item.phone},
+			</if>
+			<if test="item.memo != null">
+				#{item.memo},
+			</if>
+			<if test="item.version != null">
+				#{item.version},
+			</if>
+			<if test="item.createTime != null">
+				#{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				#{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				#{item.isActive},
+			</if>
+			
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="removeById" parameterType="long">
+        delete from t_labour where id = #{id}
+    </delete>
+
+    <delete id="removeByIds">
+        delete from t_labour where id in
+        <foreach item="id" collection="array" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="labourDO">
+        update t_labour
+        <set>
+            <if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="age != null">
+				age = #{age},
+			</if>
+			<if test="workType != null">
+				work_type = #{workType},
+			</if>
+			<if test="jobType != null">
+				job_type = #{jobType},
+			</if>
+			<if test="workAddr != null">
+				work_addr = #{workAddr},
+			</if>
+			<if test="addrDesc != null">
+				addr_desc = #{addrDesc},
+			</if>
+			<if test="treatment != null">
+				treatment = #{treatment},
+			</if>
+			<if test="phone != null">
+				phone = #{phone},
+			</if>
+			<if test="memo != null">
+				memo = #{memo},
+			</if>
+			<if test="version != null">
+				version = #{version},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+        </set>
+        where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" separator=";">
+            update t_labour
+            <set>
+                <if test="item.userId != null">
+				user_id = #{item.userId},
+			</if>
+			<if test="item.name != null">
+				name = #{item.name},
+			</if>
+			<if test="item.age != null">
+				age = #{item.age},
+			</if>
+			<if test="item.workType != null">
+				work_type = #{item.workType},
+			</if>
+			<if test="item.jobType != null">
+				job_type = #{item.jobType},
+			</if>
+			<if test="item.workAddr != null">
+				work_addr = #{item.workAddr},
+			</if>
+			<if test="item.addrDesc != null">
+				addr_desc = #{item.addrDesc},
+			</if>
+			<if test="item.treatment != null">
+				treatment = #{item.treatment},
+			</if>
+			<if test="item.phone != null">
+				phone = #{item.phone},
+			</if>
+			<if test="item.memo != null">
+				memo = #{item.memo},
+			</if>
+			<if test="item.version != null">
+				version = #{item.version},
+			</if>
+			<if test="item.createTime != null">
+				create_time = #{item.createTime},
+			</if>
+			<if test="item.updateTime != null">
+				update_time = #{item.updateTime},
+			</if>
+			<if test="item.isActive != null">
+				is_active = #{item.isActive},
+			</if>
+			update_time = CURRENT_TIMESTAMP,
+                <if test="item.version == null">
+                    version = version + 1,
+                </if>
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <sql id="select_columns">
+        id as id, user_id as userId, name as name, age as age, work_type as workType, job_type as jobType, work_addr as workAddr, addr_desc as addrDesc, treatment as treatment, phone as phone, memo as memo, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.id != null">
+			and id = #{query.id}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax == null">
+			and id <![CDATA[ >= ]]> #{query.idMin}
+		</if>
+		<if test="query != null and query.idMin == null and query.idMax != null">
+			and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.idMin != null and query.idMax != null">
+			and id <![CDATA[ >= ]]> #{query.idMin} and id <![CDATA[ <= ]]> #{query.idMax}
+		</if>
+		<if test="query != null and query.userId != null">
+			and user_id = #{query.userId}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax == null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin}
+		</if>
+		<if test="query != null and query.userIdMin == null and query.userIdMax != null">
+			and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.userIdMin != null and query.userIdMax != null">
+			and user_id <![CDATA[ >= ]]> #{query.userIdMin} and user_id <![CDATA[ <= ]]> #{query.userIdMax}
+		</if>
+		<if test="query != null and query.name != null and query.name != ''">
+			and name like concat('%', #{query.name}, '%')
+		</if>
+		<if test="query != null and query.age != null">
+			and age = #{query.age}
+		</if>
+		<if test="query != null and query.ageMin != null and query.ageMax == null">
+			and age <![CDATA[ >= ]]> #{query.ageMin}
+		</if>
+		<if test="query != null and query.ageMin == null and query.ageMax != null">
+			and age <![CDATA[ <= ]]> #{query.ageMax}
+		</if>
+		<if test="query != null and query.ageMin != null and query.ageMax != null">
+			and age <![CDATA[ >= ]]> #{query.ageMin} and age <![CDATA[ <= ]]> #{query.ageMax}
+		</if>
+		<if test="query != null and query.workType != null and query.workType != ''">
+			and work_type like concat('%', #{query.workType}, '%')
+		</if>
+		<if test="query != null and query.jobType != null and query.jobType != ''">
+			and job_type like concat('%', #{query.jobType}, '%')
+		</if>
+		<if test="query != null and query.workAddr != null and query.workAddr != ''">
+			and work_addr like concat('%', #{query.workAddr}, '%')
+		</if>
+		<if test="query != null and query.addrDesc != null and query.addrDesc != ''">
+			and addr_desc like concat('%', #{query.addrDesc}, '%')
+		</if>
+		<if test="query != null and query.treatment != null and query.treatment != ''">
+			and treatment like concat('%', #{query.treatment}, '%')
+		</if>
+		<if test="query != null and query.phone != null and query.phone != ''">
+			and phone like concat('%', #{query.phone}, '%')
+		</if>
+		<if test="query != null and query.memo != null and query.memo != ''">
+			and memo like concat('%', #{query.memo}, '%')
+		</if>
+		<if test="query != null and query.version != null">
+			and version = #{query.version}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax == null">
+			and version <![CDATA[ >= ]]> #{query.versionMin}
+		</if>
+		<if test="query != null and query.versionMin == null and query.versionMax != null">
+			and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.versionMin != null and query.versionMax != null">
+			and version <![CDATA[ >= ]]> #{query.versionMin} and version <![CDATA[ <= ]]> #{query.versionMax}
+		</if>
+		<if test="query != null and query.createTime != null">
+			and create_time = #{query.createTime}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax == null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin}
+		</if>
+		<if test="query != null and query.createTimeMin == null and query.createTimeMax != null">
+			and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.createTimeMin != null and query.createTimeMax != null">
+			and create_time <![CDATA[ >= ]]> #{query.createTimeMin} and create_time <![CDATA[ <= ]]> #{query.createTimeMax}
+		</if>
+		<if test="query != null and query.updateTime != null">
+			and update_time = #{query.updateTime}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax == null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin}
+		</if>
+		<if test="query != null and query.updateTimeMin == null and query.updateTimeMax != null">
+			and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.updateTimeMin != null and query.updateTimeMax != null">
+			and update_time <![CDATA[ >= ]]> #{query.updateTimeMin} and update_time <![CDATA[ <= ]]> #{query.updateTimeMax}
+		</if>
+		<if test="query != null and query.isActive != null">
+			and is_active = #{query.isActive}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax == null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin}
+		</if>
+		<if test="query != null and query.isActiveMin == null and query.isActiveMax != null">
+			and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
+			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="labourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour where id = #{id}
+    </select>
+
+    <select id="getVersionById" parameterType="long" resultType="integer">
+        select version from t_labour where id = #{id}
+    </select>
+
+    <select id="listAll" resultType="labourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour
+        order by update_time desc, create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="labourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+             ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="labourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            update_time desc, create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_labour
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

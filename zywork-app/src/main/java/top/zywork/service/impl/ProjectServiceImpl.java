@@ -290,10 +290,11 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     content = "项目订阅更新通知：" + content;
                     descContent = "您订阅的项目"+content+"符合条件的项目发布了，具体内容可点击《立即查看》按钮前往查看";
                 } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
+                    String openMarkTime = DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue());
                     title = "开标通知";
                     content = "项目订阅开标通知：" + content + "于" + projectVO.getOpenMarkTime() + "开标";
-                    descContent = "您订阅的项目"+content+"于"+projectVO.getOpenMarkTime()+"开标，具体内容可点击《立即查看》按钮前往查看";
-                    templateParam.put("openMarkTime", DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue()));
+                    descContent = "您订阅的项目"+content+"于"+openMarkTime+"开标，具体内容可点击《立即查看》按钮前往查看";
+                    templateParam.put("openMarkTime", openMarkTime);
                 }
                 String tempProjectTitle = projectVO.getTitle();
                 if (tempProjectTitle.length() > 16) {
@@ -312,7 +313,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 //                }
                 templateParam.put("projectTitle", tempProjectTitle);
                 templateParam.put("projectType", projectVO.getProjectType());
-                saveNotice(userId, projectVO, title, content, descContent);
+                saveNotice(userId, projectVO, title, content, descContent, type);
                 if (StringUtils.isEmpty(userIds.toString())) {
                     userIds.append(userId);
                 } else {
@@ -377,7 +378,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-27 11:54
      */
-    public void saveNotice(Long userId, ProjectVO projectVO, String title, String content, String descContent) {
+    public void saveNotice(Long userId, ProjectVO projectVO, String title, String content, String descContent, String type) {
         Long projectId = projectVO.getId();
         UserNoticeVO userNoticeVO= new UserNoticeVO();
         userNoticeVO.setUserId(userId);
@@ -386,7 +387,14 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         userNoticeVO.setTitle(title);
         userNoticeVO.setMainContent(content);
         userNoticeVO.setDetailContent(descContent);
-        userNoticeVO.setNoticeType(NoticeEnum.SUBSCRIBE_MESSAGE.getValue());
+        if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
+            // 订阅通知
+            userNoticeVO.setNoticeType(NoticeEnum.SUBSCRIBE_MESSAGE.getValue());
+        } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
+            // 开标通知
+            userNoticeVO.setNoticeType(NoticeEnum.BID_OPENING_MESSAGE.getValue());
+        }
+
         userNoticeDAO.save(userNoticeVO);
     }
 

@@ -22,9 +22,13 @@ import * as ResponseStatus from './response-status.js'
  */
 export const getAdvertisementInfo = (self) => {
 	uni.request({
-		url: BASE_URL + '/advertisement/any/all',
-		method: 'GET',
-		data: '',
+		url: BASE_URL + '/advertisement/any/all-cond',
+		method: 'POST',
+		data: {
+			pageNo: 1,
+			pageSize: 5,
+			isActive: 0
+		},
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {

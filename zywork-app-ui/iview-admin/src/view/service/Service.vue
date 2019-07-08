@@ -3,7 +3,7 @@
 		<Row>
 			<i-col span="24">
 				<Card>
-					<Button @click="showModal('add')" type="primary">添加</Button>&nbsp;
+					<!-- <Button @click="showModal('add')" type="primary">添加</Button>&nbsp; -->
 					<Dropdown @on-click="batchOpt">
 						<Button type="primary">
 							批量操作

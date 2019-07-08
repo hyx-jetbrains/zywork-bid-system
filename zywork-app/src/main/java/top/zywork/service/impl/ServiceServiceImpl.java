@@ -7,6 +7,7 @@ import top.zywork.common.BeanUtils;
 import top.zywork.dao.ServiceDAO;
 import top.zywork.dos.ServiceDO;
 import top.zywork.dto.ServiceDTO;
+import top.zywork.query.ServiceQuery;
 import top.zywork.service.AbstractBaseService;
 import top.zywork.service.ServiceService;
 
@@ -39,7 +40,9 @@ public class ServiceServiceImpl extends AbstractBaseService implements ServiceSe
 
     @Override
     public String[] getAllVipServiceUrl() {
-        List<Object> objectList = serviceDAO.listAll();
+        ServiceQuery serviceQuery = new ServiceQuery();
+        serviceQuery.setIsActive((byte)0);
+        List<Object> objectList = serviceDAO.listAllByCondition(serviceQuery);
         List<ServiceDTO> serviceDTOList = BeanUtils.copy(objectList, ServiceDTO.class);
         StringBuilder urls = new StringBuilder();
         for (ServiceDTO serviceDTO : serviceDTOList) {

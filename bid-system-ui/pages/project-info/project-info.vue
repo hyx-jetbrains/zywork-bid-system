@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<view v-if="!calendar.showCalendar">
 		<view class="zy-top-search">
 			<picker @change="chooseCity" :value="cityIndex" :range="cityArray">
 				<view class="zy-address">
@@ -40,7 +41,9 @@
 		</view>
 
 		<view class="zy-choose-date zy-disable-flex" v-if="showChooseDate">
-			<text style="margin-left:25%;" @click="openCalendar">开标日期：{{calendar.currentFormatDate}}</text>
+			<text style="margin-left:25%; color: red;" @click="openCalendar">
+				开标日期：{{calendar.currentFormatDate}}
+			</text>
 			<text style="color: #108EE9;" class="zy-disable-flex-right" @click="resetCalendar">重置</text>
 		</view>
 
@@ -166,25 +169,6 @@
 		</view>
 		<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
 		
-		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
-			<view class="calendar-box" @click.stop="">
-				<view class="zy-type-title zy-text-bold">待开标检索</view>
-				<view class="zy-date-tag">
-					<uni-tag text="本周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(1)"></uni-tag>
-					<uni-tag text="下周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(2)"></uni-tag>
-					<uni-tag text="本月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(3)"></uni-tag>
-					<uni-tag text="下月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(4)"></uni-tag>
-				</view>
-				<view class="zy-type-title zy-text-bold">日期检索</view>
-				<zywork-calendar :slide="calendar.slide" :disableBefore="calendar.disableBefore" :start-date="calendar.startDate"
-				 :date="calendar.date" @change="change" @to-click="toClick" />
-				<view class="calendar-button-groups">
-					<button type="primary" class="calendar-button-confirm" @click="closeMask">取消</button>
-					<button type="primary" class="calendar-button-confirm" @click="confirm">确认</button>
-				</view>
-			</view>
-		</view>
-
 		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
 			<scroll-view :scroll-y="true" class="uni-center center-box">
 				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
@@ -214,6 +198,25 @@
 		<button open-type="contact" class="zy-hide-button" ref="contactBtn"></button>
 
 		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
+		</view>
+		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
+			<view class="calendar-box" @click.stop="">
+				<view class="zy-type-title zy-text-bold">待开标检索</view>
+				<view class="zy-date-tag" style="margin: 30upx 0;">
+					<uni-tag text="本周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(1)"></uni-tag>
+					<uni-tag text="下周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(2)"></uni-tag>
+					<uni-tag text="本月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(3)"></uni-tag>
+					<uni-tag text="下月" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(4)"></uni-tag>
+				</view>
+				<zywork-calendar :slide="calendar.slide" :disableBefore="calendar.disableBefore" :start-date="calendar.startDate"
+				 :date="calendar.date" @change="change" @to-click="toClick" />
+				<view class="calendar-button-groups">
+					<button type="primary" size="mini" class="calendar-button-confirm" @click="closeMask">取消</button>
+					<button type="primary" size="mini" class="calendar-button-confirm" @click="confirm">确认</button>
+				</view>
+				
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -409,9 +412,11 @@
 			}
 		},
 		onPullDownRefresh() {
-			this.projectPager.pageNo = 1
-			this.updateProjectList('pullDown');
-			this.initHeadInfo();
+			if (!this.calendar.showCalendar) {
+				this.projectPager.pageNo = 1
+				this.updateProjectList('pullDown');
+				this.initHeadInfo();
+			}
 		},
 		onReachBottom() {
 			this.showLoadMore = true
@@ -650,6 +655,7 @@
 			},
 			/** 日期搜索，根据选择的时间搜索数据 */
 			dateSearch(type) {
+				this.calendar.currentFormatDate = '请选择日期';
 				var startTime = null;
 				var endTime = null;
 				if (1 === type) {
@@ -799,4 +805,5 @@
 	button::after {
 		border: 0;
 	}
+
 </style>

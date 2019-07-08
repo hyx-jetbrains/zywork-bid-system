@@ -149,9 +149,9 @@ public class AdvertisementController extends BaseController {
      * Time: 14:54
      * Description: 轮播图
      */
-    @GetMapping("any/all")
-    public ResponseStatusVO userlistAll() {
-        return listAll();
+    @PostMapping("any/all-cond")
+    public ResponseStatusVO userlistAll(@RequestBody AdvertisementQuery advertisementQuery) {
+        return listAllByCondition(advertisementQuery);
     }
 
     @PostMapping("admin/all-cond")

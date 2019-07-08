@@ -300,8 +300,6 @@ export const certificateMajorTypeObj = {
   ],
   '其他证书' : []
 }
-
-// 下面是发布信息和我的发布用到的数组
 /**
  * 建造师类型数组
  */
@@ -314,6 +312,10 @@ export const aptitudeTypeArray = ['求购', '转让']
  * 开标拼车数组
  */
 export const openMarkArray = ['车主找人', '人找车主']
+/**
+ * 劳务分类数组
+ */
+export const labourArray = ['求职', '招聘']
 
 
 // 下面是分段器用到的数组
@@ -345,4 +347,8 @@ export const industryTypeArray = ['全部', '房建招标代理', '交通招标�
  * 项目分类数组
  */
 export const projectTypeArray = ['全部', '房建市政', '水利工程', '交通工程', '政府采购', '重点工程', '其他项目']
+/**
+ * 求职类型数组
+ */
+export const jobTypeArray = ['长期', '短期', '钟点']
 

@@ -161,6 +161,8 @@ export default {
   expert_question_type_manage: 'Expert Type Question Management',
   update_notice: 'Update Notice',
   update_notice_resource: 'Update Notice Resource',
+  labour_manage: 'Labour Management',
+  labour_req_manage: 'Labour Request Management',
   credit_enquiry: 'Credit Enquiry',
   company_info_manage: 'Company Information Management',
   company_personnel_manage: 'Company Personnel Management',

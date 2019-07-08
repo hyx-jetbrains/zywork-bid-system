@@ -121,8 +121,8 @@ export const checkBuilder = (self) => {
 		showInfoToast("请输入正确的手机号");
 		return false;
 	}
-	if (self.builderReq.memo === null
-		|| self.builderReq.memo === undefined) {
+	if (self.builder.memo === null
+		|| self.builder.memo === undefined) {
 		showInfoToast("请输入说明");
 		return false;
 	}
@@ -615,6 +615,159 @@ export const saveGuarantee = (self, params) => {
 		complete: () => {
 			uni.hideLoading();
 			self.disabled.guaranteeBtn = false;
+		}
+	})
+}
+
+
+/** 
+ * 发布劳务求职信息表单验证
+ */
+export const checkLabour = (self) => {
+	if (self.labour.name == null
+		|| self.labour.name == undefined) {
+		showInfoToast("请输入姓名");
+		return false;
+	}
+	if (self.labour.phone === null
+		|| self.labour.phone === undefined) {
+		showInfoToast("请输入手机号");
+		return false;
+	}
+	if (!isPhone(self.labour.phone)) {
+		showInfoToast("请输入正确的手机号");
+		return false;
+	}
+	if (self.labour.jobType === null
+		|| self.labour.jobType === undefined) {
+		showInfoToast("请输入求职类型");
+		return false;
+	}
+	if (self.labour.workType === null
+		|| self.labour.workType === undefined) {
+		showInfoToast("请输入从事工种");
+		return false;
+	}
+	if (self.labour.memo === null
+		|| self.labour.memo === undefined) {
+		showInfoToast("请输入说明");
+		return false;
+	}
+	return true;
+}
+/**
+ * 发布劳务信息-保存劳务求职记录
+ */
+export const saveLabour = (self, params) => {
+	self.disabled.labourBtn = true;
+	if (!checkLabour(self)) {
+		self.disabled.labourBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	uni.request({
+		url: BASE_URL + '/labour/user/release-labour',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.labour = {}
+				self.initPicker();
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.labourBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.labourBtn = false;
+		}
+	})
+}
+
+/** 
+ * 发布劳务招聘信息表单验证
+ */
+export const checkLabourReq = (self) => {
+	if (self.labourReq.compName == null
+		|| self.labourReq.compName == undefined) {
+		showInfoToast("请输入企业名称");
+		return false;
+	}
+	if (self.labourReq.phone === null
+		|| self.labourReq.phone === undefined) {
+		showInfoToast("请输入手机号");
+		return false;
+	}
+	if (!isPhone(self.labourReq.phone)) {
+		showInfoToast("请输入正确的手机号");
+		return false;
+	}
+	if (self.labourReq.jobType === null
+		|| self.labourReq.jobType === undefined) {
+		showInfoToast("请输入求职类型");
+		return false;
+	}
+	if (self.labourReq.workType === null
+		|| self.labourReq.workType === undefined) {
+		showInfoToast("请输入从事工种");
+		return false;
+	}
+	if (self.labourReq.memo === null
+		|| self.labourReq.memo === undefined) {
+		showInfoToast("请输入说明");
+		return false;
+	}
+	return true;
+}
+/**
+ * 发布劳务信息-保存劳务招聘记录
+ */
+export const saveLabourReq = (self, params) => {
+	self.disabled.labourReqBtn = true;
+	if (!checkLabourReq(self)) {
+		self.disabled.labourReqBtn = false;
+		return;
+	}
+	uni.showLoading({
+		title: '发布中'
+	})
+	uni.request({
+		url: BASE_URL + '/labour-req/user/release-labour-req',
+		method: 'POST',
+		data: params,
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				self.labourReq = {}
+				self.initPicker();
+				uni.navigateTo({
+					url: '/pages-info-share/publish-result/publish-result'
+				})
+			} else {
+				showInfoToast(res.data.message);
+			}
+			self.disabled.labourReqBtn = false;
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading();
+			self.disabled.labourReqBtn = false;
 		}
 	})
 }

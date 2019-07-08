@@ -139,6 +139,13 @@
 					}
 				},
 				{
+					"path": "publish-labour/publish-labour",
+					"style": {
+						"navigationBarTitleText": "发布劳务信息",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "publish-guarantee-detail/publish-guarantee-detail",
 					"style": {
 						"navigationBarTitleText": "申请保函详情",
@@ -198,6 +205,20 @@
 					"path": "publish-update-notice-detail/publish-update-notice-detail",
 					"style": {
 						"navigationBarTitleText": "更新公告详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-labour-detail/publish-labour-detail",
+					"style": {
+						"navigationBarTitleText": "劳务求职详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-labour-req-detail/publish-labour-req-detail",
+					"style": {
+						"navigationBarTitleText": "劳务招聘详情",
 						"backgroundTextStyle": "light"
 					}
 				},
@@ -411,6 +432,13 @@
 					}
 				},
 				{
+					"path": "publish-labour/publish-labour",
+					"style": {
+						"navigationBarTitleText": "我的劳务信息",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
 					"path": "publish-builder-detail/publish-builder-detail",
 					"style": {
 						"navigationBarTitleText": "我的建造师应聘详情",
@@ -463,6 +491,20 @@
 					"path": "publish-guarantee-detail/publish-guarantee-detail",
 					"style": {
 						"navigationBarTitleText": "我的申请保函详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-labour-detail/publish-labour-detail",
+					"style": {
+						"navigationBarTitleText": "我的劳务求职详情",
+						"backgroundTextStyle": "light"
+					}
+				},
+				{
+					"path": "publish-labour-req-detail/publish-labour-req-detail",
+					"style": {
+						"navigationBarTitleText": "我的劳务招聘详情",
 						"backgroundTextStyle": "light"
 					}
 				},

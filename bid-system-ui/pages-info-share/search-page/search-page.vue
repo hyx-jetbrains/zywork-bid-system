@@ -425,6 +425,74 @@
 						<zyworkNoData v-else text="暂无保函信息"></zyworkNoData>
 					</view>
 				</view>
+				
+				<!-- 劳务信息 -->
+			<view v-if="infoType.tabIndex === 7">
+				<view class="zy-uni-segmented-control">
+					<uni-segmented-control :current="labourOpts.current" :values="labourOpts.items" v-on:clickItem="onClickLabourItem"
+					 styleType="button" activeColor="#108EE9"></uni-segmented-control>
+				</view>
+				<view class="zy-page-list-item" style="padding-top: 10upx;">
+					<view v-if="labourOpts.current === 0">
+						<!-- 求职信息 -->
+						<view class="zy-page-list" v-if="labourList.length > 0">
+							<view class="zy-page-list-item" v-for="(item, index) in labourList" :key="index">
+								<view @click="toLabourDetailPage(item)">
+									<view class="zy-disable-flex">
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
+										<view>
+											<view>
+												<text class="zy-text-bold">{{item.labourName}}</text>
+											</view>
+											<view class="zy-text-mini zy-text-info">发布时间：{{item.labourCreateTime}}</view>
+										</view>
+										<view class="zy-disable-flex-right">
+											{{item.labourJobType}}
+										</view>
+									</view>
+									<view>
+										<view class="zy-text-big zy-text-bold">{{item.labourWorkType}}</view>
+										<view class="zy-text-info">
+											{{item.labourMemo}}
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<zyworkNoData v-else text="暂无应聘信息"></zyworkNoData>
+					</view>
+					<view v-else>
+						<!-- 招聘信息 -->
+						<view class="zy-page-list" v-if="labourReqList.length > 0">
+							<view class="zy-page-list-item" v-for="(item, index) in labourReqList" :key="index">
+								<view @click="toLabourReqDetailPage(item)">
+									<view class="zy-disable-flex">
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
+										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
+										<view>
+											<view>
+												<text class="zy-text-bold">{{item.labourReqCompName}}</text>
+											</view>
+											<view class="zy-text-mini zy-text-info">发布时间：{{item.labourReqCreateTime}}</view>
+										</view>
+										<view class="zy-disable-flex-right">
+											{{item.labourReqJobType}}
+										</view>
+									</view>
+									<view>
+										<view class="zy-text-big zy-text-bold">{{item.labourReqWorkType}}</view>
+										<view class="zy-text-info">
+											{{item.labourReqMemo}}
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<zyworkNoData v-else text="暂无招聘信息"></zyworkNoData>
+					</view>
+				</view>
+			</view>
 			</view>
 		</view>
 
@@ -443,7 +511,8 @@
 		builderTypeArray,
 		aptitudeTypeArray,
 		openMarkArray,
-		hireArray
+		hireArray,
+		labourArray
 	} from '@/common/picker.data.js'
 	import {
 		DEFAULT_HEADICON,
@@ -469,6 +538,8 @@
 	const INFO_CARPOOL = 5
 	// 岗位招聘
 	const INFO_HIRE = 6
+	// 劳务信息
+	const INFO_LABOUR = 7
 
 	export default {
 		components: {
@@ -491,7 +562,9 @@
 					recruitUrl: '/UserRecruit/user/list-page',
 					seekDataUrl: '/UserSeekData/user/list-page',
 					updateNoticeUrl: '/update-notice/user/list-page',
-					guaranteeUrl: '/UserGuarantee/any/list-page'
+					guaranteeUrl: '/UserGuarantee/any/list-page',
+					labourUrl: '/UserLabour/user/list-page',
+					labourReqUrl: '/UserLabourReq/user/list-page'
 				},
 				pager: {},
 				defaultIcon: DEFAULT_HEADICON,
@@ -528,6 +601,10 @@
 						{
 							id: 'hire',
 							name: '岗位招聘'
+						},
+						{
+							id: 'labour',
+							name: '劳务信息'
 						}
 					]
 				},
@@ -543,6 +620,10 @@
 					current: 0,
 					items: openMarkArray
 				},
+				labourOpts: {
+					current: 0,
+					items: labourArray
+				},
 				builderReqList: [],
 				builderList: [],
 				aptitudeBuyList: [],
@@ -552,6 +633,8 @@
 				recruitList: [],
 				seekDataList: [],
 				updateNoticeList: [],
+				labourList: [],
+				labourReqList: [],
 				keywordMemo: '请输入公告标题关键字搜索'
 			}
 		},
@@ -748,6 +831,14 @@
 			refreshGuaranteeList(type) {
 				this.commonRequest(this.urls.guaranteeUrl, type);
 			},
+			/** 刷新劳务求职列表 */
+			refreshLabourList(type) {
+				this.commonRequest(this.urls.labourUrl, type);
+			},
+			/** 刷新劳务招聘列表 */
+			refreshLabourReqList(type) {
+				this.commonRequest(this.urls.labourReqUrl, type);
+			},
 			/** 
 			 * 请求成功之后的操作 
 			 * @param tabIndex 当前选择的类型
@@ -852,6 +943,24 @@
 					} else {
 						this.guaranteeList = rows;
 					}
+				} else if (INFO_LABOUR === tabIndex) {
+					// 劳务信息
+					if (this.labourOpts.current === 0) {
+						// 劳务求职
+						if (type === 'add') {
+							this.labourList = this.labourList.concat(rows);
+						} else {
+							this.labourList = rows;
+						}
+					} else {
+						// 劳务招聘
+						if (type === 'add') {
+							this.labourReqList = this.labourReqList.concat(rows);
+						} else {
+							this.labourReqList = rows;
+						}
+					}
+					
 				}
 			},
 			getElSize(id) {
@@ -933,6 +1042,13 @@
 					// 申请保函
 					this.pager.guaranteeProjectName = tempSearchVal;
 					this.refreshGuaranteeList(type);
+				} else if (INFO_LABOUR === tabIndex) {
+					// 劳务信息
+					if (this.labourOpts.current === 0) {
+						this.refreshLabourList(type);
+					} else {
+						this.refreshLabourReqList(type);
+					}
 				}
 			},
 			toPublishChoose(type) {
@@ -1005,7 +1121,16 @@
 			},
 			/** 前往申请保函详情页面 */
 			toGuaranteeDetailPage(item) {
-				this.toDetailPage('guarantee', item);
+				// 避免隐私泄漏，不需要详情
+				// this.toDetailPage('guarantee', item);
+			},
+			/** 前往劳务求职详情页面 */
+			toLabourDetailPage(item) {
+				this.toDetailPage('labour', item);
+			},
+			/** 前往劳务招聘详情页面 */
+			toLabourReqDetailPage(item) {
+				this.toDetailPage('labour-req', item);
 			},
 			/** 点击我要拼车，增加拼车记录 */
 			addCarpoolRecord(item) {
@@ -1047,6 +1172,14 @@
 				if (this.carPoolOpts.current !== index) {
 					this.carPoolOpts.current = index
 					this.checkRefresh(this.infoType.tabIndex, 'init')
+				}
+			},
+			/** 劳务信息分段器选择器 */
+			onClickLabourItem(index) {
+				this.initPager()
+				if (this.labourOpts.current !== index) {
+					this.labourOpts.current = index;
+					this.checkRefresh(this.infoType.tabIndex, 'init');
 				}
 			},
 		}

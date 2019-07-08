@@ -85,6 +85,8 @@ public class VipServiceFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURI();
         if (!StringUtils.isInArray(vipAllUrlArray, url)) {
+            // 两种情况下会进这里：1、不需要验证的url。2、需要验证的url，但是服务被禁用了。如果是第一种情况，这个设置不会有影响，如果是第二种情况，说明不需要隐藏字段，和用户开通了vip的效果是一样的，所以设置未true
+            httpServletRequest.setAttribute(ProjectConstants.VIP_FLAG, true);
             // url 不在需要验证的url中，不做处理，直接过
             chain.doFilter(request, response);
             return;

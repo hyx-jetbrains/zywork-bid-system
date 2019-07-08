@@ -1,0 +1,199 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zywork.dao.UserLabourDAO">
+
+    <sql id="select_columns">
+        t_labour.id as labourId, t_labour.user_id as labourUserId, t_labour.name as labourName, t_labour.age as labourAge, t_labour.work_type as labourWorkType, t_labour.job_type as labourJobType, t_labour.work_addr as labourWorkAddr, t_labour.addr_desc as labourAddrDesc, t_labour.treatment as labourTreatment, t_labour.phone as labourPhone, t_labour.memo as labourMemo, t_labour.version as labourVersion, t_labour.create_time as labourCreateTime, t_labour.update_time as labourUpdateTime, t_labour.is_active as labourIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
+    </sql>
+
+    <sql id="query_where_clause">
+        <if test="query != null and query.labourId != null">
+			and t_labour.id = #{query.labourId}
+		</if>
+		<if test="query != null and query.labourIdMin != null and query.labourIdMax == null">
+			and t_labour.id <![CDATA[ >= ]]> #{query.labourIdMin}
+		</if>
+		<if test="query != null and query.labourIdMin == null and query.labourIdMax != null">
+			and t_labour.id <![CDATA[ <= ]]> #{query.labourIdMax}
+		</if>
+		<if test="query != null and query.labourIdMin != null and query.labourIdMax != null">
+			and t_labour.id <![CDATA[ >= ]]> #{query.labourIdMin} and t_labour.id <![CDATA[ <= ]]> #{query.labourIdMax}
+		</if>
+		<if test="query != null and query.labourUserId != null">
+			and t_labour.user_id = #{query.labourUserId}
+		</if>
+		<if test="query != null and query.labourUserIdMin != null and query.labourUserIdMax == null">
+			and t_labour.user_id <![CDATA[ >= ]]> #{query.labourUserIdMin}
+		</if>
+		<if test="query != null and query.labourUserIdMin == null and query.labourUserIdMax != null">
+			and t_labour.user_id <![CDATA[ <= ]]> #{query.labourUserIdMax}
+		</if>
+		<if test="query != null and query.labourUserIdMin != null and query.labourUserIdMax != null">
+			and t_labour.user_id <![CDATA[ >= ]]> #{query.labourUserIdMin} and t_labour.user_id <![CDATA[ <= ]]> #{query.labourUserIdMax}
+		</if>
+		<if test="query != null and query.labourName != null and query.labourName != ''">
+			and t_labour.name like concat('%', #{query.labourName}, '%')
+		</if>
+		<if test="query != null and query.labourAge != null">
+			and t_labour.age = #{query.labourAge}
+		</if>
+		<if test="query != null and query.labourAgeMin != null and query.labourAgeMax == null">
+			and t_labour.age <![CDATA[ >= ]]> #{query.labourAgeMin}
+		</if>
+		<if test="query != null and query.labourAgeMin == null and query.labourAgeMax != null">
+			and t_labour.age <![CDATA[ <= ]]> #{query.labourAgeMax}
+		</if>
+		<if test="query != null and query.labourAgeMin != null and query.labourAgeMax != null">
+			and t_labour.age <![CDATA[ >= ]]> #{query.labourAgeMin} and t_labour.age <![CDATA[ <= ]]> #{query.labourAgeMax}
+		</if>
+		<if test="query != null and query.labourWorkType != null and query.labourWorkType != ''">
+			and t_labour.work_type like concat('%', #{query.labourWorkType}, '%')
+		</if>
+		<if test="query != null and query.labourJobType != null and query.labourJobType != ''">
+			and t_labour.job_type like concat('%', #{query.labourJobType}, '%')
+		</if>
+		<if test="query != null and query.labourWorkAddr != null and query.labourWorkAddr != ''">
+			and t_labour.work_addr like concat('%', #{query.labourWorkAddr}, '%')
+		</if>
+		<if test="query != null and query.labourAddrDesc != null and query.labourAddrDesc != ''">
+			and t_labour.addr_desc like concat('%', #{query.labourAddrDesc}, '%')
+		</if>
+		<if test="query != null and query.labourTreatment != null and query.labourTreatment != ''">
+			and t_labour.treatment like concat('%', #{query.labourTreatment}, '%')
+		</if>
+		<if test="query != null and query.labourPhone != null and query.labourPhone != ''">
+			and t_labour.phone like concat('%', #{query.labourPhone}, '%')
+		</if>
+		<if test="query != null and query.labourMemo != null and query.labourMemo != ''">
+			and t_labour.memo like concat('%', #{query.labourMemo}, '%')
+		</if>
+		<if test="query != null and query.labourVersion != null">
+			and t_labour.version = #{query.labourVersion}
+		</if>
+		<if test="query != null and query.labourVersionMin != null and query.labourVersionMax == null">
+			and t_labour.version <![CDATA[ >= ]]> #{query.labourVersionMin}
+		</if>
+		<if test="query != null and query.labourVersionMin == null and query.labourVersionMax != null">
+			and t_labour.version <![CDATA[ <= ]]> #{query.labourVersionMax}
+		</if>
+		<if test="query != null and query.labourVersionMin != null and query.labourVersionMax != null">
+			and t_labour.version <![CDATA[ >= ]]> #{query.labourVersionMin} and t_labour.version <![CDATA[ <= ]]> #{query.labourVersionMax}
+		</if>
+		<if test="query != null and query.labourCreateTime != null">
+			and t_labour.create_time = #{query.labourCreateTime}
+		</if>
+		<if test="query != null and query.labourCreateTimeMin != null and query.labourCreateTimeMax == null">
+			and t_labour.create_time <![CDATA[ >= ]]> #{query.labourCreateTimeMin}
+		</if>
+		<if test="query != null and query.labourCreateTimeMin == null and query.labourCreateTimeMax != null">
+			and t_labour.create_time <![CDATA[ <= ]]> #{query.labourCreateTimeMax}
+		</if>
+		<if test="query != null and query.labourCreateTimeMin != null and query.labourCreateTimeMax != null">
+			and t_labour.create_time <![CDATA[ >= ]]> #{query.labourCreateTimeMin} and t_labour.create_time <![CDATA[ <= ]]> #{query.labourCreateTimeMax}
+		</if>
+		<if test="query != null and query.labourUpdateTime != null">
+			and t_labour.update_time = #{query.labourUpdateTime}
+		</if>
+		<if test="query != null and query.labourUpdateTimeMin != null and query.labourUpdateTimeMax == null">
+			and t_labour.update_time <![CDATA[ >= ]]> #{query.labourUpdateTimeMin}
+		</if>
+		<if test="query != null and query.labourUpdateTimeMin == null and query.labourUpdateTimeMax != null">
+			and t_labour.update_time <![CDATA[ <= ]]> #{query.labourUpdateTimeMax}
+		</if>
+		<if test="query != null and query.labourUpdateTimeMin != null and query.labourUpdateTimeMax != null">
+			and t_labour.update_time <![CDATA[ >= ]]> #{query.labourUpdateTimeMin} and t_labour.update_time <![CDATA[ <= ]]> #{query.labourUpdateTimeMax}
+		</if>
+		<if test="query != null and query.labourIsActive != null">
+			and t_labour.is_active = #{query.labourIsActive}
+		</if>
+		<if test="query != null and query.labourIsActiveMin != null and query.labourIsActiveMax == null">
+			and t_labour.is_active <![CDATA[ >= ]]> #{query.labourIsActiveMin}
+		</if>
+		<if test="query != null and query.labourIsActiveMin == null and query.labourIsActiveMax != null">
+			and t_labour.is_active <![CDATA[ <= ]]> #{query.labourIsActiveMax}
+		</if>
+		<if test="query != null and query.labourIsActiveMin != null and query.labourIsActiveMax != null">
+			and t_labour.is_active <![CDATA[ >= ]]> #{query.labourIsActiveMin} and t_labour.is_active <![CDATA[ <= ]]> #{query.labourIsActiveMax}
+		</if>
+		<if test="query != null and query.userDetailNickname != null and query.userDetailNickname != ''">
+			and t_user_detail.nickname like concat('%', #{query.userDetailNickname}, '%')
+		</if>
+		<if test="query != null and query.userDetailHeadicon != null and query.userDetailHeadicon != ''">
+			and t_user_detail.headicon like concat('%', #{query.userDetailHeadicon}, '%')
+		</if>
+		<if test="query != null and query.userDetailGender != null">
+			and t_user_detail.gender = #{query.userDetailGender}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax == null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin}
+		</if>
+		<if test="query != null and query.userDetailGenderMin == null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		<if test="query != null and query.userDetailGenderMin != null and query.userDetailGenderMax != null">
+			and t_user_detail.gender <![CDATA[ >= ]]> #{query.userDetailGenderMin} and t_user_detail.gender <![CDATA[ <= ]]> #{query.userDetailGenderMax}
+		</if>
+		
+        and
+        t_labour.user_id = t_user_detail.id
+    </sql>
+
+    <select id="listById" parameterType="long" resultType="userLabourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour, t_user_detail where t_labour.id = #{id} and
+        t_labour.user_id = t_user_detail.id
+    </select>
+
+    <select id="listAll" resultType="userLabourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour, t_user_detail
+        where
+        t_labour.user_id = t_user_detail.id
+        order by t_labour.update_time desc, t_labour.create_time desc
+    </select>
+
+    <select id="listAllByCondition" resultType="userLabourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_labour.update_time desc, t_labour.create_time desc
+        </if>
+    </select>
+
+    <select id="listPageByCondition" resultType="userLabourDO">
+        select
+        <include refid="select_columns"/>
+        from t_labour, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+        order by
+        <if test="query.sortColumn != null and query.sortColumn != ''">
+            ${query.sortColumn} ${query.sortOrder}
+        </if>
+        <if test="query.sortColumn == null or query.sortColumn == ''">
+            t_labour.update_time desc, t_labour.create_time desc
+        </if>
+        limit #{query.beginIndex}, #{query.pageSize}
+    </select>
+
+    <select id="countByCondition" resultType="long">
+        select count(*) from t_labour, t_user_detail
+        <where>
+            <include refid="query_where_clause"/>
+        </where>
+    </select>
+
+</mapper>

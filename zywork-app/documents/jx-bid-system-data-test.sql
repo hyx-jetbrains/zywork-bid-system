@@ -6199,6 +6199,53 @@ INSERT INTO `t_user_work` VALUES (2, 40, '360735199812292119', '某某公司', '
 COMMIT;
 
 -- ----------------------------
+-- Table structure for t_labour
+-- ----------------------------
+DROP TABLE IF EXISTS `t_labour`;
+CREATE TABLE `t_labour` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '劳务求职编号',
+  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '姓名',
+  `age` int(10) DEFAULT '0' COMMENT '年龄',
+  `work_type` varchar(255) NOT NULL DEFAULT '' COMMENT '从事工种',
+  `job_type` varchar(10) NOT NULL COMMENT '求职类型',
+  `work_addr` varchar(30) DEFAULT NULL COMMENT '工作地点',
+  `addr_desc` varchar(255) DEFAULT NULL COMMENT '详细地址',
+  `treatment` varchar(500) DEFAULT NULL COMMENT '待遇要求',
+  `phone` varchar(20) NOT NULL COMMENT '联系电话',
+  `memo` varchar(255) DEFAULT NULL COMMENT '其他说明',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='劳务求职表';
+
+-- ----------------------------
+-- Table structure for t_labour_req
+-- ----------------------------
+DROP TABLE IF EXISTS `t_labour_req`;
+CREATE TABLE `t_labour_req` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '劳务需求编号',
+  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
+  `comp_name` varchar(300) NOT NULL COMMENT '企业名称',
+  `work_type` varchar(255) NOT NULL DEFAULT '' COMMENT '从事工种',
+  `job_type` varchar(10) NOT NULL COMMENT '求职类型',
+  `work_addr` varchar(30) DEFAULT NULL COMMENT '工作地点',
+  `addr_desc` varchar(255) DEFAULT NULL COMMENT '详细地址',
+  `treatment` varchar(500) DEFAULT NULL COMMENT '待遇要求',
+  `phone` varchar(20) NOT NULL COMMENT '联系电话',
+  `memo` varchar(255) DEFAULT NULL COMMENT '其他说明',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='劳务需求表';
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
 -- Procedure structure for initStatisticsDay
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `initStatisticsDay`;

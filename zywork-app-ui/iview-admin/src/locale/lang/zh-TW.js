@@ -161,6 +161,8 @@ export default {
   expert_question_type_manage: '專家問題類型管理',
   update_notice: '更新公告',
   update_notice_resource: '更新公告附件',
+  labour_manage: '勞務求職管理',
+  labour_req_manage: '勞務招聘管理',
   credit_enquiry: '征信査詢',
   company_info_manage: '企業資訊管理',
   company_personnel_manage: '企業人員管理',

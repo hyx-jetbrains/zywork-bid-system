@@ -93,7 +93,7 @@
 						</view>
 						<view class="uni-list-cell">
 							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请填写说明" v-model="builderReq.memo" />
-							</view>
+						</view>
 					</view>
 					<view class="zy-bottom-button">
 						<cover-view v-if="showBtn">
@@ -235,7 +235,7 @@
 							</view>
 						</view>
 						<view class="uni-list-cell">
-							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;z-index: -99999;" placeholder="请填写说明" v-model="builder.memo" />
+							<textarea class="zy-list-form-memo" style="margin-bottom: 0upx;" placeholder="请填写说明" v-model="builder.memo" />
 						</view>
 						<view class="uni-list-cell">
 							<view class="uni-pd">

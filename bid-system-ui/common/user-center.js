@@ -312,7 +312,7 @@ export const deleteBuilderById = (self, id) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				showSuccessToast(res.data.message)
-				getBuilderByUserId(self)
+				getBuilderByUserId(self, 'init')
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -391,7 +391,7 @@ export const deleteBuilderReqById = (self, id) => {
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
 				showSuccessToast(res.data.message)
-				getBuilderReqByUserId(self)
+				getBuilderReqByUserId(self, 'init')
 			} else {
 				showInfoToast(res.data.message)
 			}
@@ -1635,6 +1635,163 @@ export const createAppointment = (self) => {
 						url: '/pages-user-center/appointment/appointment'
 					})
 				}, 1500)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
+ * 我发布的劳务招聘信息
+ */
+export const getLabourReqByUserId = (self, type) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/UserLabourReq/user/list-labour-req-page',
+		method: 'POST',
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
+				if (type === 'init') {
+					self.labourReqList = rows
+				} else if (type === 'pullDown') {
+					self.labourReqList = rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (rows.length > 0) {
+						self.labourReqList = self.labourReqList.concat(rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
+ * 删除我发布的劳务招聘信息
+ */
+export const deleteLabourReqById = (self, id) => {
+	uni.showLoading({
+		title: '删除中'
+	})
+	uni.request({
+		url: BASE_URL + '/labour-req/user/delete/' + id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast(res.data.message)
+				getLabourReqByUserId(self, 'init')
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+/**
+ * 我发布的劳务求职信息
+ */
+export const getLabourByUserId = (self, type) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/UserLabour/user/list-labour-page',
+		method: 'POST',
+		data: {
+			'pageNo': self.pager.pageNo,
+			'pageSize': self.pager.pageSize
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
+				if (type === 'init') {
+					self.labourList = rows
+				} else if (type === 'pullDown') {
+					self.labourList = rows
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (rows.length > 0) {
+						self.labourList = self.labourList.concat(rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
+ * 删除我发布的劳务求职信息
+ */
+export const deleteLabourById = (self, id) => {
+	uni.showLoading({
+		title: '删除中'
+	})
+	uni.request({
+		url: BASE_URL + '/labour/user/delete/' + id,
+		method: 'GET',
+		data: {},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				showSuccessToast(res.data.message)
+				getLabourByUserId(self, 'init')
 			} else {
 				showInfoToast(res.data.message)
 			}
