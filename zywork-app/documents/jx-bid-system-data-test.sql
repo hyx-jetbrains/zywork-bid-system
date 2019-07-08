@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地开发-127.0.0.1
+ Source Server         : MySQL
  Source Server Type    : MySQL
- Source Server Version : 50724
+ Source Server Version : 80015
  Source Host           : localhost:3306
- Source Schema         : jx_bid_system
+ Source Schema         : jx-bid-system
 
  Target Server Type    : MySQL
- Target Server Version : 50724
+ Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 18/06/2019 18:17:06
+ Date: 08/07/2019 17:59:13
 */
 
 SET NAMES utf8mb4;
@@ -21,26 +21,25 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for t_account_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `t_account_detail`;
-CREATE TABLE `t_account_detail` (
+CREATE TABLE `t_account_detail`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '账目编号',
-  `transaction_no` varchar(32) NOT NULL COMMENT '交易编号',
+  `transaction_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '交易编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `amount` bigint(20) DEFAULT NULL COMMENT '金额',
-  `integral` bigint(20) DEFAULT NULL COMMENT '积分',
-  `type` tinyint(4) DEFAULT NULL COMMENT '收入或支出',
-  `sub_type` varchar(20) DEFAULT NULL COMMENT '收支类型',
-  `pay_type` tinyint(4) DEFAULT NULL COMMENT '支付方式',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `amount` bigint(20) NULL DEFAULT NULL COMMENT '金额',
+  `integral` bigint(20) NULL DEFAULT NULL COMMENT '积分',
+  `type` tinyint(4) NULL DEFAULT NULL COMMENT '收入或支出',
+  `sub_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '收支类型',
+  `pay_type` tinyint(4) NULL DEFAULT NULL COMMENT '支付方式',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户账目明细表';
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户账目明细表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_account_detail
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_account_detail` VALUES (1, '', 31, -50, NULL, 1, '提现', NULL, 1, '2018-12-25 23:24:19', NULL, 0);
 INSERT INTO `t_account_detail` VALUES (2, '', 31, -50, NULL, 1, '提现', NULL, 1, '2018-12-26 17:39:45', NULL, 0);
 INSERT INTO `t_account_detail` VALUES (3, '', 31, 500, NULL, 0, '人工充值', NULL, 1, '2018-12-26 17:42:32', NULL, 0);
@@ -51,107 +50,99 @@ INSERT INTO `t_account_detail` VALUES (7, '', 36, 100, NULL, 0, '转入', NULL, 
 INSERT INTO `t_account_detail` VALUES (8, '', 31, -10, NULL, 1, '消费', 3, 1, '2019-01-15 22:23:31', NULL, 0);
 INSERT INTO `t_account_detail` VALUES (9, '399a929dc59a48f0af9498a534252792', 31, -100, NULL, 1, '提现', NULL, 1, '2019-04-01 15:10:16', NULL, 0);
 INSERT INTO `t_account_detail` VALUES (10, '399a929dc59a48f0af9498a534252792', 31, -100, NULL, 1, '提现', NULL, 1, '2019-04-01 15:24:47', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_achievement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_achievement`;
-CREATE TABLE `t_achievement` (
+CREATE TABLE `t_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '业绩编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `url` varchar(200) DEFAULT '' COMMENT 'URL链接',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT 'URL链接',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='我的业绩表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '我的业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_achievement
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_achievement` VALUES (1, 40, 'http://www.baidu.com', 1, '2019-04-26 12:08:07', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_advertisement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_advertisement`;
-CREATE TABLE `t_advertisement` (
+CREATE TABLE `t_advertisement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '轮播广告编号',
-  `title` varchar(32) DEFAULT '' COMMENT '轮播图标题',
-  `content` varchar(2000) DEFAULT '' COMMENT '内容',
-  `img_url` varchar(200) DEFAULT '' COMMENT '图片地址',
-  `url` varchar(200) DEFAULT '' COMMENT 'URL链接',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '轮播图标题',
+  `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内容',
+  `img_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '图片地址',
+  `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT 'URL链接',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='轮播广告表';
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '轮播广告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_advertisement
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_advertisement` VALUES (8, 'fdfd', '<p>sdfsdfsd</p>', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 2, '2019-04-22 14:52:26', '2019-04-22 15:22:31', 0);
 INSERT INTO `t_advertisement` VALUES (9, 'adf', '<p>ffff</p>', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 1, '2019-04-22 15:46:52', NULL, 0);
 INSERT INTO `t_advertisement` VALUES (10, 'sdfsdf', '<p>adfsd</p>', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 1, '2019-04-22 15:47:32', NULL, 0);
 INSERT INTO `t_advertisement` VALUES (11, 'ABC', '<p>ABCABC</p>', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556111133770&di=7b878fecade084667a237bbb4985f0aa&imgtype=0&src=http%3A%2F%2Ff.zhulong.com%2Fv1%2Ftfs%2FT1zAx_BQhT1RCvBVdK.jpg', 2, '2019-04-22 14:52:26', '2019-04-22 15:22:31', 1);
 INSERT INTO `t_advertisement` VALUES (12, 'test', '<p>tests</p>', 'upload/image/advertisement/2019061113470192745.jpg', '/upload/image/advertisement/2019061113470192745.jpg', 1, '2019-06-11 13:47:09', NULL, 0);
 INSERT INTO `t_advertisement` VALUES (13, 'testtestset', '<p>特色输入色入色热热热</p>', 'upload/image/advertisement/2019061113581736936.jpg', '/upload/image/advertisement/2019061113581736936.jpg', 1, '2019-06-11 13:58:22', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_aptitude_resource
 -- ----------------------------
 DROP TABLE IF EXISTS `t_aptitude_resource`;
-CREATE TABLE `t_aptitude_resource` (
+CREATE TABLE `t_aptitude_resource`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '资质资源编号',
-  `aptitude_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '资质编号',
-  `resource_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '资源编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `aptitude_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '资质编号',
+  `resource_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '资源编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='资质资源表';
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资质资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_aptitude_resource
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_aptitude_resource` VALUES (1, 5, 14, 1, '2019-04-25 10:47:31', NULL, 0);
 INSERT INTO `t_aptitude_resource` VALUES (2, 5, 15, 1, '2019-04-25 10:47:31', NULL, 0);
 INSERT INTO `t_aptitude_resource` VALUES (3, 10, 46, 1, '2019-05-17 19:07:35', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_aptitude_transfer
 -- ----------------------------
 DROP TABLE IF EXISTS `t_aptitude_transfer`;
-CREATE TABLE `t_aptitude_transfer` (
+CREATE TABLE `t_aptitude_transfer`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '资质转让编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '转让类别',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '项目名称',
-  `comp_aptitude_level` varchar(20) DEFAULT '' COMMENT '企业资质等级',
-  `comp_aptitude_type` varchar(20) DEFAULT '' COMMENT '企业资质类型',
-  `phone` varchar(11) NOT NULL DEFAULT '' COMMENT '联系电话',
-  `memo` varchar(255) DEFAULT '' COMMENT '备注',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '转让类别',
+  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '项目名称',
+  `comp_aptitude_level` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业资质等级',
+  `comp_aptitude_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业资质类型',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '联系电话',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='资质转让表';
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资质转让表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_aptitude_transfer
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_aptitude_transfer` VALUES (6, 42, 0, '本人急购一家一级房建资质的企业', '一级', '房建', '18279700225', '111111', 1, '2019-05-17 17:14:40', NULL, 0);
 INSERT INTO `t_aptitude_transfer` VALUES (7, 42, 0, '本人急购一家一级房建资质的企业', '一级', '房建', '18279700225', '111111', 1, '2019-05-17 17:25:13', NULL, 0);
 INSERT INTO `t_aptitude_transfer` VALUES (8, 42, 0, '本人急购一家一级房建资质的企业', '一级', '房建', '18279700225', '111111', 1, '2019-05-17 17:25:18', NULL, 0);
@@ -165,105 +156,99 @@ INSERT INTO `t_aptitude_transfer` VALUES (15, 42, 0, '本人急购一家一级�
 INSERT INTO `t_aptitude_transfer` VALUES (16, 42, 0, '本人急购一家一级房建资质的企业', '一级', '房建', '1', '1', 1, '2019-05-23 16:34:43', NULL, 0);
 INSERT INTO `t_aptitude_transfer` VALUES (17, 50, 0, '本人急购一家一级房建资质的企业', '一级', '房建', '123423423', '112312', 1, '2019-05-29 16:09:37', NULL, 0);
 INSERT INTO `t_aptitude_transfer` VALUES (18, 50, 1, '本人急售一家一级房建资质的企业', '一级', '房建', '231231231', '1231', 1, '2019-05-29 16:09:44', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_article
 -- ----------------------------
 DROP TABLE IF EXISTS `t_article`;
-CREATE TABLE `t_article` (
+CREATE TABLE `t_article`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '文章编号',
   `category_id` bigint(20) NOT NULL COMMENT '类别编号',
-  `title` varchar(50) NOT NULL COMMENT '文章标题',
-  `cover_img` varchar(500) NOT NULL COMMENT '封面图片',
-  `summary` varchar(255) DEFAULT NULL COMMENT '文章摘要',
-  `content` text NOT NULL COMMENT '文章内容',
-  `view_count` int(11) DEFAULT '0' COMMENT '阅读量',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_id` bigint(20) DEFAULT NULL COMMENT '创建人编号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '1' COMMENT '是否激活',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章标题',
+  `cover_img` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '封面图片',
+  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章摘要',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文章内容',
+  `view_count` int(11) NULL DEFAULT 0 COMMENT '阅读量',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_id` bigint(20) NULL DEFAULT NULL COMMENT '创建人编号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 1 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='文章表';
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_article
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_article` VALUES (1, 1, 'zywork-app后台体验应用发布', '暂无', NULL, '<p>zywork-app后台体验应用发布</p><p><img src=\"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QC8RXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAeQAAAHAAAABDAyMjGRAQAHAAAABAECAwCgAAAHAAAABDAxMDCgAQADAAAAAQABAACgAgAEAAAAAQAAASygAwAEAAAAAQAAASykBgADAAAAAQAAAAAAAAAA/+0AOFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/AABEIASwBLAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2wBDAAICAgICAgMCAgMFAwMDBQYFBQUFBggGBgYGBggKCAgICAgICgoKCgoKCgoMDAwMDAwODg4ODg8PDw8PDw8PDw//2wBDAQICAgQEBAcEBAcQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/3QAEABP/2gAMAwEAAhEDEQA/AP3n1rWtP0DT5NT1OTy4I8AkAsSWOAABySTTtM1ex1jTotV09zLbzDKkKc8HBBXqCDwRRq+madrFg+n6rEJreUqCpyOc/KQRyCD3FS6bptlpNlFp2nRCG3hGEQZOO/fkknkk09LATfaU/uv/AN8N/hR9pT+6/wD3w3+FWMCjAouBX+0p/df/AL4b/Cj7Sn91/wDvhv8ACrGBRgUXAr/aU/uv/wB8N/hR9pT+6/8A3w3+FWMCjAouBX+0p/df/vhv8KPtKf3X/wC+G/wqxgUYFFwK/wBpT+6//fDf4UfaU/uv/wB8N/hVjAowKLgV/tKf3X/74b/Cj7Sn91/++G/wqxgUYFFwK/2lP7r/APfDf4UfaU/uv/3w3+FWMCjAouBX+0p/df8A74b/AAo+0p/df/vhv8KsYFGBRcCv9pT+6/8A3w3+FH2lP7r/APfDf4VYwKMCi4Ff7Sn91/8Avhv8KPtKf3X/AO+G/wAKsYFGBRcCv9pT+6//AHw3+FH2lP7r/wDfDf4VYwKMCi4Ff7Sn91/++G/wo+0p/df/AL4b/CrGBRgUXAr/AGlP7r/98N/hR9pT+6//AHw3+FWMCjAouBX+0p/df/vhv8KPtKf3X/74b/CrGBRgUXAr/aU/uv8A98N/hR9pT+6//fDf4VYwKMCi4Ff7Sn91/wDvhv8ACj7Sn91/++G/wqxgUYFFwK/2lP7r/wDfDf4U5Z0ZtoDD6qQPzIqbAowKLgczJ4u0KLxAvhl58XzAYXadu4jcF3YxuI5xXTVz0nhvQW1yPxBJaqdQ+6suT1CkA46ZC5GcZxXQ0O3QD//Q/fS5+4v++n/oQqxVe5+4v++n/oQqxTYBRRRSAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAK8/wB+D/f/APZWqxVef78H+/8A+ymrFNgf/9H99Ln7i/76f+hCrFV7n7i/76f+hCrFNgFFFFIAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooArz/AH4P9/8A9lNWKrz/AH4P9/8A9lNWKbA//9L99Ln7i/76f+hCrFV7n7i/76f+hCrFNgFFFFIAooooAKKKKACiiigAooooAKKKKACioI7m2lmlt4pUeWDb5iBgWTcMjcByMjpnrXyF8a/jp4x+C/7Qfws0nXRbf8Kx+IRuNCmuDGFms9eYh7MvKX5jnXKKoXghiT0FAH094o8Z+E/BNrZ3vi/V7XR4NQu4LC3kupViWW6uW2QwoWIy7twq9TW7d3H2S0muhE8/koz+XGNzvtBO1RxljjAHrXhv7Sfw38DfEz4T6jYfEOe/tNI0Ka311p9LQy3sT6TILoGFFjlZ2YIUKohdgxC4bBr1zwv4i03xb4Z0vxVo3nGw1e1hu7fz4ZLebypkDpvilCujYIyrgEHggGgDN+H3i9/H3grR/GT6LqPh1tXt0uDp2rQfZr+23/8ALO4hy2xx3GeKr6f42e/+IOr+AToOp266TY2l6NVlt9um3JunkXyYJ93zzReXmRcDaGU964D9nf42x/H3wDdeNk0d9Ce01fVNKe1kmE7K2nXLwBy4VBl1UMVx8pJXLAbjgfCuy+PqfHj4v6h8Rrk/8K9mm0mPwjbk27BUjtv9NkXy/wB4A0pAIlOdwO0bcEgHt3iXxx4P8GzaTB4s1q00iTXr2PTtPW6mWI3V5KCUgiDEb5GAOFHJrqa+SPjN8FvGHxS/aG+DPi4XFqPBXw7n1LVdQt5GzPLqEkIisSqY6ISzbs8YPHIx9M+KLbxBeeG9UtPCd7DputzWsyWV1cwm4hguWQiKSSIMhdVbBKhhkcZFAG9RWJ4at9etPD2mWvim8h1HWYbaFL25toTbwzXKoBLJHEWcxoz5KqXbaOMnrWpb3NvdxCe1lWaNsgMjBlODg8jI4IxQBPRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAFef78H+/wD+ymrFV5/vwf7/AP7KasU2B//T/fS5+4v++n/oQqxVe5+4v++n/oQqxTYBRRRSAKKKKACiiigAooooAKKKKACuN8cfETwF8NNGPiH4h+ItP8NaYGCfadRuo7WIuxwFDSsoJPYDmry+MfCsniyTwJHq9q3iOGzXUH04TIbtbN3MSzmLO4RlwVDYxkYr89LrQrX4g/thfGC+8Y6FZ+LfF3w90HTP+ED0LVptli1te27S3F1GJBJGsk12phlmEZZFRR0IyAdhpngR9Z/aU0b9qz9mPxRpHiDwn4ziGk+OIILyKa1uIrKNhbXsMkRYfaYCBGyE/dGMDLGvpf42fBzwP+0h8L7v4feKrmddL1FoLmC906ZY7m3nt3EsNxbS4dQ6sODgggkEEGvkPw/4a0Hwf+2L4Y8L+F9FsPD138QPBGo3vj7w/pkiyWMU0LwLazsqLGu5pJZ4Vl2IZVBJHp9e+ALG/wDh9qF58PI/D+l+GPh7okOn2XhiS3vi81yWjPnQyW8iL5RjcbYwJJC4+bg8AA9T0q80yeGSz069S8OnMLaYrKsrxyooyspBJD4IJBwec96raV4n8Oa7fappei6pbX95oc621/DBMkklrOyLKI5lUkxuUZWCtg4IPSvmPQ/Cnwv/AGcvjd4g8RX/AIsnsZvj3q1utlo00ebRdXtbZjO8MiL8rXCKC3mEAuAoJJUV6R4D+BPhz4e/Fr4h/FzRNRvXu/iQ1hLfWMjqbOGawhMIlhQKGDyrjeWJyRxQBzP7OPxT8SfEmT4kWPiHwgvhFPCHi3UtGtAkUkSX9tAVZbzEiJlpSxLMuVJ5BOc16J8L/jL4A+MSeJpPAN898vhLWbrQdQLwyQiO/stvmovmAb1G8YdcqexrV8O+N7nXvFHirw7c+HdS0mDwzLbxR395EiWmoieETM9myuWdYydjlguG4Ga+Gv8Agn3Fqd1+zf458U+GVjbV/E3irxTqFoZG2o9w07Rwl2wcDcgBODx2oA9M/Z68CfET/hon48fGP4hafeaTDruo2Gi6HBcshSTStIiYJcRBGb5JpJGdc8jJ4ByK7y/8F/Enxh+0zofxFsfGMMXw28I6Rd2baRYXUhlu9cuJCk326NcwtHBEEMYJ3q+eACc9V+z14X+KPhb4I+GvDvxk12XXPG8Vq51O+d0lb7RNI77VdVVWEQYIpxyFGSepzPgJ8FvDf7NPw5/4Qu11p9WvNT1K71C81PUDHDcajqWoSl2aTbhS7fKigZOFHU0AVPjz8a/Enwy1vwD4M8FeDrrxhrfjzVlsQsYeO0srKLa13dXFwEZE8uNsqjEF8HGdppvgvx5+yx8Hru1+A3gnxP4Z8NXdpNIsGgQ6hbxzRzTu0zoIDJvDMzFtuM88CvBdWX9qv4efsjfGXxv8S9fS/wDiJew6zqemWunBJYdEtfLKwW1tIsaGUxRqZAzLnJAOSCSnhX4A/AfUfhXpXg238AeHdW+DuveGG1LUvFMtzGb+W/dUPntJs81ndMym584MjKAMYFAH6GUV8Z/sZ+P72X9kXwp42+JWtH7HY296E1bVJPJebSbS6misrq4kmIO6S1SN2ZsE5yRzX1roGv6J4p0Sx8SeG76HU9K1OFLi1uraRZYZ4ZRuSSN1JDKwOQR1oA16KKKACiiigAooooAKKKKACiiigCvP9+D/AH//AGU1YqvP9+D/AH//AGU1YpsD/9T99Ln7i/76f+hCrFV7n7i/76f+hCrFNgFFFFIAooooAKKKKACiiigAprOqDc5CjIGSccngU6uJ8ffDzwj8TtDi8N+NbI3+nw3lnfrGJZISLmwnS4t33RMjfJIitjODjBBHFAG8vh7QU16TxQmnWy6zLbraPeiJBctboxdYjLjeYwxLBc4BJOK/PT9sfxT8AtM+J3g7S/2ifCWt6HpkkeNK+IWl3E1nFp91MzRvZzXdk6zwowIY+ZmM53YwrMvonxkn/be+HvxAvvH/AMIl0T4l+BZ1Vm8KXS/2ZqlqI4lUraXo3JKZJN0hMo4GEVD96vdfh94l0z9oP4Ui/wDHXgO90O11f7TaX2geJbNDJ+5kaJ1kifckkT7co2MOpBxzQB4tc/Aqb4PfCPxJ4h/Y5t7Cfx/rqW1+NU1yabVptZSHDrFNeTSmRhJFlYiXCLuyMZ3Dp/gx468EftcfDzSPFnjrwO+m694N1lTdaTrFqxk0jxBpwBLwPIoD7N+YpV7NghXDKPbtJ8J67pPjW61iHXyPCx0y1sbPQEtYY7ezmt3cvcJMvznehRPLPyqEyOvG14q1eTw/oV1qdtGryptChum52C5OOuM0m7K5pSpuclCO7Pnf9sv4I3/xx+B2qaP4XHl+MvD0sWueHLhdokh1bTz5sOxmBCmTBjJ9Gqj4m8fftMR+A/gz4j8MeCUOta5qukw+M9LlZHl06wuYW+2SI+9VHkyYORuPQbeuOr/4Wj4o/wCnf/v0f/iq5Xxj+0Rb/D7Rn8Q+N9Y07Q9MjIVri7HlxhmOAMlupJwB3NYLFRPZlw/XSu2vvNLS5Pjgnx/+KkGqxXVz8P20DTX8PgiIQjUQkwuY4iMSFmO0tu46dOK+E9D/AGe/jxoP7Bfwl/Z60bRNSs9c8QeI7Q+JXt7hba50vTZ7+W8uZZJEkUgKoVSFJbBxgniu6v8A/gqZ8AbKWeGPxbHdNDuG+HSb54WZR0Eoj24J43dB1r1X4R/tweCvjXplreeCdcsmvZ9ivp1xEYb6CR0Z9kkJfPRWwy5RsHaxqnWSV2mc8MplJ8sZxb9T3K61r46T/tN6P4U0jSTZfCbSvD09zqGpzCKQ3+qTSLHb28RJ81GhVS5OMMCwb+An2Txd4C8GePYtLh8aaLa60mi38GqWQuollFtfW2fKuI8/dkTcdrDkZPrXjo+KPig8j7Oc/wDTI/8AxVdN4R+IOtatr1vpmoJE0VxuGUUqVIUsD1OemKmOJi3Y1q5DXhFzdtD2aWKKaJ4ZkEkbgqysAQQeCCDwQa/MX4tfBP8AYM+EHifQPCfji5vtKXxlqkENj4OsNU1FtNuri4lGGbR7aQxrbmTG/KLETwQc4P6ZahBcXdhc21ncG0nmidI5lUMYnZSFcK3BKnnB4OOa+UP2f/2Pvh/8Edbv/iDrN/dePPiZrWW1DxPrB829kyeUt0JZbePsFTkqApYhVA6DxTzzxd+x14k+NXxQkvPjr4qS8+Evh6eH/hHfBOjo1np7xQIAjakQAZSrDiNTtGBghSyH7n0TRtE8L6PYeHPD9nBpemafDHbWlrbosMMMMS7UjijXCqqqMBQMACvFvGvjb4p+KNA+IHhn4I6KNK8aeGZ7azsLzxPbywaPetPHFM89vJDveaOON2XIUDzV2kY5o8GfBzWr7w14Jn+PutR+O/G/gy/uNVt9Vt4W02FLqcTRKEt4HCssUExiHmA7gN5AboAfQFFA6UUAFFFFABRRRQAUUUUAFFFFAFef78H+/wD+ymrFV5/vwf7/AP7KasU2B//V/fS5+4v++n/oQqxVe5+4v++n/oQqxTYBRRRSAKKKKACiiigAooooAK4Pw3ofjjTvFvirVfEXiRNW0PU5rZ9H09bNIG0yOOEJOjTKxM/mygyAsAVzt5Fd2xIUkDJHYd/zrwvTvjJrzaB4N1XxB8OfEWk3/i7Vn0uSwEMN1LpQHnFbq/eCV447dliB3qzYLoOpoA7a98aapZePR4Sl8Mag2jjSn1F9dXyWsElSTZ9jKiQzmbb+84j2lejE5AwNG+PPwl1fwZ4b8ey+JLXSNG8XErpcmqt/Zsly43EokV15b78Ix24ztGenNc/8cv2lPhf+zvDpVz8S5NRgg1gzeVLZabdX8aCAKXMr28biP7wwGILckAgHHhnhj45/sQ/t43Mnwvt3svHtxpUTakLDUtMuYWhRSInmha4ijwR5gUlGz81AH3PLc/6G91Zp9qPll41Rh+84yoDHj5uxzivIb7XPEHiX4Q2uveK9Ak8LavexwSXOlzTx3Mlo5kH7tpYsoxAwcrxzXzF+0VpPwsfxV4Z8JaB+0Q3wP8T+FNO+zWOk2upWkVs9tIF8kz2FwQJNqx4Q5+7mvoTTI9Vi+A2kx654uh8e3621uJ9dgihhi1B/MGZkjgLRqD0AUkcdc1FX4WduXf7xT9V+Z5ZX4B/tyfHX4o/ED4ia58KDfwW/hjw7qSWsdppzSFp50ERDz/xzSCRyEG1UUqcKWCtX763N1BYwPd3LbYohuY+w/wAelfh5+yp8JZ/jZ+2jrr+M7KVR4Z1W91+5sphsnBN68ig5wxO4Q7QTjB3Dg5ryoYiEOZt6pXPrs8lJxjTj1PN/iz+wD448A/Bn4ZfE6ynkvL3xj9ih1S3m2oNOutTdRaAtjPlnekchJYhzkcZA+RNa8NeIfhbrt1pt9eXHh7xP4du5LS6tnZobm3mQlHMMkfze+V4KkHkEZ/sC1f4f6P4m+H0/w61yNI7KWG3hifzzcbZLcq8TfNjDxvGG449DXxt+2t+xhoHx28O6rr/hm3tbHxXDHcXdt5cZQXEscKLiaUHA3rGuRtPKg9RmuHB5xK/LU27nhVsHF6w0Zz37Gvx21D46/Cn7frluser+HJ10u7nj2iG6ZIkeOaNAcrvjZdwIxuztJFfcngL/AJG/Tf8Aef8A9FtX4+/8E3fC3iPwJ8L9W8c60Z4tH8XahGtjBMgQPBaJsa7TqcMzMnPBEYI65P7BeAv+Rv03/ef/ANFtW2Gx1KrXnTpvWDSZ9JTnKWCcp7uL/U9r0vxL4ovPHmt+GL7wxPY6HpttazWestcRPDfSz7vNiSFT5iGHaMlhhs8V4BYfCP4T/s+eN/F/7TPxG8fanNd6sZYZL7xHqoXT9NtLuZGSztosRwogdVWPcGfsDknPkH7T+gW2teO7+Hx3+1S3wp8Hva26toFjcWGmXschB3SG9kbz8S8EArx2yK7r9nbwn+yJ4n+Hmt/CP4a+I7P4saPb3kOoatHqmof287XMm0xSy+eXVQWg3IEAUMpIG7JP0B+emn4L/bt+BHxN+JFh8NPhW2r+M7m8uTbTahpmmTyaZZkRl/MuLpwiLHwBuXdyR2yR9LX9z4+XxzpVrptlYP4RktLlr+5kmkW+ju1KfZ1hiC+W0bDdvLMCCBivHvBf7RvwCvvjFqP7Nfgu88jxdoSSm40+DTp7e3hFuqM4EvlLAcCRejYOQBzWn8MP2i/DnxW8eeIfAei+GfEmmSeHVcyX+qaTNZWE7RzGFkgmkwHbPzAYG5eR0OAD0f4b6F438O+GF034heJV8Wax9pu5TfJZpYgwTTvJBD5UZK/uYmWPdnLbdx5JrvK4bQvFeuat408S+Gb7wvfaXp2hi0+yarO8DWup/aIy8n2dUdpF8hhsfzFXJPy5FdzQAUUUUAFFFFABRRRQAUUUUAV5/vwf7/8A7KasVXn+/B/v/wDspqxTYH//1v30ufuL/vp/6EKsVXufuL/vp/6EKsU2AUUUUgCiiigAooooAKKKKACvOdL+L3wq1x9dj0TxfpOoP4YiM+qLbXsMxsYl35e4CMTGo8t+WwPlPoa9FIDAqwyDwQa8m+H3wH+DHwoOpn4a+CdI8NHWVEd79gs4oPtCLuISTaPmUbjhTwMnigB/wy+NPwj+OFhqN78LvEtj4ptNLlWC6e0bzEikddyq2QOo6EcdatfD3xp8P/HVrrHiDwLF5o0m/vNJupPsb20hubCQpNGvmIjOocYDDKt2JrqNG0bwl4R0yeHw5p9npNhBuaSOyhSGNTGPmJSJRyAPTPas/wCHfj/wl8VPBWk/ELwLeHUNB12H7RaXBikhMkZJG4xyqjryDwyg0AfGnxWn+DvxM8BaH8b9T/Zr1D4kavrkx08Wd9oNrDrdrDA0qh7lb3ZJHFuQ7OTw6kcHNe6eHoLK1/Z+0e307wY/w9tkghEegOIg2nr53EREJKZ/i4PfnnNeK/ELSf8AgoJ448Za3pPhHXvCHwv8DwyTR2ephJdX1eSBWOycxyqkCFkwWUgbGyMuPmr3u10zVdG+B+m6ZrfipvHF/bwwCbWmSJDfOZQTKFh/dgc4AUngDJJyair8LO3Lv94h6r8z5q+ItxLb+Hl8scNPFu+i5b9SBWd4Vtvhd4W8XWnxfM+l6VrC6ZPa6izssFxdQXUkOXlUYNxh4YwjHLKpZFxkg9b4o0htc0S4sIjiUgPGf9teR+fSviPxZFeSQ28BIh1fSHYweaNodW+/E/dScAhuxHpX5NxJiq2Ex0cRFXTVvud7H6dLDQqx5JH7W6dHbT2UF1pUNm1tIoaN4h8hU8grtFeSfHrx/YfD74ealqepTtd3YTENhZBBcXDHokayMOT2LMig9WAzXwz8DL0X+kN4mv72/t107U1sL3ToZniCpc2zGGUohw+6faAV4xnuDXhFr8Qf+Fi6FBo+jWT2Fxttn1u+u3Z5Y7rYXMa+Zy+3dmPA2nPOMGvVxnGjeE5lTs2u9/0X5nmYPgmScsTzNwg1fTve3Xy7du579FqHgmPwXoOh+BraSy0Wyi8m3jkjEOFjUIAIwSFUYwBnnGe9fVXwvdpdd0KR/vOgJ+phNfGXhfRn1q9s9C06Mx2VqirknOyFeCxPq3b1P419s/D9Fj8WaYiDCqWAHoBGwFcHAkKs51cTU+01+FzszJr2M0uz/I+f/wBpB/htpfxS1PWPGf7JuofFFxBbBvENnplhqX2lREMKI5H80mL7nzAHjj5dpPsf7J/xQ+HfxCt/EFn4D+Dut/CX+yjb+fFq2hR6Mt15m/Z5RiJEuzadwPK5Bx8wrq77wV8XZ/2iIfFnh34uxp4Nigi/tPwZNYW07KDEUWSG4VlniEjjflgedwBIwF8l8eftLftMfCrxlrUPij9n6/8AE3gm2llaz1fwvqEeo3MlsHIjMli6RyCQoNzKDgE7QWxmv1Y/KzX8Z/8ABQD9kf4a/EvV/hp418VnRvEmlXAtbwS6beeWsm1W5nWEoVwR827Hoa+tte8ZeE/C2n2ereJdXtdKs9QuLe0t5rqZYUluLpgsESFyMvIxAVepNfHHhn9v39kPxlqsmh+J/ECeDtbgCNNZeKrJ9KliJ6BnuVEWR7PX2VqWj+E/G+l2Z1ayste04S29/a+dHHdQ+bCwmt7iPcGXcjAPG68g4IPegDTt9V0u7vrrTLW8hmvLHZ9ohSRWlh8wZTzEByu4crkDI6VoVymk+BvB2heJtc8Z6NotpZa74l+z/wBp30MKpcXn2RDHB58gG5/LQ7Vz0HArq6ACiiigAooooAKKKKACiiigCvP9+D/f/wDZTViq8/34P9//ANlNWKbA/9f99Ln7i/76f+hCrFV7n7i/76f+hCrFNgFFFFIAooooAKKKKACiiigArhfDvhjxLpHi3xRr+reKbrWNM1uS1aw0yWGGOHSlgi2SLDJGokk85/nYyMcHhcc57qvMvi9q/wAUdF8C3t78G9Bs/EfiovDHa2t/dfZLYCRwryySYJKxKS5UYLYwDmgC/wCDfAXgX4V6dq8HhWzTSLPV9Su9YvS0rsr31/J5k8paVm273P3QQo6KAOKyNa+IkK6n4m8AeBLQaj410LR11K3sbhJrSyla48xbZDeeW0QDyJhtu5kHJWvjbTf2KPHvxlvLXxN+2t8Qbjxu0brNH4W0Zn07w3bsNjBHRNst1sdTh5NpI4Oa+5fFni208G+G9Yu9I0+bXtS0LT3u49G08o9/cJGp8uOKJmBy5G1ScDNAHzvpPwe+J3x4+DGo+B/2xnsEuNYvvtDWHhW5urOKGyTGy1nuN+6fd83mYwpBA5IDV63qHgjwr8NvhJbeBfBGnR6ToWjRwQWlrFkpFGJAcZYliSSSSSSSSSc15Z+zde/tS+J73Xfib+0Stj4S0fV4Yl0fwlbBJpdMjjLM093ebVZppAcMmdoABwhyo+oL210vxPo5gaRbmyvFVlkicEMPvKyMMg9iDyKmavFo6MJVUKsZvZNHyJXG+KPAfh7xcudRhMdyBhbiL5ZB9ezD2Ir6C8O6X8I/FsWuT+GfEy6lF4ZvbjTtUeC4iZbO8tADPDMduEeMEbgenepf7G+En9h6P4m/4SqD+yPED28em3n223+z3r3f/HutvL92Qy5/dhSd3bNeTXy1VYuFSKa8z7ZcQ4ZdX9x8N/ATwpJonxE8T3lrqDyW2o2PlKk9szxJcaVN51uXCsuXBMhwGHoD6+e6Z4L+EWieLNR17TNc1K6/4SW8aSeFbaCC0iE8sk26IFnmCIzkfPk7T2Ar9KH8B/Ca71vUfD0mrQTavpVvHd3tqZrdri3t5t3lyyxld6I+xtrMADtODwaw4fCnwCl03QNat9f057DxVKkGkXC3NoYtRlkRpES1cLiZmRGYBCSQCexq6mS4CUXF4ZJW0Sk7ervdv70vI4IcR4uN4/XG4yspXgtVG3KtLJWtvZvzPI/DVl4es9OH/COCNrdzkujby7DuzHkn69K9Q8Bf8jfpv+8//otq7W28E/Dd9fuPB1nrSnWrK3ju5tPjuIftMVtMzJHK8IXesbsjKrEYJBAPFdtonw+0TQdQTUrd5ppowdnmMCFJGCcADnFVQwThZRSSRvis9w8qUopu7T6HyP8AEX9nb4EftG/E3xP4p8F61q/gr4r+C57bTr/xBoUk9jdRytBFcQxS71EF0nkmMHGflwu4V9AfE/4j3fwA+FVp4o1PRte+Ib6ULO0vG0m1judRlBASS8khj8tcAjfJ5YwM8ALkjsPCHxQ8D+Nx4lfw9fM6+E9Sn0nU3ngltVhu7ZUaRQ0yIHUK6/vEJQ9m4NYNz8ePhVb3H2Y66kuDgvFHLJH/AN9qpX8jWmNzXC4a31irGF9rtK/3nyWHwVatf2UHK3ZNkUWjfB/9ozwBpniPXPDNn4j0HXrZLiGLWNNHmeW3I3xXCb0YHsQCO1X/ABz8K7XxL8LX+Fvg3Wr34e2sUFtbWV14fMdrPYw2rIY4oAUZFj2oIyoUfISARwRV8d+HPDPx++GOreEdJ8U3um2erIqDUtAvTa3ts8brIpjlTlSGUblYYZcqwIJFfPPws8L/ALafwl8fab4P8Wa/pfxa+G13K0Z1i7P9na9psQDlTOiqYroABFyCXZiSdorrpVoVIqdNpp7NaownCUW4yVmfUHwp8HeKPAXgix8L+MPF13441O0aXfqt9FFDcTK7lkV1hAX5FIXPU4yea9GoorQkKKKKACiiigAooooAKKKKAK8/34P9/wD9lNWKrz/fg/3/AP2U1YpsD//Q/fS5+4v++n/oQqxVe5+4v++n/oQqxTYBRRRSAKKKKACiiigAooooAKKKKAPnHxx8X/iZpXxs8M/CTwL8Nb7XdNvo4b3WPEU8otNK0+yd5EZY5CrGe6XZnyQAcMvOCSvydbeHY/hR+0d440j9mnwyfiD8XNchGp+JvEPizVpEs9G0+/meW0sFkjikcK2z93DGgPlxoXc7Fx+n+K/N34ueEvE3wl+LHxO8V6h4C1j4j/Cv42aZaW+uweHj5mraZe2dv9hdlgR4p5ILi2K/NC5dGQ4UEjcAaWuaz4v/AGiU1/8AY6/aNsLj4a+JNbsI9SgvvDF+1xY63pEE0Yu47e4lhRkOWEc8Ei5Mb5G5SRXreu/F74dfs6+J/hV+y/4C8PXOranroisrLTNPcMdM0i2Gx765eU8RRgE/Md0mG25IwfNPg14d8XfFb40eFPi7c+DNT+HvgP4a+H7vQ/D1lrg2avqEmoeQsk80JkkeGGKKBVUSnzGZiWAwRXqvwY/Zo/4V58WfiH8cvHGujxh408a3jpa3slv5H9maIhH2fToF3uAF2jzHXb5hVSVyCSAfTDaLpElreWTWUP2fUfMNzH5ahZzKNrmQY+YsODnOR1rwn4h/sy/DP4g6b8OdAmt30fRPhhrVnremadpwSC1MtijrBE6BeIlLZwuDxjOCQfontX59/s86nqvxL/bD+PvxMF95/h7wydN8G6dGkrtH51mn2i9JT7m5ZXwCOeSOO4Bz3wfkk8bftvftSo8A2aZpHhzRI36h/NtJpWGSAB8zYI9ga+ZfEXwk+K/hT/gmD4Su/F+gNpHj74L6mniS2tZ8b4Y9L1GVw58ssObVix5568V9afsaSQ6x8cP2oPFcZD/aPGkenhh6WFqsePwJr3r9nD4/L8f9O8dTy6KdEn8FeKtU8MyxGXzhKdPZcS5KJgurglcHaeMmgD5h/aIi1XwF8WPg5+2x4K0me5gu0tvDniq2giJnfRta2NbzMn3yba4ZflCliSo4AzX6XA8ZrxT4N/HDwr8dtH8S3vg9Z7OfwvreoeH7yG7RBLDeWD7GYqjMNrAh1yQdp5APFYn7M2pfHS8+HVzp/wC0RZrF4t0fVL+xN5GkMUOp2kUube9ijhZgiSRkDadrZUkqM0AeFfH/AMc6n4l8XT+CdL8xtO0yQRtDCrMbi6wGZmVeX2ZCqMHBBPXGOf8ABelWPhnQ5de8a6LEV1HUrGwgXUoGH+jsxN3JGj7WBRCP3mOCOK6q10vUdI/aC120AcXMsepT25XO9vPt2eIpjnOSQMc5BrhbXw340vLZ77xV4X17W9YjVRbPciaS35AyJ1cFyFPzBUYBzw2BzX8sZg8RUxtXG1IuU+epFJptR5bJXsn0l7qstVe5+y4f2UMNDDQaUeWL3s3fXy6rV/ILe58T/BPxqmsQIyWE0spj2yLLDfWKSEY3IzBmCYIJ+ZWx6kH9IrK7g1CzgvrZt8NxGsiN6q4yD+Rr80vG1peaP4U8NeEL+MDWklvr2e2XbvhN7IohiZU4V3AztHTIr9F/CmnTaR4Y0nSrn/W2dpBC/wDvIgU/qK/Q/C6c6dfE4WN1TShKz+zKSu47L0ei211ufL8YwjKlSrO3M3JXXVJ2T/rudBRRRX7IfBBRRRQAUUUUAFFFFABRRRQBXn+/B/v/APspqxVef78H+/8A+ymrFNgf/9H99Ln7i/76f+hCrFV7n7i/76f+hCrFNgFFFFIAooooAKKKKACiiigAooooAKKKKAPP/D3iXxlqfjjxT4e1rwlLpGhaP9j/ALM1d7uCWPVvPjLT7II2MsPkMAh8wDcTlciqHxZ8Sw6B4ZgsbjSNa1aLxJe22iN/YUbPd2i6k3kG7Z1ZWiigDb3lBzGBuA4r0+uIl8J6rJ8RIfGy+JtQTTotNewOiDyf7PeZpRILs/u/N84KNg/ebdv8OckgGXcz6P8ABT4ST3d1dXmoaX4K0eSR57yZ7q8mhsICxaWVsvJIwXljyTzXCfsual4f8WfBnQ/ilovg6y8E3HxET/hI7+yslXbJd34DNcSSKkZlklQIxdlyeM16R8Q/HMHgPTNOvbjQ9T19dU1Ky0zydLtftckX22URefMuV228Wd0r/wAKgnB6V0evXkejeHtQv1xHHY2s0vHAURRlvwAxQB5/8KfhH8OfhX/wlN38PYGj/wCEy1q71zUna4e58zULkgTFSzNsUFcBBgL6V6fbNYCW4gtDH5iPumVNu4O4zlwOckc88mvgn/gmHFqL/sbeENW1bP2vWbvWL6Qk53G41Gdg3U/eGD+PPNeofCb4X6J4E/aY+M/i+28bW2qaj49TRNQl8PoFW50tLaB7YTS/vGZluCp2NsQALjnrQAzwX8TvBfhj9qnxd+zjpPhS08PXupaRD4y+3WwVG1aa4lNtdyTIqAeYpVBuLFnweBioP2lvjv4z+AfjT4Wa1LaWb/DTxDrD6L4ku5I5XurKa8QDT5kdGEccPmhhKzg9gME5ri/2jfCPizR/2ofgB8a/BumXuox29/feGtbWytzNt07U4C0cs7AfJDDKhYsSADgZyQD9OfGr4ReFPjv8LvEHwo8aIzaX4gtjC8iBTLBICGini3hlEkThXQkEZFAFX4nfCjTviJDBf21y2m61ZqRb3cefunnY4Uglc8gggrzg8kH5dufgj8cYLhoIbh7iPOBImqShCPXDMGH5V9veENAk8K+FNH8MTajcau+k2dvaNeXew3FyYIwhll8tVTe+NzbVAyeAK6Kvic94BwGPq+3qXjJ7uLtf1umr+e59Dl3E2Jw0PZxs10ur29D5g+Fv7Po8NalD4m8ZXEd9qMLeZDBHloopP+eju3MjjtwADzycEfT9FFe9kmQ4XLqPsMLGy3fVt92/68jzcxzKtiqntKzu/wAvQKKKK9g4AooooAKKKKACiiigAooooArz/fg/3/8A2U1YqvP9+D/f/wDZTVimwP/S/fS5+4v++n/oQqxVe5+4v++n/oQqxTYBRRRSAKKKKACiiigAooooAKKKKACiiigAooooAKZLFHNG0Myh0cFWVhkEHggg9QafRQBk6DoGh+FtGs/DvhnTrfSdK06JYba0tIkgt4Ik4VI40AVVHYAAVHB4c8PWuvXfim20y1i1m/gitri9SFFuZoICzRRySgb2SMu5VSSFLHA5NbVFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAV5/vwf7/AP7KasVXn+/B/v8A/spqxTYH/9P99Ln7i/76f+hCrFV7n7i/76f+hCrFNgFFFFIAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooArz/AH4P9/8A9lNWKrz/AH4P9/8A9lNWKbA//9T99Ln7i/76f+hCrFV7n7i/76f+hCrFNgFFFFIAooooAKKKKACsTxLfappfh3VNS0SxOp6jaWs8ttahgpuJo0LRxbj03sAue2a26KAPnX4b+PfilrcuoP4o8K6lbCz8P6Xf20U9rb2jXl9dxSSXFuX+0OkU8TqImhJ2Rjaxmfd8nnvj/wCP/wAZ/D2seBbKy+E+pWaa/rq6fcJcXukTPPEbK6n8qFo77EUu+JW3v8mxWX7zKR9kSyRQxtLKwREBLMTgADuSelflB450f4P+GPH3i2f4ffDrR/jRp1y5vmW0tPt3/CKaqqRxyi5mhjmBs5Fb7Q0MAe9jcy7IZUmUQgH6D+HPiJ4vv4NWvfFnw+1bw1a6ZbLcIzzWWoPdHLbooIdPnnlaRQoOCo3bgF3HIHgeg/tXSXfwwl8Yatb6fpmo/wBr63YImu3X/COQyQ2F1cRwtAb1X+0SJHHGs6ofkkLg7SNo7z4C6X4N0j4Ir4Z+D/jPSdWvIku5ZtUt1FzaR6pcyPJcSGzW43RRRzswW1MqmNFEW4bc189fDHwx4vtfhLpmuad4q1e+ivfF3iG11CW1s9Ovo7dJtavIBdQ21xbyiOBZgGmERyqu0jMyx8AHs3wN/aOvviV8KE8TarLoM/iC18O2eqzQ6Vqgv2kllg3SNJZ2sc1xbJ5gwEAmcZKjcy8+F6d+158bB4G8VanrfhfTNN1Sx01dRs7jUYNc02xt5LueRVtbhrjTQspsYlXzHR1+0MyYWFWZk9J+HHh/xHZ6D8b7rVPGl54iggu9S023C6dbF4SNPtn3wrplutw7BpCPKj3ZPKrvPPyv4Fu9asrLxPeWButHl0e2tdHmmltL6wtVFpf2hvb+4nNnpMISG2lklMEsxmdUbC4BDAH2j8FPj/4x+IumeLLfU7DTBrXh62iktLfzprX7TmBXaW7kCXMNqjSHaqpJO6qC7L0WvIPFP7a/iKGfwrF4aHgW6i1rVYreW4t/FzXdvHaiCW4keaVdNUQI6oESX5h5jxpt+cEdB+zmptNF8baTp8ofRrXQbS5to0eWI21xfi7mntprWW6nKTLGIJtxRDtnAy3OPDPElj8Ubnwh8NrXw23ivTtJ8Y6FpPhOV9LfQkguLK50s3DS2L3EwuIroMjbJZQuxTIAOY2AB9n/AA3/AGgtT8fx+KZrGx8Pa23hiyW4e18M+JYtWvXnfeY4JI57axig81Uby3lmCkgg7QC1eJ6V+1r8StZ+BureNk8FT2WtahBK+hXMkumS2j3Wr3Cr4es5LaHUZLgz3EVxb5yERzuYtGjLXQ+Bkm1bxt8UdI17TtS1C6/4QPw5aXemRzWUWqy5k1qMoHs51toppV4QrMiqcHcvUeKfDjUrH4UeKPil448WeGNVsNH8N3tgtrZ6zrSalqB1T+x7KPT7S2sYGuY7i8m3LHC4m8xdwjUHnAB9veBPjrp/i7WtT0HVvD2peGZdI0uLV5bjUXsWtntJZJYhIslndXAA3QSH5tvCnGcHHzHrH7aOsab4OXxDFpBu08ReHPEPijS57Kxvb/7Fp8MqxeH2voLeJ2UagnmTO8hiWMRvHklWYdb+z94D8K3PgHUvgf8AGDRNOfx5pGj6VpviG3jz5WqaVbh5dPlRTtMlmWkmidcbPOWeNgwzu8o8P+BvGyfscR+NfBWsaDolrqHwztra/WTQ3uL25isrC4Kp9rjvYVWJVlYQp5JERLn5t2AAfa3w7+LEHxS8J3F54Rtr2DV7W0gZjrGkajpds1xPFvXZ9qhiMsec5MRbHHPIz8m63+1h8UDqfw8fwzY6bdaX4w1a4svN+yTjzoorG7uMx77hGQ77fOSvIGMc19NeANL+M+neCFudZ8RaNrzSaVaDT4INLuNN8qQIC5lmF3dtIChAUJGpDDPOQF/Of4p+FtVPj/4SrL4cu1muPEd18kkF75sp/sa/Yja9sHY8bjtDHAJIwCQAfov8Ovi7qGv+EvFHjbxV9mTTfDL3MNwllbXJuY5bBS9ypiPmGTC7SnlFi3IGTiuZ+J/xr8Q+GbvxW/hg2dxZaV4U07XbKSSNn3zXl5PCSxDrujMcalQMHOTk5wMj9nxvGXhTw/44n+KMMGgeDbXUZJdPfUj9meOzNrb+az+bHEFt/M83DS4k3bgfkCE/IHifxl8N/Bnhzxh4N1Px5oFwNI8CadplrJb6tBMHtLbWb1bQbnZSZhbGLzF5w/ALDDEA/TjxN4se6sfF/h3whdtF4m0PThMr/YnvEhnuo5TbHyg0QnbMe4wrIpIwCVDA1xHwfuvjrcarep8W/sH2aPR9E4tLZoAmstAx1RI3Mj+dbh/LMb4XBLIN20ml+Cd74WvLzxfqFj4p0jxJr2u6tPqd6NKvkvFgtTi0sEIViyhbW3jDcBTL5hXrXvdABRRRQAUUUUAFFFFABRRRQBXn+/B/v/8AspqxVef78H+//wCymrFNgf/V/fS5+4v++n/oQqxVe5+4v++n/oQqxTYBRRRSAKKKKACiiigAooooAo6npmm61p11o+sWsV9Y3sTwz286LLFLFINro6MCrKwJBBGCOtGm6XpujWUWmaRaRWNnbqFjhgjWKNFHQKigAAewq9RQBzUvgvwfPf6jqk+h2Ml7q9t9jvZ2tojLc2w3HyZn27pI/mb5GJHJ45NWLDwv4a0rw7H4R0zSbS00KGA2qWEMEcdqtuV2mJYVAQJtONoGMcYrdooA53wt4R8KeB9Gh8OeC9GstB0m3LGK0sLeO1t0LHLFY4lVRk8nA5qO/wDBfg/Vbc2uqaHY3kDXi6gY5raORDeIQVuNrKR5qkAh/vDAwa6aigDKl0LRJ9QfVprC3kvZLdrVp2iUytbsdxiL43FCeducZ7URaFokNpYWEWn26W2lbPskQiQJb+UpRPKXGE2qSq7cYHA4rVooA5vw/wCDfCPhOTUZvC2iWOjyaxcveXrWdtHbm6uX+9NMY1XzJG7u2SfWpX8K+GJNQOrSaTaNem5W888wRmX7SkP2dZt5GfMWEmMPncE+XOOK36KAKbadYPerqT20TXiRtCsxRfMWJyGZA+MhWKgkZwSAe1UoPDmgWugjwtbabbRaMsBtRZLEgthbldpi8oDZs2nG3GMcVs0UARQww20KW9uixxRKFVVGFVVGAAB0AHSuZbwJ4IbxcPiA3h/Tz4nW3FoNVNrF9uFuCSIhcbfM8sFj8u7HJ45rq6KAILm1tryB7W7iSaGQYZHUMrD0IOQRWJ/wiHhQdNGsv/AaL/4muiooAy7DRNG0p3k0ywgtGkADGGJIywHQEqBmtSiigAooooAKKKKACiiigAooooArz/fg/wB//wBlNWKrz/fg/wB//wBlNWKbA//W/aaH4weAb5FB1BrchkOJoZEwAQTyVx+tdfZeNfCOogfYtZtJSewmTP5Eg18BUjBXGHAYe4zX8v4XxvzKNvbUYS9OaP6y/I/SavBuHfwTa+5/oj9H4riCdd0EiyD1Ug/yqXNfm9C725zbs0J9Y2KH/wAdxW9a+LPFNiMWmsXkQHbz3YfkxIr6HC+OsHb22Fa9JX/NL8zz6nBUvsVfvX/BZ+glFfDdr8U/H9p93WJJR/01jif/ANkB/Wt62+N/jmA/vjaXA/2oCp/NXH8q93D+NmVTtz06kfVR/STOKpwdil8LT+b/AMj7Gor5Wg+P+vKR9p0m2kHfZLIn6ENW5B+0Hb4H2rQ5Af8ApnOrf+hKte3Q8Wcin/y/a9YT/wDkTjnwvjV9i/zX+Z9G0V4XbfHzwxJ/x82F7D/wGN/5PWtD8b/AknDy3MX+9buf1XNetS8QckmrrFwXq+X87HLPIsYt6T/P8j16ivOIfi38PpR/yF1j/wB+ORP5rWhD8SPAc5xHr1nk/wB6UL/PFenDinLJfDiqb/7fj/mc0stxC3py+5nb0Vz0Pi3wtcDMOsWb/SeP/GtCPWNKl/1V5C/0kU/yNepTx1GavCafo0c8qE1vFmjRUK3Nu/3JFP0YH+tSgg9DmuhTT2Zm0xaKM0ZqhBRRmjNABRRmjNABRTGkjXlmA+pqu9/ZR/6y4jX6uo/rUOpFbspRb2RborHk8Q6DD/rtStkx/emQf1rLn8d+C7b/AF2uWS4/6bp/Q1x181wtJXqVYr1aRrDC1JfDFv5HWUVwEnxS+H8fXXLdv9wl/wD0EGsuf4y/D+DpfyS/7lvK3/steZV4vymCvPF01/2/H/M6IZViZbUpfcz1OivF5vjr4LQHyo7yY+0IX/0NhWLN+0Do6nFto91J7u8SD9GY15dfxGySnviov0vL/wBJTOmHD+MltTf5fmfQVFfMlz+0FdnP2PQ0H/XS4P8A7KlYlx8efFsoIt7Ozg9yskn82WvIr+L2Rwuo1XJ+UZfm0kdcOFca94pfNH1tRkV8VT/GP4gT5AvooAf+eUCD/wBC31gXHxB8cXWfO126weysIx/44FrxMR44ZbH+HRqP5RX/ALcdlPgzEP4pRX3/AOR955A5NZt1rWj2IJvb6C3A/wCekqr/ADNfn7c6rqt4Sby+uJ89fMmkYfkWIrN8uPdv2Lu9cDNeBifHaX/LnCffP/KP6ndT4KX26v4f8E+5b/4meA7WSMPrVu5RskRMZTjaR0QGsKX43+BI3KrLcyAfxLbvj9cV8d5PSkr57E+NmbS/hwpx+Un/AO3HfT4Owq+KUn81/kf/1/tiiiiv89z94CiiigAooooAKKKKACiiigBcmjJ9aSincBpVW+8oP1FM8iD/AJ5J/wB8j/Cpa1o9B12aNZYdNuXRwGVlhcgg9CCF6URwbqvSHN8rilUUd3YyFCp9wBfpx/KphPcL92V1+jsP5GrT6Xqcd1HYy2ksdzKMpG6FXYYJ4DY7A/lU8Gg65c26XVtp1xLDKodHWJyrKehBAwR710UsLW+GEHp2T/rqvvIlUhu2iot/qC/du51+k0g/9mqQarqw6ahdD6XEv/xVNtNN1G/kSKytZZ2lO1dkbEE+mQMfrVeS3uIQGnhkiB6b0ZM/TcBUt1EubWwWg3bQuDWNZH/MRu//AAJl/wDiqT+19Y76jd/+BMv/AMVVTyZTB9pCnyg4i3dt5G4L9cc/Slkt54rprKSMrcI/ltH/ABB8424HfPGKTnUt1Dkh2ROdT1NvvX1yfrPIf/ZqiN3eN964lb6yuf5mtH/hHNfM5tRptz5wUOU8ps7TwD09azVtrl2kRYXLQozuu07kVOWLDGQB3z0rWpTrx+NNfeKLg9rETO7ffYt9ST/OoTDC3LRqfqorQutOv7Hd9st3hCv5ZLrgb9obbn12kH6GrK6DrrsFXTbolgSB5EgyB3GRz1rKeCqTlyyg210sUqsUr3MYRRL92NR9AKkHHTirF1aXdjMbe9he3lABKSKVbB6HB55qvWPsuR8trFqV9Rcn1pKKKdwCiiikAUUUUAFFFFABRRRQAUUUUAf/0Ptiiiiv89z94CiiigAooooAKKKKACiiigAooooAK7jw1d6J9m1JZry+EqadceYEMXlqAUz5eXByOMZA71w/tXRReLfEkCeXDfFF27MCKH7vofk5HHevSyvF06NTnqXt5JP85R/U5sVSlOPLH87fozb8G3dn/wAJhbSWd6wgAcbrtEllb5GJVQu9Qe4ORwDk812xg0maygW5kxOLJSxlit1wsEMTuclSU2pLu2r0IOO1eT/8JHrJu1vnuA9wiNGjmKPKq/B24UAH3xketSDxT4gX7t86/vjOcBRmQ4BJO3OMADH3ccYxX0eV8R0MPQdKScveb26NR6c9k9OjODEYCc58ystF+vkdf4RvIrg6bpV5qUfktIIkhE15BIivIS3+o2ozMTkFiccDisTxPqH2q3S2i1CK4gSYv5KSXMzK4Urv33OSBjggHGecVzunapeaVcm7siizdmaNH2HOQU3AhSD0I6VnEk8nkmvLrZ2pYSOH5FfZu2tla2t7vbbZaJHVDB2qupfT+r9D13S7qKy8K20sqG4igs5bs25gXy2lS7ChzN1DhRjb3HGcVkanqshtF1O6u0v/ACNUikS4hiijlaNoGlIICgB89VbOGri/7Y1X7ENNF3KLRUMfkhiI9jNvIK9Dlucnn3pX1e9e3tbRihgtH8xE8tApfGNzjHznAxls8cV14jiFTpRpxbXLGK+a072t1XmtErsxhgGpOTtq3933f156HusmvW9vqKStOEeOeLTyfs5MPml9wAPB+WNtm7OBnJ5IFcNoeueRq2tSmT7Jp8Jknm5beWTFupBjAyNzbtu3B/nxjeJtfa4W6F9IjopRQm1EVSc7QgGzGe2Oe9Mt9f1G1uJ7u28mOedgxcQR5Uj+5lSE9eB15616OL4wVWrCd2lFt7eTt9r71pdde2FLKnGLXdf10PRvGOqzjS7mztrve0cv2W7SXzCV85RImFbC5Xy/vDJ5xVzUNMsboo1mbyZDZC0jcsj4DW8TrMscjR4PztnDE5Ofp5VPrurXVo9jeXBuYXOcShXZTnJKuRuBPfB5qO51fUb1LaK9nNzFZlTDHKA6JtUKAFIxjAAI796xxHFFGrOpOpBvm5bdLWb0veVtGtUrt62Vy4ZbOKiou1r/AI29P67m74zt4or60lhdyj2saBZQodPs+YSDtZwclC2Qe9chV2+1C61GVJbor+7QRoqIsaIi5wqogAA5PQVSr5bMsRCtXnVpqyb/AOH/ABPSw9Nxgoy6BRRRXCbBRRRQAUUUUAFFFFABRRRQAUUUUAf/0ftiiiiv89z94CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z\" style=\"max-width:100%;\"><br></p>', 0, 14, 31, '2019-03-15 17:50:01', '2019-03-16 16:21:08', 1);
 INSERT INTO `t_article` VALUES (2, 1, 'test', 'tt', 'test', '<h1>测试内容</h1>', 0, 1, 31, '2019-04-22 14:10:25', NULL, 1);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_article_category
 -- ----------------------------
 DROP TABLE IF EXISTS `t_article_category`;
-CREATE TABLE `t_article_category` (
+CREATE TABLE `t_article_category`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '类别编号',
   `parent_id` bigint(20) NOT NULL COMMENT '父编号',
-  `title` varchar(20) NOT NULL COMMENT '类别名称',
-  `description` varchar(255) DEFAULT NULL COMMENT '类别描述',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '1' COMMENT '是否激活',
+  `title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类别名称',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类别描述',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 1 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='文章类别表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章类别表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_article_category
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_article_category` VALUES (1, 0, '科技', NULL, 1, '2019-03-15 17:22:23', NULL, 1);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_article_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `t_article_comment`;
-CREATE TABLE `t_article_comment` (
+CREATE TABLE `t_article_comment`  (
   `id` bigint(20) NOT NULL COMMENT '评论编号',
   `article_id` bigint(20) NOT NULL COMMENT '文章编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `title` varchar(50) NOT NULL COMMENT '评论标题',
-  `content` varchar(500) NOT NULL COMMENT '评论详情',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '1' COMMENT '是否激活',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论标题',
+  `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论详情',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 1 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='文章评论表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_builder
 -- ----------------------------
 DROP TABLE IF EXISTS `t_builder`;
-CREATE TABLE `t_builder` (
+CREATE TABLE `t_builder`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '建造师编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `name` varchar(10) DEFAULT '' COMMENT '姓名',
-  `gender` tinyint(4) DEFAULT '0' COMMENT '性别',
-  `birthday` date DEFAULT NULL COMMENT '出生年份',
-  `certificate_address` varchar(32) DEFAULT '' COMMENT '证件地址',
-  `certificate_type` varchar(20) DEFAULT '' COMMENT '证书类别',
-  `certificate_major_type` varchar(20) DEFAULT '' COMMENT '证书专业类型',
-  `certificate_status` varchar(10) DEFAULT '' COMMENT '证书状态',
-  `certificate_reg_status` varchar(4) DEFAULT '初始' COMMENT '注册状态',
-  `salary` varchar(20) DEFAULT '' COMMENT '期望年薪',
-  `phone` varchar(11) DEFAULT '' COMMENT '手机号',
-  `memo` varchar(255) DEFAULT '' COMMENT '说明',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
+  `gender` tinyint(4) NULL DEFAULT 0 COMMENT '性别',
+  `birthday` date NULL DEFAULT NULL COMMENT '出生年份',
+  `certificate_address` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '证件地址',
+  `certificate_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '证书类别',
+  `certificate_major_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '证书专业类型',
+  `certificate_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '证书状态',
+  `certificate_reg_status` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '初始' COMMENT '注册状态',
+  `salary` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '期望年薪',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '手机号',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '说明',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='建造师表';
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_builder
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_builder` VALUES (1, 42, '危锦辉', 1, '2019-04-24', '北京/北京市/东城区', '一级建造师', '建筑工程', '闲置中', '初始', '5-10万元', '18279700224', '啊啊啊啊啊啊啊啊', 3, '2019-04-24 15:39:47', '2019-04-24 15:49:24', 0);
 INSERT INTO `t_builder` VALUES (2, 31, 'aaa', 2, '2019-04-18', '山西/长治市/襄垣县', '建筑师', '一级建筑师', '闲置中', '初始', '5-10万元', '11111111111', '111111', 1, '2019-04-24 16:33:51', NULL, 0);
 INSERT INTO `t_builder` VALUES (3, 31, '2222', 2, '2019-04-08', '山西/晋城市/泽州县', '结构工程师', '二级结构师', '闲置中', '初始', '3-5万元', '23333343432', '333333', 1, '2019-04-24 16:35:38', NULL, 0);
@@ -275,61 +260,57 @@ INSERT INTO `t_builder` VALUES (8, 42, '危锦辉', 1, '2019-05-17', '北京市/
 INSERT INTO `t_builder` VALUES (9, 42, '1', 0, '2019-05-17', '', '一级建造师', '建筑工程', '闲置中', '初始', '一万元以下', '1232343', '112', 1, '2019-05-17 19:01:18', NULL, 0);
 INSERT INTO `t_builder` VALUES (10, 42, '22', 0, '2019-05-17', '', '一级建造师', '建筑工程', '闲置中', '初始', '一万元以下', '2222', '2222', 1, '2019-05-17 19:01:39', NULL, 0);
 INSERT INTO `t_builder` VALUES (11, 42, '222', 0, '2019-05-18', '北京市/市辖区/西城区', '一级建造师', '建筑工程', '闲置中', '初始', '一万元以下', '222', '222', 1, '2019-05-18 12:12:42', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_builder_req
 -- ----------------------------
 DROP TABLE IF EXISTS `t_builder_req`;
-CREATE TABLE `t_builder_req` (
+CREATE TABLE `t_builder_req`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '建造师需求编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `name` varchar(20) DEFAULT '' COMMENT '姓名',
-  `phone` varchar(11) DEFAULT '' COMMENT '手机号',
-  `memo` varchar(255) DEFAULT '' COMMENT '说明',
-  `people` varchar(30) DEFAULT '' COMMENT '所需人才',
-  `people_count` int(10) DEFAULT '0' COMMENT '所需人数',
-  `salary` bigint(20) DEFAULT '0' COMMENT '提供年薪',
-  `comp_addr` varchar(32) DEFAULT '' COMMENT '企业地址',
-  `comp_name` varchar(20) DEFAULT '' COMMENT '企业名称',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '手机号',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '说明',
+  `people` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '所需人才',
+  `people_count` int(10) NULL DEFAULT 0 COMMENT '所需人数',
+  `salary` bigint(20) NULL DEFAULT 0 COMMENT '提供年薪',
+  `comp_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业地址',
+  `comp_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业名称',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='建造师需求表';
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师需求表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_builder_req
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_builder_req` VALUES (42, 42, '危锦辉', '18279700225', '有能力你就来', '工程师', 10, 1000000, '江西省/赣州市/章贡区', '赣州智悦有限公司', 1, '2019-05-17 16:35:55', NULL, 0);
 INSERT INTO `t_builder_req` VALUES (43, 42, '2', '2', '2', '2', 2, 200, '北京市/市辖区/西城区', '2', 1, '2019-05-18 12:26:55', NULL, 0);
 INSERT INTO `t_builder_req` VALUES (44, 42, '1', '1', '1', '1', 1, 100, '北京市/市辖区/西城区', '1', 1, '2019-05-23 17:03:51', NULL, 0);
 INSERT INTO `t_builder_req` VALUES (45, 42, '1', '1', '1', '1', 1, 100, '北京市/市辖区/西城区', '1', 1, '2019-05-23 17:04:00', NULL, 0);
 INSERT INTO `t_builder_req` VALUES (46, 42, '1', '1', '1', '1', 1, 100, '北京市/市辖区/西城区', '1', 1, '2019-05-23 17:04:10', NULL, 0);
 INSERT INTO `t_builder_req` VALUES (47, 50, '111', '1', '1', '1', 1, 100, '江西省/南昌市/章贡区', '1', 1, '2019-05-29 11:31:37', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_builder_resource
 -- ----------------------------
 DROP TABLE IF EXISTS `t_builder_resource`;
-CREATE TABLE `t_builder_resource` (
+CREATE TABLE `t_builder_resource`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '建造师资源编号',
-  `builder_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '建造师编号',
-  `resource_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '资源编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `builder_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '建造师编号',
+  `resource_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '资源编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='建造师资源表';
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '建造师资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_builder_resource
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_builder_resource` VALUES (1, 2, 5, 1, '2019-04-24 16:33:51', NULL, 0);
 INSERT INTO `t_builder_resource` VALUES (2, 3, 6, 1, '2019-04-24 16:35:38', NULL, 0);
 INSERT INTO `t_builder_resource` VALUES (3, 3, 7, 1, '2019-04-24 16:35:38', NULL, 0);
@@ -340,28 +321,26 @@ INSERT INTO `t_builder_resource` VALUES (7, 8, 42, 1, '2019-05-17 18:58:34', NUL
 INSERT INTO `t_builder_resource` VALUES (8, 9, 43, 1, '2019-05-17 19:01:18', NULL, 0);
 INSERT INTO `t_builder_resource` VALUES (9, 9, 44, 1, '2019-05-17 19:01:18', NULL, 0);
 INSERT INTO `t_builder_resource` VALUES (10, 10, 45, 1, '2019-05-17 19:01:39', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_comp_aptitude
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_aptitude`;
-CREATE TABLE `t_comp_aptitude` (
+CREATE TABLE `t_comp_aptitude`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业资质编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `certificate_num` varchar(200) DEFAULT '' COMMENT '证件号码',
-  `certificate_detail` varchar(500) DEFAULT '' COMMENT '资质详情',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '证件号码',
+  `certificate_detail` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资质详情',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业资质表';
+) ENGINE = InnoDB AUTO_INCREMENT = 108 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业资质表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_comp_aptitude
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_comp_aptitude` VALUES (67, 413, 'A236008259-4/3', '水利行业丙级', 1, '2019-06-17 16:58:44', NULL, 0);
 INSERT INTO `t_comp_aptitude` VALUES (68, 414, 'A245004691', '市政行业（给水工程）专业乙级', 1, '2019-06-17 16:58:44', NULL, 0);
 INSERT INTO `t_comp_aptitude` VALUES (69, 414, 'A145004694', '水利行业甲级', 1, '2019-06-17 16:58:44', NULL, 0);
@@ -403,182 +382,180 @@ INSERT INTO `t_comp_aptitude` VALUES (104, 421, '水论证甲字第03603051', '�
 INSERT INTO `t_comp_aptitude` VALUES (105, 421, '工咨甲11720070027', '工程咨询甲级', 1, '2019-06-17 17:01:54', NULL, 0);
 INSERT INTO `t_comp_aptitude` VALUES (106, 422, 'B131023553', '工程勘察专业类（岩土工程）甲级', 1, '2019-06-17 17:01:55', NULL, 0);
 INSERT INTO `t_comp_aptitude` VALUES (107, 422, 'BB231023550', '水文地质勘察乙级，工程测量乙级', 1, '2019-06-17 17:01:55', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_comp_builder
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_builder`;
-CREATE TABLE `t_comp_builder` (
+CREATE TABLE `t_comp_builder`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业建造师编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `name` varchar(10) DEFAULT '' COMMENT '姓名',
-  `gender` varchar(10) DEFAULT '' COMMENT '性别',
-  `reg_num` varchar(2000) DEFAULT '' COMMENT '注册证件号码',
-  `major_level` varchar(500) DEFAULT '' COMMENT '专业等级',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '性别',
+  `reg_num` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册证件号码',
+  `major_level` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '专业等级',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业建造师表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业建造师表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_house_achievement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_house_achievement`;
-CREATE TABLE `t_comp_house_achievement` (
+CREATE TABLE `t_comp_house_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业房建业绩编号',
-  `comp_id` bigint(20) DEFAULT '0' COMMENT '企业编号',
-  `project_name` varchar(200) DEFAULT '' COMMENT '工程名称',
-  `builder_name` varchar(100) DEFAULT '' COMMENT '注册建造师',
-  `mark_money` varchar(20) DEFAULT '' COMMENT '中标金额',
-  `money` decimal(20,6) DEFAULT '0.000000' COMMENT '金额',
-  `build_scale` varchar(500) DEFAULT '' COMMENT '建设规模',
-  `region_type` varchar(500) DEFAULT '' COMMENT '项目所属地区归类',
-  `mark_comp` varchar(100) DEFAULT '' COMMENT '中标单位',
-  `build_comp` varchar(100) DEFAULT '' COMMENT '建设单位',
-  `project_addr` varchar(200) DEFAULT '' COMMENT '工程地址',
-  `contract_date` date DEFAULT NULL COMMENT '合同签订日期',
-  `mark_date` date DEFAULT NULL COMMENT '中标日期',
-  `name` varchar(50) DEFAULT '' COMMENT '项目负责人',
-  `certificate_num` varchar(200) DEFAULT '' COMMENT '项目负责人证书号',
-  `constructors` varchar(200) DEFAULT '' COMMENT '施工员',
-  `constructors_certificate_num` varchar(200) DEFAULT '' COMMENT '施工员证书号',
-  `constructors_id_num` varchar(200) DEFAULT '' COMMENT '施工员身份证号',
-  `quality_worker` varchar(200) DEFAULT '' COMMENT '质量员',
-  `quality_worker_certificate_num` varchar(200) DEFAULT '' COMMENT '质量员证书号',
-  `quality_worker_id_num` varchar(200) DEFAULT '' COMMENT '质量员身份证号',
-  `security_officer` varchar(200) DEFAULT '' COMMENT '安全员',
-  `security_officer_certificate_num` varchar(200) DEFAULT '' COMMENT '安全员证书号',
-  `security_officer_id_num` varchar(200) DEFAULT '' COMMENT '安全员身份证号',
-  `standard_worker` varchar(200) DEFAULT '' COMMENT '标准员',
-  `standard_worker_certificate_num` varchar(200) DEFAULT '' COMMENT '标准员证书号',
-  `standard_worker_id_num` varchar(200) DEFAULT '' COMMENT '标准员身份证号',
-  `material_man` varchar(200) DEFAULT '' COMMENT '材料员',
-  `material_man_certificate_num` varchar(200) DEFAULT '' COMMENT '材料员证书号',
-  `material_man_id_num` varchar(200) DEFAULT '' COMMENT '材料员身份证号',
-  `mechanic` varchar(200) DEFAULT '' COMMENT '机械员',
-  `mechanic_certificate_num` varchar(200) DEFAULT '' COMMENT '机械员证书号',
-  `mechanic_id_num` varchar(200) DEFAULT '' COMMENT '机械员身份证号',
-  `labors` varchar(200) DEFAULT '' COMMENT '劳务员',
-  `labors_certificate_num` varchar(200) DEFAULT '' COMMENT '劳务员证书号',
-  `labors_id_num` varchar(200) DEFAULT '' COMMENT '劳务员身份证号',
-  `data_clerk` varchar(200) DEFAULT '' COMMENT '资料员',
-  `data_clerk_certificate_num` varchar(200) DEFAULT '' COMMENT '资料员证书号',
-  `data_clerk_id_num` varchar(200) DEFAULT '' COMMENT '资料员身份证号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NULL DEFAULT 0 COMMENT '企业编号',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `builder_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册建造师',
+  `mark_money` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标金额',
+  `money` decimal(20, 6) NULL DEFAULT 0.000000 COMMENT '金额',
+  `build_scale` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设规模',
+  `region_type` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目所属地区归类',
+  `mark_comp` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标单位',
+  `build_comp` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
+  `project_addr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程地址',
+  `contract_date` date NULL DEFAULT NULL COMMENT '合同签订日期',
+  `mark_date` date NULL DEFAULT NULL COMMENT '中标日期',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
+  `certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人证书号',
+  `constructors` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '施工员',
+  `constructors_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '施工员证书号',
+  `constructors_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '施工员身份证号',
+  `quality_worker` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '质量员',
+  `quality_worker_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '质量员证书号',
+  `quality_worker_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '质量员身份证号',
+  `security_officer` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '安全员',
+  `security_officer_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '安全员证书号',
+  `security_officer_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '安全员身份证号',
+  `standard_worker` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '标准员',
+  `standard_worker_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '标准员证书号',
+  `standard_worker_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '标准员身份证号',
+  `material_man` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '材料员',
+  `material_man_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '材料员证书号',
+  `material_man_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '材料员身份证号',
+  `mechanic` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '机械员',
+  `mechanic_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '机械员证书号',
+  `mechanic_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '机械员身份证号',
+  `labors` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '劳务员',
+  `labors_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '劳务员证书号',
+  `labors_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '劳务员身份证号',
+  `data_clerk` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资料员',
+  `data_clerk_certificate_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资料员证书号',
+  `data_clerk_id_num` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资料员身份证号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业房建业绩表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业房建业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_key_project_achievement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_key_project_achievement`;
-CREATE TABLE `t_comp_key_project_achievement` (
+CREATE TABLE `t_comp_key_project_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业重点工程业绩编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `project_name` varchar(200) DEFAULT '' COMMENT '工程名称',
-  `build_comp` varchar(32) DEFAULT '' COMMENT '建设单位',
-  `mark_money` varchar(20) DEFAULT '' COMMENT '中标金额',
-  `money` decimal(20,6) DEFAULT '0.000000' COMMENT '金额',
-  `start_date` date DEFAULT NULL COMMENT '开工时间',
-  `end_date` date DEFAULT NULL COMMENT '竣工时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
+  `mark_money` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标金额',
+  `money` decimal(20, 6) NULL DEFAULT 0.000000 COMMENT '金额',
+  `start_date` date NULL DEFAULT NULL COMMENT '开工时间',
+  `end_date` date NULL DEFAULT NULL COMMENT '竣工时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业重点工程业绩表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业重点工程业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_personnel
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_personnel`;
-CREATE TABLE `t_comp_personnel` (
+CREATE TABLE `t_comp_personnel`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业人员编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `name` varchar(10) DEFAULT '' COMMENT '姓名',
-  `job_title` varchar(10) DEFAULT '' COMMENT '职称',
-  `job_detail` varchar(20) DEFAULT '' COMMENT '职业资格及专业',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
+  `job_title` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '职称',
+  `job_detail` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '职业资格及专业',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业人员表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业人员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_traffic_achievement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_traffic_achievement`;
-CREATE TABLE `t_comp_traffic_achievement` (
+CREATE TABLE `t_comp_traffic_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业交通业绩编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `project_name` varchar(200) DEFAULT '' COMMENT '工程名称',
-  `name` varchar(20) DEFAULT '' COMMENT '项目负责人',
-  `technology_name` varchar(20) DEFAULT '' COMMENT '技术负责人',
-  `contract_amount` varchar(20) DEFAULT '' COMMENT '合同金额',
-  `money` decimal(20,6) DEFAULT '0.000000' COMMENT '金额',
-  `work_addr` varchar(32) DEFAULT '' COMMENT '工程地点',
-  `start_date` date DEFAULT NULL COMMENT '开工时间',
-  `end_date` date DEFAULT NULL COMMENT '竣工时间',
-  `valid_status` varchar(10) DEFAULT '' COMMENT '验证状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
+  `technology_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '技术负责人',
+  `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
+  `money` decimal(20, 6) NULL DEFAULT 0.000000 COMMENT '金额',
+  `work_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程地点',
+  `start_date` date NULL DEFAULT NULL COMMENT '开工时间',
+  `end_date` date NULL DEFAULT NULL COMMENT '竣工时间',
+  `valid_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '验证状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业交通业绩表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业交通业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_water_achievement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_water_achievement`;
-CREATE TABLE `t_comp_water_achievement` (
+CREATE TABLE `t_comp_water_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利业绩编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `project_name` varchar(200) DEFAULT '' COMMENT '工程名称',
-  `name` varchar(20) DEFAULT '' COMMENT '项目负责人',
-  `contract_amount` varchar(20) DEFAULT '' COMMENT '合同金额',
-  `money` decimal(20,6) DEFAULT '0.000000' COMMENT '金额',
-  `start_date` date DEFAULT NULL COMMENT '开工时间',
-  `end_date` date DEFAULT NULL COMMENT '竣工时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
+  `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
+  `money` decimal(20, 6) NULL DEFAULT 0.000000 COMMENT '金额',
+  `start_date` date NULL DEFAULT NULL COMMENT '开工时间',
+  `end_date` date NULL DEFAULT NULL COMMENT '竣工时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业水利业绩表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_comp_water_devise_achievement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_water_devise_achievement`;
-CREATE TABLE `t_comp_water_devise_achievement` (
+CREATE TABLE `t_comp_water_devise_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利勘查设计业绩编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `project_name` varchar(200) DEFAULT '' COMMENT '标段(包)名称',
-  `tendering_comp` varchar(20) DEFAULT '' COMMENT '项目类型',
-  `build_comp` varchar(32) DEFAULT '' COMMENT '招标(单位)人',
-  `mark_date` date DEFAULT NULL COMMENT '中标时间',
-  `contract_amount` varchar(20) DEFAULT '' COMMENT '合同金额',
-  `money` decimal(20,6) DEFAULT '0.000000' COMMENT '金额',
-  `name` varchar(20) DEFAULT '' COMMENT '项目负责人',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '标段(包)名称',
+  `tendering_comp` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
+  `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标(单位)人',
+  `mark_date` date NULL DEFAULT NULL COMMENT '中标时间',
+  `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
+  `money` decimal(20, 6) NULL DEFAULT 0.000000 COMMENT '金额',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=300 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业水利勘查设计业绩表';
+) ENGINE = InnoDB AUTO_INCREMENT = 300 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利勘查设计业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_comp_water_devise_achievement
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_comp_water_devise_achievement` VALUES (157, 414, '广西主要支流郁江南宁市龟山堤工程', '02', '南宁市水务投资集团有限责任公司', NULL, '273.31', 273.310000, '', 1, '2019-06-17 16:58:45', NULL, 0);
 INSERT INTO `t_comp_water_devise_achievement` VALUES (158, 414, '北海市银海区海陆海堤标准化建设工程总承包', '02', '北海市银海区农业水利局', NULL, '7991.0', 7991.000000, '唐建平', 1, '2019-06-17 16:58:45', NULL, 0);
 INSERT INTO `t_comp_water_devise_achievement` VALUES (159, 414, '广西主要支流郁江贵港市石卡至竹村段河道治理工程', '02', '贵港市城区防洪管理处', NULL, '153170.0', 153170.000000, '', 1, '2019-06-17 16:58:45', NULL, 0);
@@ -722,62 +699,60 @@ INSERT INTO `t_comp_water_devise_achievement` VALUES (296, 421, '鄱阳县单退
 INSERT INTO `t_comp_water_devise_achievement` VALUES (297, 421, '江西省五河治理防洪工程新干县县城防洪工程项目', '02', '江西省五河治理防洪工程新干县县城防洪工程项目部', NULL, '473.0', 473.000000, '', 1, '2019-06-17 17:01:55', NULL, 0);
 INSERT INTO `t_comp_water_devise_achievement` VALUES (298, 421, '鄱阳县单退及1-5万亩等8座圩堤除险加固等工程碗子圩', '02', '鄱阳县碗子圩堤除险加固项目部', NULL, '301.09', 301.090000, '', 1, '2019-06-17 17:01:55', NULL, 0);
 INSERT INTO `t_comp_water_devise_achievement` VALUES (299, 421, '鄱阳县单退及1-5万亩等8座圩堤除险加固等工程向红圩', '02', '鄱阳县向红圩堤除险加固项目部', '2017-10-26', '455.51', 455.510000, '', 1, '2019-06-17 17:01:55', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_comp_water_monitor_achievement
 -- ----------------------------
 DROP TABLE IF EXISTS `t_comp_water_monitor_achievement`;
-CREATE TABLE `t_comp_water_monitor_achievement` (
+CREATE TABLE `t_comp_water_monitor_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业水利监理业绩编号',
-  `comp_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '企业编号',
-  `project_name` varchar(200) DEFAULT '' COMMENT '工程名称',
-  `project_type` varchar(20) DEFAULT '' COMMENT '项目类型',
-  `build_comp` varchar(32) DEFAULT '' COMMENT '建设单位',
-  `contract_amount` varchar(20) DEFAULT '' COMMENT '合同金额',
-  `money` decimal(20,6) DEFAULT '0.000000' COMMENT '金额',
-  `contract_date` date DEFAULT NULL COMMENT '合同签订日期',
-  `start_date` date DEFAULT NULL COMMENT '开工时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
+  `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
+  `project_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
+  `build_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建设单位',
+  `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
+  `money` decimal(20, 6) NULL DEFAULT 0.000000 COMMENT '金额',
+  `contract_date` date NULL DEFAULT NULL COMMENT '合同签订日期',
+  `start_date` date NULL DEFAULT NULL COMMENT '开工时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业水利监理业绩表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业水利监理业绩表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_company
 -- ----------------------------
 DROP TABLE IF EXISTS `t_company`;
-CREATE TABLE `t_company` (
+CREATE TABLE `t_company`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业编号',
-  `jurisdiction_type` tinyint(4) DEFAULT '0' COMMENT '辖区类别',
-  `city` varchar(20) DEFAULT '' COMMENT '市区',
-  `comp_type` varchar(20) DEFAULT '' COMMENT '企业类型',
-  `industry_type` varchar(20) DEFAULT '' COMMENT '行业分类',
-  `comp_name` varchar(20) NOT NULL DEFAULT '' COMMENT '企业名称',
-  `legal_person` varchar(10) DEFAULT '' COMMENT '法人',
-  `legal_person_phone` varchar(11) DEFAULT '' COMMENT '法人电话',
-  `reg_address` varchar(32) DEFAULT '' COMMENT '注册地区',
-  `responsible` varchar(10) DEFAULT '' COMMENT '负责人',
-  `responsible_phone` varchar(11) DEFAULT '' COMMENT '负责人电话',
-  `comp_phone` varchar(20) DEFAULT '' COMMENT '单位电话',
-  `comp_addr` varchar(100) DEFAULT '' COMMENT '联系地址',
-  `reg_capital` varchar(20) DEFAULT '' COMMENT '注册资本',
-  `business_scope` varchar(1000) DEFAULT '' COMMENT '经营范围',
-  `affordable_business` varchar(1000) DEFAULT '' COMMENT '可承担业务',
-  `source_url` varchar(300) DEFAULT '' COMMENT '源地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否激活',
+  `jurisdiction_type` tinyint(4) NULL DEFAULT 0 COMMENT '辖区类别',
+  `city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '市区',
+  `comp_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业类型',
+  `industry_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '行业分类',
+  `comp_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '企业名称',
+  `legal_person` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '法人',
+  `legal_person_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '法人电话',
+  `reg_address` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册地区',
+  `responsible` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '负责人',
+  `responsible_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '负责人电话',
+  `comp_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '单位电话',
+  `comp_addr` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系地址',
+  `reg_capital` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '注册资本',
+  `business_scope` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '经营范围',
+  `affordable_business` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '可承担业务',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=433 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='企业信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 433 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_company
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_company` VALUES (413, 0, '江西省/吉安市/安福县', '投标人', '水利勘查设计单位', '安福县利水勘察设计室', '彭孜孜', '', '江西省/吉安市/安福县', '', '', '', '', '50', '', '', 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/FrameAll?DanWeiType=163&DanWeiGuid=a1f6cfa3-60ae-4d24-9ce1-817c05356a25', 1, '2019-06-17 16:58:44', NULL, 0);
 INSERT INTO `t_company` VALUES (414, 1, '广西壮族自治区/南宁市/青秀区', '投标人', '水利勘查设计单位', '广西壮族自治区水利电力勘测设计研究院', '傅文华', '', '广西壮族自治区/南宁市/青秀区', '', '', '', '', '9001', '水利行业甲级、电力行业（水力发电（含抽水蓄能、潮汐））专业甲级（可从事资质证书许可证范围内相应的建设工程总承包业务以及项目管理和相关的技术与管理服务）；工程勘察综合类甲级；水文、水资源调查评价甲级；建筑行业建筑工程设计乙级；工程测量甲级；地籍测绘甲级；水土保持方案编制甲级；建设项目环境影响评价乙级；建设项目水资源论证甲级；电力行业(送电、变电)工程专业丙级，市政行业（给水工程）乙级，公路行业（公路）专业丙级；水利工程、水电、水文地质、工程测量、岩土工程、生态建设和环境工程、建筑的工程咨询甲级；生态建设和环境工程、岩土工程、水文地质、工程测量、水电的工程咨询丙级；土地规划甲级；地质灾害危险性评估丙级；地质灾害治理工程勘查丙级；地质灾害治理工程设计丙级；工程勘察劳务类（工程钻探）（以上项目凭资质证经营）；场地租赁；兼营：工具器材、文化用品的销售；设计、制作、代理、发布国内各类广告。', '', 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/FrameAll?DanWeiType=163&DanWeiGuid=7c9d0ba3-3c3b-445e-b3dd-3a659935ebc1', 1, '2019-06-17 16:58:44', NULL, 0);
 INSERT INTO `t_company` VALUES (415, 1, '广东省/广州市/天河区', '投标人', '水利勘查设计单位', '水利部珠江水利委员会技术咨询中心', '李庆林', '', '广东省/广州市/天河区', '', '', '', '', '500', '', '', 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/FrameAll?DanWeiType=163&DanWeiGuid=138629a9-06aa-4652-8e80-e729cc251570', 1, '2019-06-17 17:01:53', NULL, 0);
@@ -798,31 +773,29 @@ INSERT INTO `t_company` VALUES (429, 1, '河北省/石家庄市/桥西区', '代
 INSERT INTO `t_company` VALUES (430, 1, '山东省/济南市/历下区', '代理机构', '房建招标代理', '山东中咨建成招标有限公司', '王娟', '', '山东省/济南市/历下区', '', '', '0531-86556661', '山东省济南市历下区山大路201号天业科技商务大厦701、702、703、731、732室', '500', '工程建设项目招标代理、建筑工程项目管理咨询、工程造价咨询（凭资质证经营）；资格证书范围内的政府采购代理业务、咨询服务业务。', '', 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/FrameAll?DanWeiType=181&DanWeiGuid=b0814ed6-4345-4706-bbb6-3d15a31dfc8e', 1, '2019-06-17 17:47:04', NULL, 0);
 INSERT INTO `t_company` VALUES (431, 1, '江苏省/盐城市/亭湖区', '代理机构', '房建招标代理', '江苏大洲工程项目管理有限公司', '李东升', '', '江苏省/盐城市/亭湖区', '', '', '0791-88539992', '江西省南昌市红谷滩新区万达中心B1栋801、816室', '2000', '项目管理；工程勘察、设计、监理；造价咨询；招标代理；政府采购招标代理；中央投资项目招标代理；工程咨询；雷电防护装置检测；雷电灾害风险评估；网络信息技术研发、咨询；房屋建筑工程、建筑装修装饰工程、市政公用工程、水利水电工程施工；建筑工程总承包服务；企业管理咨询；财务咨询；环境影响评估；社会稳定风险评估；安全评估、资产评估、房地产价格评估。（依法须经批准的项目，经相关部门批准后方可开展经营活动）', '', 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/FrameAll?DanWeiType=181&DanWeiGuid=b0fabf29-9265-406e-aab8-9e4283521597', 1, '2019-06-17 17:47:04', NULL, 0);
 INSERT INTO `t_company` VALUES (432, 1, '广东省/深圳市/罗湖区', '代理机构', '房建招标代理', '深圳市深水水务咨询有限公司', '黄琼', '', '广东省/深圳市/罗湖区', '', '', '', '深圳市罗湖区黄贝街道延芳路63号（深水楼）', '5000', '工程监理（水利水电、市政公用甲级，房屋建筑、电力工程、机电安装乙级，信息系统丙级）；工程咨询（水利工程评估甲级，水利、市政工程编制类丙级）；水利工程施工图设计文件审查；工程招标代理甲级；政府采购代理甲级等。', '', 'http://ggzyjy.jxsggzy.cn/hygs/huiyuaninfo/pages/FrameAll?DanWeiType=181&DanWeiGuid=f114d692-119c-4cae-8f21-350c7328e457', 1, '2019-06-17 17:47:04', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_consult
 -- ----------------------------
 DROP TABLE IF EXISTS `t_consult`;
-CREATE TABLE `t_consult` (
+CREATE TABLE `t_consult`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '咨询编号',
-  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户编号',
-  `question_type_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '问题类别编号',
-  `consult_desc` varchar(255) NOT NULL DEFAULT '' COMMENT '问题说明',
-  `reply_user_id` bigint(20) DEFAULT '0' COMMENT '回复人编号',
-  `reply_content` varchar(255) DEFAULT '' COMMENT '回复内容',
-  `reply_time` datetime DEFAULT NULL COMMENT '回复时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
+  `question_type_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '问题类别编号',
+  `consult_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '问题说明',
+  `reply_user_id` bigint(20) NULL DEFAULT 0 COMMENT '回复人编号',
+  `reply_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '回复内容',
+  `reply_time` datetime(0) NULL DEFAULT NULL COMMENT '回复时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='咨询表';
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '咨询表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_consult
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_consult` VALUES (1, 40, 1, '注册遇到问题了', 31, 'bbbb', '2019-05-09 10:27:31', 3, '2019-04-26 15:34:08', '2019-05-09 10:27:30', 0);
 INSERT INTO `t_consult` VALUES (2, 42, 2, '有问题', 0, '', NULL, 1, '2019-05-21 13:30:43', NULL, 0);
 INSERT INTO `t_consult` VALUES (3, 42, 2, '33', 0, '', NULL, 1, '2019-05-23 18:10:48', NULL, 0);
@@ -836,76 +809,70 @@ INSERT INTO `t_consult` VALUES (10, 42, 4, '3333', 0, NULL, NULL, 1, '2019-05-23
 INSERT INTO `t_consult` VALUES (11, 42, 4, '3333', 0, NULL, NULL, 1, '2019-05-23 18:12:18', NULL, 0);
 INSERT INTO `t_consult` VALUES (12, 42, 8, '111', 0, '', NULL, 1, '2019-05-23 18:31:40', NULL, 0);
 INSERT INTO `t_consult` VALUES (13, 50, 8, '遇到了问题', 0, '', NULL, 1, '2019-05-31 14:59:21', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_coupon
 -- ----------------------------
 DROP TABLE IF EXISTS `t_coupon`;
-CREATE TABLE `t_coupon` (
+CREATE TABLE `t_coupon`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '抵扣券编号',
-  `type` varchar(10) DEFAULT '' COMMENT '抵用券类别',
-  `money` bigint(10) DEFAULT '0' COMMENT '金额',
-  `coupon_count` int(10) DEFAULT '0' COMMENT '数量',
-  `valid_time` date DEFAULT NULL COMMENT '有效期至',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '抵用券类别',
+  `money` bigint(10) NULL DEFAULT 0 COMMENT '金额',
+  `coupon_count` int(10) NULL DEFAULT 0 COMMENT '数量',
+  `valid_time` date NULL DEFAULT NULL COMMENT '有效期至',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='抵扣券表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_coupon
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_coupon` VALUES (1, '充值VIP', 500, 98, '2019-06-29', 3, '2019-04-26 15:53:46', '2019-04-26 17:45:39', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_coupon_record
 -- ----------------------------
 DROP TABLE IF EXISTS `t_coupon_record`;
-CREATE TABLE `t_coupon_record` (
+CREATE TABLE `t_coupon_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '抵扣券使用记录编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `coupon_id` bigint(20) DEFAULT '0' COMMENT '抵扣券编号',
-  `old_price` bigint(10) DEFAULT '0' COMMENT '原价',
-  `coupon_price` bigint(10) DEFAULT '0' COMMENT '优惠价',
-  `price` bigint(10) DEFAULT '0' COMMENT '价格',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `coupon_id` bigint(20) NULL DEFAULT 0 COMMENT '抵扣券编号',
+  `old_price` bigint(10) NULL DEFAULT 0 COMMENT '原价',
+  `coupon_price` bigint(10) NULL DEFAULT 0 COMMENT '优惠价',
+  `price` bigint(10) NULL DEFAULT 0 COMMENT '价格',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='抵扣券使用记录表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抵扣券使用记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_coupon_record
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_coupon_record` VALUES (1, 40, 1, 100, 5, 95, 1, '2019-04-26 17:50:19', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_expert_question_type
 -- ----------------------------
 DROP TABLE IF EXISTS `t_expert_question_type`;
-CREATE TABLE `t_expert_question_type` (
+CREATE TABLE `t_expert_question_type`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家问题分类编号',
-  `name` varchar(30) DEFAULT '' COMMENT '类别名称',
-  `memo` varchar(200) DEFAULT '' COMMENT '备注',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='专家问题分类表';
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '类别名称',
+  `memo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家问题分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_expert_question_type
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_expert_question_type` VALUES (1, '系统注册登录', '系统注册登录', 1, '2019-05-08 17:30:24', NULL, 0);
 INSERT INTO `t_expert_question_type` VALUES (2, 'CA锁办理及绑定激活', 'CA锁办理及绑定激活', 1, '2019-05-08 17:30:53', NULL, 0);
 INSERT INTO `t_expert_question_type` VALUES (3, '招标文件制作', '招标文件制作', 1, '2019-05-08 17:30:57', NULL, 0);
@@ -914,38 +881,36 @@ INSERT INTO `t_expert_question_type` VALUES (5, '工程量清单编制', '工程
 INSERT INTO `t_expert_question_type` VALUES (6, '工程造价', '工程造价', 1, '2019-05-08 17:31:22', NULL, 0);
 INSERT INTO `t_expert_question_type` VALUES (7, '电子虚拟保证金缴纳', '电子虚拟保证金缴纳', 1, '2019-05-08 17:31:30', NULL, 0);
 INSERT INTO `t_expert_question_type` VALUES (8, '其他', '其他', 1, '2019-05-08 17:31:36', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_expert_subscribe
 -- ----------------------------
 DROP TABLE IF EXISTS `t_expert_subscribe`;
-CREATE TABLE `t_expert_subscribe` (
+CREATE TABLE `t_expert_subscribe`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家预约编号',
-  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户编号',
-  `expert_user_id` bigint(20) DEFAULT '0' COMMENT '预约专家编号',
-  `vip_flag` tinyint(4) DEFAULT '0' COMMENT '问题标识',
-  `question_type_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '问题类型编号',
-  `question_desc` varchar(255) NOT NULL DEFAULT '' COMMENT '问题说明',
-  `reply_user_id` bigint(20) DEFAULT '0' COMMENT '回复用户编号',
-  `reply_content` varchar(255) DEFAULT '' COMMENT '回复内容',
-  `reply_time` datetime DEFAULT NULL COMMENT '回复时间',
-  `subscribe_status` varchar(10) DEFAULT '未处理' COMMENT '预约状态',
-  `price` bigint(10) DEFAULT '0' COMMENT '预约价格',
-  `pay_status` varchar(10) DEFAULT '待支付' COMMENT '支付状态',
-  `pay_type` varchar(10) DEFAULT '微信' COMMENT '支付方式',
-  `transaction_no` varchar(32) DEFAULT NULL COMMENT '交易编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
+  `expert_user_id` bigint(20) NULL DEFAULT 0 COMMENT '预约专家编号',
+  `vip_flag` tinyint(4) NULL DEFAULT 0 COMMENT '问题标识',
+  `question_type_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '问题类型编号',
+  `question_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '问题说明',
+  `reply_user_id` bigint(20) NULL DEFAULT 0 COMMENT '回复用户编号',
+  `reply_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '回复内容',
+  `reply_time` datetime(0) NULL DEFAULT NULL COMMENT '回复时间',
+  `subscribe_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '未处理' COMMENT '预约状态',
+  `price` bigint(10) NULL DEFAULT 0 COMMENT '预约价格',
+  `pay_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '待支付' COMMENT '支付状态',
+  `pay_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '微信' COMMENT '支付方式',
+  `transaction_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '交易编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='专家预约表';
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家预约表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_expert_subscribe
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_expert_subscribe` VALUES (1, 31, 40, 0, 1, '遇到个什么神恶魔问题', 31, '100元回复', '2019-04-26 10:51:19', '已处理', 100, '待支付', '微信', NULL, 2, '2019-04-25 17:19:44', '2019-04-26 10:51:19', 0);
 INSERT INTO `t_expert_subscribe` VALUES (2, 42, 40, 0, 1, '遇到个什么神恶魔问题', 31, '100元回复', '2019-04-26 10:51:19', '已处理', 100, '待支付', '微信', NULL, 2, '2019-04-25 17:19:44', '2019-04-26 10:51:19', 0);
 INSERT INTO `t_expert_subscribe` VALUES (3, 42, 40, 0, 1, '遇到个什么神恶魔问题', 31, '100元回复', '2019-04-26 10:51:19', '已处理', 100, '待支付', '微信', NULL, 2, '2019-04-25 17:19:44', '2019-04-26 10:51:19', 0);
@@ -961,199 +926,187 @@ INSERT INTO `t_expert_subscribe` VALUES (12, 42, 40, 0, 1, '遇到个什么神�
 INSERT INTO `t_expert_subscribe` VALUES (13, 42, 40, 0, 1, '遇到个什么神恶魔问题', 31, '100元回复', '2019-04-26 10:51:19', '已处理', 100, '已支付', '微信', NULL, 2, '2019-04-25 17:19:44', '2019-04-26 10:51:19', 0);
 INSERT INTO `t_expert_subscribe` VALUES (14, 50, 0, 1, 8, '你好', 31, '问题回复', '2019-05-31 10:26:34', '已处理', 10000, '待支付', '微信', NULL, 4, '2019-05-31 10:18:07', '2019-05-31 10:37:50', 0);
 INSERT INTO `t_expert_subscribe` VALUES (15, 50, 0, 0, 1, '登入遇到问题', 31, '支付1块钱，我回答你', '2019-05-31 15:37:36', '已处理', 100, '已支付', '微信', 'No123', 3, '2019-05-31 15:36:34', '2019-05-31 15:37:35', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_funds_frezee
 -- ----------------------------
 DROP TABLE IF EXISTS `t_funds_frezee`;
-CREATE TABLE `t_funds_frezee` (
+CREATE TABLE `t_funds_frezee`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '冻结编号',
-  `transaction_no` varchar(32) NOT NULL COMMENT '交易编号',
+  `transaction_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '交易编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `amount` bigint(20) NOT NULL COMMENT '金额',
-  `frezee_type` varchar(10) DEFAULT NULL COMMENT '类型',
-  `frezee_description` varchar(255) DEFAULT NULL COMMENT '描述',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `frezee_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型',
+  `frezee_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户资金冻结与解冻记录表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户资金冻结与解冻记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_funds_recharge
 -- ----------------------------
 DROP TABLE IF EXISTS `t_funds_recharge`;
-CREATE TABLE `t_funds_recharge` (
+CREATE TABLE `t_funds_recharge`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '充值编号',
-  `transaction_no` varchar(32) NOT NULL COMMENT '交易编号',
+  `transaction_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '交易编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `amount` bigint(20) NOT NULL COMMENT '充值金额',
-  `recharge_type` varchar(10) DEFAULT NULL COMMENT '充值类型',
-  `is_success` tinyint(4) DEFAULT '0' COMMENT '是否成功',
-  `out_trade_no` varchar(64) DEFAULT NULL COMMENT '商户订单号',
-  `trade_no` varchar(64) DEFAULT NULL COMMENT '支付系统订单号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `recharge_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '充值类型',
+  `is_success` tinyint(4) NULL DEFAULT 0 COMMENT '是否成功',
+  `out_trade_no` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户订单号',
+  `trade_no` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付系统订单号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户资金充值记录表';
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户资金充值记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_funds_recharge
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_funds_recharge` VALUES (1, '', 31, 134, '人工充值', 0, NULL, NULL, 1, '2018-12-23 13:06:57', NULL, 0);
 INSERT INTO `t_funds_recharge` VALUES (2, '', 31, 134, '人工充值', 0, NULL, NULL, 1, '2018-12-23 13:08:11', NULL, 0);
 INSERT INTO `t_funds_recharge` VALUES (3, '', 31, 134, '人工充值', 0, NULL, NULL, 1, '2018-12-23 14:06:48', NULL, 0);
 INSERT INTO `t_funds_recharge` VALUES (4, '', 31, 500, '人工充值', 0, NULL, NULL, 1, '2018-12-26 17:42:32', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_funds_transfer
 -- ----------------------------
 DROP TABLE IF EXISTS `t_funds_transfer`;
-CREATE TABLE `t_funds_transfer` (
+CREATE TABLE `t_funds_transfer`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '转账编号',
-  `transaction_no` varchar(32) NOT NULL COMMENT '交易编号',
+  `transaction_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '交易编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `amount` bigint(20) NOT NULL COMMENT '金额',
-  `from_user_id` bigint(20) DEFAULT NULL COMMENT 'FROM',
-  `to_user_id` bigint(20) DEFAULT NULL COMMENT 'TO',
-  `transfer_type` varchar(10) DEFAULT NULL COMMENT '类型',
-  `transfer_description` varchar(255) DEFAULT NULL COMMENT '描述',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `from_user_id` bigint(20) NULL DEFAULT NULL COMMENT 'FROM',
+  `to_user_id` bigint(20) NULL DEFAULT NULL COMMENT 'TO',
+  `transfer_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型',
+  `transfer_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户资金转入与转出记录表';
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户资金转入与转出记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_funds_transfer
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_funds_transfer` VALUES (1, '', 31, 100, NULL, 36, '转出', NULL, 1, '2019-01-06 20:56:44', NULL, 0);
 INSERT INTO `t_funds_transfer` VALUES (2, '', 36, 100, 31, NULL, '转入', NULL, 1, '2019-01-06 20:56:44', NULL, 0);
 INSERT INTO `t_funds_transfer` VALUES (3, '', 31, 100, NULL, 36, '转出', NULL, 1, '2019-01-15 20:51:44', NULL, 0);
 INSERT INTO `t_funds_transfer` VALUES (4, '', 36, 100, 31, NULL, '转入', NULL, 1, '2019-01-15 20:51:44', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_funds_withdraw
 -- ----------------------------
 DROP TABLE IF EXISTS `t_funds_withdraw`;
-CREATE TABLE `t_funds_withdraw` (
+CREATE TABLE `t_funds_withdraw`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '提现编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `transaction_no` varchar(32) NOT NULL COMMENT '交易编号',
+  `transaction_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '交易编号',
   `amount` bigint(20) NOT NULL COMMENT '提现金额',
   `bankcard_id` bigint(20) NOT NULL COMMENT '提现银行卡',
-  `withdraw_status` tinyint(4) DEFAULT NULL COMMENT '提现状态',
-  `withdraw_description` varchar(255) DEFAULT NULL COMMENT '提现描述',
-  `checked_user_id` bigint(20) DEFAULT NULL COMMENT '审核人编号',
-  `checked_time` datetime DEFAULT NULL COMMENT '审核时间',
-  `complete_time` datetime DEFAULT NULL COMMENT '完成时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `withdraw_status` tinyint(4) NULL DEFAULT NULL COMMENT '提现状态',
+  `withdraw_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提现描述',
+  `checked_user_id` bigint(20) NULL DEFAULT NULL COMMENT '审核人编号',
+  `checked_time` datetime(0) NULL DEFAULT NULL COMMENT '审核时间',
+  `complete_time` datetime(0) NULL DEFAULT NULL COMMENT '完成时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户资金提现记录表';
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户资金提现记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_funds_withdraw
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_funds_withdraw` VALUES (5, 31, '3ea854cde3b842338cc7a0fb3fd49bcb', 100, 1, 2, '不能提现', 31, '2018-12-23 18:47:53', '2018-12-23 18:47:53', 3, '2018-12-23 18:43:49', '2019-04-01 14:44:44', 0);
 INSERT INTO `t_funds_withdraw` VALUES (6, 31, '77d07a5d6d2b4a7280e9ecff229d4888', 100, 1, 4, NULL, 31, '2018-12-23 20:56:16', '2018-12-23 21:05:20', 1, '2018-12-23 18:49:38', '2018-12-23 21:05:20', 0);
 INSERT INTO `t_funds_withdraw` VALUES (7, 31, '399a929dc59a48f0af9498a534252792', 100, 1, 4, NULL, 31, '2018-12-25 15:04:57', '2019-04-01 15:24:47', 6, '2018-12-23 22:25:54', '2019-04-01 15:24:47', 0);
 INSERT INTO `t_funds_withdraw` VALUES (8, 31, 'b84bdc6156554a27a57229faa361d6a4', 50, 1, 5, '提现失败', NULL, NULL, '2019-04-01 15:28:44', 4, '2018-12-25 18:22:14', '2019-04-01 15:28:44', 0);
 INSERT INTO `t_funds_withdraw` VALUES (12, 31, '2a5e0e09c3084e6ebee0dd36a6f3acc7', 100, 1, 1, '审核通过', 31, '2019-01-15 18:06:19', NULL, 6, '2018-12-26 17:36:15', '2019-01-15 18:06:19', 0);
 INSERT INTO `t_funds_withdraw` VALUES (13, 31, 'ef011bfb3ee94b6bb978f8fee2023177', 50, 1, 4, NULL, 31, '2018-12-26 17:39:26', '2018-12-26 17:39:45', 3, '2018-12-26 17:38:45', '2018-12-26 17:39:45', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_funds_withdraw_check
 -- ----------------------------
 DROP TABLE IF EXISTS `t_funds_withdraw_check`;
-CREATE TABLE `t_funds_withdraw_check` (
+CREATE TABLE `t_funds_withdraw_check`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '提现审核编号',
   `withdraw_id` bigint(20) NOT NULL COMMENT '提现编号',
-  `transaction_no` varchar(32) NOT NULL COMMENT '交易编号',
+  `transaction_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '交易编号',
   `withdraw_status` tinyint(4) NOT NULL COMMENT '提现状态',
-  `withdraw_description` varchar(255) DEFAULT NULL COMMENT '提现描述',
+  `withdraw_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提现描述',
   `checked_user_id` bigint(20) NOT NULL COMMENT '审核人编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户资金提现审核历史表';
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户资金提现审核历史表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_funds_withdraw_check
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_funds_withdraw_check` VALUES (14, 12, '2a5e0e09c3084e6ebee0dd36a6f3acc7', 1, '审核通过', 31, 1, '2019-01-14 20:50:02', NULL, 0);
 INSERT INTO `t_funds_withdraw_check` VALUES (15, 12, '2a5e0e09c3084e6ebee0dd36a6f3acc7', 1, NULL, 31, 1, '2019-01-15 18:06:19', NULL, 0);
 INSERT INTO `t_funds_withdraw_check` VALUES (16, 7, '399a929dc59a48f0af9498a534252792', 4, '提现成功', 31, 1, '2019-04-01 15:24:47', NULL, 0);
 INSERT INTO `t_funds_withdraw_check` VALUES (17, 8, 'b84bdc6156554a27a57229faa361d6a4', 5, '提现失败', 31, 1, '2019-04-01 15:28:44', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_attribute
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_attribute`;
-CREATE TABLE `t_goods_attribute` (
+CREATE TABLE `t_goods_attribute`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品属性编号',
-  `attr_name` varchar(20) NOT NULL COMMENT '属性名称',
-  `attr_code` varchar(50) NOT NULL COMMENT '属性代码',
-  `attr_type` varchar(20) NOT NULL COMMENT '数据类型',
+  `attr_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '属性名称',
+  `attr_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '属性代码',
+  `attr_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '数据类型',
   `attr_length` int(11) NOT NULL COMMENT '数据长度',
-  `attr_required` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否必填',
-  `attr_display` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否前端显示',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `attr_required` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否必填',
+  `attr_display` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否前端显示',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品属性信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品属性信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_attribute
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_attribute` VALUES (1, '售卖标题', 'title', 'String', 50, 0, 0, 2, '2019-02-13 17:47:09', '2019-02-13 17:54:43', 0);
 INSERT INTO `t_goods_attribute` VALUES (2, '品牌', 'brand', 'String', 20, 0, 0, 1, '2019-02-13 17:51:41', NULL, 0);
 INSERT INTO `t_goods_attribute` VALUES (3, '商品名称', 'name', 'String', 50, 0, 0, 4, '2019-02-13 17:54:27', '2019-02-21 23:00:34', 0);
 INSERT INTO `t_goods_attribute` VALUES (4, '毛重', 'grossWeight', 'Double', 20, 0, 0, 2, '2019-02-21 22:56:47', '2019-02-21 22:57:35', 0);
 INSERT INTO `t_goods_attribute` VALUES (5, '净重', 'netWeight', 'Double', 20, 0, 0, 1, '2019-02-21 22:57:25', NULL, 0);
 INSERT INTO `t_goods_attribute` VALUES (6, '价格', 'price', 'Long', 20, 0, 0, 1, '2019-02-21 22:56:47', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_attribute_value
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_attribute_value`;
-CREATE TABLE `t_goods_attribute_value` (
+CREATE TABLE `t_goods_attribute_value`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品属性值编号',
   `goods_sku_id` bigint(20) NOT NULL COMMENT 'SKU编号',
   `attr_id` bigint(20) NOT NULL COMMENT '属性编号',
-  `attr_value` varchar(500) NOT NULL COMMENT '属性值',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `attr_value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '属性值',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品SKU属性及属性值表';
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品SKU属性及属性值表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_attribute_value
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_attribute_value` VALUES (44, 3, 1, '时尚女装款式二99元', 1, '2019-03-04 15:40:21', NULL, 0);
 INSERT INTO `t_goods_attribute_value` VALUES (45, 3, 2, '智悦', 1, '2019-03-04 15:40:21', NULL, 0);
 INSERT INTO `t_goods_attribute_value` VALUES (46, 3, 3, '智悦时尚女装', 1, '2019-03-04 15:40:21', NULL, 0);
@@ -1166,80 +1119,74 @@ INSERT INTO `t_goods_attribute_value` VALUES (52, 2, 3, '智悦时尚女装', 1,
 INSERT INTO `t_goods_attribute_value` VALUES (53, 2, 4, '1.5', 1, '2019-03-04 15:40:29', NULL, 0);
 INSERT INTO `t_goods_attribute_value` VALUES (54, 2, 5, '1', 1, '2019-03-04 15:40:29', NULL, 0);
 INSERT INTO `t_goods_attribute_value` VALUES (55, 2, 6, '99', 1, '2019-03-04 15:40:29', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_cart
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_cart`;
-CREATE TABLE `t_goods_cart` (
+CREATE TABLE `t_goods_cart`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '购物编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `goods_id` bigint(20) NOT NULL COMMENT '商品编号',
   `goods_sku_id` bigint(20) NOT NULL COMMENT 'SKU编号',
   `quantity` int(11) NOT NULL COMMENT '购买数量',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='购物车信息记录表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '购物车信息记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_cart
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_cart` VALUES (1, 31, 1, 2, 1, 1, '2019-03-06 11:42:41', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_category
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_category`;
-CREATE TABLE `t_goods_category` (
+CREATE TABLE `t_goods_category`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '类目编号',
   `parent_id` bigint(20) NOT NULL COMMENT '父编号',
-  `title` varchar(20) NOT NULL COMMENT '类目名称',
-  `description` varchar(255) DEFAULT NULL COMMENT '类目描述',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类目名称',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类目描述',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品类目信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类目信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_category
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_category` VALUES (1, 0, '服装', NULL, 1, '2019-02-13 17:48:51', NULL, 0);
 INSERT INTO `t_goods_category` VALUES (2, 0, '鞋包', NULL, 1, '2019-02-13 17:49:03', NULL, 0);
 INSERT INTO `t_goods_category` VALUES (3, 1, '女装', NULL, 1, '2019-02-13 17:49:14', NULL, 0);
 INSERT INTO `t_goods_category` VALUES (4, 1, '男装', NULL, 1, '2019-02-13 17:49:21', NULL, 0);
 INSERT INTO `t_goods_category` VALUES (5, 1, '内衣', NULL, 1, '2019-02-13 17:49:45', NULL, 0);
 INSERT INTO `t_goods_category` VALUES (6, 1, '童装', NULL, 1, '2019-02-13 17:49:59', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_category_attribute
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_category_attribute`;
-CREATE TABLE `t_goods_category_attribute` (
+CREATE TABLE `t_goods_category_attribute`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '类目属性编号',
   `category_id` bigint(20) NOT NULL COMMENT '商品类目编号',
   `attr_id` bigint(20) NOT NULL COMMENT '属性编号',
-  `attr_order` int(11) NOT NULL DEFAULT '1000' COMMENT '属性排序',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `attr_order` int(11) NOT NULL DEFAULT 1000 COMMENT '属性排序',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品类目属性信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品类目属性信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_category_attribute
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_category_attribute` VALUES (12, 3, 4, 4, 4, '2019-02-21 22:58:14', '2019-03-02 17:02:03', 0);
 INSERT INTO `t_goods_category_attribute` VALUES (13, 3, 3, 3, 4, '2019-02-21 22:58:14', '2019-03-02 17:02:03', 0);
 INSERT INTO `t_goods_category_attribute` VALUES (14, 3, 1, 1, 4, '2019-02-21 22:58:14', '2019-03-02 17:02:03', 0);
@@ -1259,434 +1206,455 @@ INSERT INTO `t_goods_category_attribute` VALUES (42, 5, 3, 2, 2, '2019-03-02 17:
 INSERT INTO `t_goods_category_attribute` VALUES (43, 5, 4, 3, 2, '2019-03-02 17:53:05', '2019-03-02 17:53:15', 0);
 INSERT INTO `t_goods_category_attribute` VALUES (44, 5, 1, 1, 2, '2019-03-02 17:53:05', '2019-03-02 17:53:15', 0);
 INSERT INTO `t_goods_category_attribute` VALUES (45, 5, 5, 4, 2, '2019-03-02 17:53:05', '2019-03-02 17:53:15', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_comment`;
-CREATE TABLE `t_goods_comment` (
+CREATE TABLE `t_goods_comment`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品评论编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `goods_id` bigint(20) NOT NULL COMMENT '商品编号',
   `goods_sku_id` bigint(20) NOT NULL COMMENT 'SKU编号',
-  `comments` varchar(1000) NOT NULL COMMENT '评论详情',
-  `append_comment` varchar(1000) DEFAULT NULL COMMENT '追加评论',
-  `reply` varchar(1000) DEFAULT NULL COMMENT '回复详情',
-  `stick_status` tinyint(4) DEFAULT '0' COMMENT '置顶状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `comments` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论详情',
+  `append_comment` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '追加评论',
+  `reply` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '回复详情',
+  `stick_status` tinyint(4) NULL DEFAULT 0 COMMENT '置顶状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品评论表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_goods_comment_pic
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_comment_pic`;
-CREATE TABLE `t_goods_comment_pic` (
+CREATE TABLE `t_goods_comment_pic`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '评论图片编号',
   `comment_id` bigint(20) NOT NULL COMMENT '评论编号',
-  `pic_url` varchar(500) NOT NULL COMMENT '图片URL',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `pic_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片URL',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品评论图片表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品评论图片表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_goods_coupon
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_coupon`;
-CREATE TABLE `t_goods_coupon` (
+CREATE TABLE `t_goods_coupon`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '优惠券编号',
-  `category_id` bigint(20) DEFAULT NULL COMMENT '商品类目编号',
-  `goods_id` bigint(20) DEFAULT NULL COMMENT '商品编号',
-  `goods_sku_id` bigint(20) DEFAULT NULL COMMENT '商品SKU编号',
-  `title` varchar(50) NOT NULL COMMENT '优惠券标题',
-  `use_min_amount` bigint(20) DEFAULT NULL COMMENT '最小消费金额',
-  `discount_amount` bigint(20) DEFAULT NULL COMMENT '满减优惠金额',
-  `discount_percent` double(3,0) DEFAULT NULL COMMENT '满减折扣',
-  `integral_amount` int(11) DEFAULT NULL COMMENT '赠送积分',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT '商品类目编号',
+  `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '商品编号',
+  `goods_sku_id` bigint(20) NULL DEFAULT NULL COMMENT '商品SKU编号',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '优惠券标题',
+  `use_min_amount` bigint(20) NULL DEFAULT NULL COMMENT '最小消费金额',
+  `discount_amount` bigint(20) NULL DEFAULT NULL COMMENT '满减优惠金额',
+  `discount_percent` double(3, 0) NULL DEFAULT NULL COMMENT '满减折扣',
+  `integral_amount` int(11) NULL DEFAULT NULL COMMENT '赠送积分',
   `total_count` int(11) NOT NULL COMMENT '优惠券总量',
   `coupon_usable_range` tinyint(4) NOT NULL COMMENT '优惠券使用范围',
   `coupon_type` tinyint(4) NOT NULL COMMENT '优惠券类型',
-  `start_time` datetime NOT NULL COMMENT '开始时间',
-  `due_time` datetime DEFAULT NULL COMMENT '到期时间',
-  `valid_days` int(11) DEFAULT NULL COMMENT '有效时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `start_time` datetime(0) NOT NULL COMMENT '开始时间',
+  `due_time` datetime(0) NULL DEFAULT NULL COMMENT '到期时间',
+  `valid_days` int(11) NULL DEFAULT NULL COMMENT '有效时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品优惠券信息表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品优惠券信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_goods_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_info`;
-CREATE TABLE `t_goods_info` (
+CREATE TABLE `t_goods_info`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品编号',
   `shop_id` bigint(20) NOT NULL COMMENT '店铺编号',
   `category_id` bigint(20) NOT NULL COMMENT '类目编号',
-  `intro` text NOT NULL COMMENT '图文详情',
-  `shelf_status` tinyint(4) DEFAULT '0' COMMENT '上架状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `intro` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图文详情',
+  `shelf_status` tinyint(4) NULL DEFAULT 0 COMMENT '上架状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品记录表，包含多个商品SKU';
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品记录表，包含多个商品SKU' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_info
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_info` VALUES (1, 1, 3, '女装图文详情', 0, 1, '2019-02-27 11:46:27', NULL, 0);
 INSERT INTO `t_goods_info` VALUES (2, 1, 4, '图文详情', 0, 1, '2019-02-27 17:50:20', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_order
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_order`;
-CREATE TABLE `t_goods_order` (
+CREATE TABLE `t_goods_order`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `order_no` varchar(50) NOT NULL COMMENT '订单号',
+  `order_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单号',
   `total_amount` bigint(20) NOT NULL COMMENT '订单金额',
   `pay_amount` bigint(20) NOT NULL COMMENT '实付金额',
-  `discount_amount` bigint(20) NOT NULL DEFAULT '0' COMMENT '优惠金额',
-  `integral_amount` bigint(20) NOT NULL DEFAULT '0' COMMENT '赠送积分',
-  `express_fee` bigint(20) DEFAULT '0' COMMENT '运费',
-  `order_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '订单状态',
-  `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
-  `pay_type` tinyint(4) DEFAULT NULL COMMENT '支付方式',
-  `transaction_no` varchar(50) DEFAULT NULL COMMENT '支付订单号',
-  `pay_success` tinyint(4) DEFAULT NULL COMMENT '是否支付成功',
-  `deliver_time` datetime DEFAULT NULL COMMENT '发货时间',
-  `deal_time` datetime DEFAULT NULL COMMENT '成交时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `discount_amount` bigint(20) NOT NULL DEFAULT 0 COMMENT '优惠金额',
+  `integral_amount` bigint(20) NOT NULL DEFAULT 0 COMMENT '赠送积分',
+  `express_fee` bigint(20) NULL DEFAULT 0 COMMENT '运费',
+  `order_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '订单状态',
+  `pay_time` datetime(0) NULL DEFAULT NULL COMMENT '支付时间',
+  `pay_type` tinyint(4) NULL DEFAULT NULL COMMENT '支付方式',
+  `transaction_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付订单号',
+  `pay_success` tinyint(4) NULL DEFAULT NULL COMMENT '是否支付成功',
+  `deliver_time` datetime(0) NULL DEFAULT NULL COMMENT '发货时间',
+  `deal_time` datetime(0) NULL DEFAULT NULL COMMENT '成交时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='订单信息表，一个订单包含多个订单条目';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单信息表，一个订单包含多个订单条目' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_order
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_order` VALUES (1, 31, 'order_no', 20000, 20000, 0, 200, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2019-03-12 15:45:24', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_order_coupon
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_order_coupon`;
-CREATE TABLE `t_goods_order_coupon` (
+CREATE TABLE `t_goods_order_coupon`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用券编号',
   `order_id` bigint(20) NOT NULL COMMENT '订单编号',
   `coupon_id` bigint(20) NOT NULL COMMENT '优惠券编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='订单优惠券使用记录表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单优惠券使用记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_goods_order_item
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_order_item`;
-CREATE TABLE `t_goods_order_item` (
+CREATE TABLE `t_goods_order_item`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单项编号',
   `order_id` bigint(20) NOT NULL COMMENT '订单编号',
   `goods_id` bigint(20) NOT NULL COMMENT '商品编号',
   `goods_sku_id` bigint(20) NOT NULL COMMENT 'SKU编号',
   `sku_pic_id` bigint(20) NOT NULL COMMENT 'SKU图片编号',
-  `sku_title` varchar(255) NOT NULL COMMENT '售卖标题',
-  `sku_info` varchar(500) NOT NULL COMMENT 'SKU属性JSON',
+  `sku_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '售卖标题',
+  `sku_info` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SKU属性JSON',
   `quantity` int(11) NOT NULL COMMENT '购买数量',
   `pay_amount` bigint(20) NOT NULL COMMENT '实付金额',
-  `discount_amount` bigint(20) NOT NULL DEFAULT '0' COMMENT '优惠金额',
-  `integral_amount` bigint(20) NOT NULL DEFAULT '0' COMMENT '赠送积分',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `discount_amount` bigint(20) NOT NULL DEFAULT 0 COMMENT '优惠金额',
+  `integral_amount` bigint(20) NOT NULL DEFAULT 0 COMMENT '赠送积分',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='订单详情信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单详情信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_order_item
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_order_item` VALUES (1, 1, 1, 2, 34, '智悦时尚女装', 'sku详情', 1, 20000, 0, 200, 1, '2019-03-12 15:46:42', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_order_logistics
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_order_logistics`;
-CREATE TABLE `t_goods_order_logistics` (
+CREATE TABLE `t_goods_order_logistics`  (
   `id` bigint(20) NOT NULL COMMENT '订单编号',
-  `real_name` varchar(20) NOT NULL COMMENT '收货人',
-  `phone` varchar(11) NOT NULL COMMENT '手机号',
-  `province` varchar(20) NOT NULL COMMENT '省',
-  `city` varchar(20) NOT NULL COMMENT '市',
-  `district` varchar(20) NOT NULL COMMENT '区/县',
-  `address` varchar(255) NOT NULL COMMENT '详细地址',
-  `is_deliver` tinyint(4) DEFAULT '0' COMMENT '是否已发货',
-  `logistics_company` varchar(255) DEFAULT NULL COMMENT '物流公司名称',
-  `logistics_code` varchar(20) DEFAULT NULL COMMENT '物流公司编码',
-  `logistics_no` varchar(32) DEFAULT NULL COMMENT '物流单号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `real_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收货人',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '手机号',
+  `province` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '省',
+  `city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '市',
+  `district` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '区/县',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '详细地址',
+  `is_deliver` tinyint(4) NULL DEFAULT 0 COMMENT '是否已发货',
+  `logistics_company` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流公司名称',
+  `logistics_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流公司编码',
+  `logistics_no` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流单号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='订单物流信息表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单物流信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_order_logistics
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_order_logistics` VALUES (1, '王振宇', '13672297775', '江西省', '赣州市', '章贡区', '详细地址', 0, NULL, NULL, NULL, 1, '2019-03-12 15:48:14', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_pic
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_pic`;
-CREATE TABLE `t_goods_pic` (
+CREATE TABLE `t_goods_pic`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品图片编号',
   `goods_id` bigint(20) NOT NULL COMMENT '商品编号',
-  `pic_url` varchar(500) NOT NULL COMMENT '图片URL',
-  `pic_order` int(11) DEFAULT '1000' COMMENT '图片顺序',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `pic_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片URL',
+  `pic_order` int(11) NULL DEFAULT 1000 COMMENT '图片顺序',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品图片信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品图片信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_pic
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_pic` VALUES (34, 1, 'upload/image/2019022717454055870.png', 1, 2, '2019-02-27 17:45:40', '2019-02-28 11:01:41', 0);
 INSERT INTO `t_goods_pic` VALUES (35, 1, 'upload/image/2019022717463281944.png', 2, 2, '2019-02-27 17:46:32', '2019-02-28 11:01:41', 0);
 INSERT INTO `t_goods_pic` VALUES (36, 1, 'upload/image/2019022717463223970.png', 3, 2, '2019-02-27 17:46:32', '2019-02-28 11:01:41', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_shop
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_shop`;
-CREATE TABLE `t_goods_shop` (
+CREATE TABLE `t_goods_shop`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '店铺编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `category_id` bigint(20) NOT NULL COMMENT '类目编号',
   `subject_type` tinyint(4) NOT NULL COMMENT '主体类型',
-  `logo` varchar(500) DEFAULT NULL COMMENT '店铺Logo',
-  `title` varchar(50) NOT NULL COMMENT '店铺标题',
-  `intro` varchar(255) NOT NULL COMMENT '店铺简介',
-  `level` tinyint(4) DEFAULT '1' COMMENT '店铺等级',
-  `check_status` tinyint(4) DEFAULT '0' COMMENT '审核状态',
-  `check_description` varchar(255) DEFAULT NULL COMMENT '审核描述',
-  `checked_user_id` tinyint(4) DEFAULT NULL COMMENT '审核人编号',
-  `checked_time` datetime DEFAULT NULL COMMENT '审核时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `logo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '店铺Logo',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺标题',
+  `intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺简介',
+  `level` tinyint(4) NULL DEFAULT 1 COMMENT '店铺等级',
+  `check_status` tinyint(4) NULL DEFAULT 0 COMMENT '审核状态',
+  `check_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '审核描述',
+  `checked_user_id` tinyint(4) NULL DEFAULT NULL COMMENT '审核人编号',
+  `checked_time` datetime(0) NULL DEFAULT NULL COMMENT '审核时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='店铺信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_shop
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_shop` VALUES (1, 31, 1, 1, 'logo', '智悦服装', '智悦服装', 1, 0, NULL, NULL, NULL, 2, '2019-02-22 12:03:45', '2019-02-22 13:41:11', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_shop_certification
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_shop_certification`;
-CREATE TABLE `t_goods_shop_certification` (
+CREATE TABLE `t_goods_shop_certification`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '店铺认证编号',
   `shop_id` bigint(20) NOT NULL COMMENT '店铺编号',
-  `detail` varchar(1000) NOT NULL COMMENT '认证详情JSON',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `detail` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '认证详情JSON',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='店铺认证信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺认证信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_shop_certification
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_shop_certification` VALUES (1, 1, '{\n    \"identity\": \"360723************\",\n    \"realName\": \"王振宇\",\n    \"validDate\": \"2028-10-10\",\n    \"idcardFront\": \"str\",\n    \"idcardReverse\": \"str\",\n    \"idcardHand\": \"str\",\n    \"companyName\": \"赣州智悦科技有限公司\",\n    \"creditNumber\": \"str\",\n    \"businessScope\": \"str\",\n    \"businessLicense\": \"str\"\n}', 1, '2019-02-22 14:04:18', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_shop_check
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_shop_check`;
-CREATE TABLE `t_goods_shop_check` (
+CREATE TABLE `t_goods_shop_check`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '店铺审核编号',
   `shop_id` bigint(20) NOT NULL COMMENT '店铺编号',
-  `check_status` tinyint(4) DEFAULT '0' COMMENT '审核状态',
-  `check_description` varchar(255) DEFAULT NULL COMMENT '审核描述',
-  `checked_user_id` tinyint(4) DEFAULT NULL COMMENT '审核人编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `check_status` tinyint(4) NULL DEFAULT 0 COMMENT '审核状态',
+  `check_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '审核描述',
+  `checked_user_id` tinyint(4) NULL DEFAULT NULL COMMENT '审核人编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='店铺审核历史表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺审核历史表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_shop_check
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_shop_check` VALUES (1, 1, 1, '证件齐全，通过', 31, 1, '2019-02-22 14:22:30', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_sku
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_sku`;
-CREATE TABLE `t_goods_sku` (
+CREATE TABLE `t_goods_sku`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'SKU编号',
   `goods_id` bigint(20) NOT NULL COMMENT '商品编号',
-  `pic_id` bigint(20) DEFAULT NULL COMMENT '商品图片编号',
-  `shelf_status` tinyint(4) DEFAULT '0' COMMENT '上架状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `pic_id` bigint(20) NULL DEFAULT NULL COMMENT '商品图片编号',
+  `shelf_status` tinyint(4) NULL DEFAULT 0 COMMENT '上架状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品SKU信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品SKU信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods_sku
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_goods_sku` VALUES (2, 1, 34, 0, 3, '2019-02-28 14:44:55', '2019-03-02 12:28:27', 0);
 INSERT INTO `t_goods_sku` VALUES (3, 1, 35, 0, 2, '2019-02-28 14:46:42', '2019-02-28 15:27:21', 0);
 INSERT INTO `t_goods_sku` VALUES (4, 1, 36, 0, 12, '2019-02-28 14:47:29', '2019-03-02 16:40:25', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_goods_user_coupon
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_user_coupon`;
-CREATE TABLE `t_goods_user_coupon` (
+CREATE TABLE `t_goods_user_coupon`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '购物编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `coupon_id` bigint(20) NOT NULL COMMENT '优惠券编号',
-  `coupon_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '优惠券状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `coupon_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '优惠券状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品优惠券用户领券信息表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品优惠券用户领券信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_guarantee
 -- ----------------------------
 DROP TABLE IF EXISTS `t_guarantee`;
-CREATE TABLE `t_guarantee` (
+CREATE TABLE `t_guarantee`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '保函编号',
-  `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `project_name` varchar(100) DEFAULT '' COMMENT '项目名称',
-  `open_mark_time` datetime DEFAULT NULL COMMENT '开标时间',
-  `mark_unit_name` varchar(32) DEFAULT '' COMMENT '招标单位名称',
-  `construction_period` int(10) DEFAULT '0' COMMENT '工期(天)',
-  `assure_price` bigint(20) DEFAULT '0' COMMENT '担保金额(万元)',
-  `guarantee_comp` varchar(32) DEFAULT '' COMMENT '担保公司',
-  `guarantee_price` bigint(20) DEFAULT '0' COMMENT '保函费',
-  `applicant` varchar(20) DEFAULT '' COMMENT '申请人',
-  `name` varchar(20) DEFAULT '' COMMENT '联系人',
-  `phone` varchar(11) DEFAULT '' COMMENT '手机号',
-  `address` varchar(100) DEFAULT '' COMMENT '地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='申请保函表';
+  `project_id` bigint(20) NULL DEFAULT 0 COMMENT '项目编号',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `project_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目名称',
+  `open_mark_time` datetime(0) NULL DEFAULT NULL COMMENT '开标时间',
+  `mark_unit_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标单位名称',
+  `construction_period` int(10) NULL DEFAULT 0 COMMENT '工期(天)',
+  `assure_price` bigint(20) NULL DEFAULT 0 COMMENT '担保金额(万元)',
+  `guarantee_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '担保公司',
+  `guarantee_price` bigint(20) NULL DEFAULT 0 COMMENT '保函费',
+  `applicant` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '申请人',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '手机号',
+  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '申请保函表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_guarantee
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_guarantee` VALUES (1, 1, 0, '某某项目', '2019-04-30 00:00:00', '某某公司', 100, 10000, '赣州智悦网络科技有限公司', 0, '危锦辉', '危锦辉', '18279700225', '江西省赣州市章贡区xxx地址', 1, '2019-04-30 11:06:54', NULL, 0);
 INSERT INTO `t_guarantee` VALUES (2, 4, 42, '[南昌市本级]南昌市昌南城市防洪工程管理处防汛排涝信息系统建设工程项目监理招标公告', NULL, '宜春市实验小学', 100, 100000, '江西数达信息科技有限公司', 10000, '1', '1', '1', '1', 1, '2019-05-18 13:02:23', NULL, 0);
 INSERT INTO `t_guarantee` VALUES (3, 1, 50, '[南昌市本级]南昌市昌南城市防洪工程管理处防汛排涝信息系统建设工程项目监理招标公告', NULL, '宜春市实验小学', 100, 1000, '江西数达信息科技有限公司', 1100, '111', '11', '111', '11111', 1, '2019-06-10 12:39:12', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_headlines
 -- ----------------------------
 DROP TABLE IF EXISTS `t_headlines`;
-CREATE TABLE `t_headlines` (
+CREATE TABLE `t_headlines`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '头条编号',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '标题',
-  `content` text COMMENT '内容',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='头条表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '头条表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_headlines
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_headlines` VALUES (1, '重要更新通知', '[广丰区]广丰区新型城镇化建设（一期）项目-裕丰南大道延伸段道路工程<div class=\"article-info\">            				<h1>[广丰区]广丰区新型城镇化建设（一期）项目-裕丰南大道延伸段道路工程<font color=\"red\"></font></h1>            				<p class=\"infotime\">            					[2019-05-10]            				</p>            				<div class=\"con\" style=\"margin-top: 31px;\"><meta charset=\"utf-8\"/><meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/><style>    tr{    height:30px;    }</style><div align=\"center\"><div style=\"text-align: right;\"><span style=\"font-family: 黑体; font-size: 14pt;\">招标投标格式文本二</span></div><br/><b><span style=\"font-family: 黑体; font-size: 28pt;\">江西省房屋建筑和市政基础设施工程施工</span></b><br/><br/><b><span style=\"font-family: 黑体; font-size: 30pt;\">招标公告</span></b><br/><br/><div style=\"text-align: center;font-size: 16pt;\">                                          项目编号：3611031903130201        招标编号： 赣建广招字[2019]第041号<br/><br/></div><p style=\"text-align: center\"></p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\"><tbody><tr height=\"30\"><td align=\"center\" colspan=\"6\"><b><span style=\"font-family: 黑体; font-size: 18pt\">招标条件及工程基本情况</span></b></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">招标单位名称</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">上饶市广丰区新区投资开发有限公司</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">招标工程项目</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">广丰区新型城镇化建设（一期）项目-裕丰南大道延伸段道路工程</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">工程项目建设地址</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">上饶市广丰区永丰大道</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">项目审批、核准或备案机关</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">上饶市广丰区发展和改革委员会文件</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">批文名称及编号</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">关于对广丰区新型城镇化建设（一期）项目可行性研究报告的批复 : 广发改字【2015】34号</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">建筑面积</span></td><td style=\"width:16%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0.0 平方米</span></td><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">层次</span></td><td style=\"width:16%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0 层</span></td><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">结构</span></td><td style=\"width:16%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">混合</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">项目总投资</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">667.22万元</span></td><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">本项目投资</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">667.22万元</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">资格审查方式</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">资格后审</span></td><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">资金已落实</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">100.00%</span></td></tr><tr><td align=\"center\" colspan=\"6\"><b><span style=\"font-family: 黑体; font-size: 18pt\">招标范围及标段划分</span></b></td></tr><tr><td align=\"center\"><b><span style=\"font-family: 黑体; font-size: 16pt\">招标范围</span></b></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">本工程施工图范围内所有内容（具体详见工程量清单）</span></td></tr><tr><td align=\"center\" rowspan=\"2\"><b><span style=\"font-family: 黑体; font-size: 16pt\">标段划分</span></b></td><td align=\"center\"><b><span style=\"font-family: 黑体; font-size: 16pt\">一标段</span></b></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">广丰区新型城镇化建设（一期）项目-裕丰南大道延伸段道路工程</span></td></tr><tr><td align=\"center\"><b><span style=\"font-family: 黑体; font-size: 16pt\">二标段</span></b></td><td colspan=\"4\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span></td></tr><tr><td align=\"center\" colspan=\"6\"><b><span style=\"font-family: 黑体; font-size: 18pt\">投标（申请）人应具备的资格条件</span></b></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">企业营业执照</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">经营范围应该符合招标要求</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">企业资质类别及等级</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[市政公用工程·市政公用工程三级](含)以上</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">注册建造师类别和等级</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[注册二级建造师·市政公用工程](含)以上</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">安全生产许可证</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">在有效期内</span></td><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">标段选择要求</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">一个标段</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">资格审查时投标人应提供的业绩材料</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span></td></tr><tr><td align=\"center\" colspan=\"6\"><b><span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">资格审查时应提供的证件或证书原件（建筑业企业资质证书为复印件）</span></b></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">资格证件</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">企业资质证书、营业执照、安全生产许可证</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">法定代表人或委托代理人</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">法定代表人证书或委托代理人委托书、本人身份证 (委托代理人：由注册建造师担任)</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">项目负责人</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派建造师注册证书、本人身份证</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">技术负责人</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">项目技术负责人的职称证书</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">关键岗位人员</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派施工员、安全员、质量员、材料员、标准员、机械员、劳务员、资料员的岗位证书</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">其他要求</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">1、外埠来赣施工单位在参加开标会时须根据《关于省外进赣建设工程企业实行信息登记管理的通知》，进行了信息登记入录且审核通过，可以在“一体化工作平台”上查询到相关信息的公司，并截图打印方可参加本工程投标。2、本次招标不接受联合体投标。3、按广府办字【2014】167号文件规定，投标人中标后必须提交农民工工资保障金。4、本工程采取网上报名，电子化评标。投标人可自行进入江西省公共资源交易网投标报名，相关的其它补充要求会在网上及时通知，请各投标人密切留意，否则，因此造成的失误由投标人自负。5、本工程采用报价承诺法网上电子评标。6拟承担本工程的建造师应是与本企业建立了劳动关系的员工，且不得为公务员及本单位以外的事业单位人员（是指在编在岗且是国家财政全额拨款或部分拨款单位工作人员），并提供本企业在本工程开标当月前六个月（不含开标当月）以上且尚未到期的劳动合同和缴纳的社会基本养老保险证明材料原件。7、项目技术负责人需提供本企业在本工程开标当月前六个月（不含开标当月）以上且尚未到期的劳动合同和缴纳社会基本养老保险证明材料原件.8、中标公示结束后，招标人将组织有关人员对中标单位拟派的建造师和项目技术负责人的劳动合同和社会养老保险进行现场核实，对提供虚假材料的企业直接予以做废标处理。9、本公告同时在江西省公共资源交易网、江西省招标投标网、广丰公共资源交易网发布。10、其它要求详见资审文件及招标文件。</span></td></tr><tr><td align=\"center\" colspan=\"6\"><span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">招标公告、招标文件、资审文件的发布（获取）时间</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">公告发布时间</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年05月10日 至 2019年05月28日（公告发布时间最短不得少于5日）</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">获取招标文件时间</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年05月13日</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">获取方式</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">江西省公共资源交易网自行获取</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">获取资审文件时间</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年05月13日</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">获取地址</span></td><td colspan=\"5\" style=\"width:80%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">请到江西省公共资源交易电子交易平台http://ggzyjy.jiangxi.gov.cn/dzjy/memberframe/FrameAll资审文件领取菜单领取资审文件</span></td></tr><tr><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">联系人</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">周先生</span></td><td style=\"width:16%;\"><span style=\"font-family: 黑体; font-size: 16pt\">联系电话</span></td><td colspan=\"2\" style=\"width:32%;\"><span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">15179359720</span></td></tr><tr><td colspan=\"2\" style=\"width:32%;\"><div style=\"line-height: 60pt;\"><span style=\"font-family: 黑体; font-size: 16pt\">招标代理机构：（单位章）</span></div><div style=\"line-height: 60pt;\"><span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div><div style=\"line-height: 20pt;text-align: right;\"><span style=\"font-family: 黑体; font-size: 16pt\">2019年05月10日  </span></div></td><td colspan=\"2\" style=\"width:32%;\"><div style=\"line-height: 60pt;\"><span style=\"font-family: 黑体; font-size: 16pt\">招标人：（单位章）</span></div><div style=\"line-height: 60pt;\"><span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div><div style=\"line-height: 20pt;text-align: right;\"><span style=\"font-family: 黑体; font-size: 16pt\">2019年05月10日  </span></div></td><td colspan=\"2\" style=\"width:32%;\"><div style=\"line-height: 60pt;\"><span style=\"font-family: 黑体; font-size: 16pt\">招投标监管机构：（单位章）</span></div><div style=\"line-height: 60pt;\"><span style=\"font-family: 黑体; font-size: 16pt\">经办人：（章）</span></div><div style=\"line-height: 20pt;text-align: right;\"><span style=\"font-family: 黑体; font-size: 16pt\">2019年05月10日  </span></div></td></tr></tbody></table><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\"><tbody><tr>	<td>		<div style=\"text-align: left; font-family: 宋体;font-size: 16pt;  line-height: 58px;\">			                                          注：1、本表一式三份,招标人、招标代理机构、招投标监管机构各存一份，本表属”招投标情况书面报告“材料之一。<br/>                                   2、有标段划分的招标项目，当各标段对投标人的资格条件要求不一致时，招标人应在”投标（申请）人应具备的资格条件                              “栏目中的”企业资质类别和等级、注册建造师类别和等级“栏目中将各标段的资格条件要求予以明确。<br/>    		</div>		</td>               	</tr><tr>	<td>	<br/>	<br/>		<div class=\"auto-style1\" style=\"text-align: right; word-wrap: break-word;font-family: 黑体;font-size: 22pt ; line-height: 58px; font-weight: 700;\">			                                江西省建设工程招标投标办公室印制		</div>		</td>	</tr></tbody></table><p></p></div><style type=\"text/css\">.buttomlink {			width: 200px;			height: 40px;			background: #177BBA;			border-radius:10px;			font-size:20px;			line-height: 38px;			color:white;			letter-spacing: 2px;			text-align: center;			padding: 2px;			cursor: pointer;			text-decoration: none;						clear: both;			display: block;			margin: 87px 0px 0px 0px;		}</style><div style=\"margin: 0px auto; width: 800px;\"><div style=\"width: 300px; margin-left: 0px; float: left;\"></div><div style=\"width: 300px; margin-left: 200px; float: left;\"></div></div><script type=\"text/javascript\">    function ResizeToScreen(id, pX, pY) {    var obj = document.getElementById(id);    obj.style.display = \"\";    obj.style.pixelLeft = pX;    obj.style.pixelTop = pY;    document.body.scrollTop = pY - 200;}</script></div>            			</div>', 2, '2019-04-11 16:05:00', '2019-04-22 16:05:11', 0);
-COMMIT;
+
+-- ----------------------------
+-- Table structure for t_labour
+-- ----------------------------
+DROP TABLE IF EXISTS `t_labour`;
+CREATE TABLE `t_labour`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '劳务求职编号',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '姓名',
+  `age` int(10) NULL DEFAULT 0 COMMENT '年龄',
+  `work_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '从事工种',
+  `job_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '求职类型',
+  `work_addr` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '工作地点',
+  `addr_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细地址',
+  `treatment` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '待遇要求',
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '联系电话',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其他说明',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '劳务求职表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_labour_req
+-- ----------------------------
+DROP TABLE IF EXISTS `t_labour_req`;
+CREATE TABLE `t_labour_req`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '劳务需求编号',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `comp_name` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '企业名称',
+  `work_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '从事工种',
+  `job_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '求职类型',
+  `work_addr` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '工作地点',
+  `addr_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细地址',
+  `treatment` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '待遇要求',
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '联系电话',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其他说明',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '劳务需求表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_mark_carpool
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_carpool`;
-CREATE TABLE `t_mark_carpool` (
+CREATE TABLE `t_mark_carpool`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '开标拼车编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `project_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `start_city` varchar(20) DEFAULT '' COMMENT '出发城市',
-  `start_addr` varchar(20) DEFAULT '' COMMENT '出发地点',
-  `end_city` varchar(20) DEFAULT NULL COMMENT '目的地城市',
-  `end_addr` varchar(10) DEFAULT '' COMMENT '目的地',
-  `start_time` datetime DEFAULT NULL COMMENT '出发时间',
-  `car_type` varchar(10) DEFAULT '' COMMENT '汽车类型',
-  `people_count` int(2) DEFAULT '0' COMMENT '搭载人数',
-  `record_count` int(2) DEFAULT '0' COMMENT '申请人数',
-  `price` bigint(20) DEFAULT '0' COMMENT '价格',
-  `name` varchar(10) DEFAULT '' COMMENT '联系人姓名',
-  `phone` varchar(11) DEFAULT '' COMMENT '联系人电话',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
+  `start_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发城市',
+  `start_addr` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发地点',
+  `end_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '目的地城市',
+  `end_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '目的地',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT '出发时间',
+  `car_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '汽车类型',
+  `people_count` int(2) NULL DEFAULT 0 COMMENT '搭载人数',
+  `record_count` int(2) NULL DEFAULT 0 COMMENT '申请人数',
+  `price` bigint(20) NULL DEFAULT 0 COMMENT '价格',
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人姓名',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人电话',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='开标拼车表';
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_mark_carpool
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_mark_carpool` VALUES (2, 50, 4, '北京/北京市/东城区', '某某低', '天津/天津市/和平区', '某某', '2019-05-13 00:00:00', '小轿车', 2, 2, 100, '刘某', '18279799997', 6, '2019-05-13 12:21:24', '2019-05-24 16:17:53', 0);
 INSERT INTO `t_mark_carpool` VALUES (3, 50, 1, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-17 12:01:00', '小轿车', 1, 0, 100, '1', '1', 1, '2019-05-17 19:40:19', NULL, 0);
 INSERT INTO `t_mark_carpool` VALUES (4, 50, 2, '北京市/市辖区/西城区', '2', '北京市/市辖区/西城区', '2', '2019-05-18 12:01:00', '小轿车', 2, 0, 200, '2', '2', 1, '2019-05-18 12:26:31', NULL, 0);
@@ -1698,59 +1666,55 @@ INSERT INTO `t_mark_carpool` VALUES (9, 50, 2, '北京市/市辖区/西城区', 
 INSERT INTO `t_mark_carpool` VALUES (10, 50, 2, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-23 12:01:00', '小轿车', 1, 0, 100, '1', '1', 1, '2019-05-23 17:46:50', NULL, 0);
 INSERT INTO `t_mark_carpool` VALUES (11, 50, 2, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-23 12:01:00', '小轿车', 1, 0, 100, '1', '1', 1, '2019-05-23 17:46:50', NULL, 0);
 INSERT INTO `t_mark_carpool` VALUES (12, 50, 2, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-23 12:01:00', '小轿车', 1, 0, 100, '1', '1', 1, '2019-05-23 17:46:50', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_mark_carpool_record
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_carpool_record`;
-CREATE TABLE `t_mark_carpool_record` (
+CREATE TABLE `t_mark_carpool_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '拼车记录编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `mark_carpool_id` bigint(20) DEFAULT NULL COMMENT '拼车编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='开标拼车申请记录表';
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `mark_carpool_id` bigint(20) NULL DEFAULT NULL COMMENT '拼车编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标拼车申请记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_mark_carpool_record
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_mark_carpool_record` VALUES (4, 42, 2, 1, '2019-05-17 11:34:58', NULL, 0);
 INSERT INTO `t_mark_carpool_record` VALUES (5, 44, 2, 1, '2019-05-24 16:17:53', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_mark_seekcar
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_seekcar`;
-CREATE TABLE `t_mark_seekcar` (
+CREATE TABLE `t_mark_seekcar`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '开标找车编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `project_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `start_city` varchar(20) DEFAULT '' COMMENT '出发城市',
-  `start_addr` varchar(20) DEFAULT '' COMMENT '出发地点',
-  `end_city` varchar(20) DEFAULT NULL COMMENT '目的地城市',
-  `end_addr` varchar(10) DEFAULT '' COMMENT '目的地',
-  `start_time` datetime DEFAULT NULL COMMENT '出发时间',
-  `name` varchar(10) DEFAULT '' COMMENT '联系人姓名',
-  `phone` varchar(11) DEFAULT '' COMMENT '联系人电话',
-  `memo` varchar(255) DEFAULT '' COMMENT '备注',
-  `record_count` int(2) DEFAULT '0' COMMENT '申请人数',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
+  `start_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发城市',
+  `start_addr` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '出发地点',
+  `end_city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '目的地城市',
+  `end_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '目的地',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT '出发时间',
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人姓名',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系人电话',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `record_count` int(2) NULL DEFAULT 0 COMMENT '申请人数',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='开标找车表';
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_mark_seekcar
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_mark_seekcar` VALUES (1, 42, 4, '北京/北京市/东城区', '上海', '北京/北京市/东城区', '北京', '2019-05-16 16:20:43', '危锦辉', '18279700225', '急须车', 0, 1, '2019-05-16 16:21:02', NULL, 0);
 INSERT INTO `t_mark_seekcar` VALUES (2, 40, 4, '北京/北京市/东城区', '东城', '辽宁/丹东市/凤城市', '凤城', '2019-05-17 00:00:00', '曾某', '18279700225', '急需，有意请联系', 1, 2, '2019-05-17 12:42:57', '2019-05-17 12:43:08', 0);
 INSERT INTO `t_mark_seekcar` VALUES (3, 42, 2, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-17 12:01:00', '1', '1', '1', 1, 2, '2019-05-17 19:42:48', '2019-05-24 16:18:20', 0);
@@ -1763,74 +1727,68 @@ INSERT INTO `t_mark_seekcar` VALUES (9, 42, 2, '北京市/市辖区/西城区', 
 INSERT INTO `t_mark_seekcar` VALUES (10, 42, 2, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-17 12:01:00', '1', '1', '1', 0, 1, '2019-05-17 19:42:48', NULL, 0);
 INSERT INTO `t_mark_seekcar` VALUES (11, 42, 2, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-17 12:01:00', '1', '1', '1', 0, 1, '2019-05-17 19:42:48', NULL, 0);
 INSERT INTO `t_mark_seekcar` VALUES (12, 42, 2, '北京市/市辖区/西城区', '1', '北京市/市辖区/西城区', '1', '2019-05-17 12:01:00', '1', '1', '1', 0, 1, '2019-05-17 19:42:48', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_mark_seekcar_record
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mark_seekcar_record`;
-CREATE TABLE `t_mark_seekcar_record` (
+CREATE TABLE `t_mark_seekcar_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '拼车记录编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `mark_seekcar_id` bigint(20) DEFAULT NULL COMMENT '找车编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='开标找车申请记录表';
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `mark_seekcar_id` bigint(20) NULL DEFAULT NULL COMMENT '找车编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '开标找车申请记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_mark_seekcar_record
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_mark_seekcar_record` VALUES (1, 42, 2, 1, '2019-05-17 12:43:08', NULL, 0);
 INSERT INTO `t_mark_seekcar_record` VALUES (2, 44, 3, 1, '2019-05-24 16:18:20', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_message
 -- ----------------------------
 DROP TABLE IF EXISTS `t_message`;
-CREATE TABLE `t_message` (
+CREATE TABLE `t_message`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息编号',
-  `title` varchar(50) NOT NULL COMMENT '消息标题',
-  `summary` varchar(255) DEFAULT NULL COMMENT '消息摘要',
-  `content` varchar(5000) NOT NULL COMMENT '消息内容',
-  `message_type` varchar(20) DEFAULT NULL COMMENT '消息类型',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息标题',
+  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息摘要',
+  `content` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息内容',
+  `message_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息类型',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='消息记录表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_message
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_message` VALUES (1, 'zywork-app体验版发布', NULL, 'zywork-app体验版于2019-01-22晚上10点45分正式发布，邀请您使用！', '', 4, '2019-01-24 16:19:13', '2019-05-20 10:47:15', 1);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_module
 -- ----------------------------
 DROP TABLE IF EXISTS `t_module`;
-CREATE TABLE `t_module` (
+CREATE TABLE `t_module`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '模块编号',
-  `title` varchar(50) NOT NULL COMMENT '模块标题',
-  `description` varchar(200) DEFAULT NULL COMMENT '模块描述',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模块标题',
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模块描述',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统模块表';
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统模块表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_module
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_module` VALUES (1, '测试模块', NULL, 1, '2019-03-12 16:33:21', NULL, 0);
 INSERT INTO `t_module` VALUES (2, '模块管理', NULL, 1, '2019-03-12 16:33:21', NULL, 0);
 INSERT INTO `t_module` VALUES (3, '权限管理', NULL, 1, '2019-03-12 16:33:21', NULL, 0);
@@ -1886,53 +1844,49 @@ INSERT INTO `t_module` VALUES (52, 'Redis缓存管理', NULL, 1, '2019-03-12 16:
 INSERT INTO `t_module` VALUES (53, '定时任务管理', NULL, 1, '2019-03-12 16:33:23', NULL, 0);
 INSERT INTO `t_module` VALUES (54, 'DAU管理', NULL, 1, '2019-03-12 16:33:23', NULL, 0);
 INSERT INTO `t_module` VALUES (55, '用户统计管理', NULL, 1, '2019-03-12 16:33:23', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `t_notice`;
-CREATE TABLE `t_notice` (
+CREATE TABLE `t_notice`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '公告编号',
-  `title` varchar(50) NOT NULL COMMENT '公告标题',
-  `summary` varchar(255) DEFAULT NULL COMMENT '公告摘要',
-  `content` varchar(5000) NOT NULL COMMENT '公告内容',
-  `end_time` datetime DEFAULT NULL COMMENT '截止时间',
-  `stick_status` tinyint(4) DEFAULT '0' COMMENT '置顶状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '公告标题',
+  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公告摘要',
+  `content` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '公告内容',
+  `end_time` datetime(0) NULL DEFAULT NULL COMMENT '截止时间',
+  `stick_status` tinyint(4) NULL DEFAULT 0 COMMENT '置顶状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统公告表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统公告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_notice
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_notice` VALUES (1, '公告标题', '公告摘要', '公告内容<p>hello</p>', '2019-01-08 20:00:00', 1, 4, '2019-01-07 00:12:44', '2019-03-16 18:16:28', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_often_question
 -- ----------------------------
 DROP TABLE IF EXISTS `t_often_question`;
-CREATE TABLE `t_often_question` (
+CREATE TABLE `t_often_question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '常见问题编号',
-  `question_type_id` bigint(20) DEFAULT '0' COMMENT '问题类别编号',
-  `title` varchar(32) DEFAULT '' COMMENT '问题标题',
-  `content` varchar(2000) DEFAULT '' COMMENT '问题解答',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `question_type_id` bigint(20) NULL DEFAULT 0 COMMENT '问题类别编号',
+  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '问题标题',
+  `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '问题解答',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='常见问题表';
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '常见问题表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_often_question
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_often_question` VALUES (1, 1, '证书的问题标题1', '<p>这个问题草鸡简单的</p>', 2, '2019-04-28 10:34:04', '2019-04-28 10:39:11', 0);
 INSERT INTO `t_often_question` VALUES (2, 1, '证书的问题标题2', '<p>这个问题草鸡简单的</p>', 2, '2019-04-28 10:34:04', '2019-04-28 10:39:11', 0);
 INSERT INTO `t_often_question` VALUES (3, 1, '证书的问题标题3', '<p>这个问题草鸡简单的</p>', 2, '2019-04-28 10:34:04', '2019-04-28 10:39:11', 0);
@@ -1947,28 +1901,26 @@ INSERT INTO `t_often_question` VALUES (11, 1, '证书的问题标题11', '<p>这
 INSERT INTO `t_often_question` VALUES (12, 1, '证书的问题标题12', '<p>这个问题草鸡简单的</p>', 2, '2019-04-28 10:34:04', '2019-04-28 10:39:11', 0);
 INSERT INTO `t_often_question` VALUES (13, 1, '证书的问题标题13', '<p>这个问题草鸡简单的</p>', 2, '2019-04-28 10:34:04', '2019-04-28 10:39:11', 0);
 INSERT INTO `t_often_question` VALUES (14, 1, '证书的问题标题14', '<p>这个问题草鸡简单的</p>', 2, '2019-04-28 10:34:04', '2019-04-28 10:39:11', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_organization
 -- ----------------------------
 DROP TABLE IF EXISTS `t_organization`;
-CREATE TABLE `t_organization` (
+CREATE TABLE `t_organization`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '组织编号',
   `parent_id` bigint(20) NOT NULL COMMENT '父编号',
-  `title` varchar(20) NOT NULL COMMENT '组织名称',
-  `description` varchar(255) DEFAULT NULL COMMENT '组织描述',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '组织名称',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组织描述',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='组织或部门表';
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '组织或部门表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_organization
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_organization` VALUES (1, 0, '赣州智悦科技有限公司', NULL, 1, '2019-01-24 16:15:02', NULL, 0);
 INSERT INTO `t_organization` VALUES (2, 1, '研发部', NULL, 1, '2019-01-24 16:15:13', NULL, 0);
 INSERT INTO `t_organization` VALUES (3, 1, '市场部', NULL, 1, '2019-01-24 16:15:27', NULL, 0);
@@ -1976,29 +1928,27 @@ INSERT INTO `t_organization` VALUES (4, 2, '后端组', NULL, 1, '2019-01-26 09:
 INSERT INTO `t_organization` VALUES (5, 2, '前端组', NULL, 1, '2019-01-26 10:04:42', NULL, 0);
 INSERT INTO `t_organization` VALUES (8, 2, '运维组', NULL, 1, '2019-01-26 10:37:52', NULL, 0);
 INSERT INTO `t_organization` VALUES (12, 2, '测试组', NULL, 1, '2019-01-26 10:47:41', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `t_permission`;
-CREATE TABLE `t_permission` (
+CREATE TABLE `t_permission`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '权限编号',
   `module_id` bigint(20) NOT NULL COMMENT '所属模块',
-  `title` varchar(50) NOT NULL COMMENT '权限标题',
-  `permission` varchar(200) NOT NULL COMMENT '权限字符串',
-  `description` varchar(200) DEFAULT NULL COMMENT '权限描述',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限标题',
+  `permission` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限字符串',
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限描述',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=261 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统权限表';
+) ENGINE = InnoDB AUTO_INCREMENT = 261 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_permission` VALUES (1, 1, '测试添加', '/test/add', NULL, 1, '2019-03-12 16:33:21', NULL, 0);
 INSERT INTO `t_permission` VALUES (2, 1, '测试修改', '/test/edit', NULL, 1, '2019-03-12 16:33:21', NULL, 0);
 INSERT INTO `t_permission` VALUES (3, 1, '测试删除', '/test/remove/*', NULL, 1, '2019-03-12 16:33:21', NULL, 0);
@@ -2259,81 +2209,77 @@ INSERT INTO `t_permission` VALUES (257, 54, '演示-DAU管理-条件查询所有
 INSERT INTO `t_permission` VALUES (258, 54, '演示-DAU管理-分页查询', '/statistics-dau/admin/pager-cond', NULL, 1, '2019-03-12 16:33:23', NULL, 0);
 INSERT INTO `t_permission` VALUES (259, 55, '后台-用户统计管理', '/user-liveness-stat/**', NULL, 1, '2019-03-12 16:33:23', NULL, 0);
 INSERT INTO `t_permission` VALUES (260, 55, '演示-用户统计管理', '/user-liveness-stat/**', NULL, 1, '2019-03-12 16:33:23', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_process
 -- ----------------------------
 DROP TABLE IF EXISTS `t_process`;
-CREATE TABLE `t_process` (
+CREATE TABLE `t_process`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '流程编号',
-  `process_name` varchar(200) NOT NULL COMMENT '流程Name',
-  `process_key` varchar(200) NOT NULL COMMENT '流程Key',
-  `file_path` varchar(500) DEFAULT NULL COMMENT '流程文件路径',
-  `description` varchar(500) DEFAULT NULL COMMENT '流程描述',
-  `is_deploy` tinyint(4) DEFAULT '0' COMMENT '是否部署',
-  `deploy_time` datetime DEFAULT NULL COMMENT '部署时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `process_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程Name',
+  `process_key` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程Key',
+  `file_path` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程文件路径',
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程描述',
+  `is_deploy` tinyint(4) NULL DEFAULT 0 COMMENT '是否部署',
+  `deploy_time` datetime(0) NULL DEFAULT NULL COMMENT '部署时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上传时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='流程信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '流程信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_process
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_process` VALUES (1, 'leave_process', 'leave_process', './process/2019021516022939624.zip', NULL, 1, '2019-02-15 17:18:43', 15, '2019-02-15 15:06:38', '2019-02-15 17:18:45', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_project
 -- ----------------------------
 DROP TABLE IF EXISTS `t_project`;
-CREATE TABLE `t_project` (
+CREATE TABLE `t_project`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '招投标项目编号',
-  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '项目名称',
-  `project_type` varchar(10) DEFAULT '' COMMENT '项目类型',
-  `city` varchar(10) DEFAULT '' COMMENT '城市',
-  `project_detail` mediumtext COMMENT '项目详情',
-  `release_status` varchar(10) DEFAULT '待审核' COMMENT '发布状态',
-  `mark_unit_name` varchar(100) DEFAULT '' COMMENT '招标单位名称',
-  `project_invest` varchar(20) DEFAULT '' COMMENT '项目投资',
-  `check_pattern` varchar(20) DEFAULT '' COMMENT '审查方式',
-  `comp_aptitude_type` varchar(200) DEFAULT '' COMMENT '企业资质类型',
-  `builder_level` varchar(200) DEFAULT '' COMMENT '建造师等级',
-  `money_to_implement` float(5,2) DEFAULT NULL COMMENT '资金落实(%)',
-  `tendering_agent` varchar(20) DEFAULT '' COMMENT '招标代理',
-  `phone` varchar(15) DEFAULT '' COMMENT '联系电话',
-  `offer_price` decimal(20,2) DEFAULT '0.00' COMMENT '要约价(元)',
-  `assure_price` decimal(20,2) DEFAULT '0.00' COMMENT '保证金(万元)',
-  `construction_period` int(10) DEFAULT '0' COMMENT '工期(天)',
-  `download_end_time` datetime DEFAULT NULL COMMENT '下载截止时间',
-  `other_demand` text COMMENT '其他要求',
-  `open_mark_info` varchar(10) DEFAULT '' COMMENT '开标信息',
-  `open_mark_time` datetime DEFAULT NULL COMMENT '开标时间',
-  `open_mark_addr` varchar(32) DEFAULT '' COMMENT '开标地点',
-  `mark_status` varchar(10) DEFAULT '' COMMENT '开标状态',
-  `in_mark_comp` varchar(32) DEFAULT '' COMMENT '中标单位',
-  `notice_time` datetime DEFAULT NULL COMMENT '公告时间',
-  `click_count` bigint(20) DEFAULT '0' COMMENT '点击次数',
-  `is_electronic` tinyint(4) DEFAULT '0' COMMENT '是否电子标',
-  `source_url` varchar(300) DEFAULT '' COMMENT '源地址',
-  `inward_html_url` varchar(300) DEFAULT '' COMMENT '内部地址',
-  `resource_count` int(10) DEFAULT '0' COMMENT '附件个数',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '项目名称',
+  `project_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
+  `city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '城市',
+  `project_detail` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '项目详情',
+  `release_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '待审核' COMMENT '发布状态',
+  `mark_unit_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标单位名称',
+  `project_invest` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目投资',
+  `check_pattern` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '审查方式',
+  `comp_aptitude_type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '企业资质类型',
+  `builder_level` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建造师等级',
+  `money_to_implement` float(5, 2) NULL DEFAULT NULL COMMENT '资金落实(%)',
+  `tendering_agent` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标代理',
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系电话',
+  `offer_price` decimal(20, 2) NULL DEFAULT 0.00 COMMENT '要约价(元)',
+  `assure_price` decimal(20, 2) NULL DEFAULT 0.00 COMMENT '保证金(万元)',
+  `construction_period` int(10) NULL DEFAULT 0 COMMENT '工期(天)',
+  `download_end_time` datetime(0) NULL DEFAULT NULL COMMENT '下载截止时间',
+  `other_demand` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '其他要求',
+  `open_mark_info` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标信息',
+  `open_mark_time` datetime(0) NULL DEFAULT NULL COMMENT '开标时间',
+  `open_mark_addr` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标地点',
+  `mark_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开标状态',
+  `in_mark_comp` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '中标单位',
+  `notice_time` datetime(0) NULL DEFAULT NULL COMMENT '公告时间',
+  `click_count` bigint(20) NULL DEFAULT 0 COMMENT '点击次数',
+  `is_electronic` tinyint(4) NULL DEFAULT 0 COMMENT '是否电子标',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
+  `inward_html_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内部地址',
+  `resource_count` int(10) NULL DEFAULT 0 COMMENT '附件个数',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `index_title` (`title`) USING BTREE COMMENT '招标信息名称唯一索引'
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='招投标项目表';
+  UNIQUE INDEX `index_title`(`title`) USING BTREE COMMENT '招标信息名称唯一索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 130 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招投标项目表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_project
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_project` VALUES (108, '[安源区]丹井大道（南互通连接线段）工程EPC项目监理工程', '房建市政', '', '<div class=\"article-info\">\n            				<h1>[安源区]丹井大道（南互通连接线段）工程EPC项目监理工程<font color=\"red\"></font></h1>\n            				<p class=\"infotime\">\n            					[2019-06-17]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div align=\"center\">\n        <div style=\"text-align: right;\">\n            <span style=\"font-family: 微软黑雅; font-size: 14pt;\">监理招标投标格式文本三</span>\n        </div>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 32pt;\">招 标 公 告</span></b><br/><br/>\n        <div style=\"text-align: center;font-size: 16pt;font-family: 黑体;\">\n                      招标编号： 赣建安招字[2019]第9号 \n            <br/>\n        </div>\n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 20pt\">工程概况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标人名称</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">萍乡市安源区交通运输局</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目地址</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">安源区</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">建设规模</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">资格后审</span>\n                    </td>\n                </tr>\n				 <tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 20pt\">招标内容</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td colspan=\"6\" style=\"width:96%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">本标段招标范围：图纸范围内的所有内容施工阶段监理（本工程施工阶段到竣工结算后的全部监理工作）。对工程进行进度、质量、投资、控制，安全管理、合同管理、信息管理，协调施工现场各方面关系。</span>\n                    </td>\n                </tr>\n				<tr>\n                    <td colspan=\"6\" style=\"width:96%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">本项目监理费约155.36万元</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 20pt\">投标（申请）人应具备的资格条件</span></b>\n                    </td>\n                </tr>           \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业资质类别及等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[工程监理综合资质](含)以上或者[专业资质·市政公用工程·市政公用工程甲级]</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">总监理工程师专业类别</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[注册监理工程师·市政公用工程](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">标段选择要求</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">一个标段</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查时投标人应提供的业绩材料</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">\n                        </span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 20pt;\">资格审查时应提供的证件或证书</span></b><br/>\n                        <span style=\"font-family: 黑体; font-size: 14pt;\">（采用招投标用户信息库比对、扫描件备查）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格证件</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">企业资质证书、营业执照（加盖企业公章的扫描件或复印件）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人或委托代理人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">法定代表人证书或委托代理人委托书、本人身份证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">总监理工程师</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派总监理工程师市政公用工程专业监理工程师注册证书、资格证书及本人身份证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">其他监理人员</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派其他监理人员证书</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">其他要求</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">省外进赣企业在江西省建筑市场监管与诚信信息一体化工作平台已信息登记（提供网站截图加盖单位公章）</span>\n                    </td>\n                </tr>\n				<tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">彭先生</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0799-6851889</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 20pt;\">报名时间及地点</span>            \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">公告发布时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月17日 </span>\n                    </td>\n                </tr>\n				<tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 20pt;\">联系人及联系方式</span>            \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">萍乡市安源区交通运输局</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标机构</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">江西省恒立建工咨询有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">地址</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">地址</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">江西省南昌市南昌高新技术产业开发区高新五路966号数字大厦401-402室</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">何福开</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">杨兵</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">13979981982</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n				<tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电子邮件</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电子邮件</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n               \n                <tr>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标代理机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（盖章）</span></div>\n                        \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标人法定代表人：（签字）</span></div>\n                        <div style=\"line-height:60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标人：（盖章）</span></div>\n                       \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 15pt\">招投标监管机构备案人:(单位章)</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标监管机构：（盖章）</span></div>\n                        \n                    </td>\n                </tr>\n            </tbody></table>\n        <p></p>\n    </div>\n\n<style type=\"text/css\">\n.buttomlink {\n			width: 200px;\n			height: 40px;\n			background: #177BBA;\n			border-radius:10px;\n			font-size:20px;\n			line-height: 38px;\n			color:white;\n			letter-spacing: 2px;\n			text-align: center;\n			padding: 2px;\n			cursor: pointer;\n			text-decoration: none;\n			/* a是行内元素,所以要变成块级元素,block为另起一行,inline-block为变为行内块级元素,\n			  clear清除左右浮动才能设置block\n			 */\n			clear: both;\n			display: block;\n			margin: 87px 0px 0px 0px;\n		}\n</style>\n<div style=\"margin: 0px auto; width: 800px;\">\n<div style=\"width: 300px; margin-left: 0px; float: left;\"></div>\n<div style=\"width: 300px; margin-left: 200px; float: left;\"></div>\n</div>\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '待审核', '', '', '资格后审', '[工程监理综合资质](含)以上或者[专业资质·市政公用工程·市政公用工程甲级]', '', NULL, '', '', 0.00, 0.00, 0, NULL, '省外进赣企业在江西省建筑市场监管与诚信信息一体化工作平台已信息登记（提供网站截图加盖单位公章）', '', NULL, '', '公告中', '', '2019-06-17 14:18:24', 0, 0, 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001001/20190617/41065842-1333-494b-93eb-4adcb3adcdc1.html', 'upload/file/8da73af4-8a18-4583-9deb-67e9fe5d9a2b.html', 0, 1, '2019-06-17 14:18:32', '2019-06-17 14:18:32', 0);
 INSERT INTO `t_project` VALUES (109, '[芦溪县]芦溪县妇幼保健院室内装修改造工程', '房建市政', '', '<div class=\"article-info\">\n            				<h1>[芦溪县]芦溪县妇幼保健院室内装修改造工程<font color=\"red\"></font></h1>\n            				<p class=\"infotime\">\n            					[2019-06-17]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div align=\"center\">\n        <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 14pt;\">招标投标格式文本二</span>\n        </div>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 28pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 30pt;\">招标公告</span></b><br/><br/>\n        <div style=\"text-align: center;font-size: 16pt;\">\n           \n                               项目编号：3603231905290101        招标编号： 赣建芦招字[2019]第63号 \n            <br/>\n            <br/>\n        </div>\n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标条件及工程基本情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">芦溪县妇幼保健院</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标工程项目</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">芦溪县妇幼保健院室内装修改造工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">工程项目建设地址</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">芦溪县妇幼保健院</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目审批、核准或备案机关</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">批文名称及编号</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"> : 芦发改字【2018】181号</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">建筑面积</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">4000.0 平方米</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">层次</span>\n                    </td>\n                    <td style=\"width:16%;\"> \n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0 层</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">结构</span>\n                    </td>\n                    <td style=\"width:16%;\"> \n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">砖混</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目总投资</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">90.19万元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">本项目投资</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">90.19万元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资金已落实</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">100.00%</span>\n                    </td>\n                </tr>         \n                <tr>\n                     <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标范围及标段划分</span></b>\n                    </td>    \n                </tr>\n                <tr>\n                    <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">招标范围</span></b>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">改建部分：对综合楼进行内外装修翻新，建筑面积约4000平方米。</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" rowspan=\"2\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">标段划分</span></b>\n                    </td>\n                     <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">一标段</span></b>\n                    </td>                 \n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                  <tr>   \n                     <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">二标段</span></b>\n                    </td>                 \n                     <td colspan=\"4\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标（申请）人应具备的资格条件</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业营业执照</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">经营范围应该符合招标要求</span>\n                    </td>\n                </tr>      \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业资质类别及等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[建筑工程·建筑工程三级](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">注册建造师类别和等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[注册二级建造师·建筑工程](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">安全生产许可证</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">在有效期内</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">标段选择要求</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">一个标段</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查时投标人应提供的业绩材料</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">\n                        </span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">资格审查时应提供的证件或证书原件（建筑业企业资质证书为复印件）</span></b>       \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格证件</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">企业资质证书、营业执照（加盖企业公章的扫描件或复印件）、安全生产许可证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人或委托代理人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">法定代表人证书或委托代理人委托书、本人身份证 (委托代理人：由注册建造师担任)</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目负责人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派建造师注册证书、本人身份证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">技术负责人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">项目技术负责人的职称证书</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">关键岗位人员</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派施工员、安全员、质量员、材料员、标准员、机械员、劳务员、资料员的岗位证书</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">其他要求</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">招标公告、招标文件、资审文件的发布（获取）时间</span>            \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">公告发布时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月17日 至 2019年07月05日（公告发布时间最短不得少于5日）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取招标文件时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月17日</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取方式</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">江西省公共资源交易网自行下载</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取资审文件时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月17日</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取地址</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">请到江西省公共资源交易电子交易平台http://ggzyjy.jiangxi.gov.cn/dzjy/memberframe/FrameAll资审文件领取菜单领取资审文件</span>\n                    </td>\n                </tr>\n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标代理机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div>\n                         <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月15日  </span></div>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标人：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div>\n                        <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月15日  </span></div>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招投标监管机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">经办人：（章）</span></div>\n                        <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月15日  </span></div>\n                    </td>\n                </tr>\n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                 <tbody><tr>\n	               <td>\n		                 <div style=\"text-align: left; font-family: 宋体;font-size: 16pt;  line-height: 58px;\">\n			                                          注：1、本表一式三份,招标人、招标代理机构、招投标监管机构各存一份，本表属”招投标情况书面报告“材料之一。 <br/>\n                                   2、有标段划分的招标项目，当各标段对投标人的资格条件要求不一致时，招标人应在”投标（申请）人应具备的资格条件\n                              “栏目中的”企业资质类别和等级、注册建造师类别和等级“栏目中将各标段的资格条件要求予以明确。  <br/>    \n		                    </div>\n		            </td>\n               	</tr>\n                <tr>\n	              <td>\n	                  <br/>\n	                  <br/>\n		              <div class=\"auto-style1\" style=\"text-align: right; word-wrap: break-word;font-family: 黑体;font-size: 22pt ; line-height: 58px; font-weight: 700;\">\n			                                江西省建设工程招标投标办公室印制\n		             </div>\n		          </td>\n	            </tr>\n            </tbody></table>\n        <p></p>\n    </div>\n\n<style type=\"text/css\">\n.buttomlink {\n			width: 200px;\n			height: 40px;\n			background: #177BBA;\n			border-radius:10px;\n			font-size:20px;\n			line-height: 38px;\n			color:white;\n			letter-spacing: 2px;\n			text-align: center;\n			padding: 2px;\n			cursor: pointer;\n			text-decoration: none;\n			/* a是行内元素,所以要变成块级元素,block为另起一行,inline-block为变为行内块级元素,\n			  clear清除左右浮动才能设置block\n			 */\n			clear: both;\n			display: block;\n			margin: 87px 0px 0px 0px;\n		}\n</style>\n<div style=\"margin: 0px auto; width: 800px;\">\n<div style=\"width: 300px; margin-left: 0px; float: left;\"></div>\n<div style=\"width: 300px; margin-left: 200px; float: left;\"></div>\n</div>\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '待审核', '芦溪县妇幼保健院', '90.19万元', '资格后审', '[建筑工程·建筑工程三级](含)以上', '[注册二级建造师·建筑工程](含)以上', 100.00, '', '', 0.00, 0.00, 0, NULL, '', '', NULL, '', '公告中', '', '2019-06-17 14:18:24', 0, 0, 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001001/20190617/f49eb142-ddba-4f0a-a47a-a2de0c4f2615.html', 'upload/file/5191a820-8982-4538-9cb3-c96a0af8829a.html', 0, 1, '2019-06-17 14:18:32', '2019-06-17 14:18:32', 0);
 INSERT INTO `t_project` VALUES (110, '[赣江新区本级]南昌经济技术开发区LED节能示范路网工程项目监理', '房建市政', '', '<div class=\"article-info\">\n            				<h1>[赣江新区本级]南昌经济技术开发区LED节能示范路网工程项目监理<font color=\"red\"></font></h1>\n            				<p class=\"infotime\">\n            					[2019-06-17]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div align=\"center\">\n        <div style=\"text-align: right;\">\n            <span style=\"font-family: 微软黑雅; font-size: 14pt;\">监理招标投标格式文本三</span>\n        </div>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 32pt;\">招 标 公 告</span></b><br/><br/>\n        <div style=\"text-align: center;font-size: 16pt;font-family: 黑体;\">\n                      招标编号： 赣江新区监招字［2019］第06号 \n            <br/>\n        </div>\n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 20pt\">工程概况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标人名称</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌经济技术开发区市政园林管理所</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目地址</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌市经开区辖区内LED节能示范道路</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">建设规模</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">资格后审</span>\n                    </td>\n                </tr>\n				 <tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 20pt\">招标内容</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td colspan=\"6\" style=\"width:96%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">本标段招标范围：南昌经济技术开发区新建灯杆及改造区域内原有路灯灯具、电缆及设施、设备改造等监理工程</span>\n                    </td>\n                </tr>\n				<tr>\n                    <td colspan=\"6\" style=\"width:96%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">本项目监理费约102.12万元</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 20pt\">投标（申请）人应具备的资格条件</span></b>\n                    </td>\n                </tr>           \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业资质类别及等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[工程监理综合资质](含)以上或者[专业资质·市政公用工程·市政公用工程甲级]</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">总监理工程师专业类别</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[注册监理工程师·市政公用工程](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">标段选择要求</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">一个标段</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查时投标人应提供的业绩材料</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">/\n                        </span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 20pt;\">资格审查时应提供的证件或证书</span></b><br/>\n                        <span style=\"font-family: 黑体; font-size: 14pt;\">（采用招投标用户信息库比对、扫描件备查）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格证件</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">企业资质证书、营业执照（加盖企业公章的扫描件或复印件）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人或委托代理人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">法定代表人证书或委托代理人委托书、本人身份证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">总监理工程师</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派总监理工程师具备市政公用工程国家注册监理工程师执业证书、资格证书和高级技术职称（工程类）证书。</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">其他监理人员</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">详见其他要求</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">其他要求</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">1、本项目不接受联合体投标； 2、外埠来赣单位应根据赣建办[2017]14 号文《关于省外进赣建设工程企业实行信息登记管理的通知》规定，在江西省住房和城乡建设厅网站“省外建设工程企业信息登记管理系统”上办理好有效的企业信息登记，且提供登记有效的查询结果截屏复印件且需要加盖投标单位公章；3、本项目采用资格后审，请实时关注江西省公共资源交易网的公告内容，在截至时间前及时下载资格审查文件、招标文件，提交疑问； 4、本项目监理组织机构人员最低配备要求如下：（1）总监理工程师1名，具备市政公用工程国家注册监理工程师执业证书、资格证书和高级技术职称（工程类）证书；（2）总监理工程师代表1名，具备市政公用工程国家注册监理工程师执业证书和高级技术职称（工程类）证书；（3）市政专业监理工程师3人，市政公用工程注册监理工程师，具备工程类工程师及以上职称；（4）电气专业监理工程师2人，电气类省级监理工程师，具备工程类工程师及以上职称；（5）监理员3人，且均为电气工程专业。（注：所有监理人员注册执业证书或岗位证书上的单位名称必须与投标单位名称一致）</span>\n                    </td>\n                </tr>\n				<tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">熊凤梅</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">15970639713</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 20pt;\">报名时间及地点</span>            \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">公告发布时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月17日 </span>\n                    </td>\n                </tr>\n				<tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 20pt;\">联系人及联系方式</span>            \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌经济技术开发区市政园林管理所</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标机构</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">江西众诚投资咨询有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">地址</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">地址</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌市省政府大院省农业厅食堂楼</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">李女士</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">刘吉民</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">18970912680</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0791-86276442</span>\n                    </td>\n                </tr>\n				<tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电子邮件</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">电子邮件</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n               \n                <tr>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标代理机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（盖章）</span></div>\n                        \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标人法定代表人：（签字）</span></div>\n                        <div style=\"line-height:60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标人：（盖章）</span></div>\n                       \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 15pt\">招投标监管机构备案人:(单位章)</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标监管机构：（盖章）</span></div>\n                        \n                    </td>\n                </tr>\n            </tbody></table>\n        <p></p>\n    </div>\n\n<style type=\"text/css\">\n.buttomlink {\n			width: 200px;\n			height: 40px;\n			background: #177BBA;\n			border-radius:10px;\n			font-size:20px;\n			line-height: 38px;\n			color:white;\n			letter-spacing: 2px;\n			text-align: center;\n			padding: 2px;\n			cursor: pointer;\n			text-decoration: none;\n			/* a是行内元素,所以要变成块级元素,block为另起一行,inline-block为变为行内块级元素,\n			  clear清除左右浮动才能设置block\n			 */\n			clear: both;\n			display: block;\n			margin: 87px 0px 0px 0px;\n		}\n</style>\n<div style=\"margin: 0px auto; width: 800px;\">\n<div style=\"width: 300px; margin-left: 0px; float: left;\"></div>\n<div style=\"width: 300px; margin-left: 200px; float: left;\"></div>\n</div>\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '待审核', '', '', '资格后审', '[工程监理综合资质](含)以上或者[专业资质·市政公用工程·市政公用工程甲级]', '', NULL, '', '', 0.00, 0.00, 0, NULL, '1、本项目不接受联合体投标； 2、外埠来赣单位应根据赣建办[2017]14 号文《关于省外进赣建设工程企业实行信息登记管理的通知》规定，在江西省住房和城乡建设厅网站“省外建设工程企业信息登记管理系统”上办理好有效的企业信息登记，且提供登记有效的查询结果截屏复印件且需要加盖投标单位公章；3、本项目采用资格后审，请实时关注江西省公共资源交易网的公告内容，在截至时间前及时下载资格审查文件、招标文件，提交疑问； 4、本项目监理组织机构人员最低配备要求如下：（1）总监理工程师1名，具备市政公用工程国家注册监理工程师执业证书、资格证书和高级技术职称（工程类）证书；（2）总监理工程师代表1名，具备市政公用工程国家注册监理工程师执业证书和高级技术职称（工程类）证书；（3）市政专业监理工程师3人，市政公用工程注册监理工程师，具备工程类工程师及以上职称；（4）电气专业监理工程师2人，电气类省级监理工程师，具备工程类工程师及以上职称；（5）监理员3人，且均为电气工程专业。（注：所有监理人员注册执业证书或岗位证书上的单位名称必须与投标单位名称一致）', '', NULL, '', '公告中', '', '2019-06-17 14:18:24', 0, 0, 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001001/20190617/89110484-e0a4-4658-80c8-0a16f67f4d4e.html', 'upload/file/65267610-041f-4f7c-bd62-73290206c6df.html', 0, 1, '2019-06-17 14:18:32', '2019-06-17 14:18:32', 0);
@@ -2356,36 +2302,34 @@ INSERT INTO `t_project` VALUES (126, '[临川区][非网招]安石大道抚八�
 INSERT INTO `t_project` VALUES (127, '[进贤县][非网招]民和派出所门口道路、新区垃圾中转站对面、翰香苑横一路等10条道路改造提升勘察设计工程', '房建市政', '', '<div class=\"article-info\">\n            				<h1>[进贤县]<font color=\"#0066FF\">[非网招]</font>民和派出所门口道路、新区垃圾中转站对面、翰香苑横一路等10条道路改造提升勘察设计工程</h1>\n            				<p class=\"infotime\">\n            					[2019-06-14]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\"><p -ms-text-justify:=\"\" 10.5pt;=\"\" align=\"center\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: center; line-height: 20pt; font-family: \" times=\"\"><b><span style=\"font-family: 宋体; font-size: 14pt;\">民和派出所门口道路、新区垃圾中转站对面、翰香苑横一路等<span>10</span>条道路改造提升勘察设计工程招标公告<span> </span></span></b></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" align=\"center\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: center; font-family: \" times=\"\"><b><span style=\"font-family: 宋体; font-size: 14pt;\">赣建进招设字【<span> 2019 </span>】第<span>5</span>号<span> </span></span></b></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 18pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">民和派出所门口道路、新区垃圾中转站对面、翰香苑横一路等<span>10</span>条道路改造提升工程由进发改行复字<span>[2019]53</span>号批准建设，现对该项目设计实行公开招标，\n现本工程有关事宜公告如下：</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 18pt; font-family: \" times=\"\"><b><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">一、项目概况与招标范围：</span></b></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 23.6pt; font-family: \" times=\"\"><span style=\"line-height: 150%; letter-spacing: -0.1pt; font-family: 宋体; font-size: 12pt;\">1</span><span style=\"line-height: 150%; letter-spacing: -0.1pt; font-family: 宋体; font-size: 12pt;\">、</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">工程名称：民和派出所门口道路、新区垃圾中转站对面、翰香苑横一路等<span>10</span>条道路改造提升勘察设计工程；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">2</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、工程地点：民和派出所门口、新区垃圾中转站对面、翰香苑范围内、市政大道、后万一路；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">3</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、招标范围：本工程的设计招标包括</span><span style=\"background: white; color: rgb(51, 51, 51); line-height: 150%; font-family: 宋体; font-size: 12pt;\">方案设计优化、方案设计修正、初步设计（</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">含概算</span><span style=\"background: white; color: rgb(51, 51, 51); line-height: 150%; font-family: 宋体; font-size: 12pt;\">）、施工图设计及施工阶段全过程服务配合或指导等服务；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">4</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、总投资额：约<span>2000</span>万元；本项目设计总额<span>42</span>万元；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">5</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、建设内容：<span>1</span>、民和派出所门口道路改造工程：全长约<span>180</span>米，宽<span>11</span>米，路面沥青摊铺面积约<span>1980</span>㎡<span>,</span>路面维修约<span>1300</span>㎡，人行道改造约<span>1440</span>㎡，下水道改造约<span>360m</span>。<span>2</span>、新区垃圾中转站对面道路改造工程：全长约<span>180</span>米，宽<span>12</span>米，路面沥青摊铺面积约<span>2200</span>㎡<span>,</span>人行道改造约<span>1300</span>㎡，下水道改造约<span>360m</span>。<span>3</span>、翰香苑横一路改造工程：全长约<span>550</span>米，宽<span>7</span>米，路面沥青摊铺面积约<span>3800</span>㎡<span>,</span>人行道改造约<span>4392</span>㎡，下水道疏浚：<span>1098m</span>。<span>4</span>、翰香苑横二路改造工程：全长约<span>550</span>米，宽<span>7</span>米，路面沥青摊铺面积约<span>3800</span>㎡<span>,</span>人行道改造约<span>4392</span>㎡，下水道疏浚：<span>1098m</span>。<span>5</span>、翰香苑横三路改造工程：全长约<span>550</span>米，宽<span>7</span>米，路面沥青摊铺面积约<span>3800</span>㎡<span>,</span>人行道改造约<span>4392</span>㎡，下水道疏浚：<span>1098m</span>。<span>6</span>、翰香苑纵一路改造工程：全长约<span>94</span>米，宽<span>7</span>米，路面沥青摊铺面积约<span>660</span>㎡<span>,</span>人行道改造约<span>752</span>㎡，下水道疏浚：<span>188m</span>。<span>7</span>、翰香苑纵一路改造工程：全长约<span>94</span>米，宽<span>7</span>米，路面沥青摊铺面积约<span>660</span>㎡<span>,</span>人行道改造约<span>752</span>㎡，下水道疏浚：<span>188m</span>。<span>8</span>、翰香苑纵一路改造工程：全长约<span>94</span>米，宽<span>7</span>米，路面沥青摊铺面积约<span>660</span>㎡<span>,</span>人行道改造约<span>752</span>㎡，下水道疏浚：<span>188m</span>。<span>9</span>、市政大道改造工程：全长约<span>620</span>米，宽<span>15</span>米，路面沥青摊铺面积约<span>9300</span>㎡，路面维修约<span>2000</span>㎡，人行道改造约<span>2480</span>㎡，下水道改造、疏浚<span>1240m</span>。<span>10</span>、后万一路新建道路工程：全长约<span>322</span>米，宽<span>15</span>米，新建沥青路面：<span>4830</span>㎡，新建人行道：<span>2580</span>㎡，新建下水道：<span>644m</span>；和相关路段路灯。</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 20.5pt; font-family: \" times=\"\"><b><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">二、投标人资格条件：</span></b></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">1</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、投标人必须是中华人民共和国境内注册的独立法人单位；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">2</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、设计资质：市政行业（道路工程）设计专业乙级及以上资质或工程设计综合甲级资质；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">3</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、主持设计人（注册建筑师<span>)</span>：二级及以上注册建筑师执业资格；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">4</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、拟派设计团队负责人具有市政类专业工程师及以上技术职称；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">5</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、外省来赣的设计单位应按江西省住房和建设厅《关于省外进赣建设工程企业实行信息登记管理的通知》（赣建办【<span>2017</span>】<span>14</span>号）在“省外进赣企业信息登记系统”上办理企业信息登记，投标人及本项目拟派的项目负责人及专业负责人应在“省外进赣企业信息公示”中可以查询，并且提供省住建厅“省外进赣企业登记”栏目中查询打印纸质材料加盖单位公章。</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 20.5pt; font-family: \" times=\"\"><b><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">三、其他说明</span></b></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">1</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、本项目不接受联合体投标；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">2</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、投标人在“江西公共资源交易网”上报名并下载资审文件、招标文件；招标公告、招标文件、招标文件的答疑、澄清、解答投标单位提出的问题发布在“江西公共资源交易网”（<span>http://jxsggzy.cn/web/</span>）；</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">3</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、本工程采用非电子化开评标，在投标截止时间前递交纸质投标文件，投标人网上报名，可以从江西省公共资源交易网（<span>http://www.jxsggzy.cn/web/</span>）自行下载招标文件：获取时间<span>2019</span>年<span>6</span>月<span>14</span>日至<span>2019</span>年<span>6</span>月<span>27</span>日止。</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 20.5pt; font-family: \" times=\"\"><b><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">四、投标文件的递交</span></b></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">1</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、投标文件递交的截止时间（投标截止时间，下同）为<span>2019</span>年<u> <span>6</span></u>月<u> <span>28 \n</span></u>日<u> <span>10 </span></u>时<u> <span>0 </span></u>分，地点为<u>进贤县公共资源交易中心</u>。</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">2</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">、<span> </span>逾期送达的或者未送达指定地点的投标文件，招标人不予受理。</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 20.5pt; font-family: \" times=\"\"><b><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">五、联系方式</span></b></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">招标人：进贤县城市管理局</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">联系人：黄先生</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">电<span>  </span>话：</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">15270006617</span><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\"> </span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">招标代理机构：江西赣昌工程咨询有限公司</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">地<span>  </span>址：南昌市红谷滩新区丰和南大道<span>2111</span>号世茂新城<span>6#</span>办公楼<span>710</span>室</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">联系人：李先生</span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0.75pt 0pt 0cm; text-align: justify; line-height: 150%; text-indent: 24pt; font-family: \" times=\"\"><span style=\"line-height: 150%; font-family: 宋体; font-size: 12pt;\">电<span>  </span>话：<span>13317000783</span></span></p>\n<p -ms-text-justify:=\"\" 10.5pt;=\"\" font-size:=\"\" inter-ideograph;\"=\"\" new=\"\" roman\",\"serif\";=\"\" style=\"margin: 0cm 0cm 0pt; text-align: justify; font-family: \" times=\"\"><span> </span></p><style type=\"text/css\">\n.buttomlink {\n			width: 200px;\n			height: 40px;\n			background: #177BBA;\n			border-radius:10px;\n			font-size:20px;\n			line-height: 38px;\n			color:white;\n			letter-spacing: 2px;\n			text-align: center;\n			padding: 2px;\n			cursor: pointer;\n			text-decoration: none;\n			/* a是行内元素,所以要变成块级元素,block为另起一行,inline-block为变为行内块级元素,\n			  clear清除左右浮动才能设置block\n			 */\n			clear: both;\n			display: block;\n			margin: 87px 0px 0px 0px;\n		}\n</style>\n<div style=\"margin: 0px auto; width: 800px;\">\n<div style=\"width: 300px; margin-left: 0px; float: left;\"></div>\n<div style=\"width: 300px; margin-left: 200px; float: left;\"></div>\n</div>\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '待审核', '', '', '', '', '', NULL, '', '', 0.00, 0.00, 0, NULL, NULL, '', NULL, '', '公告中', '', '2019-06-17 14:18:31', 0, 0, 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001001/20190614/b967980a-5cc3-4e67-b8d5-ea062ea5a63c.html', 'upload/file/a936e862-e07c-4a6b-a8c6-854e5e2f2e2e.html', 0, 1, '2019-06-17 14:18:32', '2019-06-17 14:18:32', 0);
 INSERT INTO `t_project` VALUES (128, '[遂川县]遂川县高坪中学整体搬迁市政配套工程', '房建市政', '', '<div class=\"article-info\">\n            				<h1>[遂川县]遂川县高坪中学整体搬迁市政配套工程<font color=\"red\"></font></h1>\n            				<p class=\"infotime\">\n            					[2019-06-14]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div align=\"center\">\n        <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 14pt;\">招标投标格式文本二</span>\n        </div>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 28pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 30pt;\">招标公告</span></b><br/><br/>\n        <div style=\"text-align: center;font-size: 16pt;\">\n           \n                               项目编号：3608271906140301        招标编号： 遂建公【2019】29号 \n            <br/>\n            <br/>\n        </div>\n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标条件及工程基本情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">遂川县高坪中学</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标工程项目</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">遂川县高坪中学整体搬迁市政配套工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">工程项目建设地址</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">遂川县高坪中学校园内</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目审批、核准或备案机关</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">遂川县发展和改革委员会</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">批文名称及编号</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">关于遂川县高坪中学整体搬迁建设工程初步设计的批复 : 遂发改设审字【2017】9号</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">建筑面积</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0.0 平方米</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">层次</span>\n                    </td>\n                    <td style=\"width:16%;\"> \n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0 层</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">结构</span>\n                    </td>\n                    <td style=\"width:16%;\"> \n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">框架</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目总投资</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">456.98万元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">本项目投资</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">456.98万元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资金已落实</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">100.00%</span>\n                    </td>\n                </tr>         \n                <tr>\n                     <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标范围及标段划分</span></b>\n                    </td>    \n                </tr>\n                <tr>\n                    <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">招标范围</span></b>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">新建校园内的足球场、篮球场、400米标准跑道、道路及场地硬化、校园绿化等附属配套工程。</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" rowspan=\"2\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">标段划分</span></b>\n                    </td>\n                     <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">一标段</span></b>\n                    </td>                 \n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">遂川县高坪中学整体搬迁市政配套工程</span>\n                    </td>\n                </tr>\n                  <tr>   \n                     <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">二标段</span></b>\n                    </td>                 \n                     <td colspan=\"4\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标（申请）人应具备的资格条件</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业营业执照</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">经营范围应该符合招标要求</span>\n                    </td>\n                </tr>      \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业资质类别及等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[市政公用工程·市政公用工程三级](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">注册建造师类别和等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[注册二级建造师·市政公用工程](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">安全生产许可证</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">在有效期内</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">标段选择要求</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">一个标段</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查时投标人应提供的业绩材料</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">\n                        </span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">资格审查时应提供的证件或证书原件（建筑业企业资质证书为复印件）</span></b>       \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格证件</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">企业资质证书、营业执照（原件或复印件加盖公章或通过国家企业信用信息公示系统查验企业营业执照信息）、安全生产许可证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人或委托代理人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">法定代表人证书或委托代理人委托书、本人身份证 (委托代理人：由注册建造师担任)</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目负责人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派建造师注册证书（含临时执业证书）（建造师注册证书提供原件或带有二维码并在江西住建云个人服务平台可查询的复印件并加盖公章）、本人身份证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">技术负责人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">关键岗位人员</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派“四大员”（施工员、质量员、安全员、材料员各一名），四大员均应具有上岗证书；（施工员、质量员专业应为市政）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">其他要求</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">1、建设工程要约价响应承诺书，2、本项目不采用虚拟子账户方式网上缴纳保证金，根据吉市管办字【2018】2号文要求，投标保证金的提交由投标人自行选择采用银行转账或提供银行保函方式。\n①采用银行转账方式：投标保证金递交的开户银行及账号如下：账户名：遂川县公共资源交易中心；开户行：1、九江银行遂川支行；2、江西遂川农村商业银行大道分理处；3、中国建设银行股份有限公司遂川支行；账号：1、757110100100002727\n；2、178417750000001539；3、36001457500052500703；\n注：采用银行转账方式递交投标保证金的，根据赣公管【2017】3号文要求，请投标人严格按照上述账号要求在投标截止时间前一天一次性足额缴纳投标保证金，未按上述账号要求递交投标保证金的，投标无效。投标人采用银行转账方式时，招标人最迟应当在书面合同签订后5日内向中标人和未中标的投标人退还投标保证金（不计息）。\n②采用银行保函方式：银行保函应由投标人基本账户所在银行出具，并附基本账户许可证复印件（加盖投标人公章）。由招标代理机构开标时当场展示并予以确认，缺少任何一项视为提交的银行保函无效。银行保函由招标人负责收取和退还，银行保函有效期应与投标有效期一致，退还流程按吉市管办字[2018]2号文要求执行。3、法定代表人身份证或委托代理人委托书、本人身份证，4、投标承诺书，5、外埠来赣施工单位还应持有江西省建设行政主管部门办理的进赣投标备案手续，6、基本账户开户许可证原件，7凡参与遂川县扶贫攻坚项目未按合同履约的投标人（或企业），不得参与本次的投标，如中标后发现，取消中标资格。</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">招标公告、招标文件、资审文件的发布（获取）时间</span>            \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">公告发布时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日 至 2019年07月04日（公告发布时间最短不得少于5日）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取招标文件时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取方式</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">网上下载</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取资审文件时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取地址</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">请到江西省公共资源交易电子交易平台http://ggzyjy.jiangxi.gov.cn/dzjy/memberframe/FrameAll资审文件领取菜单领取资审文件</span>\n                    </td>\n                </tr>\n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">冯嗣珍</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">13979634119</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标代理机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div>\n                         <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日  </span></div>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标人：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div>\n                        <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日  </span></div>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招投标监管机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">经办人：（章）</span></div>\n                        <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日  </span></div>\n                    </td>\n                </tr>\n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                 <tbody><tr>\n	               <td>\n		                 <div style=\"text-align: left; font-family: 宋体;font-size: 16pt;  line-height: 58px;\">\n			                                          注：1、本表一式三份,招标人、招标代理机构、招投标监管机构各存一份，本表属”招投标情况书面报告“材料之一。 <br/>\n                                   2、有标段划分的招标项目，当各标段对投标人的资格条件要求不一致时，招标人应在”投标（申请）人应具备的资格条件\n                              “栏目中的”企业资质类别和等级、注册建造师类别和等级“栏目中将各标段的资格条件要求予以明确。  <br/>    \n		                    </div>\n		            </td>\n               	</tr>\n                <tr>\n	              <td>\n	                  <br/>\n	                  <br/>\n		              <div class=\"auto-style1\" style=\"text-align: right; word-wrap: break-word;font-family: 黑体;font-size: 22pt ; line-height: 58px; font-weight: 700;\">\n			                                江西省建设工程招标投标办公室印制\n		             </div>\n		          </td>\n	            </tr>\n            </tbody></table>\n        <p></p>\n    </div>\n\n<style type=\"text/css\">\n.buttomlink {\n			width: 200px;\n			height: 40px;\n			background: #177BBA;\n			border-radius:10px;\n			font-size:20px;\n			line-height: 38px;\n			color:white;\n			letter-spacing: 2px;\n			text-align: center;\n			padding: 2px;\n			cursor: pointer;\n			text-decoration: none;\n			/* a是行内元素,所以要变成块级元素,block为另起一行,inline-block为变为行内块级元素,\n			  clear清除左右浮动才能设置block\n			 */\n			clear: both;\n			display: block;\n			margin: 87px 0px 0px 0px;\n		}\n</style>\n<div style=\"margin: 0px auto; width: 800px;\">\n<div style=\"width: 300px; margin-left: 0px; float: left;\"></div>\n<div style=\"width: 300px; margin-left: 200px; float: left;\"></div>\n</div>\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '待审核', '遂川县高坪中学', '456.98万元', '资格后审', '[市政公用工程·市政公用工程三级](含)以上', '[注册二级建造师·市政公用工程](含)以上', 100.00, '', '13979634119', 0.00, 0.00, 0, NULL, '1、建设工程要约价响应承诺书，2、本项目不采用虚拟子账户方式网上缴纳保证金，根据吉市管办字【2018】2号文要求，投标保证金的提交由投标人自行选择采用银行转账或提供银行保函方式。\n①采用银行转账方式：投标保证金递交的开户银行及账号如下：账户名：遂川县公共资源交易中心；开户行：1、九江银行遂川支行；2、江西遂川农村商业银行大道分理处；3、中国建设银行股份有限公司遂川支行；账号：1、757110100100002727\n；2、178417750000001539；3、36001457500052500703；\n注：采用银行转账方式递交投标保证金的，根据赣公管【2017】3号文要求，请投标人严格按照上述账号要求在投标截止时间前一天一次性足额缴纳投标保证金，未按上述账号要求递交投标保证金的，投标无效。投标人采用银行转账方式时，招标人最迟应当在书面合同签订后5日内向中标人和未中标的投标人退还投标保证金（不计息）。\n②采用银行保函方式：银行保函应由投标人基本账户所在银行出具，并附基本账户许可证复印件（加盖投标人公章）。由招标代理机构开标时当场展示并予以确认，缺少任何一项视为提交的银行保函无效。银行保函由招标人负责收取和退还，银行保函有效期应与投标有效期一致，退还流程按吉市管办字[2018]2号文要求执行。3、法定代表人身份证或委托代理人委托书、本人身份证，4、投标承诺书，5、外埠来赣施工单位还应持有江西省建设行政主管部门办理的进赣投标备案手续，6、基本账户开户许可证原件，7凡参与遂川县扶贫攻坚项目未按合同履约的投标人（或企业），不得参与本次的投标，如中标后发现，取消中标资格。', '', NULL, '', '公告中', '', '2019-06-17 14:18:31', 0, 0, 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001001/20190614/b1481a2a-0f18-40ca-bdd9-5480169a8db3.html', 'upload/file/f8f70ba7-bc0f-45ec-937f-9d53d7f76ba8.html', 0, 1, '2019-06-17 14:18:32', '2019-06-17 14:18:32', 0);
 INSERT INTO `t_project` VALUES (129, '[高新技术产业开发区]南昌高新区体坛路（规划路-京福高速辅道）道路工程一标段(网)', '房建市政', '', '<div class=\"article-info\">\n            				<h1>[高新技术产业开发区]南昌高新区体坛路（规划路-京福高速辅道）道路工程一标段(网)<font color=\"red\"></font></h1>\n            				<p class=\"infotime\">\n            					[2019-06-14]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div align=\"center\">\n        <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 14pt;\">招标投标格式文本二</span>\n        </div>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 28pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 黑体; font-size: 30pt;\">招标公告</span></b><br/><br/>\n        <div style=\"text-align: center;font-size: 16pt;\">\n           \n                               项目编号：3601071905160201        招标编号： 赣建洪高新招字【2019】第24号 \n            <br/>\n            <br/>\n        </div>\n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标条件及工程基本情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌高新工程管理有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">招标工程项目</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌高新区体坛路（规划路-京福高速辅道）道路工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">工程项目建设地址</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌高新区东起京福高速辅道，西至规划路。</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目审批、核准或备案机关</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">南昌高新技术产业开发区管理委员会</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">批文名称及编号</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"> : 洪高新管建审字【2019】27号</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">建筑面积</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">1.0 平方米</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">层次</span>\n                    </td>\n                    <td style=\"width:16%;\"> \n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">0 层</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">结构</span>\n                    </td>\n                    <td style=\"width:16%;\"> \n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">框架</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目总投资</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">13351.54万元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">本项目投资</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">4677.69万元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资金已落实</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">85.63%</span>\n                    </td>\n                </tr>         \n                <tr>\n                     <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标范围及标段划分</span></b>\n                    </td>    \n                </tr>\n                <tr>\n                    <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">招标范围</span></b>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">本标段施工图纸及工程量清单内所含全部内容（包括道路、排水、交通设施、照明、强弱电管道、绿化工程等）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" rowspan=\"2\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">标段划分</span></b>\n                    </td>\n                     <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">一标段</span></b>\n                    </td>                 \n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">本标段施工图纸及工程量清单内所含全部内容（包括道路、排水、交通设施、照明、强弱电管道、绿化工程等）</span>\n                    </td>\n                </tr>\n                  <tr>   \n                     <td align=\"center\">\n                        <b><span style=\"font-family: 黑体; font-size: 16pt\">二标段</span></b>\n                    </td>                 \n                     <td colspan=\"4\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">/</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标（申请）人应具备的资格条件</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业营业执照</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">经营范围应该符合招标要求</span>\n                    </td>\n                </tr>      \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">企业资质类别及等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[市政公用工程·市政公用工程一级](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">注册建造师类别和等级</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">[注册一级建造师·市政公用工程](含)以上</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">安全生产许可证</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">在有效期内</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">标段选择要求</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">一个标段</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格审查时投标人应提供的业绩材料</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">\n                        </span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">资格审查时应提供的证件或证书原件（建筑业企业资质证书为复印件）</span></b>       \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">资格证件</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">企业资质证书（加盖企业公章的扫描件或复印件）、营业执照、安全生产许可证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人或委托代理人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">法定代表人证书或委托代理人委托书、本人身份证 (委托代理人：由注册建造师担任)</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">项目负责人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派建造师注册证书、本人身份证</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">技术负责人</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">/</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">关键岗位人员</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">拟派施工员、安全员、质量员、材料员、标准员、机械员、劳务员、资料员的岗位证书及安全员安全生产考核证书</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">其他要求</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">1、投标保证金转账凭证或年度保证金凭证或银行保函；2、外埠来赣投标单位还应在\"省外建设工程企业信息登记管理系统\"上办理过企业信息登记,并在江西省住建厅官方网站\"省外进赣企业登记\"栏目中可查询，提供江西省住建厅官方网站\"省外进赣企业登记\"查询截图复印件加盖单位公章。</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <span style=\"font-family: 黑体; letter-spacing: -0.7pt; font-size: 18pt;\">招标公告、招标文件、资审文件的发布（获取）时间</span>            \n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">公告发布时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日 至 2019年07月04日（公告发布时间最短不得少于5日）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取招标文件时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取方式</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取资审文件时间</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">获取地址</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">请到江西省公共资源交易电子交易平台http://ggzyjy.jiangxi.gov.cn/dzjy/memberframe/FrameAll资审文件领取菜单领取资审文件</span>\n                    </td>\n                </tr>\n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系人</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">胡先生</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 黑体; font-size: 16pt\">联系电话</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 黑体; font-size: 16pt\">15170247677</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标代理机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div>\n                         <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日  </span></div>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招标人：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">法定代表人：（章）</span></div>\n                        <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日  </span></div>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">招投标监管机构：（单位章）</span></div>\n                        <div style=\"line-height: 60pt;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">经办人：（章）</span></div>\n                        <div style=\"line-height: 20pt;text-align: right;\">\n                            <span style=\"font-family: 黑体; font-size: 16pt\">2019年06月14日  </span></div>\n                    </td>\n                </tr>\n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                 <tbody><tr>\n	               <td>\n		                 <div style=\"text-align: left; font-family: 宋体;font-size: 16pt;  line-height: 58px;\">\n			                                          注：1、本表一式三份,招标人、招标代理机构、招投标监管机构各存一份，本表属”招投标情况书面报告“材料之一。 <br/>\n                                   2、有标段划分的招标项目，当各标段对投标人的资格条件要求不一致时，招标人应在”投标（申请）人应具备的资格条件\n                              “栏目中的”企业资质类别和等级、注册建造师类别和等级“栏目中将各标段的资格条件要求予以明确。  <br/>    \n		                    </div>\n		            </td>\n               	</tr>\n                <tr>\n	              <td>\n	                  <br/>\n	                  <br/>\n		              <div class=\"auto-style1\" style=\"text-align: right; word-wrap: break-word;font-family: 黑体;font-size: 22pt ; line-height: 58px; font-weight: 700;\">\n			                                江西省建设工程招标投标办公室印制\n		             </div>\n		          </td>\n	            </tr>\n            </tbody></table>\n        <p></p>\n    </div>\n\n<style type=\"text/css\">\n.buttomlink {\n			width: 200px;\n			height: 40px;\n			background: #177BBA;\n			border-radius:10px;\n			font-size:20px;\n			line-height: 38px;\n			color:white;\n			letter-spacing: 2px;\n			text-align: center;\n			padding: 2px;\n			cursor: pointer;\n			text-decoration: none;\n			/* a是行内元素,所以要变成块级元素,block为另起一行,inline-block为变为行内块级元素,\n			  clear清除左右浮动才能设置block\n			 */\n			clear: both;\n			display: block;\n			margin: 87px 0px 0px 0px;\n		}\n</style>\n<div style=\"margin: 0px auto; width: 800px;\">\n<div style=\"width: 300px; margin-left: 0px; float: left;\"></div>\n<div style=\"width: 300px; margin-left: 200px; float: left;\"></div>\n</div>\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '待审核', '南昌高新工程管理有限公司', '4677.69万元', '资格后审', '[市政公用工程·市政公用工程一级](含)以上', '[注册一级建造师·市政公用工程](含)以上', 85.63, '', '15170247677', 0.00, 0.00, 0, NULL, '1、投标保证金转账凭证或年度保证金凭证或银行保函；2、外埠来赣投标单位还应在\"省外建设工程企业信息登记管理系统\"上办理过企业信息登记,并在江西省住建厅官方网站\"省外进赣企业登记\"栏目中可查询，提供江西省住建厅官方网站\"省外进赣企业登记\"查询截图复印件加盖单位公章。', '', NULL, '', '公告中', '', '2019-06-17 14:18:32', 0, 0, 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001001/20190614/401b0239-c4a8-4372-b4ad-f9fdc95ce2b2.html', 'upload/file/a205b724-186b-4ba4-a2d4-052c79dfa386.html', 0, 1, '2019-06-17 14:18:32', '2019-06-17 14:18:32', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_project_announce
 -- ----------------------------
 DROP TABLE IF EXISTS `t_project_announce`;
-CREATE TABLE `t_project_announce` (
+CREATE TABLE `t_project_announce`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '公示编号',
-  `project_id` bigint(20) DEFAULT '0' COMMENT '项目编号',
-  `title` text COMMENT '标题',
-  `project_type` varchar(10) DEFAULT NULL COMMENT '项目类型',
-  `announce_desc` text COMMENT '公示详情',
-  `first_candidate` varchar(100) DEFAULT '' COMMENT '第一候选人',
-  `first_builder_name` varchar(32) DEFAULT '' COMMENT '建造师姓名',
-  `first_mark_money` varchar(32) DEFAULT '0' COMMENT '中标金额',
-  `second_candidate` varchar(20) DEFAULT '' COMMENT '第二候选人',
-  `third_candidate` varchar(20) DEFAULT '' COMMENT '第三候选人',
-  `source_url` varchar(300) DEFAULT '' COMMENT '源地址',
-  `inword_html_url` varchar(300) DEFAULT '' COMMENT '内部地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NULL DEFAULT 0 COMMENT '项目编号',
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '标题',
+  `project_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '项目类型',
+  `announce_desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '公示详情',
+  `first_candidate` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第一候选人',
+  `first_builder_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '建造师姓名',
+  `first_mark_money` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '中标金额',
+  `second_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第二候选人',
+  `third_candidate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '第三候选人',
+  `source_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '源地址',
+  `inword_html_url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内部地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='招标公示详情表';
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招标公示详情表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_project_announce
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_project_announce` VALUES (32, 0, '[南昌市本级]南昌市第二中学教学楼加固改造工程[中标候选人公示]', '房建市政', '<div class=\"article-info\">\n            				<h1>[南昌市本级]南昌市第二中学教学楼加固改造工程[中标候选人公示]</h1>\n            				<p class=\"infotime\">\n            					[2019-06-17]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 12pt;\">招标投标格式文本十四</span>\n     </div>\n    <div align=\"center\">\n        \n        <b><span style=\"font-family: 宋体; font-size: 22pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 宋体; font-size: 26pt;\">中标候选人公示</span></b><br/><br/>\n        \n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标工程项目基本信息</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建设单位</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">南昌市第二中学</span>\n                    </td>                                       \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程名称</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">南昌市第二中学教学楼加固改造工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程地址</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">南昌市第二中学苏圃路校区内</span>\n                    </td>\n                   \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑面积</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">5507.7 ㎡</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">结构/层数</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">框架/4</span><span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">层</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标范围</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">本工程施工图纸及工程量清单范围内的所有内容.</span>\n                    </td>\n                    </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标控制价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      5620152.63元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">开标时间</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人排序及相关内容</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西天承建设有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">施工总承包·建筑工程·建筑工程一级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      5086238.12 元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">梅阳</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236141425054;</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">贰级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西华鼎建设工程有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">施工总承包·建筑工程·建筑工程一级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      5086238.12元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">肖国华</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236001223427;</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">贰级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西力阳工程发展有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑工程(2015新标准)二级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      5086238.12元</span>\n                    </td>\n                     <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">严金风</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236001224569;</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">贰级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑工程</span>\n                    </td>\n                </tr>\n               \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">本工程项目资格审查情况</span></b>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方法</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">合格制</span>\n                    </td>\n                </tr>    \n                   <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">递交资格审查文件单位的数量</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">37</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">17</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">未通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">20</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人资格审查时申报的业绩情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西天承建设有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西桑海集团有限责任公司2017年危房改造项目工程</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西华鼎建设工程有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">婺源县2016年城市棚户区大庙街小区改造</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西力阳工程发展有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">南昌市国际体育中心固定资产维修改造工程</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标价中的暂定费用</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂估价材料费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">其他暂定费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额和暂估价费用合计</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                \n                  <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标文件中合同主要条款的承诺内容</span></b>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西天承建设有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺完全响应招标文件内容要求</span>\n                    </td>\n                </tr>    \n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西华鼎建设工程有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺完全响应招标文件内容要求</span>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西力阳工程发展有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺完全响应招标文件内容要求</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 宋体; font-size: 16pt\">原中标候选人废标原因及其依据</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">废标原因</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">认定的依据</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>         \n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr>  \n                   <td>\n                      	<div style=\"text-align:left;word-wrap:break-word;line-height:45px;font-size: 14pt\">\n				                             注：1、若招标项目为构筑物或市政工程，招标工程项目基本信息中的“建筑面积”和“结构/层数”则修改为：“构筑物容积”和“结构/高度”或者修改为“规模”和“用途”。<br/>\n				           	         2、在填写“投标文件被判定为无效投标的投标人名称、无效投标原因及其依据”内容时，填写栏目按被无效投标单位的数量自行添加。<br/>\n				           	         3、当中标候选人公示后出现投诉纠纷，原中标候选人经认定为无效投标，须重新进行中标候选人第二次公示（或者中标候选人第三次公示），此时应当需填写“原中标候选人无效投标原因及其依据”，同时按规定重新填写“第一中标排序单位名称”、“第二中标排序单位名称”和相关内容。\n				            \n			          </div>\n                   </td>\n                </tr>		      \n			</tbody></table>             \n        <p></p>\n    </div>\n\n\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '江西天承建设有限公司', '梅阳', '      5086238.12 ', '江西华鼎建设工程有限公司', '江西力阳工程发展有限公司', 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001004/20190617/95032896-0933-404c-bd8b-075e985ea451.html', 'upload/file/18f459cb-1954-457a-9297-32305be24b1e.html', 1, '2019-06-17 14:19:40', NULL, 0);
 INSERT INTO `t_project_announce` VALUES (33, 0, '[蓉江新区]赣州蓉江新区紫藤路建设工程[中标候选人公示]', '房建市政', '<div class=\"article-info\">\n            				<h1>[蓉江新区]赣州蓉江新区紫藤路建设工程[中标候选人公示]</h1>\n            				<p class=\"infotime\">\n            					[2019-06-17]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 12pt;\">招标投标格式文本十四</span>\n     </div>\n    <div align=\"center\">\n        \n        <b><span style=\"font-family: 宋体; font-size: 22pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 宋体; font-size: 26pt;\">中标候选人公示</span></b><br/><br/>\n        \n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标工程项目基本信息</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建设单位</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣州蓉江新区蓉盛工程管理有限公司</span>\n                    </td>                                       \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程名称</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣州蓉江新区紫藤路建设工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程地址</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣州蓉江新区</span>\n                    </td>\n                   \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑面积</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">0.0 ㎡</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">结构/层数</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">框架/0</span><span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">层</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标范围</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣州蓉江新区紫藤路建设工程工程量清单及施工图纸所对应的相关专业工作内容</span>\n                    </td>\n                    </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标控制价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">     39364844.31元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">开标时间</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人排序及相关内容</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">抚州市赣东建筑工程有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程(2015新标准)一级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">     35991136.54 元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">程涛</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣136171816476;</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">一级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">元</span>\n                    </td>\n                     <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n               \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">本工程项目资格审查情况</span></b>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方法</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">合格制</span>\n                    </td>\n                </tr>    \n                   <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">递交资格审查文件单位的数量</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">144</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">15</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">未通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">129</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人资格审查时申报的业绩情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">抚州市赣东建筑工程有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">响应招标文件</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标价中的暂定费用</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  1604000元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂估价材料费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  120000元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">其他暂定费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额和暂估价费用合计</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  1724000元</span>\n                    </td>\n                </tr>\n                \n                  <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标文件中合同主要条款的承诺内容</span></b>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">抚州市赣东建筑工程有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">响应招标文件</span>\n                    </td>\n                </tr>    \n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 宋体; font-size: 16pt\">原中标候选人废标原因及其依据</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">废标原因</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">认定的依据</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>         \n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr>  \n                   <td>\n                      	<div style=\"text-align:left;word-wrap:break-word;line-height:45px;font-size: 14pt\">\n				                             注：1、若招标项目为构筑物或市政工程，招标工程项目基本信息中的“建筑面积”和“结构/层数”则修改为：“构筑物容积”和“结构/高度”或者修改为“规模”和“用途”。<br/>\n				           	         2、在填写“投标文件被判定为无效投标的投标人名称、无效投标原因及其依据”内容时，填写栏目按被无效投标单位的数量自行添加。<br/>\n				           	         3、当中标候选人公示后出现投诉纠纷，原中标候选人经认定为无效投标，须重新进行中标候选人第二次公示（或者中标候选人第三次公示），此时应当需填写“原中标候选人无效投标原因及其依据”，同时按规定重新填写“第一中标排序单位名称”、“第二中标排序单位名称”和相关内容。\n				            \n			          </div>\n                   </td>\n                </tr>		      \n			</tbody></table>             \n        <p></p>\n    </div>\n\n\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '抚州市赣东建筑工程有限公司', '程涛', '     35991136.54 ', '', '', 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001004/20190617/89a36722-9753-4efc-ac89-75b3b508ee69.html', 'upload/file/79992c13-b6a5-4459-80f4-e7fa93efbb1d.html', 1, '2019-06-17 14:19:40', NULL, 0);
 INSERT INTO `t_project_announce` VALUES (34, 0, '[新干县]安全仪表监控办公室、双氧水污水收集池危废仓库[中标候选人公示]', '房建市政', '<div class=\"article-info\">\n            				<h1>[新干县]安全仪表监控办公室、双氧水污水收集池危废仓库[中标候选人公示]</h1>\n            				<p class=\"infotime\">\n            					[2019-06-17]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 12pt;\">招标投标格式文本十四</span>\n     </div>\n    <div align=\"center\">\n        \n        <b><span style=\"font-family: 宋体; font-size: 22pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 宋体; font-size: 26pt;\">中标候选人公示</span></b><br/><br/>\n        \n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标工程项目基本信息</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建设单位</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">中盐江西兰太化工有限公司</span>\n                    </td>                                       \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程名称</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">安全仪表监控办公室、双氧水污水收集池危废仓库</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程地址</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西兰太化工厂区内</span>\n                    </td>\n                   \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑面积</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">373.56 ㎡</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">结构/层数</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">框架/2</span><span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">层</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标范围</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">本项目主要包括新建安全仪表监控办公室；双氧水污水收集池；危险废物仓库等。</span>\n                    </td>\n                    </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标控制价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      2232297.12元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">开标时间</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人排序及相关内容</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">中灿建设集团有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">施工总承包·建筑工程·建筑工程一级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      2107270.58 元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">乔夏露</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236141425384;</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">二级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">元</span>\n                    </td>\n                     <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n               \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">本工程项目资格审查情况</span></b>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方法</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">合格制</span>\n                    </td>\n                </tr>    \n                   <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">递交资格审查文件单位的数量</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">6</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">6</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">未通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">0</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人资格审查时申报的业绩情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">中灿建设集团有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">/</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标价中的暂定费用</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂估价材料费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">其他暂定费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额和暂估价费用合计</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                \n                  <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标文件中合同主要条款的承诺内容</span></b>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">中灿建设集团有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">响应招标文件</span>\n                    </td>\n                </tr>    \n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 宋体; font-size: 16pt\">原中标候选人废标原因及其依据</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">废标原因</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">认定的依据</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>         \n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr>  \n                   <td>\n                      	<div style=\"text-align:left;word-wrap:break-word;line-height:45px;font-size: 14pt\">\n				                             注：1、若招标项目为构筑物或市政工程，招标工程项目基本信息中的“建筑面积”和“结构/层数”则修改为：“构筑物容积”和“结构/高度”或者修改为“规模”和“用途”。<br/>\n				           	         2、在填写“投标文件被判定为无效投标的投标人名称、无效投标原因及其依据”内容时，填写栏目按被无效投标单位的数量自行添加。<br/>\n				           	         3、当中标候选人公示后出现投诉纠纷，原中标候选人经认定为无效投标，须重新进行中标候选人第二次公示（或者中标候选人第三次公示），此时应当需填写“原中标候选人无效投标原因及其依据”，同时按规定重新填写“第一中标排序单位名称”、“第二中标排序单位名称”和相关内容。\n				            \n			          </div>\n                   </td>\n                </tr>		      \n			</tbody></table>             \n        <p></p>\n    </div>\n\n\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '中灿建设集团有限公司', '乔夏露', '      2107270.58 ', '', '', 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001004/20190617/aa95cc01-6ee5-48b5-bf88-c9f920250915.html', 'upload/file/be3ec7f5-46d7-4f8a-a67a-1f45faef1096.html', 1, '2019-06-17 14:19:40', NULL, 0);
@@ -2408,55 +2352,51 @@ INSERT INTO `t_project_announce` VALUES (50, 0, '[高安市]瑞州街道连锦�
 INSERT INTO `t_project_announce` VALUES (51, 0, '[宜春市本级]宜春职业技术学院新校区建设EPC项目（设计采购施工)总承包监理（含宜春市公共实训基地工程监理）[重发公告第1次][中标候选人公示]', '房建市政', '<div class=\"article-info\">\n            				<h1>[宜春市本级]宜春职业技术学院新校区建设EPC项目（设计采购施工)总承包监理（含宜春市公共实训基地工程监理）<font color=\"red\">[重发公告第1次]</font>[中标候选人公示]</h1>\n            				<p class=\"infotime\">\n            					[2019-06-14]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 12pt;\">招标投标格式文本十三</span>\n     </div>\n    <div align=\"center\">\n        \n        <b><span style=\"font-family: 宋体; font-size: 22pt;\">江西省房屋建筑和市政基础设施工程监理招标</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 宋体; font-size: 26pt;\">中标候选人公示</span></b><br/><br/>\n        \n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标工程项目基本信息</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标单位名称</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">宜春职业技术学院本级</span>\n                    </td>                                       \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程名称</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">宜春职业技术学院新校区建设EPC项目（设计采购施工)总承包监理（含宜春市公共实训基地工程监理）</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程地址</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">宜春市教体新区规划二路东侧，锦绣大道北侧地段</span>\n                    </td>\n                   \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑面积(平方米)</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">595000.0</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">结构/层数</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">/0</span><span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">层</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标范围</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">宜春职业技术学院新校区建设EPC（设计采购施工)总承包监理（含宜春市公共实训基地工程监理）所有内容，包括但不限于施工准备阶段、施工阶段、竣工决算阶段及缺陷责任期的全过程监理。</span>\n                    </td>         \n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">开标时间</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">2019年06月13日</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人排序及相关内容（若业主选择最满意方案中标的排序不分先后）</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省宜春市建设监理有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">房屋建筑工程甲级</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      6000000.00 元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">总监姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">宋伟</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册证书注册号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">36001463</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">总监理工程师专业类别</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">房屋建筑工程、市政公用工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省兴赣建设监理咨询有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">房屋建筑工程甲级</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      6000000.00 元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">总监姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">胡缨</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册证书注册号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">36000682</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">总监理工程师专业类别</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">房屋建筑工程、市政公共工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">郑州中兴工程监理有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程监理·工程监理综合资质·工程监理综合资质甲级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">      6000000.00 元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">总监姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">卢广慧</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册证书注册号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">41001519</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">总监理工程师专业类别</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">房屋建筑工程、市政公用工程</span>\n                    </td>\n                </tr>              \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">本工程项目资格审查情况</span></b>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方法</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格后审</span>\n                    </td>\n                </tr>    \n                   <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">递交资格审查文件单位的数量</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">7</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">6</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">未通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">1</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人资格审查时申报的业绩情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省宜春市建设监理有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">详见投标文件</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省兴赣建设监理咨询有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">详见投标文件</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">郑州中兴工程监理有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">详见投标文件</span>\n                    </td>\n                </tr>\n				<tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标文件被判定为废标的投标人名称、废标原因及其依据</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">废标原因</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">认定的依据</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n				 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">原中标候选人废标原因及其依据</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">废标原因</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">认定的依据</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">采用综合评估法评标委员会对投标人投标文件的评分</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省宜春市建设监理有限公司</span>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">技术得分</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">49.57</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">商务得分</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">50</span>\n                    </td>\n                </tr>\n				  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省兴赣建设监理咨询有限公司</span>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">技术得分</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">48.54</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">商务得分</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">50</span>\n                    </td>\n                </tr>\n				  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">郑州中兴工程监理有限公司</span>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">技术得分</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">47.69</span>\n                    </td>\n					<td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">商务得分</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">50</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标文件中合同主要条款的承诺内容</span></b>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省宜春市建设监理有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">详见投标文件</span>\n                    </td>\n                </tr>    \n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省兴赣建设监理咨询有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">详见投标文件</span>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">郑州中兴工程监理有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">详见投标文件</span>\n                    </td>\n                </tr>\n               \n                \n            </tbody></table>\n        <p></p>\n    </div>\n\n\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '江西省宜春市建设监理有限公司', '', '      6000000.00 ', '江西省兴赣建设监理咨询有限公司', '郑州中兴工程监理有限公司', 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001004/20190614/e7df8d84-560d-475f-8c90-245b07d321c6.html', 'upload/file/7e7d2776-0725-4f03-a2b9-9adc2b40b05e.html', 1, '2019-06-17 14:19:40', NULL, 0);
 INSERT INTO `t_project_announce` VALUES (52, 0, '[柴桑区]柴桑路（K0+000—K0+880）段道路改造工程[中标候选人公示]', '房建市政', '<div class=\"article-info\">\n            				<h1>[柴桑区]柴桑路（K0+000—K0+880）段道路改造工程[中标候选人公示]</h1>\n            				<p class=\"infotime\">\n            					[2019-06-14]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 12pt;\">招标投标格式文本十四</span>\n     </div>\n    <div align=\"center\">\n        \n        <b><span style=\"font-family: 宋体; font-size: 22pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 宋体; font-size: 26pt;\">中标候选人公示</span></b><br/><br/>\n        \n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标工程项目基本信息</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建设单位</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">九江市柴桑区住房和城乡建设局</span>\n                    </td>                                       \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程名称</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">柴桑路（K0+000—K0+880）段道路改造工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程地址</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">柴桑南路（庐山站—电信公司处转盘）</span>\n                    </td>\n                   \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑面积</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">0.0 ㎡</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">结构/层数</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">框架/0</span><span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">层</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标范围</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">施工图纸及工程量清单范围内所有项目</span>\n                    </td>\n                    </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标控制价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">     21729050.66元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">开标时间</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">2019年06月14日</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人排序及相关内容</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西润财建设有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程(2015新标准)二级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">     20642598.13 元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">李小妹</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236161656402;</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程二级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">福建省永泰建筑工程公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程(2015新标准)一级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">     20642598.13元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">卢素丽</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">闽235111132289;</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程二级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省鹏盛建设工程有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程(2015新标准)一级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">     20642598.13元</span>\n                    </td>\n                     <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">王秀英</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236141540347;</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程二级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程</span>\n                    </td>\n                </tr>\n               \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">本工程项目资格审查情况</span></b>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方法</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">合格制</span>\n                    </td>\n                </tr>    \n                   <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">递交资格审查文件单位的数量</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">179</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">15</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">未通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">164</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人资格审查时申报的业绩情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西润财建设有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">奉新县第二城市污水处理厂新建城镇生活污水管网工程项目</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">福建省永泰建筑工程公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">上饶县灵山大道（二标段）配套设施工程</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省鹏盛建设工程有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">竹山县鱼岭生态工业园市政配套项目</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标价中的暂定费用</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂估价材料费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">其他暂定费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额和暂估价费用合计</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                \n                  <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标文件中合同主要条款的承诺内容</span></b>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西润财建设有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">真实有效</span>\n                    </td>\n                </tr>    \n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">福建省永泰建筑工程公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">真实有效</span>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省鹏盛建设工程有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">真实有效</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 宋体; font-size: 16pt\">原中标候选人废标原因及其依据</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">废标原因</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">认定的依据</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>         \n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr>  \n                   <td>\n                      	<div style=\"text-align:left;word-wrap:break-word;line-height:45px;font-size: 14pt\">\n				                             注：1、若招标项目为构筑物或市政工程，招标工程项目基本信息中的“建筑面积”和“结构/层数”则修改为：“构筑物容积”和“结构/高度”或者修改为“规模”和“用途”。<br/>\n				           	         2、在填写“投标文件被判定为无效投标的投标人名称、无效投标原因及其依据”内容时，填写栏目按被无效投标单位的数量自行添加。<br/>\n				           	         3、当中标候选人公示后出现投诉纠纷，原中标候选人经认定为无效投标，须重新进行中标候选人第二次公示（或者中标候选人第三次公示），此时应当需填写“原中标候选人无效投标原因及其依据”，同时按规定重新填写“第一中标排序单位名称”、“第二中标排序单位名称”和相关内容。\n				            \n			          </div>\n                   </td>\n                </tr>		      \n			</tbody></table>             \n        <p></p>\n    </div>\n\n\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '江西润财建设有限公司', '李小妹', '     20642598.13 ', '福建省永泰建筑工程公司', '江西省鹏盛建设工程有限公司', 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001004/20190614/9f65e11f-afc9-4a46-af12-c9e74d8e089f.html', 'upload/file/286afb64-cc32-4341-8a9c-4a714308ac59.html', 1, '2019-06-17 14:19:40', NULL, 0);
 INSERT INTO `t_project_announce` VALUES (53, 0, '[余干县]古埠镇古埠村古埠组村庄整治--水泥砼路面工程[中标候选人公示]', '房建市政', '<div class=\"article-info\">\n            				<h1>[余干县]古埠镇古埠村古埠组村庄整治--水泥砼路面工程[中标候选人公示]</h1>\n            				<p class=\"infotime\">\n            					[2019-06-14]\n            				</p>\n            				<div class=\"con\" style=\"margin-top: 31px;\">\n\n\n    <meta charset=\"utf-8\"/>\n    <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>\n    <style>\n    tr{\n    height:30px;\n    }\n    </style>\n\n\n    <div style=\"text-align: right;\">\n            <span style=\"font-family: 黑体; font-size: 12pt;\">招标投标格式文本十四</span>\n     </div>\n    <div align=\"center\">\n        \n        <b><span style=\"font-family: 宋体; font-size: 22pt;\">江西省房屋建筑和市政基础设施工程施工</span></b>\n        <br/>\n        <br/>\n        <b><span style=\"font-family: 宋体; font-size: 26pt;\">中标候选人公示</span></b><br/><br/>\n        \n        <p style=\"text-align: center\">\n            </p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr height=\"30\">\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">招标工程项目基本信息</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建设单位</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">余干县扶贫和移民办公室</span>\n                    </td>                                       \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程名称</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">古埠镇古埠村古埠组村庄整治--水泥砼路面工程</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">工程地址</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">古埠镇</span>\n                    </td>\n                   \n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建筑面积</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">0.0 ㎡</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">结构/层数</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">混合/0</span><span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">层</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标范围</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">本项目施工图纸内的所有工程</span>\n                    </td>\n                    </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">招标控制价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">       346123.70元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">开标时间</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">2019年06月13日</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人排序及相关内容</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span> </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西炜翔园林建筑工程有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">施工总承包·市政公用工程·市政公用工程三级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span> </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">       346123.70 元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">董小云</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236171802901;</span>\n                    </td>\n                </tr>                   \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">二级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西悦杰建设工程有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程(2015新标准)三级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">       346123.70元</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">吴登成</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236141432606;</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">二级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程</span>\n                    </td>\n                </tr>\n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省龙旗建设有限公司</span>\n                    </td>\n                    </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标资质</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">施工总承包·市政公用工程·市政公用工程三级</span>\n                    </td>\n                </tr>\n                  <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">投标报价</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">       346123.70元</span>\n                    </td>\n                     <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">综合评估法总得分</span> \n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"> 分</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师姓名</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">黄锦萍</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册编号</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">赣236141538639;</span>\n                    </td>\n                </tr>                   \n              \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">建造师等级</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">二级</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">注册专业</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">市政公用工程</span>\n                    </td>\n                </tr>\n               \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">本工程项目资格审查情况</span></b>\n                    </td>\n                </tr>\n               <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方式</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格后审</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">资格审查方法</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">合格制</span>\n                    </td>\n                </tr>    \n                   <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">递交资格审查文件单位的数量</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">3</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">3</span>\n                    </td>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">未通过资审的家数</span>\n                    </td>\n                    <td colspan=\"2\" style=\"width:32%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">0</span>\n                    </td>\n                </tr>    \n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标候选人资格审查时申报的业绩情况</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西炜翔园林建筑工程有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">/</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西悦杰建设工程有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">/</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省龙旗建设有限公司</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">申报的业绩</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">/</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">中标价中的暂定费用</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂估价材料费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">其他暂定费用小计</span> </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">暂定金额和暂估价费用合计</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">  元</span>\n                    </td>\n                </tr>\n                \n                  <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 黑体; font-size: 18pt\">投标文件中合同主要条款的承诺内容</span></b>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第一中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西炜翔园林建筑工程有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">响应招标文件</span>\n                    </td>\n                </tr>    \n                     <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第二中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西悦杰建设工程有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">响应招标文件</span>\n                    </td>\n                </tr>\n                    <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">第三中标排序单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">江西省龙旗建设有限公司</span>\n                    </td>\n                </tr>\n                 <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">承诺内容</span>\n                    </td>\n                     <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\">响应招标文件</span>\n                    </td>\n                </tr>\n                <tr>\n                    <td align=\"center\" colspan=\"6\">\n                        <b><span style=\"font-family: 宋体; font-size: 16pt\">原中标候选人废标原因及其依据</span></b>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">单位名称</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">废标原因</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>\n                <tr>\n                    <td style=\"width:16%;\">\n                        <span style=\"font-family: 仿宋_GB2312; font-size: 16pt\">认定的依据</span>\n                    </td>\n                    <td colspan=\"5\" style=\"width:80%;\">\n                        <span lang=\"EN-US\" style=\"font-family: 仿宋_GB2312; font-size: 16pt\"></span>\n                    </td>\n                </tr>         \n            </tbody></table>\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"90%\">\n                <tbody><tr>  \n                   <td>\n                      	<div style=\"text-align:left;word-wrap:break-word;line-height:45px;font-size: 14pt\">\n				                             注：1、若招标项目为构筑物或市政工程，招标工程项目基本信息中的“建筑面积”和“结构/层数”则修改为：“构筑物容积”和“结构/高度”或者修改为“规模”和“用途”。<br/>\n				           	         2、在填写“投标文件被判定为无效投标的投标人名称、无效投标原因及其依据”内容时，填写栏目按被无效投标单位的数量自行添加。<br/>\n				           	         3、当中标候选人公示后出现投诉纠纷，原中标候选人经认定为无效投标，须重新进行中标候选人第二次公示（或者中标候选人第三次公示），此时应当需填写“原中标候选人无效投标原因及其依据”，同时按规定重新填写“第一中标排序单位名称”、“第二中标排序单位名称”和相关内容。\n				            \n			          </div>\n                   </td>\n                </tr>		      \n			</tbody></table>             \n        <p></p>\n    </div>\n\n\n<script type=\"text/javascript\">\n    function ResizeToScreen(id, pX, pY) {\n    var obj = document.getElementById(id);\n    obj.style.display = \"\";\n    obj.style.pixelLeft = pX;\n    obj.style.pixelTop = pY;\n    document.body.scrollTop = pY - 200;\n}\n</script>\n</div>\n            			</div>', '江西炜翔园林建筑工程有限公司', '董小云', '       346123.70 ', '江西悦杰建设工程有限公司', '江西省龙旗建设有限公司', 'http://ggzy.jiangxi.gov.cn/web/jyxx/002001/002001004/20190614/a8e4cccf-85c8-497d-940c-f34a64e461df.html', 'upload/file/bdef0c12-8a73-46c4-94a2-fe90e44397e3.html', 1, '2019-06-17 14:19:40', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_project_collection
 -- ----------------------------
 DROP TABLE IF EXISTS `t_project_collection`;
-CREATE TABLE `t_project_collection` (
+CREATE TABLE `t_project_collection`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '项目收藏编号',
-  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户编号',
-  `project_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
+  `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uni_user_id_project_id` (`user_id`,`project_id`) COMMENT '用户ID和项目ID唯一索引'
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='项目收藏表';
+  UNIQUE INDEX `uni_user_id_project_id`(`user_id`, `project_id`) USING BTREE COMMENT '用户ID和项目ID唯一索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目收藏表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_project_collection
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_project_collection` VALUES (1, 40, 1, 1, '2019-04-26 14:14:24', NULL, 0);
 INSERT INTO `t_project_collection` VALUES (19, 42, 1, 1, '2019-05-23 16:22:06', NULL, 0);
 INSERT INTO `t_project_collection` VALUES (20, 42, 5, 1, '2019-05-23 16:22:09', NULL, 0);
 INSERT INTO `t_project_collection` VALUES (21, 42, 6, 1, '2019-05-23 16:22:12', NULL, 0);
 INSERT INTO `t_project_collection` VALUES (22, 50, 1, 1, '2019-05-29 18:50:54', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_project_resource
 -- ----------------------------
 DROP TABLE IF EXISTS `t_project_resource`;
-CREATE TABLE `t_project_resource` (
+CREATE TABLE `t_project_resource`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '项目资源表主键',
-  `project_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `resource_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '资源编号',
-  `res_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '资源类别',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `project_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '项目编号',
+  `resource_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '资源编号',
+  `res_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '资源类别',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='项目资源表';
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '项目资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_project_resource
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_project_resource` VALUES (2, 1, 28, 0, 1, '2019-04-24 11:21:13', NULL, 0);
 INSERT INTO `t_project_resource` VALUES (3, 1, 28, 0, 1, '2019-04-25 10:20:44', NULL, 0);
 INSERT INTO `t_project_resource` VALUES (4, 4, 18, 0, 1, '2019-04-30 12:00:51', NULL, 0);
@@ -2468,34 +2408,32 @@ INSERT INTO `t_project_resource` VALUES (11, 1, 75, 1, 1, '2019-06-13 17:31:20',
 INSERT INTO `t_project_resource` VALUES (12, 1, 75, 1, 1, '2019-06-13 17:31:20', NULL, 0);
 INSERT INTO `t_project_resource` VALUES (13, 1, 75, 1, 1, '2019-06-13 17:31:20', NULL, 0);
 INSERT INTO `t_project_resource` VALUES (14, 1, 75, 1, 1, '2019-06-13 17:31:20', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_recruit
 -- ----------------------------
 DROP TABLE IF EXISTS `t_recruit`;
-CREATE TABLE `t_recruit` (
+CREATE TABLE `t_recruit`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '招聘编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `job_title` varchar(20) NOT NULL DEFAULT '' COMMENT '招聘岗位',
-  `is_fulltime` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否全职',
-  `work_year` varchar(10) DEFAULT '' COMMENT '工作时间（年）',
-  `education` varchar(20) DEFAULT '' COMMENT '要求学历',
-  `salary` varchar(10) DEFAULT '' COMMENT '提供月薪',
-  `work_addr` varchar(20) DEFAULT '' COMMENT '工作地',
-  `memo` varchar(255) DEFAULT '' COMMENT '职位描述',
-  `recruit_status` varchar(10) DEFAULT '招聘中' COMMENT '招聘状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `job_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '招聘岗位',
+  `is_fulltime` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否全职',
+  `work_year` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工作时间（年）',
+  `education` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '要求学历',
+  `salary` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '提供月薪',
+  `work_addr` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工作地',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '职位描述',
+  `recruit_status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '招聘中' COMMENT '招聘状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='招聘表';
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招聘表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_recruit
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_recruit` VALUES (1, 36, '某某岗位', 0, '1', '硕士', '5-10万元', '山西/长治市/襄垣县', '需要什么什么什么1', '已停止', 5, '2019-04-25 15:25:00', '2019-05-14 14:40:17', 0);
 INSERT INTO `t_recruit` VALUES (2, 40, '建造师', 1, '1', '大专', '一万元以下', '', '1', '招聘中', 3, '2019-04-25 15:25:00', '2019-04-25 15:26:41', 0);
 INSERT INTO `t_recruit` VALUES (3, 42, 'xxx', 0, '1', '', '', '北京市/市辖区/西城区', '1111', '招聘中', 1, '2019-05-18 12:07:05', NULL, 0);
@@ -2509,29 +2447,27 @@ INSERT INTO `t_recruit` VALUES (10, 42, '88', 0, '9', '不限', '一万元以下
 INSERT INTO `t_recruit` VALUES (11, 42, 'abc', 0, '22', '不限', '一万元以下', '北京市/市辖区/西城区', '222', '招聘中', 1, '2019-05-18 12:23:16', NULL, 0);
 INSERT INTO `t_recruit` VALUES (12, 42, '333', 0, '33', '不限', '一万元以下', '河北省/石家庄市/长安区', '333', '招聘中', 1, '2019-05-18 12:23:56', NULL, 0);
 INSERT INTO `t_recruit` VALUES (13, 42, 'abc', 1, '2', '不限', '一万元以下', '北京市/市辖区/西城区', '2', '招聘中', 1, '2019-05-18 12:28:09', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_resource
 -- ----------------------------
 DROP TABLE IF EXISTS `t_resource`;
-CREATE TABLE `t_resource` (
+CREATE TABLE `t_resource`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '资源编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `mime_type` varchar(20) NOT NULL DEFAULT '' COMMENT '资源类型',
-  `url` varchar(200) DEFAULT '' COMMENT '资源地址',
-  `extension` varchar(10) DEFAULT '' COMMENT '资源扩展名',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `mime_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '资源类型',
+  `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资源地址',
+  `extension` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资源扩展名',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='资源表';
+) ENGINE = InnoDB AUTO_INCREMENT = 79 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_resource
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_resource` VALUES (69, 31, 'Document', 'upload/resource/2019061317385783630.pdf', 'pdf', 1, '2019-06-13 17:38:57', NULL, 0);
 INSERT INTO `t_resource` VALUES (70, 31, 'Document', 'upload/resource/2019061317410449521.pdf', 'pdf', 1, '2019-06-13 17:53:16', NULL, 0);
 INSERT INTO `t_resource` VALUES (71, 31, 'Document', 'upload/resource/投标保证金或银行保函信息核对表 .pdf.pdf', 'pdf', 1, '2019-06-13 18:02:52', NULL, 0);
@@ -2542,65 +2478,61 @@ INSERT INTO `t_resource` VALUES (75, 31, 'Document', 'upload/resource/投标保�
 INSERT INTO `t_resource` VALUES (76, 31, 'Document', 'upload/resource/2019061813494570980.pdf', 'pdf', 1, '2019-06-18 13:49:45', NULL, 0);
 INSERT INTO `t_resource` VALUES (77, 31, 'Document', 'upload/resource/招标文件正文.pdf', 'pdf', 1, '2019-06-18 16:13:46', NULL, 0);
 INSERT INTO `t_resource` VALUES (78, 31, 'Document', 'upload/resource/招标文件正文.pdf', 'pdf', 1, '2019-06-18 16:14:22', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_resume
 -- ----------------------------
 DROP TABLE IF EXISTS `t_resume`;
-CREATE TABLE `t_resume` (
+CREATE TABLE `t_resume`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '简历编号',
-  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户编号',
-  `name` varchar(20) DEFAULT '' COMMENT '姓名',
-  `gender` varchar(10) DEFAULT '' COMMENT '性别',
-  `age` int(10) DEFAULT '0' COMMENT '年龄',
-  `is_fulltime` tinyint(4) DEFAULT '0' COMMENT '求职类型',
-  `job_title` varchar(20) DEFAULT '' COMMENT '求职岗位',
-  `work_year` varchar(10) DEFAULT '' COMMENT '工作时间（年）',
-  `education` varchar(10) DEFAULT '' COMMENT '学历',
-  `salary` varchar(20) DEFAULT '' COMMENT '要求薪资/月',
-  `is_recommend` int(4) DEFAULT '0' COMMENT '是否允许平台推荐',
-  `aptitude` varchar(200) DEFAULT '' COMMENT '我的资质',
-  `intorduce` varchar(255) DEFAULT '' COMMENT '个人简介',
-  `is_show` int(4) DEFAULT '0' COMMENT '是否开放简历',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '姓名',
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '性别',
+  `age` int(10) NULL DEFAULT 0 COMMENT '年龄',
+  `is_fulltime` tinyint(4) NULL DEFAULT 0 COMMENT '求职类型',
+  `job_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '求职岗位',
+  `work_year` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工作时间（年）',
+  `education` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '学历',
+  `salary` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '要求薪资/月',
+  `is_recommend` int(4) NULL DEFAULT 0 COMMENT '是否允许平台推荐',
+  `aptitude` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '我的资质',
+  `intorduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '个人简介',
+  `is_show` int(4) NULL DEFAULT 0 COMMENT '是否开放简历',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='简历表';
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '简历表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_resume
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_resume` VALUES (1, 40, '危锦辉', '1', 19, 0, '某岗位', '1', '本科', '1-2万元', 1, '某某资质', '是否收到否', 0, 25, '2019-04-25 16:07:00', '2019-04-25 16:26:45', 0);
 INSERT INTO `t_resume` VALUES (2, 42, '危锦辉', '1', 22, 0, '工程师', '2', '博士', '3-5万元', 1, '建筑师,其他证书', '不解释', 1, 3, '2019-05-22 16:33:53', '2019-05-22 17:20:58', 0);
 INSERT INTO `t_resume` VALUES (3, 45, '', '0', 0, 0, '', '', '', '', 0, '', '', 0, 8, '2019-05-24 16:00:07', '2019-05-24 16:00:19', 0);
 INSERT INTO `t_resume` VALUES (4, 44, '', '0', 0, 0, '', '', '', '', 0, '', '', 0, 2, '2019-05-24 16:00:21', '2019-05-24 16:00:22', 0);
 INSERT INTO `t_resume` VALUES (5, 50, '', '0', 0, 0, '', '', '本科', '1-2万元', 0, '', '', 0, 5, '2019-05-31 15:06:56', '2019-06-13 10:36:48', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
-CREATE TABLE `t_role` (
+CREATE TABLE `t_role`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
-  `title` varchar(50) NOT NULL COMMENT '角色标题',
-  `description` varchar(200) DEFAULT NULL COMMENT '角色描述',
-  `is_default` tinyint(4) DEFAULT '0' COMMENT '是否默认角色',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色标题',
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色描述',
+  `is_default` tinyint(4) NULL DEFAULT 0 COMMENT '是否默认角色',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统角色表';
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_role` VALUES (1, 'super_sys_admin', '超级系统管理员', 0, 1, '2019-02-22 14:32:27', NULL, 0);
 INSERT INTO `t_role` VALUES (2, 'sys_admin', '系统管理员', 0, 1, '2019-02-22 14:32:27', NULL, 0);
 INSERT INTO `t_role` VALUES (3, 'sys_dev', '系统研发人员', 0, 1, '2019-02-22 14:32:27', NULL, 0);
@@ -2608,27 +2540,25 @@ INSERT INTO `t_role` VALUES (4, 'sys_service', '客服人员', 0, 1, '2019-02-22
 INSERT INTO `t_role` VALUES (5, 'sys_user', '系统用户', 1, 1, '2019-02-22 14:32:27', NULL, 0);
 INSERT INTO `t_role` VALUES (10, 'customer_service', '客服人员', 0, 1, '2019-06-17 10:49:09', NULL, 0);
 INSERT INTO `t_role` VALUES (11, 'bidding_information_collector', '信息采集员', 0, 3, '2019-06-17 10:49:31', '2019-06-17 11:10:39', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_role_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role_permission`;
-CREATE TABLE `t_role_permission` (
+CREATE TABLE `t_role_permission`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `role_id` bigint(20) NOT NULL COMMENT '角色编号',
   `permission_id` bigint(20) NOT NULL COMMENT '权限编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=367 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色权限关联表';
+) ENGINE = InnoDB AUTO_INCREMENT = 367 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role_permission
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_role_permission` VALUES (1, 1, 1, 1, '2019-03-12 16:33:21', NULL, 0);
 INSERT INTO `t_role_permission` VALUES (2, 5, 1, 1, '2019-03-12 16:33:21', NULL, 0);
 INSERT INTO `t_role_permission` VALUES (3, 2, 1, 1, '2019-03-12 16:33:21', NULL, 0);
@@ -2995,144 +2925,134 @@ INSERT INTO `t_role_permission` VALUES (363, 4, 258, 1, '2019-03-12 16:33:23', N
 INSERT INTO `t_role_permission` VALUES (364, 1, 259, 1, '2019-03-12 16:33:23', NULL, 0);
 INSERT INTO `t_role_permission` VALUES (365, 2, 259, 1, '2019-03-12 16:33:23', NULL, 0);
 INSERT INTO `t_role_permission` VALUES (366, 4, 260, 1, '2019-03-12 16:33:23', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_scheduler
 -- ----------------------------
 DROP TABLE IF EXISTS `t_scheduler`;
-CREATE TABLE `t_scheduler` (
+CREATE TABLE `t_scheduler`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '作业编号',
-  `name` varchar(50) NOT NULL COMMENT '作业名称',
-  `class_name` varchar(200) NOT NULL COMMENT '完整类名',
-  `cron_expression` varchar(50) NOT NULL COMMENT 'cron表达式',
-  `group_name` varchar(50) DEFAULT NULL COMMENT '作业组名称',
-  `trigger_name` varchar(50) DEFAULT NULL COMMENT '触发器名称',
-  `trigger_group` varchar(50) DEFAULT NULL COMMENT '触发器组',
-  `description` varchar(500) DEFAULT NULL COMMENT '作业描述',
-  `job_status` tinyint(4) DEFAULT '0' COMMENT '作业状态',
-  `job_status_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '状态更新时间',
-  `auto_start` tinyint(4) DEFAULT '0' COMMENT '自动启动',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '作业名称',
+  `class_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '完整类名',
+  `cron_expression` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'cron表达式',
+  `group_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '作业组名称',
+  `trigger_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '触发器名称',
+  `trigger_group` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '触发器组',
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '作业描述',
+  `job_status` tinyint(4) NULL DEFAULT 0 COMMENT '作业状态',
+  `job_status_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '状态更新时间',
+  `auto_start` tinyint(4) NULL DEFAULT 0 COMMENT '自动启动',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='作业调度表';
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '作业调度表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_scheduler
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_scheduler` VALUES (2, 'CompHouseAchievementJob', 'top.zywork.job.CompHouseAchievementJob', '30 10 1 * * ?', 'job_group1', 'trigger_name1', 'trigger_group', '获取企业房建业绩的作业', 1, '2019-06-18 16:19:28', 1, 91, '2019-06-05 11:45:42', '2019-06-18 16:19:28', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_seek_data
 -- ----------------------------
 DROP TABLE IF EXISTS `t_seek_data`;
-CREATE TABLE `t_seek_data` (
+CREATE TABLE `t_seek_data`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '求带资料编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `start_addr` varchar(10) NOT NULL DEFAULT '' COMMENT '出发地点',
-  `end_addr` varchar(10) NOT NULL DEFAULT '' COMMENT '目的地',
-  `data_type` varchar(10) NOT NULL DEFAULT '' COMMENT '资料类型',
-  `data_count` int(10) NOT NULL DEFAULT '0' COMMENT '资料数量',
-  `latest_time` datetime DEFAULT NULL COMMENT '最晚时间',
-  `price` bigint(10) DEFAULT '0' COMMENT '赏金',
-  `phone` varchar(11) DEFAULT NULL COMMENT '联系电话',
-  `is_urgent` int(4) DEFAULT '0' COMMENT '是否加急',
-  `memo` varchar(255) DEFAULT '' COMMENT '备注',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `start_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '出发地点',
+  `end_addr` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '目的地',
+  `data_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '资料类型',
+  `data_count` int(10) NOT NULL DEFAULT 0 COMMENT '资料数量',
+  `latest_time` datetime(0) NULL DEFAULT NULL COMMENT '最晚时间',
+  `price` bigint(10) NULL DEFAULT 0 COMMENT '赏金',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系电话',
+  `is_urgent` int(4) NULL DEFAULT 0 COMMENT '是否加急',
+  `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='求带资料表';
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '求带资料表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_seek_data
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_seek_data` VALUES (1, 40, '赣州', '上饶', '资料', 1, '2019-04-25 00:00:00', 100, '18279700225', 0, '备注', 5, '2019-04-25 17:07:17', '2019-04-25 17:12:44', 0);
 INSERT INTO `t_seek_data` VALUES (2, 42, '1', '2', '资料', 2, '2019-05-18 12:01:00', 100, '2', 1, '2', 1, '2019-05-18 12:42:27', NULL, 0);
 INSERT INTO `t_seek_data` VALUES (3, 42, '3', '3', '资料', 3, '2019-05-18 12:01:00', 300, '3', 0, '3', 1, '2019-05-18 12:42:53', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_service
 -- ----------------------------
 DROP TABLE IF EXISTS `t_service`;
-CREATE TABLE `t_service` (
+CREATE TABLE `t_service`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '服务编号',
-  `title` varchar(200) DEFAULT NULL COMMENT '服务标题',
-  `memo` varchar(500) DEFAULT NULL COMMENT '详细说明',
-  `urls` varchar(2000) DEFAULT NULL COMMENT '所有收费的url',
-  `price` bigint(10) DEFAULT '0' COMMENT '服务价格',
-  `discount` int(10) DEFAULT '100' COMMENT '折扣',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='服务配置表';
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务标题',
+  `memo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细说明',
+  `urls` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所有收费的url',
+  `price` bigint(10) NULL DEFAULT 0 COMMENT '服务价格',
+  `discount` int(10) NULL DEFAULT 100 COMMENT '折扣',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '服务配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_service
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_service` VALUES (1, '项目信息订阅提醒', '针对我的订阅功能进行收费', '/subscribe/user/save', 10000, 90, 1, '2019-05-28 11:58:51', NULL, 0);
 INSERT INTO `t_service` VALUES (2, '企业资质及业绩查看', '企业资质等级查看，企业业绩查看详情查看（工程名称、中标单位、建造师姓名/项目负责人公开）其他信息查看需要缴费，中标记录详情查看（工程名称、中标单位公开）其他信息查看需要缴费', '/comp-house-achievement/user/pager-cond,/comp-water-achievement/user/pager-cond,/comp-traffic-achievement/user/pager-cond,/comp-key-projecachievement/user/pager-cond,/comp-water-monitor-achievement/user/pager-cond,/comp-water-devise-achievement/user/pager-cond,/comp-aptitude/user/pager-cond', 10000, 90, 1, '2019-05-28 11:59:22', NULL, 0);
 INSERT INTO `t_service` VALUES (3, '平台共享用户联系方式查看', '征信查询中的企业联系方式全部为缴费查看，信息共享中信息展示中建造师（应聘）、资质转让（购买）（转让）信息发布中的联系电话', '/UserBuilderReq/user/list-page,/company/user/pager-cond,/UserBuilder/user/list-page,/UserAptitudeTransfer/user/list-page', 10000, 90, 1, '2019-05-28 11:59:27', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_shipping_address
 -- ----------------------------
 DROP TABLE IF EXISTS `t_shipping_address`;
-CREATE TABLE `t_shipping_address` (
+CREATE TABLE `t_shipping_address`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '地址编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `real_name` varchar(20) NOT NULL COMMENT '收货人',
-  `phone` varchar(11) NOT NULL COMMENT '手机号',
-  `province` varchar(20) NOT NULL COMMENT '省',
-  `city` varchar(20) NOT NULL COMMENT '市',
-  `district` varchar(20) NOT NULL COMMENT '区/县',
-  `address` varchar(255) NOT NULL COMMENT '详细地址',
-  `is_default` tinyint(4) DEFAULT '0' COMMENT '是否默认',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `real_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收货人',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '手机号',
+  `province` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '省',
+  `city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '市',
+  `district` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '区/县',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '详细地址',
+  `is_default` tinyint(4) NULL DEFAULT 0 COMMENT '是否默认',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户收货地址表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户收货地址表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_shipping_address
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_shipping_address` VALUES (1, 31, '王振宇', '18888888888', '江西省', '赣州市', '章贡区', '**路', 1, 3, '2019-01-03 19:49:26', '2019-01-03 21:29:50', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_statistics_dau
 -- ----------------------------
 DROP TABLE IF EXISTS `t_statistics_dau`;
-CREATE TABLE `t_statistics_dau` (
+CREATE TABLE `t_statistics_dau`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'DAU编号',
   `dau` bigint(20) NOT NULL COMMENT 'DAU',
-  `statistics_time` datetime NOT NULL COMMENT '统计时间',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `statistics_time` datetime(0) NOT NULL COMMENT '统计时间',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='日活用户统计表';
+) ENGINE = InnoDB AUTO_INCREMENT = 167 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '日活用户统计表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_statistics_dau
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_statistics_dau` VALUES (68, 2, '2019-01-18 17:42:00', 1, '2019-01-18 17:43:00', NULL, 0);
 INSERT INTO `t_statistics_dau` VALUES (69, 16, '2019-01-25 10:47:40', 1, '2019-01-25 10:48:40', NULL, 0);
 INSERT INTO `t_statistics_dau` VALUES (71, 8, '2019-01-29 10:31:04', 1, '2019-01-29 10:32:04', NULL, 0);
@@ -3231,27 +3151,25 @@ INSERT INTO `t_statistics_dau` VALUES (163, 0, '2019-06-05 17:09:30', 1, '2019-0
 INSERT INTO `t_statistics_dau` VALUES (164, 0, '2019-06-05 17:10:30', 1, '2019-06-05 17:11:30', NULL, 0);
 INSERT INTO `t_statistics_dau` VALUES (165, 0, '2019-06-05 17:11:30', 1, '2019-06-05 17:12:30', NULL, 0);
 INSERT INTO `t_statistics_dau` VALUES (166, 0, '2019-06-05 17:12:30', 1, '2019-06-05 17:13:30', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_statistics_day
 -- ----------------------------
 DROP TABLE IF EXISTS `t_statistics_day`;
-CREATE TABLE `t_statistics_day` (
+CREATE TABLE `t_statistics_day`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '日期编号',
-  `the_date` datetime NOT NULL COMMENT '日期字符串',
-  `am_pm` char(2) NOT NULL COMMENT '上午或下午',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `the_date` datetime(0) NOT NULL COMMENT '日期字符串',
+  `am_pm` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '上午或下午',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2001 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用于数据统计的日期信息';
+) ENGINE = InnoDB AUTO_INCREMENT = 2001 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用于数据统计的日期信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_statistics_day
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_statistics_day` VALUES (1, '2019-01-01 00:00:00', 'am', 1, '2019-02-20 10:45:57', NULL, 0);
 INSERT INTO `t_statistics_day` VALUES (2, '2019-01-01 00:00:00', 'pm', 1, '2019-02-20 10:45:57', NULL, 0);
 INSERT INTO `t_statistics_day` VALUES (3, '2019-01-02 00:00:00', 'am', 1, '2019-02-20 10:45:57', NULL, 0);
@@ -5252,60 +5170,56 @@ INSERT INTO `t_statistics_day` VALUES (1997, '2021-09-25 00:00:00', 'am', 1, '20
 INSERT INTO `t_statistics_day` VALUES (1998, '2021-09-25 00:00:00', 'pm', 1, '2019-02-20 10:45:58', NULL, 0);
 INSERT INTO `t_statistics_day` VALUES (1999, '2021-09-26 00:00:00', 'am', 1, '2019-02-20 10:45:58', NULL, 0);
 INSERT INTO `t_statistics_day` VALUES (2000, '2021-09-26 00:00:00', 'pm', 1, '2019-02-20 10:45:58', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_subscribe
 -- ----------------------------
 DROP TABLE IF EXISTS `t_subscribe`;
-CREATE TABLE `t_subscribe` (
+CREATE TABLE `t_subscribe`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订阅编号',
-  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户编号',
-  `city` varchar(20) DEFAULT '' COMMENT '城市',
-  `project_type` varchar(255) DEFAULT '' COMMENT '项目类型',
-  `min_money` bigint(10) DEFAULT '0' COMMENT '最小金额',
-  `max_money` bigint(10) DEFAULT NULL COMMENT '最大金额',
-  `tenderee` varchar(255) DEFAULT '' COMMENT '招标人',
-  `aptitude_type` varchar(32) DEFAULT '' COMMENT '资质类别',
-  `keyword` varchar(32) DEFAULT '' COMMENT '关键字',
-  `is_subscribe` int(4) DEFAULT '0' COMMENT '是否开通订阅',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '用户编号',
+  `city` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '城市',
+  `project_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目类型',
+  `min_money` bigint(10) NULL DEFAULT 0 COMMENT '最小金额',
+  `max_money` bigint(10) NULL DEFAULT NULL COMMENT '最大金额',
+  `tenderee` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '招标人',
+  `aptitude_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资质类别',
+  `keyword` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '关键字',
+  `is_subscribe` int(4) NULL DEFAULT 0 COMMENT '是否开通订阅',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='订阅表';
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订阅表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_subscribe
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_subscribe` VALUES (1, 40, '赣州市', '房建市政', 1, 3, '某某公司', '三级资质', '采购', 1, 18, '2019-04-26 12:16:10', '2019-04-26 14:13:26', 0);
 INSERT INTO `t_subscribe` VALUES (2, 42, '赣州', '房建市政,交通工程,政府采购,其他项目', 200, 300, '某某公司', '水利工程,三级', '关键字', 1, 9, '2019-05-20 16:19:55', '2019-05-20 17:06:34', 0);
 INSERT INTO `t_subscribe` VALUES (3, 50, '全省', '', 0, 0, '', '房建市政,一级', '', 0, 2, '2019-05-29 10:34:17', '2019-05-29 10:35:49', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_sys_config
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_config`;
-CREATE TABLE `t_sys_config` (
+CREATE TABLE `t_sys_config`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '配置编号',
-  `name` varchar(50) NOT NULL COMMENT '配置名称',
-  `value` varchar(5000) NOT NULL COMMENT '配置内容(JSON)',
-  `description` varchar(50) DEFAULT NULL COMMENT '中文说明',
-  `comment` varchar(5000) DEFAULT NULL COMMENT '配置注释',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配置名称',
+  `value` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配置内容(JSON)',
+  `description` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '中文说明',
+  `comment` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置注释',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统配置表，以JSON格式记录常用配置，如阿里云，微信等';
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统配置表，以JSON格式记录常用配置，如阿里云，微信等' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_sys_config
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_sys_config` VALUES (1, 'aliyun_sms_config', '{\n  \"accessKeyId\": \"yourAccessKeyId\",\n  \"accessKeySecret\": \"yourAccessKeySecret\",\n  \"signName\": \"signName\",\n  \"regionId\": \"cn-hangzhou\"\n}', '阿里云短信', '{\n  \"accessKeyId\": \"访问ID\",\n  \"accessKeySecret\": \"访问密钥\",\n  \"signName\": \"短信签名\"\n,\n  \"regionId\": \"区域id\"}', 1, '2018-12-17 22:17:52', NULL, 0);
 INSERT INTO `t_sys_config` VALUES (2, 'aliyun_mail_config', '{\n  \"accessKeyId\": \"yourAccessKeyId\",\n  \"accessKeySecret\": \"yourAccessKeySecret\"\n,\n  \"regionId\": \"cn-hangzhou\"\n}', '阿里云邮件推送', '{\n  \"accessKeyId\": \"访问ID\",\n  \"accessKeySecret\": \"访问密钥\"\n,\n  \"regionId\": \"区域id\"\n}', 1, '2018-12-17 22:17:52', NULL, 0);
 INSERT INTO `t_sys_config` VALUES (3, 'weixin_gzh_config', '{\n  \"appId\": \"appId\",\n  \"appSecret\": \"appSecret\",\n  \"baseUrl\": \"http://www.zywork.top\",\n  \"loginRedirectUrl\": \"\"\n}', '微信公众号', '{\n  \"appId\": \"公众号ID\",\n  \"appSecret\": \"公众号密钥\",\n  \"baseUrl\": \"服务器端base url\",\n  \"loginRedirectUrl\": \"服务器端登录回调接口地址\"\n}', 1, '2018-12-17 22:17:52', NULL, 0);
@@ -5315,72 +5229,68 @@ INSERT INTO `t_sys_config` VALUES (14, 'default_distribution_config', '{\n  \"di
 INSERT INTO `t_sys_config` VALUES (15, 'aliyun_oss_config', '{\n  \"accessKeyId\": \"yourAccessKeyId\",\n  \"accessKeySecret\": \"yourAccessKeySecret\"\n,\n  \"regionId\": \"cn-hangzhou\"\n\n,\n  \"domain\": \"http://cdn.zywork.top\"\n\n,\n  \"defaultBucket\": \"defaultBucket\"}', '阿里云OSS', '{\n  \"accessKeyId\": \"访问ID\",\n  \"accessKeySecret\": \"访问密钥\"\n,\n  \"regionId\": \"区域id\"\n\n,\n  \"domain\": \"绑定的域名\"\n\n,\n  \"defaultBucket\": \"默认Bucket\"}', 1, '2019-03-28 16:33:51', NULL, 0);
 INSERT INTO `t_sys_config` VALUES (16, 'qiniu_oss_config', '{\"accessKey\":\"accessKey\",\"secretKey\":\"secretKey\",\"zoneName\":\"zone2\",\"domain\":\"http://cdn.zywork.top\",\"defaultBucket\":\"zywork-app\"}', '七牛云对象存储', '{\"accessKey\": \"accessKey\", \"secretKey\": \"secretKey\",  \"zoneName\": \"区域\",  \"domain\": \"绑定的域名\", \"defaultBucket\": \"默认Bucket\"}', 4, '2019-03-29 11:10:00', '2019-03-29 17:04:07', 0);
 INSERT INTO `t_sys_config` VALUES (17, 'customer_config', '{\"isShow\":\"true\",\"phone\":\"18279700225\"}', '客服消息配置', '{\"isShow\":\"是否显示客服消息\",\"phone\":\"客服联系电话\"}', 1, '2019-05-27 11:21:09', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_sys_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_info`;
-CREATE TABLE `t_sys_info` (
+CREATE TABLE `t_sys_info`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '系统信息编号',
-  `comp_name` varchar(200) DEFAULT NULL COMMENT '公司名称',
-  `head_icon` varchar(300) DEFAULT NULL COMMENT '头部图标',
-  `menu_icon_min` varchar(300) DEFAULT NULL COMMENT '菜单小图标',
-  `menu_icon_max` varchar(300) DEFAULT NULL COMMENT '菜单大图标',
-  `default_head` varchar(300) DEFAULT NULL COMMENT '默认头像',
-  `background_icon` varchar(300) DEFAULT NULL COMMENT '背景图片',
-  `do_main` varchar(300) DEFAULT NULL COMMENT '域名',
-  `comp_addr` varchar(200) DEFAULT NULL COMMENT '公司地址',
-  `comp_phone` varchar(20) DEFAULT NULL COMMENT '公司电话',
-  `comp_email` varchar(30) DEFAULT NULL COMMENT '公司邮箱',
-  `comp_memo` varchar(500) DEFAULT NULL COMMENT '公司说明',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统信息表';
+  `comp_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司名称',
+  `head_icon` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头部图标',
+  `menu_icon_min` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单小图标',
+  `menu_icon_max` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单大图标',
+  `default_head` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '默认头像',
+  `background_icon` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '背景图片',
+  `do_main` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '域名',
+  `comp_addr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司地址',
+  `comp_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司电话',
+  `comp_email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司邮箱',
+  `comp_memo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公司说明',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_sys_info
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_sys_info` VALUES (1, '赣州智悦科技有限公司', 'http://pic18.nipic.com/20120204/8339340_144203764154_2.jpg', '', 'http://pic15.nipic.com/20110628/1369025_192645024000_2.jpg', 'http://k.zol-img.com.cn/sjbbs/7692/a7691515_s.jpg', 'http://pic32.nipic.com/20130810/7772606_170808427000_2.jpg', 'http://www.zywork.top', '江西省赣州说章贡区', '18279700225', 'wjhsmarter@126.com', '自主研发', 8, '2019-06-01 09:40:48', '2019-06-11 14:01:09', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_log`;
-CREATE TABLE `t_sys_log` (
+CREATE TABLE `t_sys_log`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '日志编号',
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户编号',
-  `user_account` varchar(100) DEFAULT NULL COMMENT '用户账号',
-  `description` varchar(200) NOT NULL COMMENT '执行说明',
-  `user_agent` varchar(1000) DEFAULT NULL COMMENT 'User-Agent',
-  `request_url` varchar(500) DEFAULT NULL COMMENT '请求URL',
-  `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式',
-  `request_params` varchar(2000) DEFAULT NULL COMMENT '请求参数',
-  `response_code` int(11) DEFAULT NULL COMMENT '响应编码',
-  `response_msg` varchar(100) DEFAULT NULL COMMENT '响应消息',
-  `execute_class` varchar(500) DEFAULT NULL COMMENT '完整类名',
-  `execute_method` varchar(100) DEFAULT NULL COMMENT '方法名称',
-  `execute_time` datetime DEFAULT NULL COMMENT '开始执行时间',
-  `execute_cost_time` bigint(20) DEFAULT NULL COMMENT '执行耗时(ms)',
-  `has_exception` tinyint(4) DEFAULT '0' COMMENT '是否异常',
-  `exception_msg` varchar(2000) DEFAULT NULL COMMENT '异常消息',
-  `execute_ip` varchar(100) DEFAULT NULL COMMENT 'IP地址',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户编号',
+  `user_account` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户账号',
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '执行说明',
+  `user_agent` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'User-Agent',
+  `request_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求URL',
+  `request_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方式',
+  `request_params` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求参数',
+  `response_code` int(11) NULL DEFAULT NULL COMMENT '响应编码',
+  `response_msg` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '响应消息',
+  `execute_class` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '完整类名',
+  `execute_method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方法名称',
+  `execute_time` datetime(0) NULL DEFAULT NULL COMMENT '开始执行时间',
+  `execute_cost_time` bigint(20) NULL DEFAULT NULL COMMENT '执行耗时(ms)',
+  `has_exception` tinyint(4) NULL DEFAULT 0 COMMENT '是否异常',
+  `exception_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '异常消息',
+  `execute_ip` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'IP地址',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统操作日志表';
+) ENGINE = InnoDB AUTO_INCREMENT = 293 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统操作日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_sys_log
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_sys_log` VALUES (1, 1, '13672297775', '用户编辑', NULL, 'http://localhost:8088/test/edit', 'POST', '[]', 1001, '成功', 'top.zywork.controller.TestController', 'edit', '2018-12-18 15:28:26', 13, 0, NULL, '0:0:0:0:0:0:0:1', 1, '2018-12-18 15:28:25', NULL, 0);
 INSERT INTO `t_sys_log` VALUES (2, 1, '13672297775', '用户编辑', NULL, 'http://localhost:8088/test/edit', 'POST', '[]', 1001, '成功', 'top.zywork.controller.TestController', 'edit', '2018-12-18 15:32:31', 7, 0, NULL, '0:0:0:0:0:0:0:1', 1, '2018-12-18 15:32:30', NULL, 0);
 INSERT INTO `t_sys_log` VALUES (3, 1, '13672297775', '用户添加', NULL, 'http://localhost:8088/test/add', 'POST', '[]', 1001, '成功', 'top.zywork.controller.TestController', 'add', '2018-12-18 15:32:35', 0, 0, NULL, '0:0:0:0:0:0:0:1', 1, '2018-12-18 15:32:35', NULL, 0);
@@ -5648,77 +5558,71 @@ INSERT INTO `t_sys_log` VALUES (289, 31, '18888888888', '人工完成提现操�
 INSERT INTO `t_sys_log` VALUES (290, 31, '18888888888', '人工完成提现操作', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36', 'http://localhost:8088/withdraw/admin/confirm-human', 'POST', '{\"transactionNo\":\"ef011bfb3ee94b6bb978f8fee2023177\",\"withdrawStatus\":5}', 1003, '交易编号不正确或提现申请不是已通过状态', 'top.zywork.controller.UserWithdrawController', 'confirmWithdrawHuman', '2019-04-01 15:28:37', 8, 0, NULL, '0:0:0:0:0:0:0:1', 1, '2019-04-01 15:28:36', NULL, 0);
 INSERT INTO `t_sys_log` VALUES (291, 31, '18888888888', '人工完成提现操作', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36', 'http://localhost:8088/withdraw/admin/confirm-human', 'POST', '{\"transactionNo\":\"ef011bfb3ee94b6bb978f8fee2023177\",\"withdrawStatus\":4}', 1003, '交易编号不正确或提现申请不是已通过状态', 'top.zywork.controller.UserWithdrawController', 'confirmWithdrawHuman', '2019-04-01 15:28:40', 3, 0, NULL, '0:0:0:0:0:0:0:1', 1, '2019-04-01 15:28:40', NULL, 0);
 INSERT INTO `t_sys_log` VALUES (292, 31, '18888888888', '人工完成提现操作', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36', 'http://localhost:8088/withdraw/admin/confirm-human', 'POST', '{\"transactionNo\":\"b84bdc6156554a27a57229faa361d6a4\",\"withdrawStatus\":5}', 1001, '已人工完成提现操作，提现失败', 'top.zywork.controller.UserWithdrawController', 'confirmWithdrawHuman', '2019-04-01 15:28:44', 17, 0, NULL, '0:0:0:0:0:0:0:1', 1, '2019-04-01 15:28:44', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_update_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `t_update_notice`;
-CREATE TABLE `t_update_notice` (
+CREATE TABLE `t_update_notice`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '更新公告编号',
-  `title` varchar(32) DEFAULT '' COMMENT '公告标题',
-  `synopsis` varchar(200) DEFAULT '' COMMENT '公告简介',
-  `content` text COMMENT '公告内容',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  `resource_id` bigint(20) DEFAULT '0' COMMENT '资源编号',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='更新公告表';
+  `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公告标题',
+  `synopsis` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '公告简介',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '公告内容',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  `resource_id` bigint(20) NULL DEFAULT 0 COMMENT '资源编号',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '更新公告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_update_notice
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_update_notice` VALUES (1, '系统有重大更新', '此次更新内容如下：1、xxx。2、xxxx/', '<p>系统更新了什么什么什么</p>', 1, NULL, '2019-05-27 12:00:27', 0, 0);
 INSERT INTO `t_update_notice` VALUES (2, 'test', 'test content', '<p>test content jlskdfs sdfsdfsd fsdfsdfs fsdf sdfsdf sfsd f&nbsp;</p>', 1, NULL, '2019-06-18 13:06:28', 0, 0);
 INSERT INTO `t_update_notice` VALUES (3, '1111', '122222323', '<p>23232323232323</p>', 1, NULL, '2019-06-18 16:16:18', 0, 78);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_update_notice_resource
 -- ----------------------------
 DROP TABLE IF EXISTS `t_update_notice_resource`;
-CREATE TABLE `t_update_notice_resource` (
+CREATE TABLE `t_update_notice_resource`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '更新公告资源编号',
-  `notice_id` bigint(20) DEFAULT NULL COMMENT '更新公告编号',
-  `resource_id` bigint(20) DEFAULT NULL COMMENT '资源编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='更新公告资源表';
+  `notice_id` bigint(20) NULL DEFAULT NULL COMMENT '更新公告编号',
+  `resource_id` bigint(20) NULL DEFAULT NULL COMMENT '资源编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '更新公告资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_update_notice_resource
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_update_notice_resource` VALUES (1, 2, 76, 1, NULL, '2019-06-18 13:49:48', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
-CREATE TABLE `t_user` (
+CREATE TABLE `t_user`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户编号',
-  `phone` varchar(11) DEFAULT '' COMMENT '手机号',
-  `email` varchar(100) DEFAULT NULL COMMENT '用户邮箱',
-  `password` varchar(100) DEFAULT NULL COMMENT '登录密码',
-  `salt` varchar(200) DEFAULT NULL COMMENT '加密盐值',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '手机号',
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户邮箱',
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录密码',
+  `salt` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '加密盐值',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户基本信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户基本信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user` VALUES (31, '18888888888', NULL, '$2a$10$7YNSwyW.FfL2iPBOqSEnD.8fNnM65QjumF2CD3glyQb9zdQBzXSr2', NULL, 1, '2018-12-22 15:46:43', NULL, 0);
 INSERT INTO `t_user` VALUES (36, '13666666666', NULL, '$2a$10$7YNSwyW.FfL2iPBOqSEnD.8fNnM65QjumF2CD3glyQb9zdQBzXSr2', NULL, 1, '2018-12-28 12:00:36', NULL, 0);
 INSERT INTO `t_user` VALUES (40, '', 'demo@zywork.top', '$2a$10$BxzUB3PvmEX9VqZIfIvsf.V4ltLJY9fF06GFX.J.d.3SFOApnFBm2', NULL, 1, '2019-01-17 10:30:21', NULL, 0);
@@ -5729,103 +5633,99 @@ INSERT INTO `t_user` VALUES (52, '17777777777', '177@126.com', '$2a$10$s/NpZx7gF
 INSERT INTO `t_user` VALUES (53, '15555555555', '155@126.com', '$2a$10$G.CnCvvLVDWsM5Y6Cj0zYOuDAdgBFBl5g6FnJGimoU5NyXI56zo0a', '123456Abc', 1, '2019-06-17 11:55:53', NULL, 0);
 INSERT INTO `t_user` VALUES (54, '14444444444', '144@126.com', '$2a$10$wHOVIVWfUjfFfRVGEzO2qeQGn7x.JOSeaB8qiDmSKC.ftkEWo4KX2', '123456Abc', 1, '2019-06-17 11:57:30', NULL, 0);
 INSERT INTO `t_user` VALUES (55, '13333333333', '133@126.com', '$2a$10$mwjhcZKgSIu3xoou0f4Qbuehu5w620GufGQ42agd88gR9jkyUxO0S', '123456Abc', 1, '2019-06-17 11:59:00', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_bankcard
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_bankcard`;
-CREATE TABLE `t_user_bankcard` (
+CREATE TABLE `t_user_bankcard`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '银行卡编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `account_name` varchar(10) NOT NULL COMMENT '持卡人姓名',
-  `bank_code` varchar(20) DEFAULT NULL COMMENT '银行代码',
-  `bank_name` varchar(20) NOT NULL COMMENT '银行名称',
-  `bankcard_no` varchar(25) NOT NULL COMMENT '银行卡号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT NULL COMMENT '是否激活',
+  `account_name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '持卡人姓名',
+  `bank_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '银行代码',
+  `bank_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '银行名称',
+  `bankcard_no` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '银行卡号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT NULL COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户银行卡记录表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户银行卡记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_certification
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_certification`;
-CREATE TABLE `t_user_certification` (
+CREATE TABLE `t_user_certification`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '认证编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `identity` varchar(18) NOT NULL COMMENT '身份证号',
-  `real_name` varchar(10) NOT NULL COMMENT '真实姓名',
-  `valid_date` date DEFAULT NULL COMMENT '身份证有效期',
-  `idcard_front` varchar(500) NOT NULL COMMENT '身份证正面',
-  `idcard_reverse` varchar(500) NOT NULL COMMENT '身份证反面',
-  `idcard_hand` varchar(500) DEFAULT NULL COMMENT '手持身份证',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT NULL COMMENT '是否激活',
+  `identity` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '身份证号',
+  `real_name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '真实姓名',
+  `valid_date` date NULL DEFAULT NULL COMMENT '身份证有效期',
+  `idcard_front` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '身份证正面',
+  `idcard_reverse` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '身份证反面',
+  `idcard_hand` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '手持身份证',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT NULL COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户实名认证表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户实名认证表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user_coupon
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_coupon`;
-CREATE TABLE `t_user_coupon` (
+CREATE TABLE `t_user_coupon`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户抵扣券编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `coupon_id` bigint(20) DEFAULT '0' COMMENT '抵扣券编号',
-  `use_status` int(4) DEFAULT '0' COMMENT '使用状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `coupon_id` bigint(20) NULL DEFAULT 0 COMMENT '抵扣券编号',
+  `use_status` int(4) NULL DEFAULT 0 COMMENT '使用状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户抵扣券表';
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户抵扣券表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_coupon
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_coupon` VALUES (1, 50, 1, 0, 1, '2019-04-26 16:46:16', NULL, 0);
 INSERT INTO `t_user_coupon` VALUES (2, 50, 1, 0, 1, '2019-04-26 16:53:25', NULL, 0);
 INSERT INTO `t_user_coupon` VALUES (3, 42, 1, 0, 1, '2019-04-26 17:35:35', NULL, 0);
 INSERT INTO `t_user_coupon` VALUES (4, 42, 1, 0, 1, '2019-04-26 17:44:17', NULL, 0);
 INSERT INTO `t_user_coupon` VALUES (5, 42, 1, 0, 1, '2019-04-26 17:45:28', NULL, 0);
 INSERT INTO `t_user_coupon` VALUES (6, 42, 1, 0, 1, '2019-04-26 17:45:28', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_detail`;
-CREATE TABLE `t_user_detail` (
+CREATE TABLE `t_user_detail`  (
   `id` bigint(20) NOT NULL COMMENT '用户编号',
-  `nickname` varchar(20) DEFAULT NULL COMMENT '昵称',
-  `headicon` varchar(500) DEFAULT NULL COMMENT '头像地址',
-  `gender` tinyint(4) DEFAULT '0' COMMENT '性别',
-  `birthday` date DEFAULT NULL COMMENT '生日',
-  `age` int(11) DEFAULT NULL COMMENT '年龄',
-  `qq` varchar(20) DEFAULT NULL COMMENT 'QQ号',
-  `qq_qrcode` varchar(500) DEFAULT NULL COMMENT 'QQ二维码',
-  `wechat` varchar(50) DEFAULT NULL COMMENT '微信号',
-  `wechat_qrcode` varchar(500) DEFAULT NULL COMMENT '微信二维码',
-  `alipay` varchar(100) DEFAULT NULL COMMENT '支付宝账号',
-  `alipay_qrcode` varchar(500) DEFAULT NULL COMMENT '支付宝二维码',
-  `share_code` varchar(36) DEFAULT NULL COMMENT '分享码',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `nickname` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
+  `headicon` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像地址',
+  `gender` tinyint(4) NULL DEFAULT 0 COMMENT '性别',
+  `birthday` date NULL DEFAULT NULL COMMENT '生日',
+  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
+  `qq` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'QQ号',
+  `qq_qrcode` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'QQ二维码',
+  `wechat` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信号',
+  `wechat_qrcode` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信二维码',
+  `alipay` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付宝账号',
+  `alipay_qrcode` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付宝二维码',
+  `share_code` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分享码',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户扩展信息表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户扩展信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_detail
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_detail` VALUES (31, 'Sys Super Admin', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'nxrLRk', 1, '2018-12-22 15:46:43', NULL, 0);
 INSERT INTO `t_user_detail` VALUES (36, 'Sys User', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '62TNSs', 1, '2018-12-28 12:00:36', NULL, 0);
 INSERT INTO `t_user_detail` VALUES (40, 'Sys User Demo', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'h345CG', 1, '2019-01-17 10:30:21', NULL, 0);
@@ -5836,79 +5736,73 @@ INSERT INTO `t_user_detail` VALUES (52, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 INSERT INTO `t_user_detail` VALUES (53, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'B4FSmF', 1, '2019-06-17 11:55:53', NULL, 0);
 INSERT INTO `t_user_detail` VALUES (54, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5BbbNj', 1, '2019-06-17 11:57:30', NULL, 0);
 INSERT INTO `t_user_detail` VALUES (55, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'cRspfU', 1, '2019-06-17 11:59:09', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_expert
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_expert`;
-CREATE TABLE `t_user_expert` (
+CREATE TABLE `t_user_expert`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家信息编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `name` varchar(20) DEFAULT '' COMMENT '专家姓名',
-  `gender` tinyint(4) DEFAULT '0' COMMENT '性别',
-  `age` int(11) DEFAULT NULL COMMENT '年龄',
-  `is_fulltime` tinyint(4) DEFAULT '0' COMMENT '是否全职',
-  `phone` varchar(11) DEFAULT '' COMMENT '联系电话',
-  `memo` varchar(300) DEFAULT '' COMMENT '个人情况介绍',
-  `examine_status` tinyint(4) DEFAULT '0' COMMENT '审核状态',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='专家信息表';
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '专家姓名',
+  `gender` tinyint(4) NULL DEFAULT 0 COMMENT '性别',
+  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
+  `is_fulltime` tinyint(4) NULL DEFAULT 0 COMMENT '是否全职',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系电话',
+  `memo` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '个人情况介绍',
+  `examine_status` tinyint(4) NULL DEFAULT 0 COMMENT '审核状态',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_expert
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_expert` VALUES (1, 50, '危锦辉', 1, 22, 0, '18279700225', '正常上班', 0, 1, '2019-06-14 16:02:07', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_expert_question_type
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_expert_question_type`;
-CREATE TABLE `t_user_expert_question_type` (
+CREATE TABLE `t_user_expert_question_type`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '专家类别编号',
-  `user_expert_id` bigint(20) DEFAULT '0' COMMENT '专家信息编号',
-  `question_type_id` bigint(20) DEFAULT NULL COMMENT '问题类别编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='专家类别表';
+  `user_expert_id` bigint(20) NULL DEFAULT 0 COMMENT '专家信息编号',
+  `question_type_id` bigint(20) NULL DEFAULT NULL COMMENT '问题类别编号',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '专家类别表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_expert_question_type
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_expert_question_type` VALUES (1, 1, 7, 1, '2019-06-14 16:02:07', NULL, 0);
 INSERT INTO `t_user_expert_question_type` VALUES (2, 1, 7, 1, '2019-06-14 16:02:07', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_hierarchy
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_hierarchy`;
-CREATE TABLE `t_user_hierarchy` (
+CREATE TABLE `t_user_hierarchy`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '关系编号',
   `ancestor_id` bigint(20) NOT NULL COMMENT '祖先编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `user_level` int(11) NOT NULL COMMENT '用户级别',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户关系表';
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_hierarchy
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_hierarchy` VALUES (1, 31, 31, 1, 1, '2018-12-28 11:26:11', NULL, 0);
 INSERT INTO `t_user_hierarchy` VALUES (2, 31, 36, 2, 1, '2018-12-28 12:00:36', NULL, 0);
 INSERT INTO `t_user_hierarchy` VALUES (3, 36, 36, 1, 1, '2018-12-28 12:00:36', NULL, 0);
@@ -5918,28 +5812,26 @@ INSERT INTO `t_user_hierarchy` VALUES (11, 50, 50, 2, 1, '2019-05-27 17:19:49', 
 INSERT INTO `t_user_hierarchy` VALUES (12, 50, 51, 3, 1, '2019-05-27 17:20:05', NULL, 0);
 INSERT INTO `t_user_hierarchy` VALUES (13, 100, 100, 1, 1, '2019-05-28 14:47:07', NULL, 0);
 INSERT INTO `t_user_hierarchy` VALUES (14, 100, 101, 2, 1, '2019-05-28 14:47:07', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_message
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_message`;
-CREATE TABLE `t_user_message` (
+CREATE TABLE `t_user_message`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息发送编号',
   `message_id` bigint(20) NOT NULL COMMENT '消息编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
-  `is_read` tinyint(4) DEFAULT '0' COMMENT '是否已读',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `is_read` tinyint(4) NULL DEFAULT 0 COMMENT '是否已读',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户消息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户消息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_message
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_message` VALUES (1, 1, 50, 1, 10, '2019-01-24 16:20:13', '2019-05-23 14:48:45', 1);
 INSERT INTO `t_user_message` VALUES (2, 1, 42, 1, 3, '2019-01-24 16:20:13', '2019-05-23 14:48:40', 0);
 INSERT INTO `t_user_message` VALUES (3, 1, 42, 1, 3, '2019-01-24 16:20:13', '2019-05-23 14:46:13', 0);
@@ -5954,110 +5846,102 @@ INSERT INTO `t_user_message` VALUES (11, 1, 42, 0, 1, '2019-01-24 16:20:13', NUL
 INSERT INTO `t_user_message` VALUES (12, 1, 42, 1, 2, '2019-01-24 16:20:13', '2019-05-23 15:11:07', 0);
 INSERT INTO `t_user_message` VALUES (13, 1, 42, 1, 2, '2019-01-24 16:20:13', '2019-05-23 15:07:20', 0);
 INSERT INTO `t_user_message` VALUES (14, 1, 42, 1, 3, '2019-01-24 16:20:13', '2019-05-24 14:09:13', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_notice`;
-CREATE TABLE `t_user_notice` (
+CREATE TABLE `t_user_notice`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息通知编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `item_id` bigint(20) DEFAULT NULL COMMENT '链接编号',
-  `page_url` varchar(200) DEFAULT NULL COMMENT '页面路径',
-  `title` varchar(300) DEFAULT '' COMMENT '项目名称',
-  `main_content` varchar(300) DEFAULT NULL COMMENT '主要内容',
-  `detail_content` varchar(2000) DEFAULT NULL COMMENT '详细内容',
-  `is_read` tinyint(4) DEFAULT '0' COMMENT '是否已读',
-  `notice_type` tinyint(4) DEFAULT NULL COMMENT '通知类型',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `item_id` bigint(20) NULL DEFAULT NULL COMMENT '链接编号',
+  `page_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面路径',
+  `title` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目名称',
+  `main_content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '主要内容',
+  `detail_content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细内容',
+  `is_read` tinyint(4) NULL DEFAULT 0 COMMENT '是否已读',
+  `notice_type` tinyint(4) NULL DEFAULT NULL COMMENT '通知类型',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='消息通知表';
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息通知表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_notice
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_notice` VALUES (1, 50, 4, '/pages-info-share/publish-carpool-detail/publish-carpool-detail', '\'开标拼车\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\', \'您发起的开标拼车由\\\'江西省/南昌市/章贡区/西城科技园\\\' - \\\'江西省/南昌市/章贡区/兴国中学\\\'有一条新的申请记录，具体内容可前往publish-carpool-detail/publish-carpool-detail查看\'', 1, 2, 2, '2019-06-11 17:08:19', '2019-06-11 18:28:30', 0);
 INSERT INTO `t_user_notice` VALUES (2, 50, 4, '/pages-info-share/publish-carpool-detail/publish-carpool-detail', '\'开标拼车\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\', \'您发起的开标拼车由\\\'江西省/南昌市/章贡区/西城科技园\\\' - \\\'江西省/南昌市/章贡区/兴国中学\\\'有一条新的申请记录，具体内容可前往publish-carpool-detail/publish-carpool-detail查看\'', 1, 0, 2, '2019-06-11 17:08:19', '2019-06-11 17:47:45', 0);
 INSERT INTO `t_user_notice` VALUES (3, 50, 4, '/pages-info-share/publish-carpool-detail/publish-carpool-detail', '\'开标拼车\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\', \'您发起的开标拼车由\\\'江西省/南昌市/章贡区/西城科技园\\\' - \\\'江西省/南昌市/章贡区/兴国中学\\\'有一条新的申请记录，具体内容可前往publish-carpool-detail/publish-carpool-detail查看\'', 1, 1, 2, '2019-06-11 17:08:19', '2019-06-12 18:43:28', 0);
 INSERT INTO `t_user_notice` VALUES (4, 50, 4, '/pages-info-share/publish-carpool-detail/publish-carpool-detail', '\'开标拼车\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\', \'您发起的开标拼车由\\\'江西省/南昌市/章贡区/西城科技园\\\' - \\\'江西省/南昌市/章贡区/兴国中学\\\'有一条新的申请记录，具体内容可前往publish-carpool-detail/publish-carpool-detail查看\'', 1, 3, 2, '2019-06-11 17:08:19', '2019-06-11 18:36:13', 0);
 INSERT INTO `t_user_notice` VALUES (5, 50, 4, '/pages-info-share/publish-carpool-detail/publish-carpool-detail', '\'开标拼车\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\', \'您发起的开标拼车由\\\'江西省/南昌市/章贡区/西城科技园\\\' - \\\'江西省/南昌市/章贡区/兴国中学\\\'有一条新的申请记录，具体内容可前往publish-carpool-detail/publish-carpool-detail查看\'', 1, 4, 2, '2019-06-11 17:08:19', '2019-06-11 18:36:30', 0);
 INSERT INTO `t_user_notice` VALUES (6, 50, 4, '/pages-info-share/publish-carpool-detail/publish-carpool-detail', '\'开标拼车\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\'', '\'您发起的开标拼车由\\\'江西省/南昌市/章贡区\\\' - \\\'江西省/南昌市/章贡区\\\'有一条新的申请记录\', \'您发起的开标拼车由\\\'江西省/南昌市/章贡区/西城科技园\\\' - \\\'江西省/南昌市/章贡区/兴国中学\\\'有一条新的申请记录，具体内容可前往publish-carpool-detail/publish-carpool-detail查看\'', 1, 5, 2, '2019-06-11 17:08:19', '2019-06-11 18:36:36', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_organization
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_organization`;
-CREATE TABLE `t_user_organization` (
+CREATE TABLE `t_user_organization`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户组织编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `organization_id` bigint(20) NOT NULL COMMENT '组织编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户组织部门信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户组织部门信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_organization
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_organization` VALUES (1, 31, 2, 1, '2019-01-24 16:16:14', NULL, 0);
 INSERT INTO `t_user_organization` VALUES (2, 40, 2, 1, '2019-01-24 16:16:21', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_path
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_path`;
-CREATE TABLE `t_user_path` (
+CREATE TABLE `t_user_path`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '路径编号',
-  `user_path` text NOT NULL COMMENT '用户路径',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_path` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户路径',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE,
-  FULLTEXT KEY `idx_user_path` (`user_path`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户关系路径表';
+  FULLTEXT INDEX `idx_user_path`(`user_path`)
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户关系路径表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_path
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_path` VALUES (1, '31', 1, '2018-12-28 11:26:11', NULL, 0);
 INSERT INTO `t_user_path` VALUES (2, '31/36', 1, '2018-12-28 12:00:36', NULL, 0);
 INSERT INTO `t_user_path` VALUES (3, '45', 1, '2019-05-27 17:08:36', NULL, 0);
 INSERT INTO `t_user_path` VALUES (4, '45/50', 1, '2019-05-27 17:08:36', NULL, 0);
 INSERT INTO `t_user_path` VALUES (5, '100', 1, '2019-05-28 14:47:07', NULL, 0);
 INSERT INTO `t_user_path` VALUES (6, '100/101', 1, '2019-05-28 14:47:07', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_role`;
-CREATE TABLE `t_user_role` (
+CREATE TABLE `t_user_role`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户编号',
   `role_id` bigint(20) NOT NULL COMMENT '角色编号',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户角色表';
+) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_role
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_role` VALUES (7, 31, 1, 1, '2018-12-22 15:46:43', NULL, 0);
 INSERT INTO `t_user_role` VALUES (8, 36, 5, 1, '2018-12-28 12:00:36', NULL, 0);
 INSERT INTO `t_user_role` VALUES (9, 31, 2, 1, '2019-01-06 13:32:46', NULL, 0);
@@ -6078,89 +5962,83 @@ INSERT INTO `t_user_role` VALUES (39, 51, 11, 1, '2019-06-17 10:50:07', NULL, 0)
 INSERT INTO `t_user_role` VALUES (40, 51, 5, 1, '2019-06-17 10:50:07', NULL, 0);
 INSERT INTO `t_user_role` VALUES (41, 52, 10, 1, '2019-06-17 10:53:48', NULL, 0);
 INSERT INTO `t_user_role` VALUES (42, 52, 5, 1, '2019-06-17 10:53:48', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_service
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_service`;
-CREATE TABLE `t_user_service` (
+CREATE TABLE `t_user_service`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户服务编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `service_id` bigint(20) DEFAULT NULL COMMENT '服务编号',
-  `end_date` date DEFAULT NULL COMMENT '服务结束日期',
-  `valid_year` int(10) DEFAULT '1' COMMENT '有效年',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='用户服务表';
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `service_id` bigint(20) NULL DEFAULT NULL COMMENT '服务编号',
+  `end_date` date NULL DEFAULT NULL COMMENT '服务结束日期',
+  `valid_year` int(10) NULL DEFAULT 1 COMMENT '有效年',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户服务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_service
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_service` VALUES (1, 50, 2, '2019-05-07', 1, 1, '2019-05-28 13:06:38', NULL, 0);
 INSERT INTO `t_user_service` VALUES (2, 50, 1, '2019-05-01', 1, 1, '2019-05-28 16:41:19', NULL, 0);
 INSERT INTO `t_user_service` VALUES (3, 50, 3, '2019-06-01', 1, 1, '2019-05-29 17:15:48', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_social
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_social`;
-CREATE TABLE `t_user_social` (
+CREATE TABLE `t_user_social`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '第三方登录编号',
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户编号',
-  `openid` varchar(200) DEFAULT NULL COMMENT 'openid',
-  `union_id` varchar(200) DEFAULT NULL COMMENT 'unionid',
-  `access_token` varchar(255) DEFAULT NULL COMMENT 'AccessToken',
-  `session_key` varchar(255) DEFAULT NULL COMMENT 'SessionKey',
-  `refresh_token` varchar(200) DEFAULT NULL COMMENT '刷新Token',
-  `social_type` varchar(20) DEFAULT NULL COMMENT '第三方登录类型',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '第三方登录绑定时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户编号',
+  `openid` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'openid',
+  `union_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'unionid',
+  `access_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'AccessToken',
+  `session_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'SessionKey',
+  `refresh_token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '刷新Token',
+  `social_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '第三方登录类型',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '第三方登录绑定时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户第三方登录信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户第三方登录信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_social
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_social` VALUES (7, 31, 'openid_wechat', '123456', 'access_token', 'session_key', NULL, '微信小程序', 1, '2019-01-07 19:28:25', NULL, 0);
 INSERT INTO `t_user_social` VALUES (12, 45, 'oNFwF5gWhMocKJKPlieef0Lu9Gp0', NULL, NULL, '7+saHtVubRwwRQx8zL7mvw==', NULL, '微信小程序', 1, '2019-05-24 15:54:53', NULL, 0);
 INSERT INTO `t_user_social` VALUES (17, 50, 'oNFwF5ok3O7_MYyMu1g5JQ1UEk5Y', NULL, NULL, 'sQSWfrXo2uhhvo/pdlZnzw==', NULL, '微信小程序', 1, '2019-05-27 17:08:36', NULL, 0);
 INSERT INTO `t_user_social` VALUES (18, 51, 'oNFwF5jZn3uPZAja9hZd1ndmWdVA', NULL, NULL, 'ASYv4Zjj3JpKkXLHDpGBeg==', NULL, '微信小程序', 1, '2019-05-27 17:18:55', NULL, 0);
 INSERT INTO `t_user_social` VALUES (19, 52, 'oNFwF5jZn3uPZAja9hZd1ndmWdVA', NULL, NULL, 'Cme8zmShI5KgSCo7glJlUQ==', NULL, '微信小程序', 1, '2019-05-27 17:18:55', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_wallet
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_wallet`;
-CREATE TABLE `t_user_wallet` (
+CREATE TABLE `t_user_wallet`  (
   `id` bigint(20) NOT NULL COMMENT '钱包编号',
-  `pay_password` varchar(100) DEFAULT '' COMMENT '支付密码',
-  `rmb_balance` bigint(20) DEFAULT '0' COMMENT '人民币余额',
-  `usable_rmb_balance` bigint(20) DEFAULT '0' COMMENT '可用余额',
-  `frozen_rmb_balance` bigint(20) DEFAULT '0' COMMENT '冻结余额',
-  `integral` bigint(20) DEFAULT '0' COMMENT '总积分',
-  `usable_integral` bigint(20) DEFAULT '0' COMMENT '可用积分',
-  `frozen_integral` bigint(20) DEFAULT '0' COMMENT '冻结积分',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `pay_password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '支付密码',
+  `rmb_balance` bigint(20) NULL DEFAULT 0 COMMENT '人民币余额',
+  `usable_rmb_balance` bigint(20) NULL DEFAULT 0 COMMENT '可用余额',
+  `frozen_rmb_balance` bigint(20) NULL DEFAULT 0 COMMENT '冻结余额',
+  `integral` bigint(20) NULL DEFAULT 0 COMMENT '总积分',
+  `usable_integral` bigint(20) NULL DEFAULT 0 COMMENT '可用积分',
+  `frozen_integral` bigint(20) NULL DEFAULT 0 COMMENT '冻结积分',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户钱包表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户钱包表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_wallet
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_wallet` VALUES (31, '$2a$10$ApWvvBHw0IMFIHCAT5vHxu9dlE3Kw1j0JBmzDTUTJoQQk1UHPKYBO', 192, 192, 0, NULL, NULL, NULL, 16, NULL, '2019-04-01 15:24:47', 0);
 INSERT INTO `t_user_wallet` VALUES (36, '', 200, 200, 0, NULL, NULL, NULL, 5, '2018-12-28 12:00:36', '2019-04-01 14:46:39', 0);
 INSERT INTO `t_user_wallet` VALUES (40, '', 0, 0, 0, 0, 0, 0, 1, '2019-01-17 10:30:21', NULL, 0);
@@ -6171,86 +6049,36 @@ INSERT INTO `t_user_wallet` VALUES (52, '', 0, 0, 0, 0, 0, 0, 1, '2019-05-27 17:
 INSERT INTO `t_user_wallet` VALUES (53, '', 0, 0, 0, 0, 0, 0, 1, '2019-06-17 11:55:53', NULL, 0);
 INSERT INTO `t_user_wallet` VALUES (54, '', 0, 0, 0, 0, 0, 0, 1, '2019-06-17 11:57:30', NULL, 0);
 INSERT INTO `t_user_wallet` VALUES (55, '', 0, 0, 0, 0, 0, 0, 1, '2019-06-17 11:59:08', NULL, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_user_work
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_work`;
-CREATE TABLE `t_user_work` (
+CREATE TABLE `t_user_work`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '工作信息编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `id_num` varchar(18) DEFAULT '' COMMENT '身份证号',
-  `work_unit` varchar(50) DEFAULT '' COMMENT '工作单位',
-  `job_title` varchar(20) DEFAULT '' COMMENT '职务',
-  `work_addr` varchar(200) DEFAULT '' COMMENT '工作地点',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
+  `user_id` bigint(20) NULL DEFAULT 0 COMMENT '用户编号',
+  `id_num` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '身份证号',
+  `work_unit` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工作单位',
+  `job_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '职务',
+  `work_addr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工作地点',
+  `version` int(11) NULL DEFAULT 1 COMMENT '版本号',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='工作信息表';
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_work
 -- ----------------------------
-BEGIN;
 INSERT INTO `t_user_work` VALUES (2, 40, '360735199812292119', '某某公司', '11', '111', 2, '2019-04-26 11:36:53', '2019-04-26 11:37:01', 0);
-COMMIT;
-
--- ----------------------------
--- Table structure for t_labour
--- ----------------------------
-DROP TABLE IF EXISTS `t_labour`;
-CREATE TABLE `t_labour` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '劳务求职编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '姓名',
-  `age` int(10) DEFAULT '0' COMMENT '年龄',
-  `work_type` varchar(255) NOT NULL DEFAULT '' COMMENT '从事工种',
-  `job_type` varchar(10) NOT NULL COMMENT '求职类型',
-  `work_addr` varchar(30) DEFAULT NULL COMMENT '工作地点',
-  `addr_desc` varchar(255) DEFAULT NULL COMMENT '详细地址',
-  `treatment` varchar(500) DEFAULT NULL COMMENT '待遇要求',
-  `phone` varchar(20) NOT NULL COMMENT '联系电话',
-  `memo` varchar(255) DEFAULT NULL COMMENT '其他说明',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='劳务求职表';
-
--- ----------------------------
--- Table structure for t_labour_req
--- ----------------------------
-DROP TABLE IF EXISTS `t_labour_req`;
-CREATE TABLE `t_labour_req` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '劳务需求编号',
-  `user_id` bigint(20) DEFAULT '0' COMMENT '用户编号',
-  `comp_name` varchar(300) NOT NULL COMMENT '企业名称',
-  `work_type` varchar(255) NOT NULL DEFAULT '' COMMENT '从事工种',
-  `job_type` varchar(10) NOT NULL COMMENT '求职类型',
-  `work_addr` varchar(30) DEFAULT NULL COMMENT '工作地点',
-  `addr_desc` varchar(255) DEFAULT NULL COMMENT '详细地址',
-  `treatment` varchar(500) DEFAULT NULL COMMENT '待遇要求',
-  `phone` varchar(20) NOT NULL COMMENT '联系电话',
-  `memo` varchar(255) DEFAULT NULL COMMENT '其他说明',
-  `version` int(11) DEFAULT '1' COMMENT '版本号',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_active` tinyint(4) DEFAULT '0' COMMENT '是否激活',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='劳务需求表';
-
-SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Procedure structure for initStatisticsDay
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `initStatisticsDay`;
 delimiter ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `initStatisticsDay`(in beginDate datetime, in totalDays int)
+CREATE PROCEDURE `initStatisticsDay`(in beginDate datetime, in totalDays int)
 BEGIN
 	declare days int default 0;
 	declare theDate datetime;
@@ -6270,7 +6098,7 @@ BEGIN
 	else
 		commit;
   end if;
-END;
+END
 ;;
 delimiter ;
 
@@ -6279,52 +6107,64 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `inviteUser`;
 delimiter ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `inviteUser`(in pid bigint, in uid bigint)
+CREATE PROCEDURE `inviteUser`(in pid bigint, in uid bigint)
 BEGIN
+	-- 每次循环的祖先id
 	declare ancestorId bigint;
-	declare num int default 0;
+	-- 标记是否还有下一个祖先id
+	declare noNextAncestor int default 0;
+	-- 默认的用户等级，1为自己与自己的关系，2开始为下级
 	declare userLevel int default 2;
+	-- 当前时间
 	declare currentTime datetime default CURRENT_TIMESTAMP;
+	-- 用户路径
 	declare userPath text;
-	declare isParentDistribution bigint default null;
+	-- 判断父id是否已经在t_user_hierarchy表中的ancestor_id字段中
+	declare isParentDistribution bigint default 0;
+	-- 判断是否已经有用户关系
+	declare hasHierarchy integer default 0;
+	-- 判断是否出现异常
 	declare hasError integer default 0;
 	-- 根据直接父id获取其所有祖先id，祖先id按倒序排列，方便得出用户id与祖先id间是多少级关系
 	declare ancestorList cursor for
 	select t_user_hierarchy.ancestor_id from t_user_hierarchy where t_user_hierarchy.user_id = pid
 	order by t_user_hierarchy.user_level asc;
 	declare continue handler for sqlexception set hasError = 1;
-	declare continue handler for not found set num = 1;
+	declare continue handler for not found set noNextAncestor = 1;
 	start transaction;
-		-- 根据pid去查找当前id是否已经是分销商
-		select t_user_hierarchy.ancestor_id into isParentDistribution from t_user_hierarchy where t_user_hierarchy.ancestor_id = pid;
-		-- 父id还不是分销商并且父id自动成为分销商，需要把父id添加到t_user_hierarchy表中，再增加层级关系和用户路径
-		if isParentDistribution is null then
-			insert into t_user_hierarchy (ancestor_id, user_id, user_level, create_time) values(pid, pid, 1, currentTime);
-			insert into t_user_path (user_path, create_time) values(pid, currentTime);
-			if pid != uid then
-				insert into t_user_hierarchy (ancestor_id, user_id, user_level, create_time) values(pid, uid, 2, currentTime);
-				insert into t_user_path (user_path, create_time) values(concat(pid, '/', uid), currentTime);
+		select count(*) into hasHierarchy from t_user_hierarchy where ancestor_id = pid and user_id = uid;
+		if hasHierarchy = 0 then
+			-- 根据pid去查找当前id是否已经是分销商
+			select count(t_user_hierarchy.ancestor_id) into isParentDistribution from t_user_hierarchy where t_user_hierarchy.ancestor_id = pid;
+			-- 父id还不是分销商并且父id自动成为分销商，需要把父id添加到t_user_hierarchy表中，再增加层级关系和用户路径
+			if isParentDistribution = 0 then
+				insert into t_user_hierarchy (ancestor_id, user_id, user_level, create_time) values(pid, pid, 1, currentTime);
+				insert into t_user_path (user_path, create_time) values(pid, currentTime);
+				if pid != uid then
+					insert into t_user_hierarchy (ancestor_id, user_id, user_level, create_time) values(pid, uid, 2, currentTime);
+					insert into t_user_path (user_path, create_time) values(concat(pid, '/', uid), currentTime);
+				end if;
 			end if;
-		end if;
-		-- 如果父id已经是经销商，则直接添加关系和用户路径
-		if isParentDistribution is not null then
-			open ancestorList;
-			fetch ancestorList into ancestorId;
-			while num != 1 do
-				insert into t_user_hierarchy (ancestor_id, user_id, user_level, create_time) values(ancestorId, uid, userLevel, currentTime);
-				-- 祖先id每循环一次，等级加1
-				set userLevel = userLevel + 1;
+			-- 如果父id已经是经销商，则直接添加关系和用户路径
+			if isParentDistribution > 0 then
+				open ancestorList;
 				fetch ancestorList into ancestorId;
-			end while;
-			close ancestorList;
-			-- 自己与自己的关系，user_level为1
-			insert into t_user_hierarchy (ancestor_id, user_id, user_level) values(uid, uid, 1);
-			-- 保存用户层级路径
-			if uid != pid then
-				select t_user_path.user_path into userPath from t_user_path where t_user_path.user_path like concat('%', pid);
-				insert into t_user_path (user_path, create_time) values(concat(userPath, '/', uid), currentTime);
-			else
-				insert into t_user_path (user_path, create_time) values(uid, currentTime);
+				while noNextAncestor != 1 do
+					insert into t_user_hierarchy (ancestor_id, user_id, user_level, create_time) values(ancestorId, uid, userLevel, currentTime);
+					-- 祖先id每循环一次，等级加1
+					set userLevel = userLevel + 1;
+					fetch ancestorList into ancestorId;
+				end while;
+				close ancestorList;
+				-- 自己与自己的关系，user_level为1
+				insert into t_user_hierarchy (ancestor_id, user_id, user_level) values(uid, uid, 1);
+				-- 保存用户层级路径
+				if uid != pid then
+					select t_user_path.user_path into userPath from t_user_path where t_user_path.user_path like concat('%', pid);
+					insert into t_user_path (user_path, create_time) values(concat(userPath, '/', uid), currentTime);
+				else
+					insert into t_user_path (user_path, create_time) values(uid, currentTime);
+				end if;
 			end if;
 		end if;
 	if hasError = 1 then
@@ -6332,7 +6172,7 @@ BEGIN
 	else
 		commit;
   end if;
-END;
+END
 ;;
 delimiter ;
 
