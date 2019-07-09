@@ -7,6 +7,15 @@
 				<input type="text" placeholder="我要搜索" disabled />
 			</view>
 		</view>
+		<!-- 临时加上 -->
+		<view class="uni-swiper-msg">
+			<view class="uni-swiper-msg-icon zy-swiper-msg-icon">
+				<uni-icon type="sound" size="12" color="red" style="margin-left: 20upx;"></uni-icon>
+			</view>
+			<view style="color: red;">
+				平台试运行，征信数据不断充实中，感谢您的关注
+			</view>
+		</view>
 
 		<view class="uni-tab-bar zy-tab-bar zy-disable-flex">
 			<view>
@@ -588,6 +597,7 @@
 </template>
 
 <script>
+	import uniIcon from '@/components/uni-icon/uni-icon.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
 	import uniTag from '@/components/uni-tag/uni-tag.vue'
@@ -625,6 +635,7 @@
 
 	export default {
 		components: {
+			uniIcon,
 			zyworkIcon,
 			zyworkNoData,
 			uniTag

@@ -105,11 +105,11 @@
 					<view class="uni-list-cell">
 						<view class="uni-pd">
 							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
-								申请人
+								联系人
 							</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<input class="uni-input" type="text" :disabled="false" placeholder="输入申请人(建筑单位)" v-model="guarantee.applicant"></input>
+							<input class="uni-input" type="text" :disabled="false" placeholder="输入联系人" v-model="guarantee.applicant"></input>
 						</view>
 					</view>
 					<view class="uni-list-cell">
@@ -184,6 +184,7 @@
 					pageSize: 10,
 					isActive: 0,
 					releaseStatus: '已发布',
+					isGuarantee: 1,
 					title: ''
 				},
 				projects: [],
@@ -211,8 +212,18 @@
 				showBtn: true,
 			}
 		},
-		onLoad() {
+		onLoad(event) {
 			uni.hideShareMenu();
+			// TODO 后面把参数名替换成 payload
+			const payload = event.itemData || event.payload;
+			// 目前在某些平台参数会被主动 decode，暂时这样处理。
+			if (payload) {
+				try {
+					this.guarantee = JSON.parse(decodeURIComponent(payload));
+				} catch (error) {
+					this.guarantee = JSON.parse(payload);
+				}
+			}
 			this.initPicker();
 			this.guarantee.phone = getUserPhone();
 		},

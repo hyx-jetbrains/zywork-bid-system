@@ -295,6 +295,10 @@ export const projectResourceType = [
   {
     value: 4,
     label: '澄清答疑文件'
+  },
+  {
+    value: 5,
+    label: '进赣报名信息'
   }
 ]
 

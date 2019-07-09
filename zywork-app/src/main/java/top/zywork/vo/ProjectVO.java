@@ -113,7 +113,16 @@ public class ProjectVO extends BaseVO {
 	private Byte isActive;
 	// 附件个数
 	private Integer resourceCount;
+	// 是否可以申请保函
+	private Byte isGuarantee;
 
+	public Byte getIsGuarantee() {
+		return isGuarantee;
+	}
+
+	public void setIsGuarantee(Byte isGuarantee) {
+		this.isGuarantee = isGuarantee;
+	}
 	public Integer getResourceCount() {
 		return resourceCount;
 	}

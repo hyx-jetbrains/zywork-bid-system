@@ -1022,6 +1022,7 @@ export default {
         noticeTime: null,
         clickCount: null,
         isElectronic: null,
+        isGuarantee: null,
         sourceUrl: null,
         inwordHtmlUrl: null,
         version: null,
@@ -1244,6 +1245,7 @@ export default {
         downloadEndTimeMin: null,
         downloadEndTimeMax: null,
         otherDemand: null,
+        isGuarantee: null,
         openMarkInfo: null,
         openMarkTime: null,
         openMarkTimeMin: null,
@@ -1423,6 +1425,47 @@ export default {
                   }
                 },
                 resourceCount
+              )
+            }
+          },
+          {
+            title: '保函申请',
+            key: 'isGuarantee',
+            minWidth: 100,
+            align: 'center',
+            render: (h, params) => {
+              return h(
+                'i-switch',
+                {
+                  props: {
+                    size: 'large',
+                    value: params.row.isGuarantee !== 0
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    'on-change': status => {
+                      this.guarantee(params.row)
+                    }
+                  }
+                },
+                [
+                  h(
+                    'span',
+                    {
+                      slot: 'open'
+                    },
+                    '开启'
+                  ),
+                  h(
+                    'span',
+                    {
+                      slot: 'close'
+                    },
+                    '关闭'
+                  )
+                ]
               )
             }
           },
@@ -2048,6 +2091,12 @@ export default {
     },
     active(row) {
       utils.active(this, row)
+    },
+    /**
+     * 保函开关
+     */
+    guarantee(row) {
+      projectUtils.updateGuarantee(this, row)
     },
     search() {
       utils.search(this)

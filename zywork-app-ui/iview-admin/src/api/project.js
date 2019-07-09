@@ -84,3 +84,34 @@ export const batchRelease = (self, releaseStatus) => {
     
   })
 }
+
+/**
+ * 设置保函开关
+ * @param self this
+ * @param row 需要发布的数据对象
+ */
+export const updateGuarantee = (self, row) => {
+  return new Promise((resolve, reject) => {
+    let isGuarantee = row.isGuarantee === 0 ? 1 : 0
+    axios.request({
+      url: self.urls.activeUrl,
+      method: 'POST',
+      data: {
+        id: row.id,
+        isGuarantee: isGuarantee
+      }
+    }).then(response => {
+      if (response.data.code !== ResponseStatus.OK) {
+        self.$Message.error(response.data.message)
+      } else {
+        self.$Message.success("开启或关闭成功")
+      }
+      utils.search(self)
+      resolve(response)
+    }).catch(error => {
+      console.log(error)
+      self.$Message.error('设置失败，稍候再试')
+      reject(error)
+    })
+  })
+}

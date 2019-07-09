@@ -1,5 +1,5 @@
-export const BASE_URL = 'https://www.shudagroup.com/api'
-// export const BASE_URL = 'http://localhost:8088'
+// export const BASE_URL = 'https://www.shudagroup.com/api'
+export const BASE_URL = 'http://localhost:8088'
 export const IMAGE_BASE_URL = 'https://www.shudagroup.com'
 export const DOCUMENT_BASE_URL = 'https://www.shudagroup.com'
 export const USER_TOKEN_KEY = 'userToken'

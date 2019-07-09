@@ -171,7 +171,10 @@
 						</view>
 					</view>
 					<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
-						<view></view>
+						<view>
+							<uni-tag v-if="project.project.isGuarantee === 1" text="保函" @click="toGuaranteePage(project.project)" type="error"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+						</view>
 						<view class="zy-disable-flex-right zy-disable-flex">
 							<view v-for="(item, index_1) in project.obj" :key="index_1">
 								<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error"
@@ -183,6 +186,8 @@
 								<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary"
 								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 								<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 5" text="赣" @click='getResourceFile(project.project.id, item.type)' type="warning"
 								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 							</view>
 						</view>
@@ -733,6 +738,22 @@
 				this.projectPager.openMarkTimeMax = endTime + ' 23:59:59';
 				this.calendar.showCalendar = false;
 				this.updateProjectList('init');
+			},
+			/**
+			 * 前往申请保函的页面
+			 */
+			toGuaranteePage(project) {
+				var item = {};
+				item.projectId = project.id;
+				item.projectName = project.title;
+				item.openMarkTime = project.openMarkTime;
+				item.markUnitName = project.inMarkComp;
+				item.constructionPeriod = project.constructionPeriod;
+				item.assurePrice = project.assurePrice;
+				console.log(item)
+				uni.navigateTo({
+					url: '/pages-info-share/publish-guarantee/publish-guarantee?itemData=' + encodeURIComponent(JSON.stringify(item))
+				})
 			}
 		}
 	}

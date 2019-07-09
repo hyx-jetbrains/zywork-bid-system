@@ -83,7 +83,7 @@
             :before-upload="handleBeforeUpload"
             :on-remove="handleRemoveFile"
             :on-progress="handleProgress"
-            :format="['doc','docx','pdf']"
+            :format="['doc','docx','pdf','xls', 'xlsx']"
             :max-size="51200"
             :headers="uploadHeader"
             ref="uploadFile"
@@ -656,6 +656,8 @@ export default {
                   ? 'warning'
                   : row.resType === 4
                   ? 'primary'
+                  : row.resType === 5
+                  ? 'warning'
                   : 'error'
               const text =
                 row.resType === 0
@@ -668,6 +670,8 @@ export default {
                   ? '控股价文件'
                   : row.resType === 4
                   ? '澄清答疑文件'
+                  : row.resType === 5
+                  ? '进赣报名信息'
                   : '未知'
               return h(
                 'Button',
