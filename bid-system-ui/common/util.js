@@ -292,6 +292,31 @@ export const notLoginToUserCenter = () => {
 }
 
 /**
+ * 获取指定几天前或几天后的时间
+ * console.log("半年前："+GetDateStr(-180));
+ *	console.log("三月前："+GetDateStr(-90));
+ *	console.log("一月前："+GetDateStr(-30));
+ *	console.log("昨天："+GetDateStr(-1));
+ *	console.log("今天："+GetDateStr(0));
+ *	console.log("明天："+GetDateStr(1));
+ *	console.log("后天："+GetDateStr(2));
+ *	console.log("一月后："+GetDateStr(30));
+ *	console.log("三月后："+GetDateStr(90));
+ *	console.log("半年后："+GetDateStr(180));
+ */
+export const getDateStr = (dayCount) => {
+	var dd = new Date();
+	// 获取AddDayCount天后的日期
+	dd.setDate(dd.getDate() + dayCount); 
+	var y = dd.getFullYear();
+	// 获取当前月份的日期，不足10补0
+	var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1); 
+	// 获取当前几号，不足10补0
+	var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate(); 
+	return y + "-" + m + "-" + d;
+}
+
+/**
  * 取指定的日期
  * @param {type} 7：上周开始时间 1：上周结束时间 0：本周开始时间 -6：本周结束时间 -7：下周开始时间 -13：下周结束时间  
  */
@@ -385,6 +410,6 @@ export const showNextMonthFirstOrLastDay = (type) => {
  * 判断是否是手机号
  */
 export const isPhone = (phone) => {
-	var phoneExp = /^[1][3,4,5,7,8,9][0-9]{9}$/; 
-	return phoneExp.test(phone); 
+	var phoneExp = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+	return phoneExp.test(phone);
 }

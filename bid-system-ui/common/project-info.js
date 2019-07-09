@@ -72,6 +72,48 @@ export const getFirstHeadlinesInfo = (self, params) => {
 	})
 }
 /**
+ * 获取首页的公示信息
+ */
+export const getIndexProjectAnnounceList = (self, type, params) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/projecannounce/any/pager-cond',
+		method: 'POST',
+		data: params,
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				const rows = nullToStr(res.data.data.rows);
+				if (type === 'init') {
+					self.projectAnnounceList = rows;
+				} else if (type === 'pullDown') {
+					self.projectAnnounceList = rows;
+					uni.stopPullDownRefresh()
+					self.showLoadMore = false
+					self.loadMoreText = '加载中...'
+				} else if (type === 'reachBottom') {
+					if (rows.length > 0) {
+						self.projectAnnounceList = self.projectAnnounceList.concat(rows)
+						self.loadMoreText = '加载更多'
+					} else {
+						self.loadMoreText = '已加载全部'
+					}
+				}
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+/**
  * 获取头条列表
  */
 export const getHeadlinesList = (self, type, params) => {

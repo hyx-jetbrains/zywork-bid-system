@@ -1,90 +1,146 @@
 <template>
 	<view>
 		<view v-if="!calendar.showCalendar">
-		<view class="zy-top-search">
-			<picker @change="chooseCity" :value="cityIndex" :range="cityArray">
-				<view class="zy-address">
-					<text>{{cityArray[cityIndex]}}</text>
-					<zywork-icon type="iconxiangxia" />
+			<view class="zy-top-search">
+				<picker @change="chooseCity" :value="cityIndex" :range="cityArray">
+					<view class="zy-address">
+						<text>{{cityArray[cityIndex]}}</text>
+						<zywork-icon type="iconxiangxia" />
+					</view>
+				</picker>
+				<view class="zy-search-bar" @click="toSearchPage">
+					<zywork-icon type="iconchaxun" />
+					<input type="text" placeholder="我要搜索" disabled />
 				</view>
-			</picker>
-			<view class="zy-search-bar" @click="toSearchPage">
-				<zywork-icon type="iconchaxun" />
-				<input type="text" placeholder="我要搜索" disabled />
 			</view>
-		</view>
 
-		<view class="swiper">
-			<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-				<swiper-item v-for="(item, index) in swiperItems" :key="index">
-					<view class="swiper-item" @click="showSwiperDetail(item)">
-						<image :src="item.url" />
+			<!-- 轮播图 -->
+			<view class="swiper">
+				<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
+					<swiper-item v-for="(item, index) in swiperItems" :key="index">
+						<view class="swiper-item" @click="showSwiperDetail(item)">
+							<image :src="item.url" />
+						</view>
+					</swiper-item>
+				</swiper>
+			</view>
+
+			<!-- 把头条换成了公示 -->
+			<!-- 
+			<view v-if="latestNotice !== null" style="margin-top: 10upx;">
+				<zywork-notice-bar @click="toNoticeDetail(latestNotice)" @getmore="toNoticeList" :show-get-more="true" more-text="更多头条"
+				 show-icon="true" single="true" color="#108ee9" :text="latestNotice.title"></zywork-notice-bar>
+			</view> 
+			 -->
+			<!-- 公示信息 -->
+			<view class="zy-disable-flex zy-swiper-msg">
+				<view class="uni-swiper-msg">
+					<view class="uni-swiper-msg-icon zy-swiper-msg-icon">
+						<uni-icon type="sound" size="12" color="#108EE9"></uni-icon>
 					</view>
-				</swiper-item>
-			</swiper>
-		</view>
+					<swiper vertical="true" autoplay="true" circular="true" interval="4000">
+						<swiper-item v-for="(item, index) in projectAnnounceList" :key="index">
+							<text>{{item.firstCandidate}}</text>
+						</swiper-item>
+					</swiper>
+				</view>
+				<view class="zy-disable-flex-right zy-disable-flex" style="width: 200upx;" @click="toProjectAnnounce">
+					<text style="color: #108EE9;">更多公示</text>
+					<zywork-icon type="iconiconfonti" size="16" color="#108EE9"></zywork-icon>
+				</view>
+			</view>
 
-		<view v-if="latestNotice !== null" style="margin-top: 10upx;">
-			<zywork-notice-bar @click="toNoticeDetail(latestNotice)" @getmore="toNoticeList" :show-get-more="true" more-text="更多头条"
-			 show-icon="true" single="true" color="#108ee9" :text="latestNotice.title"></zywork-notice-bar>
-		</view>
+			<!-- 项目类型切换 -->
+			<view class="uni-tab-bar zy-tab-bar">
+				<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="projectType.scrollLeft">
+					<view v-for="(tab,index) in projectType.tabbars" :key="tab.id" class="swiper-tab-list" :class="projectType.tabIndex==index ? 'active' : ''"
+					 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
+				</scroll-view>
+			</view>
+			<view style="background-color: #FFFFFF; padding-bottom: 10upx;">
+				<uni-segmented-control :current="projectStatus.current" :values="projectStatus.items" v-on:clickItem="onClickItem"
+				 styleType="button" activeColor="#108EE9"></uni-segmented-control>
+			</view>
 
-		<view class="uni-tab-bar zy-tab-bar">
-			<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="projectType.scrollLeft">
-				<view v-for="(tab,index) in projectType.tabbars" :key="tab.id" class="swiper-tab-list" :class="projectType.tabIndex==index ? 'active' : ''"
-				 :id="tab.id" :data-current="index" @click="tapTab">{{tab.name}}</view>
-			</scroll-view>
-		</view>
-		<view style="background-color: #FFFFFF; padding-bottom: 10upx;">
-			<uni-segmented-control :current="projectStatus.current" :values="projectStatus.items" v-on:clickItem="onClickItem"
-			 styleType="button" activeColor="#108EE9"></uni-segmented-control>
-		</view>
+			<view class="zy-choose-date zy-disable-flex" v-if="showChooseDate">
+				<text style="margin-left:25%; color: red;" @click="openCalendar">
+					开标日期：{{calendar.currentFormatDate}}
+				</text>
+				<text style="color: #108EE9;" class="zy-disable-flex-right" @click="resetCalendar">重置</text>
+			</view>
 
-		<view class="zy-choose-date zy-disable-flex" v-if="showChooseDate">
-			<text style="margin-left:25%; color: red;" @click="openCalendar">
-				开标日期：{{calendar.currentFormatDate}}
-			</text>
-			<text style="color: #108EE9;" class="zy-disable-flex-right" @click="resetCalendar">重置</text>
-		</view>
-
-		<view class="zy-page-list zy-project" v-if="projects.length > 0">
-			<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
-				<!-- <zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.project.id)" /> -->
-				<view @click="toProjectDetail(project)">
-					<view class="zy-disable-flex">
-						<image class="zy-project-icon" :src="imgIcon" />
-						<view>
+			<view class="zy-page-list zy-project" v-if="projects.length > 0">
+				<view class="zy-page-list-item zy-position-relative" v-for="(project, index) in projects" :key="index">
+					<!-- <zywork-icon class="zy-project-sheet-icon" type="iconxiangxia" size="30" @tap="actionSheetTap(project.project.id)" /> -->
+					<view @click="toProjectDetail(project)">
+						<view class="zy-disable-flex">
+							<image class="zy-project-icon" :src="imgIcon" />
 							<view>
-								<text>{{project.project.projectType}}</text>
-								<text style="margin-left: 30upx;">[{{project.project.city}}]</text>
+								<view>
+									<text>{{project.project.projectType}}</text>
+									<text style="margin-left: 30upx;">[{{project.project.city}}]</text>
+								</view>
+								<view class="zy-text-mini zy-text-info">
+									公告时间：
+									<text v-if="project.project.noticeTime !== ''" class="zy-text-mini zy-text-info">
+										{{project.project.noticeTime.split(' ')[0]}}
+									</text>
+									<text v-else class="zy-text-mini zy-text-info">
+										暂无
+									</text>
+								</view>
 							</view>
-							<view class="zy-text-mini zy-text-info">
-								公告时间：
-								<text v-if="project.project.noticeTime !== ''" class="zy-text-mini zy-text-info">
-									{{project.project.noticeTime.split(' ')[0]}}
-								</text>
-								<text v-else class="zy-text-mini zy-text-info">
-									暂无
-								</text>
+							<view class="zy-project-head-right">
+								<!-- <view style="padding-right: 50upx;"> -->
+								<view>
+									<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
+									<uni-tag :text="project.project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
+								</view>
+								<view class="zy-text-mini zy-text-warning" v-if="project.project.openMarkTime !== ''">
+									开标日期：{{project.project.openMarkTime}}
+								</view>
+								<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view>
 							</view>
 						</view>
-						<view class="zy-project-head-right">
-							<!-- <view style="padding-right: 50upx;"> -->
-							<view>
-								<uni-tag text="最新" type="error" size="small" :inverted="true" :circle="true"></uni-tag>
-								<uni-tag :text="project.project.markStatus" type="primary" size="small" :inverted="true" :circle="true" style="margin-left: 10upx;"></uni-tag>
-							</view>
-							<view class="zy-text-mini zy-text-warning" v-if="project.project.openMarkTime !== ''">
-								开标日期：{{project.project.openMarkTime}}
-							</view>
-							<view class="zy-text-mini zy-text-warning" v-else>开标日期：暂无</view>
-						</view>
-					</view>
 
-					<!-- 全部内容部分 -->
-					<view v-if="projectStatus.current === 0">
+						<!-- 全部内容部分 -->
+						<view v-if="projectStatus.current === 0">
+							<!-- 公告中内容部分 -->
+							<view v-if="project.project.markStatus === '公告中'">
+								<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.project.markUnitName}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.project.builderLevel}}</view>
+								<view class="zy-project-item-row">
+									<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.project.checkPattern}}</view>
+									<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.project.projectInvest}}</view>
+								</view>
+							</view>
+							<!-- 待开标内容部分 -->
+							<view v-else-if="project.project.markStatus === '待开标'">
+								<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
+								<view class="zy-project-item-row">
+									<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.project.assurePrice}}</view>
+									<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.project.offerPrice}}</view>
+								</view>
+								<view class="zy-project-item-row">
+									<view class="zy-text-info">
+										<text class="zy-text-info zy-text-bold">工期(天)：</text>
+										{{project.project.constructionPeriod}}
+									</view>
+									<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
+								</view>
+								<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
+							</view>
+							<!-- 已开标内容部分 -->
+							<view v-else-if="project.project.markStatus === '已开标'">
+								<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.project.inMarkComp}}</view>
+							</view>
+						</view>
 						<!-- 公告中内容部分 -->
-						<view v-if="project.project.markStatus === '公告中'">
+						<view v-else-if="projectStatus.current === 1">
 							<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.project.markUnitName}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
@@ -95,7 +151,7 @@
 							</view>
 						</view>
 						<!-- 待开标内容部分 -->
-						<view v-else-if="project.project.markStatus === '待开标'">
+						<view v-else-if="projectStatus.current === 2">
 							<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
 							<view class="zy-project-item-row">
@@ -103,101 +159,67 @@
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.project.offerPrice}}</view>
 							</view>
 							<view class="zy-project-item-row">
-								<view class="zy-text-info">
-									<text class="zy-text-info zy-text-bold">工期(天)：</text>
-									{{project.project.constructionPeriod}}
-								</view>
+								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.project.constructionPeriod}}</view>
 								<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
 							</view>
 							<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
 						</view>
 						<!-- 已开标内容部分 -->
-						<view v-else-if="project.project.markStatus === '已开标'">
+						<view v-else-if="projectStatus.current === 3">
 							<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.project.inMarkComp}}</view>
 						</view>
 					</view>
-					<!-- 公告中内容部分 -->
-					<view v-else-if="projectStatus.current === 1">
-						<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">招标单位：</text>{{project.project.markUnitName}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">建造师等级：</text>{{project.project.builderLevel}}</view>
-						<view class="zy-project-item-row">
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">审查方式：</text>{{project.project.checkPattern}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">项目投资：</text>{{project.project.projectInvest}}</view>
-						</view>
-					</view>
-					<!-- 待开标内容部分 -->
-					<view v-else-if="projectStatus.current === 2">
-						<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">企业资质：</text>{{project.project.compAptitudeType}}</view>
-						<view class="zy-project-item-row">
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">保证金(万元)：</text>{{project.project.assurePrice}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">要约价(元)：</text>{{project.project.offerPrice}}</view>
-						</view>
-						<view class="zy-project-item-row">
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">工期(天)：</text>{{project.project.constructionPeriod}}</view>
-							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">开标地点：</text>{{project.project.openMarkAddr}}</view>
-						</view>
-						<!-- <view class="zy-text-info"><text class="zy-text-info zy-text-bold">其他要求：</text>{{project.project.otherDemand}}</view> -->
-					</view>
-					<!-- 已开标内容部分 -->
-					<view v-else-if="projectStatus.current === 3">
-						<view class="zy-text-big zy-text-bold">{{project.project.title}}</view>
-						<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.project.inMarkComp}}</view>
-					</view>
-				</view>
-				<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
-					<view></view>
-					<view class="zy-disable-flex-right zy-disable-flex">
-						<view v-for="(item, index_1) in project.obj" :key="index_1">
-							<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error"
-							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary"
-							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning"
-							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary"
-							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success"
-							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+					<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
+						<view></view>
+						<view class="zy-disable-flex-right zy-disable-flex">
+							<view v-for="(item, index_1) in project.obj" :key="index_1">
+								<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success"
+								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							</view>
 						</view>
 					</view>
 				</view>
 			</view>
-		</view>
-		<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
-		
-		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
-			<scroll-view :scroll-y="true" class="uni-center center-box">
-				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
-					<view style="color: #108EE9;">
-						{{index+1}}.{{ item.fileName }}
+			<zywork-no-data v-else text="暂无招标信息"></zywork-no-data>
+
+			<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
+				<scroll-view :scroll-y="true" class="uni-center center-box">
+					<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
+						<view style="color: #108EE9;">
+							{{index+1}}.{{ item.fileName }}
+						</view>
 					</view>
+				</scroll-view>
+			</uni-popup>
+
+			<zywork-fab v-if="customerShow" :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction"
+			 :showContent="customerPopup" :iconType="iconType" @trigger="trigger"></zywork-fab>
+			<uni-popup :show="customerPopup" position="bottom" @hidePopup="trigger(false)">
+				<view class="zy-popup-bottom-title">选择联系类型</view>
+				<view class="zy-popup-bottom-content">
+					<button @click="callPhone" style="background-color: #FFF;" @tap="trigger(false)">
+						<zywork-icon type="icondianhua" size="26" color="#77e663"></zywork-icon>
+						<view class="zy-popup-bottom-content-text">电话咨询</view>
+					</button>
+					<button open-type="contact" style="background-color: #FFF;" @tap="trigger(false)">
+						<zywork-icon type="iconweixin" size="26" color="#5bb674"></zywork-icon>
+						<view class="zy-popup-bottom-content-text">微信咨询</view>
+					</button>
 				</view>
-			</scroll-view>
-		</uni-popup>
+				<view class="zy-popup-bottom-btn" @click="trigger(false)">取消选择</view>
+			</uni-popup>
+			<button open-type="contact" class="zy-hide-button" ref="contactBtn"></button>
 
-		<zywork-fab v-if="customerShow" :pattern="pattern" :horizontal="horizontal" :vertical="vertical" :direction="direction"
-		 :showContent="customerPopup" :iconType="iconType" @trigger="trigger"></zywork-fab>
-		<uni-popup :show="customerPopup" position="bottom" @hidePopup="trigger(false)">
-			<view class="zy-popup-bottom-title">选择联系类型</view>
-			<view class="zy-popup-bottom-content">
-				<button @click="callPhone" style="background-color: #FFF;" @tap="trigger(false)">
-					<zywork-icon type="icondianhua" size="26" color="#77e663"></zywork-icon>
-					<view class="zy-popup-bottom-content-text">电话咨询</view>
-				</button>
-				<button open-type="contact" style="background-color: #FFF;" @tap="trigger(false)">
-					<zywork-icon type="iconweixin" size="26" color="#5bb674"></zywork-icon>
-					<view class="zy-popup-bottom-content-text">微信咨询</view>
-				</button>
-			</view>
-			<view class="zy-popup-bottom-btn" @click="trigger(false)">取消选择</view>
-		</uni-popup>
-		<button open-type="contact" class="zy-hide-button" ref="contactBtn"></button>
-
-		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
+			<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 		</view>
 		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
 			<view class="calendar-box" @click.stop="">
@@ -214,13 +236,14 @@
 					<button type="primary" size="mini" class="calendar-button-confirm" @click="closeMask">取消</button>
 					<button type="primary" size="mini" class="calendar-button-confirm" @click="confirm">确认</button>
 				</view>
-				
+
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import uniIcon from '@/components/uni-icon/uni-icon.vue'
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoticeBar from '@/components/zywork-notice-bar/zywork-notice-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
@@ -247,7 +270,8 @@
 		showInfoToast,
 		getAppointWeekDate,
 		showMonthFirstOrLastDay,
-		showNextMonthFirstOrLastDay
+		showNextMonthFirstOrLastDay,
+		getDateStr
 	} from '@/common/util.js'
 	import {
 		projectStatusArray,
@@ -291,6 +315,7 @@
 
 	export default {
 		components: {
+			uniIcon,
 			zyworkIcon,
 			zyworkNoticeBar,
 			uniSegmentedControl,
@@ -319,6 +344,16 @@
 					sortColumn: 'createTime',
 					sortOrder: 'desc',
 					isActive: 0,
+				},
+				projectAnnounceList: [],
+				projectAnnouncePager: {
+					pageNo: 1,
+					pageSize: 10,
+					sortColumn: 'createTime',
+					sortOrder: 'desc',
+					isActive: 0,
+					createTimeMin: '',
+					createTimeMax: ''
 				},
 				projectStatus: {
 					current: 0,
@@ -438,10 +473,21 @@
 				this.updateProjectList('init');
 				this.initCustomerFab();
 			},
+			/** 初始化中标公示的查询条件 */
+			initProjectAnnouncePager() {
+				// 查询近一周的数据
+				var startDate = getDateStr(-7);
+				var endDate = getDateStr(0);
+				this.projectAnnouncePager.createTimeMin = startDate + ' 0:0:0';
+				this.projectAnnouncePager.createTimeMax = endDate + ' 23:59:59';
+			},
 			/** 初始化头部的轮播图和头条 */
 			initHeadInfo() {
 				projectInfo.getAdvertisementInfo(this);
-				projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
+				// 暂时不用公告了，换成公示
+				// projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
+				this.initProjectAnnouncePager();
+				projectInfo.getIndexProjectAnnounceList(this, 'init', this.projectAnnouncePager);
 			},
 			/** 初始化客服悬浮 */
 			initCustomerFab() {
@@ -578,6 +624,11 @@
 				projectInfo.projectClickCount(this, item.project);
 				uni.navigateTo({
 					url: '/pages-project-info/project-detail/project-detail?itemData=' + encodeURIComponent(item.project.id)
+				})
+			},
+			toProjectAnnounce() {
+				uni.navigateTo({
+					url: '/pages-project-info/project-announce/project-announce'
 				})
 			},
 			getResourceFile(projectId, type) {
@@ -795,9 +846,11 @@
 		top: -2upx;
 		right: -10upx;
 	}
+
 	.zy-date-tag {
 		text-align: center;
 	}
+
 	.zy-date-tag uni-tag {
 		margin-left: 40upx;
 	}
@@ -806,4 +859,12 @@
 		border: 0;
 	}
 
+	.zy-swiper-msg {
+		background-color: #FFFFFF;
+		margin-bottom: 10upx;
+
+		.zy-swiper-msg-icon {
+			margin-left: 30upx;
+		}
+	}
 </style>
