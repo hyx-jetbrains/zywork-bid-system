@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * GuaranteeDO数据对象实体类<br/>
  *
- * 创建于2019-05-13<br/>
+ * 创建于2019-07-10<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class GuaranteeDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372035264763376L;
+    private static final long serialVersionUID = -9223372034895628512L;
 
     // 保函编号
 	private Long id;
@@ -33,16 +33,30 @@ public class GuaranteeDO extends BaseDO {
 	private Long assurePrice;
 	// 担保公司
 	private String guaranteeComp;
-	// 保函费(元)
+	// 保函费
 	private Long guaranteePrice;
-	// 申请人
+	// 申请单位
 	private String applicant;
+	// 营业执照
+	private Long applicantResId;
+	// 营业执照地址
+	private String applicantResSrc;
 	// 联系人
 	private String name;
 	// 手机号
 	private String phone;
 	// 地址
 	private String address;
+	// 开户行
+	private String bank;
+	// 开户行照片
+	private Long bankResId;
+	// 开户行照片地址
+	private String bankResSrc;
+	// 取件方式
+	private String pickUpType;
+	// 办理状态
+	private String handleStatus;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -54,7 +68,7 @@ public class GuaranteeDO extends BaseDO {
 	
     public GuaranteeDO () {}
 
-    public GuaranteeDO (Long id, Long projectId, Long userId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public GuaranteeDO (Long id, Long projectId, Long userId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, Long applicantResId, String applicantResSrc, String name, String phone, String address, String bank, Long bankResId, String bankResSrc, String pickUpType, String handleStatus, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
 		this.userId = userId;
@@ -66,9 +80,16 @@ public class GuaranteeDO extends BaseDO {
 		this.guaranteeComp = guaranteeComp;
 		this.guaranteePrice = guaranteePrice;
 		this.applicant = applicant;
+		this.applicantResId = applicantResId;
+		this.applicantResSrc = applicantResSrc;
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
+		this.bank = bank;
+		this.bankResId = bankResId;
+		this.bankResSrc = bankResSrc;
+		this.pickUpType = pickUpType;
+		this.handleStatus = handleStatus;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -164,6 +185,22 @@ public class GuaranteeDO extends BaseDO {
 		this.applicant = applicant;
 	}
 
+	public Long getApplicantResId() {
+		return applicantResId;
+	}
+
+	public void setApplicantResId(Long applicantResId) {
+		this.applicantResId = applicantResId;
+	}
+
+	public String getApplicantResSrc() {
+		return applicantResSrc;
+	}
+
+	public void setApplicantResSrc(String applicantResSrc) {
+		this.applicantResSrc = applicantResSrc;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -186,6 +223,46 @@ public class GuaranteeDO extends BaseDO {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	public Long getBankResId() {
+		return bankResId;
+	}
+
+	public void setBankResId(Long bankResId) {
+		this.bankResId = bankResId;
+	}
+
+	public String getBankResSrc() {
+		return bankResSrc;
+	}
+
+	public void setBankResSrc(String bankResSrc) {
+		this.bankResSrc = bankResSrc;
+	}
+
+	public String getPickUpType() {
+		return pickUpType;
+	}
+
+	public void setPickUpType(String pickUpType) {
+		this.pickUpType = pickUpType;
+	}
+
+	public String getHandleStatus() {
+		return handleStatus;
+	}
+
+	public void setHandleStatus(String handleStatus) {
+		this.handleStatus = handleStatus;
 	}
 
 	public Integer getVersion() {
@@ -235,9 +312,16 @@ public class GuaranteeDO extends BaseDO {
 				", guaranteeComp = " + guaranteeComp + 
 				", guaranteePrice = " + guaranteePrice + 
 				", applicant = " + applicant + 
+				", applicantResId = " + applicantResId + 
+				", applicantResSrc = " + applicantResSrc + 
 				", name = " + name + 
 				", phone = " + phone + 
 				", address = " + address + 
+				", bank = " + bank + 
+				", bankResId = " + bankResId + 
+				", bankResSrc = " + bankResSrc + 
+				", pickUpType = " + pickUpType + 
+				", handleStatus = " + handleStatus + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

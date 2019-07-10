@@ -750,7 +750,14 @@
 				item.markUnitName = project.inMarkComp;
 				item.constructionPeriod = project.constructionPeriod;
 				item.assurePrice = project.assurePrice;
-				console.log(item)
+				item.applicant = '';
+				item.name = '';
+				item.address = '';
+				item.bank = '';
+				item.bankResId = '';
+				item.bankResSrc = '';
+				item.applicantResId = '';
+				item.applicantResSrc = '';
 				uni.navigateTo({
 					url: '/pages-info-share/publish-guarantee/publish-guarantee?itemData=' + encodeURIComponent(JSON.stringify(item))
 				})

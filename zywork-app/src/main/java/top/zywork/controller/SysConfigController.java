@@ -18,6 +18,7 @@ import top.zywork.vo.PagerVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.SysConfigVO;
 import top.zywork.weixin.CustomerConfig;
+import top.zywork.weixin.GuaranteeConfig;
 
 import java.util.List;
 
@@ -139,6 +140,12 @@ public class SysConfigController extends BaseController {
     public ResponseStatusVO getCustomerConfig() {
         CustomerConfig customerConfig = sysConfigService.getByName(SysConfigEnum.CUSTOMER_CONFIG.getValue(), CustomerConfig.class);
         return ResponseStatusVO.ok("查询成功", customerConfig);
+    }
+
+    @GetMapping("any/guarantee-config")
+    public ResponseStatusVO getGuaranteeConfig() {
+        GuaranteeConfig guaranteeConfig = sysConfigService.getByName(SysConfigEnum.GUARANTEE_MEMO_CONFIG.getValue(), GuaranteeConfig.class);
+        return ResponseStatusVO.ok("查询成功", guaranteeConfig);
     }
 
     @Autowired

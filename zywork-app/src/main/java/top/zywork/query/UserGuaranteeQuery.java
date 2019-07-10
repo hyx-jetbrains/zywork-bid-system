@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * UserGuaranteeQuery查询对象类<br/>
  *
- * 创建于2019-05-18<br/>
+ * 创建于2019-07-10<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserGuaranteeQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372034789141582L;
+    private static final long serialVersionUID = -9223372034715382940L;
 
     //t_guarantee表的字段对应的属性
 	// 保函编号
@@ -63,20 +63,42 @@ public class UserGuaranteeQuery extends PageQuery {
 	private Long guaranteeAssurePriceMax;
 	// 担保公司
 	private String guaranteeGuaranteeComp;
-	// 保函费(元)
+	// 保函费
 	private Long guaranteeGuaranteePrice;
-	// 保函费(元)（最小值）
+	// 保函费（最小值）
 	private Long guaranteeGuaranteePriceMin;
-	// 保函费(元)（最大值）
+	// 保函费（最大值）
 	private Long guaranteeGuaranteePriceMax;
-	// 申请人
+	// 申请单位
 	private String guaranteeApplicant;
+	// 营业执照
+	private Long guaranteeApplicantResId;
+	// 营业执照（最小值）
+	private Long guaranteeApplicantResIdMin;
+	// 营业执照（最大值）
+	private Long guaranteeApplicantResIdMax;
+	// 营业执照地址
+	private String guaranteeApplicantResSrc;
 	// 联系人
 	private String guaranteeName;
 	// 手机号
 	private String guaranteePhone;
 	// 地址
 	private String guaranteeAddress;
+	// 开户行
+	private String guaranteeBank;
+	// 开户行照片
+	private Long guaranteeBankResId;
+	// 开户行照片（最小值）
+	private Long guaranteeBankResIdMin;
+	// 开户行照片（最大值）
+	private Long guaranteeBankResIdMax;
+	// 开户行照片地址
+	private String guaranteeBankResSrc;
+	// 取件方式
+	private String guaranteePickUpType;
+	// 办理状态
+	private String guaranteeHandleStatus;
 	// 版本号
 	private Integer guaranteeVersion;
 	// 版本号（最小值）
@@ -121,7 +143,7 @@ public class UserGuaranteeQuery extends PageQuery {
 	
     public UserGuaranteeQuery () {}
 
-    public UserGuaranteeQuery (Long guaranteeId, Long guaranteeIdMin, Long guaranteeIdMax, Long guaranteeProjectId, Long guaranteeProjectIdMin, Long guaranteeProjectIdMax, Long guaranteeUserId, Long guaranteeUserIdMin, Long guaranteeUserIdMax, String guaranteeProjectName, Date guaranteeOpenMarkTime, Date guaranteeOpenMarkTimeMin, Date guaranteeOpenMarkTimeMax, String guaranteeMarkUnitName, Integer guaranteeConstructionPeriod, Integer guaranteeConstructionPeriodMin, Integer guaranteeConstructionPeriodMax, Long guaranteeAssurePrice, Long guaranteeAssurePriceMin, Long guaranteeAssurePriceMax, String guaranteeGuaranteeComp, Long guaranteeGuaranteePrice, Long guaranteeGuaranteePriceMin, Long guaranteeGuaranteePriceMax, String guaranteeApplicant, String guaranteeName, String guaranteePhone, String guaranteeAddress, Integer guaranteeVersion, Integer guaranteeVersionMin, Integer guaranteeVersionMax, Date guaranteeCreateTime, Date guaranteeCreateTimeMin, Date guaranteeCreateTimeMax, Date guaranteeUpdateTime, Date guaranteeUpdateTimeMin, Date guaranteeUpdateTimeMax, Byte guaranteeIsActive, Byte guaranteeIsActiveMin, Byte guaranteeIsActiveMax, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender, Byte userDetailGenderMin, Byte userDetailGenderMax) {
+    public UserGuaranteeQuery (Long guaranteeId, Long guaranteeIdMin, Long guaranteeIdMax, Long guaranteeProjectId, Long guaranteeProjectIdMin, Long guaranteeProjectIdMax, Long guaranteeUserId, Long guaranteeUserIdMin, Long guaranteeUserIdMax, String guaranteeProjectName, Date guaranteeOpenMarkTime, Date guaranteeOpenMarkTimeMin, Date guaranteeOpenMarkTimeMax, String guaranteeMarkUnitName, Integer guaranteeConstructionPeriod, Integer guaranteeConstructionPeriodMin, Integer guaranteeConstructionPeriodMax, Long guaranteeAssurePrice, Long guaranteeAssurePriceMin, Long guaranteeAssurePriceMax, String guaranteeGuaranteeComp, Long guaranteeGuaranteePrice, Long guaranteeGuaranteePriceMin, Long guaranteeGuaranteePriceMax, String guaranteeApplicant, Long guaranteeApplicantResId, Long guaranteeApplicantResIdMin, Long guaranteeApplicantResIdMax, String guaranteeApplicantResSrc, String guaranteeName, String guaranteePhone, String guaranteeAddress, String guaranteeBank, Long guaranteeBankResId, Long guaranteeBankResIdMin, Long guaranteeBankResIdMax, String guaranteeBankResSrc, String guaranteePickUpType, String guaranteeHandleStatus, Integer guaranteeVersion, Integer guaranteeVersionMin, Integer guaranteeVersionMax, Date guaranteeCreateTime, Date guaranteeCreateTimeMin, Date guaranteeCreateTimeMax, Date guaranteeUpdateTime, Date guaranteeUpdateTimeMin, Date guaranteeUpdateTimeMax, Byte guaranteeIsActive, Byte guaranteeIsActiveMin, Byte guaranteeIsActiveMax, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender, Byte userDetailGenderMin, Byte userDetailGenderMax) {
         this.guaranteeId = guaranteeId;
 		this.guaranteeIdMin = guaranteeIdMin;
 		this.guaranteeIdMax = guaranteeIdMax;
@@ -147,9 +169,20 @@ public class UserGuaranteeQuery extends PageQuery {
 		this.guaranteeGuaranteePriceMin = guaranteeGuaranteePriceMin;
 		this.guaranteeGuaranteePriceMax = guaranteeGuaranteePriceMax;
 		this.guaranteeApplicant = guaranteeApplicant;
+		this.guaranteeApplicantResId = guaranteeApplicantResId;
+		this.guaranteeApplicantResIdMin = guaranteeApplicantResIdMin;
+		this.guaranteeApplicantResIdMax = guaranteeApplicantResIdMax;
+		this.guaranteeApplicantResSrc = guaranteeApplicantResSrc;
 		this.guaranteeName = guaranteeName;
 		this.guaranteePhone = guaranteePhone;
 		this.guaranteeAddress = guaranteeAddress;
+		this.guaranteeBank = guaranteeBank;
+		this.guaranteeBankResId = guaranteeBankResId;
+		this.guaranteeBankResIdMin = guaranteeBankResIdMin;
+		this.guaranteeBankResIdMax = guaranteeBankResIdMax;
+		this.guaranteeBankResSrc = guaranteeBankResSrc;
+		this.guaranteePickUpType = guaranteePickUpType;
+		this.guaranteeHandleStatus = guaranteeHandleStatus;
 		this.guaranteeVersion = guaranteeVersion;
 		this.guaranteeVersionMin = guaranteeVersionMin;
 		this.guaranteeVersionMax = guaranteeVersionMax;
@@ -370,6 +403,38 @@ public class UserGuaranteeQuery extends PageQuery {
 		this.guaranteeApplicant = guaranteeApplicant;
 	}
 
+	public Long getGuaranteeApplicantResId() {
+		return guaranteeApplicantResId;
+	}
+
+	public void setGuaranteeApplicantResId(Long guaranteeApplicantResId) {
+		this.guaranteeApplicantResId = guaranteeApplicantResId;
+	}
+
+	public Long getGuaranteeApplicantResIdMin() {
+		return guaranteeApplicantResIdMin;
+	}
+
+	public void setGuaranteeApplicantResIdMin(Long guaranteeApplicantResIdMin) {
+		this.guaranteeApplicantResIdMin = guaranteeApplicantResIdMin;
+	}
+
+	public Long getGuaranteeApplicantResIdMax() {
+		return guaranteeApplicantResIdMax;
+	}
+
+	public void setGuaranteeApplicantResIdMax(Long guaranteeApplicantResIdMax) {
+		this.guaranteeApplicantResIdMax = guaranteeApplicantResIdMax;
+	}
+
+	public String getGuaranteeApplicantResSrc() {
+		return guaranteeApplicantResSrc;
+	}
+
+	public void setGuaranteeApplicantResSrc(String guaranteeApplicantResSrc) {
+		this.guaranteeApplicantResSrc = guaranteeApplicantResSrc;
+	}
+
 	public String getGuaranteeName() {
 		return guaranteeName;
 	}
@@ -392,6 +457,62 @@ public class UserGuaranteeQuery extends PageQuery {
 
 	public void setGuaranteeAddress(String guaranteeAddress) {
 		this.guaranteeAddress = guaranteeAddress;
+	}
+
+	public String getGuaranteeBank() {
+		return guaranteeBank;
+	}
+
+	public void setGuaranteeBank(String guaranteeBank) {
+		this.guaranteeBank = guaranteeBank;
+	}
+
+	public Long getGuaranteeBankResId() {
+		return guaranteeBankResId;
+	}
+
+	public void setGuaranteeBankResId(Long guaranteeBankResId) {
+		this.guaranteeBankResId = guaranteeBankResId;
+	}
+
+	public Long getGuaranteeBankResIdMin() {
+		return guaranteeBankResIdMin;
+	}
+
+	public void setGuaranteeBankResIdMin(Long guaranteeBankResIdMin) {
+		this.guaranteeBankResIdMin = guaranteeBankResIdMin;
+	}
+
+	public Long getGuaranteeBankResIdMax() {
+		return guaranteeBankResIdMax;
+	}
+
+	public void setGuaranteeBankResIdMax(Long guaranteeBankResIdMax) {
+		this.guaranteeBankResIdMax = guaranteeBankResIdMax;
+	}
+
+	public String getGuaranteeBankResSrc() {
+		return guaranteeBankResSrc;
+	}
+
+	public void setGuaranteeBankResSrc(String guaranteeBankResSrc) {
+		this.guaranteeBankResSrc = guaranteeBankResSrc;
+	}
+
+	public String getGuaranteePickUpType() {
+		return guaranteePickUpType;
+	}
+
+	public void setGuaranteePickUpType(String guaranteePickUpType) {
+		this.guaranteePickUpType = guaranteePickUpType;
+	}
+
+	public String getGuaranteeHandleStatus() {
+		return guaranteeHandleStatus;
+	}
+
+	public void setGuaranteeHandleStatus(String guaranteeHandleStatus) {
+		this.guaranteeHandleStatus = guaranteeHandleStatus;
 	}
 
 	public Integer getGuaranteeVersion() {
@@ -559,9 +680,20 @@ public class UserGuaranteeQuery extends PageQuery {
 				", guaranteeGuaranteePriceMin = " + guaranteeGuaranteePriceMin + 
 				", guaranteeGuaranteePriceMax = " + guaranteeGuaranteePriceMax + 
 				", guaranteeApplicant = " + guaranteeApplicant + 
+				", guaranteeApplicantResId = " + guaranteeApplicantResId + 
+				", guaranteeApplicantResIdMin = " + guaranteeApplicantResIdMin + 
+				", guaranteeApplicantResIdMax = " + guaranteeApplicantResIdMax + 
+				", guaranteeApplicantResSrc = " + guaranteeApplicantResSrc + 
 				", guaranteeName = " + guaranteeName + 
 				", guaranteePhone = " + guaranteePhone + 
 				", guaranteeAddress = " + guaranteeAddress + 
+				", guaranteeBank = " + guaranteeBank + 
+				", guaranteeBankResId = " + guaranteeBankResId + 
+				", guaranteeBankResIdMin = " + guaranteeBankResIdMin + 
+				", guaranteeBankResIdMax = " + guaranteeBankResIdMax + 
+				", guaranteeBankResSrc = " + guaranteeBankResSrc + 
+				", guaranteePickUpType = " + guaranteePickUpType + 
+				", guaranteeHandleStatus = " + guaranteeHandleStatus + 
 				", guaranteeVersion = " + guaranteeVersion + 
 				", guaranteeVersionMin = " + guaranteeVersionMin + 
 				", guaranteeVersionMax = " + guaranteeVersionMax + 

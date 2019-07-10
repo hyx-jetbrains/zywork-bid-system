@@ -7,15 +7,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.GuaranteeDTO;
+import top.zywork.enums.ResponseStatusEnum;
+import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.GuaranteeQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.GuaranteeService;
+import top.zywork.service.ResourceService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.GuaranteeVO;
@@ -37,6 +43,8 @@ public class GuaranteeController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(GuaranteeController.class);
 
     private GuaranteeService guaranteeService;
+
+    private ResourceService resourceService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated GuaranteeVO guaranteeVO, BindingResult bindingResult) {
@@ -186,8 +194,30 @@ public class GuaranteeController extends BaseController {
         return removeById(id);
     }
 
+    @PostMapping("admin/upload-res")
+    public ResponseStatusVO upload(MultipartFile file, String type) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
+                ResourceConstants.RESOURCE_TYPE_IMAGE, UploadTypeEnum.IMAGE.getAllowedExts(),
+                UploadTypeEnum.IMAGE.getMaxSize(), false, ProjectConstants.NOT_CREATE_DIR);
+        if (ResponseStatusEnum.OK.getCode().equals(responseStatusVO.getCode())) {
+            responseStatusVO.setMessage(type);
+        }
+        return responseStatusVO;
+    }
+
+    @PostMapping("user/upload-res")
+    public ResponseStatusVO userUpload(MultipartFile file, String type) {
+        return upload(file, type);
+    }
+
     @Autowired
     public void setGuaranteeService(GuaranteeService guaranteeService) {
         this.guaranteeService = guaranteeService;
+    }
+
+    @Autowired
+    public void setResourceService(ResourceService resourceService) {
+        this.resourceService = resourceService;
     }
 }

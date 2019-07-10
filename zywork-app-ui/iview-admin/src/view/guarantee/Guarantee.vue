@@ -56,10 +56,11 @@
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
           <span v-text="form.projectId" />
-          &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
+          &nbsp;
+          <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="项目名称" prop="projectName">
-          <Input v-model="form.projectName" readonly placeholder="请输入项目名称"/>
+          <Input v-model="form.projectName" readonly placeholder="请输入项目名称" />
         </FormItem>
         <FormItem label="开标时间" prop="openMarkTime">
           <DatePicker
@@ -73,7 +74,7 @@
           ></DatePicker>
         </FormItem>
         <FormItem label="招标单位名称" prop="markUnitName">
-          <Input v-model="form.markUnitName" readonly placeholder="请输入招标单位名称"/>
+          <Input v-model="form.markUnitName" readonly placeholder="请输入招标单位名称" />
         </FormItem>
         <FormItem label="工期(天)" prop="constructionPeriod">
           <InputNumber
@@ -84,7 +85,12 @@
           />
         </FormItem>
         <FormItem label="担保金额(万元)" prop="assurePrice">
-          <InputNumber v-model="form.assurePrice" readonly placeholder="请输入担保金额(万元)" style="width: 100%;"/>
+          <InputNumber
+            v-model="form.assurePrice"
+            readonly
+            placeholder="请输入担保金额(万元)"
+            style="width: 100%;"
+          />
         </FormItem>
         <FormItem label="担保公司" prop="guaranteeComp">
           <Select v-model="form.guaranteeComp" placeholder="请选择担保公司" clearable filterable>
@@ -95,17 +101,85 @@
             >{{item.label}}</i-option>
           </Select>
         </FormItem>
-        <FormItem label="申请人" prop="applicant">
-          <Input v-model="form.applicant" placeholder="请输入申请人（建筑单位）"/>
+        <FormItem label="企业基本开户行" prop="bank">
+          <Input v-model="form.bank" placeholder="请输入企业基本开户行" />
+        </FormItem>
+        <FormItem label="请上传开户许可证" prop="bankResId">
+          <div class="demo-upload-list" v-if="form.bankResSrc">
+            <img :src="form.bankResSrc" />
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.bankResSrc)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('bankResSrc')"></Icon>
+            </div>
+          </div>
+          <Upload
+            ref="uploadBankImg"
+            :show-upload-list="false"
+            :on-success="handleSuccess"
+            :format="['jpg','jpeg','png']"
+            :max-size="2048"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            type="drag"
+            :data="uploadBankImg"
+            :action="urls.uploadUrl"
+            :headers="uploadHeader"
+            style="display: inline-block;width:58px;"
+          >
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-camera" size="20"></Icon>
+            </div>
+          </Upload>
+        </FormItem>
+        <FormItem label="申请单位" prop="applicant">
+          <Input v-model="form.applicant" placeholder="请输入申请单位" />
+        </FormItem>
+        <FormItem label="请上传企业营业执照" prop="applicantResId">
+          <div class="demo-upload-list" v-if="form.applicantResSrc">
+            <img :src="form.applicantResSrc" />
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.applicantResSrc)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('applicantResSrc')"></Icon>
+            </div>
+          </div>
+          <Upload
+            ref="uploadApplicantImg"
+            :show-upload-list="false"
+            :on-success="handleSuccess"
+            :format="['jpg','jpeg','png']"
+            :max-size="2048"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            type="drag"
+            :data="uploadApplicantImg"
+            :action="urls.uploadUrl"
+            :headers="uploadHeader"
+            style="display: inline-block;width:58px;"
+          >
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-camera" size="20"></Icon>
+            </div>
+          </Upload>
         </FormItem>
         <FormItem label="保函费(元)" prop="guaranteePrice">
-          <Input v-model="form.guaranteePrice" placeholder="请输入保函费"/>
+          <Input v-model="form.guaranteePrice" placeholder="请输入保函费" />
         </FormItem>
         <FormItem label="联系人" prop="name">
-          <Input v-model="form.name" placeholder="请输入联系人"/>
+          <Input v-model="form.name" placeholder="请输入联系人" />
         </FormItem>
         <FormItem label="手机号" prop="phone">
-          <Input v-model="form.phone" placeholder="请输入手机号"/>
+          <Input v-model="form.phone" placeholder="请输入手机号" />
+        </FormItem>
+        <FormItem label="取件方式" prop="pickUpType">
+          <Select v-model="form.pickUpType" placeholder="请选择取件方式">
+            <i-option
+              v-for="item in pickUpTypeSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="地址" prop="address">
           <Input
@@ -129,10 +203,11 @@
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
           <span v-text="form.projectId" />
-          &nbsp;<Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
+          &nbsp;
+          <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="项目名称" prop="projectName">
-          <Input v-model="form.projectName" readonly placeholder="请输入项目名称"/>
+          <Input v-model="form.projectName" readonly placeholder="请输入项目名称" />
         </FormItem>
         <FormItem label="开标时间" prop="openMarkTime">
           <DatePicker
@@ -146,7 +221,7 @@
           ></DatePicker>
         </FormItem>
         <FormItem label="招标单位名称" prop="markUnitName">
-          <Input v-model="form.markUnitName" readonly placeholder="请输入招标单位名称"/>
+          <Input v-model="form.markUnitName" readonly placeholder="请输入招标单位名称" />
         </FormItem>
         <FormItem label="工期(天)" prop="constructionPeriod">
           <InputNumber
@@ -157,7 +232,12 @@
           />
         </FormItem>
         <FormItem label="担保金额(万元)" prop="assurePrice">
-          <InputNumber v-model="form.assurePrice" readonly placeholder="请输入担保金额(万元)" style="width: 100%;"/>
+          <InputNumber
+            v-model="form.assurePrice"
+            readonly
+            placeholder="请输入担保金额(万元)"
+            style="width: 100%;"
+          />
         </FormItem>
         <FormItem label="担保公司" prop="guaranteeComp">
           <Select v-model="form.guaranteeComp" placeholder="请选择担保公司" clearable filterable>
@@ -168,17 +248,85 @@
             >{{item.label}}</i-option>
           </Select>
         </FormItem>
-        <FormItem label="保函费(元)" prop="guaranteePrice">
-          <Input v-model="form.guaranteePrice" placeholder="请输入保函费"/>
+        <FormItem label="企业基本开户行" prop="bank">
+          <Input v-model="form.bank" placeholder="请输入企业基本开户行" />
         </FormItem>
-        <FormItem label="申请人" prop="applicant">
-          <Input v-model="form.applicant" placeholder="请输入申请人（建筑单位）"/>
+        <FormItem label="请上传开户许可证" prop="bankResId">
+          <div class="demo-upload-list" v-if="form.bankResSrc">
+            <img :src="form.bankResSrc" />
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.bankResSrc)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('bankResSrc')"></Icon>
+            </div>
+          </div>
+          <Upload
+            ref="uploadBankImg"
+            :show-upload-list="false"
+            :on-success="handleSuccess"
+            :format="['jpg','jpeg','png']"
+            :max-size="2048"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            type="drag"
+            :data="uploadBankImg"
+            :action="urls.uploadUrl"
+            :headers="uploadHeader"
+            style="display: inline-block;width:58px;"
+          >
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-camera" size="20"></Icon>
+            </div>
+          </Upload>
+        </FormItem>
+        <FormItem label="申请单位" prop="applicant">
+          <Input v-model="form.applicant" placeholder="请输入申请单位" />
+        </FormItem>
+        <FormItem label="请上传企业营业执照" prop="applicantResId">
+          <div class="demo-upload-list" v-if="form.applicantResSrc">
+            <img :src="form.applicantResSrc" />
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(form.applicantResSrc)"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove('applicantResSrc')"></Icon>
+            </div>
+          </div>
+          <Upload
+            ref="uploadApplicantImg"
+            :show-upload-list="false"
+            :on-success="handleSuccess"
+            :format="['jpg','jpeg','png']"
+            :max-size="2048"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            type="drag"
+            :data="uploadApplicantImg"
+            :action="urls.uploadUrl"
+            :headers="uploadHeader"
+            style="display: inline-block;width:58px;"
+          >
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-camera" size="20"></Icon>
+            </div>
+          </Upload>
+        </FormItem>
+        <FormItem label="保函费(元)" prop="guaranteePrice">
+          <Input v-model="form.guaranteePrice" placeholder="请输入保函费" />
         </FormItem>
         <FormItem label="联系人" prop="name">
-          <Input v-model="form.name" placeholder="请输入联系人"/>
+          <Input v-model="form.name" placeholder="请输入联系人" />
         </FormItem>
         <FormItem label="手机号" prop="phone">
-          <Input v-model="form.phone" placeholder="请输入手机号"/>
+          <Input v-model="form.phone" placeholder="请输入手机号" />
+        </FormItem>
+        <FormItem label="取件方式" prop="pickUpType">
+          <Select v-model="form.pickUpType" placeholder="请选择取件方式">
+            <i-option
+              v-for="item in pickUpTypeSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
         <FormItem label="地址" prop="address">
           <Input
@@ -187,6 +335,15 @@
             :autosize="descriptionAutoSize"
             placeholder="请输入地址"
           />
+        </FormItem>
+         <FormItem label="办理状态" prop="handleStatus">
+          <Select v-model="form.handleStatus" placeholder="请选择办理状态">
+            <i-option
+              v-for="item in handleStatusSelect"
+              :value="item.value"
+              :key="item.value"
+            >{{item.label}}</i-option>
+          </Select>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -243,7 +400,7 @@
           </Row>
         </FormItem>
         <FormItem label="项目名称" prop="projectName">
-          <Input v-model="searchForm.projectName" placeholder="请输入项目名称"/>
+          <Input v-model="searchForm.projectName" placeholder="请输入项目名称" />
         </FormItem>
         <FormItem label="开标时间">
           <Row>
@@ -275,7 +432,7 @@
           </Row>
         </FormItem>
         <FormItem label="招标单位名称" prop="markUnitName">
-          <Input v-model="searchForm.markUnitName" placeholder="请输入招标单位名称"/>
+          <Input v-model="searchForm.markUnitName" placeholder="请输入招标单位名称" />
         </FormItem>
         <FormItem label="工期(天)">
           <Row>
@@ -324,24 +481,35 @@
           </Row>
         </FormItem>
         <FormItem label="担保公司" prop="guaranteeComp">
-          <Input v-model="searchForm.guaranteeComp" placeholder="请输入担保公司"/>
+          <Input v-model="searchForm.guaranteeComp" placeholder="请输入担保公司" />
         </FormItem>
         <FormItem label="申请人" prop="applicant">
-          <Input v-model="searchForm.applicant" placeholder="请输入申请人"/>
+          <Input v-model="searchForm.applicant" placeholder="请输入申请人" />
         </FormItem>
         <FormItem label="联系人" prop="name">
-          <Input v-model="searchForm.name" placeholder="请输入联系人"/>
+          <Input v-model="searchForm.name" placeholder="请输入联系人" />
         </FormItem>
         <FormItem label="手机号" prop="phone">
-          <Input v-model="searchForm.phone" placeholder="请输入手机号"/>
+          <Input v-model="searchForm.phone" placeholder="请输入手机号" />
         </FormItem>
-          <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
+        <FormItem label="办理状态" prop="handleStatus">
+          <Select v-model="searchForm.handleStatus" placeholder="请选择办理状态" clearable filterable>
             <i-option
-              v-for="item in isActiveSelect"
+              v-for="item in handleStatusSelect"
               :value="item.value"
               :key="item.value"
             >{{item.label}}</i-option>
           </Select>
+        </FormItem>
+        <FormItem label="激活状态" prop="isActive">
+        <Select v-model="searchForm.isActive" placeholder="请选择是否激活" clearable filterable>
+          <i-option
+            v-for="item in isActiveSelect"
+            :value="item.value"
+            :key="item.value"
+          >{{item.label}}</i-option>
+        </Select>
+        </FormItem>
         <FormItem label="版本号">
           <Row>
             <i-col span="11">
@@ -448,10 +616,10 @@
         项目编号:
         <span v-text="form.projectId"></span>
       </p>
-			<p>
-			  项目编号:
-			  <span v-text="form.userId"></span>
-			</p>
+      <p>
+        项目编号:
+        <span v-text="form.userId"></span>
+      </p>
       <p>
         项目名称:
         <span v-text="form.projectName"></span>
@@ -481,8 +649,12 @@
         <span v-text="form.guaranteePrice"></span>
       </p>
       <p>
-        申请人:
+        申请单位:
         <span v-text="form.applicant"></span>
+      </p>
+      <p>
+        开户银行:
+        <span v-text="form.bank"></span>
       </p>
       <p>
         联系人:
@@ -493,8 +665,16 @@
         <span v-text="form.phone"></span>
       </p>
       <p>
+        取件方式:
+        <span v-text="form.pickUpType"></span>
+      </p>
+      <p>
         地址:
         <span v-text="form.address"></span>
+      </p>
+      <p>
+        地址:
+        <span v-text="form.handleStatus"></span>
       </p>
       <p>
         版本号:
@@ -515,7 +695,10 @@
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.projectChoice" title="选择招投标项目">
-      <project-list-choice ref="ProjectListChoice" v-on:confirmChoiceProject="confirmChoiceProject"/>
+      <project-list-choice
+        ref="ProjectListChoice"
+        v-on:confirmChoiceProject="confirmChoiceProject"
+      />
       <div slot="footer">
         <Button type="text" size="large" @click="cancelModal('projectChoice')">取消</Button>
         <Button type="primary" size="large" @click="confirmChoice">确认选择</Button>
@@ -523,7 +706,7 @@
     </Modal>
 
     <Modal :transfer="false" v-model="modal.projectDetail" title="招投标项目详情">
-      <project-detail :form="projectDetailForm"/>
+      <project-detail :form="projectDetailForm" />
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.projectDetailSearch" title="搜索主表信息">
@@ -536,6 +719,9 @@
         <Button type="primary" size="large" @click="confirmProject">确认选择</Button>
       </div>
     </Modal>
+    <Modal title="预览图片" v-model="visible">
+      <img :src="imgUrl" v-if="visible" style="width: 100%" />
+    </Modal>
   </div>
 </template>
 
@@ -546,17 +732,26 @@ import ProjectListChoice from '@/view/project/ProjectListChoice.vue'
 import { getProjectById } from '@/api/module'
 import {
   isActiveSelect,
-  guaranteeCompSelect
+  guaranteeCompSelect,
+  pickUpTypeSelect,
+  handleStatusSelect
 } from '@/api/select'
 import ProjectDetail from '@/view/project/ProjectDetail.vue'
 import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
+import config from '@/config'
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? config.baseUrl.dev
+    : config.baseUrl.pro
+const cdnUrl = config.baseUrl.cdnUrl
+import { getLocalStorageToken, localStorage } from '@/libs/util'
 
 export default {
   name: 'Guarantee',
   components: {
     ProjectListChoice,
     ProjectDetail,
-    ProjectListSingle,
+    ProjectListSingle
   },
   data() {
     return {
@@ -618,7 +813,8 @@ export default {
         batchRemoveUrl: '/guarantee/admin/batch-remove',
         detailUrl: '/guarantee/admin/one/',
         activeUrl: '/guarantee/admin/active',
-        batchActiveUrl: '/guarantee/admin/batch-active'
+        batchActiveUrl: '/guarantee/admin/batch-active',
+        uploadUrl: baseUrl + '/sys-info/admin/upload-res'
       },
       page: {
         total: 0
@@ -626,7 +822,7 @@ export default {
       form: {
         id: null,
         projectId: null,
-				userId: null,
+        userId: null,
         projectName: null,
         openMarkTime: null,
         markUnitName: null,
@@ -635,6 +831,13 @@ export default {
         guaranteeComp: null,
         guaranteePrice: null,
         applicant: null,
+        applicantResId: null,
+        applicantResSrc: null,
+        handleStatus: null,
+        bank: null,
+        bankResId: null,
+        bankResSrc: null,
+        pickUpType: null,
         name: null,
         phone: null,
         address: null,
@@ -724,6 +927,7 @@ export default {
         openMarkTimeMin: null,
         openMarkTimeMax: null,
         markUnitName: null,
+        handleStatus: null,
         constructionPeriod: null,
         constructionPeriodMin: null,
         constructionPeriodMax: null,
@@ -732,6 +936,10 @@ export default {
         assurePriceMax: null,
         guaranteeComp: null,
         applicant: null,
+        applicantResId: null,
+        bank: null,
+        bankResId: null,
+        pickUpType: null,
         name: null,
         phone: null,
         address: null,
@@ -835,12 +1043,12 @@ export default {
               )
             }
           },
-					{
-					  title: '用户编号',
-					  key: 'userId',
-					  minWidth: 120,
-					  sortable: true
-					},
+          {
+            title: '用户编号',
+            key: 'userId',
+            minWidth: 120,
+            sortable: true
+          },
           {
             title: '项目名称',
             key: 'projectName',
@@ -860,6 +1068,12 @@ export default {
             sortable: true
           },
           {
+            title: '办理状态',
+            key: 'handleStatus',
+            minWidth: 120,
+            sortable: true
+          },
+          {
             title: '工期(天)',
             key: 'constructionPeriod',
             minWidth: 120,
@@ -873,11 +1087,7 @@ export default {
             render: (h, params) => {
               const row = params.row
               const text = row.assurePrice / 100
-              return h(
-                'span',
-                {},
-                text
-              )
+              return h('span', {}, text)
             }
           },
           {
@@ -887,25 +1097,83 @@ export default {
             sortable: true
           },
           {
-            title: '担保金额',
+            title: '保函费',
             key: 'guaranteePrice',
             minWidth: 120,
             sortable: true,
             render: (h, params) => {
               const row = params.row
               const text = row.guaranteePrice / 100
+              return h('span', {}, text)
+            }
+          },
+          {
+            title: '开户银行',
+            key: 'bankResSrc',
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const imgSrc = params.row.bankResSrc
+              if (!imgSrc) {
+                return h('span',{},'暂无图片')
+              }
               return h(
-                'span',
-                {},
-                text
+                'img',
+                {
+                  attrs: {
+                    src: imgSrc
+                  },
+                  style: {
+                    width: '100px',
+                    height: '80px',
+                    cursor: 'pointer'
+                  },
+                  on: {
+                    click: () => {
+                      this.handleView(imgSrc)
+                    }
+                  }
+                },
+                ''
               )
             }
           },
           {
-            title: '申请人',
+            title: '申请单位',
             key: 'applicant',
             minWidth: 120,
             sortable: true
+          },
+          {
+            title: '开户银行',
+            key: 'applicantResSrc',
+            minWidth: 120,
+            sortable: true,
+            render: (h, params) => {
+              const imgSrc = params.row.applicantResSrc
+              if (!imgSrc) {
+                return h('span',{},'暂无图片')
+              }
+              return h(
+                'img',
+                {
+                  attrs: {
+                    src: imgSrc
+                  },
+                  style: {
+                    width: '100px',
+                    height: '80px',
+                    cursor: 'pointer'
+                  },
+                  on: {
+                    click: () => {
+                      this.handleView(imgSrc)
+                    }
+                  }
+                },
+                ''
+              )
+            }
           },
           {
             title: '联系人',
@@ -916,6 +1184,12 @@ export default {
           {
             title: '手机号',
             key: 'phone',
+            minWidth: 120,
+            sortable: true
+          },
+          {
+            title: '取件方式',
+            key: 'pickUpType',
             minWidth: 120,
             sortable: true
           },
@@ -1072,14 +1346,27 @@ export default {
           }
         ],
         tableDetails: [],
-        selections: [],
+        selections: []
       },
       isActiveSelect: isActiveSelect,
       guaranteeCompSelect: guaranteeCompSelect,
+      pickUpTypeSelect: pickUpTypeSelect,
+      handleStatusSelect: handleStatusSelect,
       descriptionAutoSize: {
         minRows: 3,
         maxRows: 5
       },
+      imgUrl: '',
+      visible: false,
+      uploadHeader: {
+        Authorization: 'Bearer ' + getLocalStorageToken()
+      },
+      uploadBankImg: {
+        type: 0
+      },
+      uploadApplicantImg: {
+        type: 1
+      }
     }
   },
   computed: {},
@@ -1090,6 +1377,7 @@ export default {
     showModal(modal) {
       if (modal === 'add') {
         this.form.guaranteeComp = this.guaranteeCompSelect[0].value
+        this.form.pickUpType = this.pickUpTypeSelect[0].value
       }
       utils.showModal(this, modal)
     },
@@ -1187,12 +1475,18 @@ export default {
     // 设置价格
     setPrice(type) {
       if (type === 0) {
-        if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
+        if (this.form.assurePrice) {
           this.form.assurePrice = this.form.assurePrice / 100
         }
+        if (this.form.guaranteePrice) {
+          this.form.guaranteePrice = this.form.guaranteePrice / 100
+        }
       } else if (type === 1) {
-        if (this.form.assurePrice !== null && this.form.assurePrice !== 0) {
+        if (this.form.assurePrice) {
           this.form.assurePrice = this.form.assurePrice * 100
+        }
+        if (this.form.guaranteePrice) {
+          this.form.guaranteePrice = this.form.guaranteePrice * 100
         }
       }
     },
@@ -1221,6 +1515,55 @@ export default {
     },
     changePageSize(pageSize) {
       utils.changePageSize(this, pageSize)
+    },
+    handleView(url) {
+      this.imgUrl = url
+      this.visible = true
+    },
+    handleRemove(itemName) {
+      this.form[itemName] = ''
+    },
+    handleSuccess(res, file) {
+      if (res.code === ResponseStatus.OK) {
+        this.$Notice.success({
+          title: '上传成功',
+          desc: file.name + ' 上传成功'
+        })
+        const id = res.data.id
+        const url = cdnUrl + '/' + res.data.url
+        const type = res.message
+        console.log(type)
+        if (type == 0) {
+          this.form.bankResId = id
+          this.form.bankResSrc = url
+        } else if (type == 1) {
+          this.form.applicantResId = id
+          this.form.applicantResSrc = url
+        }
+      } else {
+        this.$Notice.error({
+          title: '上传失败',
+          desc: res.message
+        })
+      }
+    },
+    handleFormatError(file) {
+      this.$Notice.warning({
+        title: '文件格式不正确',
+        desc: file.name + ' 的文件格式不正确，请选择JPG或PNG。'
+      })
+    },
+    handleMaxSize(file) {
+      this.$Notice.warning({
+        title: '超出文件大小限制',
+        desc: file.name + ' 太大，不超过2M.'
+      })
+    },
+    handleProgress(event, file) {
+      this.$Notice.info({
+        title: '文件正在上传',
+        desc: file.name + ' 上传中...'
+      })
     }
   }
 }

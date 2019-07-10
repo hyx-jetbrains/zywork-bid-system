@@ -351,4 +351,8 @@ export const projectTypeArray = ['全部', '房建市政', '水利工程', '交�
  * 求职类型数组
  */
 export const jobTypeArray = ['长期', '短期', '钟点']
+/**
+ * 自取类型数组
+ */
+export const pickUpTypeArray = ['银行自提', '顺丰邮寄', '带至开标现场']
 

@@ -29,8 +29,7 @@
 										</view>
 										<view class="zy-text-mini" style="color: #dd524d; text-align: right;">
 											开标时间：
-											<text v-if="projectItem.project.openMarkTime !== ''" class="zy-text-mini"
-											 style="color: #dd524d;">
+											<text v-if="projectItem.project.openMarkTime !== ''" class="zy-text-mini" style="color: #dd524d;">
 												{{projectItem.project.openMarkTime}}
 											</text>
 											<text v-else class="zy-text-mini" style="color: #dd524d;">
@@ -105,11 +104,65 @@
 					<view class="uni-list-cell">
 						<view class="uni-pd">
 							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
-								联系人
+								企业基本户开户行
 							</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<input class="uni-input" type="text" :disabled="false" placeholder="输入联系人" v-model="guarantee.applicant"></input>
+							<input class="uni-input" type="text" :disabled="false" placeholder="输入开户行" v-model="guarantee.bank"></input>
+						</view>
+					</view>
+					<view class="uni-list list-pd">
+						<view class="cell-pd">
+							<view class="uni-uploader">
+								<view class="uni-uploader-head zy-upload-head">
+									<view class="uni-uploader-title">点击可预览选好的图片</view>
+								</view>
+								<view class="uni-uploader-body zy-upload-body">
+									<view class="uni-uploader__files">
+										<block v-if="guarantee.bankResSrc">
+											<view class="uni-uploader__file">
+												<image class="uni-uploader__img" :src="guarantee.bankResSrc" :data-src="guarantee.bankResSrc" @tap="previewImage"></image>
+											</view>
+										</block>
+										<view class="uni-uploader__input-box">
+											<view class="uni-uploader__input" @tap="chooseImage(0)"></view>
+										</view>
+									</view>
+									<view class="zy-text-warning">上传开户银行证明文件图片</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="uni-list-cell">
+						<view class="uni-pd">
+							<view class="uni-label zy-text-bold zy-list-form-label zy-required">
+								申请单位
+							</view>
+						</view>
+						<view class="uni-list-cell-db">
+							<input class="uni-input" type="text" :disabled="false" placeholder="输入申请单位" v-model="guarantee.applicant"></input>
+						</view>
+					</view>
+					<view class="uni-list list-pd">
+						<view class="cell-pd">
+							<view class="uni-uploader">
+								<view class="uni-uploader-head zy-upload-head">
+									<view class="uni-uploader-title">点击可预览选好的图片</view>
+								</view>
+								<view class="uni-uploader-body zy-upload-body">
+									<view class="uni-uploader__files">
+										<block v-if="guarantee.applicantResSrc">
+											<view class="uni-uploader__file">
+												<image class="uni-uploader__img" :src="guarantee.applicantResSrc" :data-src="guarantee.applicantResSrc" @tap="previewImage"></image>
+											</view>
+										</block>
+										<view class="uni-uploader__input-box">
+											<view class="uni-uploader__input" @tap="chooseImage(1)"></view>
+										</view>
+									</view>
+									<view class="zy-text-warning">上传企业的营业执照</view>
+								</view>
+							</view>
 						</view>
 					</view>
 					<view class="uni-list-cell">
@@ -134,10 +187,23 @@
 					</view>
 					<view class="uni-list-cell">
 						<view class="uni-pd">
+							<view class="uni-label zy-text-bold zy-list-form-label">取件方式</view>
+						</view>
+						<view class="uni-list-cell-db">
+							<picker @change="chooseGuaranteePickUpType" :range="pickUpTypeArray">
+								<view class="zy-disable-flex">
+									<text class="zy-list-form-picker zy-text-info">{{guarantee.pickUpType}}</text>
+									<zywork-icon type="iconxiangxia" />
+								</view>
+							</picker>
+						</view>
+					</view>
+					<view class="uni-list-cell">
+						<view class="uni-pd">
 							<view class="uni-label zy-text-bold zy-list-form-label">地址</view>
 						</view>
 						<view class="uni-list-cell-db">
-							<input class="uni-input" type="text" :disabled="false" placeholder="输入保函邮寄地址" v-model="guarantee.address"></input>
+							<input class="uni-input" type="text" :disabled="false" placeholder="输入保函邮寄地址(顺丰邮寄必填)" v-model="guarantee.address"></input>
 						</view>
 					</view>
 					<view class="zy-bottom-button">
@@ -147,6 +213,14 @@
 					</view>
 				</view>
 			</form>
+		</view>
+		<view class="zy-guarantee-memo" v-if="memoArray.length > 0">
+			<view>
+				注：
+			</view>
+			<view v-for="(item, index) in memoArray" :key="index">
+				{{item}}
+			</view>
 		</view>
 	</view>
 </template>
@@ -161,11 +235,35 @@
 		getProjectList
 	} from '@/common/project-info.js'
 	import {
-		guaranteeCompanyArray
+		guaranteeCompanyArray,
+		pickUpTypeArray
 	} from '@/common/picker.data.js'
 	import {
-		getUserPhone
+		getUserPhone,
+		IMAGE_BASE_URL,
+		showInfoToast,
+		BASE_URL,
+		getUserToken,
+		networkError,
+		showSuccessToast,
+		GUARANTEE_CONFIG
 	} from '@/common/util.js'
+	import {
+		getGuaranteeHistoryByUserId
+	} from '@/common/user-center.js'
+
+	import * as ResponseStatus from '@/common/response-status.js'
+
+	var sourceType = [
+		['camera'],
+		['album'],
+		['camera', 'album']
+	]
+	var sizeType = [
+		['compressed'],
+		['original'],
+		['compressed', 'original']
+	]
 	export default {
 		components: {
 			uniDrawer,
@@ -205,11 +303,24 @@
 					version: null,
 					createTime: null,
 					updateTime: null,
-					isActive: null
+					isActive: null,
+					bank: null,
+					bankResId: null,
+					bankResSrc: null,
+					pickUpType: null,
+					applicantResId: null,
+					applicantResSrc: null,
 				},
 				guaranteeCompanyArray: guaranteeCompanyArray,
 				guaranteeCompanyIndex: 0,
+				pickUpTypeArray: pickUpTypeArray,
+				pickUpTypeIndex: 0,
 				showBtn: true,
+				imageList: [],
+				sourceTypeIndex: 2,
+				sizeTypeIndex: 2,
+				count: [1, 2, 3, 4, 5],
+				memoArray: []
 			}
 		},
 		onLoad(event) {
@@ -224,19 +335,36 @@
 					this.guarantee = JSON.parse(payload);
 				}
 			}
-			this.initPicker();
-			this.guarantee.phone = getUserPhone();
+			this.initData();
 		},
 		methods: {
+			/** 初始化数据 */
+			initData() {
+				this.initPicker();
+				this.guarantee.phone = getUserPhone();
+				// 获取说明配置
+				this.initGuaranteeMemoConfig();
+				// 获取历史申请记录
+				getGuaranteeHistoryByUserId(this);
+			},
+			initGuaranteeMemoConfig() {
+				var guarantee = uni.getStorageSync(GUARANTEE_CONFIG);
+				if (!guarantee) {
+					return;
+				}
+				var tempMemo = guarantee.memo;
+				this.memoArray = tempMemo.split("#");
+			},
 			/** 初始化下拉框 */
 			initPicker() {
-				this.guarantee.guaranteeComp = this.guaranteeCompanyArray[this.guaranteeCompanyIndex]
+				this.guarantee.guaranteeComp = this.guaranteeCompanyArray[this.guaranteeCompanyIndex];
+				this.guarantee.pickUpType = this.pickUpTypeArray[this.pickUpTypeIndex];
 			},
 			/** 选择开标项目 */
 			chooseProject(project) {
 				this.guarantee.projectId = project.id
 				this.guarantee.projectName = project.title
-				if (project.openMarkTime != null && project.openMarkTime != undefined) {
+				if (project.openMarkTime) {
 					this.guarantee.openMarkTime = project.openMarkTime
 				}
 				this.guarantee.markUnitName = project.markUnitName
@@ -249,6 +377,11 @@
 			chooseGuaranteeCompany: function(e) {
 				this.guaranteeCompanyIndex = e.target.value
 				this.guarantee.guaranteeComp = this.guaranteeCompanyArray[this.guaranteeCompanyIndex]
+			},
+			/** 监听取件方式选择框 */
+			chooseGuaranteePickUpType: function(e) {
+				this.pickUpTypeIndex = e.target.value
+				this.guarantee.pickUpType = this.pickUpTypeArray[this.pickUpTypeIndex]
 			},
 			/** 显示项目选择抽屉 */
 			showProjectDrawer() {
@@ -270,7 +403,95 @@
 				this.guarantee.assurePrice *= 100;
 				this.guarantee.guaranteePrice *= 100;
 				infoPublish.saveGuarantee(this, this.guarantee);
-			}
+			},
+			/** 选择图片上传 */
+			chooseImage: async function(type) {
+				// if (this.imageList.length === 2) {
+				// 	let isContinue = await this.isFullImg();
+				// 	if (!isContinue) {
+				// 		return;
+				// 	}
+				// }
+				var myThis = this;
+				uni.chooseImage({
+					sourceType: sourceType[this.sourceTypeIndex],
+					sizeType: sizeType[this.sizeTypeIndex],
+					count: 1,
+					success: (chooseImageRes) => {
+						const tempFilePaths = chooseImageRes.tempFilePaths;
+						uni.showLoading({
+							title: '正在上传'
+						})
+						uni.uploadFile({
+							url: BASE_URL + '/guarantee/user/upload-res',
+							filePath: tempFilePaths[0],
+							name: 'file',
+							formData: {
+								'type': type
+							},
+							header: {
+								'Authorization': 'Bearer ' + getUserToken()
+							},
+							success: function(res) {
+								const data = JSON.parse(res.data);
+								if (data.code = ResponseStatus.OK) {
+									showSuccessToast('上传成功');
+									const id = data.data.id;
+									const url = IMAGE_BASE_URL + '/' + data.data.url;
+									const tempType = data.message;
+									if (tempType == 0) {
+										myThis.guarantee.bankResId = id;
+										myThis.guarantee.bankResSrc = url;
+									} else if (tempType == 1) {
+										myThis.guarantee.applicantResId = id;
+										myThis.guarantee.applicantResSrc = url;
+									}
+									myThis.imageList = myThis.imageList.concat(tempFilePaths);
+								} else {
+									showInfoToast(data.message);
+								}
+							},
+							fail: () => {
+								networkError()
+							},
+							complete: () => {
+								uni.hideLoading()
+							}
+						});
+					}
+				})
+			},
+			/** 清空图片 */
+			isFullImg: function() {
+				return new Promise((res) => {
+					uni.showModal({
+						content: "是否清空现有图片？",
+						success: (e) => {
+							if (e.confirm) {
+								this.imageList = [];
+								this.guarantee.bankResId = '';
+								this.guarantee.bankResSrc = '';
+								this.guarantee.applicantResId = '';
+								this.guarantee.applicantResSrc = '';
+								res(true);
+							} else {
+								res(false)
+							}
+						},
+						fail: () => {
+							res(false)
+						}
+					})
+				})
+			},
+			/** 预览图片 */
+			previewImage: function(e) {
+				var current = e.target.dataset.src
+				uni.previewImage({
+					current: current,
+					urls: this.imageList
+				})
+			},
 		}
 	}
 </script>
@@ -290,5 +511,11 @@
 
 	.zy-project-item:last-child {
 		border-bottom: none;
+	}
+
+	.zy-guarantee-memo {
+		padding: 20upx;
+		background-color: #FFF;
+		padding-top: 60upx;
 	}
 </style>

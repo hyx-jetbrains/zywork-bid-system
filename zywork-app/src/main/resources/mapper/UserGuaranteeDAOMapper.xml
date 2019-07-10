@@ -5,7 +5,7 @@
 <mapper namespace="top.zywork.dao.UserGuaranteeDAO">
 
     <sql id="select_columns">
-        t_guarantee.id as guaranteeId, t_guarantee.project_id as guaranteeProjectId, t_guarantee.user_id as guaranteeUserId, t_guarantee.project_name as guaranteeProjectName, t_guarantee.open_mark_time as guaranteeOpenMarkTime, t_guarantee.mark_unit_name as guaranteeMarkUnitName, t_guarantee.construction_period as guaranteeConstructionPeriod, t_guarantee.assure_price as guaranteeAssurePrice, t_guarantee.guarantee_comp as guaranteeGuaranteeComp, t_guarantee.guarantee_price as guaranteeGuaranteePrice, t_guarantee.applicant as guaranteeApplicant, t_guarantee.name as guaranteeName, t_guarantee.phone as guaranteePhone, t_guarantee.address as guaranteeAddress, t_guarantee.version as guaranteeVersion, t_guarantee.create_time as guaranteeCreateTime, t_guarantee.update_time as guaranteeUpdateTime, t_guarantee.is_active as guaranteeIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
+        t_guarantee.id as guaranteeId, t_guarantee.project_id as guaranteeProjectId, t_guarantee.user_id as guaranteeUserId, t_guarantee.project_name as guaranteeProjectName, t_guarantee.open_mark_time as guaranteeOpenMarkTime, t_guarantee.mark_unit_name as guaranteeMarkUnitName, t_guarantee.construction_period as guaranteeConstructionPeriod, t_guarantee.assure_price as guaranteeAssurePrice, t_guarantee.guarantee_comp as guaranteeGuaranteeComp, t_guarantee.guarantee_price as guaranteeGuaranteePrice, t_guarantee.applicant as guaranteeApplicant, t_guarantee.applicant_res_id as guaranteeApplicantResId, t_guarantee.applicant_res_src as guaranteeApplicantResSrc, t_guarantee.name as guaranteeName, t_guarantee.phone as guaranteePhone, t_guarantee.address as guaranteeAddress, t_guarantee.bank as guaranteeBank, t_guarantee.bank_res_id as guaranteeBankResId, t_guarantee.bank_res_src as guaranteeBankResSrc, t_guarantee.pick_up_type as guaranteePickUpType, t_guarantee.handle_status as guaranteeHandleStatus, t_guarantee.version as guaranteeVersion, t_guarantee.create_time as guaranteeCreateTime, t_guarantee.update_time as guaranteeUpdateTime, t_guarantee.is_active as guaranteeIsActive, t_user_detail.nickname as userDetailNickname, t_user_detail.headicon as userDetailHeadicon, t_user_detail.gender as userDetailGender
     </sql>
 
     <sql id="query_where_clause">
@@ -105,6 +105,21 @@
 		<if test="query != null and query.guaranteeApplicant != null and query.guaranteeApplicant != ''">
 			and t_guarantee.applicant like concat('%', #{query.guaranteeApplicant}, '%')
 		</if>
+		<if test="query != null and query.guaranteeApplicantResId != null">
+			and t_guarantee.applicant_res_id = #{query.guaranteeApplicantResId}
+		</if>
+		<if test="query != null and query.guaranteeApplicantResIdMin != null and query.guaranteeApplicantResIdMax == null">
+			and t_guarantee.applicant_res_id <![CDATA[ >= ]]> #{query.guaranteeApplicantResIdMin}
+		</if>
+		<if test="query != null and query.guaranteeApplicantResIdMin == null and query.guaranteeApplicantResIdMax != null">
+			and t_guarantee.applicant_res_id <![CDATA[ <= ]]> #{query.guaranteeApplicantResIdMax}
+		</if>
+		<if test="query != null and query.guaranteeApplicantResIdMin != null and query.guaranteeApplicantResIdMax != null">
+			and t_guarantee.applicant_res_id <![CDATA[ >= ]]> #{query.guaranteeApplicantResIdMin} and t_guarantee.applicant_res_id <![CDATA[ <= ]]> #{query.guaranteeApplicantResIdMax}
+		</if>
+		<if test="query != null and query.guaranteeApplicantResSrc != null and query.guaranteeApplicantResSrc != ''">
+			and t_guarantee.applicant_res_src like concat('%', #{query.guaranteeApplicantResSrc}, '%')
+		</if>
 		<if test="query != null and query.guaranteeName != null and query.guaranteeName != ''">
 			and t_guarantee.name like concat('%', #{query.guaranteeName}, '%')
 		</if>
@@ -113,6 +128,30 @@
 		</if>
 		<if test="query != null and query.guaranteeAddress != null and query.guaranteeAddress != ''">
 			and t_guarantee.address like concat('%', #{query.guaranteeAddress}, '%')
+		</if>
+		<if test="query != null and query.guaranteeBank != null and query.guaranteeBank != ''">
+			and t_guarantee.bank like concat('%', #{query.guaranteeBank}, '%')
+		</if>
+		<if test="query != null and query.guaranteeBankResId != null">
+			and t_guarantee.bank_res_id = #{query.guaranteeBankResId}
+		</if>
+		<if test="query != null and query.guaranteeBankResIdMin != null and query.guaranteeBankResIdMax == null">
+			and t_guarantee.bank_res_id <![CDATA[ >= ]]> #{query.guaranteeBankResIdMin}
+		</if>
+		<if test="query != null and query.guaranteeBankResIdMin == null and query.guaranteeBankResIdMax != null">
+			and t_guarantee.bank_res_id <![CDATA[ <= ]]> #{query.guaranteeBankResIdMax}
+		</if>
+		<if test="query != null and query.guaranteeBankResIdMin != null and query.guaranteeBankResIdMax != null">
+			and t_guarantee.bank_res_id <![CDATA[ >= ]]> #{query.guaranteeBankResIdMin} and t_guarantee.bank_res_id <![CDATA[ <= ]]> #{query.guaranteeBankResIdMax}
+		</if>
+		<if test="query != null and query.guaranteeBankResSrc != null and query.guaranteeBankResSrc != ''">
+			and t_guarantee.bank_res_src like concat('%', #{query.guaranteeBankResSrc}, '%')
+		</if>
+		<if test="query != null and query.guaranteePickUpType != null and query.guaranteePickUpType != ''">
+			and t_guarantee.pick_up_type like concat('%', #{query.guaranteePickUpType}, '%')
+		</if>
+		<if test="query != null and query.guaranteeHandleStatus != null and query.guaranteeHandleStatus != ''">
+			and t_guarantee.handle_status like concat('%', #{query.guaranteeHandleStatus}, '%')
 		</if>
 		<if test="query != null and query.guaranteeVersion != null">
 			and t_guarantee.version = #{query.guaranteeVersion}

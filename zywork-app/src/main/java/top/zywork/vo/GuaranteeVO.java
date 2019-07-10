@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * GuaranteeVO值对象类<br/>
  *
- * 创建于2019-05-13<br/>
+ * 创建于2019-07-10<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class GuaranteeVO extends BaseVO {
 
-    private static final long serialVersionUID = -9223372035380246206L;
+    private static final long serialVersionUID = -9223372034855388324L;
 
     // 保函编号
 	private Long id;
@@ -43,11 +43,16 @@ public class GuaranteeVO extends BaseVO {
 	// 担保公司
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String guaranteeComp;
-	// 保函费(元)
+	// 保函费
 	private Long guaranteePrice;
-	// 申请人
+	// 申请单位
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String applicant;
+	// 营业执照
+	private Long applicantResId;
+	// 营业执照地址
+	@Size(min = 0, max = 500, message = "必须小于500个字符")
+	private String applicantResSrc;
 	// 联系人
 	@Size(min = 0, max = 20, message = "必须小于20个字符")
 	private String name;
@@ -57,6 +62,20 @@ public class GuaranteeVO extends BaseVO {
 	// 地址
 	@Size(min = 0, max = 100, message = "必须小于100个字符")
 	private String address;
+	// 开户行
+	@Size(min = 0, max = 300, message = "必须小于300个字符")
+	private String bank;
+	// 开户行照片
+	private Long bankResId;
+	// 开户行照片地址
+	@Size(min = 0, max = 500, message = "必须小于500个字符")
+	private String bankResSrc;
+	// 取件方式
+	@Size(min = 0, max = 50, message = "必须小于50个字符")
+	private String pickUpType;
+	// 办理状态
+	@Size(min = 0, max = 20, message = "必须小于20个字符")
+	private String handleStatus;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -70,7 +89,7 @@ public class GuaranteeVO extends BaseVO {
 	
     public GuaranteeVO () {}
 
-    public GuaranteeVO (Long id, Long projectId, Long userId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, String name, String phone, String address, Integer version, Date createTime, Date updateTime, Byte isActive) {
+    public GuaranteeVO (Long id, Long projectId, Long userId, String projectName, Date openMarkTime, String markUnitName, Integer constructionPeriod, Long assurePrice, String guaranteeComp, Long guaranteePrice, String applicant, Long applicantResId, String applicantResSrc, String name, String phone, String address, String bank, Long bankResId, String bankResSrc, String pickUpType, String handleStatus, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;
 		this.projectId = projectId;
 		this.userId = userId;
@@ -82,9 +101,16 @@ public class GuaranteeVO extends BaseVO {
 		this.guaranteeComp = guaranteeComp;
 		this.guaranteePrice = guaranteePrice;
 		this.applicant = applicant;
+		this.applicantResId = applicantResId;
+		this.applicantResSrc = applicantResSrc;
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
+		this.bank = bank;
+		this.bankResId = bankResId;
+		this.bankResSrc = bankResSrc;
+		this.pickUpType = pickUpType;
+		this.handleStatus = handleStatus;
 		this.version = version;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -180,6 +206,22 @@ public class GuaranteeVO extends BaseVO {
 		this.applicant = applicant;
 	}
 
+	public Long getApplicantResId() {
+		return applicantResId;
+	}
+
+	public void setApplicantResId(Long applicantResId) {
+		this.applicantResId = applicantResId;
+	}
+
+	public String getApplicantResSrc() {
+		return applicantResSrc;
+	}
+
+	public void setApplicantResSrc(String applicantResSrc) {
+		this.applicantResSrc = applicantResSrc;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -202,6 +244,46 @@ public class GuaranteeVO extends BaseVO {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	public Long getBankResId() {
+		return bankResId;
+	}
+
+	public void setBankResId(Long bankResId) {
+		this.bankResId = bankResId;
+	}
+
+	public String getBankResSrc() {
+		return bankResSrc;
+	}
+
+	public void setBankResSrc(String bankResSrc) {
+		this.bankResSrc = bankResSrc;
+	}
+
+	public String getPickUpType() {
+		return pickUpType;
+	}
+
+	public void setPickUpType(String pickUpType) {
+		this.pickUpType = pickUpType;
+	}
+
+	public String getHandleStatus() {
+		return handleStatus;
+	}
+
+	public void setHandleStatus(String handleStatus) {
+		this.handleStatus = handleStatus;
 	}
 
 	public Integer getVersion() {
@@ -251,9 +333,16 @@ public class GuaranteeVO extends BaseVO {
 				", guaranteeComp = " + guaranteeComp + 
 				", guaranteePrice = " + guaranteePrice + 
 				", applicant = " + applicant + 
+				", applicantResId = " + applicantResId + 
+				", applicantResSrc = " + applicantResSrc + 
 				", name = " + name + 
 				", phone = " + phone + 
 				", address = " + address + 
+				", bank = " + bank + 
+				", bankResId = " + bankResId + 
+				", bankResSrc = " + bankResSrc + 
+				", pickUpType = " + pickUpType + 
+				", handleStatus = " + handleStatus + 
 				", version = " + version + 
 				", createTime = " + createTime + 
 				", updateTime = " + updateTime + 

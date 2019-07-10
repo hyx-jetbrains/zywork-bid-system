@@ -3,7 +3,8 @@
 		countNotReadMsg
 	} from '@/common/message.js'
 	import {
-		getCustomerConfig
+		getCustomerConfig,
+		getGuaranteeConfig
 	} from '@/common/user.js'
 	export default {
 		onLaunch: function() {
@@ -27,7 +28,8 @@
             updateManager.onUpdateFailed(function(res) {
                 // 新的版本下载失败
             });
-			getCustomerConfig()
+			getCustomerConfig();
+			getGuaranteeConfig();
         },
 		onShow: function() {
 			console.log('App Show')

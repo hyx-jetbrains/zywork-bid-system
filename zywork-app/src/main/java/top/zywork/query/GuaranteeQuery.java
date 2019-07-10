@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * GuaranteeQuery查询对象类<br/>
  *
- * 创建于2019-05-13<br/>
+ * 创建于2019-07-10<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class GuaranteeQuery extends PageQuery {
 
-    private static final long serialVersionUID = -9223372035584241220L;
+    private static final long serialVersionUID = -9223372035492904681L;
 
     // 保函编号
 	private Long id;
@@ -62,20 +62,42 @@ public class GuaranteeQuery extends PageQuery {
 	private Long assurePriceMax;
 	// 担保公司
 	private String guaranteeComp;
-	// 保函费(元)
+	// 保函费
 	private Long guaranteePrice;
-	// 保函费(元)（最小值）
+	// 保函费（最小值）
 	private Long guaranteePriceMin;
-	// 保函费(元)（最大值）
+	// 保函费（最大值）
 	private Long guaranteePriceMax;
-	// 申请人
+	// 申请单位
 	private String applicant;
+	// 营业执照
+	private Long applicantResId;
+	// 营业执照（最小值）
+	private Long applicantResIdMin;
+	// 营业执照（最大值）
+	private Long applicantResIdMax;
+	// 营业执照地址
+	private String applicantResSrc;
 	// 联系人
 	private String name;
 	// 手机号
 	private String phone;
 	// 地址
 	private String address;
+	// 开户行
+	private String bank;
+	// 开户行照片
+	private Long bankResId;
+	// 开户行照片（最小值）
+	private Long bankResIdMin;
+	// 开户行照片（最大值）
+	private Long bankResIdMax;
+	// 开户行照片地址
+	private String bankResSrc;
+	// 取件方式
+	private String pickUpType;
+	// 办理状态
+	private String handleStatus;
 	// 版本号
 	private Integer version;
 	// 版本号（最小值）
@@ -109,7 +131,7 @@ public class GuaranteeQuery extends PageQuery {
 	
     public GuaranteeQuery () {}
 
-    public GuaranteeQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, Long userId, Long userIdMin, Long userIdMax, String projectName, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String markUnitName, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, String guaranteeComp, Long guaranteePrice, Long guaranteePriceMin, Long guaranteePriceMax, String applicant, String name, String phone, String address, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+    public GuaranteeQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, Long userId, Long userIdMin, Long userIdMax, String projectName, Date openMarkTime, Date openMarkTimeMin, Date openMarkTimeMax, String markUnitName, Integer constructionPeriod, Integer constructionPeriodMin, Integer constructionPeriodMax, Long assurePrice, Long assurePriceMin, Long assurePriceMax, String guaranteeComp, Long guaranteePrice, Long guaranteePriceMin, Long guaranteePriceMax, String applicant, Long applicantResId, Long applicantResIdMin, Long applicantResIdMax, String applicantResSrc, String name, String phone, String address, String bank, Long bankResId, Long bankResIdMin, Long bankResIdMax, String bankResSrc, String pickUpType, String handleStatus, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
         this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
@@ -135,9 +157,20 @@ public class GuaranteeQuery extends PageQuery {
 		this.guaranteePriceMin = guaranteePriceMin;
 		this.guaranteePriceMax = guaranteePriceMax;
 		this.applicant = applicant;
+		this.applicantResId = applicantResId;
+		this.applicantResIdMin = applicantResIdMin;
+		this.applicantResIdMax = applicantResIdMax;
+		this.applicantResSrc = applicantResSrc;
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
+		this.bank = bank;
+		this.bankResId = bankResId;
+		this.bankResIdMin = bankResIdMin;
+		this.bankResIdMax = bankResIdMax;
+		this.bankResSrc = bankResSrc;
+		this.pickUpType = pickUpType;
+		this.handleStatus = handleStatus;
 		this.version = version;
 		this.versionMin = versionMin;
 		this.versionMax = versionMax;
@@ -353,6 +386,38 @@ public class GuaranteeQuery extends PageQuery {
 		this.applicant = applicant;
 	}
 
+	public Long getApplicantResId() {
+		return applicantResId;
+	}
+
+	public void setApplicantResId(Long applicantResId) {
+		this.applicantResId = applicantResId;
+	}
+
+	public Long getApplicantResIdMin() {
+		return applicantResIdMin;
+	}
+
+	public void setApplicantResIdMin(Long applicantResIdMin) {
+		this.applicantResIdMin = applicantResIdMin;
+	}
+
+	public Long getApplicantResIdMax() {
+		return applicantResIdMax;
+	}
+
+	public void setApplicantResIdMax(Long applicantResIdMax) {
+		this.applicantResIdMax = applicantResIdMax;
+	}
+
+	public String getApplicantResSrc() {
+		return applicantResSrc;
+	}
+
+	public void setApplicantResSrc(String applicantResSrc) {
+		this.applicantResSrc = applicantResSrc;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -375,6 +440,62 @@ public class GuaranteeQuery extends PageQuery {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	public Long getBankResId() {
+		return bankResId;
+	}
+
+	public void setBankResId(Long bankResId) {
+		this.bankResId = bankResId;
+	}
+
+	public Long getBankResIdMin() {
+		return bankResIdMin;
+	}
+
+	public void setBankResIdMin(Long bankResIdMin) {
+		this.bankResIdMin = bankResIdMin;
+	}
+
+	public Long getBankResIdMax() {
+		return bankResIdMax;
+	}
+
+	public void setBankResIdMax(Long bankResIdMax) {
+		this.bankResIdMax = bankResIdMax;
+	}
+
+	public String getBankResSrc() {
+		return bankResSrc;
+	}
+
+	public void setBankResSrc(String bankResSrc) {
+		this.bankResSrc = bankResSrc;
+	}
+
+	public String getPickUpType() {
+		return pickUpType;
+	}
+
+	public void setPickUpType(String pickUpType) {
+		this.pickUpType = pickUpType;
+	}
+
+	public String getHandleStatus() {
+		return handleStatus;
+	}
+
+	public void setHandleStatus(String handleStatus) {
+		this.handleStatus = handleStatus;
 	}
 
 	public Integer getVersion() {
@@ -502,9 +623,20 @@ public class GuaranteeQuery extends PageQuery {
 				", guaranteePriceMin = " + guaranteePriceMin + 
 				", guaranteePriceMax = " + guaranteePriceMax + 
 				", applicant = " + applicant + 
+				", applicantResId = " + applicantResId + 
+				", applicantResIdMin = " + applicantResIdMin + 
+				", applicantResIdMax = " + applicantResIdMax + 
+				", applicantResSrc = " + applicantResSrc + 
 				", name = " + name + 
 				", phone = " + phone + 
 				", address = " + address + 
+				", bank = " + bank + 
+				", bankResId = " + bankResId + 
+				", bankResIdMin = " + bankResIdMin + 
+				", bankResIdMax = " + bankResIdMax + 
+				", bankResSrc = " + bankResSrc + 
+				", pickUpType = " + pickUpType + 
+				", handleStatus = " + handleStatus + 
 				", version = " + version + 
 				", versionMin = " + versionMin + 
 				", versionMax = " + versionMax + 

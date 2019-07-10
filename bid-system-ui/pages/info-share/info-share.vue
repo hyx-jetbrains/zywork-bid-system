@@ -384,6 +384,9 @@
 											{{item.guaranteeCreateTime}}
 										</view>
 									</view>
+									<view class="zy-disable-flex-right">
+										<text style="margin-right: 10upx;">{{item.guaranteeHandleStatus}}</text>
+									</view>
 								</view>
 								<view>
 									<view class="zy-text-bold">
@@ -397,6 +400,12 @@
 										<view class="zy-text-bold zy-disable-flex-right">
 											工期(天)：
 											<text class="zy-text-info">{{item.guaranteeConstructionPeriod}}</text>
+										</view>
+									</view>
+									<view class="zy-text-info zy-disable-flex">
+										<view class="zy-text-bold">
+											申请单位：
+											<text class="zy-text-info">{{item.guaranteeApplicant}}</text>
 										</view>
 									</view>
 								</view>

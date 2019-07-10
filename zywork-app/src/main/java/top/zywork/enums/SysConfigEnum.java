@@ -19,7 +19,8 @@ public enum SysConfigEnum {
     ALIYUN_OSS_CONFIG("aliyun_oss_config"),
     QINIU_OSS_CONFIG("qiniu_oss_config"),
     CUSTOMER_CONFIG("customer_config"),
-    SMS_SWITCH_CONFIG("sms_switch_config");
+    SMS_SWITCH_CONFIG("sms_switch_config"),
+    GUARANTEE_MEMO_CONFIG("guarantee_memo_config");
 
     private String value;
 

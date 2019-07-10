@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * UserGuaranteeDO数据对象实体类<br/>
  *
- * 创建于2019-05-18<br/>
+ * 创建于2019-07-10<br/>
  *
- * @author http://zywork.top 邓敏
+ * @author http://zywork.top 危锦辉
  * @version 1.0
  */
 public class UserGuaranteeDO extends BaseDO {
 
-    private static final long serialVersionUID = -9223372035348232929L;
+    private static final long serialVersionUID = -9223372036188137390L;
 
     //t_guarantee表的字段对应的属性
 	// 保函编号
@@ -34,16 +34,30 @@ public class UserGuaranteeDO extends BaseDO {
 	private Long guaranteeAssurePrice;
 	// 担保公司
 	private String guaranteeGuaranteeComp;
-	// 保函费(元)
+	// 保函费
 	private Long guaranteeGuaranteePrice;
-	// 申请人
+	// 申请单位
 	private String guaranteeApplicant;
+	// 营业执照
+	private Long guaranteeApplicantResId;
+	// 营业执照地址
+	private String guaranteeApplicantResSrc;
 	// 联系人
 	private String guaranteeName;
 	// 手机号
 	private String guaranteePhone;
 	// 地址
 	private String guaranteeAddress;
+	// 开户行
+	private String guaranteeBank;
+	// 开户行照片
+	private Long guaranteeBankResId;
+	// 开户行照片地址
+	private String guaranteeBankResSrc;
+	// 取件方式
+	private String guaranteePickUpType;
+	// 办理状态
+	private String guaranteeHandleStatus;
 	// 版本号
 	private Integer guaranteeVersion;
 	// 创建时间
@@ -62,7 +76,7 @@ public class UserGuaranteeDO extends BaseDO {
 	
     public UserGuaranteeDO () {}
 
-    public UserGuaranteeDO (Long guaranteeId, Long guaranteeProjectId, Long guaranteeUserId, String guaranteeProjectName, Date guaranteeOpenMarkTime, String guaranteeMarkUnitName, Integer guaranteeConstructionPeriod, Long guaranteeAssurePrice, String guaranteeGuaranteeComp, Long guaranteeGuaranteePrice, String guaranteeApplicant, String guaranteeName, String guaranteePhone, String guaranteeAddress, Integer guaranteeVersion, Date guaranteeCreateTime, Date guaranteeUpdateTime, Byte guaranteeIsActive, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender) {
+    public UserGuaranteeDO (Long guaranteeId, Long guaranteeProjectId, Long guaranteeUserId, String guaranteeProjectName, Date guaranteeOpenMarkTime, String guaranteeMarkUnitName, Integer guaranteeConstructionPeriod, Long guaranteeAssurePrice, String guaranteeGuaranteeComp, Long guaranteeGuaranteePrice, String guaranteeApplicant, Long guaranteeApplicantResId, String guaranteeApplicantResSrc, String guaranteeName, String guaranteePhone, String guaranteeAddress, String guaranteeBank, Long guaranteeBankResId, String guaranteeBankResSrc, String guaranteePickUpType, String guaranteeHandleStatus, Integer guaranteeVersion, Date guaranteeCreateTime, Date guaranteeUpdateTime, Byte guaranteeIsActive, String userDetailNickname, String userDetailHeadicon, Byte userDetailGender) {
         this.guaranteeId = guaranteeId;
 		this.guaranteeProjectId = guaranteeProjectId;
 		this.guaranteeUserId = guaranteeUserId;
@@ -74,9 +88,16 @@ public class UserGuaranteeDO extends BaseDO {
 		this.guaranteeGuaranteeComp = guaranteeGuaranteeComp;
 		this.guaranteeGuaranteePrice = guaranteeGuaranteePrice;
 		this.guaranteeApplicant = guaranteeApplicant;
+		this.guaranteeApplicantResId = guaranteeApplicantResId;
+		this.guaranteeApplicantResSrc = guaranteeApplicantResSrc;
 		this.guaranteeName = guaranteeName;
 		this.guaranteePhone = guaranteePhone;
 		this.guaranteeAddress = guaranteeAddress;
+		this.guaranteeBank = guaranteeBank;
+		this.guaranteeBankResId = guaranteeBankResId;
+		this.guaranteeBankResSrc = guaranteeBankResSrc;
+		this.guaranteePickUpType = guaranteePickUpType;
+		this.guaranteeHandleStatus = guaranteeHandleStatus;
 		this.guaranteeVersion = guaranteeVersion;
 		this.guaranteeCreateTime = guaranteeCreateTime;
 		this.guaranteeUpdateTime = guaranteeUpdateTime;
@@ -175,6 +196,22 @@ public class UserGuaranteeDO extends BaseDO {
 		this.guaranteeApplicant = guaranteeApplicant;
 	}
 
+	public Long getGuaranteeApplicantResId() {
+		return guaranteeApplicantResId;
+	}
+
+	public void setGuaranteeApplicantResId(Long guaranteeApplicantResId) {
+		this.guaranteeApplicantResId = guaranteeApplicantResId;
+	}
+
+	public String getGuaranteeApplicantResSrc() {
+		return guaranteeApplicantResSrc;
+	}
+
+	public void setGuaranteeApplicantResSrc(String guaranteeApplicantResSrc) {
+		this.guaranteeApplicantResSrc = guaranteeApplicantResSrc;
+	}
+
 	public String getGuaranteeName() {
 		return guaranteeName;
 	}
@@ -197,6 +234,46 @@ public class UserGuaranteeDO extends BaseDO {
 
 	public void setGuaranteeAddress(String guaranteeAddress) {
 		this.guaranteeAddress = guaranteeAddress;
+	}
+
+	public String getGuaranteeBank() {
+		return guaranteeBank;
+	}
+
+	public void setGuaranteeBank(String guaranteeBank) {
+		this.guaranteeBank = guaranteeBank;
+	}
+
+	public Long getGuaranteeBankResId() {
+		return guaranteeBankResId;
+	}
+
+	public void setGuaranteeBankResId(Long guaranteeBankResId) {
+		this.guaranteeBankResId = guaranteeBankResId;
+	}
+
+	public String getGuaranteeBankResSrc() {
+		return guaranteeBankResSrc;
+	}
+
+	public void setGuaranteeBankResSrc(String guaranteeBankResSrc) {
+		this.guaranteeBankResSrc = guaranteeBankResSrc;
+	}
+
+	public String getGuaranteePickUpType() {
+		return guaranteePickUpType;
+	}
+
+	public void setGuaranteePickUpType(String guaranteePickUpType) {
+		this.guaranteePickUpType = guaranteePickUpType;
+	}
+
+	public String getGuaranteeHandleStatus() {
+		return guaranteeHandleStatus;
+	}
+
+	public void setGuaranteeHandleStatus(String guaranteeHandleStatus) {
+		this.guaranteeHandleStatus = guaranteeHandleStatus;
 	}
 
 	public Integer getGuaranteeVersion() {
@@ -270,9 +347,16 @@ public class UserGuaranteeDO extends BaseDO {
 				", guaranteeGuaranteeComp = " + guaranteeGuaranteeComp + 
 				", guaranteeGuaranteePrice = " + guaranteeGuaranteePrice + 
 				", guaranteeApplicant = " + guaranteeApplicant + 
+				", guaranteeApplicantResId = " + guaranteeApplicantResId + 
+				", guaranteeApplicantResSrc = " + guaranteeApplicantResSrc + 
 				", guaranteeName = " + guaranteeName + 
 				", guaranteePhone = " + guaranteePhone + 
 				", guaranteeAddress = " + guaranteeAddress + 
+				", guaranteeBank = " + guaranteeBank + 
+				", guaranteeBankResId = " + guaranteeBankResId + 
+				", guaranteeBankResSrc = " + guaranteeBankResSrc + 
+				", guaranteePickUpType = " + guaranteePickUpType + 
+				", guaranteeHandleStatus = " + guaranteeHandleStatus + 
 				", guaranteeVersion = " + guaranteeVersion + 
 				", guaranteeCreateTime = " + guaranteeCreateTime + 
 				", guaranteeUpdateTime = " + guaranteeUpdateTime + 

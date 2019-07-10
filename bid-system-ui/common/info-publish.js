@@ -563,7 +563,12 @@ export const checkGuarantee = (self) => {
 	}
 	if (self.guarantee.applicant === null
 		|| self.guarantee.applicant === undefined) {
-		showInfoToast("请输入申请人");
+		showInfoToast("请输入申请单位");
+		return false;
+	}
+	if (self.guarantee.bank === null
+		|| self.guarantee.bank === undefined) {
+		showInfoToast("请输入开户行");
 		return false;
 	}
 	if (self.guarantee.name === null
@@ -573,8 +578,14 @@ export const checkGuarantee = (self) => {
 	}
 	if (self.guarantee.phone === null
 		|| self.guarantee.phone === undefined) {
-		showInfoToast("请输入联系人");
+		showInfoToast("请输入联系人手机");
 		return false;
+	}
+	if (self.guarantee.pickUpType === '顺丰邮寄') {
+		if (!self.guarantee.address) {
+			showInfoToast("请输入邮件地址");
+			return false;
+		}
 	}
 	return true;
 }

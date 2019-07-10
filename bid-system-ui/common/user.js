@@ -21,7 +21,8 @@ import {
 	CUSTOMER_CONFIG,
 	nullToStr,
 	LOGIN_FLAG,
-	USER_PHONE
+	USER_PHONE,
+	GUARANTEE_CONFIG
 } from './util.js'
 import * as ResponseStatus from './response-status.js'
 
@@ -735,6 +736,35 @@ export const getCustomerConfig = () => {
 				console.log(res.data.data);
 				uni.setStorage({
 					key: CUSTOMER_CONFIG,
+					data: res.data.data
+				})
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+
+		}
+	})
+}
+
+/**
+ * 获取申请保函说明配置
+ */
+export const getGuaranteeConfig = () => {
+	uni.request({
+		url: BASE_URL + '/sys-config/any/guarantee-config',
+		method: 'GET',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				console.log(res.data.data);
+				uni.setStorage({
+					key: GUARANTEE_CONFIG,
 					data: res.data.data
 				})
 			} else {

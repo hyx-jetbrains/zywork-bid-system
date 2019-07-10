@@ -25,6 +25,7 @@ export const USER_FLAG_ORDINARY = 'ordinary'
 export const SHARE_CODE_PAGE_IMG = '/static/share.jpg'
 export const LOGIN_FLAG = 'loginFlag'
 export const USER_PHONE = 'userPhone'
+export const GUARANTEE_CONFIG = 'guaranteeConfig'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 

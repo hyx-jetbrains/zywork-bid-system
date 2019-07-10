@@ -817,6 +817,54 @@ export const deleteSeekDataById = (self, id) => {
 }
 
 /**
+ * 获取我的历史保函申请信息
+ */
+export const getGuaranteeHistoryByUserId = (self) => {
+	uni.showLoading({
+		title: '加载中'
+	})
+	uni.request({
+		url: BASE_URL + '/guarantee/user/list-page',
+		method: 'POST',
+		data: {
+			'pageNo': 1,
+			'pageSize': 1,
+			'isActive': 0
+		},
+		header: {
+			'Authorization': 'Bearer ' + getUserToken()
+		},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				var rows = nullToStr(res.data.data.rows);
+				if (rows.length > 0) {
+					var row = rows[0];
+					// 有申请过保函，获取基础信息
+					console.log(row)
+					self.guarantee.applicant = row.applicant;
+					self.guarantee.name = row.name;
+					self.guarantee.address = row.address;
+					self.guarantee.bank = row.bank;
+					self.guarantee.bankResId = row.bankResId;
+					self.guarantee.bankResSrc = row.bankResSrc;
+					self.guarantee.applicantResId = row.applicantResId;
+					self.guarantee.applicantResSrc = row.applicantResSrc;
+				}
+				console.log(self.guarantee)
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
+	})
+}
+
+/**
  * 我的申请保函
  */
 export const getGuaranteeByUserId = (self, type) => {

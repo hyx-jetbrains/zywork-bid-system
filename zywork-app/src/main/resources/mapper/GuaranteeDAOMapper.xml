@@ -40,6 +40,12 @@
 			<if test="applicant != null">
 				applicant,
 			</if>
+			<if test="applicantResId != null">
+				applicant_res_id,
+			</if>
+			<if test="applicantResSrc != null">
+				applicant_res_src,
+			</if>
 			<if test="name != null">
 				name,
 			</if>
@@ -48,6 +54,21 @@
 			</if>
 			<if test="address != null">
 				address,
+			</if>
+			<if test="bank != null">
+				bank,
+			</if>
+			<if test="bankResId != null">
+				bank_res_id,
+			</if>
+			<if test="bankResSrc != null">
+				bank_res_src,
+			</if>
+			<if test="pickUpType != null">
+				pick_up_type,
+			</if>
+			<if test="handleStatus != null">
+				handle_status,
 			</if>
 			<if test="version != null">
 				version,
@@ -94,6 +115,12 @@
 			<if test="applicant != null">
 				#{applicant},
 			</if>
+			<if test="applicantResId != null">
+				#{applicantResId},
+			</if>
+			<if test="applicantResSrc != null">
+				#{applicantResSrc},
+			</if>
 			<if test="name != null">
 				#{name},
 			</if>
@@ -102,6 +129,21 @@
 			</if>
 			<if test="address != null">
 				#{address},
+			</if>
+			<if test="bank != null">
+				#{bank},
+			</if>
+			<if test="bankResId != null">
+				#{bankResId},
+			</if>
+			<if test="bankResSrc != null">
+				#{bankResSrc},
+			</if>
+			<if test="pickUpType != null">
+				#{pickUpType},
+			</if>
+			<if test="handleStatus != null">
+				#{handleStatus},
 			</if>
 			<if test="version != null">
 				#{version},
@@ -156,6 +198,12 @@
 			<if test="item.applicant != null">
 				applicant,
 			</if>
+			<if test="item.applicantResId != null">
+				applicant_res_id,
+			</if>
+			<if test="item.applicantResSrc != null">
+				applicant_res_src,
+			</if>
 			<if test="item.name != null">
 				name,
 			</if>
@@ -164,6 +212,21 @@
 			</if>
 			<if test="item.address != null">
 				address,
+			</if>
+			<if test="item.bank != null">
+				bank,
+			</if>
+			<if test="item.bankResId != null">
+				bank_res_id,
+			</if>
+			<if test="item.bankResSrc != null">
+				bank_res_src,
+			</if>
+			<if test="item.pickUpType != null">
+				pick_up_type,
+			</if>
+			<if test="item.handleStatus != null">
+				handle_status,
 			</if>
 			<if test="item.version != null">
 				version,
@@ -210,6 +273,12 @@
 			<if test="item.applicant != null">
 				#{item.applicant},
 			</if>
+			<if test="item.applicantResId != null">
+				#{item.applicantResId},
+			</if>
+			<if test="item.applicantResSrc != null">
+				#{item.applicantResSrc},
+			</if>
 			<if test="item.name != null">
 				#{item.name},
 			</if>
@@ -218,6 +287,21 @@
 			</if>
 			<if test="item.address != null">
 				#{item.address},
+			</if>
+			<if test="item.bank != null">
+				#{item.bank},
+			</if>
+			<if test="item.bankResId != null">
+				#{item.bankResId},
+			</if>
+			<if test="item.bankResSrc != null">
+				#{item.bankResSrc},
+			</if>
+			<if test="item.pickUpType != null">
+				#{item.pickUpType},
+			</if>
+			<if test="item.handleStatus != null">
+				#{item.handleStatus},
 			</if>
 			<if test="item.version != null">
 				#{item.version},
@@ -280,6 +364,12 @@
 			<if test="applicant != null">
 				applicant = #{applicant},
 			</if>
+			<if test="applicantResId != null">
+				applicant_res_id = #{applicantResId},
+			</if>
+			<if test="applicantResSrc != null">
+				applicant_res_src = #{applicantResSrc},
+			</if>
 			<if test="name != null">
 				name = #{name},
 			</if>
@@ -288,6 +378,21 @@
 			</if>
 			<if test="address != null">
 				address = #{address},
+			</if>
+			<if test="bank != null">
+				bank = #{bank},
+			</if>
+			<if test="bankResId != null">
+				bank_res_id = #{bankResId},
+			</if>
+			<if test="bankResSrc != null">
+				bank_res_src = #{bankResSrc},
+			</if>
+			<if test="pickUpType != null">
+				pick_up_type = #{pickUpType},
+			</if>
+			<if test="handleStatus != null">
+				handle_status = #{handleStatus},
 			</if>
 			<if test="version != null">
 				version = #{version},
@@ -340,6 +445,12 @@
 			<if test="item.applicant != null">
 				applicant = #{item.applicant},
 			</if>
+			<if test="item.applicantResId != null">
+				applicant_res_id = #{item.applicantResId},
+			</if>
+			<if test="item.applicantResSrc != null">
+				applicant_res_src = #{item.applicantResSrc},
+			</if>
 			<if test="item.name != null">
 				name = #{item.name},
 			</if>
@@ -348,6 +459,21 @@
 			</if>
 			<if test="item.address != null">
 				address = #{item.address},
+			</if>
+			<if test="item.bank != null">
+				bank = #{item.bank},
+			</if>
+			<if test="item.bankResId != null">
+				bank_res_id = #{item.bankResId},
+			</if>
+			<if test="item.bankResSrc != null">
+				bank_res_src = #{item.bankResSrc},
+			</if>
+			<if test="item.pickUpType != null">
+				pick_up_type = #{item.pickUpType},
+			</if>
+			<if test="item.handleStatus != null">
+				handle_status = #{item.handleStatus},
 			</if>
 			<if test="item.version != null">
 				version = #{item.version},
@@ -371,7 +497,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, project_id as projectId, user_id as userId, project_name as projectName, open_mark_time as openMarkTime, mark_unit_name as markUnitName, construction_period as constructionPeriod, assure_price as assurePrice, guarantee_comp as guaranteeComp, guarantee_price as guaranteePrice, applicant as applicant, name as name, phone as phone, address as address, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        id as id, project_id as projectId, user_id as userId, project_name as projectName, open_mark_time as openMarkTime, mark_unit_name as markUnitName, construction_period as constructionPeriod, assure_price as assurePrice, guarantee_comp as guaranteeComp, guarantee_price as guaranteePrice, applicant as applicant, applicant_res_id as applicantResId, applicant_res_src as applicantResSrc, name as name, phone as phone, address as address, bank as bank, bank_res_id as bankResId, bank_res_src as bankResSrc, pick_up_type as pickUpType, handle_status as handleStatus, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -471,6 +597,21 @@
 		<if test="query != null and query.applicant != null and query.applicant != ''">
 			and applicant like concat('%', #{query.applicant}, '%')
 		</if>
+		<if test="query != null and query.applicantResId != null">
+			and applicant_res_id = #{query.applicantResId}
+		</if>
+		<if test="query != null and query.applicantResIdMin != null and query.applicantResIdMax == null">
+			and applicant_res_id <![CDATA[ >= ]]> #{query.applicantResIdMin}
+		</if>
+		<if test="query != null and query.applicantResIdMin == null and query.applicantResIdMax != null">
+			and applicant_res_id <![CDATA[ <= ]]> #{query.applicantResIdMax}
+		</if>
+		<if test="query != null and query.applicantResIdMin != null and query.applicantResIdMax != null">
+			and applicant_res_id <![CDATA[ >= ]]> #{query.applicantResIdMin} and applicant_res_id <![CDATA[ <= ]]> #{query.applicantResIdMax}
+		</if>
+		<if test="query != null and query.applicantResSrc != null and query.applicantResSrc != ''">
+			and applicant_res_src like concat('%', #{query.applicantResSrc}, '%')
+		</if>
 		<if test="query != null and query.name != null and query.name != ''">
 			and name like concat('%', #{query.name}, '%')
 		</if>
@@ -479,6 +620,30 @@
 		</if>
 		<if test="query != null and query.address != null and query.address != ''">
 			and address like concat('%', #{query.address}, '%')
+		</if>
+		<if test="query != null and query.bank != null and query.bank != ''">
+			and bank like concat('%', #{query.bank}, '%')
+		</if>
+		<if test="query != null and query.bankResId != null">
+			and bank_res_id = #{query.bankResId}
+		</if>
+		<if test="query != null and query.bankResIdMin != null and query.bankResIdMax == null">
+			and bank_res_id <![CDATA[ >= ]]> #{query.bankResIdMin}
+		</if>
+		<if test="query != null and query.bankResIdMin == null and query.bankResIdMax != null">
+			and bank_res_id <![CDATA[ <= ]]> #{query.bankResIdMax}
+		</if>
+		<if test="query != null and query.bankResIdMin != null and query.bankResIdMax != null">
+			and bank_res_id <![CDATA[ >= ]]> #{query.bankResIdMin} and bank_res_id <![CDATA[ <= ]]> #{query.bankResIdMax}
+		</if>
+		<if test="query != null and query.bankResSrc != null and query.bankResSrc != ''">
+			and bank_res_src like concat('%', #{query.bankResSrc}, '%')
+		</if>
+		<if test="query != null and query.pickUpType != null and query.pickUpType != ''">
+			and pick_up_type like concat('%', #{query.pickUpType}, '%')
+		</if>
+		<if test="query != null and query.handleStatus != null and query.handleStatus != ''">
+			and handle_status like concat('%', #{query.handleStatus}, '%')
 		</if>
 		<if test="query != null and query.version != null">
 			and version = #{query.version}
