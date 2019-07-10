@@ -43,8 +43,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="中标金额（万元）" prop="markMoneyDisplay">
-					<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
+				<FormItem label="中标金额（万元）" prop="markMoney">
+					<Input v-model="form.markMoney" placeholder="请输入中标金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"
@@ -74,8 +74,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="中标金额（万元）" prop="markMoneyDisplay">
-					<Input v-model="form.markMoneyDisplay" placeholder="请输入中标金额" />
+				<FormItem label="中标金额（万元）" prop="markMoney">
+					<Input v-model="form.markMoney" placeholder="请输入中标金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"

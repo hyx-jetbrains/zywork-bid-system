@@ -54,8 +54,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
-					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
+				<FormItem label="合同金额（万元）" prop="contractAmount">
+					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="合同签订日期" prop="contractDate">
 					<DatePicker @on-change="form.contractDate=$event" :value="form.contractDate" placeholder="请输入合同签订日期" type="datetime"
@@ -96,8 +96,8 @@
 				<FormItem label="建设单位" prop="buildComp">
 					<Input v-model="form.buildComp" placeholder="请输入建设单位" />
 				</FormItem>
-				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
-					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
+				<FormItem label="合同金额（万元）" prop="contractAmount">
+					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="合同签订日期" prop="contractDate">
 					<DatePicker @on-change="form.contractDate=$event" :value="form.contractDate" placeholder="请输入合同签订日期" type="datetime"

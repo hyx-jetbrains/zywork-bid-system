@@ -46,8 +46,8 @@
 				<FormItem label="技术负责人" prop="technologyName">
 					<Input v-model="form.technologyName" placeholder="请输入技术负责人" />
 				</FormItem>
-				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
-					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
+				<FormItem label="合同金额（万元）" prop="contractAmount">
+					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="工程地点" prop="workAddr">
 					<Cascader
@@ -101,8 +101,8 @@
 				<FormItem label="技术负责人" prop="technologyName">
 					<Input v-model="form.technologyName" placeholder="请输入技术负责人" />
 				</FormItem>
-				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
-					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
+				<FormItem label="合同金额（万元）" prop="contractAmount">
+					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="工程地点" prop="workAddr">
 					<Cascader

@@ -43,8 +43,8 @@
 				<FormItem label="项目负责人" prop="name">
 					<Input v-model="form.name" placeholder="请输入项目负责人" />
 				</FormItem>
-				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
-					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
+				<FormItem label="合同金额（万元）" prop="contractAmount">
+					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"
@@ -74,8 +74,8 @@
 				<FormItem label="项目负责人" prop="name">
 					<Input v-model="form.name" placeholder="请输入项目负责人" />
 				</FormItem>
-				<FormItem label="合同金额（万元）" prop="contractAmountDisplay">
-					<Input v-model="form.contractAmountDisplay" placeholder="请输入合同金额" />
+				<FormItem label="合同金额（万元）" prop="contractAmount">
+					<Input v-model="form.contractAmount" placeholder="请输入合同金额" />
 				</FormItem>
 				<FormItem label="开工时间" prop="startDate">
 					<DatePicker @on-change="form.startDate=$event" :value="form.startDate" placeholder="请输入开工时间" type="datetime"

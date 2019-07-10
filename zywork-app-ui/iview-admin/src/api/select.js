@@ -1350,8 +1350,8 @@ export const checkPatternSelect = [
  */
 export const guaranteeCompSelect = [
   {
-    value: '赣州智悦网络科技有限公司',
-    label: '赣州智悦网络科技有限公司'
+    value: '江西数达信息科技有限公司',
+    label: '江西数达信息科技有限公司'
   }
 ]
 
@@ -1467,5 +1467,37 @@ export const jobTypeSelect = [
   {
     value: '钟点',
     label: '钟点'
+  }
+]
+
+/**
+ * 取件方式下拉框
+ */
+export const pickUpTypeSelect = [
+  {
+    value: '银行自提',
+    label: '银行自提'
+  },
+  {
+    value: '顺丰邮寄',
+    label: '顺丰邮寄'
+  },
+  {
+    value: '带至开标现场',
+    label: '带至开标现场'
+  }
+]
+
+/**
+ * 办理状态下拉框
+ */
+export const handleStatusSelect = [
+  {
+    value: '未办理',
+    label: '未办理'
+  },
+  {
+    value: '已办理',
+    label: '已办理'
   }
 ]
