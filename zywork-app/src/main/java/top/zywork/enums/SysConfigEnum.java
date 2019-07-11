@@ -20,7 +20,8 @@ public enum SysConfigEnum {
     QINIU_OSS_CONFIG("qiniu_oss_config"),
     CUSTOMER_CONFIG("customer_config"),
     SMS_SWITCH_CONFIG("sms_switch_config"),
-    GUARANTEE_MEMO_CONFIG("guarantee_memo_config");
+    GUARANTEE_MEMO_CONFIG("guarantee_memo_config"),
+    MESSAGE_PHONE_CONFIG("message_phone_config");
 
     private String value;
 

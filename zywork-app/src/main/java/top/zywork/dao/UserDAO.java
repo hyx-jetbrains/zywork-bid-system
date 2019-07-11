@@ -2,6 +2,7 @@ package top.zywork.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import top.zywork.dos.UserDO;
 import top.zywork.query.PageQuery;
 
 import java.util.List;
@@ -28,8 +29,15 @@ public interface UserDAO extends BaseDAO {
 
     /**
      * 根据用户ids获取用户列表
-     * @param ids 以逗号分割的用户id
+     * @param ids id数组
      * @return
      */
     List<Object> listByUserIds(@Param("ids") String[] ids);
+
+    /**
+     * 根据手机号查询用户信息
+     * @param phone 手机号数组
+     * @return
+     */
+    List<UserDO> listByUserPhone(@Param("phone") String[] phone);
 }

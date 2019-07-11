@@ -1398,6 +1398,10 @@ export const pythonTypeSelect = [
  */
 export const pythonProjectTypeSelect = [
   {
+    value: 'project/procurement',
+    label: '政府采购'
+  },
+  {
     value: 'project/house',
     label: '房建市政'
   },
@@ -1409,10 +1413,6 @@ export const pythonProjectTypeSelect = [
     value: 'project/traffic',
     label: '交通工程'
   }, 
-  {
-    value: 'project/procurement',
-    label: '政府采购'
-  },
   {
     value: 'project/key',
     label: '重点项目'
@@ -1427,6 +1427,10 @@ export const pythonProjectTypeSelect = [
  */
 export const pythonProjectAnnounceTypeSelect = [
   {
+    value: 'project-announce/procurement',
+    label: '政府采购'
+  },
+  {
     value: 'project-announce/house',
     label: '房建市政'
   },
@@ -1437,10 +1441,6 @@ export const pythonProjectAnnounceTypeSelect = [
   {
     value: 'project-announce/traffic',
     label: '交通工程'
-  },
-  {
-    value: 'project-announce/procurement',
-    label: '政府采购'
   },
   {
     value: 'project-announce/key',

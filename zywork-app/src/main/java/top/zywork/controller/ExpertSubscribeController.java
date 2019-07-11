@@ -15,11 +15,13 @@ import top.zywork.constant.ExpertSubscribeConstants;
 import top.zywork.constant.NoticeConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ExpertSubscribeDTO;
+import top.zywork.dto.UserMessageDTO;
 import top.zywork.enums.NoticeEnum;
 import top.zywork.query.ExpertSubscribeQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.ExpertSubscribeService;
+import top.zywork.service.UserMessageService;
 import top.zywork.service.UserNoticeService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -45,6 +47,8 @@ public class ExpertSubscribeController extends BaseController {
     private ExpertSubscribeService expertSubscribeService;
 
     private UserNoticeService userNoticeService;
+
+    private UserMessageService userMessageService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ExpertSubscribeVO expertSubscribeVO, BindingResult bindingResult) {
@@ -196,7 +200,7 @@ public class ExpertSubscribeController extends BaseController {
         if (null == jwtUser) {
             return ResponseStatusVO.authenticationError();
         }
-
+        userMessageService.saveUserMessage(NoticeConstants.MESSAGE_NOTICE_EXPERT);
         expertSubscribeVO.setUserId(jwtUser.getUserId());
         return save(expertSubscribeVO, bindingResult);
     }
@@ -209,5 +213,10 @@ public class ExpertSubscribeController extends BaseController {
     @Autowired
     public void setUserNoticeService(UserNoticeService userNoticeService) {
         this.userNoticeService = userNoticeService;
+    }
+
+    @Autowired
+    public void setUserMessageService(UserMessageService userMessageService) {
+        this.userMessageService = userMessageService;
     }
 }

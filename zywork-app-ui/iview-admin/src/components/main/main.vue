@@ -1,7 +1,22 @@
 <template>
   <Layout style="height: 100%" class="main">
-    <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
-      <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
+    <Sider
+      hide-trigger
+      collapsible
+      :width="256"
+      :collapsed-width="64"
+      v-model="collapsed"
+      class="left-sider"
+      :style="{overflow: 'hidden'}"
+    >
+      <side-menu
+        accordion
+        ref="sideMenu"
+        :active-name="$route.name"
+        :collapsed="collapsed"
+        @on-select="turnToPage"
+        :menu-list="menuList"
+      >
         <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
         <div class="logo-con">
           <img v-show="!collapsed" :src="maxLogo" key="max-logo" />
@@ -12,20 +27,32 @@
     <Layout>
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <user :message-unread-count="unreadCount" :user-avator="userAvator"/>
+          <user :message-unread-count="unreadCount" :user-avator="userAvator" />
           <!-- <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/> -->
           <!-- <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store> -->
-          <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <fullscreen v-model="isFullscreen" style="margin-right: 10px;" />
+          <message
+            v-model="messageCount"
+            :expert="expert"
+            :guarantee="guarantee"
+            @initNotReadMessage="initNotReadMessage"
+            style="margin-right: 20px;"
+          />
         </header-bar>
       </Header>
       <Content class="main-content-con">
         <Layout class="main-layout-con">
           <div class="tag-nav-wrapper">
-            <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
+            <tags-nav
+              :value="$route"
+              @input="handleClick"
+              :list="tagNavList"
+              @on-close="handleCloseTag"
+            />
           </div>
           <Content class="content-wrapper">
             <keep-alive :include="cacheList">
-              <router-view/>
+              <router-view />
             </keep-alive>
             <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
           </Content>
@@ -41,6 +68,7 @@ import TagsNav from './components/tags-nav'
 import User from './components/user'
 import ABackTop from './components/a-back-top'
 import Fullscreen from './components/fullscreen'
+import Message from './components/message'
 import Language from './components/language'
 import ErrorStore from './components/error-store'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
@@ -51,6 +79,8 @@ import maxLogo from '@/assets/images/logo.png'
 import userAvator from '@/assets/images/head.png'
 import './main.less'
 import { SYS_INFO_KEY, localStorage } from '@/api/utils.js'
+import { allByAdminMessage } from '@/api/message.js'
+import * as ResponseStatus from '@/api/response-status'
 export default {
   name: 'Main',
   components: {
@@ -59,46 +89,57 @@ export default {
     Language,
     TagsNav,
     Fullscreen,
+    Message,
     ErrorStore,
     User,
     ABackTop
   },
-  data () {
+  data() {
     return {
       collapsed: false,
       minLogo,
       maxLogo,
       userAvator,
-      isFullscreen: false
+      isFullscreen: false,
+      messageCount: 0,
+      guarantee: 0,
+      tempGuaranteeCount: 0,
+      expert: 0,
+      tempExpertCount: 0,
     }
   },
   computed: {
-    ...mapGetters([
-      'errorCount'
-    ]),
-    tagNavList () {
+    ...mapGetters(['errorCount']),
+    tagNavList() {
       return this.$store.state.app.tagNavList
     },
-    tagRouter () {
+    tagRouter() {
       return this.$store.state.app.tagRouter
     },
     // userAvator () {
-      // return this.$store.state.user.avatorImgPath
-      // return this.userAvator
+    // return this.$store.state.user.avatorImgPath
+    // return this.userAvator
     // },
-    cacheList () {
-      return ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
+    cacheList() {
+      return [
+        'ParentView',
+        ...(this.tagNavList.length
+          ? this.tagNavList
+              .filter(item => !(item.meta && item.meta.notCache))
+              .map(item => item.name)
+          : [])
+      ]
     },
-    menuList () {
+    menuList() {
       return this.$store.getters.menuList
     },
-    local () {
+    local() {
       return this.$store.state.app.local
     },
-    hasReadErrorPage () {
+    hasReadErrorPage() {
       return this.$store.state.app.hasReadErrorPage
     },
-    unreadCount () {
+    unreadCount() {
       return this.$store.state.user.unreadCount
     }
   },
@@ -110,11 +151,8 @@ export default {
       'setLocal',
       'setHomeRoute'
     ]),
-    ...mapActions([
-      'handleLogin',
-      'getUnreadMessageCount'
-    ]),
-    turnToPage (route) {
+    ...mapActions(['handleLogin', 'getUnreadMessageCount']),
+    turnToPage(route) {
       let { name, params, query } = {}
       if (typeof route === 'string') name = route
       else {
@@ -132,10 +170,10 @@ export default {
         query
       })
     },
-    handleCollapsedChange (state) {
+    handleCollapsedChange(state) {
       this.collapsed = state
     },
-    handleCloseTag (res, type, route) {
+    handleCloseTag(res, type, route) {
       if (type === 'all') {
         this.turnToPage(this.$config.homeName)
       } else if (routeEqual(this.$route, route)) {
@@ -146,12 +184,52 @@ export default {
       }
       this.setTagNavList(res)
     },
-    handleClick (item) {
+    handleClick(item) {
       this.turnToPage(item)
-    }
+    },
+    initNotReadMessage() {
+      var param = {
+        isActive: 0,
+        messageId: 0,
+        isRead: 0
+      }
+      allByAdminMessage(this, param)
+        .then(response => {
+          if (response.data.code === ResponseStatus.OK) {
+            const len = response.data.data.total
+            if (len > 0) {
+              this.guarantee = 1
+              this.tempGuaranteeCount = len
+            } else {
+              this.guarantee = 0
+              this.tempGuaranteeCount = 0
+            }
+          }
+          param.messageId = -1
+          allByAdminMessage(this, param)
+            .then(response => {
+              const len = response.data.data.total
+              if (len > 0) {
+                this.expert = 1
+                this.tempExpertCount = len
+              } else {
+                this.expert = 0
+                this.tempExpertCount = 0
+              }
+            })
+            .catch(error => {
+              console.log(error)
+              self.$Message.error('获取消息失败')
+            })
+        })
+        .catch(error => {
+          console.log(error)
+          self.$Message.error('获取消息失败')
+        })
+    },
   },
   watch: {
-    '$route' (newRoute) {
+    $route(newRoute) {
       const { name, query, params, meta } = newRoute
       this.addTag({
         route: { name, query, params, meta },
@@ -160,9 +238,15 @@ export default {
       this.setBreadCrumb(newRoute)
       this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
       this.$refs.sideMenu.updateOpenName(newRoute.name)
+    },
+    tempGuaranteeCount(val) {
+      this.messageCount = val + this.tempExpertCount
+    },
+    tempExpertCount(val) {
+      this.messageCount = val + this.tempGuaranteeCount
     }
   },
-  mounted () {
+  mounted() {
     /**
      * @description 初始化设置面包屑导航和标签导航
      */
@@ -187,17 +271,34 @@ export default {
       var sysInfo = localStorage.getItem(SYS_INFO_KEY)
       if (sysInfo !== undefined && sysInfo != null) {
         sysInfo = JSON.parse(sysInfo)
-        if (sysInfo.menuIconMin !== null && sysInfo.menuIconMin !== '' && sysInfo.menuIconMin !== undefined) {
+        if (
+          sysInfo.menuIconMin !== null &&
+          sysInfo.menuIconMin !== '' &&
+          sysInfo.menuIconMin !== undefined
+        ) {
           this.minLogo = sysInfo.menuIconMin
         }
-        if (sysInfo.menuIconMax !== null && sysInfo.menuIconMax !== '' && sysInfo.menuIconMax !== undefined) {
+        if (
+          sysInfo.menuIconMax !== null &&
+          sysInfo.menuIconMax !== '' &&
+          sysInfo.menuIconMax !== undefined
+        ) {
           this.maxLogo = sysInfo.menuIconMax
         }
-        if (sysInfo.defaultHead !== null && sysInfo.defaultHead !== '' && sysInfo.defaultHead !== undefined) {
+        if (
+          sysInfo.defaultHead !== null &&
+          sysInfo.defaultHead !== '' &&
+          sysInfo.defaultHead !== undefined
+        ) {
           this.userAvator = sysInfo.defaultHead
         }
       }
     }
+    // 初始化未读消息
+    var myThis = this
+    setInterval(function() {
+      myThis.initNotReadMessage()
+    }, 6000)
   }
 }
 </script>

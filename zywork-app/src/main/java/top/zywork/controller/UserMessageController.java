@@ -160,6 +160,34 @@ public class UserMessageController extends BaseController {
         }
     }
 
+    /**
+     * 获取后台用户的消息
+     * @param userMessageQuery
+     * @return
+     */
+    @PostMapping("admin/user-message")
+    public ResponseStatusVO getAdminMessage(@RequestBody UserMessageQuery userMessageQuery) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        userMessageQuery.setUserId(jwtUser.getUserId());
+        return listAllByCondition(userMessageQuery);
+    }
+
+    /**
+     * 读取后台用户指定消息的所有未读消息
+     * @param messageId
+     * @return
+     */
+    @GetMapping("admin/read-user-message/{messageId}")
+    public ResponseStatusVO readAdminMessage(@PathVariable("messageId") Long messageId) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        Long updateRow = userMessageService.readAdminMsgByMsgId(jwtUser.getUserId(), messageId);
+        if (updateRow > 0) {
+            return ResponseStatusVO.ok("读取成功", null);
+        } else {
+            return ResponseStatusVO.error("没有未读消息",null);
+        }
+    }
+
     @Autowired
     public void setUserMessageService(UserMessageService userMessageService) {
         this.userMessageService = userMessageService;

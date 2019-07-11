@@ -1,5 +1,6 @@
 package top.zywork.controller;
 
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.NoticeConstants;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.GuaranteeDTO;
+import top.zywork.dto.UserMessageDTO;
 import top.zywork.enums.ResponseStatusEnum;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.GuaranteeQuery;
@@ -22,6 +25,7 @@ import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.GuaranteeService;
 import top.zywork.service.ResourceService;
+import top.zywork.service.UserMessageService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.GuaranteeVO;
@@ -45,6 +49,8 @@ public class GuaranteeController extends BaseController {
     private GuaranteeService guaranteeService;
 
     private ResourceService resourceService;
+
+    private UserMessageService userMessageService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated GuaranteeVO guaranteeVO, BindingResult bindingResult) {
@@ -173,7 +179,7 @@ public class GuaranteeController extends BaseController {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-
+        userMessageService.saveUserMessage(NoticeConstants.MESSAGE_NOTICE_GUARANTEE);
         guaranteeVO.setUserId(jwtUser.getUserId());
         return save(guaranteeVO, bindingResult);
     }
@@ -219,5 +225,10 @@ public class GuaranteeController extends BaseController {
     @Autowired
     public void setResourceService(ResourceService resourceService) {
         this.resourceService = resourceService;
+    }
+
+    @Autowired
+    public void setUserMessageService(UserMessageService userMessageService) {
+        this.userMessageService = userMessageService;
     }
 }

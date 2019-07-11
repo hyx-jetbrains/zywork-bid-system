@@ -17,5 +17,18 @@
         </where>
     </select>
 
+    <select id="listByUserPhone" resultType="userDO">
+        select
+        <include refid="select_columns"/>
+        from t_user
+        <where>
+            1 = 1 and phone in
+            <foreach collection="phone" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+            and is_active = 0
+        </where>
+    </select>
+
 
 </mapper>

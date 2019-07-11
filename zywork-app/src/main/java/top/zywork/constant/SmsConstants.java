@@ -20,4 +20,8 @@ public class SmsConstants {
      * 短信通知模版code-修改手机号-SMS_169642566
      */
     public static final String SMS_NOTICE_TEMPLATE_CODE_UPDATE_PHONE = "SMS_169642566";
+    /**
+     * 短信通知模板code-操作提醒-SMS_170330110
+     */
+    public static final String SMS_NOTICE_TEMPLATE_CODE_OPT_NOTICE = "SMS_170330110";
 }

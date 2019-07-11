@@ -1,6 +1,7 @@
 package top.zywork.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import top.zywork.query.PageQuery;
 
@@ -25,4 +26,12 @@ public interface UserMessageDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    /**
+     * 读取所有后台用户指定消息的未读消息
+     * @param userId
+     * @param messageId
+     * @return
+     */
+    Long readAdminMsgByMsgId(@Param("userId")Long userId, @Param("messageId") Long messageId);
 }
