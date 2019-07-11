@@ -25,7 +25,7 @@ import top.zywork.service.AbstractBaseService;
 import top.zywork.service.WeixinPayService;
 import top.zywork.vo.*;
 import top.zywork.weixin.WXPayConfig;
-import top.zywork.weixin.WeixinUtils;
+import top.zywork.weixin.WeixinPayUtils;
 import top.zywork.weixin.WeixinXcxConfig;
 
 import java.util.Calendar;
@@ -148,8 +148,8 @@ public class WeixinPayServiceImpl extends AbstractBaseService implements WeixinP
         String ip = "127.0.0.1";
 
         String payNotifyUrl = wXPayConfig.getBaseUrl() + wXPayConfig.getPayNotifyUrl();
-        Map<String, String> unifiedOrderResult = WeixinUtils.unifiedOrder(appId, mchId, apiKey, openid, orderNo, ip, body, attach, totalFee, payNotifyUrl);
-        Map<String, String> data = WeixinUtils.payDataMap(appId, apiKey, unifiedOrderResult);
+        Map<String, String> unifiedOrderResult = WeixinPayUtils.unifiedOrder(appId, mchId, apiKey, openid, orderNo, ip, body, attach, totalFee, payNotifyUrl);
+        Map<String, String> data = WeixinPayUtils.payDataMap(appId, apiKey, unifiedOrderResult);
         return ResponseStatusVO.ok("下单成功", data);
     }
 

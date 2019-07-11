@@ -10,7 +10,14 @@ package top.zywork.weixin;
  */
 public class WeixinConstants {
 
-    // 微信返回消息，如果出错，则包含有errcode
+    /**
+     * 微信返回消息，如果出错，则包含有errcode
+     */
     public static final String ERROR_CODE_STR = "errcode";
+
+    /**
+     * 微信返回消息
+     */
+    public static final String ERROR_MSG_STR = "errmsg";
 
 }

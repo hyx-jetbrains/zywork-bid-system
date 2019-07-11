@@ -2,6 +2,9 @@ package top.zywork.service;
 
 import top.zywork.vo.ResponseStatusVO;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 支付服务接口。一般情况下建议先生成支付订单，再发起支付<br/>
  *
@@ -45,6 +48,15 @@ public interface PayService {
     ResponseStatusVO payByXcxWxpay(String openid, String orderNo, String ip, String body, String attach, int totalFee);
 
     /**
+     * 微信支付回调方法
+     * @param request
+     * @param response
+     * @param payNotifyService
+     * @return
+     */
+    void payByWxNotify(HttpServletRequest request, HttpServletResponse response, PayNotifyService payNotifyService);
+
+    /**
      * 支付宝支付
      * @return
      */
@@ -68,9 +80,38 @@ public interface PayService {
      * @param actName 活动名称
      * @param remark 备注
      * @param sceneId 普通红包不需要传，非普通红包必传，参考RedpackSceneEnum枚举
+     * @param certPath 证书路径
      * @return
      */
-    ResponseStatusVO sendRedpackByWxpay(String openid, String billNo, String ip, String sendName, int totalAmount,
-                                        int totalNum, String wishing, String actName, String remark, String sceneId);
+    ResponseStatusVO sendRedpackByGzh(String openid, String billNo, String ip, String sendName, int totalAmount,
+                                      int totalNum, String wishing, String actName, String remark, String sceneId, String certPath);
+
+    /**
+     * 微信企业付款到个人，通过公众号付款
+     * @param openid 用户openid
+     * @param ip 调用接口的ip地址
+     * @param partnerTradeNo 商户订单号
+     * @param amount 支付总金额
+     * @param checkName 是否校验真实姓名
+     * @param desc 付款备注
+     * @param certPath 证书路径
+     * @return
+     */
+    ResponseStatusVO transferToPersonalGzh(String openid, String ip, String partnerTradeNo, int amount,
+                                           String checkName, String desc, String certPath);
+
+    /**
+     * 微信企业付款到个人，通过小程序付款
+     * @param openid 用户openid
+     * @param ip 调用接口的ip地址
+     * @param partnerTradeNo 商户订单号
+     * @param amount 支付总金额
+     * @param checkName 是否校验真实姓名
+     * @param desc 付款备注
+     * @param certPath 证书路径
+     * @return
+     */
+    ResponseStatusVO transferToPersonalXcx(String openid, String ip, String partnerTradeNo, int amount,
+                                           String checkName, String desc, String certPath);
 
 }

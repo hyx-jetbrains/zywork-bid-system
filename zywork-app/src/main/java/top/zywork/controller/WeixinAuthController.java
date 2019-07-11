@@ -75,9 +75,9 @@ public class WeixinAuthController extends BaseController {
         logger.info("openid: {}", openid);
         if (StringUtils.isEmpty(openid)) {
             WeixinGzhConfig weixinGzhConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_GZH_CONFIG.getValue(), WeixinGzhConfig.class);
-            return new ModelAndView("redirect:" + WeixinUtils.gzhAuthorizeUrl(weixinGzhConfig.getAppId(), weixinGzhConfig.getLoginRedirectUrl(), extraParams));
+            return new ModelAndView("redirect:" + WeixinAuthUtils.gzhAuthorizeUrl(weixinGzhConfig.getAppId(), weixinGzhConfig.getLoginRedirectUrl(), extraParams));
         } else {
-            return new ModelAndView("redirect:" + extraParams.split(WeixinUtils.EXTRA_PARAMS_SEPERATOR)[0]);
+            return new ModelAndView("redirect:" + extraParams.split(WeixinAuthUtils.EXTRA_PARAMS_SEPARATOR)[0]);
         }
     }
 
@@ -97,7 +97,7 @@ public class WeixinAuthController extends BaseController {
         logger.info("extraParams: {}, code: {}", extraParams, code);
         String openid = WebUtils.getCookieValue(request, gzhCookieName);
         logger.info("openid: {}", openid);
-        String[] extraParamAry = extraParams.split(WeixinUtils.EXTRA_PARAMS_SEPERATOR);
+        String[] extraParamAry = extraParams.split(WeixinAuthUtils.EXTRA_PARAMS_SEPARATOR);
         String fromUrl = extraParamAry[0];
         String notAuthUrl = extraParamAry[1];
         String shareCode = extraParamAry[2];
@@ -110,7 +110,7 @@ public class WeixinAuthController extends BaseController {
             return new ModelAndView("redirect:" + notAuthUrl);
         }
         WeixinGzhConfig weixinGzhConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_GZH_CONFIG.getValue(), WeixinGzhConfig.class);
-        GzhAuth gzhAuth = WeixinUtils.authGzh(weixinGzhConfig.getAppId(), weixinGzhConfig.getAppSecret(), code);
+        GzhAuth gzhAuth = WeixinAuthUtils.authGzh(weixinGzhConfig.getAppId(), weixinGzhConfig.getAppSecret(), code);
         if (gzhAuth == null) {
             return new ModelAndView("redirect:" + notAuthUrl);
         }
@@ -118,7 +118,7 @@ public class WeixinAuthController extends BaseController {
         JwtUser jwtUser = (JwtUser) jwtUserDetailsService.loadUserByUsername(gzhAuth.getOpenid());
         if (StringUtils.isEmpty(jwtUser.getUsername())) {
             // 还未保存用户信息
-            WeixinUser weixinUser = WeixinUtils.userInfo(gzhAuth);
+            WeixinUser weixinUser = WeixinAuthUtils.userInfo(gzhAuth);
             if (weixinUser != null) {
                 Long inviteUserId = null;
                 if (StringUtils.isNotEmpty(shareCode) && !SHARE_CODE.equals(shareCode)) {
@@ -196,7 +196,7 @@ public class WeixinAuthController extends BaseController {
             return ResponseStatusVO.dataError("微信授权登录缺少code", null);
         }
         WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_XCX_CONFIG.getValue(), WeixinXcxConfig.class);
-        XcxAuth xcxAuth = WeixinUtils.authXcx(weixinXcxConfig.getAppId(), weixinXcxConfig.getAppSecret(), code);
+        XcxAuth xcxAuth = WeixinAuthUtils.authXcx(weixinXcxConfig.getAppId(), weixinXcxConfig.getAppSecret(), code);
         if (xcxAuth == null) {
             return ResponseStatusVO.error("微信授权登录失败，请检查参数", null);
         }
@@ -250,7 +250,7 @@ public class WeixinAuthController extends BaseController {
      */
     @PostMapping("xcx-phone")
     public ResponseStatusVO xcxUserPhone(String openid, String encryptedData, String iv) {
-        XcxPhone xcxPhone = WeixinUtils.decryptPhoneData(userRegService.getSessionKeyByOpenid(openid), encryptedData, iv);
+        XcxPhone xcxPhone = WeixinAuthUtils.decryptPhoneData(userRegService.getSessionKeyByOpenid(openid), encryptedData, iv);
         userRegService.updateUserPhone(openid, xcxPhone.getPhoneNumber());
         return ResponseStatusVO.ok("成功获取微信用户手机号", xcxPhone);
     }
