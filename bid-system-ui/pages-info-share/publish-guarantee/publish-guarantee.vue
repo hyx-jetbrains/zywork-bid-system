@@ -282,7 +282,6 @@
 					pageSize: 10,
 					isActive: 0,
 					releaseStatus: '已发布',
-					isGuarantee: 1,
 					title: ''
 				},
 				projects: [],

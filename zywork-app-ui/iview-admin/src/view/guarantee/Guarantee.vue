@@ -483,7 +483,7 @@
         <FormItem label="担保公司" prop="guaranteeComp">
           <Input v-model="searchForm.guaranteeComp" placeholder="请输入担保公司" />
         </FormItem>
-        <FormItem label="申请人" prop="applicant">
+        <FormItem label="申请单位" prop="applicant">
           <Input v-model="searchForm.applicant" placeholder="请输入申请人" />
         </FormItem>
         <FormItem label="联系人" prop="name">

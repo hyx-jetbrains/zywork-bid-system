@@ -228,7 +228,6 @@
 		</view>
 		<view v-if="calendar.showCalendar" class="calendar-mask" @click="closeMask">
 			<view class="calendar-box" @click.stop="">
-				<view class="zy-type-title zy-text-bold">待开标检索</view>
 				<view class="zy-date-tag" style="margin: 30upx 0;">
 					<uni-tag text="本周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(1)"></uni-tag>
 					<uni-tag text="下周" type="default" size="normal" :inverted="true" :circle="true" @click="dateSearch(2)"></uni-tag>
@@ -241,7 +240,6 @@
 					<button type="primary" size="mini" class="calendar-button-confirm" @click="closeMask">取消</button>
 					<button type="primary" size="mini" class="calendar-button-confirm" @click="confirm">确认</button>
 				</view>
-
 			</view>
 		</view>
 	</view>
@@ -492,7 +490,7 @@
 				// 暂时不用公告了，换成公示
 				// projectInfo.getFirstHeadlinesInfo(this, this.noticePager);
 				this.initProjectAnnouncePager();
-				projectInfo.getIndexProjectAnnounceList(this, 'init', this.projectAnnouncePager);
+				projectInfo.getIndexProjectAnnounceTop(this, 10);
 			},
 			/** 初始化客服悬浮 */
 			initCustomerFab() {

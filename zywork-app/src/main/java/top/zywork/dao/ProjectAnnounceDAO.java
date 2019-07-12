@@ -39,4 +39,11 @@ public interface ProjectAnnounceDAO extends BaseDAO {
 
     Object getByTitle(@Param("title") String title);
 
+    /**
+     * 获取指定的前几条数据，用于首页的轮播
+     * @param top
+     * @return
+     */
+    List<Object> getTop(@Param("top") Long top);
+
 }

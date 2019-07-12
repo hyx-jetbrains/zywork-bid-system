@@ -57,4 +57,9 @@ public class ProjectAnnounceServiceImpl extends AbstractBaseService implements P
     public Object getByTitle(String title) {
         return projectAnnounceDAO.getByTitle(title);
     }
+
+    @Override
+    public List<Object> getTop(Long top) {
+        return projectAnnounceDAO.getTop(top);
+    }
 }

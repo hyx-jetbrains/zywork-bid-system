@@ -43,4 +43,14 @@
 	 	where
 			title = #{title}
 	</select>
+
+    <select id="getTop" parameterType="long" resultType="projectAnnounceDO">
+        select
+        <include refid="select_columns"/>
+        from
+        t_project_announce
+        where
+        first_candidate is not null and first_candidate != ''
+        order by create_time desc limit 0,#{top};
+    </select>
 </mapper>

@@ -35,6 +35,7 @@
             v-model="messageCount"
             :expert="expert"
             :guarantee="guarantee"
+            :consult="consult"
             @initNotReadMessage="initNotReadMessage"
             style="margin-right: 20px;"
           />
@@ -106,6 +107,8 @@ export default {
       tempGuaranteeCount: 0,
       expert: 0,
       tempExpertCount: 0,
+      consult: 0,
+      tempConsultCount: 0
     }
   },
   computed: {
@@ -216,17 +219,30 @@ export default {
                 this.expert = 0
                 this.tempExpertCount = 0
               }
+              param.messageId = -2
+              allByAdminMessage(this, param)
+                .then(response => {
+                  const len = response.data.data.total
+                  if (len > 0) {
+                    this.consult = 1
+                    this.tempConsultCount = len
+                  } else {
+                    this.consult = 0
+                    this.tempConsultCount = 0
+                  }
+                })
+                .catch(error => {
+                  console.log(error)
+                })
             })
             .catch(error => {
               console.log(error)
-              self.$Message.error('获取消息失败')
             })
         })
         .catch(error => {
           console.log(error)
-          self.$Message.error('获取消息失败')
         })
-    },
+    }
   },
   watch: {
     $route(newRoute) {
@@ -240,10 +256,13 @@ export default {
       this.$refs.sideMenu.updateOpenName(newRoute.name)
     },
     tempGuaranteeCount(val) {
-      this.messageCount = val + this.tempExpertCount
+      this.messageCount = val + this.tempExpertCount + this.tempConsultCount
     },
     tempExpertCount(val) {
-      this.messageCount = val + this.tempGuaranteeCount
+      this.messageCount = val + this.tempGuaranteeCount + this.tempConsultCount
+    },
+    tempConsultCount(val) {
+      this.messageCount = val + this.tempGuaranteeCount + this.tempExpertCount
     }
   },
   mounted() {

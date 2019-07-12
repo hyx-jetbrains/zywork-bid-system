@@ -17,4 +17,18 @@ public final class UserMessageConstants {
      */
     public static final Integer MESSAGE_IS_READ_TRUE = 1;
 
+
+    /**
+     * 消息通知类型-保函申请消息
+     */
+    public static final Long MESSAGE_NOTICE_GUARANTEE = 0L;
+    /**
+     * 消息通知类型-专家预约消息
+     */
+    public static final Long MESSAGE_NOTICE_EXPERT = -1L;
+    /**
+     * 消息通知类型-用户咨询消息
+     */
+    public static final Long MESSAGE_NOTICE_CONSULT = -2L;
+
 }

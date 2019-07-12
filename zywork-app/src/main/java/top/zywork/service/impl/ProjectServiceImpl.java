@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import top.zywork.ali.AliyunSmsConfig;
 import top.zywork.ali.AliyunSmsUtils;
@@ -17,22 +18,22 @@ import top.zywork.common.DateParseUtils;
 import top.zywork.common.DateUtils;
 import top.zywork.constant.NoticeConstants;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.RedisKeyConstants;
 import top.zywork.constant.SmsConstants;
 import top.zywork.controller.BuilderReqController;
 import top.zywork.dao.*;
 import top.zywork.dos.ProjectDO;
-import top.zywork.dto.PagerDTO;
-import top.zywork.dto.ProjectDTO;
-import top.zywork.dto.UserDTO;
+import top.zywork.dto.*;
 import top.zywork.enums.DatePatternEnum;
 import top.zywork.enums.NoticeEnum;
 import top.zywork.enums.SysConfigEnum;
 import top.zywork.query.ProjectQuery;
 import top.zywork.query.SubscribeQuery;
-import top.zywork.service.AbstractBaseService;
-import top.zywork.service.ProjectService;
-import top.zywork.service.SysConfigService;
+import top.zywork.query.UserServiceQuery;
+import top.zywork.query.UserUserSocialQuery;
+import top.zywork.service.*;
 import top.zywork.vo.*;
+import top.zywork.weixin.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -66,6 +67,15 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
     private SysConfigService sysConfigService;
 
     private UserDAO userDAO;
+
+    private UserServiceService userServiceService;
+
+    private UserUserSocialService userUserSocialService;
+
+    private RedisTemplate<String, Object> redisTemplate;
+
+
+
 
     @Autowired
     public void setProjectDAO(ProjectDAO projectDAO) {
@@ -215,6 +225,26 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             JSONObject templateParam = new JSONObject();
             for(SubscribeVO subscribeVO: list) {
                 Long userId = subscribeVO.getUserId();
+                // 先查询用户购买的订阅服务是否有过期
+                UserServiceQuery userServiceQuery = new UserServiceQuery();
+                userServiceQuery.setUserId(userId);
+                userServiceQuery.setServiceId(ProjectConstants.SERVICE_SUBSCRIBE_ID);
+                userServiceQuery.setIsActive((byte)0);
+                PagerDTO pagerDTO = userServiceService.listAllByCondition(userServiceQuery);
+                List<Object> userServiceObj = pagerDTO.getRows();
+                if (null == userServiceObj || userServiceObj.size() <= 0) {
+                    // 用户未购买订阅服务
+                    continue;
+                }
+                // 这里只会取到条数据
+                List<UserServiceDTO> userServiceDTOList = BeanUtils.copy(userServiceObj, UserServiceDTO.class);
+                UserServiceDTO userServiceDTO = userServiceDTOList.get(0);
+                Date endDate = userServiceDTO.getEndDate();
+                Date currDate = DateUtils.currentDate();
+                if (currDate.getTime() > endDate.getTime()) {
+                    // 当前时间大于服务到期时间，说明服务已到期
+                    continue;
+                }
                 // 一、判断用户是否开通了订阅推送
                 if (0 == subscribeVO.getIsSubscribe()) {
                     // 用户未开通订阅推送，直接跳过当前循环
@@ -322,7 +352,8 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             }
             // 开始处理发送短信提醒
             if (userIds.length() > 0) {
-                List<Object> objectList = userDAO.listByUserIds(userIds.toString().split(","));
+                String[] userIdsArr = userIds.toString().split(",");
+                List<Object> objectList = userDAO.listByUserIds(userIdsArr);
                 if (null != objectList && objectList.size() > 0) {
                     List<UserDTO> userDTOList = BeanUtils.copy(objectList, UserDTO.class);
                     StringBuilder userPhones = new StringBuilder();
@@ -341,7 +372,23 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                         sendSmsNotice(type, userPhones.toString(), templateParam.toJSONString());
                     }
                 }
+                // TODO 暂时不推送微信消息，等模版审核通过之后再进行微信消息推送
+                // 开始推送微信消息
+//                for (String tempUserId : userIdsArr) {
+//                    UserUserSocialQuery userUserSocialQuery = new UserUserSocialQuery();
+//                    userUserSocialQuery.setUserId(Long.valueOf(tempUserId));
+//                    PagerDTO pagerDTO = userUserSocialService.listAllByCondition(userUserSocialQuery);
+//                    List<Object> userSocialObjList = pagerDTO.getRows();
+//                    UserUserSocialDTO userUserSocialDTO = BeanUtils.copy(userSocialObjList.get(0), UserUserSocialDTO.class);
+//                    if (null != userUserSocialDTO) {
+//                        // 一个userId对应一条记录，这里只会有一条记录
+//                        String openId = userUserSocialDTO.getUserSocialOpenid();
+//                        sendWeixinMsg(openId);
+//
+//                    }
+//                }
             }
+
         }
     }
 
@@ -441,5 +488,41 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         }
     }
 
+    /**
+     * 发送微信消息推送
+     * @param openId 用户的openId
+     */
+    public void sendWeixinMsg(String openId) {
+        try {
+            // 获取到微信公众号配置
+            WeixinGzhConfig weixinGzhConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_GZH_CONFIG.getValue(), WeixinGzhConfig.class);
+            // 获取缓存中的accessToken
+            String accessToken = WeixinAuthUtils.getAccessToken(redisTemplate, RedisKeyConstants.REDIS_KEY_ACCESS_TOKEN_KEY, weixinGzhConfig.getAppId(), weixinGzhConfig.getAppSecret(), ProjectConstants.WEIXIN_TYPE_GZH);
+            UniformMsg uniformMsg = new UniformMsg();
+            uniformMsg.setTouser(openId);
+            GzhTemplateMsg gzhTemplateMsg = new GzhTemplateMsg();
+            gzhTemplateMsg.setAppid(weixinGzhConfig.getAppId());
+            // TODO 等模版审核通过之后再增加
+            uniformMsg.setMp_template_msg(gzhTemplateMsg);
+            WeixinMsgUtils.sendUniformMsg(accessToken, uniformMsg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    @Autowired
+    public void setUserUserSocialService(UserUserSocialService userUserSocialService) {
+        this.userUserSocialService = userUserSocialService;
+    }
+
+    @Autowired
+    public void setUserServiceService(UserServiceService userServiceService) {
+        this.userServiceService = userServiceService;
+    }
 
 }

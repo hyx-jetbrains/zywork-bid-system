@@ -384,8 +384,17 @@
 		<if test="query != null and query.name != null and query.name != ''">
 			and name like concat('%', #{query.name}, '%')
 		</if>
-		<if test="query != null and query.gender != null and query.gender != ''">
-			and gender like concat('%', #{query.gender}, '%')
+		<if test="query != null and query.gender != null">
+			and gender = #{query.gender}
+		</if>
+		<if test="query != null and query.genderMin != null and query.genderMax == null">
+			and gender <![CDATA[ >= ]]> #{query.genderMin}
+		</if>
+		<if test="query != null and query.genderMin == null and query.genderMax != null">
+			and gender <![CDATA[ <= ]]> #{query.genderMax}
+		</if>
+		<if test="query != null and query.genderMin != null and query.genderMax != null">
+			and gender <![CDATA[ >= ]]> #{query.genderMin} and gender <![CDATA[ <= ]]> #{query.genderMax}
 		</if>
 		<if test="query != null and query.birthday != null">
 			and birthday = #{query.birthday}

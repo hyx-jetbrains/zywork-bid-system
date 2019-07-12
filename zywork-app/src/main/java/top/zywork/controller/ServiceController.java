@@ -3,13 +3,16 @@ package top.zywork.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
+import top.zywork.common.RedisUtils;
 import top.zywork.common.StringUtils;
+import top.zywork.constant.RedisKeyConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ServiceDTO;
 import top.zywork.query.ServiceQuery;
@@ -36,11 +39,14 @@ public class ServiceController extends BaseController {
 
     private ServiceService serviceService;
 
+    private RedisTemplate<String, Object> redisTemplate;
+
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ServiceVO serviceVO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseStatusVO.dataError(BindingResultUtils.errorString(bindingResult), null);
         }
+        RedisUtils.delete(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL);
         serviceService.save(BeanUtils.copy(serviceVO, ServiceDTO.class));
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -57,6 +63,7 @@ public class ServiceController extends BaseController {
     @GetMapping("admin/remove/{id}")
     public ResponseStatusVO removeById(@PathVariable("id") Long id) {
         serviceService.removeById(id);
+        RedisUtils.delete(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL);
         return ResponseStatusVO.ok("删除成功", null);
     }
 
@@ -73,6 +80,7 @@ public class ServiceController extends BaseController {
         }
         int updateRows = serviceService.update(BeanUtils.copy(serviceVO, ServiceDTO.class));
         if (updateRows == 1) {
+            RedisUtils.delete(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL);
             return ResponseStatusVO.ok("更新成功", null);
         } else {
             return ResponseStatusVO.dataError("数据版本号有问题，在此更新前数据已被更新", null);
@@ -90,12 +98,14 @@ public class ServiceController extends BaseController {
 
     @PostMapping("admin/active")
     public ResponseStatusVO active(@RequestBody ServiceVO serviceVO) {
+        RedisUtils.delete(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL);
         serviceService.update(BeanUtils.copy(serviceVO, ServiceDTO.class));
         return ResponseStatusVO.ok("激活或冻结成功", null);
     }
 
     @PostMapping("admin/batch-active")
     public ResponseStatusVO activeBatch(@RequestBody @Validated List<ServiceVO> serviceVOList) {
+        RedisUtils.delete(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL);
         serviceService.updateBatch(BeanUtils.copyListObj(serviceVOList, ServiceDTO.class));
         return ResponseStatusVO.ok("批量激活或冻结成功", null);
     }
@@ -157,5 +167,10 @@ public class ServiceController extends BaseController {
     @Autowired
     public void setServiceService(ServiceService serviceService) {
         this.serviceService = serviceService;
+    }
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 }

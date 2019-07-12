@@ -74,6 +74,30 @@ export const getFirstHeadlinesInfo = (self, params) => {
 /**
  * 获取首页的公示信息
  */
+export const getIndexProjectAnnounceTop = (self, top) => {
+	uni.request({
+		url: BASE_URL + '/projecannounce/any/top/' + top,
+		method: 'GET',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				const rows = nullToStr(res.data.data);
+				self.projectAnnounceList = rows;
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+		}
+	})
+}
+/**
+ * 获取公示列表信息
+ */
 export const getIndexProjectAnnounceList = (self, type, params) => {
 	uni.showLoading({
 		title: '加载中'

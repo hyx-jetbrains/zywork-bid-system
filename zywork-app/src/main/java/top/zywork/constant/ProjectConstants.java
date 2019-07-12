@@ -83,4 +83,20 @@ public final class ProjectConstants {
     public static final String SMS_SWITCH_TRUE = "true";
 
 
+    /**
+     * 微信类型-公众号-0
+     */
+    public static final int WEIXIN_TYPE_GZH = 0;
+    /**
+     * 微信类型-小程序-1
+     */
+    public static final int WEIXIN_TYPE_XCX = 1;
+
+
+    /**
+     * 服务订阅ID-1
+     */
+    public static final Long SERVICE_SUBSCRIBE_ID = 1L;
+
+
 }

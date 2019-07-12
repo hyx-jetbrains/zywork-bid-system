@@ -145,6 +145,8 @@ public class UpdateNoticeController extends BaseController {
 
     @PostMapping("user/list-page")
     public ResponseStatusVO userListPage(@RequestBody UpdateNoticeQuery updateNoticeQuery) {
+        updateNoticeQuery.setSortColumn("createTime");
+        updateNoticeQuery.setSortOrder("desc");
         return listPageByCondition(updateNoticeQuery);
     }
 

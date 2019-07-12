@@ -147,12 +147,17 @@ public class BuilderController extends BaseController {
         return ResponseStatusVO.ok("查询成功", pagerVO);
     }
 
-    @PostMapping("admin/pager-cond")
+    @PostMapping("admin/pager-cond-temp")
     public ResponseStatusVO listPageByCondition(@RequestBody BuilderQuery builderQuery) {
         PagerDTO pagerDTO = builderService.listPageByCondition(builderQuery);
         PagerVO pagerVO = BeanUtils.copy(pagerDTO, PagerVO.class);
         pagerVO.setRows(BeanUtils.copyList(pagerDTO.getRows(), BuilderVO.class));
         return ResponseStatusVO.ok("查询成功", pagerVO);
+    }
+
+    @PostMapping("admin/pager-cond")
+    public ResponseStatusVO listPageByConditionTemp(@RequestBody BuilderQuery builderQuery) {
+        return listPageByCondition(builderQuery);
     }
 
     @PostMapping("admin/upload-res")

@@ -29,4 +29,5 @@ public interface ProjectAnnounceService extends BaseService {
 
     Object getByTitle(String title);
 
+    List<Object> getTop(Long top);
 }

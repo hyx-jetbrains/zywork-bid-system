@@ -85,13 +85,21 @@
 						<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
 							<view></view>
 							<view class="zy-disable-flex-right zy-disable-flex">
-								<view  v-for="(item, index_1) in project.obj" :key="index_1">
-									<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-							<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success" size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-								</view> 
+								<view v-for="(item, index_1) in project.obj" :key="index_1">
+									<uni-tag v-if="item.type == 0" text="资" @click='getResourceFile(project.project.id, item.type)' type="error"
+									 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 1" text="招" @click='getResourceFile(project.project.id, item.type)' type="primary"
+									 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 2" text="清" @click='getResourceFile(project.project.id, item.type)' type="warning"
+									 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary"
+									 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success"
+									 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+									<uni-tag v-if="item.type == 5" text="赣" @click='getResourceFile(project.project.id, item.type)' type="warning"
+									 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+								</view>
+
 							</view>
 						</view>
 						<!-- <view class="zy-disable-flex" @tap="actionSheetTap">
@@ -99,6 +107,10 @@
 							<zywork-icon type="iconxiangxia" />
 						</view> -->
 					</view>
+				</view>
+				<view class="zy-disable-flex zy-project-desc-item">
+					<view class="zy-text-bold">保函</view>
+					<view class="zy-disable-flex-right zy-detail-phone" @click="toGuaranteePage(project.project)">申请保函</view>
 				</view>
 				<view class="zy-disable-flex zy-project-desc-item">
 					<view class="zy-text-bold">要约价(元)</view>
@@ -213,8 +225,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in carpoolList" :key="index">
 								<view @click="toCarpoolDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-											:src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view class="zy-disable-flex">
@@ -259,8 +270,7 @@
 							<view class="zy-page-list-item" v-for="(item, index) in seekcarList" :key="index">
 								<view @click="toSeekcarDetailPage(item)">
 									<view class="zy-disable-flex">
-										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon"
-											:src="item.userDetailHeadicon" />
+										<image v-if="item.userDetailHeadicon !== ''" class="zy-page-mini-headicon" :src="item.userDetailHeadicon" />
 										<image v-else class="zy-page-mini-headicon" :src="defaultIcon" />
 										<view>
 											<view class="zy-disable-flex">
@@ -299,7 +309,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<uni-popup :show="isShowFileList" position="middle" mode="fixed" @hidePopup="isShowFileList = false">
 			<scroll-view :scroll-y="true" class="uni-center center-box">
 				<view v-for="(item, index) in fileList" :key="index" class="uni-list-item" @click="openDocument(item.resourceUrl)">
@@ -457,7 +467,7 @@
 			tapTab(type) {
 				if (type == 1) {
 					// 公告详情
-					this.toWebViewPage("公告详情", DOCUMENT_BASE_URL +"/"+ this.project.project.inwardHtmlUrl)
+					this.toWebViewPage("公告详情", DOCUMENT_BASE_URL + "/" + this.project.project.inwardHtmlUrl)
 				} else {
 					this.currTabIndex = type;
 					if (type === 3) {
@@ -481,7 +491,7 @@
 			/** 公示详情 */
 			toAnnounceDetail() {
 				if (this.projectAnnounce.id !== null && this.projectAnnounce.inwordHtmlUrl !== '') {
-					this.toWebViewPage("公示详情", DOCUMENT_BASE_URL +"/"+ this.projectAnnounce.inwordHtmlUrl);
+					this.toWebViewPage("公示详情", DOCUMENT_BASE_URL + "/" + this.projectAnnounce.inwordHtmlUrl);
 				} else {
 					uni.showModal({
 						title: '提示',
@@ -585,6 +595,29 @@
 				}
 				callPhone(phone);
 			},
+			/**
+			 * 前往申请保函的页面
+			 */
+			toGuaranteePage(project) {
+				var item = {};
+				item.projectId = project.id;
+				item.projectName = project.title;
+				item.openMarkTime = project.openMarkTime;
+				item.markUnitName = project.inMarkComp;
+				item.constructionPeriod = project.constructionPeriod;
+				item.assurePrice = project.assurePrice;
+				item.applicant = '';
+				item.name = '';
+				item.address = '';
+				item.bank = '';
+				item.bankResId = '';
+				item.bankResSrc = '';
+				item.applicantResId = '';
+				item.applicantResSrc = '';
+				uni.navigateTo({
+					url: '/pages-info-share/publish-guarantee/publish-guarantee?itemData=' + encodeURIComponent(JSON.stringify(item))
+				})
+			}
 		}
 	}
 </script>

@@ -20,6 +20,14 @@
         <div v-else>
           暂无专家预约信息
         </div>
+        <Divider :dashed="true" style="margin: 10px 0px;" />
+        <div v-if="consult === 1">
+          您有新的用户咨询通知：
+          <a class="zy-search-link" @click="toConsultPage">立即查看</a>
+        </div>
+        <div v-else>
+          暂无用户咨询信息
+        </div>
       </div>
     </Poptip>
   </div>
@@ -42,6 +50,10 @@ export default {
     expert: {
       type: Number,
       default: 0
+    },
+    consult: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
@@ -61,6 +73,15 @@ export default {
       readMessage(this, -1)
       this.$router.push({
         path: '/admin/ExpertSubscribe'
+      })
+    },
+    /**
+     * 前往用户咨询页面
+     */
+    toConsultPage() {
+      readMessage(this, -2)
+      this.$router.push({
+        path: '/admin/UserConsult'
       })
     }
   },

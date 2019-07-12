@@ -15,6 +15,7 @@ import top.zywork.common.StringUtils;
 import top.zywork.constant.NoticeConstants;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.ResourceConstants;
+import top.zywork.constant.UserMessageConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.GuaranteeDTO;
 import top.zywork.dto.UserMessageDTO;
@@ -179,7 +180,7 @@ public class GuaranteeController extends BaseController {
         if (jwtUser == null) {
             return ResponseStatusVO.authenticationError();
         }
-        userMessageService.saveUserMessage(NoticeConstants.MESSAGE_NOTICE_GUARANTEE);
+        userMessageService.saveUserMessage(UserMessageConstants.MESSAGE_NOTICE_GUARANTEE);
         guaranteeVO.setUserId(jwtUser.getUserId());
         return save(guaranteeVO, bindingResult);
     }

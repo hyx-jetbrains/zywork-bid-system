@@ -13,6 +13,7 @@ import top.zywork.common.DateUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.constant.ExpertSubscribeConstants;
 import top.zywork.constant.NoticeConstants;
+import top.zywork.constant.UserMessageConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ExpertSubscribeDTO;
 import top.zywork.dto.UserMessageDTO;
@@ -200,7 +201,7 @@ public class ExpertSubscribeController extends BaseController {
         if (null == jwtUser) {
             return ResponseStatusVO.authenticationError();
         }
-        userMessageService.saveUserMessage(NoticeConstants.MESSAGE_NOTICE_EXPERT);
+        userMessageService.saveUserMessage(UserMessageConstants.MESSAGE_NOTICE_EXPERT);
         expertSubscribeVO.setUserId(jwtUser.getUserId());
         return save(expertSubscribeVO, bindingResult);
     }

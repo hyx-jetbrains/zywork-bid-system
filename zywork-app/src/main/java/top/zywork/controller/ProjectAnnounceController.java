@@ -318,6 +318,13 @@ public class ProjectAnnounceController extends BaseController {
         return ResponseStatusVO.ok("后台更新中", null);
     }
 
+    @GetMapping("any/top/{top}")
+    public ResponseStatusVO getTop(@PathVariable("top") Long top) {
+        List<Object> objectList = projectAnnounceService.getTop(top);
+        List<ProjectAnnounceDTO> projectAnnounceDTOList = BeanUtils.copy(objectList, ProjectAnnounceDTO.class);
+        return ResponseStatusVO.ok("查询成功", projectAnnounceDTOList);
+    }
+
     @Autowired
     public void setProjectAnnounceService(ProjectAnnounceService projectAnnounceService) {
         this.projectAnnounceService = projectAnnounceService;

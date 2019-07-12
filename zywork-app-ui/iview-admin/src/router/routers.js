@@ -145,7 +145,7 @@ export default [
         path: 'Builder',
         name: 'builder_manage',
         meta: {
-          title: '发布建造师管理',
+          title: '建造师求职管理',
           icon: 'ios-contacts'
         },
         component: () => import('@/view/builder/Builder.vue')
@@ -154,7 +154,7 @@ export default [
         path: 'BuilderRequest',
         name: 'builder_req_manage',
         meta: {
-          title: '发布建造师需求管理',
+          title: '建造师招聘管理',
           icon: 'ios-contacts-outline'
         },
         component: () => import('@/view/builder-req/BuilderReq.vue')

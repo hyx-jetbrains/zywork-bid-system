@@ -12,12 +12,14 @@ import top.zywork.common.BindingResultUtils;
 import top.zywork.common.DateUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.constant.ExpertSubscribeConstants;
+import top.zywork.constant.UserMessageConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ConsultDTO;
 import top.zywork.query.ConsultQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.ConsultService;
+import top.zywork.service.UserMessageService;
 import top.zywork.vo.ExpertSubscribeVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -40,6 +42,8 @@ public class ConsultController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(ConsultController.class);
 
     private ConsultService consultService;
+
+    private UserMessageService userMessageService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ConsultVO consultVO, BindingResult bindingResult) {
@@ -162,7 +166,7 @@ public class ConsultController extends BaseController {
         if (null == jwtUser) {
             return ResponseStatusVO.authenticationError();
         }
-
+        userMessageService.saveUserMessage(UserMessageConstants.MESSAGE_NOTICE_CONSULT);
         consultVO.setUserId(jwtUser.getUserId());
         return save(consultVO, bindingResult);
     }
@@ -188,5 +192,10 @@ public class ConsultController extends BaseController {
     @Autowired
     public void setConsultService(ConsultService consultService) {
         this.consultService = consultService;
+    }
+
+    @Autowired
+    public void setUserMessageService(UserMessageService userMessageService) {
+        this.userMessageService = userMessageService;
     }
 }

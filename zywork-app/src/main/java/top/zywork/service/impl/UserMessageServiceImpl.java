@@ -11,6 +11,7 @@ import top.zywork.ali.AliyunSmsUtils;
 import top.zywork.ali.MessagePhoneConfig;
 import top.zywork.constant.NoticeConstants;
 import top.zywork.constant.SmsConstants;
+import top.zywork.constant.UserMessageConstants;
 import top.zywork.dao.UserDAO;
 import top.zywork.dao.UserMessageDAO;
 import top.zywork.dos.UserMessageDO;
@@ -86,7 +87,14 @@ public class UserMessageServiceImpl extends AbstractBaseService implements UserM
             }
             if (phones.length() > 0) {
                 // 发送短信通知
-                String optType = messageId.longValue() == NoticeConstants.MESSAGE_NOTICE_GUARANTEE.longValue() ? "申请保函" : "预约专家";
+                String optType = "未知类型";
+                if (UserMessageConstants.MESSAGE_NOTICE_GUARANTEE.longValue() == messageId) {
+                    optType = "申请保函";
+                } else if (UserMessageConstants.MESSAGE_NOTICE_EXPERT.longValue() == messageId) {
+                    optType = "预约专家";
+                } else if (UserMessageConstants.MESSAGE_NOTICE_CONSULT.longValue() == messageId) {
+                    optType = "用户咨询";
+                }
                 JSONObject templateParam = new JSONObject();
                 templateParam.put("optType", optType);
                 AliyunSmsConfig aliyunSmsConfig = sysConfigService.getByName(SysConfigEnum.ALIYUN_SMS_CONFIG.getValue(), AliyunSmsConfig.class);

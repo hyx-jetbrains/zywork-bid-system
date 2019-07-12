@@ -2,8 +2,11 @@ package top.zywork.service.impl;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.RedisUtils;
+import top.zywork.constant.RedisKeyConstants;
 import top.zywork.dao.ServiceDAO;
 import top.zywork.dos.ServiceDO;
 import top.zywork.dto.ServiceDTO;
@@ -27,10 +30,17 @@ public class ServiceServiceImpl extends AbstractBaseService implements ServiceSe
 
     private ServiceDAO serviceDAO;
 
+    private RedisTemplate<String, Object> redisTemplate;
+
     @Autowired
     public void setServiceDAO(ServiceDAO serviceDAO) {
         super.setBaseDAO(serviceDAO);
         this.serviceDAO = serviceDAO;
+    }
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     @PostConstruct
@@ -51,6 +61,8 @@ public class ServiceServiceImpl extends AbstractBaseService implements ServiceSe
                urls.append(tempUrls).append(",");
             }
         }
-        return urls.toString().split(",");
+        String tempUrl = urls.toString();
+        RedisUtils.save(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL, tempUrl);
+        return tempUrl.split(",");
     }
 }

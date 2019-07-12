@@ -4,13 +4,16 @@ import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import top.zywork.annotation.HasHideProperty;
 import top.zywork.annotation.HideProperty;
 import top.zywork.common.BeanUtils;
+import top.zywork.common.RedisUtils;
 import top.zywork.common.ReflectUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.RedisKeyConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ServiceDTO;
 import top.zywork.enums.ContentTypeEnum;
@@ -47,6 +50,8 @@ public class VipServiceFilter implements Filter {
 
     private UserServiceServiceService userServiceServiceService;
 
+    private RedisTemplate<String, Object> redisTemplate;
+
     /**
      * 所有需要验证的url
      */
@@ -63,8 +68,7 @@ public class VipServiceFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         logger.info("vipServiceFilter启动");
-        logger.info("开始初始化url数组");
-        vipAllUrlArray = serviceService.getAllVipServiceUrl();
+        logger.info("开始初始化需要隐藏字段的url数组");
         StringBuilder tempUrls = new StringBuilder();
         List<Class<?>> classList = ReflectUtils.getClasses("top.zywork.controller", false, HasHideProperty.class);
         for (Class clazz : classList) {
@@ -77,11 +81,20 @@ public class VipServiceFilter implements Filter {
             }
         }
         hidePropertyAllUrlArray = tempUrls.toString().split(",");
-        logger.info("url数组初始化完毕：{}",tempUrls.toString());
+        logger.info("需要隐藏字段url数组初始化完毕：{}",tempUrls.toString());
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        if (RedisUtils.exists(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL)) {
+            Object urlObj = RedisUtils.get(redisTemplate, RedisKeyConstants.REDIS_CODE_KEY_SERVICE_URL);
+            String tempUrl = (String) urlObj;
+            vipAllUrlArray = tempUrl.split(",");
+        } else {
+            // 缓存中不存在，则取数据库并重新存缓存
+            vipAllUrlArray = serviceService.getAllVipServiceUrl();
+        }
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURI();
         if (!StringUtils.isInArray(vipAllUrlArray, url)) {
@@ -134,5 +147,10 @@ public class VipServiceFilter implements Filter {
     @Autowired
     public void setUserServiceServiceService(UserServiceServiceService userServiceServiceService) {
         this.userServiceServiceService = userServiceServiceService;
+    }
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 }

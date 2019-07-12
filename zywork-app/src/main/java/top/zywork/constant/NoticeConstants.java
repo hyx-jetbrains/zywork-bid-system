@@ -17,13 +17,6 @@ public class NoticeConstants {
     public static final String expertSubscribe = "/pages-user-center/appointment/appointment";
 
 
-    /**
-     * 消息通知类型-保函申请消息
-     */
-    public static final Long MESSAGE_NOTICE_GUARANTEE = 0L;
-    /**
-     * 消息通知类型-专家预约消息
-     */
-    public static final Long MESSAGE_NOTICE_EXPERT = -1L;
+
 
 }
