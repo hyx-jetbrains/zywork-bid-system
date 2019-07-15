@@ -71,11 +71,14 @@ public class ProjectResourceQuery extends PageQuery {
 	private Byte isActiveMin;
 	// 是否激活（最大值）
 	private Byte isActiveMax;
+
+	private String password;
 	
     public ProjectResourceQuery () {}
 
-    public ProjectResourceQuery (Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, Long resourceId, Long resourceIdMin, Long resourceIdMax, Byte resType, Byte resTypeMin, Byte resTypeMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
-        this.id = id;
+    public ProjectResourceQuery (String password, Long id, Long idMin, Long idMax, Long projectId, Long projectIdMin, Long projectIdMax, Long resourceId, Long resourceIdMin, Long resourceIdMax, Byte resType, Byte resTypeMin, Byte resTypeMax, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
+        this.password = password;
+    	this.id = id;
 		this.idMin = idMin;
 		this.idMax = idMax;
 		this.projectId = projectId;
@@ -102,7 +105,15 @@ public class ProjectResourceQuery extends PageQuery {
 		
     }
 
-    public Long getId() {
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Long getId() {
 		return id;
 	}
 

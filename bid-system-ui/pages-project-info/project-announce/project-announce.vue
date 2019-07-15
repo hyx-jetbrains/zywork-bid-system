@@ -123,7 +123,7 @@
 				pager: {
 					pageNo: 1,
 					pageSize: 10,
-					sortColumn: 'createTime',
+					sortColumn: 'firstCandidate',
 					sortOrder: 'desc',
 					isActive: 0,
 					createTimeMin: '',

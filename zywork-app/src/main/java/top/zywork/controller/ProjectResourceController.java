@@ -19,19 +19,19 @@ import top.zywork.dto.ProjectDTO;
 import top.zywork.dto.ProjectResourceDTO;
 import top.zywork.dto.ResourceDTO;
 import top.zywork.enums.ResponseStatusEnum;
+import top.zywork.enums.SysConfigEnum;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.ProjectResourceQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
-import top.zywork.service.ProjectResourceService;
-import top.zywork.service.ProjectService;
-import top.zywork.service.ResourceService;
-import top.zywork.service.UploadService;
+import top.zywork.service.*;
 import top.zywork.vo.ResourceVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.ProjectResourceVO;
+import top.zywork.weixin.DeletePwdConfig;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -53,6 +53,8 @@ public class ProjectResourceController extends BaseController {
     private ResourceService resourceService;
 
     private ProjectService projectService;
+
+    private SysConfigService sysConfigService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated ProjectResourceVO projectResourceVO, BindingResult bindingResult) {
@@ -87,6 +89,15 @@ public class ProjectResourceController extends BaseController {
 
     @GetMapping("admin/remove/{id}")
     public ResponseStatusVO removeById(@PathVariable("id") Long id) {
+        ProjectResourceDTO projectResourceDTO = BeanUtils.copy(projectResourceService.getById(id), ProjectResourceDTO.class);
+        Long resourceId = projectResourceDTO.getResourceId();
+        ResourceDTO resourceDTO = BeanUtils.copy(resourceService.getById(resourceId), ResourceDTO.class);
+        String url = "/data/bid-system/" + resourceDTO.getUrl();
+        File file = new File(url);
+        if(file.exists()) {
+            file.delete();
+        }
+        resourceService.removeById(resourceId);
         projectResourceService.removeById(id);
         return ResponseStatusVO.ok("删除成功", null);
     }
@@ -174,6 +185,18 @@ public class ProjectResourceController extends BaseController {
         return responseStatusVO;
     }
 
+    @PostMapping("admin/delete")
+    public ResponseStatusVO delete(@RequestBody ProjectResourceQuery projectResourceQuery) {
+        DeletePwdConfig deletePwdConfig = sysConfigService.getByName(SysConfigEnum.DELETE_PWD_CONFIG.getValue(), DeletePwdConfig.class);
+        if (!projectResourceQuery.getPassword().equals(deletePwdConfig.getPassword())) {
+            return ResponseStatusVO.error("密码错误，请输入正确的密码", null);
+        }
+        if (projectResourceQuery.getCreateTimeMax().getTime() < projectResourceQuery.getCreateTimeMin().getTime()) {
+            return ResponseStatusVO.error("结束时间不能小于开始时间", null);
+        }
+        return projectResourceService.deleteByCond(projectResourceQuery);
+    }
+
     @Autowired
     public void setProjectResourceService(ProjectResourceService projectResourceService) {
         this.projectResourceService = projectResourceService;
@@ -187,5 +210,10 @@ public class ProjectResourceController extends BaseController {
     @Autowired
     public void setProjectService(ProjectService projectService) {
         this.projectService = projectService;
+    }
+
+    @Autowired
+    public void setSysConfigService(SysConfigService sysConfigService) {
+        this.sysConfigService = sysConfigService;
     }
 }

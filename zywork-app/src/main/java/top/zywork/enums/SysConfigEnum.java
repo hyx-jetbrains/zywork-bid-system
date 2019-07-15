@@ -21,7 +21,8 @@ public enum SysConfigEnum {
     CUSTOMER_CONFIG("customer_config"),
     SMS_SWITCH_CONFIG("sms_switch_config"),
     GUARANTEE_MEMO_CONFIG("guarantee_memo_config"),
-    MESSAGE_PHONE_CONFIG("message_phone_config");
+    MESSAGE_PHONE_CONFIG("message_phone_config"),
+    DELETE_PWD_CONFIG("delete_pwd_config");
 
     private String value;
 

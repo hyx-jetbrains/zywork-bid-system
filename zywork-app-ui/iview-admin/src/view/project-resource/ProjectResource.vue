@@ -14,13 +14,14 @@
               <DropdownItem name="batchInactive">
                 <span style="color: red;">批量冻结</span>
               </DropdownItem>
-              <DropdownItem name="batchRemove" divided>
+              <!-- <DropdownItem name="batchRemove" divided>
                 <span style="color: red;">批量删除</span>
-              </DropdownItem>
+              </DropdownItem>-->
             </DropdownMenu>
           </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
           <Button @click="showModal('project')" type="primary">选择项目</Button>&nbsp;
+          <Button @click="showModal('delete')" type="error">删除附件</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
           </Tooltip>
@@ -56,12 +57,12 @@
     >
       <Form ref="addForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <span v-text="form.projectId"/>
+          <span v-text="form.projectId" />
           &nbsp;
           <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="项目" prop="projectTitle">
-          <span v-text="projectTitle"/>
+          <span v-text="projectTitle" />
         </FormItem>
         <FormItem label="资源类别" prop="resType">
           <Select v-model="form.resType" placeholder="请选择资源类别" clearable filterable>
@@ -107,12 +108,12 @@
     >
       <Form ref="editForm" :model="form" :label-width="80" :rules="validateRules">
         <FormItem label="项目编号" prop="projectId">
-          <span v-text="form.projectId"/>
+          <span v-text="form.projectId" />
           &nbsp;
           <Button @click="showModal('projectChoice')" type="text">选择项目</Button>&nbsp;
         </FormItem>
         <FormItem label="项目" prop="projectTitle">
-          <span v-text="projectTitle"/>
+          <span v-text="projectTitle" />
         </FormItem>
         <FormItem label="资源类别" prop="resType">
           <Select v-model="form.resType" placeholder="请选择资源类别" clearable filterable>
@@ -341,7 +342,7 @@
     </Modal>
 
     <Modal :transfer="false" v-model="modal.projectDetail" title="招投标项目详情">
-      <project-detail :form="projectDetailForm"/>
+      <project-detail :form="projectDetailForm" />
     </Modal>
 
     <Modal :transfer="false" fullscreen v-model="modal.projectDetailSearch" title="搜索主表信息">
@@ -367,9 +368,59 @@
     </Modal>
 
     <Modal :transfer="false" v-model="modal.resourceDetail" title="资源预览">
-      <img :src="imgUrl" style="width: 490px">
+      <img :src="imgUrl" style="width: 490px" />
       <div slot="footer">
         <Button type="default" size="large" @click="cancelModal('resourceDetail')">取消</Button>
+      </div>
+    </Modal>
+
+    <Modal
+      v-model="modal.delete"
+      title="删除附件"
+      @on-visible-change="changeModalVisibleResetForm('deleteForm', $event)"
+    >
+      <Form ref="deleteForm" :model="deleteForm" :label-width="80">
+        <FormItem label="删除密码">
+          <Input
+            type="password"
+            v-model="deleteForm.password"
+            placeholder="请输入删除密码"
+            style="width: 100%;"
+          />
+        </FormItem>
+        <FormItem label="删除时间">
+          <Row>
+            <i-col span="11">
+              <FormItem prop="createTimeMin">
+                <DatePicker
+                  @on-change="deleteForm.createTimeMin=$event"
+                  :value="deleteForm.createTimeMin"
+                  placeholder="请输入开始时间"
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  style="width: 100%;"
+                ></DatePicker>
+              </FormItem>
+            </i-col>
+            <i-col span="2" style="text-align: center">-</i-col>
+            <i-col span="11">
+              <FormItem prop="createTimeMax">
+                <DatePicker
+                  @on-change="deleteForm.createTimeMax=$event"
+                  :value="deleteForm.createTimeMax"
+                  placeholder="请输入结束时间"
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  style="width: 100%;"
+                ></DatePicker>
+              </FormItem>
+            </i-col>
+          </Row>
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('delete')">取消</Button>
+        <Button type="primary" size="large" @click="deleteData" :loading="loading.delete">搜索</Button>
       </div>
     </Modal>
   </div>
@@ -384,6 +435,7 @@ import ProjectListSingle from '@/view/project/ProjectListSingle.vue'
 import { getProjectById } from '@/api/module'
 import ProjectListChoice from '@/view/project/ProjectListChoice.vue'
 import { isActiveSelect, projectResourceType } from '@/api/select'
+import { deleteProjectResource } from '@/api/project'
 import config from '@/config'
 const baseUrl =
   process.env.NODE_ENV === 'development'
@@ -444,12 +496,14 @@ export default {
         projectDetail: false,
         projectDetailSearch: false,
         projectChoice: false,
-        resourceDetail: false
+        resourceDetail: false,
+        delete: false
       },
       loading: {
         add: false,
         edit: false,
-        search: false
+        search: false,
+        delete: false
       },
       urls: {
         addUrl: '/projecresource/admin/save',
@@ -465,10 +519,16 @@ export default {
         projectSelectUrl: '/project/admin/all',
         batchActiveUrl: '/projecresource/admin/batch-active',
         uploadResourceUrl: baseUrl + '/projecresource/admin/upload-res',
-        resourceOneUrl: '/resource/admin/one/'
+        resourceOneUrl: '/resource/admin/one/',
+        deleteUrl: '/projecresource/admin/delete'
       },
       page: {
         total: 0
+      },
+      deleteForm: {
+        password: '',
+        createTimeMin: '',
+        createTimeMax: ''
       },
       form: {
         id: null,
@@ -914,7 +974,14 @@ export default {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
       } else if (itemName === 'remove') {
-        utils.remove(this, row)
+        this.$Modal.confirm({
+          title: '确认删除',
+          content: '您确定要执行删除操作吗？此操作不可逆',
+          onOk: () => {
+            utils.remove(this, row)
+          },
+          onCancel: () => {}
+        })
       } else if (itemName === 'moduleDetailProject') {
         this.showProjectDetailModal(row.projectId)
       } else if (itemName === 'showSearchProject') {
@@ -1057,6 +1124,29 @@ export default {
         .catch(err => {
           this.$Message.error(err)
         })
+    },
+    // 删除数据
+    deleteData() {
+      if (!this.deleteForm.password) {
+        this.$Message.error('请输入删除密码')
+        return
+      }
+      if (!this.deleteForm.createTimeMin) {
+        this.$Message.error('请选择开始时间')
+        return
+      }
+      if (!this.deleteForm.createTimeMax) {
+        this.$Message.error('请选择结束时间')
+        return
+      }
+      this.$Modal.confirm({
+        title: '确认删除',
+        content: '您确定要执行删除操作吗？此操作不可逆',
+        onOk: () => {
+          deleteProjectResource(this, this.deleteForm)
+        },
+        onCancel: () => {}
+      })
     }
   }
 }

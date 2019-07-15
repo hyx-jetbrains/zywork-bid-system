@@ -407,8 +407,8 @@
 				projectPager: {
 					pageNo: 1,
 					pageSize: 10,
-					sortColumn: 'createTime',
-					sortOrder: 'desc',
+					sortColumn: 'openMarkTime',
+					sortOrder: 'asc',
 					projectType: '房建市政',
 					markStatus: '',
 					isActive: 0,

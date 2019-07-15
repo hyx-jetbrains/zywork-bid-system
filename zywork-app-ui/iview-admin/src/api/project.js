@@ -115,3 +115,34 @@ export const updateGuarantee = (self, row) => {
     })
   })
 }
+
+/**
+ * 删除项目附件
+ * @param self this
+ * @param param 需要发布的数据对象
+ */
+export const deleteProjectResource = (self, param) => {
+  return new Promise((resolve, reject) => {
+    self.loading.delete = true
+    axios.request({
+      url: self.urls.deleteUrl,
+      method: 'POST',
+      data: param
+    }).then(response => {
+      if (response.data.code !== ResponseStatus.OK) {
+        self.$Message.error(response.data.message)
+      } else {
+        self.modal.delete = false
+        self.$Message.success(response.data.message)
+      }
+      self.loading.delete = false
+      utils.search(self)
+      resolve(response)
+    }).catch(error => {
+      console.log(error)
+      self.loading.delete = false
+      self.$Message.error('删除失败，稍候再试')
+      reject(error)
+    })
+  })
+}

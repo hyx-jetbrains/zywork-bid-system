@@ -25,4 +25,11 @@ public interface ResourceDAO extends BaseDAO {
 
     @Override
     Long countByCondition(@Param("query") Object queryObj);
+
+    /**
+     * 根据ids获取资源数据
+     * @param ids
+     * @return
+     */
+    List<Object> listByIds(@Param("ids") String[] ids);
 }
