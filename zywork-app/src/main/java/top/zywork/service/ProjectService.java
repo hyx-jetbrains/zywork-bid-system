@@ -68,4 +68,6 @@ public interface ProjectService extends BaseService {
      * @date: 2019-06-27 11:52
      */
     void subscribleNotice(ProjectVO projectVO, String type);
+
+    void sendWeixinMsg(String openId, String type, String projectTitle, String projectType, String projectCity, String openMarkTime) throws Exception;
 }

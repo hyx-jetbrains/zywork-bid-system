@@ -61,7 +61,8 @@
 	import {
 		DEFAULT_HEADICON,
 		SHARE_CODE_PAGE_IMG,
-		getShareCode
+		getShareCode,
+		SHARE_TITLE
 	} from '@/common/util.js'
 	
 	import {
@@ -92,7 +93,7 @@
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();
 			return  {
-				title: '江西招投标平台信息共享',
+				title: SHARE_TITLE,
 				path: '/pages/project-info/project-info?shareCode=' + shareCode,
 				imageUrl: SHARE_CODE_PAGE_IMG
 			}

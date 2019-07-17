@@ -14,6 +14,7 @@ import top.zywork.common.BeanUtils;
 import top.zywork.common.CommonMethodUtils;
 import top.zywork.common.UUIDUtils;
 import top.zywork.common.UploadUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectAnnounceDTO;
 import top.zywork.dto.ProjectDTO;
@@ -149,6 +150,22 @@ public class TestController {
             }
         }
         return ResponseStatusVO.ok("成功更新：" + count + "条记录", null);
+    }
+
+    @GetMapping("send-gzh-msg")
+    public ResponseStatusVO sendGzhMsg() {
+        String openId = "oNFwF5ok3O7_MYyMu1g5JQ1UEk5Y";
+        String type = ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK;
+        String projectTitle = "[省本级][非网招]江西省高速公路联网管理中心2019年度高速公路项目机电工程交工及入网检测服务[变更公告:第 1次]";
+        String projectType = "交通工程";
+        String projectCity = "赣州市";
+        String openMarkTime = "2019-07-17 9:30";
+        try {
+            projectService.sendWeixinMsg(openId, type, projectTitle, projectType, projectCity, openMarkTime);
+        } catch (Exception e) {
+            return ResponseStatusVO.error("发送失败", null);
+        }
+        return ResponseStatusVO.ok("发送成功", null);
     }
 
     @Autowired

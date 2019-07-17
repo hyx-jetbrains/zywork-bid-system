@@ -29,6 +29,8 @@ export const GUARANTEE_CONFIG = 'guaranteeConfig'
 
 export const DEFAULT_HEADICON = '/static/icon/headicon.png'
 
+export const SHARE_TITLE = '江西招投标信息共享平台';
+
 export const isEmpty = (data) => {
 	// return data === null || data === undefined || data === ''
 	return !data

@@ -36,10 +36,7 @@ import top.zywork.vo.*;
 import top.zywork.weixin.*;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -215,6 +212,15 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 
     @Override
     public void subscribleNotice(ProjectVO projectVO, String type) {
+
+        String tempProjectTitle = projectVO.getTitle();
+        if (tempProjectTitle.length() > 16) {
+            tempProjectTitle = tempProjectTitle.substring(0,16) + "...";
+        }
+        String openMarkTime = "";
+        if (StringUtils.isNotEmpty(projectVO.getOpenMarkTime().toString())) {
+            openMarkTime = DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue());
+        }
         // 查询所有的订阅信息
         SubscribeQuery subscribeQuery = new SubscribeQuery();
         subscribeQuery.setIsActive((byte)0);
@@ -320,27 +326,13 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     content = "项目订阅更新通知：" + content;
                     descContent = "您订阅的项目"+content+"符合条件的项目发布了，具体内容可点击《立即查看》按钮前往查看";
                 } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
-                    String openMarkTime = DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue());
+
                     title = "开标通知";
                     content = "项目订阅开标通知：" + content + "于" + projectVO.getOpenMarkTime() + "开标";
                     descContent = "您订阅的项目"+content+"于"+openMarkTime+"开标，具体内容可点击《立即查看》按钮前往查看";
                     templateParam.put("openMarkTime", openMarkTime);
                 }
-                String tempProjectTitle = projectVO.getTitle();
-                if (tempProjectTitle.length() > 16) {
-                    tempProjectTitle = tempProjectTitle.substring(0,16) + "...";
-                }
-//                Iterable<String> iterableProjectTitle = Splitter.fixedLength(ProjectConstants.SMS_PROJECT_TITLE_SPLIT_LENGTH).split(tempProjectTitle);
-//                Iterator<String> iteratorProjectTitle = iterableProjectTitle.iterator();
-//                int i = 1;
-//                while (i < 6) {
-//                    if (iteratorProjectTitle.hasNext()) {
-//                        templateParam.put("projectTitle" + i, iteratorProjectTitle.next());
-//                    } else {
-//                        templateParam.put("projectTitle" + i, "");
-//                    }
-//                    i++;
-//                }
+
                 templateParam.put("projectTitle", tempProjectTitle);
                 templateParam.put("projectType", projectVO.getProjectType());
                 saveNotice(userId, projectVO, title, content, descContent, type);
@@ -383,7 +375,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 //                    if (null != userUserSocialDTO) {
 //                        // 一个userId对应一条记录，这里只会有一条记录
 //                        String openId = userUserSocialDTO.getUserSocialOpenid();
-//                        sendWeixinMsg(openId);
+//                        sendWeixinMsg(openId, type, tempProjectTitle, projectVO.getProjectType(), projectVO.getCity(), openMarkTime);
 //
 //                    }
 //                }
@@ -492,21 +484,66 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
      * 发送微信消息推送
      * @param openId 用户的openId
      */
-    public void sendWeixinMsg(String openId) {
+    @Override
+    public void sendWeixinMsg(String openId, String type, String projectTitle, String projectType, String projectCity, String openMarkTime) throws Exception {
         try {
             // 获取到微信公众号配置
             WeixinGzhConfig weixinGzhConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_GZH_CONFIG.getValue(), WeixinGzhConfig.class);
+            // 获取考程序的配置
+            WeixinXcxConfig weixinXcxConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_XCX_CONFIG.getValue(), WeixinXcxConfig.class);
             // 获取缓存中的accessToken
-            String accessToken = WeixinAuthUtils.getAccessToken(redisTemplate, RedisKeyConstants.REDIS_KEY_ACCESS_TOKEN_KEY, weixinGzhConfig.getAppId(), weixinGzhConfig.getAppSecret(), ProjectConstants.WEIXIN_TYPE_GZH);
+            String accessToken = WeixinAuthUtils.getAccessToken(redisTemplate, RedisKeyConstants.REDIS_KEY_ACCESS_TOKEN_KEY, weixinXcxConfig.getAppId(), weixinXcxConfig.getAppSecret(), ProjectConstants.WEIXIN_TYPE_XCX);
+            // uniform消息类
             UniformMsg uniformMsg = new UniformMsg();
             uniformMsg.setTouser(openId);
+            // 配置公众号模板消息
             GzhTemplateMsg gzhTemplateMsg = new GzhTemplateMsg();
             gzhTemplateMsg.setAppid(weixinGzhConfig.getAppId());
-            // TODO 等模版审核通过之后再增加
+            gzhTemplateMsg.setTemplate_id(ProjectConstants.WX_GZH_MSG_TEMPLATE_ID);
+            // 配置模版消息参数
+            Map<String, GzhTemplateMsg.MsgData> paramData = new HashMap<>();
+            GzhTemplateMsg.MsgData keyword1 = new GzhTemplateMsg.MsgData();
+            keyword1.setColor("#000000");
+            keyword1.setValue(projectTitle);
+            paramData.put("keyword1", keyword1);
+            GzhTemplateMsg.MsgData keyword3 = new GzhTemplateMsg.MsgData();
+            keyword3.setColor("#000000");
+            keyword3.setValue("项目所在辖区【" + projectCity + "]");
+            paramData.put("keyword3", keyword3);
+            GzhTemplateMsg.MsgData remark = new GzhTemplateMsg.MsgData();
+            remark.setColor("#000000");
+            remark.setValue("点击进入小程序查看详情");
+            paramData.put("remark", remark);
+            GzhTemplateMsg.MsgData first = new GzhTemplateMsg.MsgData();
+            first.setColor("#000000");
+            GzhTemplateMsg.MsgData keyword2 = new GzhTemplateMsg.MsgData();
+            keyword2.setColor("#000000");
+            String miniProgramUrl = "";
+            if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
+                // 项目订阅提醒
+                first.setValue("您好，您有1个新的项目订阅提醒");
+                keyword2.setValue("[" + projectType + "]项目公告");
+                miniProgramUrl = "/pages/message-notify/message-notify?tabIndex=0";
+            } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
+                // 开标提醒
+                first.setValue("您好，您有1个新的项目开标提醒");
+                keyword2.setValue("[" + projectType + "]开标时间" + openMarkTime);
+                miniProgramUrl = "/pages/message-notify/message-notify?tabIndex=1";
+            }
+            paramData.put("first", first);
+            paramData.put("keyword2", keyword2);
+            gzhTemplateMsg.setData(paramData);
+            // 配置跳转的小程序信息
+            GzhTemplateMsg.Miniprogram miniprogram = new GzhTemplateMsg.Miniprogram();
+            miniprogram.setAppid(weixinXcxConfig.getAppId());
+            miniprogram.setPagepath(miniProgramUrl);
+            gzhTemplateMsg.setMiniprogram(miniprogram);
             uniformMsg.setMp_template_msg(gzhTemplateMsg);
+            // 发送消息
             WeixinMsgUtils.sendUniformMsg(accessToken, uniformMsg);
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
     }
 

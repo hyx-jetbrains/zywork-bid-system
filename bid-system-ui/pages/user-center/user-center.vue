@@ -89,7 +89,8 @@
 		IS_EXPERT_COLOR_TRUE,
 		IS_EXPERT_COLOR_FALSE,
 		IS_VIP_COLOR_TRUE,
-		IS_VIP_COLOR_FALSE
+		IS_VIP_COLOR_FALSE,
+		SHARE_TITLE
 	} from '@/common/util.js'
 	import {
 		judgeLogin,
@@ -143,7 +144,7 @@
 		onShareAppMessage(res) {
 			var shareCode = getShareCode();
 			return {
-				title: '江西招投标平台信息共享',
+				title: SHARE_TITLE,
 				path: '/pages/project-info/project-info?shareCode=' + shareCode,
 				imageUrl: SHARE_CODE_PAGE_IMG
 			}

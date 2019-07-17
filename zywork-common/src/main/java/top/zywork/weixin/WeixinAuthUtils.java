@@ -193,7 +193,7 @@ public class WeixinAuthUtils {
         }
         String response = HttpUtils.get(accessTokenApi.replace("{APP_ID}", appId).replace("{APP_KEY}", appKey));
         JSONObject jsonObject = JSONObject.parseObject(response);
-        if (isResultOk(jsonObject)) {
+        if (!response.contains(WeixinConstants.ERROR_CODE_STR)) {
             String accessToken = jsonObject.get("access_token").toString();
             RedisUtils.save(redisTemplate, accessTokenKey, accessToken, 115, TimeUnit.MINUTES);
             return accessToken;

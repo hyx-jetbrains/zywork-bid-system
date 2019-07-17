@@ -98,5 +98,10 @@ public final class ProjectConstants {
      */
     public static final Long SERVICE_SUBSCRIBE_ID = 1L;
 
+    /**
+     * 公众号消息模版ID
+     */
+    public static final String WX_GZH_MSG_TEMPLATE_ID = "Vtcj5rFB7qrN5YLc8VZDN3JcVnGrp75FTsvtHk09yjo";
+
 
 }
