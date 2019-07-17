@@ -364,21 +364,20 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                         sendSmsNotice(type, userPhones.toString(), templateParam.toJSONString());
                     }
                 }
-                // TODO 暂时不推送微信消息，等模版审核通过之后再进行微信消息推送
                 // 开始推送微信消息
-//                for (String tempUserId : userIdsArr) {
-//                    UserUserSocialQuery userUserSocialQuery = new UserUserSocialQuery();
-//                    userUserSocialQuery.setUserId(Long.valueOf(tempUserId));
-//                    PagerDTO pagerDTO = userUserSocialService.listAllByCondition(userUserSocialQuery);
-//                    List<Object> userSocialObjList = pagerDTO.getRows();
-//                    UserUserSocialDTO userUserSocialDTO = BeanUtils.copy(userSocialObjList.get(0), UserUserSocialDTO.class);
-//                    if (null != userUserSocialDTO) {
-//                        // 一个userId对应一条记录，这里只会有一条记录
-//                        String openId = userUserSocialDTO.getUserSocialOpenid();
-//                        sendWeixinMsg(openId, type, tempProjectTitle, projectVO.getProjectType(), projectVO.getCity(), openMarkTime);
-//
-//                    }
-//                }
+                for (String tempUserId : userIdsArr) {
+                    UserUserSocialQuery userUserSocialQuery = new UserUserSocialQuery();
+                    userUserSocialQuery.setUserId(Long.valueOf(tempUserId));
+                    PagerDTO pagerDTO = userUserSocialService.listAllByCondition(userUserSocialQuery);
+                    List<Object> userSocialObjList = pagerDTO.getRows();
+                    UserUserSocialDTO userUserSocialDTO = BeanUtils.copy(userSocialObjList.get(0), UserUserSocialDTO.class);
+                    if (null != userUserSocialDTO) {
+                        // 一个userId对应一条记录，这里只会有一条记录
+                        String openId = userUserSocialDTO.getUserSocialOpenid();
+                        sendWeixinMsg(openId, type, projectVO.getId(), tempProjectTitle, projectVO.getProjectType(), projectVO.getCity(), openMarkTime);
+
+                    }
+                }
             }
 
         }
@@ -484,8 +483,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
      * 发送微信消息推送
      * @param openId 用户的openId
      */
-    @Override
-    public void sendWeixinMsg(String openId, String type, String projectTitle, String projectType, String projectCity, String openMarkTime) throws Exception {
+    public void sendWeixinMsg(String openId, String type, Long projectId, String projectTitle, String projectType, String projectCity, String openMarkTime) {
         try {
             // 获取到微信公众号配置
             WeixinGzhConfig weixinGzhConfig = sysConfigService.getByName(SysConfigEnum.WEIXIN_GZH_CONFIG.getValue(), WeixinGzhConfig.class);
@@ -518,32 +516,55 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             first.setColor("#000000");
             GzhTemplateMsg.MsgData keyword2 = new GzhTemplateMsg.MsgData();
             keyword2.setColor("#000000");
-            String miniProgramUrl = "";
+            StringBuilder miniProgramUrl = new StringBuilder("/pages-project-info/project-detail/project-detail");
+            miniProgramUrl.append("?itemData=").append(projectId);
+//            int statusIndex = 0;
+//            int tabIndex = 0;
             if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
                 // 项目订阅提醒
                 first.setValue("您好，您有1个新的项目订阅提醒");
                 keyword2.setValue("[" + projectType + "]项目公告");
-                miniProgramUrl = "/pages/message-notify/message-notify?tabIndex=0";
+//                statusIndex = 1;
             } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
                 // 开标提醒
                 first.setValue("您好，您有1个新的项目开标提醒");
                 keyword2.setValue("[" + projectType + "]开标时间" + openMarkTime);
-                miniProgramUrl = "/pages/message-notify/message-notify?tabIndex=1";
+//                statusIndex = 2;
             }
+//            miniProgramUrl.append("?statusIndex=").append(statusIndex);
+//            if (ProjectConstants.PROJECT_TYPE_HOUSE.equals(projectType)) {
+//                // 房建市政
+//                tabIndex = 0;
+//            } else if (ProjectConstants.PROJECT_TYPE_WATER.equals(projectType)) {
+//                // 水利工程
+//                tabIndex = 1;
+//            } else if (ProjectConstants.PROJECT_TYPE_TRAFFIC.equals(projectType)) {
+//                // 交通工程
+//                tabIndex = 2;
+//            } else if (ProjectConstants.PROJECT_TYPE_PURCHASE.equals(projectType)) {
+//                // 政府采购
+//                tabIndex = 3;
+//            } else if (ProjectConstants.PROJECT_TYPE_KEY_PROJECT.equals(projectType)) {
+//                // 重点工程
+//                tabIndex = 4;
+//            } else if (ProjectConstants.PROJECT_TYPE_OTHER.equals(projectType)) {
+//                // 其他项目
+//                tabIndex = 5;
+//            }
+//            miniProgramUrl.append("?tabIndex=").append(tabIndex);
             paramData.put("first", first);
             paramData.put("keyword2", keyword2);
             gzhTemplateMsg.setData(paramData);
             // 配置跳转的小程序信息
             GzhTemplateMsg.Miniprogram miniprogram = new GzhTemplateMsg.Miniprogram();
             miniprogram.setAppid(weixinXcxConfig.getAppId());
-            miniprogram.setPagepath(miniProgramUrl);
+            miniprogram.setPagepath(miniProgramUrl.toString());
             gzhTemplateMsg.setMiniprogram(miniprogram);
             uniformMsg.setMp_template_msg(gzhTemplateMsg);
             // 发送消息
             WeixinMsgUtils.sendUniformMsg(accessToken, uniformMsg);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
     }
 

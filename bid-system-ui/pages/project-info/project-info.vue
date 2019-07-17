@@ -449,6 +449,12 @@
 					data: options.shareCode
 				});
 			}
+			if (options.tabIndex) {
+				this.projectType.tabIndex = options.tabIndex;
+			}
+			if (options.statusIndex) {
+				this.projectStatus.current = options.statusIndex;
+			}
 		},
 		onPullDownRefresh() {
 			if (!this.calendar.showCalendar) {

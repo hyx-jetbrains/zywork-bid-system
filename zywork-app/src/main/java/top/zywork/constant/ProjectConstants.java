@@ -104,4 +104,29 @@ public final class ProjectConstants {
     public static final String WX_GZH_MSG_TEMPLATE_ID = "Vtcj5rFB7qrN5YLc8VZDN3JcVnGrp75FTsvtHk09yjo";
 
 
+    /**
+     * 项目类型-房建市政
+     */
+    public static final String PROJECT_TYPE_HOUSE = "房建市政";
+    /**
+     * 项目类型-水利工程
+     */
+    public static final String PROJECT_TYPE_WATER = "水利工程";
+    /**
+     * 项目类型-交通工程
+     */
+    public static final String PROJECT_TYPE_TRAFFIC = "交通工程";
+    /**
+     * 项目类型-政府采购
+     */
+    public static final String PROJECT_TYPE_PURCHASE = "政府采购";
+    /**
+     * 项目类型-重点工程
+     */
+    public static final String PROJECT_TYPE_KEY_PROJECT = "重点工程";
+    /**
+     * 项目类型-其他项目
+     */
+    public static final String PROJECT_TYPE_OTHER = "其他项目";
+
 }

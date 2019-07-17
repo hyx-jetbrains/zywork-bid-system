@@ -9,6 +9,7 @@
 					<view>
 						<text>{{project.project.projectType}}</text>
 						<text style="margin-left: 30upx;">[{{project.project.city}}]</text>
+						<text style="margin-left: 30upx; color:#108EE9;" @tap="toIndexPage">查看更多</text>
 					</view>
 					<view class="zy-text-mini zy-text-info">
 						公告时间：
@@ -616,6 +617,14 @@
 				item.applicantResSrc = '';
 				uni.navigateTo({
 					url: '/pages-info-share/publish-guarantee/publish-guarantee?itemData=' + encodeURIComponent(JSON.stringify(item))
+				})
+			},
+			/**
+			 * 前往首页
+			 */
+			toIndexPage() {
+				uni.switchTab({
+					url: '/pages/project-info/project-info'
 				})
 			}
 		}
