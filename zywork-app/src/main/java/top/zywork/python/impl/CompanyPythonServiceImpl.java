@@ -73,7 +73,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             HttpUtils.timeout(PythonConstants.TIME_OUT);
             String content = HttpUtils.get(url.toString());
             JSONArray jsonArray = JSON.parseArray(content);
-            if (null == jsonArray) {
+            if (null == jsonArray || jsonArray.isEmpty()) {
                 logger.info("未获取到企业信息");
                 return;
             }

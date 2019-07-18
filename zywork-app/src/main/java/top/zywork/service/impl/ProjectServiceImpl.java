@@ -212,104 +212,105 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 
     @Override
     public void subscribleNotice(ProjectVO projectVO, String type) {
-
-        String tempProjectTitle = projectVO.getTitle();
-        if (tempProjectTitle.length() > 16) {
-            tempProjectTitle = tempProjectTitle.substring(0,16) + "...";
-        }
-        String openMarkTime = "";
-        if (StringUtils.isNotEmpty(projectVO.getOpenMarkTime().toString())) {
-            openMarkTime = DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATE.getValue());
-        }
-        // 查询所有的订阅信息
-        SubscribeQuery subscribeQuery = new SubscribeQuery();
-        subscribeQuery.setIsActive((byte)0);
-        List<Object> objList = subscribeDAO.listAllByCondition(subscribeQuery);
-        if(objList != null && objList.size() > 0) {
-            List<SubscribeVO> list = BeanUtils.copy(objList, SubscribeVO.class);
-            StringBuilder userIds = new StringBuilder();
-            JSONObject templateParam = new JSONObject();
-            for(SubscribeVO subscribeVO: list) {
-                Long userId = subscribeVO.getUserId();
-                // 先查询用户购买的订阅服务是否有过期
-                UserServiceQuery userServiceQuery = new UserServiceQuery();
-                userServiceQuery.setUserId(userId);
-                userServiceQuery.setServiceId(ProjectConstants.SERVICE_SUBSCRIBE_ID);
-                userServiceQuery.setIsActive((byte)0);
-                PagerDTO pagerDTO = userServiceService.listAllByCondition(userServiceQuery);
-                List<Object> userServiceObj = pagerDTO.getRows();
-                if (null == userServiceObj || userServiceObj.size() <= 0) {
-                    // 用户未购买订阅服务
-                    continue;
-                }
-                // 这里只会取到条数据
-                List<UserServiceDTO> userServiceDTOList = BeanUtils.copy(userServiceObj, UserServiceDTO.class);
-                UserServiceDTO userServiceDTO = userServiceDTOList.get(0);
-                Date endDate = userServiceDTO.getEndDate();
-                Date currDate = DateUtils.currentDate();
-                if (currDate.getTime() > endDate.getTime()) {
-                    // 当前时间大于服务到期时间，说明服务已到期
-                    continue;
-                }
-                // 一、判断用户是否开通了订阅推送
-                if (0 == subscribeVO.getIsSubscribe()) {
-                    // 用户未开通订阅推送，直接跳过当前循环
-                    continue;
-                }
-                // 二、用户开通了订阅推送，判断城市是否匹配
-                if (!subscribeVO.getCity().equals("全省")) {
-                    // 用户设置的不是全省，需要判断当前项目是否满足
-                    if (!projectVO.getCity().equals(subscribeVO.getCity())) {
-                        // 和用户订阅的城市不匹配，跳出本次循环，继续判断下个用户
+        try {
+            String tempProjectTitle = projectVO.getTitle();
+            if (tempProjectTitle.length() > 16) {
+                tempProjectTitle = tempProjectTitle.substring(0, 16) + "...";
+            }
+            String openMarkTime = "";
+            Date openMarkTimeDate = projectVO.getOpenMarkTime();
+            if (null != openMarkTimeDate && StringUtils.isNotEmpty(openMarkTimeDate.toString())) {
+                openMarkTime = DateFormatUtils.format(projectVO.getOpenMarkTime(), DatePatternEnum.DATETIME_ZH.getValue());
+            }
+            // 查询所有的订阅信息
+            SubscribeQuery subscribeQuery = new SubscribeQuery();
+            subscribeQuery.setIsActive((byte) 0);
+            List<Object> objList = subscribeDAO.listAllByCondition(subscribeQuery);
+            if (objList != null && objList.size() > 0) {
+                List<SubscribeVO> list = BeanUtils.copy(objList, SubscribeVO.class);
+                StringBuilder userIds = new StringBuilder();
+                JSONObject templateParam = new JSONObject();
+                for (SubscribeVO subscribeVO : list) {
+                    Long userId = subscribeVO.getUserId();
+                    // 先查询用户购买的订阅服务是否有过期
+                    UserServiceQuery userServiceQuery = new UserServiceQuery();
+                    userServiceQuery.setUserId(userId);
+                    userServiceQuery.setServiceId(ProjectConstants.SERVICE_SUBSCRIBE_ID);
+                    userServiceQuery.setIsActive((byte) 0);
+                    PagerDTO pagerDTO = userServiceService.listAllByCondition(userServiceQuery);
+                    List<Object> userServiceObj = pagerDTO.getRows();
+                    if (null == userServiceObj || userServiceObj.size() <= 0) {
+                        // 用户未购买订阅服务
                         continue;
                     }
-                }
-                // 三、用户设置了全省或者当前这个项目和用户订阅的城市匹配，继续判断项目类型是否匹配
-                if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getProjectType())) {
-                    // 用户设置了订阅的项目类型
-                    if (!subscribeVO.getProjectType().contains(projectVO.getProjectType())) {
-                        // 当前项目不在用户订阅的项目类型当中
+                    // 这里只会取到条数据
+                    List<UserServiceDTO> userServiceDTOList = BeanUtils.copy(userServiceObj, UserServiceDTO.class);
+                    UserServiceDTO userServiceDTO = userServiceDTOList.get(0);
+                    Date endDate = userServiceDTO.getEndDate();
+                    Date currDate = DateUtils.currentDate();
+                    if (currDate.getTime() > endDate.getTime()) {
+                        // 当前时间大于服务到期时间，说明服务已到期
                         continue;
                     }
-                }
-                if ("政府采购".equals(projectVO.getProjectType())) {
-                    // 如果当前项目是政府采购，还需要判断用户有没有订阅关键字
-                    if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getKeyword())) {
-                        // 用户有输入关键字
-                        if (!projectVO.getTitle().contains(subscribeVO.getKeyword())) {
-                            // 当前项目不包含用户订阅的关键字
+                    // 一、判断用户是否开通了订阅推送
+                    if (0 == subscribeVO.getIsSubscribe()) {
+                        // 用户未开通订阅推送，直接跳过当前循环
+                        continue;
+                    }
+                    // 二、用户开通了订阅推送，判断城市是否匹配
+                    if (!subscribeVO.getCity().equals("全省")) {
+                        // 用户设置的不是全省，需要判断当前项目是否满足
+                        if (!projectVO.getCity().equals(subscribeVO.getCity())) {
+                            // 和用户订阅的城市不匹配，跳出本次循环，继续判断下个用户
                             continue;
                         }
                     }
-                } else {
-                    String tempProjectInvest = projectVO.getProjectInvest();
-                    if (org.apache.commons.lang.StringUtils.isNotEmpty(tempProjectInvest)) {
-                        // 当前项目有设置金额，需要判断用户订阅的金额区间
-                        Pattern pat = Pattern.compile(ProjectConstants.ZHCN_TEXT_REG);
-                        Matcher mat = pat.matcher(tempProjectInvest);
-                        Double projectInvest = Double.valueOf(mat.replaceAll("").trim());
-                        // 四、用户设置了全省或者当前这个项目和用户订阅的城市匹配，并且没有设置订阅的类型，继续判断金额区间
-                        if (0 != subscribeVO.getMinMoney()) {
-                            // 用设置了最小金额
-                            double minMoney = Double.valueOf(subscribeVO.getMinMoney()) / 100;
-                            if (projectInvest < minMoney) {
-                                // 当前项目的金额小于用户订阅的最小金额
-                                continue;
-                            }
-                        }
-                        if (0 != subscribeVO.getMaxMoney()) {
-                            // 用户设置了最大金额
-                            double maxMoney = Double.valueOf(subscribeVO.getMaxMoney()) / 100;
-                            if (projectInvest > maxMoney) {
-                                // 当前项目的金额大于用户订阅的金额
-                                continue;
-                            }
+                    // 三、用户设置了全省或者当前这个项目和用户订阅的城市匹配，继续判断项目类型是否匹配
+                    if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getProjectType())) {
+                        // 用户设置了订阅的项目类型
+                        if (!subscribeVO.getProjectType().contains(projectVO.getProjectType())) {
+                            // 当前项目不在用户订阅的项目类型当中
+                            continue;
                         }
                     }
+                    if ("政府采购".equals(projectVO.getProjectType())) {
+                        // 如果当前项目是政府采购，还需要判断用户有没有订阅关键字
+                        if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getKeyword())) {
+                            // 用户有输入关键字
+                            if (!projectVO.getTitle().contains(subscribeVO.getKeyword())) {
+                                // 当前项目不包含用户订阅的关键字
+                                continue;
+                            }
+                        }
+                    } else {
+                        String tempProjectInvest = projectVO.getProjectInvest();
+                        if (org.apache.commons.lang.StringUtils.isNotEmpty(tempProjectInvest)) {
+                            // 当前项目有设置金额，需要判断用户订阅的金额区间
+                            Pattern pat = Pattern.compile(ProjectConstants.ZHCN_TEXT_REG);
+                            Matcher mat = pat.matcher(tempProjectInvest);
+                            Double projectInvest = Double.valueOf(mat.replaceAll("").trim());
+                            // 四、用户设置了全省或者当前这个项目和用户订阅的城市匹配，并且没有设置订阅的类型，继续判断金额区间
+                            if (0 != subscribeVO.getMinMoney()) {
+                                // 用设置了最小金额
+                                double minMoney = Double.valueOf(subscribeVO.getMinMoney()) / 100;
+                                if (projectInvest < minMoney) {
+                                    // 当前项目的金额小于用户订阅的最小金额
+                                    continue;
+                                }
+                            }
+                            if (0 != subscribeVO.getMaxMoney()) {
+                                // 用户设置了最大金额
+                                double maxMoney = Double.valueOf(subscribeVO.getMaxMoney()) / 100;
+                                if (projectInvest > maxMoney) {
+                                    // 当前项目的金额大于用户订阅的金额
+                                    continue;
+                                }
+                            }
+                        }
 
-                }
+                    }
 
-                // 五、上面的条件都满足，继续判断订阅的招标单位
+                    // 五、上面的条件都满足，继续判断订阅的招标单位
 //                if (!org.apache.commons.lang.StringUtils.isEmpty(subscribeVO.getTenderee())) {
 //                    // 用户有订阅专门的投标单位
 //                    if (!subscribeVO.getTenderee().contains(projectVO.getInMarkComp())) {
@@ -317,69 +318,72 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 //                        continue;
 //                    }
 //                }
-                // 六、满足用户的所有订阅条件，给用户推送消息
-                String title = "";
-                String descContent = "";
-                String content = projectVO.getProjectType() + "-" + projectVO.getTitle();
-                if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
-                    title = "项目订阅更新";
-                    content = "项目订阅更新通知：" + content;
-                    descContent = "您订阅的项目"+content+"符合条件的项目发布了，具体内容可点击《立即查看》按钮前往查看";
-                } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
+                    // 六、满足用户的所有订阅条件，给用户推送消息
+                    String title = "";
+                    String descContent = "";
+                    String content = projectVO.getProjectType() + "-" + projectVO.getTitle();
+                    if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
+                        title = "项目订阅更新";
+                        content = "项目订阅更新通知：" + content;
+                        descContent = "您订阅的项目" + content + "符合条件的项目发布了，具体内容可点击《立即查看》按钮前往查看";
+                    } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
 
-                    title = "开标通知";
-                    content = "项目订阅开标通知：" + content + "于" + projectVO.getOpenMarkTime() + "开标";
-                    descContent = "您订阅的项目"+content+"于"+openMarkTime+"开标，具体内容可点击《立即查看》按钮前往查看";
-                    templateParam.put("openMarkTime", openMarkTime);
-                }
+                        title = "开标通知";
+                        content = "项目订阅开标通知：" + content + "于" + projectVO.getOpenMarkTime() + "开标";
+                        descContent = "您订阅的项目" + content + "于" + openMarkTime + "开标，具体内容可点击《立即查看》按钮前往查看";
+                        templateParam.put("openMarkTime", openMarkTime);
+                    }
 
-                templateParam.put("projectTitle", tempProjectTitle);
-                templateParam.put("projectType", projectVO.getProjectType());
-                saveNotice(userId, projectVO, title, content, descContent, type);
-                if (StringUtils.isEmpty(userIds.toString())) {
-                    userIds.append(userId);
-                } else {
-                    userIds.append(",").append(userId);
+                    templateParam.put("projectTitle", tempProjectTitle);
+                    templateParam.put("projectType", projectVO.getProjectType());
+                    saveNotice(userId, projectVO, title, content, descContent, type);
+                    if (StringUtils.isEmpty(userIds.toString())) {
+                        userIds.append(userId);
+                    } else {
+                        userIds.append(",").append(userId);
+                    }
                 }
-            }
-            // 开始处理发送短信提醒
-            if (userIds.length() > 0) {
-                String[] userIdsArr = userIds.toString().split(",");
-                List<Object> objectList = userDAO.listByUserIds(userIdsArr);
-                if (null != objectList && objectList.size() > 0) {
-                    List<UserDTO> userDTOList = BeanUtils.copy(objectList, UserDTO.class);
-                    StringBuilder userPhones = new StringBuilder();
-                    for (UserDTO userDTO : userDTOList) {
-                        String phone = userDTO.getPhone();
-                        if (StringUtils.isEmpty(phone)) {
-                            continue;
+                // 开始处理发送短信提醒
+                if (userIds.length() > 0) {
+                    String[] userIdsArr = userIds.toString().split(",");
+                    List<Object> objectList = userDAO.listByUserIds(userIdsArr);
+                    if (null != objectList && objectList.size() > 0) {
+                        List<UserDTO> userDTOList = BeanUtils.copy(objectList, UserDTO.class);
+                        StringBuilder userPhones = new StringBuilder();
+                        for (UserDTO userDTO : userDTOList) {
+                            String phone = userDTO.getPhone();
+                            if (StringUtils.isEmpty(phone)) {
+                                continue;
+                            }
+                            if (StringUtils.isEmpty(userPhones.toString())) {
+                                userPhones.append(phone);
+                            } else {
+                                userPhones.append(",").append(phone);
+                            }
                         }
-                        if (StringUtils.isEmpty(userPhones.toString())) {
-                            userPhones.append(phone);
-                        } else {
-                            userPhones.append(",").append(phone);
+                        if (userPhones.length() > 0) {
+                            sendSmsNotice(type, userPhones.toString(), templateParam.toJSONString());
                         }
                     }
-                    if (userPhones.length() > 0) {
-                        sendSmsNotice(type, userPhones.toString(), templateParam.toJSONString());
-                    }
-                }
-                // 开始推送微信消息
-                for (String tempUserId : userIdsArr) {
-                    UserUserSocialQuery userUserSocialQuery = new UserUserSocialQuery();
-                    userUserSocialQuery.setUserId(Long.valueOf(tempUserId));
-                    PagerDTO pagerDTO = userUserSocialService.listAllByCondition(userUserSocialQuery);
-                    List<Object> userSocialObjList = pagerDTO.getRows();
-                    UserUserSocialDTO userUserSocialDTO = BeanUtils.copy(userSocialObjList.get(0), UserUserSocialDTO.class);
-                    if (null != userUserSocialDTO) {
-                        // 一个userId对应一条记录，这里只会有一条记录
-                        String openId = userUserSocialDTO.getUserSocialOpenid();
-                        sendWeixinMsg(openId, type, projectVO.getId(), tempProjectTitle, projectVO.getProjectType(), projectVO.getCity(), openMarkTime);
+                    // 开始推送微信消息
+                    for (String tempUserId : userIdsArr) {
+                        UserUserSocialQuery userUserSocialQuery = new UserUserSocialQuery();
+                        userUserSocialQuery.setUserId(Long.valueOf(tempUserId));
+                        PagerDTO pagerDTO = userUserSocialService.listAllByCondition(userUserSocialQuery);
+                        List<Object> userSocialObjList = pagerDTO.getRows();
+                        UserUserSocialDTO userUserSocialDTO = BeanUtils.copy(userSocialObjList.get(0), UserUserSocialDTO.class);
+                        if (null != userUserSocialDTO) {
+                            // 一个userId对应一条记录，这里只会有一条记录
+                            String openId = userUserSocialDTO.getUserSocialOpenid();
+                            sendWeixinMsg(openId, type, projectVO.getId(), projectVO.getTitle(), projectVO.getProjectType(), projectVO.getCity(), openMarkTime);
 
+                        }
                     }
                 }
+
             }
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -510,7 +514,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             paramData.put("keyword3", keyword3);
             GzhTemplateMsg.MsgData remark = new GzhTemplateMsg.MsgData();
             remark.setColor("#000000");
-            remark.setValue("点击进入小程序查看详情");
+            remark.setValue("点击进入小程序查看详情，如您觉得推送消息过于频繁，影响了您的用户体验，请您进入小程序[个人中心]中[我的订阅]中进行修改订阅或者关闭订阅");
             paramData.put("remark", remark);
             GzhTemplateMsg.MsgData first = new GzhTemplateMsg.MsgData();
             first.setColor("#000000");
@@ -528,7 +532,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
             } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
                 // 开标提醒
                 first.setValue("您好，您有1个新的项目开标提醒");
-                keyword2.setValue("[" + projectType + "]开标时间" + openMarkTime);
+                keyword2.setValue("[" + projectType + "]开标时间:" + openMarkTime);
 //                statusIndex = 2;
             }
 //            miniProgramUrl.append("?statusIndex=").append(statusIndex);

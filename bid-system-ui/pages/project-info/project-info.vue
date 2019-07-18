@@ -408,8 +408,8 @@
 				projectPager: {
 					pageNo: 1,
 					pageSize: 10,
-					sortColumn: 'openMarkTime',
-					sortOrder: 'asc',
+					sortColumn: 'noticeTime',
+					sortOrder: 'desc',
 					projectType: '房建市政',
 					markStatus: '',
 					isActive: 0,
@@ -576,7 +576,11 @@
 					this.initPager();
 					if (index === PROJECT_STATUS_WAITTING) {
 						this.showChooseDate = true
+						this.projectPager.sortColumn = 'openMarkTime';
+						this.projectPager.sortOrder = 'asc';
 					} else {
+						this.projectPager.sortColumn = 'noticeTime';
+						this.projectPager.sortOrder = 'desc';
 						this.showChooseDate = false
 						this.projectPager.openMarkTimeMin = null
 						this.projectPager.openMarkTimeMax = null

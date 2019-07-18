@@ -110,7 +110,7 @@ public class JwtUtils {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            logger.error("jwt token error!");
+            logger.error("jwt token exception!");
         }
         return claims;
     }

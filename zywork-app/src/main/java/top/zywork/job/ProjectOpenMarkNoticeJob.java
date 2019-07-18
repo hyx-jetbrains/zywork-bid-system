@@ -44,7 +44,7 @@ public class ProjectOpenMarkNoticeJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute ProjectOpenMarkNoticeJob......");
         // 取明天的日期
-         LocalDate localDate = LocalDate.now().plusDays(1);
+        LocalDate localDate = LocalDate.now().plusDays(1);
         String tommorrowDate = localDate.format(DateTimeFormatter.ofPattern(DatePatternEnum.DATE.getValue()));
         Date tommorrowDateMin = DateParseUtils.parseDate(tommorrowDate + " 00:00:00", DatePatternEnum.DATETIME.getValue());
         Date tommorrowDateMax = DateParseUtils.parseDate(tommorrowDate + " 23:59:59", DatePatternEnum.DATETIME.getValue());
