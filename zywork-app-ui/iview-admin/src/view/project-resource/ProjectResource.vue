@@ -974,14 +974,7 @@ export default {
         utils.showModal(this, 'detail')
         this.form = JSON.parse(JSON.stringify(row))
       } else if (itemName === 'remove') {
-        this.$Modal.confirm({
-          title: '确认删除',
-          content: '您确定要执行删除操作吗？此操作不可逆',
-          onOk: () => {
-            utils.remove(this, row)
-          },
-          onCancel: () => {}
-        })
+        utils.remove(this, row)
       } else if (itemName === 'moduleDetailProject') {
         this.showProjectDetailModal(row.projectId)
       } else if (itemName === 'showSearchProject') {

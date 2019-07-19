@@ -170,10 +170,13 @@
 							<view class="zy-text-info"><text class="zy-text-info zy-text-bold">中标单位：</text>{{project.project.inMarkComp}}</view>
 						</view>
 					</view>
+					<view v-for="(item, index_2) in project.obj" :key="index_2">
+						<view v-if="item.type == 5" @tap='getResourceFile(project.project.id, item.type)' class="zy-text-bold" style="color:#E80080;">进赣报名信息</view>
+					</view>
 					<view class="zy-disable-flex" style="padding-right: 10px;margin-top: 10px;">
 						<view>
 							<uni-tag v-if="project.project.isGuarantee === 1" text="保函" @click="toGuaranteePage(project.project)" type="error"
-								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
+							 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 						</view>
 						<view class="zy-disable-flex-right zy-disable-flex">
 							<view v-for="(item, index_1) in project.obj" :key="index_1">
@@ -186,8 +189,6 @@
 								<uni-tag v-if="item.type == 3" text="控" @click='getResourceFile(project.project.id, item.type)' type="primary"
 								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 								<uni-tag v-if="item.type == 4" text="澄" @click='getResourceFile(project.project.id, item.type)' type="success"
-								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
-								<uni-tag v-if="item.type == 5" text="赣" @click='getResourceFile(project.project.id, item.type)' type="warning"
 								 size="normal" :inverted="false" :circle="true" style="margin-left: 20upx;"></uni-tag>
 							</view>
 						</view>

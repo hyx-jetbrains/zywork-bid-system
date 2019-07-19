@@ -9,7 +9,7 @@
 					<view>
 						<text>{{project.project.projectType}}</text>
 						<text style="margin-left: 30upx;">[{{project.project.city}}]</text>
-						<text style="margin-left: 30upx; color:#108EE9;" @tap="toIndexPage">查看更多</text>
+						<text style="margin-left: 30upx; color:#108EE9;" @tap="toIndexPage">返回首页</text>
 					</view>
 					<view class="zy-text-mini zy-text-info">
 						公告时间：
