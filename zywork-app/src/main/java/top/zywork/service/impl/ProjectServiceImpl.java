@@ -69,6 +69,8 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
 
     private UserUserSocialService userUserSocialService;
 
+    private ServiceService serviceService;
+
     private RedisTemplate<String, Object> redisTemplate;
 
 
@@ -232,25 +234,30 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 JSONObject templateParam = new JSONObject();
                 for (SubscribeVO subscribeVO : list) {
                     Long userId = subscribeVO.getUserId();
-                    // 先查询用户购买的订阅服务是否有过期
-                    UserServiceQuery userServiceQuery = new UserServiceQuery();
-                    userServiceQuery.setUserId(userId);
-                    userServiceQuery.setServiceId(ProjectConstants.SERVICE_SUBSCRIBE_ID);
-                    userServiceQuery.setIsActive((byte) 0);
-                    PagerDTO pagerDTO = userServiceService.listAllByCondition(userServiceQuery);
-                    List<Object> userServiceObj = pagerDTO.getRows();
-                    if (null == userServiceObj || userServiceObj.size() <= 0) {
-                        // 用户未购买订阅服务
-                        continue;
-                    }
-                    // 这里只会取到条数据
-                    List<UserServiceDTO> userServiceDTOList = BeanUtils.copy(userServiceObj, UserServiceDTO.class);
-                    UserServiceDTO userServiceDTO = userServiceDTOList.get(0);
-                    Date endDate = userServiceDTO.getEndDate();
-                    Date currDate = DateUtils.currentDate();
-                    if (currDate.getTime() > endDate.getTime()) {
-                        // 当前时间大于服务到期时间，说明服务已到期
-                        continue;
+                    // 先查询订阅服务配置，如果订阅服务冻结了，则说明不需要验证用户vip
+                    Object serviceObj = serviceService.getById(ProjectConstants.SERVICE_SUBSCRIBE_ID);
+                    ServiceDTO serviceDTO = BeanUtils.copy(serviceObj, ServiceDTO.class);
+                    if (ProjectConstants.SERVICE_SUBSCRIBE_ACTIVE_TRUE == serviceDTO.getIsActive()) {
+                        // 如果服务订阅是激活的状态，需要查询用户购买的订阅服务是否有过期
+                        UserServiceQuery userServiceQuery = new UserServiceQuery();
+                        userServiceQuery.setUserId(userId);
+                        userServiceQuery.setServiceId(ProjectConstants.SERVICE_SUBSCRIBE_ID);
+                        userServiceQuery.setIsActive((byte) 0);
+                        PagerDTO pagerDTO = userServiceService.listAllByCondition(userServiceQuery);
+                        List<Object> userServiceObj = pagerDTO.getRows();
+                        if (null == userServiceObj || userServiceObj.size() <= 0) {
+                            // 用户未购买订阅服务
+                            continue;
+                        }
+                        // 这里只会取到1条数据
+                        List<UserServiceDTO> userServiceDTOList = BeanUtils.copy(userServiceObj, UserServiceDTO.class);
+                        UserServiceDTO userServiceDTO = userServiceDTOList.get(0);
+                        Date endDate = userServiceDTO.getEndDate();
+                        Date currDate = DateUtils.currentDate();
+                        if (currDate.getTime() > endDate.getTime()) {
+                            // 当前时间大于服务到期时间，说明服务已到期
+                            continue;
+                        }
                     }
                     // 一、判断用户是否开通了订阅推送
                     if (0 == subscribeVO.getIsSubscribe()) {
@@ -585,6 +592,11 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
     @Autowired
     public void setUserServiceService(UserServiceService userServiceService) {
         this.userServiceService = userServiceService;
+    }
+
+    @Autowired
+    public void setServiceService(ServiceService serviceService) {
+        this.serviceService = serviceService;
     }
 
 }

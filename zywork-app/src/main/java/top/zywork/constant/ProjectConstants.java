@@ -97,6 +97,10 @@ public final class ProjectConstants {
      * 服务订阅ID-1
      */
     public static final Long SERVICE_SUBSCRIBE_ID = 1L;
+    /**
+     * 订阅服务的激活开关-开启-0
+     */
+    public static final byte SERVICE_SUBSCRIBE_ACTIVE_TRUE = 0;
 
     /**
      * 公众号消息模版ID

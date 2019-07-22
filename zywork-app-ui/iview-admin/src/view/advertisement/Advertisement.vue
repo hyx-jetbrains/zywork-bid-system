@@ -374,13 +374,6 @@ export default {
           }
         ],
         content: [
-          {
-            type: 'string',
-            min: 1,
-            max: 2000,
-            message: '必须1-2000个字符',
-            trigger: 'blur'
-          }
         ],
         imgUrl: [
           {
@@ -395,8 +388,8 @@ export default {
           {
             type: 'string',
             min: 1,
-            max: 200,
-            message: '必须1-200个字符',
+            max: 500,
+            message: '必须1-500个字符',
             trigger: 'blur'
           }
         ]
