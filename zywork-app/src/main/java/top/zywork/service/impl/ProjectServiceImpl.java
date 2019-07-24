@@ -336,7 +336,7 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                     } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
 
                         title = "开标通知";
-                        content = "项目订阅开标通知：" + content + "于" + projectVO.getOpenMarkTime() + "开标";
+                        content = "项目订阅开标通知：" + content + "于" + openMarkTime + "开标";
                         descContent = "您订阅的项目" + content + "于" + openMarkTime + "开标，具体内容可点击《立即查看》按钮前往查看";
                         templateParam.put("openMarkTime", openMarkTime);
                     }
