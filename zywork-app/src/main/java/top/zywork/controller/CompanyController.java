@@ -20,6 +20,7 @@ import top.zywork.dto.CompanyDTO;
 import top.zywork.python.CompanyPythonService;
 import top.zywork.query.CompanyQuery;
 import top.zywork.service.CompanyService;
+import top.zywork.vo.CompanyPythonVO;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
 import top.zywork.vo.CompanyVO;
@@ -186,6 +187,16 @@ public class CompanyController extends BaseController {
     @GetMapping("any/one/{id}")
     public ResponseStatusVO userGetById(@PathVariable("id") Long id) {
         return getById(id);
+    }
+
+    /**
+     * 获取python爬取企业信息的爬取情况，获取每个文件当前的页面
+     * @return
+     */
+    @GetMapping("admin/python-data")
+    public ResponseStatusVO getPythonData() {
+        List<CompanyPythonVO> companyPythonVOList = companyService.getPageNoFileValue();
+        return ResponseStatusVO.ok("查询成功", companyPythonVOList);
     }
 
     @Autowired

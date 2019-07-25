@@ -83,6 +83,10 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 // 企业名称
                 String compName = jsonObject.getString("compName");
+                if (!compName.contains("有限公司")) {
+                    logger.error("公司名称不合法：" + compName);
+                    continue;
+                }
                 String industryType = jsonObject.getString("industryType");
                 Object obj = companyDAO.getByName(compName);
                 boolean companyFlag = true;
@@ -267,7 +271,9 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             CompAptitudeDTO compAptitudeDTO = new CompAptitudeDTO();
             // 证件号码
             String certificateNum = jsonObj.getString("certificateNum");
-            Object obj = compAptitudeDAO.getByCompIdAndCertificateNum(compId, certificateNum);
+            // 资质详情
+            String certificateDetail = jsonObj.getString("certificateDetail");
+            Object obj = compAptitudeDAO.getByCompIdAndCertificateNum(compId, certificateDetail);
             boolean updateFlag = false;
             if (null != obj) {
                 updateFlag = true;
@@ -280,8 +286,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             }
             compAptitudeDTO.setCompId(compId);
             compAptitudeDTO.setCertificateNum(certificateNum);
-            // 资质详情
-            String certificateDetail = jsonObj.getString("certificateDetail");
+
             compAptitudeDTO.setCertificateDetail(certificateDetail);
             if (updateFlag) {
                 // 更新企业资质信息

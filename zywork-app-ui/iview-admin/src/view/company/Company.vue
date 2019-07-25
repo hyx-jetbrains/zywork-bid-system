@@ -43,6 +43,7 @@
           </Dropdown>&nbsp;
           <Button @click="showModal('search')" type="primary">高级搜索</Button>&nbsp;
           <Button @click="showModal('python')" type="primary">爬取数据</Button>&nbsp;
+          <Button @click="showPythonData" type="primary">爬取情况</Button>&nbsp;
           <Tooltip content="刷新" placement="right">
             <Button icon="md-refresh" type="success" shape="circle" @click="search"></Button>
           </Tooltip>
@@ -622,6 +623,35 @@
         <Button type="primary" size="large" @click="crawlData" :loading="loading.python">爬取</Button>
       </div>
     </Modal>
+    <Modal
+      v-model="modal.pythonData"
+      width="960"
+      title="爬取情况数据"
+    >
+      <Form ref="pythonForm" :label-width="80">
+        <Row v-for="(item, index) in pythonListData" :key="index">
+          <i-col span="8">
+            <FormItem label="类型:">
+              {{item.typeName}}
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="当前页:">
+              {{item.pageNo}}
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="预计页码:">
+              {{item.estimatePageNo}}
+            </FormItem>
+          </i-col>
+        </Row>
+      </Form>
+      <div slot="footer">
+        <Button type="text" size="large" @click="cancelModal('pythonData')">关闭</Button>
+        <Button type="primary" size="large" @click="loadPythonData" :loading="loading.pythonData">更新数据</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -649,13 +679,15 @@ export default {
         edit: false,
         search: false,
         detail: false,
-        python: false
+        python: false,
+        pythonData: false
       },
       loading: {
         add: false,
         edit: false,
         search: false,
-        python: false
+        python: false,
+        pythonData: false
       },
       urls: {
         addUrl: '/company/admin/save',
@@ -669,7 +701,8 @@ export default {
         detailUrl: '/company/admin/one/',
         activeUrl: '/company/admin/active',
         batchActiveUrl: '/company/admin/batch-active',
-        pythonUpdateDataUrl: '/company/admin/python'
+        pythonUpdateDataUrl: '/company/admin/python',
+        pythonDataUrl: '/company/admin/python-data'
       },
       page: {
         total: 0
@@ -1192,7 +1225,8 @@ export default {
         minRows: 3,
         maxRows: 5
       },
-      currProjectType: '全部'
+      currProjectType: '全部',
+      pythonListData: []
     }
   },
   computed: {},
@@ -1450,7 +1484,40 @@ export default {
           console.log(err)
           this.$Message.error('爬取数据失败')
         })
-    }
+    },
+    /**
+     * 获取爬取数据的情况
+     */
+    showPythonData() {
+      this.showModal('pythonData')
+      this.loadPythonData()
+    },
+    /**
+     * 更新数据
+     */
+     loadPythonData() {
+       this.loading['pythonData'] = true
+       axios
+        .request({
+          url: this.urls.pythonDataUrl,
+          method: 'GET',
+          data: {}
+        })
+        .then(res => {
+          if (res.data.code !== ResponseStatus.OK) {
+            this.$Message.error(res.data.message)
+          } else {
+            this.$Message.success(res.data.message)
+          }
+          this.loading['pythonData'] = false
+          this.pythonListData = res.data.data
+        })
+        .catch(err => {
+          this.loading['pythonData'] = false
+          console.log(err)
+          this.$Message.error('查询数据失败')
+        })
+     }
   }
 }
 </script>

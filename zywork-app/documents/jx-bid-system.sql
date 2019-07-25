@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `t_advertisement`;
 CREATE TABLE `t_advertisement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '轮播广告编号',
   `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '轮播图标题',
-  `content` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内容',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '内容',
   `img_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '图片地址',
   `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT 'URL链接',
   `version` int(11) NULL DEFAULT 1 COMMENT '版本号',

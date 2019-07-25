@@ -8,7 +8,7 @@
         select
         <include refid="select_columns"/>
         from t_comp_aptitude
-        where comp_id = #{compId} and certificate_num = #{certificateNum}
+        where comp_id = #{compId} and certificate_detail = #{certificateDetail}
     </select>
 
 

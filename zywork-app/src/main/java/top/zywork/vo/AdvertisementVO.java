@@ -27,7 +27,6 @@ public class AdvertisementVO extends BaseVO {
 	@Size(min = 0, max = 32, message = "必须小于32个字符")
 	private String title;
 	// 内容
-	@Size(min = 0, max = 5000, message = "必须小于5000个字符")
 	private String content;
 	// 图片地址
 	@Size(min = 0, max = 200, message = "必须小于200个字符")
