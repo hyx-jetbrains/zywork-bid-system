@@ -630,19 +630,24 @@
     >
       <Form ref="pythonForm" :label-width="80">
         <Row v-for="(item, index) in pythonListData" :key="index">
-          <i-col span="8">
+          <i-col span="6">
             <FormItem label="类型:">
               {{item.typeName}}
             </FormItem>
           </i-col>
-          <i-col span="8">
+          <i-col span="6">
             <FormItem label="当前页:">
               {{item.pageNo}}
             </FormItem>
           </i-col>
-          <i-col span="8">
+          <i-col span="6">
             <FormItem label="预计页码:">
               {{item.estimatePageNo}}
+            </FormItem>
+          </i-col>
+          <i-col span="6">
+            <FormItem label="抓取状态:">
+              {{parseInt(item.pageNo) >= parseInt(item.estimatePageNo) ? '已完成' : '抓取中'}}
             </FormItem>
           </i-col>
         </Row>
