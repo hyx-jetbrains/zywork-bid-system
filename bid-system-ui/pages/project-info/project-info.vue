@@ -538,7 +538,7 @@
 			showSwiperDetail(item) {
 				uni.navigateTo({
 					url: '/pages-project-info/advertisement-detail/advertisement-detail?itemData=' + encodeURIComponent(JSON.stringify(
-						item))
+						item.id))
 				})
 			},
 			getElSize(id) {

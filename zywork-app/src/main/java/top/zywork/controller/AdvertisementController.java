@@ -154,6 +154,16 @@ public class AdvertisementController extends BaseController {
         return listAllByCondition(advertisementQuery);
     }
 
+    /**
+     * 根据id获取轮播图信息
+     * @param id
+     * @return
+     */
+    @GetMapping("any/one/{id}")
+    public ResponseStatusVO anyGetByid(@PathVariable("id") Long id) {
+        return getById(id);
+    }
+
     @PostMapping("admin/all-cond")
     public ResponseStatusVO listAllByCondition(@RequestBody AdvertisementQuery advertisementQuery) {
         PagerDTO pagerDTO = advertisementService.listAllByCondition(advertisementQuery);

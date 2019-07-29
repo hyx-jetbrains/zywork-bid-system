@@ -32,7 +32,7 @@ export const getAdvertisementInfo = (self) => {
 		header: {},
 		success: (res) => {
 			if (res.data.code === ResponseStatus.OK) {
-				var tempSwiperItems = nullToStr(res.data.data.rows);
+				var tempSwiperItems = res.data.data.rows;
 				self.swiperItems = []
 				tempSwiperItems.forEach(item => {
 					item.url = IMAGE_BASE_URL + item.url;
@@ -46,6 +46,40 @@ export const getAdvertisementInfo = (self) => {
 			networkError()
 		},
 		complete: () => {}
+	})
+}
+
+/**
+ * 获取单个轮播图信息
+ */
+export const getAdvertisementOneInfo = (self, id) => {
+	uni.showLoading({
+		title: '加载中...'
+	})
+	uni.request({
+		url: BASE_URL + '/advertisement/any/one/' + id,
+		method: 'GET',
+		data: {},
+		header: {},
+		success: (res) => {
+			if (res.data.code === ResponseStatus.OK) {
+				var row = res.data.data;
+				row.url = IMAGE_BASE_URL + row.url;
+				console.log(row.content)
+				self.item = row
+				uni.setNavigationBarTitle({
+					title: row.title
+				});
+			} else {
+				showInfoToast(res.data.message)
+			}
+		},
+		fail: () => {
+			networkError()
+		},
+		complete: () => {
+			uni.hideLoading()
+		}
 	})
 }
 

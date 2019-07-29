@@ -4,7 +4,7 @@
 
 <mapper namespace="top.zywork.dao.CompAptitudeDAO">
 
-    <select id="getByCompIdAndCertificateNum" resultType="compAptitudeDO">
+    <select id="getByCompIdAndCertificateDetail" resultType="compAptitudeDO">
         select
         <include refid="select_columns"/>
         from t_comp_aptitude

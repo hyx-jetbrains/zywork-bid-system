@@ -12,10 +12,17 @@
 </template>
 
 <script>
+	import {
+		getAdvertisementOneInfo
+	} from '@/common/project-info.js'
 	export default {
 		data() {
 			return {
-				item: {}
+				urls: {
+					oneUrl: '/advertisement/any/one/'
+				},
+				item: {},
+				id: ''
 			}
 		},
 		onLoad(event) {
@@ -24,20 +31,22 @@
 			const payload = event.itemData || event.payload;
 			// 目前在某些平台参数会被主动 decode，暂时这样处理。
 			try {
-				this.item = JSON.parse(decodeURIComponent(payload));
+				this.id = JSON.parse(decodeURIComponent(payload));
 			} catch (error) {
-				this.item = JSON.parse(payload);
+				this.id = JSON.parse(payload);
 			}
-			uni.setNavigationBarTitle({
-				title: this.item.title
-			});
+			this.loadData();
 		},
 		methods: {
-			
+			/**
+			 * 加载数据
+			 */
+			loadData() {
+				getAdvertisementOneInfo(this, this.id);
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	@import '../../common/zywork-main.scss';
 </style>

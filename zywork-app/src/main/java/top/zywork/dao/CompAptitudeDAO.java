@@ -26,5 +26,5 @@ public interface CompAptitudeDAO extends BaseDAO {
     @Override
     Long countByCondition(@Param("query") Object queryObj);
 
-    Object getByCompIdAndCertificateNum(@Param("compId") Long compId, @Param("certificateNum") String certificateDetail);
+    Object getByCompIdAndCertificateDetail(@Param("compId") Long compId, @Param("certificateDetail") String certificateDetail);
 }

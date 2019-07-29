@@ -273,7 +273,7 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
             String certificateNum = jsonObj.getString("certificateNum");
             // 资质详情
             String certificateDetail = jsonObj.getString("certificateDetail");
-            Object obj = compAptitudeDAO.getByCompIdAndCertificateNum(compId, certificateDetail);
+            Object obj = compAptitudeDAO.getByCompIdAndCertificateDetail(compId, certificateDetail);
             boolean updateFlag = false;
             if (null != obj) {
                 updateFlag = true;
