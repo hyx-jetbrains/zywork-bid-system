@@ -349,7 +349,7 @@ CREATE TABLE `t_comp_traffic_achievement`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业交通业绩编号',
   `comp_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '企业编号',
   `project_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '工程名称',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
+  `name` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '项目负责人',
   `technology_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '技术负责人',
   `contract_amount` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '合同金额',
   `money` decimal(20, 6) NULL DEFAULT 0.000000 COMMENT '金额',

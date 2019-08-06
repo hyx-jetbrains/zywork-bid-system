@@ -83,10 +83,6 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 // 企业名称
                 String compName = jsonObject.getString("compName");
-                if (!compName.contains("有限公司")) {
-                    logger.error("公司名称不合法：" + compName);
-                    continue;
-                }
                 String industryType = jsonObject.getString("industryType");
                 Object obj = companyDAO.getByName(compName);
                 boolean companyFlag = true;
