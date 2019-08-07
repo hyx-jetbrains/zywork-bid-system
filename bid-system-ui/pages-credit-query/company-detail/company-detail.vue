@@ -104,7 +104,7 @@
 								<zywork-icon type="iconjiaozaoshi" color="#108EE9" size="30" style="display: inline-block; margin-right: 20upx;" />
 								<view>
 									<view class="zy-disable-flex">
-										<text class="zy-text-bold" style="margin-right: 20upx;">{{item.compBuilderName}}</text>
+										<text class="zy-text-bold" style="margin-right: 20upx;" v-text="item.compBuilderName"></text>
 										<zywork-icon v-if="item.compBuilderGender === '0'" type="iconyincang" color="#BFBFBF" size="20" />
 										<zywork-icon v-else-if="item.compBuilderGender === '1'" type="iconnan" color="#108EE9" size="20" />
 										<zywork-icon v-else-if="item.compBuilderGender === '2'" type="iconnv" color="#dd524d" size="20" />
@@ -121,8 +121,7 @@
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">注册证件号码:</view>
 									<view v-if="item.compBuilderRegNum != ''"
-									 class="zy-text-info">
-										{{item.compBuilderRegNum}}
+									 class="zy-text-info" v-html="item.compBuilderRegNum">
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -131,8 +130,7 @@
 								<view class="zy-disable-flex">
 									<view class="zy-text-info zy-text-bold zy-content-label">专业等级:</view>
 									<view v-if="item.compBuilderMajorLevel != ''"
-									 class="zy-text-info">
-										{{item.compBuilderMajorLevel}}
+									 class="zy-text-info" v-html="item.compBuilderMajorLevel">
 									</view>
 									<view v-else class="zy-text-info">
 										暂无
@@ -141,6 +139,7 @@
 							</view>
 						</view>
 					</view>
+					<uni-pagination :current="pager.pageNo" :total="pager.pageTotal" title="标题文字" prev-text="前一页" next-text="后一页" @change="changePageTotal" />
 				</view>
 				<zywork-no-data v-else text="暂无企业建造师信息"></zywork-no-data>
 			</view>
@@ -189,6 +188,7 @@
 							</view>
 						</view>
 					</view>
+					<uni-pagination :current="pager.pageNo" :total="pager.pageTotal" title="标题文字" prev-text="前一页" next-text="后一页" @change="changePageTotal" />
 				</view>
 				<zywork-no-data v-else text="暂无企业资质信息"></zywork-no-data>
 			</view>
@@ -485,6 +485,7 @@
 
 						</view>
 					</view>
+					<uni-pagination :current="pager.pageNo" :total="pager.pageTotal" title="标题文字" prev-text="前一页" next-text="后一页" @change="changePageTotal" />
 				</view>
 				<zywork-no-data v-else text="暂无企业业绩信息"></zywork-no-data>
 			</view>
@@ -533,6 +534,7 @@
 							</view>
 						</view>
 					</view>
+					<uni-pagination :current="pager.pageNo" :total="pager.pageTotal" title="标题文字" prev-text="前一页" next-text="后一页" @change="changePageTotal" />
 				</view>
 				<zywork-no-data v-else text="暂无企业人员信息"></zywork-no-data>
 			</view>
@@ -543,6 +545,7 @@
 <script>
 	import zyworkIcon from '@/components/zywork-icon/zywork-icon.vue'
 	import zyworkNoData from '@/components/zywork-no-data/zywork-no-data.vue'
+	import uniPagination from '@/components/uni-pagination/uni-pagination.vue'
 	import * as ResponseStatus from '@/common/response-status.js'
 	import * as creditQuery from '@/common/credit-query.js'
 	import {
@@ -569,7 +572,8 @@
 	export default {
 		components: {
 			zyworkIcon,
-			zyworkNoData
+			zyworkNoData,
+			uniPagination
 		},
 		data() {
 			return {
@@ -590,7 +594,8 @@
 					pageNo: 1,
 					pageSize: 10,
 					isActive: 0,
-					compId: ''
+					compId: '',
+					pageTotal: 0
 				},
 				achievementList: [],
 				builderList: [],
@@ -616,6 +621,26 @@
 			this.tapTab(this.item.tabIndex);
 		},
 		methods: {
+			changePageTotal(e) {
+				this.pager.pageNo = e.current;
+				let type = this.currTabIndex;
+				if (INFO_ACHIEVEMENT === type) {
+					// 业绩信息
+					this.refreshAchievementList(this.achievementOpts.current);
+				} else if (INFO_BUILDER === type) {
+					// 建造师信息
+					this.refreshBuilderList();
+				} else if (INFO_APTITUDE === type) {
+					// 资质信息
+					this.refreshAptitudeList();
+				} else if (INFO_PERSONNEL === type) {
+					// 企业人员
+					this.refreshPersonnelList();
+				}
+			},
+			/**
+			 * 初始化企业id
+			 */
 			initCompId() {
 				this.pager.compHouseAchievementCompId 
 					= this.pager.compKeyProjectAchievementCompId 
@@ -698,6 +723,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
+							this.pager.pageTotal = res.data.data.total
 							this.builderList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
@@ -737,6 +763,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
+							this.pager.pageTotal = res.data.data.total
 							this.achievementList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
@@ -753,6 +780,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
+							this.pager.pageTotal = res.data.data.total
 							this.aptitudeList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
@@ -769,6 +797,7 @@
 						uni.hideLoading()
 						var [error, res] = data;
 						if (res.data.code === ResponseStatus.OK) {
+							this.pager.pageTotal = res.data.data.total
 							this.personnelList = nullToStr(res.data.data.rows);
 						} else {
 							showInfoToast(res.data.message)
