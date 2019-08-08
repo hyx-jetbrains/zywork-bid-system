@@ -18,6 +18,8 @@ import top.zywork.enums.DatePatternEnum;
 import top.zywork.python.ProjectPythonService;
 import top.zywork.vo.ProjectVO;
 
+import java.util.Date;
+
 /**
  * 获取招标信息的接口实现类<br/>
  *
@@ -51,8 +53,18 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                 for (int i = 0; i < jsonArray.size() ; i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
                     String title = obj.getString("title");
+                    String noticeTimeStr = obj.getString("noticeTime").trim();
+                    Date noticeTime = null;
+                    Object projectObj = null;
+                    if (!StringUtils.isEmpty(noticeTimeStr)) {
+                        noticeTime = DateParseUtils.parseDate(noticeTimeStr, DatePatternEnum.DATE.getValue());
+                        // 公告时间不为空，则根据项目名称和公告时间查询数据
+                        projectObj = projectDAO.getByTitleAndNoticeTime(title, noticeTimeStr);
+                    } else {
+                        // 公告时间为空，则根据项目名称查询数据
+                        projectObj = projectDAO.getByTitle(title);
+                    }
 
-                    Object projectObj = projectDAO.getByTitle(title);
                     boolean updateFlag = false;
                     if (null != projectObj) {
                         updateFlag = true;
@@ -92,10 +104,7 @@ public class ProjectPythonServiceImpl implements ProjectPythonService {
                     projectVO.setOpenMarkTime(obj.getDate("openMarkTime"));
                     projectVO.setOpenMarkAddr(obj.getString("openMarkAddr"));
                     projectVO.setInMarkComp(obj.getString("inMarkComp"));
-                    String noticeTime = obj.getString("noticeTime").trim();
-                    if (!StringUtils.isEmpty(noticeTime)) {
-                        projectVO.setNoticeTime(DateParseUtils.parseDate(noticeTime, DatePatternEnum.DATE.getValue()));
-                    }
+                    projectVO.setNoticeTime(noticeTime);
                     projectVO.setSourceUrl(obj.getString("sourceUrl"));
                     if (StringUtils.isNotEmpty(newFileName)) {
                         projectVO.setInwardHtmlUrl(uri + "/" + newFileName);

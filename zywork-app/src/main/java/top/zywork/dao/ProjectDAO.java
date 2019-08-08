@@ -32,6 +32,14 @@ public interface ProjectDAO extends BaseDAO {
 
     Object getByTitle(@Param("title") String title);
 
+    /**
+     * 根据公告名称和公告时间查询公告信息
+     * @param title
+     * @param noticeTime
+     * @return
+     */
+    Object getByTitleAndNoticeTime(@Param("title") String title, @Param("noticeTime") String noticeTime);
+
     Object getProjectBySelect(@Param("id") Long id, @Param("city") String city, @Param("list") List<Object> list);
 
     /***

@@ -2281,8 +2281,7 @@ CREATE TABLE `t_project`  (
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `is_active` tinyint(4) NULL DEFAULT 0 COMMENT '是否激活',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `index_title`(`title`) USING BTREE COMMENT '招标信息名称唯一索引'
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 130 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '招投标项目表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
