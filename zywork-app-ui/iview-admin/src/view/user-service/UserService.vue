@@ -567,6 +567,23 @@
 							key: 'validYear',
 							minWidth: 120,
 							sortable: true
+            },
+            {
+							title: '服务状态',
+							key: 'endDate',
+							minWidth: 150,
+              sortable: true,
+              render: (h, params) => {
+                const endDate = params.row.endDate
+                const currDate = utils.getDate(0)
+                const color = endDate < currDate ? 'error' : 'primary'
+                const txt =  endDate < currDate ? '已过期' : '正常'
+                return h('Tag',{
+                  props: {
+                    color: color
+                  }
+                }, txt)
+              }
 						},
 						{
 							title: '版本号',
