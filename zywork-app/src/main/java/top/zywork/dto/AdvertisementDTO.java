@@ -33,8 +33,18 @@ public class AdvertisementDTO extends BaseDTO {
 	private Date updateTime;
 	// 是否激活
 	private Byte isActive;
-	
-    public AdvertisementDTO () {}
+	// 附件编号
+	private Long resourceId;
+
+	public Long getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(Long resourceId) {
+		this.resourceId = resourceId;
+	}
+
+	public AdvertisementDTO () {}
 
     public AdvertisementDTO (Long id, String title, String content, String imgUrl, String url, Integer version, Date createTime, Date updateTime, Byte isActive) {
         this.id = id;

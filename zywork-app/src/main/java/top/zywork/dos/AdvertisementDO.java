@@ -25,6 +25,8 @@ public class AdvertisementDO extends BaseDO {
 	private String imgUrl;
 	// URL链接
 	private String url;
+	// 附件编号
+	private Long resourceId;
 	// 版本号
 	private Integer version;
 	// 创建时间
@@ -121,8 +123,15 @@ public class AdvertisementDO extends BaseDO {
 		this.isActive = isActive;
 	}
 
-	
-    @Override
+	public Long getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(Long resourceId) {
+		this.resourceId = resourceId;
+	}
+
+	@Override
     public String toString() {
         return "AdvertisementDO {" +
                 "id = " + id + 

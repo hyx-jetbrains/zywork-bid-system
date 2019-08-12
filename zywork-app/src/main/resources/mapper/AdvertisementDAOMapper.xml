@@ -34,6 +34,9 @@
 			<if test="isActive != null">
 				is_active,
 			</if>
+			<if test="resourceId != null">
+				resource_id,
+			</if>
 			
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -60,6 +63,9 @@
 			</if>
 			<if test="isActive != null">
 				#{isActive},
+			</if>
+			<if test="resourceId != null">
+				#{resourceId},
 			</if>
 			
         </trim>
@@ -96,6 +102,9 @@
 			<if test="item.isActive != null">
 				is_active,
 			</if>
+				<if test="item.resourceId != null">
+					resource_id,
+				</if>
 			
             </trim>
             <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -123,7 +132,9 @@
 			<if test="item.isActive != null">
 				#{item.isActive},
 			</if>
-			
+				<if test="item.resourceId != null">
+					#{item.resourceId},
+				</if>
             </trim>
         </foreach>
     </insert>
@@ -166,6 +177,9 @@
 			<if test="isActive != null">
 				is_active = #{isActive},
 			</if>
+			<if test="resourceId != null">
+				resource_id = #{resourceId},
+			</if>
 			update_time = CURRENT_TIMESTAMP,
         </set>
         where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
@@ -199,6 +213,9 @@
 			<if test="item.isActive != null">
 				is_active = #{item.isActive},
 			</if>
+				<if test="item.resourceId != null">
+					resourceId = #{item.resourceId},
+				</if>
 			update_time = CURRENT_TIMESTAMP,
                 <if test="item.version == null">
                     version = version + 1,
@@ -209,7 +226,7 @@
     </update>
 
     <sql id="select_columns">
-        id as id, title as title, content as content, img_url as imgUrl, url as url, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        resource_id as resourceId, id as id, title as title, content as content, img_url as imgUrl, url as url, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -285,7 +302,18 @@
 		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
 			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
 		</if>
-		
+		<if test="query != null and query.resourceId != null">
+			and resource_id = #{query.resourceId}
+		</if>
+		<if test="query != null and query.resourceIdMin != null and query.resourceIdMin == null">
+			and resource_id <![CDATA[ >= ]]> #{query.resourceIdMin}
+		</if>
+		<if test="query != null and query.resourceIdMax == null and query.resourceIdMax != null">
+			and resource_id <![CDATA[ <= ]]> #{query.resourceIdMax}
+		</if>
+		<if test="query != null and query.resourceIdMin != null and query.resourceIdMax != null">
+			and resource_id <![CDATA[ >= ]]> #{query.resourceIdMin} and resource_id <![CDATA[ <= ]]> #{query.resourceIdMax}
+		</if>
     </sql>
 
     <select id="getById" parameterType="long" resultType="advertisementDO">

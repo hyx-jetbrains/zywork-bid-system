@@ -103,6 +103,25 @@
         <FormItem label="公告标题" prop="title">
           <Input v-model="form.title" placeholder="请输入公告标题"/>
         </FormItem>
+        <FormItem label="资源编号" prop="resourceId">
+          <Upload
+            type="drag"
+            :action="urls.uploadResourceUrl"
+            :on-success="handleSuccess"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            :format="['doc','docx','pdf']"
+            :max-size="10240"
+            :headers="uploadHeader"
+          >
+            <div style="padding: 20px 0">
+              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+              <p>单击或拖动文件到此处上传</p>
+            </div>
+          </Upload>
+          <p style="color: red;">注：重新上传附件，会覆盖之前的附件，如不上传，则没有影响</p>
+        </FormItem>
         <FormItem label="公告简介" prop="synopsis">
           <Input
             v-model="form.synopsis"

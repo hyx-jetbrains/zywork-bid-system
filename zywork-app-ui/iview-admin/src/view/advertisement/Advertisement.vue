@@ -80,6 +80,24 @@
             </div>
           </Upload>
         </FormItem>
+        <FormItem label="附件编号" prop="resourceId">
+          <Upload
+            type="drag"
+            :action="urls.uploadResUrl"
+            :on-success="handleSuccess1"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            :format="['doc','docx','pdf']"
+            :max-size="10240"
+            :headers="uploadHeader"
+          >
+            <div style="padding: 20px 0">
+              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+              <p>单击或拖动文件到此处上传</p>
+            </div>
+          </Upload>
+        </FormItem>
         <FormItem label="内容" prop="content">
           <editor ref="editorAdd" :value="form.content" @on-change="handleChange"/>
         </FormItem>
@@ -120,6 +138,25 @@
               <Icon type="ios-camera" size="20"></Icon>
             </div>
           </Upload>
+        </FormItem>
+        <FormItem label="附件编号" prop="resourceId">
+          <Upload
+            type="drag"
+            :action="urls.uploadResUrl"
+            :on-success="handleSuccess1"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :on-progress="handleProgress"
+            :format="['doc','docx','pdf']"
+            :max-size="10240"
+            :headers="uploadHeader"
+          >
+            <div style="padding: 20px 0">
+              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+              <p>单击或拖动文件到此处上传</p>
+            </div>
+          </Upload>
+          <p style="color: red;">注：重新上传附件，会覆盖之前的附件，如不上传，则没有影响</p>
         </FormItem>
         <FormItem label="内容" prop="content">
           <editor ref="editorEdit" :value="form.content" @on-change="handleChange"/>
@@ -347,7 +384,8 @@ export default {
         activeUrl: '/advertisement/admin/active',
         batchActiveUrl: '/advertisement/admin/batch-active',
         uploadImgUrl: baseUrl + '/advertisement/admin/upload-img',
-				uploadUrl: '/advertisement/admin/upload-img'
+				uploadUrl: '/advertisement/admin/upload-img',
+        uploadResUrl: baseUrl + '/advertisement/admin/upload-res'
       },
       page: {
         total: 0
@@ -358,6 +396,7 @@ export default {
         content: null,
         imgUrl: null,
         url: null,
+        resourceId: null,
         version: null,
         createTime: null,
         updateTime: null,
@@ -506,6 +545,12 @@ export default {
                 ''
               )
             }
+          },
+          {
+            title: '附件编号',
+            key: 'resourceId',
+            minWidth: 120,
+            sortable: true
           },
           {
             title: '版本号',
@@ -755,6 +800,20 @@ export default {
         })
         this.form.imgUrl = res.data
         this.form.url = cdnUrl + "/" + res.data
+      } else {
+        this.$Notice.error({
+          title: '上传失败',
+          desc: res.message
+        })
+      }
+    },
+    handleSuccess1(res, file) {
+      if (res.code === ResponseStatus.OK) {
+        this.$Notice.success({
+          title: '上传成功',
+          desc: file.name + ' 上传成功'
+        })
+        this.form.resourceId = res.data.id
       } else {
         this.$Notice.error({
           title: '上传失败',

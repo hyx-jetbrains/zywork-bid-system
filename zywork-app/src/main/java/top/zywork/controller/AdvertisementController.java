@@ -13,11 +13,16 @@ import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.common.UploadUtils;
+import top.zywork.constant.ProjectConstants;
+import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.AdvertisementDTO;
 import top.zywork.enums.UploadTypeEnum;
 import top.zywork.query.AdvertisementQuery;
+import top.zywork.security.JwtUser;
+import top.zywork.security.SecurityUtils;
 import top.zywork.service.AdvertisementService;
+import top.zywork.service.ResourceService;
 import top.zywork.service.UploadService;
 import top.zywork.vo.ResponseStatusVO;
 import top.zywork.vo.PagerVO;
@@ -60,6 +65,8 @@ public class AdvertisementController extends BaseController {
     private AdvertisementService advertisementService;
 
     private UploadService uploadService;
+
+    private ResourceService resourceService;
 
     @PostMapping("admin/save")
     public ResponseStatusVO save(@RequestBody @Validated AdvertisementVO advertisementVO, BindingResult bindingResult) {
@@ -187,6 +194,15 @@ public class AdvertisementController extends BaseController {
         return uploadService.uploadFile(storageProvider, file, UploadTypeEnum.IMAGE.getAllowedExts(), UploadTypeEnum.IMAGE.getMaxSize(), uploadOptions);
     }
 
+    @PostMapping("admin/upload-res")
+    public ResponseStatusVO uploadRes(MultipartFile file) {
+        JwtUser jwtUser = SecurityUtils.getJwtUser();
+        ResponseStatusVO responseStatusVO = resourceService.saveResource(jwtUser, file,
+                ResourceConstants.RESOURCE_TYPE_DOCUMENT, UploadTypeEnum.OFFICE.getAllowedExts(),
+                UploadTypeEnum.OFFICE.getMaxSize(), true, ProjectConstants.NOT_CREATE_DIR);
+        return responseStatusVO;
+    }
+
     @Autowired
     public void setAdvertisementService(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
@@ -195,5 +211,10 @@ public class AdvertisementController extends BaseController {
     @Autowired
     public void setUploadService(UploadService uploadService) {
         this.uploadService = uploadService;
+    }
+
+    @Autowired
+    public void setResourceService(ResourceService resourceService) {
+        this.resourceService = resourceService;
     }
 }

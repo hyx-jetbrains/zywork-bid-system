@@ -61,7 +61,34 @@ public class AdvertisementQuery extends PageQuery {
 	private Byte isActiveMin;
 	// 是否激活（最大值）
 	private Byte isActiveMax;
-	
+	// 附件编号
+	private Long resourceId;
+	private Long resourceIdMin;
+	private Long resourceIdMax;
+
+	public Long getResourceIdMin() {
+		return resourceIdMin;
+	}
+
+	public void setResourceIdMin(Long resourceIdMin) {
+		this.resourceIdMin = resourceIdMin;
+	}
+
+	public Long getResourceIdMax() {
+		return resourceIdMax;
+	}
+
+	public void setResourceIdMax(Long resourceIdMax) {
+		this.resourceIdMax = resourceIdMax;
+	}
+
+	public Long getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(Long resourceId) {
+		this.resourceId = resourceId;
+	}
     public AdvertisementQuery () {}
 
     public AdvertisementQuery (Long id, Long idMin, Long idMax, String title, String content, String imgUrl, String url, Integer version, Integer versionMin, Integer versionMax, Date createTime, Date createTimeMin, Date createTimeMax, Date updateTime, Date updateTimeMin, Date updateTimeMax, Byte isActive, Byte isActiveMin, Byte isActiveMax) {
