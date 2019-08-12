@@ -991,6 +991,7 @@ export default {
         isUpdate: false,
         inMarkComp: 'save'
       },
+      oldOpenMarkTime: null,
       form: {
         id: null,
         title: null,
@@ -1029,7 +1030,8 @@ export default {
         createTime: null,
         updateTime: null,
         isActive: null,
-        resourceCount: null
+        resourceCount: null,
+        noticeFlag: 0
       },
       validateRules: {
         title: [
@@ -1996,6 +1998,7 @@ export default {
       if (itemName === 'showEdit') {
         utils.showModal(this, 'edit')
         this.form = JSON.parse(JSON.stringify(row))
+        this.oldOpenMarkTime = this.form.openMarkTime
         this.$refs.editorEdit.setHtml(this.form.projectDetail)
         this.setPrice(0)
       } else if (itemName === 'showDetail') {
@@ -2012,6 +2015,7 @@ export default {
         // 设置开标时间
         utils.showModal(this, 'markDate')
         this.form = JSON.parse(JSON.stringify(row))
+        this.oldOpenMarkTime = this.form.openMarkTime
       } else if (itemName === 'updateInwordHtmlUrl') {
         this.form = JSON.parse(JSON.stringify(row))
         this.updateInwardHtmlUrl()
@@ -2067,6 +2071,12 @@ export default {
     },
     edit() {
       this.setPrice(1)
+      if (this.oldOpenMarkTime && this.oldOpenMarkTime != this.form.openMarkTime) {
+        // 表示有修改开标时间，需要提醒
+        this.form.noticeFlag = 1
+      } else {
+        this.form.noticeFlag = 0
+      }
       utils.edit(this)
       if (this.modal.markDate) {
         this.cancelModal('markDate')

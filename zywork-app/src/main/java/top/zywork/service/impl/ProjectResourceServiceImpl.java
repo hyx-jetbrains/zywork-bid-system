@@ -13,6 +13,8 @@ import top.zywork.dto.ResourceDTO;
 import top.zywork.query.ProjectResourceQuery;
 import top.zywork.service.AbstractBaseService;
 import top.zywork.service.ProjectResourceService;
+import top.zywork.service.ProjectService;
+import top.zywork.vo.ProjectVO;
 import top.zywork.vo.ResponseStatusVO;
 
 import javax.annotation.PostConstruct;
@@ -34,10 +36,17 @@ public class ProjectResourceServiceImpl extends AbstractBaseService implements P
 
     private ResourceDAO resourceDAO;
 
+    private ProjectService projectService;
+
     @Autowired
     public void setProjectResourceDAO(ProjectResourceDAO projectResourceDAO) {
         super.setBaseDAO(projectResourceDAO);
         this.projectResourceDAO = projectResourceDAO;
+    }
+
+    @Autowired
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
     @Autowired
@@ -59,6 +68,9 @@ public class ProjectResourceServiceImpl extends AbstractBaseService implements P
                 StringBuilder projectResourceIds = new StringBuilder();
                 StringBuilder resourceIds = new StringBuilder();
                 for (ProjectResourceDTO projectResourceDTO : projectResourceDTOList) {
+                    ProjectVO projectVO = BeanUtils.copy(projectService.getById(projectResourceDTO.getProjectId()), ProjectVO.class);
+                    projectVO.setResourceCount(projectVO.getResourceCount() - 1);
+                    projectService.update(projectVO);
                     Long id = projectResourceDTO.getId();
                     Long resourceId = projectResourceDTO.getResourceId();
                     if (StringUtils.isEmpty(projectResourceIds.toString())) {

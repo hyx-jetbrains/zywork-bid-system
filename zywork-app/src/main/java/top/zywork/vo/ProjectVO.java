@@ -115,6 +115,16 @@ public class ProjectVO extends BaseVO {
 	private Integer resourceCount;
 	// 是否可以申请保函
 	private Byte isGuarantee;
+	// 是否需要通知
+	private Integer noticeFlag;
+
+	public Integer getNoticeFlag() {
+		return noticeFlag;
+	}
+
+	public void setNoticeFlag(Integer noticeFlag) {
+		this.noticeFlag = noticeFlag;
+	}
 
 	public Byte getIsGuarantee() {
 		return isGuarantee;

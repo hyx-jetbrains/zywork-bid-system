@@ -76,6 +76,15 @@ public final class ProjectConstants {
      * 项目订阅通知类型-开标提醒
      */
     public static final String PROJECT_SUBSCRIBE_TYPE_OPEN_MARK = "openMark";
+    /**
+     * 开标时间变更通知
+     */
+    public static final String PROJECT_SUBSCRIBE_TYPE_OPEN_MARK_UPDATE = "openMarkUpdate";
+    /**
+     * 答疑文件更新通知
+     */
+    public static final String PROJECT_SUBSCRIBE_TYPE_UPLOAD_FILE = "uploadFile";
+
 
     /**
      * 短信开关-开-true

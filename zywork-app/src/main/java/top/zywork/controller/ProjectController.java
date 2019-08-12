@@ -144,6 +144,10 @@ public class ProjectController extends BaseController {
 //            // 是已发布的状态
 //            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE);
 //        }
+        if (projectVO.getNoticeFlag() == 1) {
+            // 需要发送开标时间变更通知
+            projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK_UPDATE);
+        }
         int updateRows = projectService.update(BeanUtils.copy(projectVO, ProjectDTO.class));
         if (updateRows == 1) {
             return ResponseStatusVO.ok("更新成功", null);

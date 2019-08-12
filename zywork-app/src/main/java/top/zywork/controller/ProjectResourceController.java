@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +14,7 @@ import top.zywork.common.BeanUtils;
 import top.zywork.common.BindingResultUtils;
 import top.zywork.common.StringUtils;
 import top.zywork.common.UploadUtils;
+import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.ResourceConstants;
 import top.zywork.dto.PagerDTO;
 import top.zywork.dto.ProjectDTO;
@@ -25,10 +27,7 @@ import top.zywork.query.ProjectResourceQuery;
 import top.zywork.security.JwtUser;
 import top.zywork.security.SecurityUtils;
 import top.zywork.service.*;
-import top.zywork.vo.ResourceVO;
-import top.zywork.vo.ResponseStatusVO;
-import top.zywork.vo.PagerVO;
-import top.zywork.vo.ProjectResourceVO;
+import top.zywork.vo.*;
 import top.zywork.weixin.DeletePwdConfig;
 
 import java.io.File;
@@ -71,9 +70,13 @@ public class ProjectResourceController extends BaseController {
             projectResourceQuery.setIsActive((byte)0);
             Long count = projectResourceService.countByCondition(projectResourceQuery);
             Object obj = projectService.getById(projectResourceVO.getProjectId());
-            ProjectDTO projectDTO = BeanUtils.copy(obj, ProjectDTO.class);
-            projectDTO.setResourceCount(count.intValue());
-            projectService.update(projectDTO);
+            ProjectVO projectVO = BeanUtils.copy(obj, ProjectVO.class);
+            projectVO.setResourceCount(count.intValue());
+            projectService.update(projectVO);
+            if (projectResourceVO.getResType() == 4) {
+                // 上传的文件类型是答疑文件，需要给用户推送消息
+                projectService.subscribleNotice(projectVO, ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPLOAD_FILE);
+            }
         }
         return ResponseStatusVO.ok("添加成功", null);
     }
@@ -87,10 +90,17 @@ public class ProjectResourceController extends BaseController {
         return ResponseStatusVO.ok("批量添加成功", null);
     }
 
+    private void removeProjectResourceCount(ProjectResourceDTO projectResourceDTO) {
+        ProjectVO projectVO = BeanUtils.copy(projectService.getById(projectResourceDTO.getProjectId()), ProjectVO.class);
+        projectVO.setResourceCount(projectVO.getResourceCount() - 1);
+        projectService.update(projectVO);
+    }
+
     @GetMapping("admin/remove/{id}")
     public ResponseStatusVO removeById(@PathVariable("id") Long id) {
         ProjectResourceDTO projectResourceDTO = BeanUtils.copy(projectResourceService.getById(id), ProjectResourceDTO.class);
         Long resourceId = projectResourceDTO.getResourceId();
+        removeProjectResourceCount(projectResourceDTO);
         ResourceDTO resourceDTO = BeanUtils.copy(resourceService.getById(resourceId), ResourceDTO.class);
         String url = "/data/bid-system/" + resourceDTO.getUrl();
         File file = new File(url);
@@ -105,6 +115,10 @@ public class ProjectResourceController extends BaseController {
     @PostMapping("admin/batch-remove")
     public ResponseStatusVO removeByIds(@RequestBody String[] ids) {
         projectResourceService.removeByIds(StringUtils.strArrayToLongArray(ids));
+        for (String id : ids) {
+            ProjectResourceDTO projectResourceDTO = BeanUtils.copy(projectResourceService.getById(id), ProjectResourceDTO.class);
+            removeProjectResourceCount(projectResourceDTO);
+        }
         return ResponseStatusVO.ok("批量删除成功", null);
     }
 

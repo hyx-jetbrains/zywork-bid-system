@@ -339,6 +339,15 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                         content = "项目订阅开标通知：" + content + "于" + openMarkTime + "开标";
                         descContent = "您订阅的项目" + content + "于" + openMarkTime + "开标，具体内容可点击《立即查看》按钮前往查看";
                         templateParam.put("openMarkTime", openMarkTime);
+                    } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK_UPDATE.equalsIgnoreCase(type)) {
+                        title = "开标时间变更通知";
+                        content = "项目订阅开标通知：" + content + "开标时间变更为：" + openMarkTime + "开标,请注意您的行程安排";
+                        descContent = "您订阅的项目" +  content + "开标时间变更为：" + openMarkTime + "开标，,请注意您的行程安排，具体内容可点击《立即查看》按钮前往查看";
+                        templateParam.put("openMarkTime", openMarkTime);
+                    } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPLOAD_FILE.equalsIgnoreCase(type)) {
+                        title = "答疑文件更新通知";
+                        content = "项目订阅答疑文件更新通知：" + content + "有新的答疑文件更新";
+                        descContent = "您订阅的项目" +  content + "有新的答疑文件更新，具体内容可点击《立即查看》按钮前往查看";
                     }
 
                     templateParam.put("projectTitle", tempProjectTitle);
@@ -442,6 +451,12 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
         } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
             // 开标通知
             userNoticeVO.setNoticeType(NoticeEnum.BID_OPENING_MESSAGE.getValue());
+        } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK_UPDATE.equals(type)) {
+            // 开标时间变更通知 => 开标通知
+            userNoticeVO.setNoticeType(NoticeEnum.BID_OPENING_MESSAGE.getValue());
+        } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPLOAD_FILE.equals(type)) {
+            // 答疑文件更新通知 => 订阅通知
+            userNoticeVO.setNoticeType(NoticeEnum.SUBSCRIBE_MESSAGE.getValue());
         }
 
         userNoticeDAO.save(userNoticeVO);
@@ -464,27 +479,23 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 logger.error("短信发送失败,发送手机号为空");
                 return;
             }
-            if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
-                // 项目订阅提醒
-                if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getSubscribeNotice())) {
-                    // 只有配置中开启了短信提醒，才需要发送短信提醒
-                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
-                            templateParam, null);
-                    if (!sendSmsResponse.getCode().equals("OK")) {
-                        logger.error("{}:短信发送失败：{}", phones, sendSmsResponse.getMessage());
-                    }
+            if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getOpenMarkNotice())) {
+                // 只有配置中开启了短信提醒，才需要发送短信提醒
+                SendSmsResponse sendSmsResponse = null;
+                if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPDATE.equals(type)) {
+                    sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_SUBSCRIBE_NOTICE,
+                                templateParam, null);
+
+                } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
+                        // 只有配置中开启了短信提醒，才需要发送短信提醒
+                    sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE,
+                                templateParam, null);
                 }
-            } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK.equals(type)) {
-                // 开标提醒
-                if (ProjectConstants.SMS_SWITCH_TRUE.equals(smsSwitchConfig.getOpenMarkNotice())) {
-                    // 只有配置中开启了短信提醒，才需要发送短信提醒
-                    SendSmsResponse sendSmsResponse = AliyunSmsUtils.sendSms(aliyunSmsConfig, phones, SmsConstants.SMS_NOTICE_TEMPLATE_CODE_OPEN_MARK_NOTICE,
-                            templateParam, null);
-                    if (!sendSmsResponse.getCode().equals("OK")) {
-                        logger.error("{}:短信发送失败：{}", phones, sendSmsResponse.getMessage());
-                    }
+                if (sendSmsResponse != null && !sendSmsResponse.getCode().equals("OK")) {
+                    logger.error("{}:短信发送失败：{}", phones, sendSmsResponse.getMessage());
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -541,6 +552,14 @@ public class ProjectServiceImpl extends AbstractBaseService implements ProjectSe
                 first.setValue("您好，您有1个新的项目开标提醒");
                 keyword2.setValue("[" + projectType + "]开标时间:" + openMarkTime);
 //                statusIndex = 2;
+            } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_OPEN_MARK_UPDATE.equals(type)) {
+                // 开标时间变更提醒
+                first.setValue("您好，您订阅的项目开标时间有变更");
+                keyword2.setValue("[" + projectType + "]新的开标时间:" + openMarkTime);
+            } else if (ProjectConstants.PROJECT_SUBSCRIBE_TYPE_UPLOAD_FILE.equals(type)) {
+                // 答疑文件更新通知
+                first.setValue("您好，您订阅的项目有新的答疑文件更新");
+                keyword2.setValue("[" + projectType + "]有新的答疑文件更新");
             }
 //            miniProgramUrl.append("?statusIndex=").append(statusIndex);
 //            if (ProjectConstants.PROJECT_TYPE_HOUSE.equals(projectType)) {
