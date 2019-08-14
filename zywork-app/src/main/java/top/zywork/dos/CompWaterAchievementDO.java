@@ -39,7 +39,16 @@ public class CompWaterAchievementDO extends BaseDO {
 	private Byte isActive;
 	// 金额
 	private BigDecimal money;
+	// 内部地址
+	private String inwardHtmlUrl;
 
+	public String getInwardHtmlUrl() {
+		return inwardHtmlUrl;
+	}
+
+	public void setInwardHtmlUrl(String inwardHtmlUrl) {
+		this.inwardHtmlUrl = inwardHtmlUrl;
+	}
 	public BigDecimal getMoney() {
 		return money;
 	}

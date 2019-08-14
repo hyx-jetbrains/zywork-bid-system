@@ -21,6 +21,10 @@ public class PythonConstants {
      */
     public static final String COMP_HOUSE_ACHIEVEMENt_INFO_URL = "comp-house-achievement/house";
     /**
+     * 初始化房建业绩信息接口地址
+     */
+    public static final String COMP_HOUSE_ACHIEVEMENt_INIT_URL = "comp-house-achievement/initFile";
+    /**
      * 获取房建工程信息接口地址
      */
     public static final String PROJECT_HOUSE = "project/house";
@@ -107,7 +111,7 @@ public class PythonConstants {
     /**
      * 超时时间-1分钟-60秒-60000毫秒
      */
-    public static final int TIME_OUT = 60000;
+    public static final int TIME_OUT = 120000;
     /**
      * 默认查询页码-1
      */

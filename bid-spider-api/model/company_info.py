@@ -1,12 +1,47 @@
 import requests
 import json
 import time
+import uuid
 
 from model.company import Company
 from model.comp_personnel import CompPersonnel
 from model.comp_aptitude import CompAptitude
 from model.comp_builder import CompBuilder
 from model.comp_achievement import CompAchievement
+from bs4 import BeautifulSoup
+from selenium import webdriver
+
+
+# 获取html文本
+def getHtmlText(url):
+    # 调用本地的火狐浏览器，Chrom 甚至 Ie 也可以的
+    # driver=webdriver.PhantomJS(executable_path="/Applications/phantomjs-2.1.1-macosx/bin/phantomjs")
+    # 本地开发使用下面这个，线上请使用上面的
+    driver=webdriver.Safari()
+    # 请求页面，会打开一个浏览器窗口
+    print(url)
+    # 模拟访问url
+    driver.get(url)
+    # 配置页面加载超时时间
+    driver.set_page_load_timeout(10)
+    # 点击业绩
+    driver.find_element_by_link_text('公路施工业绩').click()
+    time.sleep(3)
+    # 定位到iframe
+    driver.switch_to.frame('main-frame')
+    time.sleep(3)
+    # 截屏保存图片
+    driver.save_screenshot('11.png')
+    # 清除所有的js
+    driver.find_element_by_tag_name('script').clear()
+    # 清除头部的搜索条件
+    driver.find_element_by_class_name('fui-condition').clear()
+
+    html_text=driver.page_source
+    # 退出浏览器
+    driver.quit()
+
+    return html_text
 
 # 获取cookie
 def getCookies(url):
@@ -22,7 +57,7 @@ def get_company_info(type, compType, pageNo, pageSize):
     # current_comp_info_file = open('current_comp_info_file.txt', 'r+')
     # 获取已爬取的最新的链接
     # current_comp_info_href = current_comp_info_file.readline()
-    response = requests.get(url="http://jxsggzy.cn/jxggzy/services/JyxxWebservice/getTradeList?response=application/json&pageIndex="+pageNo+"&pageSize="+pageSize+"&&dsname=ztb_data&bname=&qytype="+type+"&itemvalue=" + compType)
+    response = requests.get(url="http://jxsggzy.cn/jxggzy/services/JyxxWebservice/getTradeList?response=application/json&pageIndex="+pageNo+"&pageSize="+pageSize+"&&dsname=ztb_data&bname=&qytype="+type+"&itemvalue=" + compType, timeout=60000)
     # 获取返回的内容为json字符串
     text = response.text
     textJson = json.loads(text)
@@ -32,6 +67,7 @@ def get_company_info(type, compType, pageNo, pageSize):
 
     # latest_flag = False
     companys = []
+    i = 0
     for table in tableJson:
         company = Company()
         alink = table['alink']
@@ -57,6 +93,8 @@ def get_company_info(type, compType, pageNo, pageSize):
         #     # 网站没有更新新数据，则停止爬取
         #     break
 
+        print(i)
+        print(pageUrl)
         company.sourceUrl = pageUrl
 
         requestsCookies = getCookies(pageUrl)
@@ -64,8 +102,19 @@ def get_company_info(type, compType, pageNo, pageSize):
         controls = get_detail_info(requestsCookies, scrfcokie, detailUrl, compType, alink)
         company = set_company_type(type, compType, company, requestsCookies, scrfcokie, personnelUrl, alink)
         company = set_company_info(controls, company)
+        # 方案一
+        # detailResponse = requests.get(pageUrl, timeout=60000)
+        # # 获取文本原来编码，使两者编码一致才能正确显示
+        # detailResponse.encoding = detailResponse.apparent_encoding
+        # # 使用的是html解析，一般使用lxml解析更好
+        # detailSoup = BeautifulSoup(detailResponse.text, 'html5lib')
+        # company.contentDetail = str(detailSoup)
+        # 方案二
+        # company.contentDetail = getHtmlText(pageUrl)
+        # 关闭文件
         # current_comp_info_file.close()
         companys.append(company.__dict__)
+        i = i+1
     return companys
 
 
@@ -82,7 +131,7 @@ def set_company_info(controls, company):
             company.compName = value
         if id == 'unitorgnum':
             # 组织机构/信用代码
-            print(value)
+            print('组织机构/信用代码:' + value)
         if id == 'faren':
             # 法定代表人
             company.legalPerson = value
@@ -92,45 +141,45 @@ def set_company_info(controls, company):
             company.regAddress = value
         if id == 'guoshuino':
             # 国税登记证编号
-            print(value)
+            print('国税登记证编号:' + value)
         if id == 'dishuino':
             # 地税登记证编号
-            print(value)
+            print('地税登记证编号:'+ value)
         if id == 'licencenum':
             # 营业执照号码
-            print(value)
+            print('营业执照号码:' + value)
         if id == 'zhuceziben':
             # 注册资本
             company.regCapital = value
         if id == 'currency':
             # 注册资本币种 156
-            print(value)
+            print('注册资本币种:' + value)
         if id == 'yingyeqixianfrom':
             # 营业期限开始 1027612800000
             value = format_date_time(value)
-            print(value)
+            print('营业期限开始:' + value)
         if id == 'yingyeqixianto':
             # 营业期限结束 2605449600000
             value = format_date_time(value)
-            print(value)
+            print('营业期限结束:' + value)
         if id == 'jinyingfanwei':
             # 经营范围
             company.businessScope = value
         if id == 'faren2':
             # 企业负责人
-            print(value)
+            print('企业负责人' + value)
         if id == 'farenzhiwu':
             # 职务
-            print(value)
+            print('farenzhiwu:' + value)
         if id == 'farenzhicheng':
             # 职称
-            print(value)
+            print('职称:' + value)
         if id == 'faren2':
             # 企业负责人
-            print(value)
+            print('企业负责人:' + value)
         if id == 'faren2':
             # 企业负责人
-            print(value)
+            print('企业负责人:' + value)
         if id == 'localtel':
             # 联系电话
             company.compPhone = value
@@ -542,6 +591,9 @@ def set_comp_achievement_info(controls, compType):
                 if validStatus == '3':
                     validStatus = '审核通过'
                 compAchievement.validStatus = validStatus
+                # 生成静态文件
+                compAchievement.inwardHtmlUrl = generate_html('traffic.html', data)
+
             elif compType == compTypeWaterBidder:
                 # 水利施工单位
                 contractAmount = data['hetongjine']
@@ -553,6 +605,7 @@ def set_comp_achievement_info(controls, compType):
                 endDate = format_date_time(data['jungongdate'])
                 compAchievement.endDate = endDate
                 compAchievement.name = data['pname']
+                compAchievement.inwardHtmlUrl = generate_html('water.html', data)
             elif compType == compTypeKeyProjectBidder:
                 # 重点工程施工单位
                 compAchievement.buildComp = data['jianshedanweiname']
@@ -594,3 +647,28 @@ def format_date_time(tempTime):
         timeArray = time.localtime(tempTime)
         tempTime = time.strftime("%Y-%m-%d", timeArray)
     return tempTime
+
+# 生成html静态文件
+def generate_html(modal, data):
+    with open(modal, 'r+') as wb_data:
+        soup = BeautifulSoup(wb_data, 'html5lib')
+        for key in data:
+            span = soup.find(id=key)
+            val = data[key]
+            if span is not None and val is not '':
+                span.string = str(val)
+        # 文件储存路径-线上
+        path = '/data/bid-system/upload/file/'
+        # 文件储存路径-本地
+        # path = 'temp/'
+        # 文件名
+        newFileName = str(uuid.uuid1()) + '.html'
+        inwardHtmlUrl = '/upload/file/' + newFileName
+        # 文件路径
+        filePath = path + newFileName
+        # 创建文件
+        tempHtml = open(filePath, 'w')
+        tempHtml.write(str(soup))
+        # 关闭文件
+        tempHtml.close()
+        return inwardHtmlUrl

@@ -7,52 +7,64 @@ from model.project.project import Project
 
 # 其他项目
 def get_other_project(pageNo):
-    # current_other_file = open('current_other_file.txt', 'r+')
-    # 获取已爬取的最新的链接
-    # current_other_href = current_other_file.readline()
-    response = requests.get(url="http://ggzy.jiangxi.gov.cn/web/jyxx/002013/002013001/"+pageNo+".html")
-    # 获取文本原来编码，使两者编码一致才能正确显示
-    response.encoding = response.apparent_encoding
-    # 使用的是html解析，一般使用lxml解析更好
-    soup = BeautifulSoup(response.text, 'html5lib')
-    target = soup.find('div', {'class': 'ewb-infolist'})
-    li_list = target.ul.find_all('li')
-    latest_flag = False
     projects = []
-    for li in li_list:
-        href = 'http://ggzy.jiangxi.gov.cn' + li.a.get('href')
-        # 如果已爬取的最新链接不等于现在抓取的链接，则表示网站有更新新数据
-        # if current_other_href != href:
-        #     if not latest_flag:
-        #         # 清除文件原内容
-        #         current_other_file.seek(0)
-        #         current_other_file.truncate()
-        #         # 记录新链接到文件中
-        #         current_other_file.write(href)
-        #         latest_flag = True
-        # else:
-        #     # 网站没有更新新数据，则停止爬取
-        #     break
-        project = Project()
-        project.projectType = '其他项目'
-        project.title = li.a.text
-        project.sourceUrl = href
-        # 打开招标详情页面
-        project_res = requests.get(href)
-        project_res.encoding = project_res.apparent_encoding
-        project_soup = BeautifulSoup(project_res.text, 'html5lib')
-        # 获取招标信息主体文档
-        article_info = project_soup.find('div', {'class': 'article-info'})
-        get_from_table(project, article_info)
-        # 去除页面底部查看操作说明 与 交易主体登录按钮
-        [s.extract() for s in article_info.find_all('a', {'class': 'buttomlink'})]
-        project.projectDetail = str(article_info)
-        # project.noticeTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        project.noticeTime = project_soup.find('p', {'class': 'infotime'}).text.replace('[', '').replace(']', '')
-        projects.append(project.__dict__)
-    # current_other_file.close()
-    print(projects)
-    return projects
+    try:
+        # current_other_file = open('current_other_file.txt', 'r+')
+        # 获取已爬取的最新的链接
+        # current_other_href = current_other_file.readline()
+        response = requests.get(url="http://ggzy.jiangxi.gov.cn/web/jyxx/002013/002013001/"+pageNo+".html", timeout=60000)
+        # 获取文本原来编码，使两者编码一致才能正确显示
+        response.encoding = response.apparent_encoding
+        # 使用的是html解析，一般使用lxml解析更好
+        soup = BeautifulSoup(response.text, 'html5lib')
+        target = soup.find('div', {'class': 'ewb-infolist'})
+        li_list = target.ul.find_all('li')
+        latest_flag = False
+
+        i = 0
+        for li in li_list:
+            if i >= 22:
+                break
+            href = 'http://ggzy.jiangxi.gov.cn' + li.a.get('href')
+            # 如果已爬取的最新链接不等于现在抓取的链接，则表示网站有更新新数据
+            # if current_other_href != href:
+            #     if not latest_flag:
+            #         # 清除文件原内容
+            #         current_other_file.seek(0)
+            #         current_other_file.truncate()
+            #         # 记录新链接到文件中
+            #         current_other_file.write(href)
+            #         latest_flag = True
+            # else:
+            #     # 网站没有更新新数据，则停止爬取
+            #     break
+            project = Project()
+            project.projectType = '其他项目'
+            project.title = li.a.text
+            project.sourceUrl = href
+            # 打开招标详情页面
+            project_res = requests.get(href, timeout=60000)
+            print(i)
+            print(href)
+            project_res.encoding = project_res.apparent_encoding
+            project_soup = BeautifulSoup(project_res.text, 'html5lib')
+            # 获取招标信息主体文档
+            article_info = project_soup.find('div', {'class': 'article-info'})
+            get_from_table(project, article_info)
+            # 去除页面底部查看操作说明 与 交易主体登录按钮
+            [s.extract() for s in article_info.find_all('a', {'class': 'buttomlink'})]
+            project.projectDetail = str(article_info)
+            # project.noticeTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            project.noticeTime = project_soup.find('p', {'class': 'infotime'}).text.replace('[', '').replace(']', '')
+            projects.append(project.__dict__)
+            i = i + 1
+        # current_other_file.close()
+        print(projects)
+        return projects
+    except ConnectionError:
+        print('error')
+        print(projects)
+        return projects
 
 
 # 从表格中获取招标信息
@@ -76,7 +88,10 @@ def get_from_td(article_info, zh_text):
     if tag is not None:
         td = tag.parent.parent
         if td.name == 'td':
-            text = td.next_sibling.next_sibling.span.text
-            return text
+            try:
+                text = td.next_sibling.next_sibling.span.text
+                return text
+            except AttributeError:
+                return ''
     return None
 

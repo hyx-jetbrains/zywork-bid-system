@@ -47,6 +47,16 @@ public class CompWaterAchievementCompanyDO extends BaseDO {
 	private String companyCompName;
 	// 金额
 	private BigDecimal money;
+	// 内部地址
+	private String compWaterAchievementInwardHtmlUrl;
+
+	public String getCompWaterAchievementInwardHtmlUrl() {
+		return compWaterAchievementInwardHtmlUrl;
+	}
+
+	public void setCompWaterAchievementInwardHtmlUrl(String compWaterAchievementInwardHtmlUrl) {
+		this.compWaterAchievementInwardHtmlUrl = compWaterAchievementInwardHtmlUrl;
+	}
 
 	public BigDecimal getMoney() {
 		return money;

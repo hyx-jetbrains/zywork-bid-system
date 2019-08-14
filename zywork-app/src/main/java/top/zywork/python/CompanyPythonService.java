@@ -26,9 +26,10 @@ public interface CompanyPythonService {
     /***
      * @description:  获取企业房建业绩信息
      * @param isUpdate 是否更新数据标识：true-需要更新，false-不需要更新
+     * @param isInit 是否初始化文件信息，页面爬取需要初始化，定时任务不需要
      * @return: void
      * @author: 危锦辉 http://wjhsmart.vip
      * @date: 2019-06-05 17:29
      */
-    void getCompHouseAchievement(String pageNo, boolean isUpdate) throws Exception;
+    void getCompHouseAchievement(String pageNo, boolean isUpdate, boolean isInit) throws Exception;
 }

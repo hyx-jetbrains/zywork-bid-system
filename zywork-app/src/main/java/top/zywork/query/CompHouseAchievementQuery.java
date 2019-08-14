@@ -151,6 +151,26 @@ public class CompHouseAchievementQuery extends PageQuery {
 	private BigDecimal moneyMax;
 	// 金额
 	private BigDecimal money;
+	// 源地址
+	private String sourceUrl;
+	// 内部地址
+	private String inwardHtmlUrl;
+
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
+	public String getInwardHtmlUrl() {
+		return inwardHtmlUrl;
+	}
+
+	public void setInwardHtmlUrl(String inwardHtmlUrl) {
+		this.inwardHtmlUrl = inwardHtmlUrl;
+	}
 
 	public BigDecimal getMoneyMin() {
 		return moneyMin;

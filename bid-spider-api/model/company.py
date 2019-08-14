@@ -37,3 +37,5 @@ class Company:
     compBuilderList = []
     # 企业业绩
     compAchievementList = []
+    # 源地址
+    sourceUrl = ''

@@ -1,0 +1,152 @@
+body {
+    font-family: "Microsoft YaHei",Tahoma,Verdana;
+    line-height: 46px;
+    color: #3d4b64;
+}
+html, body, .scale100 {
+  overflow: scroll;
+}
+.fui-content {
+  overflow: scroll;
+}
+
+.form-control {
+    background-color: #fff;
+    font-size: 32px;
+}
+
+.form-label {
+    display: block;
+    box-sizing: border-box!important;
+    font-size: 32px;
+    min-height: 46px;
+    padding-right: 5px;
+    font-weight: bold;
+}
+/* 左右2列布局 */
+.fui-left {
+    border-right: 1px solid #fff;
+    background-color: #f7f7f7;
+}
+
+.fui-left.closed {
+    background-color: #e2e2e2;
+}
+
+.fui-left-hd {
+    height: 34px;
+
+    border-bottom: 0;
+    background-color: #e2e2e2;
+}
+.fui-left-title {
+    font-size: 18px;
+    font-weight: normal;
+
+    color: #000;
+}
+
+/* 手风琴布局 */
+
+.fui-acc-hd {
+
+    height: 40px;
+    padding: 0;
+
+    font-size: 20px;
+    line-height: 40px;
+
+    background: #d1d1d1;
+    border-bottom: 0;
+    color: #333;
+}
+.fui-acc-title {
+    margin-left: 20px;
+}
+.fui-acc-order {
+    width: 24px;
+    padding: 0 6px;
+}
+.fui-acc-toggle {
+    top: 0;
+    right: 20px;
+
+    width: 20px;
+    height: 40px;
+
+
+}
+.fui-accordion.opened .fui-acc-toggle {
+    background: url('images/accLayout/icon-acc-pm.png') -30px 10px no-repeat;
+}
+.fui-accordion.closed .fui-acc-toggle {
+    background: url('images/accLayout/icon-acc-pm.png') 0 10px no-repeat;
+}
+.fui-acc-title {
+    float: left;
+
+    margin-right: 20px;
+}
+.fui-acc-bd {
+    padding: 5px;
+
+    background-color: #fff;
+}
+
+/* toolbar工具栏 */
+
+.fui-toolbar {
+    /*height: 26px;
+    padding: 5px;*/
+
+    background-color: #e2e2e2;
+}
+
+.fui-toolbar-helper {
+	/*line-height: 26px;
+	height: 26px;*/
+}
+/* 搜索条件区域 */
+.fui-condition {
+    background-color: #eeeced;
+}
+.fui-condition .cond-srh-btn {
+    /*top: 3px;*/
+}
+.cond-srh-btn {
+    /*height: 34px;
+    line-height: 34px;*/
+}
+.cond-srh-btn-text {
+    /*display: block;
+
+    height: 100%;
+    padding-right: 10px;
+    padding-left: 28px;
+
+    font-size: 13px;
+
+    color: #fff;
+    background: url('images/contentPage/search.png') no-repeat 8px center;*/
+    background-color: #00930f;
+}
+.cond-srh-btn-text:hover {
+    background-color: #029403;
+}
+.cond-srh-btn-toggle {
+    /*width: 20px;
+    height: 100%;
+
+    text-align: center;*/
+
+    background-color: #00930f;
+}
+.cond-srh-btn-toggle.opened,
+.cond-srh-btn-toggle:hover {
+    background-color: #029403;
+}
+
+.text-special,
+a.text-special:hover {
+    color: #6e612f;
+}

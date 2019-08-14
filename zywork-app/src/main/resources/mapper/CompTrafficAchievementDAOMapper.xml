@@ -52,6 +52,9 @@
 			<if test="isActive != null">
 				is_active,
 			</if>
+			<if test="inwardHtmlUrl != null">
+				inward_html_url,
+			</if>
 			
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -96,6 +99,9 @@
 			</if>
 			<if test="isActive != null">
 				#{isActive},
+			</if>
+			<if test="inwardHtmlUrl != null">
+				#{inwardHtmlUrl},
 			</if>
 			
         </trim>
@@ -150,6 +156,9 @@
 			<if test="item.isActive != null">
 				is_active,
 			</if>
+				<if test="item.inwardHtmlUrl != null">
+					inward_html_url,
+				</if>
 			
             </trim>
             <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -195,6 +204,9 @@
 			<if test="item.isActive != null">
 				#{item.isActive},
 			</if>
+				<if test="item.inwardHtmlUrl != null">
+					#{item.inwardHtmlUrl},
+				</if>
 			
             </trim>
         </foreach>
@@ -256,6 +268,9 @@
 			<if test="isActive != null">
 				is_active = #{isActive},
 			</if>
+			<if test="inwardHtmlUrl != null">
+				inward_html_url = #{inwardHtmlUrl},
+			</if>
 			update_time = CURRENT_TIMESTAMP,
         </set>
         where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
@@ -307,6 +322,9 @@
 			<if test="item.isActive != null">
 				is_active = #{item.isActive},
 			</if>
+				<if test="item.inwardHtmlUrl != null">
+					inward_html_url = #{item.inwardHtmlUrl},
+				</if>
 			update_time = CURRENT_TIMESTAMP,
                 <if test="item.version == null">
                     version = version + 1,
@@ -317,7 +335,7 @@
     </update>
 
     <sql id="select_columns">
-        money as money, id as id, comp_id as compId, project_name as projectName, name as name, technology_name as technologyName, contract_amount as contractAmount, work_addr as workAddr, start_date as startDate, end_date as endDate, valid_status as validStatus, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        inward_html_url as inwardHtmlUrl, money as money, id as id, comp_id as compId, project_name as projectName, name as name, technology_name as technologyName, contract_amount as contractAmount, work_addr as workAddr, start_date as startDate, end_date as endDate, valid_status as validStatus, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
@@ -443,6 +461,9 @@
 		</if>
 		<if test="query != null and query.isActiveMin != null and query.isActiveMax != null">
 			and is_active <![CDATA[ >= ]]> #{query.isActiveMin} and is_active <![CDATA[ <= ]]> #{query.isActiveMax}
+		</if>
+		<if test="query != null and query.inwardHtmlUrl != null and query.inwardHtmlUrl != null">
+			and inward_html_url like concat('%', #{query.inwardHtmlUrl}, '%')
 		</if>
 		
     </sql>

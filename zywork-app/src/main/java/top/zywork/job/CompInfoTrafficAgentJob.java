@@ -43,6 +43,7 @@ public class CompInfoTrafficAgentJob implements Job {
             IOUtils.writeText(tempPageNo + "", path);
         } catch (Exception e) {
             logger.error("CompInfoTrafficAgentJob Error:pageNo:{}", pageNo);
+            e.printStackTrace();
         }
         logger.info("executed CompInfoTrafficAgentJob......");
     }

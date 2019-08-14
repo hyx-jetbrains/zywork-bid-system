@@ -27,3 +27,5 @@ class CompAchievement:
     projectType = ''
     # 合同签订日期
     contractDate = ''
+    # 内部地址
+    inwardHtmlUrl = ''

@@ -43,6 +43,7 @@ public class CompInfoKeyProjectBidderJob implements Job {
             IOUtils.writeText(tempPageNo + "", path);
         } catch (Exception e) {
             logger.error("CompInfoKeyProjectBidderJob Error:pageNo:{}", pageNo);
+            e.printStackTrace();
         }
         logger.info("executed CompInfoKeyProjectBidderJob......");
     }

@@ -109,6 +109,26 @@ public class CompHouseAchievementCompanyDO extends BaseDO {
 	private String companyCompName;
 	// 金额
 	private BigDecimal money;
+	// 源地址
+	private String compHouseAchievementSourceUrl;
+	// 内部地址
+	private String compHouseAchievementInwardHtmlUrl;
+
+	public String getCompHouseAchievementSourceUrl() {
+		return compHouseAchievementSourceUrl;
+	}
+
+	public void setCompHouseAchievementSourceUrl(String compHouseAchievementSourceUrl) {
+		this.compHouseAchievementSourceUrl = compHouseAchievementSourceUrl;
+	}
+
+	public String getCompHouseAchievementInwardHtmlUrl() {
+		return compHouseAchievementInwardHtmlUrl;
+	}
+
+	public void setCompHouseAchievementInwardHtmlUrl(String compHouseAchievementInwardHtmlUrl) {
+		this.compHouseAchievementInwardHtmlUrl = compHouseAchievementInwardHtmlUrl;
+	}
 
 	public BigDecimal getMoney() {
 		return money;

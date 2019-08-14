@@ -32,7 +32,7 @@
 					<!-- 房建业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.compHouseAchievementProjectName}}</view>
+						<view class="zy-disable-flex-right zy-detail-phone" @click="toWebViewPage('房建业绩详情', item.compHouseAchievementInwardHtmlUrl)">{{item.compHouseAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">注册建造师</view>
@@ -181,7 +181,7 @@
 					<!-- 水利业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.compWaterAchievementProjectName}}</view>
+						<view class="zy-disable-flex-right zy-detail-phone" @click="toWebViewPage('水利业绩详情', item.compWaterAchievementInwardHtmlUrl)">{{item.compWaterAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人</view>
@@ -206,7 +206,7 @@
 					<!-- 交通业绩 -->
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">工程名称</view>
-						<view class="zy-disable-flex-right">{{item.compTrafficAchievementProjectName}}</view>
+						<view class="zy-disable-flex-right zy-detail-phone" @click="toWebViewPage('交通业绩详情', item.compTrafficAchievementInwardHtmlUrl)">{{item.compTrafficAchievementProjectName}}</view>
 					</view>
 					<view class="zy-disable-flex zy-page-list-item">
 						<view class="zy-text-bold">项目负责人</view>
@@ -388,7 +388,21 @@
 			/** 验证文字 */
 			validText(text) {
 				validText(text);
-			}
+			},
+			/** 前往webview页面 */
+			toWebViewPage(title, url) {
+				if (!url) {
+					showInfoToast('暂无详细信息')
+					return
+				}
+				var item = {
+					'title': title,
+					'url': url
+				}
+				uni.navigateTo({
+					url: '/pages-static/web-view/web-view?itemData=' + encodeURIComponent(JSON.stringify(item))
+				});
+			},
 		}
 	}
 </script>

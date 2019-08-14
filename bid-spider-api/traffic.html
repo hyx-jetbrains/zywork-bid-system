@@ -1,0 +1,1215 @@
+<html class="mini-xs mini-sm mini-md mini-lg mini-lg-active">
+
+<head>
+  <title>查看业绩</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="./miniui.css?_t=9.1.16.1">
+  <link rel="stylesheet" href="./common.min.css?_t=9.1.16.1">
+  <link rel="stylesheet" href="./skin.css?_t=9.1.16.1">
+
+</head>
+
+<body>
+
+  <div class="fui-content">
+    <div class="fui-accordions">
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="交易主体业绩信息  " class="fui-acc-hd"><span class="fui-acc-order">01</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">交易主体业绩信息 </h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="fui-form">
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">工程名称：</label>
+                <div label="工程名称" class="form-control span2">
+                  <span class="mini-outputtext" id="biaoduanname" style="border-width: 0px;"
+                    ></span>
+                </div>
+                <label class="form-label">项目类型：</label>
+                <div label="项目类型" class="form-control span2">
+                  <span class="mini-outputtext" id="xiangmutype" style="border-width: 0px;" ></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">合同段名称：</label>
+                <div label="合同段名称" class="form-control span5">
+                  <span class="mini-outputtext" id="hetongduanname" style="border-width: 0px;"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">建设性质：</label>
+                <div label="建设性质" class="form-control span2">
+                  <span class="mini-outputtext" id="jianshetype" style="border-width: 0px;" ></span>
+                </div>
+                <label class="form-label">建设状态：</label>
+                <div label="建设状态" class="form-control span2">
+                  <span class="mini-outputtext" id="iszaijian" style="border-width: 0px;"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">项目负责人：</label>
+                <div label="项目负责人" class="form-control span2">
+                  <span class="mini-outputtext" id="pname" style="border-width: 0px;" ></span>
+                </div>
+                <label class="form-label">技术负责人：</label>
+                <div label="技术负责人" class="form-control span2">
+                  <span class="mini-outputtext" id="jspname" style="border-width: 0px;" ></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">合同金额：</label>
+                <div label="合同金额" class="form-control span2">
+                  <div style="float: left;">
+                    <span class="mini-outputtext" id="hetongjine" style="border-width: 0px; float: left; padding: 0px;"
+                      ></span>
+                    &nbsp;&nbsp;万元
+                  </div>
+                </div>
+                <label class="form-label">结算金额：</label>
+                <div label="结算金额" class="form-control span2">
+                  <div style="float: left;">
+                    <span class="mini-outputtext" id="jiesuanmoney"
+                      style="border-width: 0px; float: left; padding: 0px;"></span>
+                    &nbsp;&nbsp;万元
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">工程地点：</label>
+                <div label="工程地点" class="form-control span2">
+                  <span class="mini-outputtext" id="biaoduanaddress" style="border-width: 0px;" ></span>
+                </div>
+                <label class="form-label">质量评定：</label>
+                <div label="质量评定" class="form-control span2">
+                  <span class="mini-outputtext" id="zhiliangpdstatus" style="border-width: 0px;"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">开工时间：</label>
+                <div label="开工时间" class="form-control span2">
+                  <span class="mini-outputtext" id="kaigongdate" style="border-width: 0px;"
+                    ></span>
+                </div>
+                <label class="form-label">交工日期：</label>
+                <div label="交工日期" class="form-control span2">
+                  <span class="mini-outputtext" id="xiangmuendtime" style="border-width: 0px;"
+                    ></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">竣工时间：</label>
+                <div label="竣工时间" class="form-control span2">
+                  <span class="mini-outputtext" id="jungongdate" style="border-width: 0px;" ></span>
+                </div>
+                <label class="form-label">验证状态：</label>
+                <div label="验证状态" class="form-control span2">
+                  <span class="mini-outputtext" style="border-width: 0px;" title="审核通过">审核通过</span>
+                  <span class="mini-outputtext" id="auditstatus" style="border-width: 0px; display: none; padding: 0px;"
+                   ></span>
+                </div>
+              </div>
+              <div id="reason" class="form-row" style="display: none;">
+                <label class="form-label">验证不通过原因：</label>
+                <div label="验证不通过原因" class="form-control span5">
+                  <span class="mini-outputtext" id="backreason" style="border-width: 0px;" ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="路基" class="fui-acc-hd"><span class="fui-acc-order">02</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">路基</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="fui-form">
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">主线长度(km)：</label>
+                <div label="主线长度(km)" class="form-control span2">
+                  <span class="mini-outputtext" id="lujichangdu" style="border-width: 0px;"></span>
+                </div>
+                <label class="form-label">车道数：</label>
+                <div label="车道数" class="form-control span2">
+                  <span class="mini-outputtext" id="lujichedaoshu" style="border-width: 0px;"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="路面" class="fui-acc-hd"><span class="fui-acc-order">03</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">路面</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="fui-form">
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">主线长度(km)：</label>
+                <div label="主线长度(km)" class="form-control span2">
+                  <span class="mini-outputtext" id="lumianchangdu" style="border-width: 0px;"></span>
+                </div>
+                <label class="form-label">车道数：</label>
+                <div label="车道数" class="form-control span2">
+                  <span class="mini-outputtext" id="lumianchedaoshu" style="border-width: 0px;"></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">路面类型：</label>
+                <div label="路面类型" class="form-control span2">
+                  <span class="mini-outputtext" id="lumianleixing" style="border-width: 0px;" ></span>
+                </div>
+                <label class="form-label">表面层面积(m²)：</label>
+                <div label="表面层面积(m²)" class="form-control span2">
+                  <span class="mini-outputtext" id="biaomianmianji" style="border-width: 0px;"
+                    ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="桥梁" class="fui-acc-hd"><span class="fui-acc-order">04</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">桥梁</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="form-wrap">
+            <div class="form-content">
+              <div class="mini-panel mini-grid mini-datagrid" tabindex="0" id="datagridOfQL"
+                style="border-width: 0px; width: 100%; display: block; padding: 0px;">
+                <div class="mini-panel-border mini-grid-border">
+                  <div class="mini-panel-header" style="display: none;">
+                    <div class="mini-panel-header-inner"><span class="mini-panel-icon mini-icon mini-iconfont "
+                        style="display: none;"></span>
+                      <div class="mini-panel-title">&nbsp;</div>
+                      <div class="mini-tools"><span id="0" class="mini-icon mini-iconfont fa mini-tools-collapse "
+                          style=";display:none;"></span><span id="1"
+                          class="mini-icon mini-iconfont fa mini-tools-close " style="display:none;"></span></div>
+                    </div>
+                  </div>
+                  <div class="mini-panel-viewport mini-grid-viewport" style="height: auto;">
+                    <div class="mini-panel-toolbar" style="display: none;"></div>
+                    <div class="mini-grid-columns" style="display: block;">
+                      <div class="mini-grid-columns-lock" style="left: -10px; width: 0px; height: auto;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 0px;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-topRightCell"></div>
+                      </div>
+                      <div class="mini-grid-columns-view"
+                        style="margin-left: 0px; width: auto; height: auto; padding-right: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="1" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="2" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="3" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="4" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="5" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="6" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="7" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-26$headerCell2$1" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">序号</div>
+                                  <div id="1" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-26$headerCell2$2" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">桥梁规模</div>
+                                  <div id="2" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-26$headerCell2$3" class="mini-grid-headerCell    mini-grid-bottomCell"
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap " title="">桥梁名称
+                                  </div>
+                                  <div id="3" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-26$headerCell2$4" class="mini-grid-headerCell    mini-grid-bottomCell"
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap " title="">主跨桥形
+                                  </div>
+                                  <div id="4" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-26$headerCell2$5" class="mini-grid-headerCell    mini-grid-bottomCell"
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap " title="">最大跨径(m)
+                                  </div>
+                                  <div id="5" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-26$headerCell2$6" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">总长(m)</div>
+                                  <div id="6" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-26$headerCell2$7"
+                                class="mini-grid-headerCell    mini-grid-bottomCell  mini-grid-rightCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">车道数</div>
+                                  <div id="7" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-topRightCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-grid-filterRow" style="display: none;">
+                      <div class="mini-grid-filterRow-lock" style="height: 100%; left: -10px; width: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0"
+                          style="position:absolute;top:0;left:0;height:100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-filterRow-view"
+                        style="margin-left: 0px; width: auto; padding-right: 0px; height: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0"
+                          style="position: absolute; top: 0px; left: 0px; height: 100%; width: 1290px;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="1" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="2" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="3" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="4" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="5" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="6" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="7" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-26$filter$1" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-26$filter$2" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-26$filter$3" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-26$filter$4" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-26$filter$5" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-26$filter$6" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-26$filter$7" class="mini-grid-filterCell" style="">&nbsp;</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-panel-body mini-grid-rows" style="height: auto;">
+                      <div class="mini-grid-rows-lock" style="left: -10px; width: 0px; height: auto;">
+                        <div class="mini-grid-rows-content">
+                          <table class="mini-grid-table mini-grid-rowstable" cellspacing="0" cellpadding="0" border="0"
+                            style="width: 0px;">
+                            <tbody>
+                              <tr style="height:1px;">
+                                <td style="height:0px;width:0;"></td>
+                                <td style="width:0px;"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="mini-grid-rows-view" style="margin-left: 0px; width: 100%;">
+                        <div class="mini-grid-rows-content">
+                          <table class="mini-grid-table mini-grid-rowstable" cellspacing="0" cellpadding="0" border="0"
+                            style="width: 100%;">
+                            <tbody>
+                              <tr style="height:1px;">
+                                <td style="height:0px;width:0;"></td>
+                                <td id="1" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                                <td id="2" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="3" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="4" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="5" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="6" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="7" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td style="width:0px;"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="mini-grid-vscroll" style="display: none;">
+                        <div class="mini-grid-vscroll-content"></div>
+                      </div>
+                    </div>
+                    <div class="mini-grid-summaryRow" style="display: none;">
+                      <div class="mini-grid-summaryRow-lock" style="left: -10px; width: 0px; height: auto;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-summaryRow-view"
+                        style="margin-left: 0px; width: auto; height: auto; padding-right: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="1" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="2" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="3" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="4" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="5" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="6" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="7" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-26$summary$1_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-26$summary$2_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-26$summary$3_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-26$summary$4_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-26$summary$5_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-26$summary$6_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-26$summary$7_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-grid-pager" style="display: none;">
+                      <div class="mini-pager" id="mini-28">
+                        <div class="mini-pager-left">
+                          <table cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                              <tr>
+                                <td><span class="mini-pager-sizetext" style="display: none;"></span><span
+                                    class="mini-pager-size"><span class="mini-buttonedit mini-combobox mini-popupedit"
+                                      id="mini-29" style="border-width: 0px;"><span
+                                        class="mini-buttonedit-border mini-corner-all"><input type="text"
+                                          class="mini-buttonedit-input" autocomplete="off" placeholder=""
+                                          readonly=""><span class="mini-buttonedit-buttons"><span
+                                            class="mini-buttonedit-close mini-icon" name="close"></span><span title=""
+                                            name="trigger" class="mini-buttonedit-button mini-buttonedit-trigger"
+                                            onmouseover="mini.addClass(this, 'mini-buttonedit-button-hover');"
+                                            onmouseout="mini.removeClass(this, 'mini-buttonedit-button-hover');"><span
+                                              class="mini-buttonedit-icon mini-icon mini-iconfont "></span></span></span></span><input
+                                        name="" type="hidden" value="999"></span><span
+                                      class="separator"></span></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-firstbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-32"><i
+                                      class="mini-button-icon mini-pager-first"></i></a><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-prevbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-33"><i
+                                      class="mini-button-icon mini-pager-prev"></i></a><span
+                                    class="mini-pager-index"><input type="text" class="mini-pager-num"><span
+                                      class="mini-pager-pages">/ 0</span></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-nextbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-34"><i
+                                      class="mini-button-icon mini-pager-next"></i></a><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-lastbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-35"><i
+                                      class="mini-button-icon mini-pager-last"></i></a><span class="separator"
+                                    style="display: none;"></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-button-plain"
+                                    href="javascript:void(0)" id="mini-36" style="display: none;"><i
+                                      class="mini-button-icon mini-pager-reload"></i></a></td>
+                                <td>
+                                  <div class="mini-page-buttons"></div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="mini-pager-right">每页 999 条, 共 0 条</div>
+                      </div>
+                    </div>
+                    <div class="mini-panel-footer" style="display: none;"></div>
+                    <div class="mini-resizer-trigger" style="display: none;"></div>
+                  </div><a href="#" class="mini-grid-focus"
+                    style="position:absolute;left:0px;top:0px;width:0px;height:0px;outline:none;" hidefocus=""
+                    onclick="return false"></a>
+                </div>
+              </div>
+              <div class="fui-form">
+                <div class="form-inner">
+                  <div class="form-row">
+                    <label class="form-label">中小桥数量：</label>
+                    <div label="中小桥数量" class="form-control span2">
+                      <span class="mini-outputtext" id="zhongxiaoqiaonum" style="border-width: 0px;" title=""></span>
+                    </div>
+                    <label class="form-label">中小桥长度(m)：</label>
+                    <div label="中小桥长度(m)" class="form-control span2">
+                      <span class="mini-outputtext" id="zhongxiaoqiaochang" style="border-width: 0px;" title=""></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="隧道" class="fui-acc-hd"><span class="fui-acc-order">05</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">隧道</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="form-wrap">
+            <div class="form-content">
+              <div class="mini-panel mini-grid mini-datagrid" tabindex="0" id="datagridOfSD"
+                style="border-width: 0px; width: 100%; display: block; padding: 0px;">
+                <div class="mini-panel-border mini-grid-border">
+                  <div class="mini-panel-header" style="display: none;">
+                    <div class="mini-panel-header-inner"><span class="mini-panel-icon mini-icon mini-iconfont "
+                        style="display: none;"></span>
+                      <div class="mini-panel-title">&nbsp;</div>
+                      <div class="mini-tools"><span id="0" class="mini-icon mini-iconfont fa mini-tools-collapse "
+                          style=";display:none;"></span><span id="1"
+                          class="mini-icon mini-iconfont fa mini-tools-close " style=";display:none;"></span></div>
+                    </div>
+                  </div>
+                  <div class="mini-panel-viewport mini-grid-viewport" style="height: auto;">
+                    <div class="mini-panel-toolbar" style="display: none;"></div>
+                    <div class="mini-grid-columns" style="display: block;">
+                      <div class="mini-grid-columns-lock" style="left: -10px; width: 0px; height: auto;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 0px;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-topRightCell"></div>
+                      </div>
+                      <div class="mini-grid-columns-view"
+                        style="margin-left: 0px; width: auto; height: auto; padding-right: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="8" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="9" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="10" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="11" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="12" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="13" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-41$headerCell2$8" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">序号</div>
+                                  <div id="8" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-41$headerCell2$9" class="mini-grid-headerCell    mini-grid-bottomCell"
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap " title="">隧道规模
+                                  </div>
+                                  <div id="9" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-41$headerCell2$10" class="mini-grid-headerCell    mini-grid-bottomCell"
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap " title="">隧道名称
+                                  </div>
+                                  <div id="10" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-41$headerCell2$11" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">结构形式</div>
+                                  <div id="11" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-41$headerCell2$12" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">单洞长(m)</div>
+                                  <div id="12" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-41$headerCell2$13"
+                                class="mini-grid-headerCell    mini-grid-bottomCell  mini-grid-rightCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">车道数</div>
+                                  <div id="13" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-topRightCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-grid-filterRow" style="display: none;">
+                      <div class="mini-grid-filterRow-lock" style="height: 100%; left: -10px; width: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0"
+                          style="position:absolute;top:0;left:0;height:100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-filterRow-view"
+                        style="margin-left: 0px; width: auto; padding-right: 0px; height: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0"
+                          style="position: absolute; top: 0px; left: 0px; height: 100%; width: 1290px;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="8" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="9" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="10" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="11" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="12" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="13" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-41$filter$8" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-41$filter$9" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-41$filter$10" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-41$filter$11" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-41$filter$12" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-41$filter$13" class="mini-grid-filterCell" style="">&nbsp;</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-panel-body mini-grid-rows" style="height: auto;">
+                      <div class="mini-grid-rows-lock" style="left: -10px; width: 0px; height: auto;">
+                        <div class="mini-grid-rows-content">
+                          <table class="mini-grid-table mini-grid-rowstable" cellspacing="0" cellpadding="0" border="0"
+                            style="width: 0px;">
+                            <tbody>
+                              <tr style="height:1px;">
+                                <td style="height:0px;width:0;"></td>
+                                <td style="width:0px;"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="mini-grid-rows-view" style="margin-left: 0px; width: 100%;">
+                        <div class="mini-grid-rows-content">
+                          <table class="mini-grid-table mini-grid-rowstable" cellspacing="0" cellpadding="0" border="0"
+                            style="width: 100%;">
+                            <tbody>
+                              <tr style="height:1px;">
+                                <td style="height:0px;width:0;"></td>
+                                <td id="8" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                                <td id="9" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="10" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="11" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="12" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="13" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td style="width:0px;"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="mini-grid-vscroll" style="display: none;">
+                        <div class="mini-grid-vscroll-content"></div>
+                      </div>
+                    </div>
+                    <div class="mini-grid-summaryRow" style="display: none;">
+                      <div class="mini-grid-summaryRow-lock" style="left: -10px; width: 0px; height: auto;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-summaryRow-view"
+                        style="margin-left: 0px; width: auto; height: auto; padding-right: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="8" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="9" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="10" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="11" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="12" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="13" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-41$summary$8_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-41$summary$9_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-41$summary$10_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-41$summary$11_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-41$summary$12_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-41$summary$13_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-grid-pager" style="display: none;">
+                      <div class="mini-pager" id="mini-43">
+                        <div class="mini-pager-left">
+                          <table cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                              <tr>
+                                <td><span class="mini-pager-sizetext" style="display: none;"></span><span
+                                    class="mini-pager-size"><span class="mini-buttonedit mini-combobox mini-popupedit"
+                                      id="mini-44" style="border-width: 0px;"><span
+                                        class="mini-buttonedit-border mini-corner-all"><input type="text"
+                                          class="mini-buttonedit-input" autocomplete="off" placeholder=""
+                                          readonly=""><span class="mini-buttonedit-buttons"><span
+                                            class="mini-buttonedit-close mini-icon" name="close"></span><span title=""
+                                            name="trigger" class="mini-buttonedit-button mini-buttonedit-trigger"
+                                            onmouseover="mini.addClass(this, 'mini-buttonedit-button-hover');"
+                                            onmouseout="mini.removeClass(this, 'mini-buttonedit-button-hover');"><span
+                                              class="mini-buttonedit-icon mini-icon mini-iconfont "></span></span></span></span><input
+                                        name="" type="hidden" value="999"></span><span
+                                      class="separator"></span></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-firstbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-47"><i
+                                      class="mini-button-icon mini-pager-first"></i></a><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-prevbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-48"><i
+                                      class="mini-button-icon mini-pager-prev"></i></a><span
+                                    class="mini-pager-index"><input type="text" class="mini-pager-num"><span
+                                      class="mini-pager-pages">/ 0</span></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-nextbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-49"><i
+                                      class="mini-button-icon mini-pager-next"></i></a><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-lastbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-50"><i
+                                      class="mini-button-icon mini-pager-last"></i></a><span class="separator"
+                                    style="display: none;"></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-button-plain"
+                                    href="javascript:void(0)" id="mini-51" style="display: none;"><i
+                                      class="mini-button-icon mini-pager-reload"></i></a></td>
+                                <td>
+                                  <div class="mini-page-buttons"></div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="mini-pager-right">每页 999 条, 共 0 条</div>
+                      </div>
+                    </div>
+                    <div class="mini-panel-footer" style="display: none;"></div>
+                    <div class="mini-resizer-trigger" style="display: none;"></div>
+                  </div><a href="#" class="mini-grid-focus"
+                    style="position:absolute;left:0px;top:0px;width:0px;height:0px;outline:none;" hidefocus=""
+                    onclick="return false"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="房建" class="fui-acc-hd"><span class="fui-acc-order">06</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">房建</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="form-wrap">
+            <div class="form-content">
+              <div class="mini-panel mini-grid mini-datagrid" tabindex="0" id="datagridOfFJ"
+                style="border-width: 0px; width: 100%; display: block; padding: 0px;">
+                <div class="mini-panel-border mini-grid-border">
+                  <div class="mini-panel-header" style="display: none;">
+                    <div class="mini-panel-header-inner"><span class="mini-panel-icon mini-icon mini-iconfont "
+                        style="display: none;"></span>
+                      <div class="mini-panel-title">&nbsp;</div>
+                      <div class="mini-tools"><span id="0" class="mini-icon mini-iconfont fa mini-tools-collapse "
+                          style=";display:none;"></span><span id="1"
+                          class="mini-icon mini-iconfont fa mini-tools-close " style=";display:none;"></span></div>
+                    </div>
+                  </div>
+                  <div class="mini-panel-viewport mini-grid-viewport" style="height: auto;">
+                    <div class="mini-panel-toolbar" style="display: none;"></div>
+                    <div class="mini-grid-columns" style="display: block;">
+                      <div class="mini-grid-columns-lock" style="left: -10px; width: 0px; height: auto;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 0px;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-topRightCell"></div>
+                      </div>
+                      <div class="mini-grid-columns-view"
+                        style="margin-left: 0px; width: auto; height: auto; padding-right: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="14" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="15" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="16" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="17" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="18" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="19" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="20" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-54$headerCell2$14" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">序号</div>
+                                  <div id="14" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-54$headerCell2$15" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">代表性单体名称</div>
+                                  <div id="15" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-54$headerCell2$16" class="mini-grid-headerCell    mini-grid-bottomCell"
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap " title="">类型
+                                  </div>
+                                  <div id="16" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-54$headerCell2$17" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">结构形式</div>
+                                  <div id="17" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-54$headerCell2$18" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">建筑高度(m)</div>
+                                  <div id="18" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-54$headerCell2$19" class="mini-grid-headerCell    mini-grid-bottomCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">建筑面积(m²)</div>
+                                  <div id="19" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                              <td id="mini-54$headerCell2$20"
+                                class="mini-grid-headerCell    mini-grid-bottomCell  mini-grid-rightCell "
+                                style="text-align:center;">
+                                <div class="mini-grid-headerCell-outer">
+                                  <div class="mini-grid-headerCell-inner  mini-grid-headerCell-nowrap ">层数</div>
+                                  <div id="20" class="mini-grid-column-splitter"></div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-topRightCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-grid-filterRow" style="display: none;">
+                      <div class="mini-grid-filterRow-lock" style="height: 100%; left: -10px; width: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0"
+                          style="position:absolute;top:0;left:0;height:100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-filterRow-view"
+                        style="margin-left: 0px; width: auto; padding-right: 0px; height: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0"
+                          style="position: absolute; top: 0px; left: 0px; height: 100%; width: 1290px;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="14" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="15" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="16" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="17" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="18" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="19" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="20" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-54$filter$14" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-54$filter$15" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-54$filter$16" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-54$filter$17" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-54$filter$18" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-54$filter$19" class="mini-grid-filterCell" style="">&nbsp;</td>
+                              <td id="mini-54$filter$20" class="mini-grid-filterCell" style="">&nbsp;</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-panel-body mini-grid-rows" style="height: auto;">
+                      <div class="mini-grid-rows-lock" style="left: -10px; width: 0px; height: auto;">
+                        <div class="mini-grid-rows-content">
+                          <table class="mini-grid-table mini-grid-rowstable" cellspacing="0" cellpadding="0" border="0"
+                            style="width: 0px;">
+                            <tbody>
+                              <tr style="height:1px;">
+                                <td style="height:0px;width:0;"></td>
+                                <td style="width:0px;"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="mini-grid-rows-view" style="margin-left: 0px; width: 100%;">
+                        <div class="mini-grid-rows-content">
+                          <table class="mini-grid-table mini-grid-rowstable" cellspacing="0" cellpadding="0" border="0"
+                            style="width: 100%;">
+                            <tbody>
+                              <tr style="height:1px;">
+                                <td style="height:0px;width:0;"></td>
+                                <td id="14" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                                <td id="15" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="16" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="17" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="18" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="19" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td id="20" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                                <td style="width:0px;"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="mini-grid-vscroll" style="display: none;">
+                        <div class="mini-grid-vscroll-content"></div>
+                      </div>
+                    </div>
+                    <div class="mini-grid-summaryRow" style="display: none;">
+                      <div class="mini-grid-summaryRow-lock" style="left: -10px; width: 0px; height: auto;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-summaryRow-view"
+                        style="margin-left: 0px; width: auto; height: auto; padding-right: 0px;">
+                        <table class="mini-grid-table" cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+                          <tbody>
+                            <tr style="height:0px;">
+                              <td style="height:0px;width:0;"></td>
+                              <td id="14" style="padding:0;border:0;margin:0;height:0px;width:50px"></td>
+                              <td id="15" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="16" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="17" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="18" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="19" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td id="20" style="padding:0;border:0;margin:0;height:0px;width:100%"></td>
+                              <td style="width:0px;"></td>
+                            </tr>
+                            <tr>
+                              <td style="width:0;"></td>
+                              <td id="mini-54$summary$14_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-54$summary$15_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-54$summary$16_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-54$summary$17_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-54$summary$18_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-54$summary$19_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                              <td id="mini-54$summary$20_0" class="mini-grid-summaryCell " style=";">&nbsp;</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mini-grid-scrollHeaderCell"></div>
+                      </div>
+                      <div class="mini-grid-scrollHeaderCell"></div>
+                    </div>
+                    <div class="mini-grid-pager" style="display: none;">
+                      <div class="mini-pager" id="mini-56">
+                        <div class="mini-pager-left">
+                          <table cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                              <tr>
+                                <td><span class="mini-pager-sizetext" style="display: none;"></span><span
+                                    class="mini-pager-size"><span class="mini-buttonedit mini-combobox mini-popupedit"
+                                      id="mini-57" style="border-width: 0px;"><span
+                                        class="mini-buttonedit-border mini-corner-all"><input type="text"
+                                          class="mini-buttonedit-input" autocomplete="off" placeholder=""
+                                          readonly=""><span class="mini-buttonedit-buttons"><span
+                                            class="mini-buttonedit-close mini-icon" name="close"></span><span title=""
+                                            name="trigger" class="mini-buttonedit-button mini-buttonedit-trigger"
+                                            onmouseover="mini.addClass(this, 'mini-buttonedit-button-hover');"
+                                            onmouseout="mini.removeClass(this, 'mini-buttonedit-button-hover');"><span
+                                              class="mini-buttonedit-icon mini-icon mini-iconfont "></span></span></span></span><input
+                                        name="" type="hidden" value="10"></span><span class="separator"></span></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-firstbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-60"><i
+                                      class="mini-button-icon mini-pager-first"></i></a><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-prevbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-61"><i
+                                      class="mini-button-icon mini-pager-prev"></i></a><span
+                                    class="mini-pager-index"><input type="text" class="mini-pager-num"><span
+                                      class="mini-pager-pages">/ 0</span></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-nextbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-62"><i
+                                      class="mini-button-icon mini-pager-next"></i></a><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-pager-lastbutton mini-button-plain mini-button-disabled"
+                                    href="javascript:void(0)" id="mini-63"><i
+                                      class="mini-button-icon mini-pager-last"></i></a><span class="separator"
+                                    style="display: none;"></span><a
+                                    class="mini-button mini-state-default mini-corner-all mini-button-iconOnly mini-button-plain"
+                                    href="javascript:void(0)" id="mini-64" style="display: none;"><i
+                                      class="mini-button-icon mini-pager-reload"></i></a></td>
+                                <td>
+                                  <div class="mini-page-buttons"></div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="mini-pager-right">每页 10 条, 共 0 条</div>
+                      </div>
+                    </div>
+                    <div class="mini-panel-footer" style="display: none;"></div>
+                    <div class="mini-resizer-trigger" style="display: none;"></div>
+                  </div><a href="#" class="mini-grid-focus"
+                    style="position:absolute;left:0px;top:0px;width:0px;height:0px;outline:none;" hidefocus=""
+                    onclick="return false"></a>
+                </div>
+              </div>
+              <div class="fui-form">
+                <div class="form-inner">
+                  <div class="form-row">
+                    <label class="form-label">单体建筑总数：</label>
+                    <div label="单体建筑总数" class="form-control span2">
+                      <span class="mini-outputtext" id="dantijianzhuzongshu" style="border-width: 0px;" title=""></span>
+                    </div>
+                    <label class="form-label">房建总面积(m²)：</label>
+                    <div label="房建总面积(m²)" class="form-control span2">
+                      <span class="mini-outputtext" id="fangjianzongmianji" style="border-width: 0px;" title=""></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="绿化" class="fui-acc-hd"><span class="fui-acc-order">07</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">绿化</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="fui-form">
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">主线长度(km)：</label>
+                <div label="主线长度(km)" class="form-control span2">
+                  <span class="mini-outputtext" id="lhzhuxianchang" style="border-width: 0px;" title=""></span>
+                </div>
+                <label class="form-label">车道数：</label>
+                <div label="车道数" class="form-control span2">
+                  <span class="mini-outputtext" id="lhchedaoshu" style="border-width: 0px;" title=""></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">是否公路主线绿化业绩：</label>
+                <div label="是否公路主线绿化业绩" class="form-control span5">
+                  <div>
+                    <span class="mini-outputtext" id="isgongluzhuxian" style="border-width: 0px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="交通安全设施" class="fui-acc-hd"><span class="fui-acc-order">08</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">交通安全设施</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="fui-form">
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">主线长度(km)：</label>
+                <div label="主线长度(km)" class="form-control span2">
+                  <span class="mini-outputtext" id="jtaqzhuxianchang" style="border-width: 0px;" title=""></span>
+                </div>
+                <label class="form-label">车道数：</label>
+                <div label="车道数" class="form-control span2">
+                  <span class="mini-outputtext" id="jtaqchedaoshu" style="border-width: 0px;" title=""></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">工程内容：</label>
+                <div label="工程内容" class="form-control span5">
+                  <div>
+                    <span class="mini-outputtext" id="jtaqgongchengneirong" style="border-width: 0px;" title=""></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="机电" class="fui-acc-hd"><span class="fui-acc-order">09</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">机电</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="fui-form">
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">主线长度(km)：</label>
+                <div label="主线长度(km)" class="form-control span2">
+                  <span class="mini-outputtext" id="jidianzhuxianchang" style="border-width: 0px;" title=""></span>
+                </div>
+                <label class="form-label">车道数：</label>
+                <div label="车道数" class="form-control span2">
+                  <span class="mini-outputtext" id="jidianchedaoshu" style="border-width: 0px;" title=""></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label">其中单隧道长度(m)：</label>
+                <div label="其中单隧道长度(m)" class="form-control span2">
+                  <span class="mini-outputtext" id="qizhongdansdchang" style="border-width: 0px;" title=""></span>
+                </div>
+                <label class="form-label">工程内容：</label>
+                <div label="工程内容" class="form-control span2">
+                  <div>
+                    <span class="mini-outputtext" id="jidiangongchengneirong" style="border-width: 0px;"
+                      title=""></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="accordion" opened="true" class="fui-accordion opened">
+        <div role="head" title="相关" class="fui-acc-hd"><span class="fui-acc-order">10</span><i
+            class="fui-acc-toggle"></i>
+          <h4 class="fui-acc-title">相关</h4>
+        </div>
+        <div role="body" class="fui-acc-bd">
+          <div class="fui-form">
+            <div class="form-inner">
+              <div class="form-row">
+                <label class="form-label">相关内容：</label>
+                <div label="相关内容" class="form-control span5">
+                  <span class="mini-outputtext" id="biaoduansize" style="border-width: 0px;"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  </body>
+
+</html>

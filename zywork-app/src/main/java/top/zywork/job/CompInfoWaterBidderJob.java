@@ -43,6 +43,7 @@ public class CompInfoWaterBidderJob implements Job {
             IOUtils.writeText(tempPageNo + "", path);
         } catch (Exception e) {
             logger.error("CompInfoWaterBidderJob Error:pageNo:{}", pageNo);
+            e.printStackTrace();
         }
         logger.info("executed CompInfoWaterBidderJob......");
     }

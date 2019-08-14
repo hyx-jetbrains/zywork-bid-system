@@ -43,6 +43,7 @@ public class CompInfoWaterAgentJob implements Job {
             IOUtils.writeText(tempPageNo + "", path);
         } catch (Exception e) {
             logger.error("CompInfoWaterAgentJob Error:pageNo:{}", pageNo);
+            e.printStackTrace();
         }
         logger.info("executed CompInfoWaterAgentJob......");
     }

@@ -103,7 +103,16 @@ public class CompTrafficAchievementCompanyQuery extends PageQuery {
 	private BigDecimal moneyMax;
 	// 金额
 	private BigDecimal money;
+	// 内部地址
+	private String compTrafficAchievementInwardHtmlUrl;
 
+	public String getCompTrafficAchievementInwardHtmlUrl() {
+		return compTrafficAchievementInwardHtmlUrl;
+	}
+
+	public void setCompTrafficAchievementInwardHtmlUrl(String compTrafficAchievementInwardHtmlUrl) {
+		this.compTrafficAchievementInwardHtmlUrl = compTrafficAchievementInwardHtmlUrl;
+	}
 	public BigDecimal getMoneyMin() {
 		return moneyMin;
 	}

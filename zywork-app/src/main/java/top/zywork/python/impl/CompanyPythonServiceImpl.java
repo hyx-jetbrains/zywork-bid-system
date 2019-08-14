@@ -7,10 +7,9 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import top.zywork.common.BeanUtils;
-import top.zywork.common.DateParseUtils;
-import top.zywork.common.HttpUtils;
+import top.zywork.common.*;
 import top.zywork.constant.ProjectConstants;
 import top.zywork.constant.PythonConstants;
 import top.zywork.dao.*;
@@ -54,6 +53,12 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
     private CompWaterDeviseAchievementDAO compWaterDeviseAchievementDAO;
 
     private CompHouseAchievementDAO compHouseAchievementDAO;
+
+    @Value("${projectDetail.uri}")
+    private String uri;
+
+    @Value("${projectDetail.location}")
+    private String location;
 
     @Override
     public void getCompanyInfo(String type, String compType, String pageNo, String pageSize, boolean isUpate) throws Exception {
@@ -445,6 +450,9 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 验证状态
                 String validStatus = jsonObj.getString("validStatus");
                 compTrafficAchievementDTO.setValidStatus(validStatus);
+                // 内部地址
+                String inwardHtmlUrl = jsonObj.getString("inwardHtmlUrl");
+                compTrafficAchievementDTO.setInwardHtmlUrl(inwardHtmlUrl);
                 if (updateFlag) {
                     // 更新交通业绩
                     compTrafficAchievementDTO.setVersion(compTrafficAchievementDTO.getVersion()+1);
@@ -488,6 +496,9 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 项目负责人
                 String name = jsonObj.getString("name");
                 compWaterAchievementDTO.setName(name);
+                // 内部地址
+                String inwardHtmlUrl = jsonObj.getString("inwardHtmlUrl");
+                compWaterAchievementDTO.setInwardHtmlUrl(inwardHtmlUrl);
                 if (updateFlag) {
                     // 更新水利施工业绩
                     compWaterAchievementDTO.setVersion(compWaterAchievementDTO.getVersion()+1);
@@ -620,20 +631,35 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
 
 
     @Override
-    public void getCompHouseAchievement(String pageNo, boolean isUpdate) throws Exception {
+    public void getCompHouseAchievement(String pageNo, boolean isUpdate, boolean isInit) throws Exception {
         try {
+            // 这个请求比较特殊，超时时间设置长一点
+            HttpUtils.timeout(600000);
             StringBuilder url = new StringBuilder();
+            String content = "";
+            if (isInit) {
+                url.append(PythonConstants.BASE_URL)
+                        .append(PythonConstants.COMP_HOUSE_ACHIEVEMENt_INIT_URL);
+                content = HttpUtils.get(url.toString());
+                if (StringUtils.isEmpty(content)) {
+                    logger.error("初始化文件信息失败");
+                    return;
+                }
+                // 避免还未收到响应，就发起了请求
+                Thread.sleep(347);
+            }
+            url.setLength(0);
+            content = "";
             url.append(PythonConstants.BASE_URL)
                     .append(PythonConstants.COMP_HOUSE_ACHIEVEMENt_INFO_URL)
                     .append("?pageNo=")
                     .append(pageNo);
-            HttpUtils.timeout(PythonConstants.TIME_OUT);
-            String content = HttpUtils.get(url.toString());
-            JSONArray jsonArray = JSON.parseArray(content);
-            if (null == jsonArray) {
-                logger.info("未获取到业绩信息");
+            content = HttpUtils.get(url.toString());
+            if (StringUtils.isEmpty(content)) {
+                logger.error("未获取到业绩信息");
                 return;
             }
+            JSONArray jsonArray = JSON.parseArray(content);
             int len = jsonArray.size();
             for (int i = 0; i < len; i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -775,6 +801,17 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 资料员身份证号
                 String dataClerkIdNum = jsonObject.getString("dataClerkIdNum");
                 compHouseAchievementDTO.setDataClerkIdNum(dataClerkIdNum);
+                // 源地址
+                String sourceUrl = jsonObject.getString("sourceUrl");
+                compHouseAchievementDTO.setSourceUrl(sourceUrl);
+
+                String fileName = UUIDUtils.uuid() +".html";
+                String projectDetail = jsonObject.getString("contentDetail");
+                String newFileName = "";
+                newFileName = CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
+                if (StringUtils.isNotEmpty(newFileName)) {
+                    compHouseAchievementDTO.setInwardHtmlUrl(uri + "/" + newFileName);
+                }
                 if (updateFlag) {
                     // 更新房建业绩信息
                     compHouseAchievementDTO.setVersion(compHouseAchievementDTO.getVersion()+1);

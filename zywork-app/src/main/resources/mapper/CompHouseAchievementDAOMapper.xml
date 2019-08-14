@@ -136,6 +136,12 @@
 			<if test="isActive != null">
 				is_active,
 			</if>
+			<if test="sourceUrl != null">
+				source_url,
+			</if>
+			<if test="inwardHtmlUrl != null">
+				inward_html_url,
+			</if>
 			
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -264,6 +270,12 @@
 			</if>
 			<if test="isActive != null">
 				#{isActive},
+			</if>
+			<if test="sourceUrl != null">
+				#{sourceUrl},
+			</if>
+			<if test="inwardHtmlUrl != null">
+				#{inwardHtmlUrl},
 			</if>
 			
         </trim>
@@ -402,6 +414,12 @@
 			<if test="item.isActive != null">
 				is_active,
 			</if>
+				<if test="item.sourceUrl != null">
+					source_url,
+				</if>
+				<if test="item.inwardHtmlUrl != null">
+					inward_html_url,
+				</if>
 			
             </trim>
             <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -531,6 +549,12 @@
 			<if test="item.isActive != null">
 				#{item.isActive},
 			</if>
+				<if test="item.sourceUrl != null">
+					#{item.sourceUrl},
+				</if>
+				<if test="item.inwardHtmlUrl != null">
+					#{item.inwardHtmlUrl},
+				</if>
 			
             </trim>
         </foreach>
@@ -676,6 +700,12 @@
 			<if test="isActive != null">
 				is_active = #{isActive},
 			</if>
+			<if test="sourceUrl != null">
+				source_url = #{sourceUrl},
+			</if>
+			<if test="inwardHtmlUrl != null">
+				inward_html_url = #{inwardHtmlUrl},
+			</if>
 			update_time = CURRENT_TIMESTAMP,
         </set>
         where id = #{id} and version + 1 <![CDATA[<=]]> #{version}
@@ -811,6 +841,12 @@
 			<if test="item.isActive != null">
 				is_active = #{item.isActive},
 			</if>
+				<if test="item.sourceUrl != null">
+					source_url = #{item.sourceUrl},
+				</if>
+				<if test="item.inwardHtmlUrl != null">
+					inward_html_url = #{item.inwardHtmlUrl},
+				</if>
 			update_time = CURRENT_TIMESTAMP,
                 <if test="item.version == null">
                     version = version + 1,
@@ -821,10 +857,16 @@
     </update>
 
     <sql id="select_columns">
-        money as money, id as id, comp_id as compId, project_name as projectName, builder_name as builderName, mark_money as markMoney, build_scale as buildScale, region_type as regionType, mark_comp as markComp, build_comp as buildComp, project_addr as projectAddr, contract_date as contractDate, mark_date as markDate, name as name, certificate_num as certificateNum, constructors as constructors, constructors_certificate_num as constructorsCertificateNum, constructors_id_num as constructorsIdNum, quality_worker as qualityWorker, quality_worker_certificate_num as qualityWorkerCertificateNum, quality_worker_id_num as qualityWorkerIdNum, security_officer as securityOfficer, security_officer_certificate_num as securityOfficerCertificateNum, security_officer_id_num as securityOfficerIdNum, standard_worker as standardWorker, standard_worker_certificate_num as standardWorkerCertificateNum, standard_worker_id_num as standardWorkerIdNum, material_man as materialMan, material_man_certificate_num as materialManCertificateNum, material_man_id_num as materialManIdNum, mechanic as mechanic, mechanic_certificate_num as mechanicCertificateNum, mechanic_id_num as mechanicIdNum, labors as labors, labors_certificate_num as laborsCertificateNum, labors_id_num as laborsIdNum, data_clerk as dataClerk, data_clerk_certificate_num as dataClerkCertificateNum, data_clerk_id_num as dataClerkIdNum, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
+        source_url as sourceUrl, inward_html_url as inwardHtmlUrl, money as money, id as id, comp_id as compId, project_name as projectName, builder_name as builderName, mark_money as markMoney, build_scale as buildScale, region_type as regionType, mark_comp as markComp, build_comp as buildComp, project_addr as projectAddr, contract_date as contractDate, mark_date as markDate, name as name, certificate_num as certificateNum, constructors as constructors, constructors_certificate_num as constructorsCertificateNum, constructors_id_num as constructorsIdNum, quality_worker as qualityWorker, quality_worker_certificate_num as qualityWorkerCertificateNum, quality_worker_id_num as qualityWorkerIdNum, security_officer as securityOfficer, security_officer_certificate_num as securityOfficerCertificateNum, security_officer_id_num as securityOfficerIdNum, standard_worker as standardWorker, standard_worker_certificate_num as standardWorkerCertificateNum, standard_worker_id_num as standardWorkerIdNum, material_man as materialMan, material_man_certificate_num as materialManCertificateNum, material_man_id_num as materialManIdNum, mechanic as mechanic, mechanic_certificate_num as mechanicCertificateNum, mechanic_id_num as mechanicIdNum, labors as labors, labors_certificate_num as laborsCertificateNum, labors_id_num as laborsIdNum, data_clerk as dataClerk, data_clerk_certificate_num as dataClerkCertificateNum, data_clerk_id_num as dataClerkIdNum, version as version, create_time as createTime, update_time as updateTime, is_active as isActive
     </sql>
 
     <sql id="query_where_clause">
+		<if test="query != null and query.sourceUrl != null and query.sourceUrl != ''">
+			and source_url like concat('%', #{query.sourceUrl}, '%')
+		</if>
+		<if test="query != null and query.inwardHtmlUrl != null and query.inwardHtmlUrl != ''">
+			and inward_html_url like concat('%', #{query.inwardHtmlUrl}, '%')
+		</if>
 		<if test="query != null and query.money != null">
 			and money = #{query.money}
 		</if>

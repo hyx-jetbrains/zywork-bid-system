@@ -71,3 +71,7 @@ class CompHouseAchievement:
     dataClerkCertificateNum = ''
     # 资料员身份证号
     dataClerkIdNum = ''
+    # 源地址
+    sourceUrl = ''
+    # 源地址内容详情
+    contentDetail = ''

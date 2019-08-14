@@ -1,8 +1,17 @@
 import requests
+import time
 import json
 from bs4 import BeautifulSoup
 
 from model.comp_house_achievement import CompHouseAchievement
+
+# 初始化文件
+def init_file():
+    current_house_file = open('current_house_achievement_file.txt', 'r+')
+    current_house_file.seek(0)
+    current_house_file.truncate()
+    current_house_file.close()
+    return '初始化成功'
 
 # 获取请求的data数据
 def get_request_data(url, pageNo):
@@ -30,9 +39,12 @@ def get_request_data(url, pageNo):
 
 # 获取房建业绩信息
 def get_house_achievement(pageNo):
-    # current_house_file = open('current_house_achievement_file.txt', 'r+')
-    # 获取已爬取的最新的链接
-    # current_house_href = current_house_file.readline()
+    try:
+        current_house_file = open('current_house_achievement_file.txt', 'r+')
+        # 获取已爬取的最新的链接
+        current_house_href = current_house_file.readline()
+    except IOError:
+        current_house_file = open('current_house_achievement_file.txt', 'w')
     # response = requests.get(url="http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx")
     url = "http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx"
 
@@ -46,7 +58,7 @@ def get_house_achievement(pageNo):
         'Cache-Control': 'no-cache',
         'Accept-Encoding': 'gzip, deflate'
     }
-    response = requests.post(url=url, data=requestData, headers = headers)
+    response = requests.post(url=url, data=requestData, headers=headers)
     # 获取文本原来编码，使两者编码一致才能正确显示
     response.encoding = response.apparent_encoding
     # 使用的是html解析，一般使用lxml解析更好
@@ -58,35 +70,44 @@ def get_house_achievement(pageNo):
     compHouseAchievements = []
 
     latest_flag = False
+    i = 0
     for tr in tr_list:
+        if i >= 20:
+            break
         if tr.get('class')[0] == 'HeaderStyle':
             continue
         a = tr.find('a')
         ahref = a.get('href')
         href = 'http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/ZBTZS_Detail.aspx?' + ahref.split('?')[1]
         # 如果已爬取的最新链接不等于现在抓取的链接，则表示网站有更新新数据
-        # if current_house_href != href:
-        #     if not latest_flag:
-        #         # 清除文件原内容
-        #         current_house_file.seek(0)
-        #         current_house_file.truncate()
-        #         # 记录新链接到文件中
-        #         current_house_file.write(href)
-        #         latest_flag = True
-        # else:
-        #     # 网站没有更新新数据，则停止爬取
-        #     break
+        if current_house_href != href:
+            if not latest_flag:
+                # 清除文件原内容
+                current_house_file.seek(0)
+                current_house_file.truncate()
+                # 记录新链接到文件中
+                current_house_file.write(href)
+                latest_flag = True
+        else:
+            # 网站没有更新新数据，则停止爬取
+            break
+        print(i)
+        print(href)
         # 有更新，打开业绩详情
-        detailResponse = requests.get(href)
+        detailResponse = requests.get(href, timeout=60000)
         # 获取文本原来编码，使两者编码一致才能正确显示
         detailResponse.encoding = detailResponse.apparent_encoding
         # 使用的是html解析，一般使用lxml解析更好
         detailSoup = BeautifulSoup(detailResponse.text, 'html5lib')
         table = detailSoup.find('table', {'class' : 'table'})
         compHouseAchievement = CompHouseAchievement()
+        compHouseAchievement.sourceUrl = href
+        compHouseAchievement.contentDetail = str(detailSoup)
         compHouseAchievement = get_from_table(compHouseAchievement, table)
         compHouseAchievements.append(compHouseAchievement.__dict__)
-    # current_house_file.close()
+        i = i+1
+        time.sleep(5)
+    current_house_file.close()
     print(compHouseAchievements)
     return compHouseAchievements
 

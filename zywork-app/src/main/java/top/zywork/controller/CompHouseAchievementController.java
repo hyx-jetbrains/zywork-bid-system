@@ -164,9 +164,10 @@ public class CompHouseAchievementController extends BaseController {
         String pageNo = compHouseAchievementQuery.getPageNo().toString();
         boolean isUpdate = compHouseAchievementQuery.getProjectName().equals(PythonConstants.IS_UPDATE_FLAG_STR);
         try {
-            companyPythonService.getCompHouseAchievement(pageNo, isUpdate);
+            companyPythonService.getCompHouseAchievement(pageNo, isUpdate, true);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseStatusVO.error("爬取异常", null);
         }
         return ResponseStatusVO.ok("后台更新中", null);
     }

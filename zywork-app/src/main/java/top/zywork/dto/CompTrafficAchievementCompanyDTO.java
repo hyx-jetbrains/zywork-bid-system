@@ -53,7 +53,16 @@ public class CompTrafficAchievementCompanyDTO extends BaseDTO {
 	private String companyCompName;
 	// 金额
 	private BigDecimal money;
+	// 内部地址
+	private String compTrafficAchievementInwardHtmlUrl;
 
+	public String getCompTrafficAchievementInwardHtmlUrl() {
+		return compTrafficAchievementInwardHtmlUrl;
+	}
+
+	public void setCompTrafficAchievementInwardHtmlUrl(String compTrafficAchievementInwardHtmlUrl) {
+		this.compTrafficAchievementInwardHtmlUrl = compTrafficAchievementInwardHtmlUrl;
+	}
 	public BigDecimal getMoney() {
 		return money;
 	}

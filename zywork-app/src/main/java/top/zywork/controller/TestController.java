@@ -108,7 +108,7 @@ public class TestController {
                 if (org.apache.commons.lang.StringUtils.isNotEmpty(newFileName)) {
                     projectDTO.setInwardHtmlUrl(uri + "/" + newFileName);
                 }
-                int updateRow = projectAnnounceService.update(projectDTO);
+                int updateRow = projectService.update(projectDTO);
                 if (updateRow > 0) {
                     count++;
                 }

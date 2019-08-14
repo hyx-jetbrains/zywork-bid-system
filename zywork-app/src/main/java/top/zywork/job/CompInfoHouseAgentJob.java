@@ -43,6 +43,7 @@ public class CompInfoHouseAgentJob implements Job {
             IOUtils.writeText(tempPageNo + "", path);
         } catch (Exception e) {
             logger.error("CompInfoHouseAgentJob Error:pageNo:{}", pageNo);
+            e.printStackTrace();
         }
         logger.info("executed CompInfoHouseAgentJob......");
     }

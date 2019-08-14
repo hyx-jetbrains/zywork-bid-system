@@ -34,13 +34,19 @@ public class CompHouseAchievementJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         logger.info("begin to execute CompHouseAchievementJob......");
-        String path = filesPath + PythonConstants.PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT;
-        String pageNo = IOUtils.getText(path).replaceAll("\r\n", "");
+//        String path = filesPath + PythonConstants.PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT;
+//        String pageNo = IOUtils.getText(path).replaceAll("\r\n", "");
+//        try {
+//            companyPythonService.getCompHouseAchievement(pageNo, PythonConstants.DEFAULT_IS_UPDATE_FLAG, false);
+//            int tempPageNo = Integer.valueOf(pageNo);
+//            tempPageNo++;
+//            IOUtils.writeText(tempPageNo + "", path);
+//        } catch (Exception e) {
+//            logger.error("CompHouseAchievementJob Error:pageNo:{}", pageNo);
+//        }
+        String pageNo = "1";
         try {
-            companyPythonService.getCompHouseAchievement(pageNo, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
-            int tempPageNo = Integer.valueOf(pageNo);
-            tempPageNo++;
-            IOUtils.writeText(tempPageNo + "", path);
+            companyPythonService.getCompHouseAchievement(pageNo, PythonConstants.DEFAULT_IS_UPDATE_FLAG, false);
         } catch (Exception e) {
             logger.error("CompHouseAchievementJob Error:pageNo:{}", pageNo);
         }
