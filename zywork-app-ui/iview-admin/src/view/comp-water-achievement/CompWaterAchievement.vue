@@ -535,6 +535,12 @@
 							key: 'endDate',
 							minWidth: 150,
 							sortable: true
+            },
+            {
+							title: '内部地址',
+							key: 'inwardHtmlUrl',
+							minWidth: 120,
+							sortable: true
 						},
 						{
 							title: '版本号',

@@ -804,14 +804,10 @@ public class CompanyPythonServiceImpl implements CompanyPythonService {
                 // 源地址
                 String sourceUrl = jsonObject.getString("sourceUrl");
                 compHouseAchievementDTO.setSourceUrl(sourceUrl);
+                // 内部地址
+                String inwardHtmlUrl = jsonObject.getString("inwardHtmlUrl");
+                compHouseAchievementDTO.setInwardHtmlUrl(inwardHtmlUrl);
 
-                String fileName = UUIDUtils.uuid() +".html";
-                String projectDetail = jsonObject.getString("contentDetail");
-                String newFileName = "";
-                newFileName = CommonMethodUtils.generatorHtmlCode(fileName, projectDetail, location);
-                if (StringUtils.isNotEmpty(newFileName)) {
-                    compHouseAchievementDTO.setInwardHtmlUrl(uri + "/" + newFileName);
-                }
                 if (updateFlag) {
                     // 更新房建业绩信息
                     compHouseAchievementDTO.setVersion(compHouseAchievementDTO.getVersion()+1);

@@ -137,6 +137,14 @@ public class CompanyServiceImpl extends AbstractBaseService implements CompanySe
             companyPythonVO.setPageNo(pageNo);
             companyPythonVO.setEstimatePageNo("37");
             companyPythonVOList.add(companyPythonVO);
+            // 房建业绩
+            companyPythonVO = new CompanyPythonVO();
+            path = filesPath + PythonConstants.PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT;
+            pageNo = IOUtils.getText(path).replaceAll("\r\n", "");
+            companyPythonVO.setTypeName("房建施工单位业绩");
+            companyPythonVO.setPageNo(pageNo);
+            companyPythonVO.setEstimatePageNo("3188");
+            companyPythonVOList.add(companyPythonVO);
         } catch (Exception e) {
             e.printStackTrace();
         }

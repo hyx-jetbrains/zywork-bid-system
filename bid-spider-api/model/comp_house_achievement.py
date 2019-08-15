@@ -73,5 +73,5 @@ class CompHouseAchievement:
     dataClerkIdNum = ''
     # 源地址
     sourceUrl = ''
-    # 源地址内容详情
-    contentDetail = ''
+    # 内部地址
+    inwardHtmlUrl = ''

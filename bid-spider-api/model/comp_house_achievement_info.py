@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+import uuid
 from bs4 import BeautifulSoup
 
 from model.comp_house_achievement import CompHouseAchievement
@@ -15,7 +16,11 @@ def init_file():
 
 # 获取请求的data数据
 def get_request_data(url, pageNo):
-    response = requests.get(url=url)
+    try:
+        response = requests.get(url=url, timeout=60000)
+    except TimeoutError:
+        print('请求超时异常')
+        get_request_data(url, pageNo)
     # 获取文本原来编码，使两者编码一致才能正确显示
     response.encoding = response.apparent_encoding
     # 使用的是html解析，一般使用lxml解析更好
@@ -47,7 +52,6 @@ def get_house_achievement(pageNo):
         current_house_file = open('current_house_achievement_file.txt', 'w')
     # response = requests.get(url="http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx")
     url = "http://59.52.254.77:8081/jxhthy/HeTongBAMis2_JX/Pages/QueryInfo/Query_List.aspx"
-
     returnData = get_request_data(url, pageNo)
     requestData = returnData[0]
     cookie_value = returnData[1]
@@ -94,7 +98,11 @@ def get_house_achievement(pageNo):
         print(i)
         print(href)
         # 有更新，打开业绩详情
-        detailResponse = requests.get(href, timeout=60000)
+        try:
+            detailResponse = requests.get(href, timeout=60000)
+        except TimeoutError:
+            print('请求超时：' + href)
+            continue
         # 获取文本原来编码，使两者编码一致才能正确显示
         detailResponse.encoding = detailResponse.apparent_encoding
         # 使用的是html解析，一般使用lxml解析更好
@@ -102,7 +110,7 @@ def get_house_achievement(pageNo):
         table = detailSoup.find('table', {'class' : 'table'})
         compHouseAchievement = CompHouseAchievement()
         compHouseAchievement.sourceUrl = href
-        compHouseAchievement.contentDetail = str(detailSoup)
+        compHouseAchievement.inwardHtmlUrl = generate_html(detailSoup)
         compHouseAchievement = get_from_table(compHouseAchievement, table)
         compHouseAchievements.append(compHouseAchievement.__dict__)
         i = i+1
@@ -160,3 +168,21 @@ def get_from_td(table, zh_text):
         text = tag.text
         return text
     return None
+
+# 生成html文件
+def generate_html(data):
+    # 文件储存路径-线上
+    path = '/data/bid-system/upload/file/'
+    # 文件储存路径-本地
+    # path = 'temp/'
+    # 文件名
+    newFileName = str(uuid.uuid1()) + '.html'
+    inwardHtmlUrl = '/upload/file/' + newFileName
+    # 文件路径
+    filePath = path + newFileName
+    # 创建文件
+    tempHtml = open(filePath, 'w')
+    tempHtml.write(str(data))
+    # 关闭文件
+    tempHtml.close()
+    return inwardHtmlUrl

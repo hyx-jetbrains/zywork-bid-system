@@ -13,18 +13,18 @@ import top.zywork.constant.PythonConstants;
 import top.zywork.python.CompanyPythonService;
 
 /**
- * 访问python接口获取水利投标人公司信息的作业,
- * 每半个小时执行一次<br/>
+ * 访问python接口获取房建业绩信息的作业,
+ * 临时使用，需要重新抓取房建业绩的信息<br/>
  *
- * 创建于2019-06-05<br/>
+ * 创建于2019-08-15<br/>
  *
  * @author 危锦辉
  * @version 1.0
  */
 @ExposeClass(type = "job")
-public class CompInfoWaterBidderJob implements Job {
+public class CompHouseAchievementTempJob implements Job {
 
-    private static final Logger logger = LoggerFactory.getLogger(CompInfoWaterBidderJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(CompHouseAchievementTempJob.class);
 
     private CompanyPythonService companyPythonService;
 
@@ -33,19 +33,18 @@ public class CompInfoWaterBidderJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        logger.info("begin to execute CompInfoWaterBidderJob......");
-        String path = filesPath + PythonConstants.PAGE_NO_FILE_NAME_COMP_WATER_BIDDER;
+        logger.info("begin to execute CompHouseAchievementTempJob......");
+        String path = filesPath + PythonConstants.PAGE_NO_FILE_NAME_COMP_HOUSE_ACHIEVEMENT;
         String pageNo = IOUtils.getText(path).replaceAll("\r\n", "");
         try {
-            companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_WATER_BIDDER, pageNo, PythonConstants.DEFAULT_PAGE_SIXE, true);
+            companyPythonService.getCompHouseAchievement(pageNo, true, false);
             int tempPageNo = Integer.valueOf(pageNo);
             tempPageNo++;
             IOUtils.writeText(tempPageNo + "", path);
         } catch (Exception e) {
-            logger.error("CompInfoWaterBidderJob Error:pageNo:{}", pageNo);
-            e.printStackTrace();
+            logger.error("CompHouseAchievementJob Error:pageNo:{}", pageNo);
         }
-        logger.info("executed CompInfoWaterBidderJob......");
+        logger.info("executed CompHouseAchievementTempJob......");
     }
 
     @Autowired

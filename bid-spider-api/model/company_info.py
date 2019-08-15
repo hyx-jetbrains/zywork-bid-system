@@ -9,39 +9,39 @@ from model.comp_aptitude import CompAptitude
 from model.comp_builder import CompBuilder
 from model.comp_achievement import CompAchievement
 from bs4 import BeautifulSoup
-from selenium import webdriver
+# from selenium import webdriver
 
 
 # 获取html文本
-def getHtmlText(url):
-    # 调用本地的火狐浏览器，Chrom 甚至 Ie 也可以的
-    # driver=webdriver.PhantomJS(executable_path="/Applications/phantomjs-2.1.1-macosx/bin/phantomjs")
-    # 本地开发使用下面这个，线上请使用上面的
-    driver=webdriver.Safari()
-    # 请求页面，会打开一个浏览器窗口
-    print(url)
-    # 模拟访问url
-    driver.get(url)
-    # 配置页面加载超时时间
-    driver.set_page_load_timeout(10)
-    # 点击业绩
-    driver.find_element_by_link_text('公路施工业绩').click()
-    time.sleep(3)
-    # 定位到iframe
-    driver.switch_to.frame('main-frame')
-    time.sleep(3)
-    # 截屏保存图片
-    driver.save_screenshot('11.png')
-    # 清除所有的js
-    driver.find_element_by_tag_name('script').clear()
-    # 清除头部的搜索条件
-    driver.find_element_by_class_name('fui-condition').clear()
-
-    html_text=driver.page_source
-    # 退出浏览器
-    driver.quit()
-
-    return html_text
+# def getHtmlText(url):
+#     # 调用本地的火狐浏览器，Chrom 甚至 Ie 也可以的
+#     # driver=webdriver.PhantomJS(executable_path="/Applications/phantomjs-2.1.1-macosx/bin/phantomjs")
+#     # 本地开发使用下面这个，线上请使用上面的
+#     driver=webdriver.Safari()
+#     # 请求页面，会打开一个浏览器窗口
+#     print(url)
+#     # 模拟访问url
+#     driver.get(url)
+#     # 配置页面加载超时时间
+#     driver.set_page_load_timeout(10)
+#     # 点击业绩
+#     driver.find_element_by_link_text('公路施工业绩').click()
+#     time.sleep(3)
+#     # 定位到iframe
+#     driver.switch_to.frame('main-frame')
+#     time.sleep(3)
+#     # 截屏保存图片
+#     driver.save_screenshot('11.png')
+#     # 清除所有的js
+#     driver.find_element_by_tag_name('script').clear()
+#     # 清除头部的搜索条件
+#     driver.find_element_by_class_name('fui-condition').clear()
+#
+#     html_text=driver.page_source
+#     # 退出浏览器
+#     driver.quit()
+#
+#     return html_text
 
 # 获取cookie
 def getCookies(url):

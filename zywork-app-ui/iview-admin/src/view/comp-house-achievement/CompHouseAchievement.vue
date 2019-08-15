@@ -261,6 +261,9 @@
 						</FormItem>
 					</i-col>
 				</Row>
+        <FormItem label="源地址" prop="sourceUrl">
+					<Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+				</FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="resetFormCancelModal('addForm', 'add')">取消</Button>
@@ -498,6 +501,9 @@
 						</FormItem>
 					</i-col>
 				</Row>
+        <FormItem label="源地址" prop="sourceUrl">
+					<Input v-model="form.sourceUrl" placeholder="请输入源地址" />
+				</FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="text" size="large" @click="resetFormCancelModal('editForm', 'edit')">取消</Button>
@@ -787,7 +793,7 @@
 			<p>创建时间: <span v-text="form.createTime"></span></p>
 			<p>更新时间: <span v-text="form.updateTime"></span></p>
 			<p>是否激活: <span v-text="form.isActive"></span></p>
-
+      <p>源地址: <a :href="form.sourceUrl" target="_blank">{{form.sourceUrl}}</a></p>
 		</Modal>
 		
 		<Modal :transfer="false" v-model="modal.companyDetail" title="企业详情">
@@ -809,6 +815,7 @@
       v-model="modal.python"
       title="爬取数据"
       @on-visible-change="changeModalVisibleResetForm('pythonForm', $event)"
+      width="700"
     >
       <Form ref="pythonForm" :model="python" :label-width="80" :rules="validateRules">
         <FormItem label="数据来源" prop="sourse">
@@ -910,7 +917,9 @@
 					markDate: null,
 					name: null,
 					certificateNum: null,
-					constructors: null,
+          constructors: null,
+          sourceUrl: null,
+          inwardHtmlUrl: null,
 					constructorsCertificateNum: null,
 					constructorsIdNum: null,
 					qualityWorker: null,
@@ -1188,6 +1197,31 @@
 							title: '中标日期',
 							key: 'markDate',
 							minWidth: 150,
+							sortable: true
+            },
+            {
+              title: '源地址',
+              key: 'sourceUrl',
+              minWidth: 150,
+              sortable: true,
+              render: (h, params) => {
+                const row = params.row
+                return h(
+                  'a',
+                  {
+                    attrs: {
+                      href: row.sourceUrl,
+                      target: '_blank'
+                    }
+                  },
+                  row.sourceUrl
+                )
+              }
+            },
+            {
+							title: '内部地址',
+							key: 'inwardHtmlUrl',
+							minWidth: 120,
 							sortable: true
 						},
 						{
@@ -1637,6 +1671,7 @@
           this.loading.python = false
           this.cancelModal('python')
         }).catch(err => {
+          this.loading.python = false
           console.log(err)
           this.$Message.error("爬取数据失败")
         })

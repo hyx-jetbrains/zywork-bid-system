@@ -37,7 +37,7 @@ public class CompInfoTrafficBidderJob implements Job {
         String path = filesPath + PythonConstants.PAGE_NO_FILE_NAME_COMP_TRAFFIC_BIDDER;
         String pageNo = IOUtils.getText(path).replaceAll("\r\n", "");
         try {
-            companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_TRAFFIC_BIDDER, pageNo, PythonConstants.DEFAULT_PAGE_SIXE, PythonConstants.DEFAULT_IS_UPDATE_FLAG);
+            companyPythonService.getCompanyInfo(PythonConstants.TYPE_BIDDER, PythonConstants.COMP_TYPE_TRAFFIC_BIDDER, pageNo, PythonConstants.DEFAULT_PAGE_SIXE, true);
             int tempPageNo = Integer.valueOf(pageNo);
             tempPageNo++;
             IOUtils.writeText(tempPageNo + "", path);
